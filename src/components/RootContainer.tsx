@@ -3,7 +3,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
-// import firebase from 'react-native-firebase';
+import firebase from 'react-native-firebase';
+import * as Sentry from '@sentry/react-native';
 
 import CloseBtn from './Header/CloseBtn';
 import LoggedInNavigation from '../navigations/LoggedInNavigation';
@@ -18,48 +19,56 @@ export default () => {
   const {isLoggedIn} = useSelector((state: any) => state.userReducer);
   const RootStack = createStackNavigator();
 
+  // Sentry.init({
+  //   dsn:
+  //     'https://920fb530d09442768b04ec6825a3a2b4@o450648.ingest.sentry.io/5457931',
+  //   enableAutoSessionTracking: true,
+  //   sessionTrackingIntervalMillis: 10000,
+  // });
+
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      onReady={() =>
-        (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
-      }
-      onStateChange={() => {
-        const previousRouteName = routeNameRef.current;
-        const currentRouteName = navigationRef.current.getCurrentRoute().name;
-        if (
-          previousRouteName !== currentRouteName &&
-          navigationRef.current.getCurrentOptions().title
-        ) {
-          console.log(
-            '===================',
-            navigationRef.current.getCurrentOptions().title,
-            '===================',
-          );
-          //   firebase
-          //     .analytics()
-          //     .setCurrentScreen(navigationRef.current.getCurrentOptions().title);
-        } else {
-          if (
-            navigationRef.current.getCurrentRoute().name !==
-              'ChecklistShareUpdateScreen' &&
-            navigationRef.current.getCurrentRoute().name !== '특이사항' &&
-            navigationRef.current.getCurrentRoute().name !== '지시사항' &&
-            navigationRef.current.getCurrentRoute().name !== 'CU소식' &&
-            navigationRef.current.getCurrentRoute().name !==
-              'ChecklistShareItemScreen' &&
-            navigationRef.current.getCurrentRoute().name !==
-              'ChecklistShareInsertScreen'
-          ) {
-            console.log(
-              'NO TITLE *********************',
-              navigationRef.current.getCurrentRoute().name,
-              '********************* HERE',
-            );
-          }
-        }
-        routeNameRef.current = currentRouteName;
-      }}>
+    // <NavigationContainer
+    //   ref={navigationRef}
+    //   onReady={() =>
+    //     (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
+    //   }
+    //   onStateChange={() => {
+    //     const previousRouteName = routeNameRef.current;
+    //     const currentRouteName = navigationRef.current.getCurrentRoute().name;
+    //     if (
+    //       previousRouteName !== currentRouteName &&
+    //       navigationRef.current.getCurrentOptions().title
+    //     ) {
+    //       console.log(
+    //         '===================',
+    //         navigationRef.current.getCurrentOptions().title,
+    //         '===================',
+    //       );
+    //       firebase
+    //         .analytics()
+    //         .setCurrentScreen(navigationRef.current.getCurrentOptions().title);
+    //     } else {
+    //       if (
+    //         navigationRef.current.getCurrentRoute().name !==
+    //           'ChecklistShareUpdateScreen' &&
+    //         navigationRef.current.getCurrentRoute().name !== '특이사항' &&
+    //         navigationRef.current.getCurrentRoute().name !== '지시사항' &&
+    //         navigationRef.current.getCurrentRoute().name !== 'CU소식' &&
+    //         navigationRef.current.getCurrentRoute().name !==
+    //           'ChecklistShareItemScreen' &&
+    //         navigationRef.current.getCurrentRoute().name !==
+    //           'ChecklistShareInsertScreen'
+    //       ) {
+    //         console.log(
+    //           'NO TITLE *********************',
+    //           navigationRef.current.getCurrentRoute().name,
+    //           '********************* HERE',
+    //         );
+    //       }
+    //     }
+    //     routeNameRef.current = currentRouteName;
+    //   }}>
+    <NavigationContainer>
       <RootStack.Navigator
         mode="modal"
         initialRouteName={

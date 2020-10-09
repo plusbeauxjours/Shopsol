@@ -3,10 +3,10 @@ import {NativeModules} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import StartScreen from '../screens/LoggedOutScreen/StartScreen';
-import LogInScreen from '../screens/LoggedOutScreen/LogInScreen';
-import SignupScreen from '../screens/LoggedOutScreen/SignupScreen';
-import FindPasswordScreen from '../screens/LoggedOutScreen/FindPasswordScreen';
-import VerificationScreen from '../screens/LoggedOutScreen/VerificationScreen';
+// import LogInScreen from '../screens/LoggedOutScreen/LogInScreen';
+// import SignupScreen from '../screens/LoggedOutScreen/SignupScreen';
+// import FindPasswordScreen from '../screens/LoggedOutScreen/FindPasswordScreen';
+// import VerificationScreen from '../screens/LoggedOutScreen/VerificationScreen';
 import BackBtn from '../components/Header/BackBtn';
 import {useSelector} from 'react-redux';
 import RootModal from '../components/RootModal';
@@ -48,7 +48,7 @@ export default () => {
             title: '시작 페이지',
           }}
         />
-        <LoggedOutNavigation.Screen
+        {/* <LoggedOutNavigation.Screen
           name="LogInScreen"
           component={LogInScreen}
           options={{
@@ -83,7 +83,7 @@ export default () => {
             title: '비밀번호 찾기',
             headerTintColor: '#fff',
           }}
-        />
+        /> */}
       </LoggedOutNavigation.Navigator>
       {alert.visible && <RootModal alert={alert} />}
     </React.Fragment>
