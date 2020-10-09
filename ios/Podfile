@@ -3,10 +3,19 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'ShopsolWesop' do
+install! 'cocoapods',
+         :deterministic_uuids => false
+         
+target 'CUwesop' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
+  pod 'Firebase/Core'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
 
   target 'ShopsolWesopTests' do
     inherit! :complete

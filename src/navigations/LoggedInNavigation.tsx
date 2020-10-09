@@ -4,79 +4,79 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // 직원관리 ========================================================
 import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
-import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
-import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
-import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
-import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen';
-import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
-import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
+// import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
+// import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
+// import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
+// import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen';
+// import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
+// import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
 
 // EmployeeScheduleScreen========================================================
-import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
-import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
-import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
+// import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
+// import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
+// import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
 
-import InviteEmployeeScreen from '../screens/LoggedInScreen/Home/InviteEmployeeScreen';
-import EmployeeListScreen from '../screens/LoggedInScreen/Home/EmployeeListScreen';
-import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
-import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
-import ShelfLifeCheckScreen from '../screens/LoggedInScreen/Home/ShelfLifeCheckScreen';
-import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/Home/ShelfLifeUpdateScreen';
-import AddShelfLifeScreen from '../screens/LoggedInScreen/Home/AddShelfLifeScreen';
+// import InviteEmployeeScreen from '../screens/LoggedInScreen/Home/InviteEmployeeScreen';
+// import EmployeeListScreen from '../screens/LoggedInScreen/Home/EmployeeListScreen';
+// import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
+// import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
+// import ShelfLifeCheckScreen from '../screens/LoggedInScreen/Home/ShelfLifeCheckScreen';
+// import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/Home/ShelfLifeUpdateScreen';
+// import AddShelfLifeScreen from '../screens/LoggedInScreen/Home/AddShelfLifeScreen';
 
-import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Home/ManageInviteEmployeeScreen';
-import EmployeeInfoScreen from '../screens/LoggedInScreen/Home/EmployeeInfoScreen';
-import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Home/EmployeeInfoEMPScreen';
+// import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Home/ManageInviteEmployeeScreen';
+// import EmployeeInfoScreen from '../screens/LoggedInScreen/Home/EmployeeInfoScreen';
+// import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Home/EmployeeInfoEMPScreen';
 
 // 캘린더========================================================
-import CalendarAddScreen from '../screens/LoggedInScreen/Calendar/CalendarAddScreen';
-import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
-import WorkTimeScreen from '../screens/LoggedInScreen/Calendar/WorkTimeScreen';
-import RealWorkTimeScreen from '../screens/LoggedInScreen/Calendar/RealWorkTimeScreen';
-import WorkDayScreen from '../screens/LoggedInScreen/Calendar/WorkDayScreen';
-import WorkDayRestTypeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTypeScreen';
-import WorkDayRestTimeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTimeScreen';
+// import CalendarAddScreen from '../screens/LoggedInScreen/Calendar/CalendarAddScreen';
+// import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
+// import WorkTimeScreen from '../screens/LoggedInScreen/Calendar/WorkTimeScreen';
+// import RealWorkTimeScreen from '../screens/LoggedInScreen/Calendar/RealWorkTimeScreen';
+// import WorkDayScreen from '../screens/LoggedInScreen/Calendar/WorkDayScreen';
+// import WorkDayRestTypeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTypeScreen';
+// import WorkDayRestTimeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTimeScreen';
 
 // 체크리스트========================================================
-import ChecklistAddScreen from '../screens/LoggedInScreen/Checklist/ChecklistAddScreen';
-import ChecklistItemsScreen from '../screens/LoggedInScreen/Checklist/ChecklistItemsScreen';
-import ChecklistSpecificationScreen from '../screens/LoggedInScreen/Checklist/ChecklistSpecificationScreen';
-import ChecklistDetailScreen from '../screens/LoggedInScreen/Checklist/ChecklistDetailScreen';
+// import ChecklistAddScreen from '../screens/LoggedInScreen/Checklist/ChecklistAddScreen';
+// import ChecklistItemsScreen from '../screens/LoggedInScreen/Checklist/ChecklistItemsScreen';
+// import ChecklistSpecificationScreen from '../screens/LoggedInScreen/Checklist/ChecklistSpecificationScreen';
+// import ChecklistDetailScreen from '../screens/LoggedInScreen/Checklist/ChecklistDetailScreen';
 
 // 업무일지========================================================
-import ChecklistShareMainScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareMainScreen';
-import ChecklistShareItemScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareItemScreen';
-import ChecklistShareInsertScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareInsertScreen';
-import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareUpdateScreen';
+// import ChecklistShareMainScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareMainScreen';
+// import ChecklistShareItemScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareItemScreen';
+// import ChecklistShareInsertScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareInsertScreen';
+// import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareUpdateScreen';
 
 // 교육컨텐츠========================================================
-import MyCuMonthlyListScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyListScreen';
-import MyCuMonthlyDetailScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyDetailScreen';
-import MyCuVideoListScreen from '../screens/LoggedInScreen/MyCu/MyCuVideoListScreen';
-import MyCuVideoDetailScreen from '../screens/LoggedInScreen/MyCu/MyCuVideoDetailScreen';
-import EducationVideoListScreen from '../screens/LoggedInScreen/MyCu/EducationVideoListScreen';
-import EducationVideoDetailScreen from '../screens/LoggedInScreen/MyCu/EducationVideoDetailScreen';
+// import MyCuMonthlyListScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyListScreen';
+// import MyCuMonthlyDetailScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyDetailScreen';
+// import MyCuVideoListScreen from '../screens/LoggedInScreen/MyCu/MyCuVideoListScreen';
+// import MyCuVideoDetailScreen from '../screens/LoggedInScreen/MyCu/MyCuVideoDetailScreen';
+// import EducationVideoListScreen from '../screens/LoggedInScreen/MyCu/EducationVideoListScreen';
+// import EducationVideoDetailScreen from '../screens/LoggedInScreen/MyCu/EducationVideoDetailScreen';
 
 // 마이페이지========================================================
-import MyPageAlarmSetScreen from '../screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
-import MyPageAppointmentScreen from '../screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
-import MyPageMainScreen from '../screens/LoggedInScreen/MyPage/MyPageMainScreen';
-import MyPagePlaceSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
+// import MyPageAlarmSetScreen from '../screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
+// import MyPageAppointmentScreen from '../screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
+// import MyPageMainScreen from '../screens/LoggedInScreen/MyPage/MyPageMainScreen';
+// import MyPagePlaceSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
 
-import MyPageIdSetMainScreen from '../screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
-import MyPageDeleteSetScreen from '../screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
-import MyPageNameSetScreen from '../screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
-import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
+// import MyPageIdSetMainScreen from '../screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
+// import MyPageDeleteSetScreen from '../screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
+// import MyPageNameSetScreen from '../screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
+// import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
 
 // 조기경보========================================================
-import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
-import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
-import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
-import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
-import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
-import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
-import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
-import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
+// import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
+// import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
+// import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
+// import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
+// import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
+// import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
+// import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
+// import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
 
 // Components========================================================
 import SettingBtn from '../components/Header/SettingBtn';
@@ -116,8 +116,8 @@ export default () => {
             title: '메인 페이지',
           }}
         />
-
-        {/* 직원관리======================================================== */}
+        {/* 
+        직원관리========================================================
         <LoggedInNavigation.Screen
           name="AddStoreScreen"
           component={AddStoreScreen}
@@ -186,7 +186,7 @@ export default () => {
           }}
         />
 
-        {/* EmployeeScheduleScreen======================================================== */}
+        EmployeeScheduleScreen========================================================
         <LoggedInNavigation.Screen
           name="EmployeeScheduleMainScreen"
           component={EmployeeScheduleMainScreen}
@@ -254,7 +254,7 @@ export default () => {
           }}
         />
 
-        {/* 유통기한======================================================== */}
+        유통기한========================================================
         <LoggedInNavigation.Screen
           name="ShelfLifeCheckScreen"
           component={ShelfLifeCheckScreen}
@@ -281,7 +281,7 @@ export default () => {
           }}
         />
 
-        {/* 캘린더======================================================== */}
+        캘린더========================================================
         <LoggedInNavigation.Screen
           name="CalendarAddScreen"
           component={CalendarAddScreen}
@@ -340,7 +340,7 @@ export default () => {
           }}
         />
 
-        {/* 체크리스트======================================================== */}
+        체크리스트========================================================
         <LoggedInNavigation.Screen
           name="ChecklistAddScreen"
           component={ChecklistAddScreen}
@@ -374,7 +374,7 @@ export default () => {
           }}
         />
 
-        {/* 업무일지======================================================== */}
+        업무일지========================================================
         <LoggedInNavigation.Screen
           name="ChecklistShareMainScreen"
           component={ChecklistShareMainScreen}
@@ -405,7 +405,7 @@ export default () => {
           })}
         />
 
-        {/* 교육컨텐츠======================================================== */}
+        교육컨텐츠========================================================
         <LoggedInNavigation.Screen
           name="MyCuMonthlyListScreen"
           component={MyCuMonthlyListScreen}
@@ -455,7 +455,7 @@ export default () => {
           }}
         />
 
-        {/* 마이페이지======================================================== */}
+        마이페이지========================================================
         <LoggedInNavigation.Screen
           name="MyPageAlarmSetScreen"
           component={MyPageAlarmSetScreen}
@@ -529,7 +529,7 @@ export default () => {
           }}
         />
 
-        {/* 조기경보======================================================== */}
+        조기경보========================================================
         <LoggedInNavigation.Screen
           name="HealthCertificateTypeScreen"
           component={HealthCertificateTypeScreen}
@@ -593,7 +593,7 @@ export default () => {
             headerTitle: '위생교육증 수정',
             title: '조기경보시스템 업체 수정',
           }}
-        />
+        /> */}
       </LoggedInNavigation.Navigator>
       {alert.visible && <RootModal alert={alert} />}
     </React.Fragment>

@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
-import firebase from 'react-native-firebase';
+// import firebase from 'react-native-firebase';
 
 import CloseBtn from './Header/CloseBtn';
 import LoggedInNavigation from '../navigations/LoggedInNavigation';
@@ -36,9 +36,9 @@ export default () => {
             navigationRef.current.getCurrentOptions().title,
             '===================',
           );
-          firebase
-            .analytics()
-            .setCurrentScreen(navigationRef.current.getCurrentOptions().title);
+          //   firebase
+          //     .analytics()
+          //     .setCurrentScreen(navigationRef.current.getCurrentOptions().title);
         } else {
           if (
             navigationRef.current.getCurrentRoute().name !==
