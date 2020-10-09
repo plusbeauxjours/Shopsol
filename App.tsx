@@ -1,18 +1,20 @@
 import React from 'react';
-import styled from 'styled-components/native';
 
-const View = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {RootSiblingParent} from 'react-native-root-siblings';
 
-const Text = styled.Text``;
+import store, {persistor} from './src/redux/store';
+import RootContainer from '~/components/RootContainer';
 
 export default function App() {
   return (
-    <View>
-      <Text>Shopsol</Text>
-    </View>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <RootSiblingParent>
+          <RootContainer />
+        </RootSiblingParent>
+      </PersistGate>
+    </Provider>
   );
 }
