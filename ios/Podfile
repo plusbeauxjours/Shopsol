@@ -6,7 +6,7 @@ platform :ios, '10.0'
 install! 'cocoapods',
          :deterministic_uuids => false
          
-target 'CUwesop' do
+target 'ShopsolWesop' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
