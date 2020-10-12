@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ShopsolWesopTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ShopsolWesopTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -19,6 +20,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		81C08B1E7FF221F7E86DB441 /* libPods-ShopsolWesop-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 068338B18DE23579873C76A6 /* libPods-ShopsolWesop-tvOSTests.a */; };
 		A90237CD1CF8AB3717509BC6 /* libPods-ShopsolWesop-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1009583CBA9FD6E7ED6799E0 /* libPods-ShopsolWesop-tvOS.a */; };
+		BEFBC2C3253497E9009CD5E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEFBC2C2253497E9009CD5E6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,7 @@
 		7FC789AD0CB0060E4899190F /* Pods-ShopsolWesop-ShopsolWesopTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopsolWesop-ShopsolWesopTests.release.xcconfig"; path = "Target Support Files/Pods-ShopsolWesop-ShopsolWesopTests/Pods-ShopsolWesop-ShopsolWesopTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ShopsolWesop/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		890A231A69A4B775BFE7D9A1 /* Pods-ShopsolWesop-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopsolWesop-tvOS.release.xcconfig"; path = "Target Support Files/Pods-ShopsolWesop-tvOS/Pods-ShopsolWesop-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		BEFBC2C2253497E9009CD5E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ShopsolWesop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D76C840F5CA28FF512349D09 /* Pods-ShopsolWesop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopsolWesop.debug.xcconfig"; path = "Target Support Files/Pods-ShopsolWesop/Pods-ShopsolWesop.debug.xcconfig"; sourceTree = "<group>"; };
 		E2440D453E617B6A3DD95363 /* Pods-ShopsolWesop-ShopsolWesopTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopsolWesop-ShopsolWesopTests.debug.xcconfig"; path = "Target Support Files/Pods-ShopsolWesop-ShopsolWesopTests/Pods-ShopsolWesop-ShopsolWesopTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E765980F126384C006C44FDA /* libPods-ShopsolWesop-ShopsolWesopTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShopsolWesop-ShopsolWesopTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +129,7 @@
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				BEFBC2C2253497E9009CD5E6 /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -147,7 +151,6 @@
 				2E2A2CAE363F276E87D47C7D /* Pods-ShopsolWesop-tvOSTests.debug.xcconfig */,
 				64E5D28C89EA5E775BED41B2 /* Pods-ShopsolWesop-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -342,6 +345,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				BEFBC2C3253497E9009CD5E6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +547,20 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShopsolWesop/Pods-ShopsolWesop-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B4376C9B5F3E4B0B87EFC251 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
+		};
 		CD1634681F3D67C7FBCC2553 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -624,20 +642,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		B4376C9B5F3E4B0B87EFC251 /* Upload Debug Symbols to Sentry */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			name = "Upload Debug Symbols to Sentry";
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
 /* End PBXShellScriptBuildPhase section */
 

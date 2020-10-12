@@ -165,7 +165,6 @@ export default () => {
       const {data} = await api.getSMS({
         PHONENUMBER: mobileNo,
       });
-      console.log(data);
       if (data.message == 'SUCCESS') {
         alertModal('인증번호를 발송하였습니다.');
       }

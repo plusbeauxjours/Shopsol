@@ -3,6 +3,8 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+@import Firebase;
+#import "RNFirebaseNotifications.h"
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -43,6 +45,9 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [FIRApp configure];
+  [RNFirebaseNotifications configure];
   return YES;
 }
 
@@ -54,5 +59,10 @@ static void InitializeFlipper(UIApplication *application) {
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  [[RNFirebaseNotifications instance] didReceiveLocalNotification:notification];
+}
+
 
 @end
