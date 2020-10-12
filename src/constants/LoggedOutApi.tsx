@@ -5,7 +5,7 @@ const callApi = async (method: string, path: string, data?: any) => {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://133.186.209.113:3003/api';
+  const baseUrl = 'http://133.186.210.223:3003/api';
   const fullUrl = `${baseUrl}${path}`;
   if (method === 'get' || method === 'delete') {
     return axios[method](fullUrl, {headers});
@@ -14,13 +14,41 @@ const callApi = async (method: string, path: string, data?: any) => {
   }
 };
 
-export default {
-  logIn: (data: any) => callApi('post', '/auth/signin/', data),
-  signUp: (data: any) => callApi('post', '/auth/signup/', data),
-  findPwd: (data: any) => callApi('post', '/auth/findPwd/', data),
-  checkSMS: (data: any) => callApi('post', '/auth/checksms/', data),
+const oldApi = async (
+  method: string,
+  path: string,
+  data?: any,
+  isImg?: boolean,
+) => {
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
 
-  checkApp: (data: any) => callApi('post', '/auth/checkApp/', data), // SelectStoreScreen, HomeScreen, StartScreen
-  getSMS: (data: any) => callApi('post', '/auth/getsms/', data), //MyPagePasswordSetScreen, FindPasswordScreen, VerificationScreen
-  help: () => callApi('post', '/auth/help/'), // MyPageAppointmentScreen, StartScreen
+  const baseUrl = 'http://133.186.210.223:80/api/v2';
+  const fullUrl = `${baseUrl}${path}`;
+
+  if (method === 'get' || method === 'delete') {
+    console.log(fullUrl);
+    return axios[method](fullUrl, {headers});
+  } else {
+    if (isImg) {
+      console.log(fullUrl, data);
+      return axios[method](fullUrl, data, {headers});
+    } else {
+      console.log(fullUrl, data);
+      return axios[method](fullUrl, data, {headers});
+    }
+  }
+};
+
+export default {
+  signUp: (data: any) => oldApi('post', '/Auth/signup3/', data),
+  findPwd: (data: any) => oldApi('post', '/Member/changepwd3/', data),
+  getSMS: (data: any) => oldApi('post', '/Auth/get_appSMS/', data),
+  checkSMS: (data: any) => oldApi('post', '/Auth/checkSMS/', data),
+  help: () => callApi('post', '/auth/help/'),
+  help2: () => callApi('get', '/auth/gethelpinfo2/'),
+  logIn: (data: any) => oldApi('post', '/Auth/signin2/', data),
+  checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
 };

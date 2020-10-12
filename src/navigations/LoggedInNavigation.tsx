@@ -97,7 +97,7 @@ export default () => {
         initialRouteName={'SelectStoreScreen'}
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#AACE36',
+            backgroundColor: '#e85356',
             borderColor: '#fff',
             borderWidth: 0,
           },

@@ -16,7 +16,7 @@ const SubmitButton = styled(Ripple)<IIsBefore>`
   height: 60px;
   align-items: center;
   justify-content: center;
-  background-color: #642a8c;
+  background-color: #e85356;
 `;
 
 const NoSubmitButton = styled(SubmitButton)`
@@ -34,7 +34,7 @@ export default ({onPressIn = null, text, onPress = null, isRegisted}) => {
       <SubmitButton
         onPressIn={onPressIn}
         onPress={onPress}
-        rippleColor={'#ac52eb'}
+        rippleColor={'#e39a9c'}
         rippleDuration={600}
         rippleSize={1200}
         rippleOpacity={0.45}>

@@ -19,9 +19,9 @@ const SubmitButton = styled(Ripple)<IIsWhiteBack>`
   justify-content: center;
   border-radius: 30px;
   background-color: ${(props) =>
-    props.isWhiteBack ? 'transparent' : '#642a8c'};
+    props.isWhiteBack ? 'transparent' : '#e85356'};
   border-width: ${(props) => (props.isWhiteBack ? '1' : '0')};
-  border-color: ${(props) => (props.isWhiteBack ? '#642a8c' : 'transparent')};
+  border-color: ${(props) => (props.isWhiteBack ? '#e85356' : 'transparent')};
 `;
 
 const NoSubmitButton = styled(SubmitButton)`
@@ -39,7 +39,7 @@ const NoSubmitButtonText = styled.Text<IIsWhiteBack>`
 
 const SubmitButtonText = styled.Text<IIsWhiteBack>`
   font-size: 16px;
-  color: ${(props) => (props.isWhiteBack ? '#642a8c' : 'white')};
+  color: ${(props) => (props.isWhiteBack ? '#e85356' : 'white')};
 `;
 
 export default ({
@@ -57,7 +57,7 @@ export default ({
         isWhiteBack={isWhiteBack}
         onPressIn={onPressIn}
         onPress={onPress}
-        rippleColor={'#ac52eb'}
+        rippleColor={'#e39a9c'}
         rippleDuration={600}
         rippleSize={1200}
         rippleContainerBorderRadius={30}

@@ -1,0 +1,2 @@
+import FindPasswordScreenContainer from "./FindPasswordScreenContainer"
+export default FindPasswordScreenContainer

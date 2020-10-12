@@ -3,13 +3,14 @@ import {NativeModules} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import StartScreen from '../screens/LoggedOutScreen/StartScreen';
-// import LogInScreen from '../screens/LoggedOutScreen/LogInScreen';
-// import SignupScreen from '../screens/LoggedOutScreen/SignupScreen';
-// import FindPasswordScreen from '../screens/LoggedOutScreen/FindPasswordScreen';
-// import VerificationScreen from '../screens/LoggedOutScreen/VerificationScreen';
+import LogInScreen from '../screens/LoggedOutScreen/LogInScreen';
+import SignupScreen from '../screens/LoggedOutScreen/SignupScreen';
+import FindPasswordScreen from '../screens/LoggedOutScreen/FindPasswordScreen';
+import VerificationScreen from '../screens/LoggedOutScreen/VerificationScreen';
 import BackBtn from '../components/Header/BackBtn';
 import {useSelector} from 'react-redux';
 import RootModal from '../components/RootModal';
+import utils from '../constants/utils';
 
 const LoggedOutNavigation = createStackNavigator();
 
@@ -17,13 +18,15 @@ export default () => {
   const alert = useSelector((state: any) => state.alertReducer);
   const SharedStorage = NativeModules.SharedStorage;
   useEffect(() => {
-    SharedStorage.set(
-      JSON.stringify({
-        WIDGET_TEXT: '로그아웃 되어있습니다. 탭하여 로그인하세요.',
-        WIDGET_STORE: null,
-        WIDGET_STATUS: '0',
-      }),
-    );
+    if (utils.isAndroid()) {
+      SharedStorage.set(
+        JSON.stringify({
+          WIDGET_TEXT: '로그아웃 되어있습니다. 탭하여 로그인하세요.',
+          WIDGET_STORE: null,
+          WIDGET_STATUS: '0',
+        }),
+      );
+    }
   }, []);
 
   return (
@@ -32,7 +35,7 @@ export default () => {
         headerMode={'screen'}
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#AACE36',
+            backgroundColor: '#e85356',
             borderColor: '#fff',
             borderWidth: 0,
           },
@@ -48,7 +51,7 @@ export default () => {
             title: '시작 페이지',
           }}
         />
-        {/* <LoggedOutNavigation.Screen
+        <LoggedOutNavigation.Screen
           name="LogInScreen"
           component={LogInScreen}
           options={{
@@ -83,7 +86,7 @@ export default () => {
             title: '비밀번호 찾기',
             headerTintColor: '#fff',
           }}
-        /> */}
+        />
       </LoggedOutNavigation.Navigator>
       {alert.visible && <RootModal alert={alert} />}
     </React.Fragment>

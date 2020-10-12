@@ -34,7 +34,7 @@ const Box = styled.View`
 
 const Title = styled.Text`
   font-size: 24px;
-  color: #642a8c;
+  color: #e85356;
   margin-bottom: 30px;
 `;
 
@@ -51,7 +51,7 @@ const Attach = styled.Text`
 
 const WithHelpBtn = styled(Ripple)<IColor>`
   height: 60px;
-  width: ${(props) => (props.color === '#642A8C' ? wp('80%') : wp('20%'))}px;
+  width: ${(props) => (props.color === '#e85356' ? wp('80%') : wp('20%'))}px;
   align-items: center;
   justify-content: center;
   background-color: ${(props) => props.color};
@@ -68,11 +68,11 @@ const HalfBtnLeft = styled(Ripple)<IWarning>`
 
 const HalfTextLeft = styled.Text`
   font-size: 18px;
-  color: #642a8c;
+  color: #e85356;
 `;
 
 const HalfBtnRight = styled(HalfBtnLeft)<IWarning>`
-  background-color: ${(props) => (props.warning == 'yes' ? '#fff' : '#642A8C')};
+  background-color: ${(props) => (props.warning == 'yes' ? '#fff' : '#e85356')};
   border-left-width: ${(props) => (props.warning == 'yes' ? '1px' : 0)};
 `;
 
@@ -86,7 +86,7 @@ const BarBtn = styled(Ripple)`
   width: ${wp('100%')}px;
   align-items: center;
   justify-content: center;
-  background-color: #642a8c;
+  background-color: #e85356;
 `;
 const WhiteText = styled.Text`
   font-size: 16px;
@@ -136,18 +136,18 @@ export default ({alert}) => {
           </BackGround>
           <Row>
             <WithHelpBtn
-              color={'#642A8C'}
+              color={'#fff'}
               onPress={() => onOKPress()}
-              rippleColor={'#ac52eb'}
+              rippleColor={'#666'}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.45}>
               <WhiteText>{alert.okButtonText}</WhiteText>
             </WithHelpBtn>
             <WithHelpBtn
-              color={'#AACE36'}
+              color={'#e85356'}
               onPress={() => onPressExplain()}
-              rippleColor={'#aed685'}
+              rippleColor={'##e39a9c'}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.1}>
@@ -166,7 +166,7 @@ export default ({alert}) => {
               <HalfBtnLeft
                 warning={alert.warning}
                 onPress={() => onCancelPress()}
-                rippleColor={'#ac52eb'}
+                rippleColor={'#e39a9c'}
                 rippleSize={1200}
                 rippleDuration={600}
                 rippleOpacity={0.45}>
@@ -187,7 +187,7 @@ export default ({alert}) => {
           ) : (
             <BarBtn
               onPress={() => onOKPress()}
-              rippleColor={'#ac52eb'}
+              rippleColor={'#e39a9c'}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.45}>

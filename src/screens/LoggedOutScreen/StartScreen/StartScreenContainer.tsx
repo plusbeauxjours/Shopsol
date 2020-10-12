@@ -17,8 +17,8 @@ export default () => {
   const checkVersion = async () => {
     try {
       const {data} = await api.checkApp({
-        VERSION: utils.appVersion,
-        PLATFORM: DEVICE_PLATFORM,
+        appinfoversion: utils.appVersion,
+        Dplatform: DEVICE_PLATFORM,
       });
       if (data.RESULT_CODE == '1') {
         alertModal(
@@ -34,12 +34,12 @@ export default () => {
   const exitandroid = () => {
     if (Platform.OS === 'ios') {
       Linking.openURL(
-        'https://apps.apple.com/kr/app/%ED%87%B4%EA%B7%BC%ED%95%B4%EC%94%A8%EC%9C%A0-%EC%9A%B0%EB%A6%AC%EB%A7%A4%EC%9E%A5-%ED%95%84%EC%88%98%ED%92%88/id1503486454',
+        'https://itunes.apple.com/kr/app/샵솔/id1408364175?l=ko&ls=1&mt=8',
       );
     } else {
       BackHandler.exitApp();
       Linking.openURL(
-        'https://play.google.com/store/apps/details?id=com.wesop.cuhr',
+        'https://play.google.com/store/apps/details?id=com.wesop.appshopsol',
       );
     }
   };

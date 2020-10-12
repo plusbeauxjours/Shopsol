@@ -79,7 +79,7 @@ export default () => {
     <BackGround>
       <ScrollView showsVerticalScrollIndicator={false}>
         <KakaoBox
-          onPress={() => Linking.openURL('http://pf.kakao.com/_kRynxb/chat')}>
+          onPress={() => Linking.openURL('http://pf.kakao.com/_tAUxlj/chat')}>
           <Row>
             <Image
               source={require('../../../../assets/images/kakaoBtn.png')}
