@@ -29,7 +29,7 @@ const KakaoText = styled.Text`
 
 const AdviceText = styled.Text`
   font-size: 16px;
-  color: #642a8c;
+  color: #e85356;
 `;
 
 const WhiteSpace = styled.View`

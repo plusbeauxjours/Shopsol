@@ -19,6 +19,7 @@ export default () => {
   const [isCountDownStarted, setIsCountDownStarted] = useState<boolean>(false);
   const [hasCheckTimeOut, setHasCheckTimeOut] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [policyCheck, setPolicyCheck] = useState<boolean>(false);
   const [hasCheckedVerifyCode, setHasCheckedVerifyCode] = useState<boolean>(
     false,
   );
@@ -125,6 +126,21 @@ export default () => {
     navigation.navigate('SignupScreen', {mobileNo, verifyCode});
   };
 
+  const togglePolicyCheck = () => {
+    if (policyCheck) {
+      setMobileNo('');
+      setVerifyCode('');
+      setCountdown('');
+      setIsCountDownStarted(false);
+      setHasCheckTimeOut(false);
+      setIsVerified(false);
+      setPolicyCheck(false);
+      setHasCheckedVerifyCode(false);
+    } else {
+      setPolicyCheck(true);
+    }
+  };
+
   useEffect(() => {
     return () => {
       clearInterval(timer);
@@ -145,6 +161,8 @@ export default () => {
       hasCheckedVerifyCode={hasCheckedVerifyCode}
       hasCheckTimeOut={hasCheckTimeOut}
       isVerified={isVerified}
+      policyCheck={policyCheck}
+      togglePolicyCheck={togglePolicyCheck}
     />
   );
 };

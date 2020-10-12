@@ -21,7 +21,7 @@ export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
         : 'ios-chevron-forward-outline'
     }
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -31,7 +31,7 @@ export const BackIcon: React.FC<IProps> = ({size, color}) => (
       utils.isAndroid ? 'md-chevron-back-outline' : 'ios-chevron-back-outline'
     }
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -39,7 +39,7 @@ export const CartIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-cart-outline' : 'ios-cart-outline'}
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -47,19 +47,19 @@ export const HomeIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-home-outline' : 'ios-home-outline'}
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
 export const CloseIcon: React.FC<IProps> = ({size, color}) => (
-  <Ionicons name={'close-sharp'} size={size ?? 14} color={color ?? '#642A8C'} />
+  <Ionicons name={'close-sharp'} size={size ?? 14} color={color ?? '#e85356'} />
 );
 
 export const LocationIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-location' : 'ios-location'}
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -67,7 +67,7 @@ export const LogoutIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'log-out-outline'}
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -75,7 +75,7 @@ export const CheckBoxIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'checkbox-outline'}
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -83,7 +83,7 @@ export const CheckMarkIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-checkmark' : 'ios-checkmark;'}
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -91,7 +91,7 @@ export const RadioBtnOnIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'radio-button-on-outline'}
     size={size ?? 14}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -116,7 +116,7 @@ export const AddCircleIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name="add-circle-outline"
     size={size ?? 30}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -126,7 +126,7 @@ export const PersonCircleIcon: React.FC<IProps> = ({size, color}) => (
       utils.isAndroid ? 'md-person-circle-outline' : 'ios-person-circle-outline'
     }
     size={size ?? 17}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -174,7 +174,7 @@ export const QrCodeIcon: React.FC<IProps> = ({size, color}) => (
   <MaterialCommunityIcons
     name="qrcode-scan"
     size={size ?? 36}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -190,7 +190,7 @@ export const CameraIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'camera-outline'}
     size={size ?? 30}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -206,7 +206,7 @@ export const PersonAddIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'person-add-outline'}
     size={size ?? 22}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -222,14 +222,14 @@ export const SearchIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'search-outline'}
     size={size ?? 28}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 export const CreateIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'create-outline'}
     size={size ?? 28}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
@@ -273,7 +273,7 @@ export const PictureIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'image-outline'}
     size={size ?? 40}
-    color={color ?? '#642A8C'}
+    color={color ?? '#e85356'}
   />
 );
 
