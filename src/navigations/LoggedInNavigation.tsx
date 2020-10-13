@@ -89,7 +89,7 @@ import ShelfLifeCheckHeader from '../components/Header/ShelfLifeCheckHeader';
 
 const LoggedInNavigation = createStackNavigator();
 export default () => {
-  const {visible} = useSelector((state: any) => state.alertReducer);
+  const alert = useSelector((state: any) => state.alertReducer);
   return (
     <React.Fragment>
       <LoggedInNavigation.Navigator
@@ -596,7 +596,7 @@ export default () => {
           }}
         /> */}
       </LoggedInNavigation.Navigator>
-      {visible && <RootModal alert={alert} />}
+      {alert.visible && <RootModal alert={alert} />}
     </React.Fragment>
   );
 };

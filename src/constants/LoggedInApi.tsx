@@ -7,9 +7,6 @@ const callApi = async (
   data?: any,
   isImg?: boolean,
 ) => {
-  const {
-    userReducer: {MEMBER_SEQ},
-  } = store.getState();
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -31,9 +28,6 @@ const oldApi = async (
   data?: any,
   isImg?: boolean,
 ) => {
-  const {
-    userReducer: {MEMBER_SEQ},
-  } = store.getState();
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -50,9 +44,6 @@ const oldApi = async (
 };
 
 const noPortApi = async (method: string, path: string, data?: any) => {
-  const {
-    userReducer: {MEMBER_SEQ},
-  } = store.getState();
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -69,12 +60,12 @@ const noPortApi = async (method: string, path: string, data?: any) => {
 };
 
 export default {
-  checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
-  storeList: (STORE: string) =>
-    oldApi('get', `/Store/store_list?STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`),
   getHelpInfo: () => callApi('get', '/auth/gethelpinfo/'),
-  addStore: (data: any) => oldApi('post', '/Store/insert22', data),
   help: () => callApi('post', '/auth/help/'), // MyPageAppointmentScreen, StartScreen
+  checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
+  storeList: (STORE: string, MEMBER_SEQ: string) =>
+    oldApi('get', `/Store/store_list?STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`),
+  addStore: (data: any) => oldApi('post', '/Store/insert22', data),
   // getSMS: (data: any) => callApi('post', '/auth/getsms/', data), //MyPagePasswordSetScreen, FindPasswordScreen, VerificationScreen
   // updatePush: (data: any) => callApi('post', '/auth/updatePush/', data),
   // getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),

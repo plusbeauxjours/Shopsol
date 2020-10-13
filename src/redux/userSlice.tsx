@@ -120,10 +120,10 @@ export const userLogout = () => async (dispatch) => {
 
 export const getSTORELIST_DATA = () => async (dispatch, getState) => {
   const {
-    userReducer: {STORE},
+    userReducer: {STORE, MEMBER_SEQ},
   } = getState();
   try {
-    const {data} = await api.storeList(STORE);
+    const {data} = await api.storeList(STORE, MEMBER_SEQ);
     if (data.message === 'SUCCESS') {
       dispatch(setSTORELIST_DATA(data.result));
     }

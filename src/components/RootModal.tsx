@@ -26,7 +26,7 @@ const WhiteBox = styled.View`
 `;
 
 const Box = styled.View`
-  height: 100%;
+  flex: 1;
   align-items: center;
   justify-content: center;
   padding: 0 20px;
@@ -43,15 +43,9 @@ const Content = styled.Text`
   color: #707070;
 `;
 
-const Attach = styled.Text`
-  margin-top: 20px;
-  font-size: 12px;
-  color: #777;
-`;
-
 const WithHelpBtn = styled(Ripple)<IColor>`
   height: 60px;
-  width: ${(props) => (props.color === '#e85356' ? wp('80%') : wp('20%'))}px;
+  width: ${(props) => (props.color === '#e85356' ? wp('20%') : wp('80%'))}px;
   align-items: center;
   justify-content: center;
   background-color: ${(props) => props.color};
@@ -105,7 +99,6 @@ export default ({alert}) => {
     <Box>
       <Title>{alert?.title}</Title>
       <Content>{alert?.content}</Content>
-      <Attach>{alert?.attach}</Attach>
     </Box>
   );
 
@@ -142,7 +135,7 @@ export default ({alert}) => {
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.45}>
-              <WhiteText>{alert.okButtonText}</WhiteText>
+              <HalfTextLeft>{alert.okButtonText}</HalfTextLeft>
             </WithHelpBtn>
             <WithHelpBtn
               color={'#e85356'}
