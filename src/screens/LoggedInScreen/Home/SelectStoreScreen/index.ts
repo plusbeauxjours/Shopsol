@@ -1,0 +1,2 @@
+import SelectStoreScreenContainer from "./SelectStoreScreenContainer"
+export default SelectStoreScreenContainer

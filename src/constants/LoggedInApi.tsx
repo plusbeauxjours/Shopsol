@@ -47,7 +47,6 @@ const oldApi = async (
   const {
     userReducer: {MEMBER_SEQ},
   } = store.getState();
-
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -102,9 +101,11 @@ const noPortApi = async (method: string, path: string, data?: any) => {
 };
 
 export default {
-  checkApp: (data: any) => callApi('post', '/auth/checkApp/', data), // SelectStoreScreen, HomeScreen, StartScreen
-  getSMS: (data: any) => callApi('post', '/auth/getsms/', data), //MyPagePasswordSetScreen, FindPasswordScreen, VerificationScreen
-  help: () => callApi('post', '/auth/help/'), // MyPageAppointmentScreen, StartScreen
+  checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
+  storeList: (STORE: string) =>
+    oldApi('get', `/Store/store_list?STORE=${STORE}&`),
+  // getSMS: (data: any) => callApi('post', '/auth/getsms/', data), //MyPagePasswordSetScreen, FindPasswordScreen, VerificationScreen
+  // help: () => callApi('post', '/auth/help/'), // MyPageAppointmentScreen, StartScreen
   // updatePush: (data: any) => callApi('post', '/auth/updatePush/', data),
   // getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),
   // getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
@@ -128,8 +129,7 @@ export default {
   // attendanceWork: (data: any) => callApi('post', '/auth/attendancework/', data),
   // attendanceOffWork: (data: any) =>
   //   callApi('post', '/auth/attendanceoffwork/', data),
-  // storeList: (STORE: string) =>
-  //   callApi('get', `/auth/storelist?STORE=${STORE}&`),
+
   // updateStore: (data: any) => callApi('post', '/auth/updatestore', data),
   // cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
   // rejectJoin: (data: any) => callApi('post', '/auth/reject_join/', data),

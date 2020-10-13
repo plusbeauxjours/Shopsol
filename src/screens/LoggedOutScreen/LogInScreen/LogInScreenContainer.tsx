@@ -48,22 +48,37 @@ export default () => {
       const {data} = await api.logIn({
         MobileNo: mobileNo,
         PASSWORD: password,
-        Device_Version: DEVICE_SYSTEM_VERSION,
+        Device_Version: DEVICE_SYSTEM_VERSION || '',
         Device_Platform: DEVICE_PLATFORM,
-        Device_Model: DEVICE_MODEL,
+        Device_Model: DEVICE_MODEL || '',
         App_Version: utils.appVersion,
         USERID: PUSH_TOKEN,
         push: PUSH_TOKEN,
       });
-      switch (data.RESULT_CODE) {
-        case '0':
-          dispatch(setUSER(data.RESULT_DATA));
+      switch (data.message) {
+        case 'SUCCESS':
+          dispatch(setUSER(data.result));
           dispatch(setMOBILE_NO(mobileNo));
           dispatch(userLogin());
-          return navigation.navigate('LoggedInNavigation');
-        case '1':
+          return navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'LoggedInNavigation',
+                state: {
+                  routes: [
+                    {
+                      name: 'SelectStoreScreen',
+                      params: {MEMBER_SEQ: data?.result.MEMBER_SEQ},
+                    },
+                  ],
+                },
+              },
+            ],
+          });
+        case 'FAIL':
           return alertModal('사용자 정보가 맞지 않습니다.');
-        case '2':
+        case 'MEMBER_ERROR':
           return alertModal('가입된 계정이 없습니다. 회원가입을 진행해주세요.');
         default:
           break;

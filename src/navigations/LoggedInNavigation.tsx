@@ -4,10 +4,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // 직원관리 ========================================================
 import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
+import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen';
 // import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
 // import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
 // import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
-// import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen';
 // import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
 // import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
 
@@ -109,6 +109,16 @@ export default () => {
           headerLeftContainerStyle: {marginLeft: 10},
         }}>
         <LoggedInNavigation.Screen
+          name="SelectStoreScreen"
+          component={SelectStoreScreen}
+          options={{
+            headerLeft: () => <SettingBtn />,
+            headerTitle: '점포 선택',
+            title: '사업장(점포) 목록',
+            headerRight: () => <LogOutBtn />,
+          }}
+        />
+        <LoggedInNavigation.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{
@@ -140,16 +150,6 @@ export default () => {
           options={{
             headerTitle: '점포 검색',
             title: '사업장(점포) 검색',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="SelectStoreScreen"
-          component={SelectStoreScreen}
-          options={{
-            headerLeft: () => <SettingBtn />,
-            headerTitle: '점포 선택',
-            title: '사업장(점포) 목록',
-            headerRight: () => <LogOutBtn />,
           }}
         />
         <LoggedInNavigation.Screen

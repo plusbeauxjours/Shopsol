@@ -8,7 +8,7 @@ import Ripple from 'react-native-material-ripple';
 
 interface IIsWhiteBack {
   isWhiteBack: boolean;
-  isInSection: boolean;
+  isInSection?: boolean;
 }
 
 const SubmitButton = styled(Ripple)<IIsWhiteBack>`
@@ -61,7 +61,7 @@ export default ({
         rippleDuration={600}
         rippleSize={1200}
         rippleContainerBorderRadius={30}
-        rippleOpacity={isWhiteBack ? 0.1 : 0.45}>
+        rippleOpacity={0.45}>
         <SubmitButtonText isWhiteBack={isWhiteBack}>{text}</SubmitButtonText>
       </SubmitButton>
     );
