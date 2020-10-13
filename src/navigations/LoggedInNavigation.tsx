@@ -5,9 +5,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 // 직원관리 ========================================================
 import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
 import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen';
-// import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
+import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
+import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
 // import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
-// import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
 // import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
 // import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
 
@@ -113,8 +113,8 @@ export default () => {
           component={SelectStoreScreen}
           options={{
             headerLeft: () => <SettingBtn />,
-            headerTitle: '점포 선택',
-            title: '사업장(점포) 목록',
+            headerTitle: '사업장 선택',
+            title: '사업장 목록',
             headerRight: () => <LogOutBtn />,
           }}
         />
@@ -126,30 +126,31 @@ export default () => {
             title: '메인 페이지',
           }}
         />
-        {/* 
-        직원관리========================================================
         <LoggedInNavigation.Screen
           name="AddStoreScreen"
           component={AddStoreScreen}
           options={{
-            headerTitle: '점포 등록',
-            title: '사업장(점포) 등록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="UpdateStoreScreen"
-          component={UpdateStoreScreen}
-          options={{
-            headerTitle: '점포 수정',
-            title: '사업장(점포) 수정',
+            headerTitle: '사업장 등록',
+            title: '사업장 등록',
           }}
         />
         <LoggedInNavigation.Screen
           name="SearchAddressScreen"
           component={SearchAddressScreen}
           options={{
-            headerTitle: '점포 검색',
-            title: '사업장(점포) 검색',
+            headerTitle: '사업장 검색',
+            title: '사업장 검색',
+          }}
+        />
+        {/* 
+        직원관리========================================================
+  
+        <LoggedInNavigation.Screen
+          name="UpdateStoreScreen"
+          component={UpdateStoreScreen}
+          options={{
+            headerTitle: '점포 수정',
+            title: '사업장(점포) 수정',
           }}
         />
         <LoggedInNavigation.Screen

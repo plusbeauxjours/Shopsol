@@ -1,0 +1,2 @@
+import AddStoreScreenContainer from "./AddStoreScreenContainer"
+export default AddStoreScreenContainer

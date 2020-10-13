@@ -15,7 +15,7 @@ export default () => {
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
   const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
-  const {MEMBER_SEQ, STORE, STORELIST_DATA, DEVICE_PLATFORM} = useSelector(
+  const {STORE, STORELIST_DATA, DEVICE_PLATFORM} = useSelector(
     (state: any) => state.userReducer,
   );
   const [refreshing, setRefreshing] = useState<boolean>(false);

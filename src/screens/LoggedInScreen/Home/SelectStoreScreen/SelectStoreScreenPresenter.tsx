@@ -103,7 +103,7 @@ export default ({
       if (STORE == '1') {
         return (
           <EmptyListWrapper>
-            <EmptyListText>점포를 등록하시면 입력하신 주소로</EmptyListText>
+            <EmptyListText>사업장을 등록하시면 입력하신 주소로</EmptyListText>
             <EmptyListText>
               출퇴근이 가능한 QR키트를 송부해 드립니다.
             </EmptyListText>
@@ -113,13 +113,15 @@ export default ({
       } else {
         return (
           <EmptyListWrapper>
-            <EmptyListTitle>합류된 점포가 없습니다!</EmptyListTitle>
-            <EmptyListText>점주님에게 직원초대를 요청하세요</EmptyListText>
+            <EmptyListTitle>합류된 사업장이 없습니다!</EmptyListTitle>
             <EmptyListText>
-              그 후 로그인하여 생성된 매장을 확인하게 되면
+              점장 또는 매니저가 직원을 초대할 수 있습니다.
             </EmptyListText>
             <EmptyListText>
-              점주님이 직원합류를 완료할 수 있습니다.
+              초대 후 재로그인하여 직원이 사업장을 확인하게 되면
+            </EmptyListText>
+            <EmptyListText>
+              관리자가 직원합류를 완료할 수 있습니다.
             </EmptyListText>
           </EmptyListWrapper>
         );
@@ -136,7 +138,7 @@ export default ({
           rippleSize={1200}
           rippleContainerBorderRadius={30}
           rippleOpacity={0.45}>
-          <AddStoreButtonText>점포 등록하기</AddStoreButtonText>
+          <AddStoreButtonText>사업장 등록하기</AddStoreButtonText>
           <AddCircleIcon />
         </AddStoreButton>
       )}

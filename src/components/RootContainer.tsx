@@ -91,7 +91,7 @@ export default () => {
             title: '도움말 전체보기',
             headerRight: () => <CloseBtn />,
             headerStyle: {
-              backgroundColor: '#AACE36',
+              backgroundColor: '#e85356',
               borderColor: '#fff',
               borderWidth: 0,
             },

@@ -10,31 +10,18 @@ const callApi = async (
   const {
     userReducer: {MEMBER_SEQ},
   } = store.getState();
-
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-
   const baseUrl = 'http://133.186.210.223:3003/api';
   const fullUrl = `${baseUrl}${path}`;
+  console.log(method, fullUrl, data, {headers});
 
   if (method === 'get' || method === 'delete') {
-    console.log(
-      method,
-      `${fullUrl}MEMBER_SEQ=${MEMBER_SEQ}`,
-      'MEMBER_SEQ:',
-      MEMBER_SEQ,
-    );
-    return axios[method](`${fullUrl}MEMBER_SEQ=${MEMBER_SEQ}`, {headers});
+    return axios[method](fullUrl, {headers});
   } else {
-    if (isImg) {
-      console.log(method, fullUrl, data, {headers});
-      return axios[method](fullUrl, data, {headers});
-    } else {
-      console.log(method, fullUrl, {...data, MEMBER_SEQ}, {headers});
-      return axios[method](fullUrl, {...data, MEMBER_SEQ}, {headers});
-    }
+    return axios[method](fullUrl, data, {headers});
   }
 };
 
@@ -51,26 +38,14 @@ const oldApi = async (
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-
   const baseUrl = 'http://133.186.210.223:80/api/v2';
   const fullUrl = `${baseUrl}${path}`;
+  console.log(method, fullUrl, data, {headers});
 
   if (method === 'get' || method === 'delete') {
-    console.log(
-      method,
-      `${fullUrl}MEMBER_SEQ=${MEMBER_SEQ}`,
-      'MEMBER_SEQ:',
-      MEMBER_SEQ,
-    );
-    return axios[method](`${fullUrl}MEMBER_SEQ=${MEMBER_SEQ}`, {headers});
+    return axios[method](fullUrl, {headers});
   } else {
-    if (isImg) {
-      console.log(method, fullUrl, data, {headers});
-      return axios[method](fullUrl, data, {headers});
-    } else {
-      console.log(method, fullUrl, {...data, MEMBER_SEQ}, {headers});
-      return axios[method](fullUrl, {...data, MEMBER_SEQ}, {headers});
-    }
+    return axios[method](fullUrl, data, {headers});
   }
 };
 
@@ -78,34 +53,29 @@ const noPortApi = async (method: string, path: string, data?: any) => {
   const {
     userReducer: {MEMBER_SEQ},
   } = store.getState();
-
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-
   const baseUrl = 'http://133.186.210.223/api/v2';
   const fullUrl = `${baseUrl}${path}`;
+  console.log(method, fullUrl, data, {headers});
+
   if (method === 'get' || method === 'delete') {
-    console.log(
-      method,
-      `${fullUrl}MEMBER_SEQ=${MEMBER_SEQ}`,
-      'MEMBER_SEQ:',
-      MEMBER_SEQ,
-    );
-    return axios[method](`${fullUrl}MEMBER_SEQ=${MEMBER_SEQ}`, {headers});
+    return axios[method](fullUrl, {headers});
   } else {
-    console.log(method, fullUrl, {...data, MEMBER_SEQ}, {headers});
-    return axios[method](fullUrl, {...data, MEMBER_SEQ}, {headers});
+    return axios[method](fullUrl, data, {headers});
   }
 };
 
 export default {
   checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
   storeList: (STORE: string) =>
-    oldApi('get', `/Store/store_list?STORE=${STORE}&`),
+    oldApi('get', `/Store/store_list?STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`),
+  getHelpInfo: () => callApi('get', '/auth/gethelpinfo/'),
+  addStore: (data: any) => oldApi('post', '/Store/insert22', data),
+  help: () => callApi('post', '/auth/help/'), // MyPageAppointmentScreen, StartScreen
   // getSMS: (data: any) => callApi('post', '/auth/getsms/', data), //MyPagePasswordSetScreen, FindPasswordScreen, VerificationScreen
-  // help: () => callApi('post', '/auth/help/'), // MyPageAppointmentScreen, StartScreen
   // updatePush: (data: any) => callApi('post', '/auth/updatePush/', data),
   // getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),
   // getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
@@ -230,7 +200,7 @@ export default {
   //   ),
   // getWaitEmpList: (STORE_SEQ: string) =>
   //   oldApi('get', `/Store/get_wait_emp_list?STORE_SEQ=${STORE_SEQ}&`),
-  // addStore: (data: any) => oldApi('post', '/Store/insert22', data),
+
   // createScheduleVacation2: (data: any) =>
   //   oldApi('post', '/Management/createScheduleVacation2', data),
   // updateEmpSchedule: (data: any) =>
