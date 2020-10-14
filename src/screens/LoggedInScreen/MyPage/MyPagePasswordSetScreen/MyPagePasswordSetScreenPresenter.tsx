@@ -5,6 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
+import {useNavigation} from '@react-navigation/native';
 
 interface IsError {
   isError: boolean;
@@ -84,13 +85,13 @@ const RequestButton = styled.TouchableOpacity<HasCheckedVerifyCode>`
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  border-color: ${(props) => (props.hasCheckedVerifyCode ? '#aaa' : '#642a8c')};
+  border-color: ${(props) => (props.hasCheckedVerifyCode ? '#aaa' : '#e85356')};
   border-radius: 20px;
 `;
 
 const RequestText = styled.Text`
   font-size: 14px;
-  color: #642a8c;
+  color: #e85356;
 `;
 
 const MobileNoText = styled.Text`
@@ -98,12 +99,11 @@ const MobileNoText = styled.Text`
 `;
 
 export default ({
-  alertModal,
   password,
   passwordCheck,
   hasCheckedVerifyCode,
   verifyCode,
-  mobileNo,
+  MOBILE_NO,
   requireVerifyCode,
   onChangeVerifyCode,
   submitFn,
@@ -120,6 +120,7 @@ export default ({
   isPasswordCheckError,
   passwordCheckerFn,
 }) => {
+  const navigation = useNavigation();
   return (
     <BackGround>
       <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
@@ -130,7 +131,7 @@ export default ({
               <TextInput
                 placeholder={'영문, 숫자 조합 6자 이상'}
                 placeholderTextColor={'#E5E5E5'}
-                selectionColor={'#642A8C'}
+                selectionColor={'#e85356'}
                 onFocus={() => {
                   setPassword('');
                   setPasswordCheck('');
@@ -169,7 +170,7 @@ export default ({
               <TextInput
                 placeholder={'새 비밀번호 확인'}
                 placeholderTextColor={'#E5E5E5'}
-                selectionColor={'#642A8C'}
+                selectionColor={'#e85356'}
                 onChangeText={(text) => passwordCheckerFn(text, true)}
                 value={passwordCheck}
                 editable={!hasCheckedVerifyCode}
@@ -197,7 +198,7 @@ export default ({
           <Case>
             <NameText>휴대폰 번호</NameText>
             <TextinputCase>
-              <MobileNoText>{mobileNo}</MobileNoText>
+              <MobileNoText>{MOBILE_NO}</MobileNoText>
               <RequestButton
                 hasCheckedVerifyCode={hasCheckedVerifyCode}
                 onPress={() => requireVerifyCode()}
@@ -209,7 +210,7 @@ export default ({
                 )}
               </RequestButton>
             </TextinputCase>
-            <InputLine isBefore={mobileNo ? false : true} />
+            <InputLine isBefore={MOBILE_NO ? false : true} />
           </Case>
           {hasCheckedTimeOut && (
             <TimeText>
@@ -225,7 +226,7 @@ export default ({
                   <TextInput
                     placeholder={'인증번호를 입력해주세요'}
                     placeholderTextColor={'#E5E5E5'}
-                    selectionColor={'#642A8C'}
+                    selectionColor={'#e85356'}
                     onChangeText={(text) => {
                       onChangeVerifyCode(text);
                     }}

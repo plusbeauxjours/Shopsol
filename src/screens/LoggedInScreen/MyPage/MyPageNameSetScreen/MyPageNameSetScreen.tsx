@@ -30,6 +30,7 @@ const NameText = styled.Text`
 
 const TextInput = styled.TextInput`
   padding: 5px 0;
+  margin-left: 5px;
   font-size: 15px;
   color: black;
 `;
@@ -37,12 +38,11 @@ const TextInput = styled.TextInput`
 export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {MEMBER_SEQ, MOBILE_NO, MEMBER_NAME} = useSelector(
+  const {MEMBER_SEQ, MOBILE_NO, MEMBER_NAME, GENDER} = useSelector(
     (state: any) => state.userReducer,
   );
 
   const [NAME, setNAME] = useState<string>(MEMBER_NAME || '');
-  const [GENDER, setGENDER] = useState<string>('0');
 
   const alertModal = (text) => {
     const params = {
@@ -68,7 +68,7 @@ export default () => {
         NAME,
         GENDER,
       });
-      if (data.resultmsg !== '1') {
+      if (data.message !== 'SUCCESS') {
         alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {
@@ -92,10 +92,6 @@ export default () => {
         />
         <InputLine isBefore={NAME === '' ? true : false} />
         <SubmitBtn
-          // onPressIn={() => {
-          //   alertModal('이름이 변경되었습니다.');
-          //   navigation.goBack();
-          // }}
           onPress={() => submitFn()}
           text={'수정하기'}
           isRegisted={NAME !== ''}

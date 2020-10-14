@@ -26,7 +26,6 @@ export default () => {
     false,
   );
   const [verifyCode, setVerifyCode] = useState<string>('');
-  const [mobileNo, setMobileNo] = useState<string>(MOBILE_NO || '');
   const [countdown, setCountdown] = useState<string>('');
   const [isCountDownStarted, setIsCountDownStarted] = useState<boolean>(false);
   const [hasCheckedTimeOut, setHasCheckedTimeOut] = useState<boolean>(false);
@@ -70,16 +69,15 @@ export default () => {
 
     try {
       const {data} = await api.changePwd({
-        MobileNo: mobileNo,
+        MobileNo: MOBILE_NO,
         MEMBER_SEQ,
         PASSWORD: password,
         SMS: verifyCode,
       });
+      console.log(data);
       if (data.message == 'SMSERROR') {
         alertModal('인증번호 오류입니다.');
       } else {
-        alertModal('비밀번호가 변경 되었습니다. 다시 로그인해주세요.');
-        setHasCheckedVerifyCode(false);
         dispatch(userLogout());
         clearInterval(timer);
         navigation.reset({
@@ -87,10 +85,13 @@ export default () => {
           routes: [
             {
               name: 'LoggedOutNavigation',
-              state: {routes: [{name: 'StartScreen'}]},
+              state: {
+                routes: [{name: 'StartScreen'}],
+              },
             },
           ],
         });
+        setHasCheckedVerifyCode(false);
       }
     } catch (e) {
       console.log(e);
@@ -169,9 +170,9 @@ export default () => {
     startCountDown();
     try {
       const {data} = await api.getSMS({
-        MOBILENO: mobileNo,
+        PHONENUMBER: MOBILE_NO,
       });
-      if (data.RESULT_CODE == '0') {
+      if (data.message == 'SUCCESS') {
         alertModal('인증번호를 발송하였습니다.');
       }
     } catch (e) {
@@ -187,12 +188,11 @@ export default () => {
 
   return (
     <MyPagePasswordSetScreenPresenter
-      alertModal={alertModal}
       password={password}
       passwordCheck={passwordCheck}
       hasCheckedVerifyCode={hasCheckedVerifyCode}
       verifyCode={verifyCode}
-      mobileNo={mobileNo}
+      MOBILE_NO={MOBILE_NO}
       requireVerifyCode={requireVerifyCode}
       onChangeVerifyCode={onChangeVerifyCode}
       submitFn={submitFn}

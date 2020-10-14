@@ -54,7 +54,7 @@ const CheckText = styled.Text`
 
 const SubmitBtn = styled(Ripple)<IIsConfirm>`
   margin-top: 30px;
-  width: ${wp('100%') - 80}px;
+  width: ${wp('100%') - 40}px;
   height: 60px;
   background-color: #e85356;
   justify-content: center;
@@ -75,7 +75,15 @@ interface IIsConfirm {
 export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {MEMBER_SEQ, mobileNo} = useSelector((state: any) => state.userReducer);
+  const {MEMBER_SEQ, MOBILE_NO} = useSelector(
+    (state: any) => state.userReducer,
+  );
+
+  const alertModal = (text) => {
+    const params = {alertType: 'alert', content: text};
+    dispatch(setAlertInfo(params));
+    dispatch(setAlertVisible(true));
+  };
 
   const confirmModal = () => {
     const params = {
@@ -94,21 +102,23 @@ export default () => {
 
   const submit = async () => {
     try {
+      dispatch(userLogout());
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'LoggedOutNavigation',
+            state: {routes: [{name: 'StartScreen'}]},
+          },
+        ],
+      });
       const {data} = await api.toggleMember({
-        MobileNo: mobileNo,
+        MobileNo: MOBILE_NO,
         MEMBER_SEQ,
       });
-      if (data.resultmsg === '1') {
-        dispatch(userLogout());
-        navigation.reset({
-          index: 0,
-          routes: [
-            {
-              name: 'LoggedOutNavigation',
-              state: {routes: [{name: 'StartScreen'}]},
-            },
-          ],
-        });
+      console.log(data);
+      if (data.message !== 'SUCCESS') {
+        alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {
       console.log(e);

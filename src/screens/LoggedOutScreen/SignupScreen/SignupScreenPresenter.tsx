@@ -67,7 +67,7 @@ const TextInput = styled.TextInput`
 const TypeCheckCase = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 20;
+  margin-top: 20px;
 `;
 
 const WhiteSpace = styled.View`
@@ -250,12 +250,12 @@ export default ({
           <Case>
             <NameText>가입유형</NameText>
             <TypeCheckCase>
-              <View>{positionType(0, '점장')}</View>
-              <View>{positionType(1, '직원')}</View>
+              <View>{positionType(1, '점장')}</View>
+              <View>{positionType(0, '직원')}</View>
             </TypeCheckCase>
           </Case>
           <WhiteSpace />
-          {positionTypeCheck[0] == true && (
+          {positionTypeCheck[1] == true && (
             <Case>
               <NameText>가입경로</NameText>
               <Touchable onPress={() => sheetRef.current.open()}>

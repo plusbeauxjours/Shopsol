@@ -66,9 +66,8 @@ import MyPageMainScreen from '../screens/LoggedInScreen/MyPage/MyPageMainScreen'
 import MyPagePlaceSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
 import MyPageDeleteSetScreen from '../screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
 import MyPageIdSetMainScreen from '../screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
-
-// import MyPageNameSetScreen from '../screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
-// import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
+import MyPageNameSetScreen from '../screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
+import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
 
 // 조기경보========================================================
 // import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
@@ -199,7 +198,6 @@ export default () => {
             headerRight: null,
           }}
         />
-        {/* 
         <LoggedInNavigation.Screen
           name="MyPageNameSetScreen"
           component={MyPageNameSetScreen}
@@ -217,7 +215,7 @@ export default () => {
             title: '마이페이지 비밀번호 재설정',
             headerRight: null,
           }}
-        /> */}
+        />
         {/* 
         직원관리========================================================
   

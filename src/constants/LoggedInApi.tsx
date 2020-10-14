@@ -61,13 +61,13 @@ export default {
     oldApi('get', `/Store/END_list?MEMBER_SEQ=${MEMBER_SEQ}`),
   closeList: (MEMBER_SEQ: string) =>
     oldApi('get', `/Store/Close_list?MEMBER_SEQ=${MEMBER_SEQ}`),
+  toggleMember: (data: any) => oldApi('post', '/Auth/toggleMember/', data),
+  changeName: (data: any) => oldApi('post', '/Auth/changeName/', data),
+  getSMS: (data: any) => oldApi('post', '/Auth/get_appSMS/', data),
+  changePwd: (data: any) => oldApi('post', '/Auth/changePwd', data),
   //
-  // getSMS: (data: any) => callApi('post', '/auth/getsms/', data), //MyPagePasswordSetScreen, FindPasswordScreen, VerificationScreen
   // getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),
   // getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
-  // toggleMember: (data: any) =>
-  //   callApi('post', '/auth/changeMemberStore/', data),
-  // changeName: (data: any) => callApi('post', '/auth/changeMemberName', data),
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
   // setvideocheck: (VIDEO_SEQ: string) =>
@@ -175,7 +175,7 @@ export default {
   //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
 
   // // oldApi
-  // changePwd: (data: any) => oldApi('post', '/Auth/changePwd', data),
+
   // createSchedule: (data: any) =>
   //   oldApi('post', '/Management/schedule_create', data),
   // getWorkingEmpTotalPay: (YEAR: string, MONTH: string, STORE_SEQ: string) =>

@@ -62,7 +62,7 @@ export default ({route: {params}}) => {
     if (!/^[a-zA-Z0-9]{6,15}$/.test(password)) {
       return alertModal('숫자와 영문자 조합으로 6~15자리를 사용해야 합니다.');
     }
-    if (positionTypeCheck[0] == true && joinRoute == '가입경로') {
+    if (positionTypeCheck[1] == true && joinRoute == '가입경로') {
       alertModal('가입경로를 입력해주세요.');
       dispatch(setSplashVisible(false));
       return;

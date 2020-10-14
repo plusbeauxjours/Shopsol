@@ -5,6 +5,6 @@ export default {
     appVersion: '2.0.7',
     miniPay: "8590",
     calculateDay: 23,
-    avatarUrl: (gender) => `http://133.186.210.223/uploads/${gender == '1' ? '1.png' : '2.png'}`
+    avatarUrl: (gender) => `http://133.186.210.223/uploads/${gender == '0' ? '1.png' : '2.png'}`
 };
 

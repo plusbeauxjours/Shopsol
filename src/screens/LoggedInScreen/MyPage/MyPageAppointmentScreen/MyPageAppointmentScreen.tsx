@@ -40,7 +40,7 @@ const WhiteText = styled.Text`
 `;
 
 const Card = styled.TouchableOpacity`
-  padding: ${hp('2%')}px 20px;
+  padding: 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

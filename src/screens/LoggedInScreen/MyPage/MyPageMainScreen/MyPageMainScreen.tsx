@@ -184,7 +184,7 @@ export default () => {
             <CardText>계정관리</CardText>
             <ArrowIcon />
           </Card>
-          <Card>
+          <Card disabled={true}>
             <CardText>앱버전</CardText>
             <Arrow>
               <BoxTitle>{utils.appVersion}</BoxTitle>

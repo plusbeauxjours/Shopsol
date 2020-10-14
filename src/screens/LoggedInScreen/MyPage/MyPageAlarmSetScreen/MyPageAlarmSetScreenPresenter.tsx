@@ -8,14 +8,14 @@ const BackGround = styled.SafeAreaView`
 
 const Box = styled.View`
   flex-direction: row;
-  margin: 30px 30px 0 30px;
+  padding: 20px;
   justify-content: space-between;
   align-items: center;
 `;
 
 const Text = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 15px;
+  color: #212121;
 `;
 const Switch = styled.Switch``;
 

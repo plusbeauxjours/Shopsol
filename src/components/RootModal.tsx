@@ -97,7 +97,7 @@ export default ({alert}) => {
 
   const TextBox = ({alert}) => (
     <Box>
-      <Title>{alert?.title}</Title>
+      {alert.title?.length > 0 && <Title>{alert?.title}</Title>}
       <Content>{alert?.content}</Content>
     </Box>
   );

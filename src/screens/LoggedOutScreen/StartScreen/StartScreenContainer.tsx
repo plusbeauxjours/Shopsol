@@ -9,7 +9,7 @@ import {setDEVICE_PLATFORM} from '~/redux/userSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import StartScreenPresenter from './StartScreenPresenter';
 
-export default () => {
+export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {DEVICE_PLATFORM} = useSelector((state: any) => state.userReducer);
