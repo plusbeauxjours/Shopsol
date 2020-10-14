@@ -8,10 +8,13 @@ import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen'
 import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
 import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
 // import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
-// import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
-// import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
 
-// EmployeeScheduleScreen========================================================
+// 유통기한========================================================
+// import ShelfLifeCheckScreen from '../screens/LoggedInScreen/Home/ShelfLifeCheckScreen';
+// import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/Home/ShelfLifeUpdateScreen';
+// import AddShelfLifeScreen from '../screens/LoggedInScreen/Home/AddShelfLifeScreen';
+
+// 직원관리========================================================
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
 // import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
 // import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
@@ -20,13 +23,12 @@ import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScr
 // import EmployeeListScreen from '../screens/LoggedInScreen/Home/EmployeeListScreen';
 // import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
 // import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
-// import ShelfLifeCheckScreen from '../screens/LoggedInScreen/Home/ShelfLifeCheckScreen';
-// import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/Home/ShelfLifeUpdateScreen';
-// import AddShelfLifeScreen from '../screens/LoggedInScreen/Home/AddShelfLifeScreen';
 
 // import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Home/ManageInviteEmployeeScreen';
 // import EmployeeInfoScreen from '../screens/LoggedInScreen/Home/EmployeeInfoScreen';
 // import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Home/EmployeeInfoEMPScreen';
+// import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
+// import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
 
 // 캘린더========================================================
 // import CalendarAddScreen from '../screens/LoggedInScreen/Calendar/CalendarAddScreen';
@@ -58,13 +60,13 @@ import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScr
 // import EducationVideoDetailScreen from '../screens/LoggedInScreen/MyCu/EducationVideoDetailScreen';
 
 // 마이페이지========================================================
-// import MyPageAlarmSetScreen from '../screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
-// import MyPageAppointmentScreen from '../screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
-// import MyPageMainScreen from '../screens/LoggedInScreen/MyPage/MyPageMainScreen';
-// import MyPagePlaceSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
+import MyPageAlarmSetScreen from '../screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
+import MyPageAppointmentScreen from '../screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
+import MyPageMainScreen from '../screens/LoggedInScreen/MyPage/MyPageMainScreen';
+import MyPagePlaceSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
+import MyPageDeleteSetScreen from '../screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
+import MyPageIdSetMainScreen from '../screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
 
-// import MyPageIdSetMainScreen from '../screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
-// import MyPageDeleteSetScreen from '../screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
 // import MyPageNameSetScreen from '../screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
 // import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
 
@@ -142,6 +144,80 @@ export default () => {
             title: '사업장 검색',
           }}
         />
+        {/* 마이페이지======================================================== */}
+        <LoggedInNavigation.Screen
+          name="MyPageAlarmSetScreen"
+          component={MyPageAlarmSetScreen}
+          options={{
+            headerTitle: '알림설정',
+            title: '마이페이지 알림설정',
+            headerRight: null,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="MyPageAppointmentScreen"
+          component={MyPageAppointmentScreen}
+          options={{
+            headerTitle: '약관보기',
+            title: '마이페이지 약관보기',
+            headerRight: null,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="MyPageMainScreen"
+          component={MyPageMainScreen}
+          options={{
+            headerTitle: '마이페이지',
+            title: '마이페이지',
+            headerRight: null,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="MyPagePlaceSetScreen"
+          component={MyPagePlaceSetScreen}
+          options={{
+            headerTitle: '사업장관리이력',
+            title: '마이페이지 사업장 관리이력',
+            headerRight: null,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="MyPageDeleteSetScreen"
+          component={MyPageDeleteSetScreen}
+          options={{
+            headerTitle: '회원탈퇴',
+            title: '마이페이지 회원탈퇴',
+            headerRight: null,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="MyPageIdSetMainScreen"
+          component={MyPageIdSetMainScreen}
+          options={{
+            headerTitle: '마이페이지',
+            title: '마이페이지 개인정보변경',
+            headerRight: null,
+          }}
+        />
+        {/* 
+        <LoggedInNavigation.Screen
+          name="MyPageNameSetScreen"
+          component={MyPageNameSetScreen}
+          options={{
+            headerTitle: '이름 변경',
+            title: '마이페이지 이름변경',
+            headerRight: null,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="MyPagePasswordSetScreen"
+          component={MyPagePasswordSetScreen}
+          options={{
+            headerTitle: '비밀번호 재설정',
+            title: '마이페이지 비밀번호 재설정',
+            headerRight: null,
+          }}
+        /> */}
         {/* 
         직원관리========================================================
   
@@ -456,79 +532,7 @@ export default () => {
           }}
         />
 
-        마이페이지========================================================
-        <LoggedInNavigation.Screen
-          name="MyPageAlarmSetScreen"
-          component={MyPageAlarmSetScreen}
-          options={{
-            headerTitle: '알림설정',
-            title: '마이페이지 알림설정',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPageAppointmentScreen"
-          component={MyPageAppointmentScreen}
-          options={{
-            headerTitle: '약관보기',
-            title: '마이페이지 약관보기',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPageMainScreen"
-          component={MyPageMainScreen}
-          options={{
-            headerTitle: '마이페이지',
-            title: '마이페이지',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPagePlaceSetScreen"
-          component={MyPagePlaceSetScreen}
-          options={{
-            headerTitle: '점포관리이력',
-            title: '마이페이지 점포(사업장) 관리이력',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPageIdSetMainScreen"
-          component={MyPageIdSetMainScreen}
-          options={{
-            headerTitle: '마이페이지',
-            title: '마이페이지 개인정보변경',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPageDeleteSetScreen"
-          component={MyPageDeleteSetScreen}
-          options={{
-            headerTitle: '회원탈퇴',
-            title: '마이페이지 회원탈퇴',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPageNameSetScreen"
-          component={MyPageNameSetScreen}
-          options={{
-            headerTitle: '이름 변경',
-            title: '마이페이지 이름변경',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPagePasswordSetScreen"
-          component={MyPagePasswordSetScreen}
-          options={{
-            headerTitle: '비밀번호 재설정',
-            title: '마이페이지 비밀번호 재설정',
-            headerRight: null,
-          }}
-        />
+        
 
         조기경보========================================================
         <LoggedInNavigation.Screen

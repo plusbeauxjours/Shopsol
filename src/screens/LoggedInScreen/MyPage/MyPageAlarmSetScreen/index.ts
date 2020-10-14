@@ -1,0 +1,2 @@
+import MyPageAlarmSetScreenContainer from "./MyPageAlarmSetScreenContainer"
+export default MyPageAlarmSetScreenContainer

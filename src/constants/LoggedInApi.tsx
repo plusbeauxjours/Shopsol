@@ -1,12 +1,6 @@
 import axios from 'axios';
-import store from '../redux/store';
 
-const callApi = async (
-  method: string,
-  path: string,
-  data?: any,
-  isImg?: boolean,
-) => {
+const callApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -22,12 +16,7 @@ const callApi = async (
   }
 };
 
-const oldApi = async (
-  method: string,
-  path: string,
-  data?: any,
-  isImg?: boolean,
-) => {
+const oldApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -66,11 +55,16 @@ export default {
   storeList: (STORE: string, MEMBER_SEQ: string) =>
     oldApi('get', `/Store/store_list?STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`),
   addStore: (data: any) => oldApi('post', '/Store/insert22', data),
+  updatePush: (data: any) => oldApi('post', '/Employee/updatePush/', data),
+  getPush: (data: any) => oldApi('post', '/Employee/getPush/', data),
+  endList: (MEMBER_SEQ: string) =>
+    oldApi('get', `/Store/END_list?MEMBER_SEQ=${MEMBER_SEQ}`),
+  closeList: (MEMBER_SEQ: string) =>
+    oldApi('get', `/Store/Close_list?MEMBER_SEQ=${MEMBER_SEQ}`),
+  //
   // getSMS: (data: any) => callApi('post', '/auth/getsms/', data), //MyPagePasswordSetScreen, FindPasswordScreen, VerificationScreen
-  // updatePush: (data: any) => callApi('post', '/auth/updatePush/', data),
   // getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),
   // getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
-  // getPush: (data: any) => callApi('post', '/auth/getPush/', data),
   // toggleMember: (data: any) =>
   //   callApi('post', '/auth/changeMemberStore/', data),
   // changeName: (data: any) => callApi('post', '/auth/changeMemberName', data),
@@ -78,7 +72,7 @@ export default {
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
   // setvideocheck: (VIDEO_SEQ: string) =>
   //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
-  // endList: () => callApi('get', `/auth/endstorelist?`),
+
   // cuedulistcheck: () => callApi('get', `/auth/cuedulistcheck?`),
   // storeHealthEmpList: (STORE_SEQ: string, STORE: string) =>
   //   callApi(
@@ -196,7 +190,6 @@ export default {
   //   oldApi('post', '/Management/createScheduleVacation2', data),
   // updateEmpSchedule: (data: any) =>
   //   oldApi('post', '/Employee/update_emp_schedules3', data),
-  // closeList: () => oldApi('get', `/Store/Close_list?`),
   // getEmployeeList: (data: any) => oldApi('post', '/Employee/getEmpList/', data),
   // getEmpPay: (data: any) => oldApi('post', '/Employee/getEmpPay/', data),
   // getScheduleRestTimeCreate: (data: any) =>

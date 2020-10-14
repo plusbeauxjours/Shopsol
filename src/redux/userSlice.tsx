@@ -8,6 +8,7 @@ const userSlice = createSlice({
     isLoggedIn: false,
     MEMBER_SEQ: '',
     MEMBER_NAME: '',
+    GENDER: '',
     STORE: '',
     TYPE: '',
     MOBILE_NO: '',
@@ -42,13 +43,15 @@ const userSlice = createSlice({
     },
     setUSER(state, action) {
       const {payload: userInfo} = action;
+      console.log(userInfo);
       return {
         ...state,
         MEMBER_SEQ: userInfo.MEMBER_SEQ,
+        GENDER: userInfo.GENDER,
         MEMBER_NAME: userInfo.NAME,
         STORE: userInfo.STORE,
         TYPE: userInfo.TYPE,
-        MOBILE_NO: userInfo.mobileNo,
+        MOBILE_NO: userInfo.MobileNo,
       };
     },
     setLOGIN(state) {
@@ -62,6 +65,7 @@ const userSlice = createSlice({
         ...state,
         isLoggedIn: false,
         MEMBER_SEQ: '',
+        GENDER: '',
         STORE: '',
         MOBILE_NO: '',
         STORELIST_DATA: [],

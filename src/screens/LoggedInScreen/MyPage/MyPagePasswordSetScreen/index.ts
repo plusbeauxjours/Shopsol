@@ -1,0 +1,2 @@
+import MyPagePasswordSetScreenContainer from "./MyPagePasswordSetScreenContainer"
+export default MyPagePasswordSetScreenContainer
