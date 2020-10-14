@@ -78,6 +78,7 @@ export default () => {
       if (data.message == 'SMSERROR') {
         alertModal('인증번호 오류입니다.');
       } else {
+        setHasCheckedVerifyCode(false);
         dispatch(userLogout());
         clearInterval(timer);
         navigation.reset({
@@ -91,7 +92,6 @@ export default () => {
             },
           ],
         });
-        setHasCheckedVerifyCode(false);
       }
     } catch (e) {
       console.log(e);

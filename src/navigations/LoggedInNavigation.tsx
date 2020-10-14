@@ -68,6 +68,7 @@ import MyPageDeleteSetScreen from '../screens/LoggedInScreen/MyPage/MyPageDelete
 import MyPageIdSetMainScreen from '../screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
 import MyPageNameSetScreen from '../screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
 import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
+import MyPagePositionSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePositionSetScreen';
 
 // 조기경보========================================================
 // import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
@@ -213,6 +214,15 @@ export default () => {
           options={{
             headerTitle: '비밀번호 재설정',
             title: '마이페이지 비밀번호 재설정',
+            headerRight: null,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="MyPagePositionSetScreen"
+          component={MyPagePositionSetScreen}
+          options={{
+            headerTitle: '가입유형 재설정',
+            title: '마이페이지 가입유형 재설정',
             headerRight: null,
           }}
         />

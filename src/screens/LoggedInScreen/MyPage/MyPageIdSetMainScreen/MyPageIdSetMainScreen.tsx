@@ -47,6 +47,13 @@ export default () => {
       </Card>
       <Card
         onPress={() => {
+          navigation.navigate('MyPagePositionSetScreen');
+        }}>
+        <CardText>점장 - 직원 전환</CardText>
+        <ArrowIcon />
+      </Card>
+      <Card
+        onPress={() => {
           navigation.navigate('MyPagePasswordSetScreen');
         }}>
         <CardText>비밀번호 재설정</CardText>

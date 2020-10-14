@@ -65,6 +65,7 @@ export default {
   changeName: (data: any) => oldApi('post', '/Auth/changeName/', data),
   getSMS: (data: any) => oldApi('post', '/Auth/get_appSMS/', data),
   changePwd: (data: any) => oldApi('post', '/Auth/changePwd', data),
+  changeStore: (data: any) => oldApi('post', '/Auth/changeStore', data),
   //
   // getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),
   // getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),

@@ -41,6 +41,14 @@ const userSlice = createSlice({
         STORELIST_DATA,
       };
     },
+    setSTORE(state, action) {
+      const {payload: STORE} = action;
+      console.log(STORE);
+      return {
+        ...state,
+        STORE,
+      };
+    },
     setUSER(state, action) {
       const {payload: userInfo} = action;
       console.log(userInfo);
@@ -102,6 +110,7 @@ export const {
   setMEMBER_NAME,
   setMOBILE_NO,
   setSTORELIST_DATA,
+  setSTORE,
   setUSER,
   setLOGIN,
   setLOGOUT,
