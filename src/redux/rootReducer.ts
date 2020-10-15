@@ -6,6 +6,8 @@ import splashReducer from "./splashSlice";
 import helpReducer from "./helpSlice";
 import storeReducer from "./storeSlice";
 import mypageReducer from "./mypageSlice";
+import employeeReducer from "./employeeSlice"
+import healthReducer from "./healthSlice"
 
 export default combineReducers({
     userReducer,
@@ -14,5 +16,7 @@ export default combineReducers({
     splashReducer,
     helpReducer,
     storeReducer,
-    mypageReducer
+    mypageReducer,
+    employeeReducer,
+    healthReducer
 });

@@ -66,9 +66,15 @@ export default {
   getSMS: (data: any) => oldApi('post', '/Auth/get_appSMS/', data),
   changePwd: (data: any) => oldApi('post', '/Auth/changePwd', data),
   changeStore: (data: any) => oldApi('post', '/Auth/changeStore', data),
+  getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),
+  attendanceWork: (data: any) =>
+    oldApi('post', '/StoreAuth/attendance_work1/', data),
+  attendanceOffWork: (data: any) =>
+    oldApi('post', '/StoreAuth/attendance_offwork1/', data),
+  getWaitEmpList: (STORE_SEQ: string) =>
+    oldApi('get', `/Store/get_wait_emp_list?STORE_SEQ=${STORE_SEQ}`),
+  getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
   //
-  // getStoreInfo: (data: any) => callApi('post', '/auth/getstoreinfo/', data),
-  // getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
   // setvideocheck: (VIDEO_SEQ: string) =>
@@ -82,9 +88,6 @@ export default {
   //   ),
   // storeHealthEmpDetail: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/emphealthdetail?EMP_SEQ=${EMP_SEQ}&`),
-  // attendanceWork: (data: any) => callApi('post', '/auth/attendancework/', data),
-  // attendanceOffWork: (data: any) =>
-  //   callApi('post', '/auth/attendanceoffwork/', data),
 
   // updateStore: (data: any) => callApi('post', '/auth/updatestore', data),
   // cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
@@ -184,8 +187,6 @@ export default {
   //     'get',
   //     `/Store/get_working_emp_totalpay2?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
   //   ),
-  // getWaitEmpList: (STORE_SEQ: string) =>
-  //   oldApi('get', `/Store/get_wait_emp_list?STORE_SEQ=${STORE_SEQ}&`),
 
   // createScheduleVacation2: (data: any) =>
   //   oldApi('post', '/Management/createScheduleVacation2', data),
