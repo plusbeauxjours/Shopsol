@@ -1,0 +1,2 @@
+import ShelfLifeCheckScreenContainer from "./ShelfLifeCheckScreenContainer"
+export default ShelfLifeCheckScreenContainer

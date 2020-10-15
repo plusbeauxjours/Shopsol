@@ -75,6 +75,20 @@ export default {
     oldApi('get', `/Store/get_wait_emp_list?STORE_SEQ=${STORE_SEQ}`),
   getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
   updateStore: (data: any) => oldApi('put', '/Store/update2', data),
+  getShelfLifeData: (data: any) =>
+    callApi('post', '/auth/getshelfLifeData/', data),
+  getAllShelfLifeData: (data: any) =>
+    callApi('post', '/auth/getAllshelfLifeData/', data),
+  checkShelfLifeData: (data: any) =>
+    callApi('post', '/auth/checkShelfLifeData/', data),
+  cancelShelfLifeData: (data: any) =>
+    callApi('post', '/auth/cancelShelfLifeData/', data),
+  updateShelfLifeData: (data: any) =>
+    callApi('post', '/auth/updateshelfLifeData/', data),
+  deleteShelfLifeData: (data: any) =>
+    callApi('post', '/auth/deleteshelfLifeData/', data),
+  setShelfLifeData: (data: any) =>
+    callApi('post', '/auth/setshelfLifeData/', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -93,18 +107,7 @@ export default {
   // cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
   // rejectJoin: (data: any) => callApi('post', '/auth/reject_join/', data),
   // sendOneEmp: (data: any) => callApi('post', '/auth/sendOneEmp', data),
-  // getShelfLifeData: (data: any) =>
-  //   callApi('post', '/auth/getshelfLifeData/', data),
-  // checkShelfLifeData: (data: any) =>
-  //   callApi('post', '/auth/checkShelfLifeData/', data),
-  // getAllShelfLifeData: (data: any) =>
-  //   callApi('post', '/auth/getAllshelfLifeData/', data),
-  // deleteShelfLifeData: (data: any) =>
-  //   callApi('post', '/auth/deleteshelfLifeData/', data),
-  // updateShelfLifeData: (data: any) =>
-  //   callApi('post', '/auth/updateshelfLifeData/', data),
-  // cancelShelfLifeData: (data: any) =>
-  //   callApi('post', '/auth/cancelShelfLifeData/', data),
+
   // checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data, true),
   // checkocr1: (data: any) => callApi('post', '/auth/checkocr1/', data, true),
   // saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data, true),
@@ -117,8 +120,7 @@ export default {
   //   callApi('post', '/auth/getAllCeoHealth/', data),
   // deleteCeoHealth: (data: any) =>
   //   callApi('post', '/auth/deleteCeoHealth/', data),
-  // setShelfLifeData: (data: any) =>
-  //   callApi('post', '/auth/setshelfLifeData/', data),
+
   // sendEmp2: (data: any) => callApi('post', '/auth/sendEmp', data),
   // toggleCalendar: (data: any) => callApi('post', '/auth/toggleCalendar/', data),
   // getEmp: (EMP_SEQ: string) =>

@@ -10,9 +10,9 @@ import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScr
 import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
 
 // 유통기한========================================================
-// import ShelfLifeCheckScreen from '../screens/LoggedInScreen/Home/ShelfLifeCheckScreen';
-// import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/Home/ShelfLifeUpdateScreen';
-// import AddShelfLifeScreen from '../screens/LoggedInScreen/Home/AddShelfLifeScreen';
+import ShelfLifeCheckScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLifeCheckScreen';
+import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLifeUpdateScreen';
+import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLifeScreen';
 
 // 직원관리========================================================
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
@@ -234,6 +234,32 @@ export default () => {
             title: '사업장(점포) 수정',
           }}
         />
+        {/* 유통기한======================================================== */}
+        <LoggedInNavigation.Screen
+          name="ShelfLifeCheckScreen"
+          component={ShelfLifeCheckScreen}
+          options={{
+            headerTitle: '유통기한 체크',
+            title: '유통기한 목록',
+            headerRight: () => <ShelfLifeCheckHeader />,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="ShelfLifeUpdateScreen"
+          component={ShelfLifeUpdateScreen}
+          options={{
+            headerTitle: '유통기한 체크 수정',
+            title: '유통기한 수정',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="AddShelfLifeScreen"
+          component={AddShelfLifeScreen}
+          options={{
+            headerTitle: '유통기한 체크 등록',
+            title: '유통기한 등록',
+          }}
+        />
         {/* 
         직원관리========================================================
         <LoggedInNavigation.Screen
@@ -338,32 +364,7 @@ export default () => {
           }}
         />
 
-        유통기한========================================================
-        <LoggedInNavigation.Screen
-          name="ShelfLifeCheckScreen"
-          component={ShelfLifeCheckScreen}
-          options={{
-            headerTitle: '유통기한 체크',
-            title: '유통기한 목록',
-            headerRight: () => <ShelfLifeCheckHeader />,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="ShelfLifeUpdateScreen"
-          component={ShelfLifeUpdateScreen}
-          options={{
-            headerTitle: '유통기한 체크 수정',
-            title: '유통기한 수정',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="AddShelfLifeScreen"
-          component={AddShelfLifeScreen}
-          options={{
-            headerTitle: '유통기한 체크 등록',
-            title: '유통기한 등록',
-          }}
-        />
+    
 
         캘린더========================================================
         <LoggedInNavigation.Screen

@@ -131,7 +131,7 @@ export default ({
               <TextInput
                 placeholder={'영문, 숫자 조합 6자 이상'}
                 placeholderTextColor={'#E5E5E5'}
-                selectionColor={'#e85356'}
+                selectionColor={'#999'}
                 onFocus={() => {
                   setPassword('');
                   setPasswordCheck('');
@@ -170,7 +170,7 @@ export default ({
               <TextInput
                 placeholder={'새 비밀번호 확인'}
                 placeholderTextColor={'#E5E5E5'}
-                selectionColor={'#e85356'}
+                selectionColor={'#999'}
                 onChangeText={(text) => passwordCheckerFn(text, true)}
                 value={passwordCheck}
                 editable={!hasCheckedVerifyCode}
@@ -226,7 +226,7 @@ export default ({
                   <TextInput
                     placeholder={'인증번호를 입력해주세요'}
                     placeholderTextColor={'#E5E5E5'}
-                    selectionColor={'#e85356'}
+                    selectionColor={'#999'}
                     onChangeText={(text) => {
                       onChangeVerifyCode(text);
                     }}

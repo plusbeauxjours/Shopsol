@@ -82,7 +82,7 @@ export default () => {
         <NameText>이름</NameText>
         <TextInput
           placeholder={'변경하실 이름을 입력해주세요.'}
-          selectionColor={'#642A8C'}
+          selectionColor={'#999'}
           placeholderTextColor={'#CCCCCC'}
           onChangeText={(text) => {
             setNAME(text);

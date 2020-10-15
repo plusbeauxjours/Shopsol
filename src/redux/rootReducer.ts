@@ -8,6 +8,7 @@ import storeReducer from "./storeSlice";
 import mypageReducer from "./mypageSlice";
 import employeeReducer from "./employeeSlice"
 import healthReducer from "./healthSlice"
+import shelflifeReducer from "./shelflifeSlice"
 
 export default combineReducers({
     userReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
     storeReducer,
     mypageReducer,
     employeeReducer,
-    healthReducer
+    healthReducer,
+    shelflifeReducer,
 });

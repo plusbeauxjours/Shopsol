@@ -18,9 +18,6 @@ import {
   QrCodeIcon,
 } from '~/constants/Icons';
 
-interface IIsTrue {
-  isTrue: boolean;
-}
 interface IHasHeight {
   hasHeight: boolean;
 }
@@ -58,12 +55,11 @@ const MyPage = styled.View`
   justify-content: flex-end;
 `;
 
-const MenuCnt = styled.TouchableOpacity<IIsTrue>`
+const MenuCnt = styled.TouchableOpacity`
   width: ${(wp('100%') - 20) / 3}px;
   height: ${wp('40%')}px;
   justify-content: center;
   align-items: center;
-  left: ${(props) => (props.isTrue ? '-7px' : 0)};
 `;
 
 const NewCnt = styled.View`
@@ -288,7 +284,6 @@ export default ({
   const MenuCntContainer = ({selection, paging, count = 0}) => (
     <MenuCnt
       style={{zIndex: 4}}
-      isTrue={selection == '체크리스트'}
       activeOpacity={0.6}
       onPress={() => {
         selection == 'QR보기'
