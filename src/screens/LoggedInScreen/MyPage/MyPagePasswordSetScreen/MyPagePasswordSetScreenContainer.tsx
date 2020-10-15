@@ -74,7 +74,6 @@ export default () => {
         PASSWORD: password,
         SMS: verifyCode,
       });
-      console.log(data);
       if (data.message == 'SMSERROR') {
         alertModal('인증번호 오류입니다.');
       } else {

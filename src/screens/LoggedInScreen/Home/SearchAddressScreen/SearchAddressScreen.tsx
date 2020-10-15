@@ -12,10 +12,10 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const choseAddress = (data) => {
-    const {addr, lat, long} = JSON.parse(data.data);
+    const {addr, LAT, LONG} = JSON.parse(data.data);
     navigation.navigate(
       params?.screen == 0 ? 'AddStoreScreen' : 'UpdateStoreScreen',
-      {addr, lat, long},
+      {addr, LAT, LONG},
     );
   };
 

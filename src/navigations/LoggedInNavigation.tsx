@@ -7,7 +7,7 @@ import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
 import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen';
 import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
 import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
-// import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
+import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
 
 // 유통기한========================================================
 // import ShelfLifeCheckScreen from '../screens/LoggedInScreen/Home/ShelfLifeCheckScreen';
@@ -226,9 +226,6 @@ export default () => {
             headerRight: null,
           }}
         />
-        {/* 
-        직원관리========================================================
-  
         <LoggedInNavigation.Screen
           name="UpdateStoreScreen"
           component={UpdateStoreScreen}
@@ -237,6 +234,8 @@ export default () => {
             title: '사업장(점포) 수정',
           }}
         />
+        {/* 
+        직원관리========================================================
         <LoggedInNavigation.Screen
           name="EmployeeInfoScreen"
           component={EmployeeInfoScreen}

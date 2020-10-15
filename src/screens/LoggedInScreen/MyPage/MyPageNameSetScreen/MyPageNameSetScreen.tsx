@@ -55,7 +55,7 @@ export default () => {
   };
 
   const submitFn = async () => {
-    if (MEMBER_NAME === '') {
+    if (NAME === '') {
       return alert('[에러] 이를을 기입해주세요.');
     }
     try {

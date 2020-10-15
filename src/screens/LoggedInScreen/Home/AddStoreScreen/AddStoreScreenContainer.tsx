@@ -24,8 +24,8 @@ export default ({route: {params}}) => {
   const [CALCULATE_DAY, setCALCULATE_DAY] = useState<string>('1');
   const [LAT, setLAT] = useState<number>(params?.lat || 0);
   const [LONG, setLONG] = useState<number>(params?.lng || 0);
-
   const [TYPE, setTYPE] = useState<number>(0);
+
   const [commuteType, setCommuteType] = useState<number>(0); // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
   const [storeCategoryType, setStoreCategoryType] = useState<string>(
     '분류 선택',
@@ -47,6 +47,7 @@ export default ({route: {params}}) => {
   const [distanceCheck, setDistanceCheck] = useState<boolean>(false);
   const [timeCheck, setTimeCheck] = useState<boolean>(false);
   const [dayCheck, setDayCheck] = useState<boolean>(false);
+
   const [modalVisible1, setModalVisible1] = useState<boolean>(false);
   const [modalVisible2, setModalVisible2] = useState<boolean>(false);
   const [modalVisible3, setModalVisible3] = useState<boolean>(false);
@@ -124,43 +125,33 @@ export default ({route: {params}}) => {
 
   // 등록하기버튼
   const submit = async () => {
-    console.log('koko');
     if (NAME == '') {
       dispatch(setSplashVisible(false));
       alertModal('', '점포명을 입력해주세요.');
-      console.log('점포명을 입력해주세요.');
     } else if (ADDR1 == '') {
       dispatch(setSplashVisible(false));
       alertModal('', '기본주소를 입력해주세요.');
-      console.log('기본주소를 입력해주세요.');
     } else if (ADDR2 == '') {
       dispatch(setSplashVisible(false));
       alertModal('', '상세주소를 입력해주세요.');
-      console.log('상세주소를 입력해주세요.');
     } else if (timeCheck == false) {
       dispatch(setSplashVisible(false));
       alertModal('', '지각허용시간을 선택해주세요.');
-      console.log('지각허용시간을 선택해주세요.');
     } else if (EARLYtimeCheck == false) {
       dispatch(setSplashVisible(false));
       alertModal('', '조퇴허용시간을 선택해주세요.');
-      console.log('조퇴허용시간을 선택해주세요.');
     } else if (dayCheck == false) {
       dispatch(setSplashVisible(false));
       alertModal('', '급여정산일을 선택해주세요.');
-      console.log('급여정산일을 선택해주세요.');
     } else if (storeCategoryType == '분류 선택') {
       dispatch(setSplashVisible(false));
       alertModal('', '사업장분류를 선택해주세요.');
-      console.log('사업장분류를 선택해주세요.');
     } else if (storeCategoryType == '기타' && storeCategoryTypeEtc == '') {
       dispatch(setSplashVisible(false));
       alertModal('', '기타 사업장분류를 입력해주세요.');
-      console.log('기타 사업장분류를 입력해주세요.');
-    } else if (commuteTypeCheck[0] && distanceCheck == false) {
+    } else if (commuteTypeCheck[1] && distanceCheck == false) {
       dispatch(setSplashVisible(false));
       alertModal('', '출퇴근 허용거리를 선택해주세요.');
-      console.log('출퇴근 허용거리를 선택해주세요.');
     } else {
       try {
         dispatch(setSplashVisible(true));
@@ -207,8 +198,8 @@ export default ({route: {params}}) => {
 
   useEffect(() => {
     setADDR1(params?.addr ?? '');
-    setLAT(params?.lat ?? '');
-    setLONG(params?.long ?? '');
+    setLAT(params?.LAT ?? '');
+    setLONG(params?.LONG ?? '');
   }, [params]);
 
   useEffect(() => {

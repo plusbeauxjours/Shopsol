@@ -398,8 +398,8 @@ export default ({
                   <SheetTouchable
                     key={index}
                     onPress={() => {
-                      setJoinRoute(data.TITLE);
                       sheetRef.current.close();
+                      setJoinRoute(data.TITLE);
                     }}>
                     <NameText>{data.TITLE}</NameText>
                   </SheetTouchable>

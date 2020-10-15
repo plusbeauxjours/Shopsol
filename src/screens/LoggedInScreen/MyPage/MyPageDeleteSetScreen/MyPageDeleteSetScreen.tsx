@@ -116,7 +116,6 @@ export default () => {
         MobileNo: MOBILE_NO,
         MEMBER_SEQ,
       });
-      console.log(data);
       if (data.message !== 'SUCCESS') {
         alertModal('연결에 실패하였습니다.');
       }

@@ -81,7 +81,6 @@ export default () => {
         MEMBER_SEQ,
         STORE: positionTypeCheck.indexOf(true),
       });
-      console.log(data);
       if (data.message !== 'SUCCESS') {
         alertModal('연결에 실패하였습니다.');
       }

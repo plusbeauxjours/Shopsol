@@ -43,7 +43,6 @@ const userSlice = createSlice({
     },
     setSTORE(state, action) {
       const {payload: STORE} = action;
-      console.log(STORE);
       return {
         ...state,
         STORE,
@@ -51,7 +50,6 @@ const userSlice = createSlice({
     },
     setUSER(state, action) {
       const {payload: userInfo} = action;
-      console.log(userInfo);
       return {
         ...state,
         MEMBER_SEQ: userInfo.MEMBER_SEQ,

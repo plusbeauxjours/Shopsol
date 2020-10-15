@@ -74,6 +74,7 @@ export default {
   getWaitEmpList: (STORE_SEQ: string) =>
     oldApi('get', `/Store/get_wait_emp_list?STORE_SEQ=${STORE_SEQ}`),
   getCertificate: (data: any) => callApi('post', '/auth/getCERTIFICATE/', data),
+  updateStore: (data: any) => oldApi('put', '/Store/update2', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -89,7 +90,6 @@ export default {
   // storeHealthEmpDetail: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/emphealthdetail?EMP_SEQ=${EMP_SEQ}&`),
 
-  // updateStore: (data: any) => callApi('post', '/auth/updatestore', data),
   // cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
   // rejectJoin: (data: any) => callApi('post', '/auth/reject_join/', data),
   // sendOneEmp: (data: any) => callApi('post', '/auth/sendOneEmp', data),

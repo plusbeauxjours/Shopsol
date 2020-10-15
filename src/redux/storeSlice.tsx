@@ -45,8 +45,15 @@ const storeSlice = createSlice({
           EARLY_FLAG,
           EARLY_TIME,
           CALCULATE_DAY,
+          GPS,
+          JULI,
+          CATEGORY,
+          other,
+          LAT,
+          LONG,
         },
       } = action;
+      console.log('GPS', GPS);
       state.STORE_DATA.resultdata.NAME = NAME;
       state.STORE_DATA.resultdata.ADDR1 = ADDR1;
       state.STORE_DATA.resultdata.ADDR2 = ADDR2;
@@ -56,6 +63,12 @@ const storeSlice = createSlice({
       state.STORE_DATA.resultdata.EARLY_FLAG = EARLY_FLAG;
       state.STORE_DATA.resultdata.EARLY_TIME = EARLY_TIME;
       state.STORE_DATA.resultdata.CALCULATE_DAY = CALCULATE_DAY;
+      state.STORE_DATA.resultdata.GPS = GPS;
+      state.STORE_DATA.resultdata.JULI = JULI;
+      state.STORE_DATA.resultdata.CATEGORY = CATEGORY;
+      state.STORE_DATA.resultdata.other = other;
+      state.STORE_DATA.resultdata.LAT = LAT;
+      state.STORE_DATA.resultdata.LONG = LONG;
     },
     closeSTORE_DATA(state) {
       return {

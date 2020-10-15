@@ -7,6 +7,7 @@ const callApi = async (method: string, path: string, data?: any) => {
   };
   const baseUrl = 'http://133.186.210.223:3003/api';
   const fullUrl = `${baseUrl}${path}`;
+  console.log(method, fullUrl, data, {headers});
   if (method === 'get' || method === 'delete') {
     return axios[method](fullUrl, {headers});
   } else {
@@ -14,31 +15,18 @@ const callApi = async (method: string, path: string, data?: any) => {
   }
 };
 
-const oldApi = async (
-  method: string,
-  path: string,
-  data?: any,
-  isImg?: boolean,
-) => {
+const oldApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-
   const baseUrl = 'http://133.186.210.223:80/api/v2';
   const fullUrl = `${baseUrl}${path}`;
-
+  console.log(method, fullUrl, data, {headers});
   if (method === 'get' || method === 'delete') {
-    console.log(fullUrl);
     return axios[method](fullUrl, {headers});
   } else {
-    if (isImg) {
-      console.log(fullUrl, data);
-      return axios[method](fullUrl, data, {headers});
-    } else {
-      console.log(fullUrl, data);
-      return axios[method](fullUrl, data, {headers});
-    }
+    return axios[method](fullUrl, data, {headers});
   }
 };
 

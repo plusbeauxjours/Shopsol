@@ -268,6 +268,7 @@ export default ({
   setNAME,
   submit,
   helparr,
+  commuteType,
   setCommuteType,
   commuteTypeCheck,
   setCommuteTypeCheck,
@@ -331,7 +332,7 @@ export default ({
           value.fill(false);
           value[selection] = true;
           setCommuteTypeCheck(value);
-          setCommuteType(selection);
+          setCommuteType(selection == 0 ? '1' : '0');
         }}>
         {commuteTypeCheck[selection] ? (
           <RadioBtnOnIcon size={25} color="#e85356" />
@@ -435,11 +436,11 @@ export default ({
               <HelpCircleIcon />
             </RowTouchable>
             <TypeCheckCase>
-              <CommuteType selection={1} text={'GPS 출퇴근'} />
-              <CommuteType selection={0} text={'QR코드 출퇴근'} />
+              <CommuteType selection={0} text={'GPS 출퇴근'} />
+              <CommuteType selection={1} text={'QR코드 출퇴근'} />
             </TypeCheckCase>
             <WhiteSpace />
-            {commuteTypeCheck[1] == true && (
+            {commuteTypeCheck[0] == true && (
               <>
                 <RowTouchable
                   onPress={() =>
@@ -709,7 +710,6 @@ export default ({
               NAME !== '' &&
               ADDR1 !== '' &&
               ADDR2 !== '' &&
-              categoryCheck == true &&
               timeCheck == true &&
               EARLYtimeCheck == true &&
               dayCheck == true &&
