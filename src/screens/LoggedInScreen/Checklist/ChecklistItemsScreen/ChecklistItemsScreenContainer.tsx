@@ -233,7 +233,6 @@ export default () => {
   };
 
   useEffect(() => {
-    console.log(MAX_CHECK_COUNT, CHECK_COUNT);
     dispatch(getCHECKLIST_DATA());
     markingFn(
       moment().format('YYYY'),

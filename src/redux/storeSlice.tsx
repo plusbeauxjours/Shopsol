@@ -53,7 +53,6 @@ const storeSlice = createSlice({
           LONG,
         },
       } = action;
-      console.log('GPS', GPS);
       state.STORE_DATA.resultdata.NAME = NAME;
       state.STORE_DATA.resultdata.ADDR1 = ADDR1;
       state.STORE_DATA.resultdata.ADDR2 = ADDR2;

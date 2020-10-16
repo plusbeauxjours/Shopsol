@@ -16,7 +16,6 @@ export default ({route: {params}}) => {
     (state: any) => state.storeReducer,
   );
 
-  console.log('STORE_DATA', STORE_DATA);
   const [CLOSE_FLAG, setCLOSE_FLAG] = useState<boolean>(
     STORE_DATA?.resultdata?.CLOSE_FLAG == '0' ? false : true || false,
   );
@@ -164,7 +163,6 @@ export default ({route: {params}}) => {
   };
   // 수정하기버튼
   const submit = async (sign) => {
-    console.log('commuteType state', commuteType);
     if (sign == 'close') {
       alertModal('', '매장의 폐업처리가 완료되었습니다.');
       navigation.reset({

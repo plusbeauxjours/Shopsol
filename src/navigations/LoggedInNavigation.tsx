@@ -277,7 +277,7 @@ export default () => {
             title: '체크리스트 목록',
           }}
         />
-        {/* <LoggedInNavigation.Screen
+        <LoggedInNavigation.Screen
           name="ChecklistSpecificationScreen"
           component={ChecklistSpecificationScreen}
           options={{
@@ -292,7 +292,7 @@ export default () => {
             headerTitle: '체크리스트 체크상세',
             title: '체크리스트 상세 (점장)',
           }}
-        /> */}
+        />
         {/* 업무일지======================================================== */}
         {/* <LoggedInNavigation.Screen
           name="ChecklistShareMainScreen"

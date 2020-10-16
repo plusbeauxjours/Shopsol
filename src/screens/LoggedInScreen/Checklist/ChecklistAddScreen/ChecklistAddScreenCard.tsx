@@ -16,7 +16,7 @@ export default ({name, image}) => {
       <FastImage
         style={{width: 60, height: 60, borderRadius: 30}}
         source={{
-          uri: 'http://cuapi.shop-sol.com/uploads/' + image,
+          uri: 'http://133.186.210.223/uploads/' + image,
           headers: {Authorization: 'someAuthToken'},
           priority: FastImage.priority.low,
         }}

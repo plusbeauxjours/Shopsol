@@ -1,0 +1,2 @@
+import ChecklistSpecificationScreenContainer from "./ChecklistSpecificationScreenContainer"
+export default ChecklistSpecificationScreenContainer

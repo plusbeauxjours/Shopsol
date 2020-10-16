@@ -21,24 +21,23 @@ export default ({route: {params}}) => {
     CHECK_LIST = [],
     CHECK_TIME = null,
     type = null,
-    CHECK_TYPE = null,
     EMP_SEQ = null,
   } = params;
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
   const [choiceEmp, setChoiceEmp] = useState<any>([]);
   const [isCheckedEmpChoise, setIsCheckedEmpChoise] = useState<boolean>(
-    CHECK_TYPE === '1' ? true : false,
+    EMP_SEQ ? true : false,
   );
   const [emplist, setEmplist] = useState<any>([]);
   const [TITLE, setTITLE] = useState<string>(CHECK_TITLE || null);
   const [checklistInput, setChecklistInput] = useState<string>('');
   const [LIST, setLIST] = useState<any>(CHECK_LIST || []);
   const [isNoCheckedtime, setIsNoCheckedtime] = useState<boolean>(
-    CHECK_TIME ? false : true,
+    CHECK_TIME?.length > 0 ? false : true,
   );
   const [isCheckedCamera, setIsCheckedCamera] = useState<boolean>(
-    PHOTO_CHECK ? true : false,
+    PHOTO_CHECK == '1' ? true : false,
   );
   const [customChecktime, setCustomChecktime] = useState<string>(
     CHECK_TIME || null,
@@ -127,7 +126,7 @@ export default ({route: {params}}) => {
     if (TITLE == '') {
       alertModal('체크포인트를 입력해주세요');
     }
-    if (isCheckedEmpChoise) {
+    if (isCheckedEmpChoise && sign !== 'close') {
       if (buffer.length == 0) {
         return alertModal('체크리스트 담당 직원을 선택해주세요');
       }
@@ -201,7 +200,7 @@ export default ({route: {params}}) => {
             PHOTO_CHECK: isCheckedCamera ? '1' : '0',
             EMP_SEQ: newChoiceEmp,
           });
-          if (data.resultmsg === 'SUCCESS') {
+          if (data.message === 'SUCCESS') {
             navigation.pop(2);
             alertModal(
               `체크리스트가 ${sign == 'close' ? '삭제' : '수정'}되었습니다.`,
@@ -219,7 +218,7 @@ export default ({route: {params}}) => {
             createdData: isNoCheckedtime ? '' : customChecktime,
             PHOTO_CHECK: isCheckedCamera ? '1' : '0',
           });
-          if (data.resultmsg === 'SUCCESS') {
+          if (data.message === 'SUCCESS') {
             navigation.pop(2);
             alertModal(
               `체크리스트가 ${sign == 'close' ? '삭제' : '수정'}되었습니다.`,

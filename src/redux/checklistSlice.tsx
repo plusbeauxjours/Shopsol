@@ -38,7 +38,6 @@ export const getCHECKLIST_DATA = (
   try {
     dispatch(setSplashVisible(true));
     const {data} = await api.getChecklist(STORE_SEQ, date);
-    console.log(data);
     if (data.message === 'SUCCESS') {
       dispatch(setCHECKLIST_DATA(data.result));
     }

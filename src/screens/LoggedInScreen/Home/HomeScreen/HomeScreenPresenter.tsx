@@ -551,7 +551,7 @@ export default ({
                     {TOTAL_COUNT !== 0 && (
                       <MenuCntContainer
                         selection={'QR보기'}
-                        paging={'qrView'}
+                        paging={'qrViewScreen'}
                       />
                     )}
                   </Container>

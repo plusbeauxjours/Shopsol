@@ -100,6 +100,11 @@ export default {
   checkRegister: (data: any) => oldApi('post', '/Store/CheckRegister/', data),
   getEmployeeList: (data: any) => oldApi('post', '/Employee/getEmpList/', data),
   checkUpdate: (data: any) => oldApi('post', '/Store/CheckUpdate/', data),
+  getAllCheckSchedules: (data: any) =>
+    callApi('post', '/auth/getAllCheckSchedules/', data),
+  setCheckListImg2: (data: any) =>
+    callApi('post', '/auth/setCheckListImg2/', data),
+  setCheckList2: (data: any) => callApi('post', '/auth/setCheckList2/', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -138,11 +143,6 @@ export default {
   //   callApi('get', `/auth/getempinfo?EMP_SEQ=${EMP_SEQ}&`),
   // getSchedules: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/getschedules?EMP_SEQ=${EMP_SEQ}&`),
-  // getAllCheckSchedules: (data: any) =>
-  //   callApi('post', '/auth/getAllCheckSchedules/', data),
-  // setCheckListImg2: (data: any) =>
-  //   callApi('post', '/auth/setCheckListImg2/', data, true),
-  // setCheckList2: (data: any) => callApi('post', '/auth/setCheckList2/', data),
   // setNoticeFavorite: (data: any) =>
   //   callApi('post', '/auth/setNoticeFavorite/', data),
   // getNotice: (STORE_SEQ: string, DATE: string, STORE: string) =>

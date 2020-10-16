@@ -255,7 +255,6 @@ export default ({
 }) => {
   const yesterday = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
   const tomorrow = moment(date).add(1, 'days').format('YYYY-MM-DD');
-
   const CheckState = ({check}) => {
     let checkState;
     if (check !== null) {

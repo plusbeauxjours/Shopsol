@@ -21,7 +21,7 @@ import DatePickerModal from 'react-native-modal-datetime-picker';
 import utils from '~/constants/utils';
 
 interface IsSelected {
-  isSelected: boolean;
+  isSelected?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -89,11 +89,11 @@ const ChecktimeButton = styled.TouchableOpacity`
   padding: 5px 20px;
   border-width: 1px;
   border-radius: 30px;
-  border-color: #642a8c;
+  border-color: #e85356;
 `;
 
 const ChecktimeButtonText = styled.Text<IsSelected>`
-  color: #642a8c;
+  color: #e85356;
   font-weight: ${(props) => (props.isSelected ? 'bold' : '400')};
 `;
 
@@ -228,7 +228,7 @@ export default ({
             </Row>
             <TextInput
               placeholder={'ex. 주방'}
-              selectionColor={'#642A8C'}
+              selectionColor={'#999'}
               placeholderTextColor={'#E5E5E5'}
               onChangeText={(text) => setTITLE(text)}
               value={TITLE}
@@ -241,7 +241,7 @@ export default ({
             </Row>
             <TextInput
               placeholder={'ex. 가스벨브 잠그기'}
-              selectionColor={'#642A8C'}
+              selectionColor={'#999'}
               placeholderTextColor={'#E5E5E5'}
               onChangeText={(text) => setChecklistInput(text)}
               value={checklistInput}
@@ -454,7 +454,6 @@ export default ({
         is24Hour={true}
         onCancel={() => setIsCustomModalVisible(false)}
         display="default"
-        pickerContainerStyleIOS={{backgroundColor: 'red'}}
       />
     </BackGround>
   );
