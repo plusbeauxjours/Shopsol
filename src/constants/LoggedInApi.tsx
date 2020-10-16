@@ -89,6 +89,14 @@ export default {
     callApi('post', '/auth/deleteshelfLifeData/', data),
   setShelfLifeData: (data: any) =>
     callApi('post', '/auth/setshelfLifeData/', data),
+  checkChecklist: (data: any) => oldApi('post', '/StoreAuth/checklist', data),
+  getChecklist: (STORE: string, DATE: string) =>
+    oldApi('get', `/Store/Checklist?STORE=${STORE}&DATE=${DATE}&`),
+  getChecklistAll: (storeID: string, YEAR: string, MONTH: string) =>
+    oldApi(
+      'get',
+      `/Store/ChecklistAll?STORE=${storeID}&YEAR=${YEAR}&MONTH=${MONTH}`,
+    ),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -198,19 +206,13 @@ export default {
   // getEmpPay: (data: any) => oldApi('post', '/Employee/getEmpPay/', data),
   // getScheduleRestTimeCreate: (data: any) =>
   //   oldApi('post', '/Management/schedule_Rest_TIme_create/', data),
-  // checkChecklist: (data: any) => oldApi('post', '/StoreAuth/checklist', data),
+
   // monthLists: (STORE_ID: string, EMP_ID: string, YEAR: string, MONTH: string) =>
   //   noPortApi(
   //     'get',
   //     `/PayMents/month_lists?STORE_ID=${STORE_ID}&EMP_ID=${EMP_ID}&YEAR=${YEAR}&MONTH=${MONTH}&`,
   //   ),
-  // getChecklistAll: (storeID: string, YEAR: string, MONTH: string) =>
-  //   oldApi(
-  //     'get',
-  //     `/Store/ChecklistAll?STORE=${storeID}&YEAR=${YEAR}&MONTH=${MONTH}&`,
-  //   ),
-  // getChecklist: (STORE: string, DATE: string) =>
-  //   oldApi('get', `/Store/Checklist?STORE=${STORE}&DATE=${DATE}&`),
+
   // getAllSchedules: (STORE_SEQ: string, YEAR: string, MONTH: string) =>
   //   oldApi(
   //     'get',

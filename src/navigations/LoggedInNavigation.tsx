@@ -40,16 +40,16 @@ import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLife
 // import WorkDayRestTimeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTimeScreen';
 
 // 체크리스트========================================================
-// import ChecklistAddScreen from '../screens/LoggedInScreen/Checklist/ChecklistAddScreen';
-// import ChecklistItemsScreen from '../screens/LoggedInScreen/Checklist/ChecklistItemsScreen';
-// import ChecklistSpecificationScreen from '../screens/LoggedInScreen/Checklist/ChecklistSpecificationScreen';
-// import ChecklistDetailScreen from '../screens/LoggedInScreen/Checklist/ChecklistDetailScreen';
+import ChecklistAddScreen from '../screens/LoggedInScreen/Checklist/ChecklistAddScreen';
+import ChecklistItemsScreen from '../screens/LoggedInScreen/Checklist/ChecklistItemsScreen';
+import ChecklistSpecificationScreen from '../screens/LoggedInScreen/Checklist/ChecklistSpecificationScreen';
+import ChecklistDetailScreen from '../screens/LoggedInScreen/Checklist/ChecklistDetailScreen';
 
 // 업무일지========================================================
-// import ChecklistShareMainScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareMainScreen';
-// import ChecklistShareItemScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareItemScreen';
-// import ChecklistShareInsertScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareInsertScreen';
-// import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/Checklist/ChecklistShareUpdateScreen';
+import ChecklistShareMainScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareMainScreen';
+import ChecklistShareItemScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareItemScreen';
+import ChecklistShareInsertScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
+import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
 
 // 교육컨텐츠========================================================
 // import MyCuMonthlyListScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyListScreen';
@@ -260,6 +260,69 @@ export default () => {
             title: '유통기한 등록',
           }}
         />
+        {/* 체크리스트======================================================== */}
+        {/* <LoggedInNavigation.Screen
+          name="ChecklistAddScreen"
+          component={ChecklistAddScreen}
+          options={{
+            headerTitle: '체크리스트 입력',
+            title: '체크리스트 등록 & 수정',
+          }}
+        /> */}
+        <LoggedInNavigation.Screen
+          name="ChecklistItemsScreen"
+          component={ChecklistItemsScreen}
+          options={{
+            headerTitle: '체크리스트',
+            title: '체크리스트 목록',
+          }}
+        />
+        {/* <LoggedInNavigation.Screen
+          name="ChecklistSpecificationScreen"
+          component={ChecklistSpecificationScreen}
+          options={{
+            headerTitle: '체크리스트 상세',
+            title: '체크리스트 상세 (직원)',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="ChecklistDetailScreen"
+          component={ChecklistDetailScreen}
+          options={{
+            headerTitle: '체크리스트 체크상세',
+            title: '체크리스트 상세 (점장)',
+          }}
+        /> */}
+        {/* 업무일지======================================================== */}
+        {/* <LoggedInNavigation.Screen
+          name="ChecklistShareMainScreen"
+          component={ChecklistShareMainScreen}
+          options={{
+            headerTitle: '업무일지',
+            title: '업무일지 목록',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="ChecklistShareItemScreen"
+          component={ChecklistShareItemScreen}
+          options={({route: {params}}: any) => ({
+            headerTitle: `${params?.TITLE} 상세`,
+          })}
+        />
+        <LoggedInNavigation.Screen
+          name="ChecklistShareInsertScreen"
+          component={ChecklistShareInsertScreen}
+          options={({route: {params}}: any) => ({
+            headerTitle: `${params?.TITLE} 등록`,
+          })}
+        />
+        <LoggedInNavigation.Screen
+          name="ChecklistShareUpdateScreen"
+          component={ChecklistShareUpdateScreen}
+          options={({route: {params}}: any) => ({
+            headerTitle: `${params?.TITLE} 수정`,
+          })}
+        /> */}
         {/* 
         직원관리========================================================
         <LoggedInNavigation.Screen
@@ -425,70 +488,7 @@ export default () => {
           }}
         />
 
-        체크리스트========================================================
-        <LoggedInNavigation.Screen
-          name="ChecklistAddScreen"
-          component={ChecklistAddScreen}
-          options={{
-            headerTitle: '체크리스트 입력',
-            title: '체크리스트 등록 & 수정',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="ChecklistItemsScreen"
-          component={ChecklistItemsScreen}
-          options={{
-            headerTitle: '체크리스트',
-            title: '체크리스트 목록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="ChecklistSpecificationScreen"
-          component={ChecklistSpecificationScreen}
-          options={{
-            headerTitle: '체크리스트 상세',
-            title: '체크리스트 상세 (직원)',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="ChecklistDetailScreen"
-          component={ChecklistDetailScreen}
-          options={{
-            headerTitle: '체크리스트 체크상세',
-            title: '체크리스트 상세 (점장)',
-          }}
-        />
-
-        업무일지========================================================
-        <LoggedInNavigation.Screen
-          name="ChecklistShareMainScreen"
-          component={ChecklistShareMainScreen}
-          options={{
-            headerTitle: '업무일지',
-            title: '업무일지 목록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="ChecklistShareItemScreen"
-          component={ChecklistShareItemScreen}
-          options={({route: {params}}: any) => ({
-            headerTitle: `${params?.TITLE} 상세`,
-          })}
-        />
-        <LoggedInNavigation.Screen
-          name="ChecklistShareInsertScreen"
-          component={ChecklistShareInsertScreen}
-          options={({route: {params}}: any) => ({
-            headerTitle: `${params?.TITLE} 등록`,
-          })}
-        />
-        <LoggedInNavigation.Screen
-          name="ChecklistShareUpdateScreen"
-          component={ChecklistShareUpdateScreen}
-          options={({route: {params}}: any) => ({
-            headerTitle: `${params?.TITLE} 수정`,
-          })}
-        />
+      
 
         교육컨텐츠========================================================
         <LoggedInNavigation.Screen

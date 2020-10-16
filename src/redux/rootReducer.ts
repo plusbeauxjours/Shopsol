@@ -9,6 +9,7 @@ import mypageReducer from "./mypageSlice";
 import employeeReducer from "./employeeSlice"
 import healthReducer from "./healthSlice"
 import shelflifeReducer from "./shelflifeSlice"
+import checklistReducer from "./checklistSlice"
 
 export default combineReducers({
     userReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
     employeeReducer,
     healthReducer,
     shelflifeReducer,
+    checklistReducer
 });
