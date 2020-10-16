@@ -182,6 +182,9 @@ export default ({route: {params}}) => {
       dispatch(getCHECKLIST_SHARE_DATA1(date));
     } else if (location === 'secondRoute') {
       dispatch(getCHECKLIST_SHARE_DATA2(date));
+    } else {
+      dispatch(getCHECKLIST_SHARE_DATA1(date));
+      dispatch(getCHECKLIST_SHARE_DATA2(date));
     }
   };
 

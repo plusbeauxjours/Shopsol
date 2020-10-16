@@ -202,6 +202,7 @@ export const getCHECKLIST_SHARE_DATA1 = (date) => async (
   }
   try {
     const {data} = await api.getNotice(STORE_SEQ, date, '1', MEMBER_SEQ);
+    console.log('getCHECKLIST_SHARE_DATA1', data);
     for (let a = 0; a < data.basic.length; a++) {
       if (data.basic[a].NoticeCheck_SEQ == null) {
         dispatch(increaseNEW_CNT1());
@@ -238,6 +239,7 @@ export const getCHECKLIST_SHARE_DATA2 = (date) => async (
   }
   try {
     const {data} = await api.getNotice(STORE_SEQ, date, '0', MEMBER_SEQ);
+    console.log('getCHECKLIST_SHARE_DATA2', data);
     for (let a = 0; a < data.basic.length; a++) {
       if (data.basic[a].NoticeCheck_SEQ == null) {
         dispatch(increaseNEW_CNT2());
