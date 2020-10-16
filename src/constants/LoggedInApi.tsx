@@ -105,6 +105,34 @@ export default {
   setCheckListImg2: (data: any) =>
     callApi('post', '/auth/setCheckListImg2/', data),
   setCheckList2: (data: any) => callApi('post', '/auth/setCheckList2/', data),
+  getNoticeAll: (
+    STORE_SEQ: string,
+    YEAR: string,
+    MONTH: number,
+    TYPE: string,
+  ) =>
+    oldApi(
+      'get',
+      `/Store/noticeAll?STORE_SEQ=${STORE_SEQ}&YEAR=${YEAR}&MONTH=${MONTH}&TYPE=${TYPE}`,
+    ),
+  getNotice: (
+    STORE_SEQ: string,
+    DATE: string,
+    STORE: string,
+    MEMBER_SEQ: string,
+  ) =>
+    oldApi(
+      'get',
+      `/Employee/getNotice2?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&DATE=${DATE}&MEMBER_SEQ=${MEMBER_SEQ}`,
+    ),
+  setNoticeFavorite: (data: any) =>
+    callApi('post', '/auth/setNoticeFavorite/', data),
+  getNoticeComment: (NOTICE_SEQ: string, STORE_SEQ: string, TITLE: string) =>
+    oldApi(
+      'get',
+      `/Employee/getNoticeComment?NOTICE_SEQ=${NOTICE_SEQ}&STORE_SEQ=${STORE_SEQ}&TITLE=${TITLE}`,
+    ),
+
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -143,13 +171,7 @@ export default {
   //   callApi('get', `/auth/getempinfo?EMP_SEQ=${EMP_SEQ}&`),
   // getSchedules: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/getschedules?EMP_SEQ=${EMP_SEQ}&`),
-  // setNoticeFavorite: (data: any) =>
-  //   callApi('post', '/auth/setNoticeFavorite/', data),
-  // getNotice: (STORE_SEQ: string, DATE: string, STORE: string) =>
-  //   callApi(
-  //     'get',
-  //     `/auth/getNotice?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&DATE=${DATE}&`,
-  //   ),
+
   // getCuNotice: (STORE_SEQ: string) =>
   //   callApi('get', `/auth/getCuNotice?STORE_SEQ=${STORE_SEQ}&`),
   // editNoticeComment: (COM_SEQ: string, CONTENTS: string) =>
@@ -169,11 +191,7 @@ export default {
   //     'get',
   //     `/auth/setNoticeComment?NOTICE_SEQ=${NOTICE_SEQ}&EMP_NAME=${EMP_NAME}&CONTENTS=${CONTENTS}&STORE=${STORE}&`,
   //   ),
-  // getNoticeComment: (NOTICE_SEQ: string, STORE_SEQ: string, TITLE: string) =>
-  //   callApi(
-  //     'get',
-  //     `/auth/getNoticeComment?NOTICE_SEQ=${NOTICE_SEQ}&STORE_SEQ=${STORE_SEQ}&TITLE=${TITLE}&`,
-  //   ),
+
   // setNoticeImg2: (data: any) =>
   //   callApi('post', '/auth/setNoticeImg2/', data, true),
   // setNotice2: (data: any) => callApi('post', '/auth/setNotice2/', data),
@@ -223,16 +241,7 @@ export default {
   //   ),
   // getEmpLists: (STORE_SEQ: string) =>
   //   oldApi('get', `/Store/get_emp_lists?STORE_SEQ=${STORE_SEQ}&`),
-  // getNoticeAll: (
-  //   STORE_SEQ: string,
-  //   YEAR: string,
-  //   MONTH: number,
-  //   TYPE: string,
-  // ) =>
-  //   oldApi(
-  //     'get',
-  //     `/Store/noticeAll?STORE_SEQ=${STORE_SEQ}&YEAR=${YEAR}&MONTH=${MONTH}&TYPE=${TYPE}&`,
-  //   ),
+
   // setpdfcheck: (PDF_SEQ: string) =>
   //   oldApi('get', `/Store/setpdfcheck?PDF_SEQ=${PDF_SEQ}&`),
   // updateEmp: (data: any) => oldApi('put', '/Employee/update/', data),

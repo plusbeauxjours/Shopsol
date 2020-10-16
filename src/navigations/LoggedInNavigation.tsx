@@ -47,9 +47,9 @@ import ChecklistDetailScreen from '../screens/LoggedInScreen/Checklist/Checklist
 
 // 업무일지========================================================
 import ChecklistShareMainScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareMainScreen';
-import ChecklistShareItemScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareItemScreen';
-import ChecklistShareInsertScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
-import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
+// import ChecklistShareItemScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareItemScreen';
+// import ChecklistShareInsertScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
+// import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
 
 // 교육컨텐츠========================================================
 // import MyCuMonthlyListScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyListScreen';
@@ -294,7 +294,7 @@ export default () => {
           }}
         />
         {/* 업무일지======================================================== */}
-        {/* <LoggedInNavigation.Screen
+        <LoggedInNavigation.Screen
           name="ChecklistShareMainScreen"
           component={ChecklistShareMainScreen}
           options={{
@@ -302,7 +302,7 @@ export default () => {
             title: '업무일지 목록',
           }}
         />
-        <LoggedInNavigation.Screen
+        {/* <LoggedInNavigation.Screen
           name="ChecklistShareItemScreen"
           component={ChecklistShareItemScreen}
           options={({route: {params}}: any) => ({
