@@ -127,11 +127,34 @@ export default {
     ),
   setNoticeFavorite: (data: any) =>
     callApi('post', '/auth/setNoticeFavorite/', data),
-  getNoticeComment: (NOTICE_SEQ: string, STORE_SEQ: string, TITLE: string) =>
+  setNoticeComment: (
+    NOTICE_SEQ: string,
+    EMP_NAME: string,
+    CONTENTS: string,
+    STORE: string,
+    MEMBER_SEQ: string,
+  ) =>
     oldApi(
       'get',
-      `/Employee/getNoticeComment?NOTICE_SEQ=${NOTICE_SEQ}&STORE_SEQ=${STORE_SEQ}&TITLE=${TITLE}`,
+      `/Employee/setNoticeComment?NOTICE_SEQ=${NOTICE_SEQ}&EMP_NAME=${EMP_NAME}&CONTENTS=${CONTENTS}&STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`,
     ),
+  getNoticeComment: (
+    NOTICE_SEQ: string,
+    STORE_SEQ: string,
+    TITLE: string,
+    MEMBER_SEQ: string,
+  ) =>
+    oldApi(
+      'get',
+      `/Employee/getNoticeComment?NOTICE_SEQ=${NOTICE_SEQ}&STORE_SEQ=${STORE_SEQ}&TITLE=${TITLE}&MEMBER_SEQ=${MEMBER_SEQ}`,
+    ),
+  editNoticeComment: (COM_SEQ: string, CONTENTS: string) =>
+    oldApi(
+      'get',
+      `/Employee/editNoticeComment?COM_SEQ=${COM_SEQ}&CONTENTS=${CONTENTS}`,
+    ),
+  delNoticeComment: (COM_SEQ: string) =>
+    oldApi('get', `/Employee/delNoticeComment?COM_SEQ=${COM_SEQ}`),
 
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
@@ -174,23 +197,6 @@ export default {
 
   // getCuNotice: (STORE_SEQ: string) =>
   //   callApi('get', `/auth/getCuNotice?STORE_SEQ=${STORE_SEQ}&`),
-  // editNoticeComment: (COM_SEQ: string, CONTENTS: string) =>
-  //   callApi(
-  //     'get',
-  //     `/auth/editNoticeComment?COM_SEQ=${COM_SEQ}&CONTENTS=${CONTENTS}&`,
-  //   ),
-  // delNoticeComment: (COM_SEQ: string) =>
-  //   callApi('get', `/auth/delNoticeComment?COM_SEQ=${COM_SEQ}&`),
-  // setNoticeComment: (
-  //   NOTICE_SEQ: string,
-  //   EMP_NAME: string,
-  //   CONTENTS: string,
-  //   STORE: string,
-  // ) =>
-  //   callApi(
-  //     'get',
-  //     `/auth/setNoticeComment?NOTICE_SEQ=${NOTICE_SEQ}&EMP_NAME=${EMP_NAME}&CONTENTS=${CONTENTS}&STORE=${STORE}&`,
-  //   ),
 
   // setNoticeImg2: (data: any) =>
   //   callApi('post', '/auth/setNoticeImg2/', data, true),

@@ -202,7 +202,6 @@ export const getCHECKLIST_SHARE_DATA1 = (date) => async (
   }
   try {
     const {data} = await api.getNotice(STORE_SEQ, date, '1', MEMBER_SEQ);
-    console.log(data);
     for (let a = 0; a < data.basic.length; a++) {
       if (data.basic[a].NoticeCheck_SEQ == null) {
         dispatch(increaseNEW_CNT1());
@@ -239,7 +238,6 @@ export const getCHECKLIST_SHARE_DATA2 = (date) => async (
   }
   try {
     const {data} = await api.getNotice(STORE_SEQ, date, '0', MEMBER_SEQ);
-    console.log(data);
     for (let a = 0; a < data.basic.length; a++) {
       if (data.basic[a].NoticeCheck_SEQ == null) {
         dispatch(increaseNEW_CNT2());
@@ -265,17 +263,17 @@ export const getCHECKLIST_COMMENTS = (NOTICE_SEQ, TITLE) => async (
   const {
     storeReducer: {STORE_SEQ},
   } = getState();
-
+  const {
+    userReducer: {MEMBER_SEQ},
+  } = getState();
   try {
     const {data} = await api.getNoticeComment(
       NOTICE_SEQ,
       STORE_SEQ,
       TITLE == '공지사항' ? '1' : '0',
+      MEMBER_SEQ,
     );
-    console.log(data);
-    if (data.resultmsg === '1') {
-      dispatch(setCHECKLIST_SHARE_COMMENTS(data.resultdata));
-    }
+    dispatch(setCHECKLIST_SHARE_COMMENTS(data.message));
   } catch (e) {
     console.log(e);
   }
