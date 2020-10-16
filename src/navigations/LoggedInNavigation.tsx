@@ -31,8 +31,8 @@ import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLife
 // import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
 
 // 캘린더========================================================
-// import CalendarAddScreen from '../screens/LoggedInScreen/Calendar/CalendarAddScreen';
-// import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
+import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
+import CalendarAddScreen from '../screens/LoggedInScreen/Calendar/CalendarAddScreen';
 // import WorkTimeScreen from '../screens/LoggedInScreen/Calendar/WorkTimeScreen';
 // import RealWorkTimeScreen from '../screens/LoggedInScreen/Calendar/RealWorkTimeScreen';
 // import WorkDayScreen from '../screens/LoggedInScreen/Calendar/WorkDayScreen';
@@ -323,6 +323,25 @@ export default () => {
             headerTitle: `${params?.TITLE} 수정`,
           })}
         />
+        {/* 캘린더======================================================== */}
+        <LoggedInNavigation.Screen
+          name="CalendarInfoScreen"
+          component={CalendarInfoScreen}
+          options={{
+            headerTitle: '일정관리',
+            title: '일정관리 목록',
+            headerRight: () => <CalendarInfoHeader />,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="CalendarAddScreen"
+          component={CalendarAddScreen}
+          options={{
+            headerTitle: '일정추가',
+            title: '일정관리 등록',
+          }}
+        />
+
         {/* 
         직원관리========================================================
         <LoggedInNavigation.Screen
@@ -429,24 +448,7 @@ export default () => {
 
     
 
-        캘린더========================================================
-        <LoggedInNavigation.Screen
-          name="CalendarAddScreen"
-          component={CalendarAddScreen}
-          options={{
-            headerTitle: '일정추가',
-            title: '일정관리 등록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="CalendarInfoScreen"
-          component={CalendarInfoScreen}
-          options={{
-            headerTitle: '일정관리',
-            title: '일정관리 목록',
-            headerRight: () => <CalendarInfoHeader />,
-          }}
-        />
+    
         <LoggedInNavigation.Screen
           name="WorkTimeScreen"
           component={WorkTimeScreen}

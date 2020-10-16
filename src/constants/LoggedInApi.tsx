@@ -160,6 +160,15 @@ export default {
   updateNotice: (data: any) => callApi('post', '/auth/updateNotice/', data),
   updateNoticeImg: (data: any) =>
     callApi('post', '/auth/updateNoticeImg/', data),
+  getAllSchedules: (STORE_SEQ: string, YEAR: string, MONTH: string) =>
+    oldApi(
+      'get',
+      `/Store/getAllSchedules?STORE_SEQ=${STORE_SEQ}&YEAR=${YEAR}&MONTH=${MONTH}`,
+    ),
+  cancelScheduleVacation: (data: any) =>
+    oldApi('post', '/Management/cancelScheduleVacation/', data),
+  createNewSchedule: (data: any) =>
+    oldApi('post', '/Management/new_schedule_create/', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -204,8 +213,7 @@ export default {
 
   // setEmpType: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/request_join?EMP_SEQ=${EMP_SEQ}&`),
-  // cancelScheduleVacation: (data: any) =>
-  //   callApi('post', '/auth/cancelScheduleVacation/', data),
+
   // getScheduleRestTimeUpdate: (data: any) =>
   //   callApi('post', '/auth/updateRestTime/', data),
   // deleteSchedule: (data: any) => callApi('post', '/auth/deleteschedule/', data),
@@ -238,11 +246,6 @@ export default {
   //     `/PayMents/month_lists?STORE_ID=${STORE_ID}&EMP_ID=${EMP_ID}&YEAR=${YEAR}&MONTH=${MONTH}&`,
   //   ),
 
-  // getAllSchedules: (STORE_SEQ: string, YEAR: string, MONTH: string) =>
-  //   oldApi(
-  //     'get',
-  //     `/Store/getAllSchedules?STORE_SEQ=${STORE_SEQ}&YEAR=${YEAR}&MONTH=${MONTH}&`,
-  //   ),
   // getEmpLists: (STORE_SEQ: string) =>
   //   oldApi('get', `/Store/get_emp_lists?STORE_SEQ=${STORE_SEQ}&`),
 
@@ -250,8 +253,6 @@ export default {
   //   oldApi('get', `/Store/setpdfcheck?PDF_SEQ=${PDF_SEQ}&`),
   // updateEmp: (data: any) => oldApi('put', '/Employee/update/', data),
 
-  // createNewSchedule: (data: any) =>
-  //   oldApi('post', '/Management/new_schedule_create/', data),
   // insertEmpSchedule: (data: any) =>
   // oldApi('post', '/Employee/insert_emp_schedules/', data),
 };

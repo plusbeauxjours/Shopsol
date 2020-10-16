@@ -11,6 +11,7 @@ import healthReducer from "./healthSlice"
 import shelflifeReducer from "./shelflifeSlice"
 import checklistReducer from "./checklistSlice"
 import checklistshareReducer from "./checklistshareSlice"
+import calendarReducer from "./calendarSlice"
 
 export default combineReducers({
     userReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
     healthReducer,
     shelflifeReducer,
     checklistReducer,
-    checklistshareReducer
+    checklistshareReducer,
+    calendarReducer
 });
