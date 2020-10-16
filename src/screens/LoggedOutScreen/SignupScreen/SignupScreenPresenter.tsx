@@ -271,7 +271,7 @@ export default ({
             </Case>
           )}
           <WhiteSpace />
-          {positionTypeCheck[0] == true && joinRoute == '기타' && (
+          {positionTypeCheck[1] == true && joinRoute == '기타' && (
             <Case>
               <TextinputCase>
                 <TextInput
