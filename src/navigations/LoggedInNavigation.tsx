@@ -48,8 +48,8 @@ import ChecklistDetailScreen from '../screens/LoggedInScreen/Checklist/Checklist
 // 업무일지========================================================
 import ChecklistShareMainScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareMainScreen';
 import ChecklistShareItemScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareItemScreen';
-// import ChecklistShareInsertScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
-// import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
+import ChecklistShareInsertScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
+import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
 
 // 교육컨텐츠========================================================
 // import MyCuMonthlyListScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyListScreen';
@@ -309,7 +309,7 @@ export default () => {
             headerTitle: `${params?.TITLE} 상세`,
           })}
         />
-        {/* <LoggedInNavigation.Screen
+        <LoggedInNavigation.Screen
           name="ChecklistShareInsertScreen"
           component={ChecklistShareInsertScreen}
           options={({route: {params}}: any) => ({
@@ -322,7 +322,7 @@ export default () => {
           options={({route: {params}}: any) => ({
             headerTitle: `${params?.TITLE} 수정`,
           })}
-        /> */}
+        />
         {/* 
         직원관리========================================================
         <LoggedInNavigation.Screen

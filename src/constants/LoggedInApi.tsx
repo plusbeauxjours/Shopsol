@@ -155,7 +155,11 @@ export default {
     ),
   delNoticeComment: (COM_SEQ: string) =>
     oldApi('get', `/Employee/delNoticeComment?COM_SEQ=${COM_SEQ}`),
-
+  setNoticeImg: (data: any) => callApi('post', '/auth/setNoticeImg/', data),
+  setNotice: (data: any) => callApi('post', '/auth/setNotice/', data),
+  updateNotice: (data: any) => callApi('post', '/auth/updateNotice/', data),
+  updateNoticeImg: (data: any) =>
+    callApi('post', '/auth/updateNoticeImg/', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -198,12 +202,6 @@ export default {
   // getCuNotice: (STORE_SEQ: string) =>
   //   callApi('get', `/auth/getCuNotice?STORE_SEQ=${STORE_SEQ}&`),
 
-  // setNoticeImg2: (data: any) =>
-  //   callApi('post', '/auth/setNoticeImg2/', data, true),
-  // setNotice2: (data: any) => callApi('post', '/auth/setNotice2/', data),
-  // updateNotice: (data: any) => callApi('post', '/auth/updateNotice/', data),
-  // updateNoticeImg: (data: any) =>
-  //   callApi('post', '/auth/updateNoticeImg/', data, true),
   // setEmpType: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/request_join?EMP_SEQ=${EMP_SEQ}&`),
   // cancelScheduleVacation: (data: any) =>

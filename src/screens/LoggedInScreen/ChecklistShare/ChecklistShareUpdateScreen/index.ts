@@ -1,0 +1,2 @@
+import ChecklistShareUpdateScreenContainer from "./ChecklistShareUpdateScreenContainer"
+export default ChecklistShareUpdateScreenContainer
