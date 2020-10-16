@@ -261,14 +261,14 @@ export default () => {
           }}
         />
         {/* 체크리스트======================================================== */}
-        {/* <LoggedInNavigation.Screen
+        <LoggedInNavigation.Screen
           name="ChecklistAddScreen"
           component={ChecklistAddScreen}
           options={{
             headerTitle: '체크리스트 입력',
             title: '체크리스트 등록 & 수정',
           }}
-        /> */}
+        />
         <LoggedInNavigation.Screen
           name="ChecklistItemsScreen"
           component={ChecklistItemsScreen}

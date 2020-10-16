@@ -91,12 +91,15 @@ export default {
     callApi('post', '/auth/setshelfLifeData/', data),
   checkChecklist: (data: any) => oldApi('post', '/StoreAuth/checklist', data),
   getChecklist: (STORE: string, DATE: string) =>
-    oldApi('get', `/Store/Checklist?STORE=${STORE}&DATE=${DATE}&`),
+    oldApi('get', `/Store/Checklist?STORE=${STORE}&DATE=${DATE}`),
   getChecklistAll: (storeID: string, YEAR: string, MONTH: string) =>
     oldApi(
       'get',
       `/Store/ChecklistAll?STORE=${storeID}&YEAR=${YEAR}&MONTH=${MONTH}`,
     ),
+  checkRegister: (data: any) => oldApi('post', '/Store/CheckRegister/', data),
+  getEmployeeList: (data: any) => oldApi('post', '/Employee/getEmpList/', data),
+  checkUpdate: (data: any) => oldApi('post', '/Store/CheckUpdate/', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -202,7 +205,7 @@ export default {
   //   oldApi('post', '/Management/createScheduleVacation2', data),
   // updateEmpSchedule: (data: any) =>
   //   oldApi('post', '/Employee/update_emp_schedules3', data),
-  // getEmployeeList: (data: any) => oldApi('post', '/Employee/getEmpList/', data),
+
   // getEmpPay: (data: any) => oldApi('post', '/Employee/getEmpPay/', data),
   // getScheduleRestTimeCreate: (data: any) =>
   //   oldApi('post', '/Management/schedule_Rest_TIme_create/', data),
@@ -233,8 +236,7 @@ export default {
   // setpdfcheck: (PDF_SEQ: string) =>
   //   oldApi('get', `/Store/setpdfcheck?PDF_SEQ=${PDF_SEQ}&`),
   // updateEmp: (data: any) => oldApi('put', '/Employee/update/', data),
-  // checkUpdate: (data: any) => oldApi('post', '/Store/CheckUpdate/', data),
-  // checkRegister: (data: any) => oldApi('post', '/Store/CheckRegister/', data),
+
   // createNewSchedule: (data: any) =>
   //   oldApi('post', '/Management/new_schedule_create/', data),
   // insertEmpSchedule: (data: any) =>

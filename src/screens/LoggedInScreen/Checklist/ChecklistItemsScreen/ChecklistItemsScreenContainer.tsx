@@ -204,7 +204,6 @@ export default () => {
         }
       }
     }
-    console.log(STORE_SEQ + '-' + item.QR_SEQ, lat, long, MEMBER_SEQ);
     if (flag) {
       setIsChecklistModalVisible(false);
       const {data} = await api.checkChecklist({

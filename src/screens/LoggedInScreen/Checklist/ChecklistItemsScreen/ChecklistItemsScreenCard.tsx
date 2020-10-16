@@ -49,7 +49,7 @@ const CheckpointBox = styled.View`
 
 const ChecktimeText = styled.Text`
   font-size: 13px;
-  color: #642a8c;
+  color: #e85356;
 `;
 
 const CalendarText = styled.Text`

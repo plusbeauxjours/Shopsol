@@ -243,7 +243,7 @@ const GrayLinearGradient = styled(LinearGradient)<IHasHeight>`
   right: 0;
   height: ${hp('30%')}px;
   background-color: gray;
-  height: ${(props) => (props.hasHeight ? `${hp('30%')}px` : '0px')};
+  height: ${hp('30%')}px};
 `;
 
 const BlackLinearGradient = styled(LinearGradient)<IHasHeight>`
@@ -254,7 +254,7 @@ const BlackLinearGradient = styled(LinearGradient)<IHasHeight>`
   right: 0;
   height: ${hp('15%')}px;
   background-color: #000;
-  height: ${(props) => (props.hasHeight ? `${hp('10%')}px` : '0px')};
+  height: ${hp('10%')}px};
 `;
 
 export default ({

@@ -104,6 +104,7 @@ const Section = styled.View`
   width: 100%;
   border-radius: 20px;
   padding: 20px;
+  margin-bottom: 20px;
   background-color: white;
 `;
 
@@ -248,8 +249,6 @@ export default ({
   onDayPress,
   onMonthChange,
   CHECKLIST_DATA,
-  adviceModal,
-  gotoChecklistAdd,
   selectCheckListFn,
   checkdataFn,
   fetchData,
