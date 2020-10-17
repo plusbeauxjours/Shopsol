@@ -177,7 +177,10 @@ export default {
     oldApi('post', '/Management/schedule_Rest_TIme_create/', data),
   getScheduleRestTimeUpdate: (data: any) =>
     oldApi('post', '/Management/schedule_Rest_TIme_update/', data),
-
+  createScheduleVacation2: (data: any) =>
+    oldApi('post', '/Management/createScheduleVacation2', data),
+  getEmpAnnual: (EMP_ID: string, YEAR: string) =>
+    oldApi('get', `/Employee/getEmpAnnual?EMP_SEQ=${EMP_ID}&YEAR=${YEAR}`),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -234,8 +237,6 @@ export default {
   //     `/Store/get_working_emp_totalpay2?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
   //   ),
 
-  // createScheduleVacation2: (data: any) =>
-  //   oldApi('post', '/Management/createScheduleVacation2', data),
   // updateEmpSchedule: (data: any) =>
   //   oldApi('post', '/Employee/update_emp_schedules3', data),
 
