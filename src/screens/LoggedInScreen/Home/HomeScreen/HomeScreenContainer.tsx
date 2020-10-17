@@ -1,6 +1,14 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {Linking, BackHandler, NativeModules} from 'react-native';
+import {
+  Alert,
+  Linking,
+  BackHandler,
+  NativeModules,
+  PermissionsAndroid,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {openSettings} from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -196,7 +204,80 @@ export default ({route: {params}}) => {
     }
   };
 
+  const locationPermission = async () => {
+    try {
+      console.log(utils.isAndroid());
+      if (utils.isAndroid()) {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          getLocation();
+        } else {
+          Alert.alert(
+            '위치정보 권한 거절',
+            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 위치권한 허용을 해야 합니다.',
+            [
+              {
+                text: '취소',
+                style: 'cancel',
+              },
+              {
+                text: '확인',
+                onPress: () => {
+                  utils.isAndroid()
+                    ? openSettings()
+                    : Linking.openURL('app-settings:');
+                },
+              },
+            ],
+          );
+        }
+      } else {
+        const permission = await Geolocation.requestAuthorization('always');
+        if (permission === 'granted') {
+          getLocation();
+        } else {
+          Alert.alert(
+            '위치정보 권한 거절',
+            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 위치권한 허용을 해야 합니다.',
+            [
+              {
+                text: '취소',
+                style: 'cancel',
+              },
+              {
+                text: '확인',
+                onPress: () => {
+                  utils.isAndroid()
+                    ? openSettings()
+                    : Linking.openURL('app-settings:');
+                },
+              },
+            ],
+          );
+        }
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setLat(position.coords.latitude);
+        setLong(position.coords.longitude);
+        console.log(position.coords.latitude, position.coords.longitude);
+      },
+      (error) => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  };
+
   useEffect(() => {
+    locationPermission();
     fetchData();
     checkVersion();
   }, []);
