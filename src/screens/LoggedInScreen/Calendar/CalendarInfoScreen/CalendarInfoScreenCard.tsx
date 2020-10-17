@@ -12,7 +12,6 @@ import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {toggleVACATION} from '~/redux/calendarSlice';
 import {EllipseIcon} from '~/constants/Icons';
-import moment from 'moment';
 
 const Row = styled.View`
   flex-direction: row;
@@ -33,13 +32,14 @@ const NameText = styled.Text`
 `;
 
 const RowSpace = styled(Row)`
+  margin-top:10px;
   width: 100%;
   justify-content: space-between;
 `;
 
 const SelectBox = styled(RowSpace)`
   margin-top: 10;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 0 20px;
 `;
 
@@ -192,6 +192,7 @@ export default ({
           <SelectBox>
             <SelectBoxTouchable
               onPress={() => {
+                console.log(data)
                 navigation.navigate('WorkTimeScreen', {
                   data,
                   date,
@@ -201,6 +202,7 @@ export default ({
             </SelectBoxTouchable>
             <SelectBoxTouchable
               onPress={() => {
+                console.log(data)
                 navigation.navigate('RealWorkTimeScreen', {
                   data,
                   date,

@@ -33,11 +33,11 @@ import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLife
 // 캘린더========================================================
 import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
 import CalendarAddScreen from '../screens/LoggedInScreen/Calendar/CalendarAddScreen';
-// import WorkTimeScreen from '../screens/LoggedInScreen/Calendar/WorkTimeScreen';
-// import RealWorkTimeScreen from '../screens/LoggedInScreen/Calendar/RealWorkTimeScreen';
-// import WorkDayScreen from '../screens/LoggedInScreen/Calendar/WorkDayScreen';
-// import WorkDayRestTypeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTypeScreen';
-// import WorkDayRestTimeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTimeScreen';
+import WorkTimeScreen from '../screens/LoggedInScreen/Calendar/WorkTimeScreen';
+import RealWorkTimeScreen from '../screens/LoggedInScreen/Calendar/RealWorkTimeScreen';
+import WorkDayScreen from '../screens/LoggedInScreen/Calendar/WorkDayScreen';
+import WorkDayRestTypeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTypeScreen';
+import WorkDayRestTimeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTimeScreen';
 
 // 체크리스트========================================================
 import ChecklistAddScreen from '../screens/LoggedInScreen/Checklist/ChecklistAddScreen';
@@ -341,6 +341,46 @@ export default () => {
             title: '일정관리 등록',
           }}
         />
+        <LoggedInNavigation.Screen
+          name="WorkTimeScreen"
+          component={WorkTimeScreen}
+          options={{
+            headerTitle: '근무시간 수정하기',
+            title: '일정관리 수정',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="RealWorkTimeScreen"
+          component={RealWorkTimeScreen}
+          options={{
+            headerTitle: '출퇴근시간 수정하기',
+            title: '일정관리 출퇴근 수정',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="WorkDayScreen"
+          component={WorkDayScreen}
+          options={{
+            headerTitle: '휴무/휴게시간 설정',
+            title: '일정관리 기타 설정',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="WorkDayRestTypeScreen"
+          component={WorkDayRestTypeScreen}
+          options={{
+            headerTitle: '휴무 설정',
+            title: '일정관리 휴무 설정',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="WorkDayRestTimeScreen"
+          component={WorkDayRestTimeScreen}
+          options={{
+            headerTitle: '시간 설정',
+            title: '일정관리 휴게시간 수정',
+          }}
+        />
 
         {/* 
         직원관리========================================================
@@ -445,52 +485,6 @@ export default () => {
             title: '직원 초대현황',
           }}
         />
-
-    
-
-    
-        <LoggedInNavigation.Screen
-          name="WorkTimeScreen"
-          component={WorkTimeScreen}
-          options={{
-            headerTitle: '근무시간 수정하기',
-            title: '일정관리 수정',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="RealWorkTimeScreen"
-          component={RealWorkTimeScreen}
-          options={{
-            headerTitle: '출퇴근시간 수정하기',
-            title: '일정관리 출퇴근 수정',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="WorkDayScreen"
-          component={WorkDayScreen}
-          options={{
-            headerTitle: '휴무/휴게시간 설정',
-            title: '일정관리 기타 설정',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="WorkDayRestTypeScreen"
-          component={WorkDayRestTypeScreen}
-          options={{
-            headerTitle: '휴무 설정',
-            title: '일정관리 휴무 설정',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="WorkDayRestTimeScreen"
-          component={WorkDayRestTimeScreen}
-          options={{
-            headerTitle: '시간 설정',
-            title: '일정관리 휴게시간 수정',
-          }}
-        />
-
-      
 
         교육컨텐츠========================================================
         <LoggedInNavigation.Screen

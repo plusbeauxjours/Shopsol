@@ -169,6 +169,15 @@ export default {
     oldApi('post', '/Management/cancelScheduleVacation/', data),
   createNewSchedule: (data: any) =>
     oldApi('post', '/Management/new_schedule_create/', data),
+  updateSchedule: (data: any) => oldApi('post', '/Management/update/', data),
+  createSchedule: (data: any) =>
+    oldApi('post', '/Management/schedule_create', data),
+  deleteSchedule: (data: any) => callApi('post', '/auth/deleteschedule/', data),
+  getScheduleRestTimeCreate: (data: any) =>
+    oldApi('post', '/Management/schedule_Rest_TIme_create/', data),
+  getScheduleRestTimeUpdate: (data: any) =>
+    oldApi('post', '/Management/schedule_Rest_TIme_update/', data),
+
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -214,17 +223,11 @@ export default {
   // setEmpType: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/request_join?EMP_SEQ=${EMP_SEQ}&`),
 
-  // getScheduleRestTimeUpdate: (data: any) =>
-  //   callApi('post', '/auth/updateRestTime/', data),
-  // deleteSchedule: (data: any) => callApi('post', '/auth/deleteschedule/', data),
-  // updateSchedule: (data: any) => callApi('post', '/auth/updateTime/', data),
   // seteducheck: (VIDEO_SEQ: string) =>
   //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
 
   // // oldApi
 
-  // createSchedule: (data: any) =>
-  //   oldApi('post', '/Management/schedule_create', data),
   // getWorkingEmpTotalPay: (YEAR: string, MONTH: string, STORE_SEQ: string) =>
   //   oldApi(
   //     'get',
@@ -237,8 +240,6 @@ export default {
   //   oldApi('post', '/Employee/update_emp_schedules3', data),
 
   // getEmpPay: (data: any) => oldApi('post', '/Employee/getEmpPay/', data),
-  // getScheduleRestTimeCreate: (data: any) =>
-  //   oldApi('post', '/Management/schedule_Rest_TIme_create/', data),
 
   // monthLists: (STORE_ID: string, EMP_ID: string, YEAR: string, MONTH: string) =>
   //   noPortApi(
