@@ -6,7 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 import Pdf from 'react-native-pdf';
 import styled from 'styled-components/native';
-import WebView from 'react-native-webview';
+import {WebView} from 'react-native-webview';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import Orientation from 'react-native-orientation-locker';
 

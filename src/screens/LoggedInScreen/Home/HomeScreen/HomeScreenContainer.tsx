@@ -24,23 +24,23 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const SharedStorage = NativeModules.SharedStorage;
   const {STORE_SEQ, STORE, STORE_NAME, WORKING_COUNT, TOTAL_COUNT} = params;
-
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
+  console.log(
+    'STORE_DATA',
+    STORE_DATA.resultdata.LAT,
+    STORE_DATA.resultdata.LONG,
+  );
   const {MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM} = useSelector(
     (state: any) => state.userReducer,
   );
 
   const [qrModalOpen, setQrModalOpen] = useState<boolean>(false);
   const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
-
+  const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
   const [QR, setQR] = useState<string>('');
-  const [notice, setNotice] = useState<{}>({
-    TITLE: '',
-    CONTENTS: '',
-  });
   const [invitedEmpCount, setInvitedEmpCount] = useState<number>(0);
   const [checklistCount, setChecklistCount] = useState<number>(0);
   const [noticeCount, setNoticeCount] = useState<number>(0);
@@ -190,7 +190,6 @@ export default ({route: {params}}) => {
         dispatch(setSTORE_DATA(data));
         dispatch(setEMP_SEQ(data.EMP_SEQ));
         setQR(data.resultdata.QR);
-        setNotice(data.notice);
         setInvitedEmpCount(data.inviteemp);
         setChecklistCount(data.checklength);
         setNoticeCount(data.noticelength);
@@ -306,7 +305,6 @@ export default ({route: {params}}) => {
 
   return (
     <HomeScreenPresenter
-      notice={notice}
       STORE_DATA={STORE_DATA}
       MEMBER_NAME={MEMBER_NAME}
       STORE={STORE}
@@ -327,6 +325,10 @@ export default ({route: {params}}) => {
       QR={QR}
       qrModalOpen={qrModalOpen}
       setQrModalOpen={setQrModalOpen}
+      isGpsVisible={isGpsVisible}
+      setIsGpsVisible={setIsGpsVisible}
+      lat={lat}
+      long={long}
     />
   );
 };

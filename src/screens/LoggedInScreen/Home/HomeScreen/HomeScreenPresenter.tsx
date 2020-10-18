@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
@@ -10,6 +10,7 @@ import FastImage from 'react-native-fast-image';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
+import {WebView} from 'react-native-webview';
 
 import {
   ForwardIcon,
@@ -257,8 +258,31 @@ const BlackLinearGradient = styled(LinearGradient)<IHasHeight>`
   height: ${hp('10%')}px};
 `;
 
+const Box = styled.TouchableOpacity`
+  width: 160px;
+  height: 70px;
+  border-width: 1px;
+  border-color: #e85356;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+`;
+
+const BoxText = styled.Text`
+  font-size: 16px;
+  color: #e85356;
+  font-weight: bold;
+`;
+
+const BoxContainer = styled.View`
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  margin: 20px 0;
+`;
+
 export default ({
-  notice,
   STORE_DATA,
   MEMBER_NAME,
   STORE,
@@ -279,7 +303,12 @@ export default ({
   checklistCount,
   noticeCount,
   QR,
+  isGpsVisible,
+  setIsGpsVisible,
+  lat,
+  long,
 }) => {
+  const webviewRef = useRef(null);
   const navigation = useNavigation();
   const MenuCntContainer = ({selection, paging, count = 0}) => (
     <MenuCnt
@@ -427,11 +456,33 @@ export default ({
           </StoreUpdate>
         </FastImage>
         <MenuBox style={{zIndex: 1}}>
-          {STORE == '0' && (
-            <Qr onPress={async () => setQrModalOpen(true)}>
+          {STORE == 0 && STORE_DATA?.GPS == '1' ? (
+            <Qr onPress={() => setQrModalOpen(true)}>
               <QrText>출퇴근하기</QrText>
               <QrCodeIcon />
             </Qr>
+          ) : (
+            <BoxContainer>
+              <Box onPress={() => setQrModalOpen(true)}>
+                <BoxText>QR출퇴근하기</BoxText>
+              </Box>
+              <Box onPress={() => setIsGpsVisible(!isGpsVisible)}>
+                <BoxText>{isGpsVisible ? 'GPS닫기' : 'GPS출퇴근하기'}</BoxText>
+              </Box>
+            </BoxContainer>
+          )}
+          {isGpsVisible && (
+            <>
+              <WebView
+                ref={webviewRef}
+                source={{
+                  // uri: `http://133.186.210.223/Shopsol/kakaoMap?Lat=${STORE_DATA.resultdata.LAT}&Lng=${STORE_DATA.resultdata.LONG}&radius=${STORE_DATA.resultdata.JULI}&device_Lat=${lat}&device_Lng=${long}`,
+                  uri: `http://133.186.210.223/Shopsol/kakaoMap?Lat=37.411051183903&Lng=127.12872651224&radius=150&device_Lat=37.411051183903&device_Lng=127.12872651224`,
+                }}
+                style={{width: 400, height: 300}}
+              />
+              <BoxText>GPS출퇴근하기</BoxText>
+            </>
           )}
           {STORE == '1' ? ( // 점주 ============================
             <>
