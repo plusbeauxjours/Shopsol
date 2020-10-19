@@ -183,8 +183,8 @@ export default {
     oldApi('get', `/Employee/getEmpAnnual?EMP_SEQ=${EMP_ID}&YEAR=${YEAR}`),
   sendEmp2: (data: any) => oldApi('post', '/Auth/sendEmp2', data),
   cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
-  rejectJoin: (data: any) => callApi('post', '/auth/reject_join/', data),
-  sendOneEmp: (data: any) => callApi('post', '/auth/sendOneEmp', data),
+  rejectJoin: (data: any) => oldApi('post', '/Employee/reject_join/', data),
+  sendOneEmp: (data: any) => oldApi('post', '/Auth/sendOneEmp', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),

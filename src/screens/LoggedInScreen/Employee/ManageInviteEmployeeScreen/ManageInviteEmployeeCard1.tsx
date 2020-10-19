@@ -114,7 +114,7 @@ export default ({
   const refuseFn = async (EMP_SEQ) => {
     try {
       const {data} = await api.rejectJoin({STORE_SEQ, EMP_SEQ});
-      if (data.resultmsg === '1') {
+      if (data.message === 'SUCCESS') {
         setIsRefused(true);
       }
     } catch (e) {
