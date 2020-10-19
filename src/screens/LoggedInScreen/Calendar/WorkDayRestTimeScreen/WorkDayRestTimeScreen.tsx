@@ -146,7 +146,7 @@ export default ({route: {params}}) => {
             <TextInput
               placeholder={'시간을 입력해주세요'}
               placeholderTextColor={'#E5E5E5'}
-              selectionColor={'#642A8C'}
+              selectionColor={'#999'}
               onChangeText={(text) => {
                 setRestTime(text);
               }}

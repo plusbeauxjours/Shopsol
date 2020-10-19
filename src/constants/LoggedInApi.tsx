@@ -181,6 +181,7 @@ export default {
     oldApi('post', '/Management/createScheduleVacation2', data),
   getEmpAnnual: (EMP_ID: string, YEAR: string) =>
     oldApi('get', `/Employee/getEmpAnnual?EMP_SEQ=${EMP_ID}&YEAR=${YEAR}`),
+  sendEmp2: (data: any) => oldApi('post', '/Auth/sendEmp2', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -213,7 +214,6 @@ export default {
   // deleteCeoHealth: (data: any) =>
   //   callApi('post', '/auth/deleteCeoHealth/', data),
 
-  // sendEmp2: (data: any) => callApi('post', '/auth/sendEmp', data),
   // toggleCalendar: (data: any) => callApi('post', '/auth/toggleCalendar/', data),
   // getEmp: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/getempinfo?EMP_SEQ=${EMP_SEQ}&`),

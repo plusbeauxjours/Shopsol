@@ -13,7 +13,7 @@ import Ripple from 'react-native-material-ripple';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: white;
+  background-color: #f6f6f6; ;
 `;
 
 const WhiteSpace = styled.View`

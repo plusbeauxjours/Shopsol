@@ -17,7 +17,7 @@ interface IIsStore {
 const BackGround = styled.View<IIsStore>`
   flex: 1;
   background-color: #f6f6f6;
-  padding-top: ${(props) => (props.isStore ? 60 : 0)};
+  padding-top: ${(props) => (props.isStore ? 60 : 0)}px;
 `;
 
 const ScrollView = styled.ScrollView``;

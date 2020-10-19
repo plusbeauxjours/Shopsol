@@ -456,20 +456,26 @@ export default ({
           </StoreUpdate>
         </FastImage>
         <MenuBox style={{zIndex: 1}}>
-          {STORE == 0 && STORE_DATA?.GPS == '1' ? (
-            <Qr onPress={() => setQrModalOpen(true)}>
-              <QrText>출퇴근하기</QrText>
-              <QrCodeIcon />
-            </Qr>
-          ) : (
-            <BoxContainer>
-              <Box onPress={() => setQrModalOpen(true)}>
-                <BoxText>QR출퇴근하기</BoxText>
-              </Box>
-              <Box onPress={() => setIsGpsVisible(!isGpsVisible)}>
-                <BoxText>{isGpsVisible ? 'GPS닫기' : 'GPS출퇴근하기'}</BoxText>
-              </Box>
-            </BoxContainer>
+          {STORE == 0 && (
+            <>
+              {STORE_DATA?.GPS == '1' ? (
+                <Qr onPress={() => setQrModalOpen(true)}>
+                  <QrText>출퇴근하기</QrText>
+                  <QrCodeIcon />
+                </Qr>
+              ) : (
+                <BoxContainer>
+                  <Box onPress={() => setQrModalOpen(true)}>
+                    <BoxText>QR출퇴근하기</BoxText>
+                  </Box>
+                  <Box onPress={() => setIsGpsVisible(!isGpsVisible)}>
+                    <BoxText>
+                      {isGpsVisible ? 'GPS닫기' : 'GPS출퇴근하기'}
+                    </BoxText>
+                  </Box>
+                </BoxContainer>
+              )}
+            </>
           )}
           {isGpsVisible && (
             <>

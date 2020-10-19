@@ -25,11 +25,6 @@ export default ({route: {params}}) => {
   const SharedStorage = NativeModules.SharedStorage;
   const {STORE_SEQ, STORE, STORE_NAME, WORKING_COUNT, TOTAL_COUNT} = params;
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
-  console.log(
-    'STORE_DATA',
-    STORE_DATA.resultdata.LAT,
-    STORE_DATA.resultdata.LONG,
-  );
   const {MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM} = useSelector(
     (state: any) => state.userReducer,
   );
@@ -205,7 +200,6 @@ export default ({route: {params}}) => {
 
   const locationPermission = async () => {
     try {
-      console.log(utils.isAndroid());
       if (utils.isAndroid()) {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -266,10 +260,9 @@ export default ({route: {params}}) => {
       (position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
-        console.log(position.coords.latitude, position.coords.longitude);
       },
       (error) => {
-        console.log(error.code, error.message);
+        console.log(error);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );

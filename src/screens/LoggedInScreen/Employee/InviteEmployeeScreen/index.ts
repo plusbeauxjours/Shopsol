@@ -1,0 +1,2 @@
+import InviteEmployeeScreenContainer from "./InviteEmployeeScreenContainer"
+export default InviteEmployeeScreenContainer

@@ -192,7 +192,6 @@ export default ({
           <SelectBox>
             <SelectBoxTouchable
               onPress={() => {
-                console.log(data)
                 navigation.navigate('WorkTimeScreen', {
                   data,
                   date,
@@ -202,7 +201,6 @@ export default ({
             </SelectBoxTouchable>
             <SelectBoxTouchable
               onPress={() => {
-                console.log(data)
                 navigation.navigate('RealWorkTimeScreen', {
                   data,
                   date,

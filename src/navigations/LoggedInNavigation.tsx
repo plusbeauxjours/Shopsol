@@ -15,11 +15,11 @@ import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLife
 import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLifeScreen';
 
 // 직원관리========================================================
+import InviteEmployeeScreen from '../screens/LoggedInScreen/Employee/InviteEmployeeScreen';
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
 // import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
 // import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
 
-// import InviteEmployeeScreen from '../screens/LoggedInScreen/Home/InviteEmployeeScreen';
 // import EmployeeListScreen from '../screens/LoggedInScreen/Home/EmployeeListScreen';
 // import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
 // import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
@@ -28,7 +28,6 @@ import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLife
 // import EmployeeInfoScreen from '../screens/LoggedInScreen/Home/EmployeeInfoScreen';
 // import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Home/EmployeeInfoEMPScreen';
 // import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
-// import ElectronicContractsScreen from '../screens/LoggedInScreen/Home/ElectronicContractsScreen';
 
 // 캘린더========================================================
 import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
@@ -381,9 +380,17 @@ export default () => {
             title: '일정관리 휴게시간 수정',
           }}
         />
-
+        {/* 직원관리======================================================== */}
+        <LoggedInNavigation.Screen
+          name="InviteEmployeeScreen"
+          component={InviteEmployeeScreen}
+          options={{
+            headerTitle: '직원 초대',
+            title: '직원 초대',
+          }}
+        />
         {/* 
-        직원관리========================================================
+        
         <LoggedInNavigation.Screen
           name="EmployeeInfoScreen"
           component={EmployeeInfoScreen}
@@ -408,16 +415,6 @@ export default () => {
             title: '직원 정보등록 & 정보수정',
           }}
         />
-        <LoggedInNavigation.Screen
-          name="ElectronicContractsScreen"
-          component={ElectronicContractsScreen}
-          options={{
-            headerTitle: '전자근로계약서 체결',
-            title: '직원 전자근로계약서',
-            headerRight: null,
-          }}
-        />
-
         EmployeeScheduleScreen========================================================
         <LoggedInNavigation.Screen
           name="EmployeeScheduleMainScreen"
@@ -445,14 +442,7 @@ export default () => {
           }}
         />
 
-        <LoggedInNavigation.Screen
-          name="InviteEmployeeScreen"
-          component={InviteEmployeeScreen}
-          options={{
-            headerTitle: '직원 초대',
-            title: '직원 초대',
-          }}
-        />
+
         <LoggedInNavigation.Screen
           name="EmployeeListScreen"
           component={EmployeeListScreen}
