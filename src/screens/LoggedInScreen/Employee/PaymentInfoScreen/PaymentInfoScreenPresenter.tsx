@@ -194,7 +194,7 @@ export default ({
               <PaymentInfoScreenCard
                 key={data.MEMBER_SEQ}
                 name={data.EMP_NAME}
-                isManager={data.IS_MANAGER == 0 ? '스태프' : '점장'}
+                isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
                 image={data.images.length == 0 ? '3.png' : data.images[0].IMAGE}
                 data={data}
                 STORE={STORE}

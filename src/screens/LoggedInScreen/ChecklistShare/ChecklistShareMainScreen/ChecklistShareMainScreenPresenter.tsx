@@ -327,7 +327,7 @@ export default ({
         <Container>
           <DateController
             location={'firstRoute'}
-            text={'점주가 직원들에게 전달하는 내용입니다.'}
+            text={'점장 및 매니저가 직원들에게 전달하는 내용입니다.'}
           />
           {CHECKLIST_SHARE_DATA1?.basic?.length == 0 &&
           CHECKLIST_SHARE_DATA1?.favorite?.length == 0 ? (

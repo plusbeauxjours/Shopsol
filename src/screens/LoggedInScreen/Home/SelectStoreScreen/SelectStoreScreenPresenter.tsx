@@ -94,7 +94,7 @@ export default ({
           employee={data.emplist}
           STORE={STORE}
           TYPE={data.TYPE}
-          MANAGER={data.IS_MANAGER == 1 ? '[점장]' : '[스태프]'}
+          MANAGER={data.IS_MANAGER == 1 ? '[매니저]' : '[스태프]'}
           workinglist={data.workinglist}
           gotoHomeScreen={gotoHomeScreen}
         />

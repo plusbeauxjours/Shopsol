@@ -497,7 +497,7 @@ export default ({
                   <Row style={{justifyContent: 'flex-start'}}>
                     <NameText>{data?.EMP_NAME}</NameText>
                     <DateText>
-                      {data?.IS_MANAGER === '1' ? '[점장]' : '[스태프]'}
+                      {data?.IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
                     </DateText>
                   </Row>
                   <DateText>근무기간</DateText>
@@ -621,9 +621,9 @@ export default ({
                   timeTable.length == 0 && ( // 자율출퇴근★
                     <FixTypeDayChangeBox>
                       <FixTypeDayChangeButton
-                        style={{borderColor: '#000', width: '100%'}}
+                        style={{borderColor: '#393939', width: '100%'}}
                         onPress={() => registerScheduleFn()}>
-                        <FixTypeDayChangeButtonText style={{color: '#000'}}>
+                        <FixTypeDayChangeButtonText style={{color: '#393939'}}>
                           일정 추가
                         </FixTypeDayChangeButtonText>
                       </FixTypeDayChangeButton>
@@ -632,16 +632,16 @@ export default ({
                 {isFreeWorkingType !== true && timeTable.length > 0 && (
                   <FixTypeDayChangeBox>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#000'}}
+                      style={{borderColor: '#393939'}}
                       onPress={() => registerScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#000'}}>
+                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
                         추가
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#000'}}
+                      style={{borderColor: '#393939'}}
                       onPress={() => modifyScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#000'}}>
+                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
                         수정
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>

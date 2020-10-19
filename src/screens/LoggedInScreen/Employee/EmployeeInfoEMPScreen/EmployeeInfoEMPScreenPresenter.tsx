@@ -404,7 +404,7 @@ export default ({
                     <NameText>{EMPLOYEE_INFO_DATA?.EMP_NAME}</NameText>
                     <DateText>
                       {EMPLOYEE_INFO_DATA?.IS_MANAGER === '1'
-                        ? '[점장]'
+                        ? '[매니저]'
                         : '[스태프]'}
                     </DateText>
                   </Row>

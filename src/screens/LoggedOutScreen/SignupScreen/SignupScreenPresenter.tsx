@@ -359,7 +359,7 @@ export default ({
             onPress={() =>
               confirmModal(
                 '정확한 가입유형을 선택하셨나요?',
-                '점주 : 점주\n직원 : 점장 또는 스태프',
+                '점장: 사업주(점장)\n직원: 매니저 또는 스태프',
               )
             }
             isRegisted={
