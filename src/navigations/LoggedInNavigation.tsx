@@ -19,6 +19,7 @@ import InviteEmployeeScreen from '../screens/LoggedInScreen/Employee/InviteEmplo
 import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Employee/ManageInviteEmployeeScreen';
 import EmployeeListScreen from '../screens/LoggedInScreen/Employee/EmployeeListScreen';
 import EmployeeInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoScreen';
+import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoEMPScreen';
 
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
 // import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
@@ -27,7 +28,6 @@ import EmployeeInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoS
 // import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
 // import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
 
-// import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Home/EmployeeInfoEMPScreen';
 // import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
 
 // 캘린더========================================================
@@ -414,7 +414,6 @@ export default () => {
             title: '직원 정보 (점장)',
           }}
         />
-        {/* 
         <LoggedInNavigation.Screen
           name="EmployeeInfoEMPScreen"
           component={EmployeeInfoEMPScreen}
@@ -423,6 +422,7 @@ export default () => {
             title: '직원 정보 (직원)',
           }}
         />
+        {/* 
         <LoggedInNavigation.Screen
           name="SetEmployeeInfoScreen"
           component={SetEmployeeInfoScreen}

@@ -1,0 +1,2 @@
+import EmployeeInfoEMPScreenContainer from "./EmployeeInfoEMPScreenContainer"
+export default EmployeeInfoEMPScreenContainer
