@@ -204,6 +204,12 @@ export default {
       'get',
       `/Store/get_working_emp_totalpay2?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
     ),
+  monthLists: (STORE_ID: string, EMP_ID: string, YEAR: string, MONTH: string) =>
+    noPortApi(
+      'get',
+      `/PayMents/month_lists?STORE_ID=${STORE_ID}&EMP_ID=${EMP_ID}&YEAR=${YEAR}&MONTH=${MONTH}&`,
+    ),
+
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -242,12 +248,6 @@ export default {
   //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
 
   // // oldApi
-
-  // monthLists: (STORE_ID: string, EMP_ID: string, YEAR: string, MONTH: string) =>
-  //   noPortApi(
-  //     'get',
-  //     `/PayMents/month_lists?STORE_ID=${STORE_ID}&EMP_ID=${EMP_ID}&YEAR=${YEAR}&MONTH=${MONTH}&`,
-  //   ),
 
   // setpdfcheck: (PDF_SEQ: string) =>
   //   oldApi('get', `/Store/setpdfcheck?PDF_SEQ=${PDF_SEQ}&`),

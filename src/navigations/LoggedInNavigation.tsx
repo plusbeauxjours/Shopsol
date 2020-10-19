@@ -21,12 +21,11 @@ import EmployeeListScreen from '../screens/LoggedInScreen/Employee/EmployeeListS
 import EmployeeInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoScreen';
 import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoEMPScreen';
 import PaymentInfoScreen from '../screens/LoggedInScreen/Employee/PaymentInfoScreen';
+import EmpPayInfoScreen from '../screens/LoggedInScreen/Employee/EmpPayInfoScreen';
 
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
 // import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
 // import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
-
-// import EmpPayInfoScreen from '../screens/LoggedInScreen/Employee/EmpPayInfoScreen';
 
 // import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Employee/SetEmployeeInfoScreen';
 
@@ -430,6 +429,14 @@ export default () => {
             title: '사업장(점포) 급여정보',
           }}
         />
+        <LoggedInNavigation.Screen
+          name="EmpPayInfoScreen"
+          component={EmpPayInfoScreen}
+          options={{
+            headerTitle: '직원급여 정보',
+            title: '직원 급여정보',
+          }}
+        />
         {/* 
         <LoggedInNavigation.Screen
           name="SetEmployeeInfoScreen"
@@ -467,16 +474,7 @@ export default () => {
         />
 
 
- 
-     
-        <LoggedInNavigation.Screen
-          name="EmpPayInfoScreen"
-          component={EmpPayInfoScreen}
-          options={{
-            headerTitle: '직원급여 정보',
-            title: '직원 급여정보',
-          }}
-        />
+
 
         교육컨텐츠========================================================
         <LoggedInNavigation.Screen
