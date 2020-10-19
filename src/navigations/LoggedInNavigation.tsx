@@ -18,6 +18,7 @@ import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLife
 import InviteEmployeeScreen from '../screens/LoggedInScreen/Employee/InviteEmployeeScreen';
 import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Employee/ManageInviteEmployeeScreen';
 import EmployeeListScreen from '../screens/LoggedInScreen/Employee/EmployeeListScreen';
+import EmployeeInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoScreen';
 
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
 // import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
@@ -26,7 +27,6 @@ import EmployeeListScreen from '../screens/LoggedInScreen/Employee/EmployeeListS
 // import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
 // import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
 
-// import EmployeeInfoScreen from '../screens/LoggedInScreen/Home/EmployeeInfoScreen';
 // import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Home/EmployeeInfoEMPScreen';
 // import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
 
@@ -406,7 +406,6 @@ export default () => {
             title: '직원 목록',
           }}
         />
-        {/* 
         <LoggedInNavigation.Screen
           name="EmployeeInfoScreen"
           component={EmployeeInfoScreen}
@@ -415,6 +414,7 @@ export default () => {
             title: '직원 정보 (점장)',
           }}
         />
+        {/* 
         <LoggedInNavigation.Screen
           name="EmployeeInfoEMPScreen"
           component={EmployeeInfoEMPScreen}

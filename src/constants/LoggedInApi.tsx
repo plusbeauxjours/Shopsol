@@ -187,7 +187,18 @@ export default {
   sendOneEmp: (data: any) => oldApi('post', '/Auth/sendOneEmp', data),
   getEmpLists: (STORE_SEQ: string) =>
     oldApi('get', `/Store/get_emp_lists?STORE_SEQ=${STORE_SEQ}`),
-
+  toggleCalendar: (data: any) =>
+    oldApi('post', '/Employee/toggleCalendar/', data),
+  getEmp: (EMP_SEQ: string) =>
+    oldApi('get', `/Employee/get?EMP_SEQ=${EMP_SEQ}`),
+  getSchedules: (EMP_SEQ: string, YEAR: string, MONTH: string) =>
+    oldApi(
+      'get',
+      `/Employee/get_schedules?EMP_SEQ=${EMP_SEQ}&YEAR=${YEAR}&MONTH=${MONTH}`,
+    ),
+  getEmpPay: (data: any) => oldApi('post', '/Employee/getEmpPay/', data),
+  updateEmpSchedule: (data: any) =>
+    oldApi('post', '/Employee/update_emp_schedules3', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -216,12 +227,6 @@ export default {
   // deleteCeoHealth: (data: any) =>
   //   callApi('post', '/auth/deleteCeoHealth/', data),
 
-  // toggleCalendar: (data: any) => callApi('post', '/auth/toggleCalendar/', data),
-  // getEmp: (EMP_SEQ: string) =>
-  //   callApi('get', `/auth/getempinfo?EMP_SEQ=${EMP_SEQ}&`),
-  // getSchedules: (EMP_SEQ: string) =>
-  //   callApi('get', `/auth/getschedules?EMP_SEQ=${EMP_SEQ}&`),
-
   // getCuNotice: (STORE_SEQ: string) =>
   //   callApi('get', `/auth/getCuNotice?STORE_SEQ=${STORE_SEQ}&`),
 
@@ -238,11 +243,6 @@ export default {
   //     'get',
   //     `/Store/get_working_emp_totalpay2?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
   //   ),
-
-  // updateEmpSchedule: (data: any) =>
-  //   oldApi('post', '/Employee/update_emp_schedules3', data),
-
-  // getEmpPay: (data: any) => oldApi('post', '/Employee/getEmpPay/', data),
 
   // monthLists: (STORE_ID: string, EMP_ID: string, YEAR: string, MONTH: string) =>
   //   noPortApi(
