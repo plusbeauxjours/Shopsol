@@ -210,6 +210,10 @@ export default {
       `/PayMents/month_lists?STORE_ID=${STORE_ID}&EMP_ID=${EMP_ID}&YEAR=${YEAR}&MONTH=${MONTH}&`,
     ),
   updateEmp: (data: any) => oldApi('put', '/Employee/update/', data),
+  insertEmpSchedule: (data: any) =>
+    oldApi('post', '/Employee/insert_emp_schedules/', data),
+  setEmpType: (EMP_SEQ: string) =>
+    oldApi('get', `/Employee/setEmpType?EMP_SEQ=${EMP_SEQ}`),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -241,9 +245,6 @@ export default {
   // getCuNotice: (STORE_SEQ: string) =>
   //   callApi('get', `/auth/getCuNotice?STORE_SEQ=${STORE_SEQ}&`),
 
-  // setEmpType: (EMP_SEQ: string) =>
-  //   callApi('get', `/auth/request_join?EMP_SEQ=${EMP_SEQ}&`),
-
   // seteducheck: (VIDEO_SEQ: string) =>
   //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
 
@@ -251,7 +252,4 @@ export default {
 
   // setpdfcheck: (PDF_SEQ: string) =>
   //   oldApi('get', `/Store/setpdfcheck?PDF_SEQ=${PDF_SEQ}&`),
-
-  // insertEmpSchedule: (data: any) =>
-  // oldApi('post', '/Employee/insert_emp_schedules/', data),
 };

@@ -1,0 +1,2 @@
+import EmployeeScheduleMainScreen from "./EmployeeScheduleMainScreen"
+export default EmployeeScheduleMainScreen

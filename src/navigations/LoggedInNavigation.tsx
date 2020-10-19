@@ -23,10 +23,9 @@ import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Employee/EmployeeIn
 import PaymentInfoScreen from '../screens/LoggedInScreen/Employee/PaymentInfoScreen';
 import EmpPayInfoScreen from '../screens/LoggedInScreen/Employee/EmpPayInfoScreen';
 import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Employee/SetEmployeeInfoScreen';
-
-// import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
-// import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
-// import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
+import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Employee/EmployeeScheduleMainScreen';
+import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeScheduleInfoScreen';
+import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Employee/EmployeeScheduleAddScreen';
 
 // 캘린더========================================================
 import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
@@ -444,8 +443,6 @@ export default () => {
             title: '직원 정보등록 & 정보수정',
           }}
         />
-        {/* 
-        EmployeeScheduleScreen========================================================
         <LoggedInNavigation.Screen
           name="EmployeeScheduleMainScreen"
           component={EmployeeScheduleMainScreen}
@@ -471,6 +468,8 @@ export default () => {
             title: '직원 급여유형 (최초 가입시)',
           }}
         />
+
+        {/* 
 
 
 
