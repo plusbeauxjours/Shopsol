@@ -182,6 +182,9 @@ export default {
   getEmpAnnual: (EMP_ID: string, YEAR: string) =>
     oldApi('get', `/Employee/getEmpAnnual?EMP_SEQ=${EMP_ID}&YEAR=${YEAR}`),
   sendEmp2: (data: any) => oldApi('post', '/Auth/sendEmp2', data),
+  cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
+  rejectJoin: (data: any) => callApi('post', '/auth/reject_join/', data),
+  sendOneEmp: (data: any) => callApi('post', '/auth/sendOneEmp', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -196,10 +199,6 @@ export default {
   //   ),
   // storeHealthEmpDetail: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/emphealthdetail?EMP_SEQ=${EMP_SEQ}&`),
-
-  // cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
-  // rejectJoin: (data: any) => callApi('post', '/auth/reject_join/', data),
-  // sendOneEmp: (data: any) => callApi('post', '/auth/sendOneEmp', data),
 
   // checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data, true),
   // checkocr1: (data: any) => callApi('post', '/auth/checkocr1/', data, true),

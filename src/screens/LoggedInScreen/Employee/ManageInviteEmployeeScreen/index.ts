@@ -1,0 +1,2 @@
+import ManageInviteEmployeeScreen from "./ManageInviteEmployeeScreen"
+export default ManageInviteEmployeeScreen

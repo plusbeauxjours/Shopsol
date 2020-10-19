@@ -16,6 +16,7 @@ import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLife
 
 // 직원관리========================================================
 import InviteEmployeeScreen from '../screens/LoggedInScreen/Employee/InviteEmployeeScreen';
+import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Employee/ManageInviteEmployeeScreen';
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
 // import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
 // import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
@@ -24,7 +25,6 @@ import InviteEmployeeScreen from '../screens/LoggedInScreen/Employee/InviteEmplo
 // import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
 // import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
 
-// import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Home/ManageInviteEmployeeScreen';
 // import EmployeeInfoScreen from '../screens/LoggedInScreen/Home/EmployeeInfoScreen';
 // import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Home/EmployeeInfoEMPScreen';
 // import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
@@ -389,8 +389,16 @@ export default () => {
             title: '직원 초대',
           }}
         />
+        <LoggedInNavigation.Screen
+          name="ManageInviteEmployeeScreen"
+          component={ManageInviteEmployeeScreen}
+          options={{
+            headerTitle: '직원 초대현황',
+            title: '직원 초대현황',
+          }}
+        />
+
         {/* 
-        
         <LoggedInNavigation.Screen
           name="EmployeeInfoScreen"
           component={EmployeeInfoScreen}
@@ -465,14 +473,6 @@ export default () => {
           options={{
             headerTitle: '직원급여 정보',
             title: '직원 급여정보',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="ManageInviteEmployeeScreen"
-          component={ManageInviteEmployeeScreen}
-          options={{
-            headerTitle: '직원 초대현황',
-            title: '직원 초대현황',
           }}
         />
 

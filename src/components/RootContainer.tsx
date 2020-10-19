@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {ActivityIndicator, StatusBar} from 'react-native';
+import {ActivityIndicator, StatusBar, LogBox} from 'react-native';
 import {useSelector} from 'react-redux';
 import firebase from 'react-native-firebase';
 import * as Sentry from '@sentry/react-native';
@@ -10,6 +10,8 @@ import CloseBtn from './Header/CloseBtn';
 import LoggedInNavigation from '../navigations/LoggedInNavigation';
 import LoggedOutNavigation from '../navigations/LoggedOutNavigation';
 import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/index';
+
+LogBox.ignoreAllLogs(true);
 
 export default () => {
   const routeNameRef = useRef(null);
