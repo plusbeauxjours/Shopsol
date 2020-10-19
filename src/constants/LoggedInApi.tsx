@@ -185,6 +185,9 @@ export default {
   cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
   rejectJoin: (data: any) => oldApi('post', '/Employee/reject_join/', data),
   sendOneEmp: (data: any) => oldApi('post', '/Auth/sendOneEmp', data),
+  getEmpLists: (STORE_SEQ: string) =>
+    oldApi('get', `/Store/get_emp_lists?STORE_SEQ=${STORE_SEQ}`),
+
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -246,9 +249,6 @@ export default {
   //     'get',
   //     `/PayMents/month_lists?STORE_ID=${STORE_ID}&EMP_ID=${EMP_ID}&YEAR=${YEAR}&MONTH=${MONTH}&`,
   //   ),
-
-  // getEmpLists: (STORE_SEQ: string) =>
-  //   oldApi('get', `/Store/get_emp_lists?STORE_SEQ=${STORE_SEQ}&`),
 
   // setpdfcheck: (PDF_SEQ: string) =>
   //   oldApi('get', `/Store/setpdfcheck?PDF_SEQ=${PDF_SEQ}&`),
