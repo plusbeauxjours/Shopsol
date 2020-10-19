@@ -1,0 +1,2 @@
+import PaymentInfoScreenContainer from "./PaymentInfoScreenContainer"
+export default PaymentInfoScreenContainer

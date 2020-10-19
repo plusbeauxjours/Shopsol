@@ -199,6 +199,11 @@ export default {
   getEmpPay: (data: any) => oldApi('post', '/Employee/getEmpPay/', data),
   updateEmpSchedule: (data: any) =>
     oldApi('post', '/Employee/update_emp_schedules3', data),
+  getWorkingEmpTotalPay: (YEAR: string, MONTH: string, STORE_SEQ: string) =>
+    oldApi(
+      'get',
+      `/Store/get_working_emp_totalpay2?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
+    ),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -237,12 +242,6 @@ export default {
   //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
 
   // // oldApi
-
-  // getWorkingEmpTotalPay: (YEAR: string, MONTH: string, STORE_SEQ: string) =>
-  //   oldApi(
-  //     'get',
-  //     `/Store/get_working_emp_totalpay2?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
-  //   ),
 
   // monthLists: (STORE_ID: string, EMP_ID: string, YEAR: string, MONTH: string) =>
   //   noPortApi(

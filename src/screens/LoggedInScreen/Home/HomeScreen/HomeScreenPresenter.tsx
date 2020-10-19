@@ -483,7 +483,7 @@ export default ({
                 ref={webviewRef}
                 source={{
                   // uri: `http://133.186.210.223/Shopsol/kakaoMap?Lat=${STORE_DATA.resultdata.LAT}&Lng=${STORE_DATA.resultdata.LONG}&radius=${STORE_DATA.resultdata.JULI}&device_Lat=${lat}&device_Lng=${long}`,
-                  uri: `http://133.186.210.223/Shopsol/kakaoMap?Lat=37.411051183903&Lng=127.12872651224&radius=150&device_Lat=37.411051183903&device_Lng=127.12872651224`,
+                  uri: `http://133.186.210.223/Shopsol/kakaoMap?Lat=37.411051183903&Lng=127.12872651224&radius=150&device_Lat=37.111051183903&device_Lng=127.12872651224`,
                 }}
                 style={{width: 400, height: 300}}
               />

@@ -20,15 +20,15 @@ import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Employee/Manag
 import EmployeeListScreen from '../screens/LoggedInScreen/Employee/EmployeeListScreen';
 import EmployeeInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoScreen';
 import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoEMPScreen';
+import PaymentInfoScreen from '../screens/LoggedInScreen/Employee/PaymentInfoScreen';
 
 // import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleMainScreen';
 // import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleInfoScreen';
 // import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Home/EmployeeScheduleAddScreen';
 
-// import PaymentInfoScreen from '../screens/LoggedInScreen/Home/PaymentInfoScreen';
-// import EmpPayInfoScreen from '../screens/LoggedInScreen/Home/EmpPayInfoScreen';
+// import EmpPayInfoScreen from '../screens/LoggedInScreen/Employee/EmpPayInfoScreen';
 
-// import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Home/SetEmployeeInfoScreen';
+// import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Employee/SetEmployeeInfoScreen';
 
 // 캘린더========================================================
 import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
@@ -422,6 +422,14 @@ export default () => {
             title: '직원 정보 (직원)',
           }}
         />
+        <LoggedInNavigation.Screen
+          name="PaymentInfoScreen"
+          component={PaymentInfoScreen}
+          options={{
+            headerTitle: '점포급여 정보',
+            title: '사업장(점포) 급여정보',
+          }}
+        />
         {/* 
         <LoggedInNavigation.Screen
           name="SetEmployeeInfoScreen"
@@ -460,14 +468,7 @@ export default () => {
 
 
  
-        <LoggedInNavigation.Screen
-          name="PaymentInfoScreen"
-          component={PaymentInfoScreen}
-          options={{
-            headerTitle: '점포급여 정보',
-            title: '사업장(점포) 급여정보',
-          }}
-        />
+     
         <LoggedInNavigation.Screen
           name="EmpPayInfoScreen"
           component={EmpPayInfoScreen}
