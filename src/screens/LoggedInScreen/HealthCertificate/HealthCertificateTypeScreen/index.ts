@@ -1,0 +1,2 @@
+import HealthCertificateTypeScreenContainer from "./HealthCertificateTypeScreenContainer"
+export default HealthCertificateTypeScreenContainer

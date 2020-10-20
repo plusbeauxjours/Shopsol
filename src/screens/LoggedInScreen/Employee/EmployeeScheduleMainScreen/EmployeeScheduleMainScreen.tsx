@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -156,7 +156,6 @@ export default ({route: {params}}) => {
         <SubmitBtn
           text={'선택 완료'}
           onPress={() => {
-            console.log('CALCULATE_DAY', CALCULATE_DAY);
             navigation.navigate('EmployeeScheduleInfoScreen', {
               CALCULATE_DAY,
               isFreeWorkingType,

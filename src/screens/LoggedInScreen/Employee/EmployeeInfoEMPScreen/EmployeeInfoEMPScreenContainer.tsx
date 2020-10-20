@@ -71,7 +71,6 @@ export default () => {
         moment().format('YYYY'),
         moment().format('MM'),
       );
-      console.log('data', data);
       if (data.message === 'SUCCESS') {
         initTimeTable(data.result);
       } else if (data.message === 'LIST_EMPTY') {

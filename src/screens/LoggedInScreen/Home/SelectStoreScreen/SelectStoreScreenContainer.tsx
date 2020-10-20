@@ -96,6 +96,7 @@ export default () => {
         STORE_NAME: data.NAME,
         WORKING_COUNT: data.workinglist,
         TOTAL_COUNT: data.emplist,
+        GPS: data.GPS,
       });
     }
   };

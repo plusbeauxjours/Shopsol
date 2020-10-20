@@ -23,7 +23,14 @@ export default ({route: {params}}) => {
   const modalRef = useRef(null);
   const dispatch = useDispatch();
   const SharedStorage = NativeModules.SharedStorage;
-  const {STORE_SEQ, STORE, STORE_NAME, WORKING_COUNT, TOTAL_COUNT} = params;
+  const {
+    STORE_SEQ,
+    STORE,
+    STORE_NAME,
+    WORKING_COUNT,
+    TOTAL_COUNT,
+    GPS,
+  } = params;
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
   const {MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM} = useSelector(
     (state: any) => state.userReducer,
@@ -39,6 +46,7 @@ export default ({route: {params}}) => {
   const [invitedEmpCount, setInvitedEmpCount] = useState<number>(0);
   const [checklistCount, setChecklistCount] = useState<number>(0);
   const [noticeCount, setNoticeCount] = useState<number>(0);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const alertModal = (title, text, okCallback = () => {}) => {
     const params = {
@@ -256,16 +264,42 @@ export default ({route: {params}}) => {
     }
   };
   const getLocation = () => {
-    Geolocation.getCurrentPosition(
+    Geolocation.watchPosition(
       (position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
       },
-      (error) => {
-        console.log(error);
+      (e) => {
+        console.log(e);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      {
+        enableHighAccuracy: true,
+        distanceFilter: 100,
+        interval: 5000,
+        fastestInterval: 2000,
+      },
     );
+  };
+
+  const getDistance = () => {
+    const prevLatInRad = toRad(Number(STORE_DATA.resultdata.LAT));
+    const prevLongInRad = toRad(Number(STORE_DATA.resultdata.LONG));
+    const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.0002);
+    const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.0002);
+
+    return (
+      6377830.272 *
+      Math.acos(
+        Math.sin(prevLatInRad) * Math.sin(latInRad) +
+          Math.cos(prevLatInRad) *
+            Math.cos(latInRad) *
+            Math.cos(longInRad - prevLongInRad),
+      )
+    );
+  };
+
+  const toRad = (angle) => {
+    return (angle * Math.PI) / 180;
   };
 
   useEffect(() => {
@@ -322,6 +356,10 @@ export default ({route: {params}}) => {
       setIsGpsVisible={setIsGpsVisible}
       lat={lat}
       long={long}
+      getDistance={getDistance}
+      GPS={GPS}
+      modalOpen={modalOpen}
+      setModalOpen={setModalOpen}
     />
   );
 };

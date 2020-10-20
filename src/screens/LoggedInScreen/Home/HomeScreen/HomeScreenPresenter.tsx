@@ -11,6 +11,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
 import {WebView} from 'react-native-webview';
+import MapView, {PROVIDER_GOOGLE, Marker, Circle} from 'react-native-maps';
 
 import {
   ForwardIcon,
@@ -262,16 +263,16 @@ const Box = styled.TouchableOpacity`
   width: 160px;
   height: 70px;
   border-width: 1px;
-  border-color: #e85356;
+  border-color: #fff;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 const BoxText = styled.Text`
   font-size: 16px;
-  color: #e85356;
+  color: #fff;
   font-weight: bold;
 `;
 
@@ -280,6 +281,29 @@ const BoxContainer = styled.View`
   width: 100%;
   justify-content: space-around;
   margin: 20px 0;
+`;
+
+const MarkerWrapper = styled.View`
+  align-items: center;
+`;
+
+const MarkerContainer = styled.View`
+  background-color: green;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+`;
+
+const MarkerText = styled.Text`
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const MarkerTriangle = styled.View`
+  border: 10px solid transparent;
+  width: 10px;
+  border-top-color: green;
 `;
 
 export default ({
@@ -307,8 +331,11 @@ export default ({
   setIsGpsVisible,
   lat,
   long,
+  getDistance,
+  GPS,
+  modalOpen,
+  setModalOpen,
 }) => {
-  const webviewRef = useRef(null);
   const navigation = useNavigation();
   const MenuCntContainer = ({selection, paging, count = 0}) => (
     <MenuCnt
@@ -328,6 +355,23 @@ export default ({
         )}
       <AdrChange paging={paging} />
     </MenuCnt>
+  );
+
+  const RoomMarker = ({distance, current}) => (
+    <MarkerWrapper>
+      <MarkerContainer>
+        {distance !== '제한 없음' || current < distance ? (
+          <MarkerText>탭하여 출퇴근하기</MarkerText>
+        ) : (
+          <MarkerText>
+            허용거리: {distance}
+            {distance !== '제한 없음' && '미터'}
+          </MarkerText>
+        )}
+        <MarkerText>남은거리: {current}미터</MarkerText>
+      </MarkerContainer>
+      <MarkerTriangle />
+    </MarkerWrapper>
   );
 
   const AdrChange = ({paging}) => {
@@ -458,7 +502,7 @@ export default ({
         <MenuBox style={{zIndex: 1}}>
           {STORE == 0 && (
             <>
-              {STORE_DATA?.GPS == '1' ? (
+              {GPS == '0' ? (
                 <Qr onPress={() => setQrModalOpen(true)}>
                   <QrText>출퇴근하기</QrText>
                   <QrCodeIcon />
@@ -479,15 +523,60 @@ export default ({
           )}
           {isGpsVisible && (
             <>
-              <WebView
-                ref={webviewRef}
-                source={{
-                  // uri: `http://133.186.210.223/Shopsol/kakaoMap?Lat=${STORE_DATA.resultdata.LAT}&Lng=${STORE_DATA.resultdata.LONG}&radius=${STORE_DATA.resultdata.JULI}&device_Lat=${lat}&device_Lng=${long}`,
-                  uri: `http://133.186.210.223/Shopsol/kakaoMap?Lat=37.411051183903&Lng=127.12872651224&radius=150&device_Lat=37.111051183903&device_Lng=127.12872651224`,
-                }}
-                style={{width: 400, height: 300}}
-              />
-              <BoxText>GPS출퇴근하기</BoxText>
+              <MapView
+                style={{width: wp('100%') - 40, height: 300}}
+                provider={PROVIDER_GOOGLE}
+                initialRegion={{
+                  latitude: Number(STORE_DATA.resultdata.LAT) + 0.0002,
+                  longitude: Number(STORE_DATA.resultdata.LONG) + 0.0002,
+                  latitudeDelta: 0.005,
+                  longitudeDelta: 0.005,
+                }}>
+                {STORE_DATA?.resultdata.JULI !== -1 && (
+                  <Circle
+                    zIndex={0}
+                    radius={STORE_DATA.resultdata.JULI}
+                    strokeWidth={0}
+                    fillColor={
+                      getDistance() < STORE_DATA.resultdata.JULI
+                        ? 'rgba(0, 230, 64, 0.2)'
+                        : 'rgba(240, 52, 52, 0.2)'
+                    }
+                    strokeColor={
+                      getDistance() < STORE_DATA.resultdata.JULI
+                        ? 'rgba(0, 230, 64, 1)'
+                        : 'rgba(240, 52, 52, 1)'
+                    }
+                    center={{
+                      latitude: Number(STORE_DATA.resultdata.LAT),
+                      longitude: Number(STORE_DATA.resultdata.LONG),
+                    }}
+                  />
+                )}
+                <Marker
+                  coordinate={{
+                    latitude: Number(STORE_DATA.resultdata.LAT),
+                    longitude: Number(STORE_DATA.resultdata.LONG),
+                  }}
+                  title="this is a shop"
+                  description="this is a marker example"
+                />
+                <Marker
+                  onPress={() => {}}
+                  coordinate={{
+                    latitude: Number(STORE_DATA.resultdata.LAT) + 0.0002,
+                    longitude: Number(STORE_DATA.resultdata.LONG) + 0.0002,
+                  }}>
+                  <RoomMarker
+                    distance={
+                      STORE_DATA.resultdata.JULI == '-1'
+                        ? '제한 없음'
+                        : STORE_DATA.resultdata.JULI
+                    }
+                    current={Math.round(getDistance() * 10) / 10}
+                  />
+                </Marker>
+              </MapView>
             </>
           )}
           {STORE == '1' ? ( // 점주 ============================
