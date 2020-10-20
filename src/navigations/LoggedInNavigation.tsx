@@ -63,10 +63,10 @@ import MyPagePositionSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePosi
 import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
 import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
 import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
+import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
 // import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
 // import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
 // import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
-// import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
 // import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
 
 // Components========================================================
@@ -484,6 +484,14 @@ export default () => {
             title: '조기경보시스템 업체 상세',
           }}
         />
+        <LoggedInNavigation.Screen
+          name="HealthCertificateEmpUpdateScreen"
+          component={HealthCertificateEmpUpdateScreen}
+          options={{
+            headerTitle: '보건증 수정',
+            title: '조기경보시스템 직원 수정',
+          }}
+        />
         {/* 
         조기경보========================================================
         <LoggedInNavigation.Screen
@@ -511,14 +519,7 @@ export default () => {
           }}
         />
       
-        <LoggedInNavigation.Screen
-          name="HealthCertificateEmpUpdateScreen"
-          component={HealthCertificateEmpUpdateScreen}
-          options={{
-            headerTitle: '보건증 수정',
-            title: '조기경보시스템 직원 수정',
-          }}
-        />
+ 
         <LoggedInNavigation.Screen
           name="HealthCertificateStoreUpdateScreen"
           component={HealthCertificateStoreUpdateScreen}

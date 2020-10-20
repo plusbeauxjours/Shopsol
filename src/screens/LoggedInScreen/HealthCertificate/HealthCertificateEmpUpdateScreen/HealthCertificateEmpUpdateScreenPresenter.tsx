@@ -1,23 +1,24 @@
 import React, {useRef} from 'react';
 import Modal from 'react-native-modal';
-import styled from 'styled-components/native';
-import DatePickerModal from 'react-native-modal-datetime-picker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import styled from 'styled-components/native';
+import DatePickerModal from 'react-native-modal-datetime-picker';
+import FastImage from 'react-native-fast-image';
+import {RNCamera} from 'react-native-camera';
+import moment from 'moment';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
-import FastImage from 'react-native-fast-image';
-import {RNCamera} from 'react-native-camera';
-import {CameraIcon, CheckBoxIcon} from '~/constants/Icons';
-import moment from 'moment';
+import {CameraIcon} from '~/constants/Icons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const WhiteSpace = styled.View`
   height: 20px;
 `;
+
 const SmallWhiteSpace = styled.View`
   height: 10px;
 `;
@@ -29,7 +30,6 @@ const BackGround = styled.SafeAreaView`
 const ScrollView = styled.ScrollView``;
 
 const Container = styled.View`
-  width: 100%;
   margin-top: 20px;
   padding: 20px;
 `;
@@ -66,10 +66,10 @@ const DateText = styled.Text`
 const TextInput = styled.TextInput`
   width: 100%;
   font-size: 17px;
+  color: black;
   margin-left: 5px;
   height: 40px;
 `;
-
 const Bold = styled(Text)``;
 
 const Section = styled.View`
@@ -151,30 +151,29 @@ const CameraLastPictureContainer = styled.View`
   align-items: center;
 `;
 
+const DeleteButton = styled.TouchableOpacity`
+  margin: 50px 0;
+  justify-content: center;
+  align-items: center;
+`;
+
 export default ({
-  submitFn,
-  setNAME,
-  NAME,
-  setPosition,
-  position,
-  setOwner,
-  owner,
-  setStorename,
-  storename,
-  EDUCATION_DATE,
-  setEDUCATION_DATE,
-  EDUCATION_TYPE,
-  setBusinesstype,
-  businesstype,
-  dateModalVisible,
-  setDateModalVisible,
-  toggleEducationType,
-  isCameraModalVisible,
-  setIsCameraModalVisible,
+  checkOrcFn,
+  confirmModal,
+  takePictureFn,
   cameraPictureLast,
   setCameraPictureLast,
-  takePictureFn,
-  checkOrcFn,
+  isCameraModalVisible,
+  setIsCameraModalVisible,
+  dateModalVisible,
+  setDateModalVisible,
+  submitFn,
+  NAME,
+  setNAME,
+  RESULT_COUNT,
+  setRESULT_COUNT,
+  EDUCATION_DATE,
+  setEDUCATION_DATE,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -183,8 +182,7 @@ export default ({
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           keyboardDismissMode="on-drag"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{alignItems: 'center'}}>
+          showsVerticalScrollIndicator={false}>
           <Container>
             <Section>
               <TextContainer>
@@ -222,7 +220,7 @@ export default ({
               <TextInputContainer>
                 <GreyText>성명</GreyText>
                 <TextInput
-                  placeholder={'교육이수자성명'}
+                  placeholder={'성명'}
                   placeholderTextColor={'#999'}
                   onChangeText={(text) => {
                     setNAME(text);
@@ -231,108 +229,37 @@ export default ({
                   maxLength={6}
                 />
               </TextInputContainer>
-              <InputLine isBefore={NAME.length === 0 ? true : false} />
+              <InputLine isBefore={NAME == '' ? true : false} />
               <WhiteSpace />
               <TextInputContainer>
-                <GreyText>직책</GreyText>
+                <GreyText>회차</GreyText>
                 <TextInput
-                  placeholder={'교육이수자 직책'}
+                  placeholder={'회차'}
                   placeholderTextColor={'#999'}
                   onChangeText={(text) => {
-                    setPosition(text);
+                    setRESULT_COUNT(text);
                   }}
-                  value={position}
+                  value={RESULT_COUNT}
                   maxLength={6}
                 />
               </TextInputContainer>
-              <InputLine isBefore={position.length === 0 ? true : false} />
+              <InputLine isBefore={RESULT_COUNT == '' ? true : false} />
               <WhiteSpace />
               <TextInputContainer>
-                <GreyText>대표자 성명</GreyText>
-                <TextInput
-                  placeholder={'대표자 성명'}
-                  placeholderTextColor={'#999'}
-                  onChangeText={(text) => {
-                    setOwner(text);
-                  }}
-                  value={owner}
-                  maxLength={6}
-                />
-              </TextInputContainer>
-              <InputLine isBefore={owner.length === 0 ? true : false} />
-              <WhiteSpace />
-              <TextInputContainer>
-                <GreyText>영업소 명칭</GreyText>
-                <TextInput
-                  placeholder={'영업소 명칭'}
-                  placeholderTextColor={'#999'}
-                  onChangeText={(text) => {
-                    setStorename(text);
-                  }}
-                  value={storename}
-                  maxLength={6}
-                />
-              </TextInputContainer>
-              <InputLine isBefore={storename.length === 0 ? true : false} />
-              <WhiteSpace />
-              <TextInputContainer>
+                <GreyText>검진일</GreyText>
                 <Touchable onPress={() => setDateModalVisible(true)}>
-                  <GreyText>교육 일시</GreyText>
                   <DateText>
                     {moment(EDUCATION_DATE).format('YYYY.MM.DD')}
                   </DateText>
                 </Touchable>
               </TextInputContainer>
               <SmallWhiteSpace />
-              <InputLine
-                isBefore={EDUCATION_DATE.length === 0 ? true : false}
-              />
-              <WhiteSpace />
-              <TextInputContainer>
-                <GreyText>영업의 종류</GreyText>
-                <TextInput
-                  placeholder={'영업의 종류'}
-                  placeholderTextColor={'#999'}
-                  onChangeText={(text) => {
-                    setBusinesstype(text);
-                  }}
-                  value={businesstype}
-                  maxLength={6}
-                />
-              </TextInputContainer>
-              <InputLine isBefore={businesstype.length === 0 ? true : false} />
-              <WhiteSpace />
-              <TextInputContainer>
-                <GreyText>교육 구분</GreyText>
-                <WhiteSpace />
-                <Row style={{justifyContent: 'space-around', width: '100%'}}>
-                  <Touchable onPress={() => toggleEducationType()}>
-                    <Row>
-                      {EDUCATION_TYPE === 'online' ? (
-                        <CheckBoxIcon size={25} color="#e85356" />
-                      ) : (
-                        <CheckBoxIcon size={25} color="#CCCCCC" />
-                      )}
-                      <GreyText style={{marginLeft: 10}}>온라인 교육</GreyText>
-                    </Row>
-                  </Touchable>
-                  <Touchable onPress={() => toggleEducationType()}>
-                    <Row>
-                      {EDUCATION_TYPE === 'offline' ? (
-                        <CheckBoxIcon size={25} color="#e85356" />
-                      ) : (
-                        <CheckBoxIcon size={25} color="#CCCCCC" />
-                      )}
-                      <GreyText style={{marginLeft: 10}}>집체 교육</GreyText>
-                    </Row>
-                  </Touchable>
-                </Row>
-              </TextInputContainer>
+              <InputLine isBefore={EDUCATION_DATE == '' ? true : false} />
             </TextInputBox>
             <DatePickerModal
-              headerTextIOS={'날짜를 선택하세요.'}
-              cancelTextIOS={'취소'}
-              confirmTextIOS={'선택'}
+              headerTextIOS={'Choose a Date'}
+              cancelTextIOS={'Cancel'}
+              confirmTextIOS={'Confirm'}
               isVisible={dateModalVisible}
               mode="date"
               locale="ko_KRus_EN"
@@ -344,10 +271,24 @@ export default ({
               display="default"
             />
             <SubmitBtn
-              text={'입력완료'}
+              text={'수정완료'}
               onPress={() => submitFn()}
               isRegisted={true}
             />
+            <DeleteButton
+              onPress={() => {
+                confirmModal();
+              }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  color: '#FF3D3D',
+                  textDecorationLine: 'underline',
+                }}>
+                보건증 삭제하기
+              </Text>
+            </DeleteButton>
           </Container>
         </ScrollView>
       </KeyboardAwareScrollView>

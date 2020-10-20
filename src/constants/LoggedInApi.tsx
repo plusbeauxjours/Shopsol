@@ -218,6 +218,10 @@ export default {
     callApi('post', '/auth/getAllCeoHealth/', data),
   saveOcr1: (data: any) => callApi('post', '/auth/saveocr1/', data),
   checkocr1: (data: any) => callApi('post', '/auth/checkocr1/', data),
+  // deleteStoreHealth: (data: any) =>
+  //   callApi('post', '/auth/deleteStoreHealth/', data),
+  // checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data),
+  // updateOcr: (data: any) => callApi('post', '/auth/updateocr/', data),
   //
   // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
   // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
@@ -233,14 +237,9 @@ export default {
   // storeHealthEmpDetail: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/emphealthdetail?EMP_SEQ=${EMP_SEQ}&`),
 
-  // checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data, true),
-
   // saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data, true),
 
-  // updateOcr: (data: any) => callApi('post', '/auth/updateocr/', data, true),
   // updateOcr1: (data: any) => callApi('post', '/auth/updateocr1/', data, true),
-  // deleteStoreHealth: (data: any) =>
-  //   callApi('post', '/auth/deleteStoreHealth/', data),
 
   // deleteCeoHealth: (data: any) =>
   //   callApi('post', '/auth/deleteCeoHealth/', data),
