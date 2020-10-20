@@ -1,0 +1,2 @@
+import HealthCertificateStoreDetailScreenContainer from "./HealthCertificateStoreDetailScreenContainer"
+export default HealthCertificateStoreDetailScreenContainer

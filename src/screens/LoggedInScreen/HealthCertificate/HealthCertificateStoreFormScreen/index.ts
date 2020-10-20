@@ -1,0 +1,2 @@
+import HealthCertificateStoreFormScreenContainer from './HealthCertificateStoreFormScreenContainer';
+export default HealthCertificateStoreFormScreenContainer;

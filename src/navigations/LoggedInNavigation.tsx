@@ -48,14 +48,6 @@ import ChecklistShareItemScreen from '../screens/LoggedInScreen/ChecklistShare/C
 import ChecklistShareInsertScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
 import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
 
-// 교육컨텐츠========================================================
-// import MyCuMonthlyListScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyListScreen';
-// import MyCuMonthlyDetailScreen from '../screens/LoggedInScreen/MyCu/MyCuMonthlyDetailScreen';
-// import MyCuVideoListScreen from '../screens/LoggedInScreen/MyCu/MyCuVideoListScreen';
-// import MyCuVideoDetailScreen from '../screens/LoggedInScreen/MyCu/MyCuVideoDetailScreen';
-// import EducationVideoListScreen from '../screens/LoggedInScreen/MyCu/EducationVideoListScreen';
-// import EducationVideoDetailScreen from '../screens/LoggedInScreen/MyCu/EducationVideoDetailScreen';
-
 // 마이페이지========================================================
 import MyPageAlarmSetScreen from '../screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
 import MyPageAppointmentScreen from '../screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
@@ -68,12 +60,12 @@ import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePass
 import MyPagePositionSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePositionSetScreen';
 
 // 조기경보========================================================
-// import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
+import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
+import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
+import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
 // import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
 // import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
 // import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
-// import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
-// import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
 // import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
 // import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
 
@@ -468,65 +460,6 @@ export default () => {
             title: '직원 급여유형 (최초 가입시)',
           }}
         />
-
-        {/* 
-
-
-
-
-        교육컨텐츠========================================================
-        <LoggedInNavigation.Screen
-          name="MyCuMonthlyListScreen"
-          component={MyCuMonthlyListScreen}
-          options={{
-            headerTitle: '노무 월간지',
-            title: '노무 월간지 목록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyCuMonthlyDetailScreen"
-          component={MyCuMonthlyDetailScreen}
-          options={{
-            headerTitle: '노무 월간지',
-            title: '노무 월간지 상세',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyCuVideoListScreen"
-          component={MyCuVideoListScreen}
-          options={{
-            headerTitle: '노무 교육 콘텐츠',
-            title: '노무 교육콘텐츠 목록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyCuVideoDetailScreen"
-          component={MyCuVideoDetailScreen}
-          options={{
-            headerTitle: '노무 교육 콘텐츠',
-            title: '노무 교육콘텐츠 상세',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="EducationVideoListScreen"
-          component={EducationVideoListScreen}
-          options={{
-            headerTitle: '교육자료',
-            title: '교육콘텐츠 목록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="EducationVideoDetailScreen"
-          component={EducationVideoDetailScreen}
-          options={{
-            headerTitle: '교육자료',
-            title: '교육콘텐츠 상세',
-          }}
-        />
-
-        
-
-        조기경보========================================================
         <LoggedInNavigation.Screen
           name="HealthCertificateTypeScreen"
           component={HealthCertificateTypeScreen}
@@ -535,6 +468,24 @@ export default () => {
             title: '조기경보시스템 타입 선택',
           }}
         />
+        <LoggedInNavigation.Screen
+          name="HealthCertificateStoreFormScreen"
+          component={HealthCertificateStoreFormScreen}
+          options={{
+            headerTitle: '위생교육증 입력',
+            title: '조기경보시스템 업체 등록',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="HealthCertificateStoreDetailScreen"
+          component={HealthCertificateStoreDetailScreen}
+          options={{
+            headerTitle: '위생교육증 상세',
+            title: '조기경보시스템 업체 상세',
+          }}
+        />
+        {/* 
+        조기경보========================================================
         <LoggedInNavigation.Screen
           name="HealthCertificateEmpListScreen"
           component={HealthCertificateEmpListScreen}
@@ -559,22 +510,7 @@ export default () => {
             title: '조기경보시스템 직원 등록',
           }}
         />
-        <LoggedInNavigation.Screen
-          name="HealthCertificateStoreFormScreen"
-          component={HealthCertificateStoreFormScreen}
-          options={{
-            headerTitle: '위생교육증 입력',
-            title: '조기경보시스템 업체 등록',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="HealthCertificateStoreDetailScreen"
-          component={HealthCertificateStoreDetailScreen}
-          options={{
-            headerTitle: '위생교육증 상세',
-            title: '조기경보시스템 업체 상세',
-          }}
-        />
+      
         <LoggedInNavigation.Screen
           name="HealthCertificateEmpUpdateScreen"
           component={HealthCertificateEmpUpdateScreen}

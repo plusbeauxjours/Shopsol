@@ -4,6 +4,7 @@ import SelectStoreScreenPresenter from './SelectStoreScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 import {BackHandler, Linking, NativeModules} from 'react-native';
 
+import {setSplashVisible} from '~/redux/splashSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {getSTORELIST_DATA} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
@@ -122,6 +123,7 @@ export default () => {
 
     checkVersion();
     dispatch(getSTORELIST_DATA());
+    dispatch(setSplashVisible(false));
   }, []);
 
   return (

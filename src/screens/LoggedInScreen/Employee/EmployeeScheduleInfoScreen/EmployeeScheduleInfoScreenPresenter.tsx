@@ -449,7 +449,7 @@ export default ({
                     marginRight: 10,
                   }}
                   source={{
-                    uri: 'http://cuapi.shop-sol.com/uploads/3.png',
+                    uri: 'http://133.186.210.223/uploads/3.png',
                     headers: {Authorization: 'someAuthToken'},
                     priority: FastImage.priority.low,
                   }}
@@ -535,12 +535,12 @@ export default ({
               )}
               <Row>
                 {!isFreeWorkingType &&
-                timeTable.length == 0 && ( // 자율출퇴근★
+                  timeTable.length == 0 && ( // 자율출퇴근★
                     <FixTypeDayChangeBox>
                       <FixTypeDayChangeButton
-                        style={{borderColor: '#642A8C', width: '100%'}}
+                        style={{borderColor: '#393939', width: '100%'}}
                         onPress={() => registerScheduleFn()}>
-                        <FixTypeDayChangeButtonText style={{color: '#642A8C'}}>
+                        <FixTypeDayChangeButtonText style={{color: '#393939'}}>
                           일정 추가
                         </FixTypeDayChangeButtonText>
                       </FixTypeDayChangeButton>
@@ -549,16 +549,16 @@ export default ({
                 {!isFreeWorkingType && timeTable.length > 0 && (
                   <FixTypeDayChangeBox>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#642A8C'}}
+                      style={{borderColor: '#393939'}}
                       onPress={() => registerScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#642A8C'}}>
+                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
                         추가
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#642A8C'}}
+                      style={{borderColor: '#393939'}}
                       onPress={() => modifyScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#642A8C'}}>
+                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
                         수정
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
