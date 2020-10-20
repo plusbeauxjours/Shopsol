@@ -221,36 +221,16 @@ export default {
   updateOcr1: (data: any) => callApi('post', '/auth/updateocr1/', data),
   deleteCeoHealth: (data: any) =>
     callApi('post', '/auth/deleteCeoHealth/', data),
-
+  storeHealthEmpList: (STORE_SEQ: string, STORE: string, MEMBER_SEQ: string) =>
+    oldApi(
+      'get',
+      `/Store/store_health_emp_list?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`,
+    ),
   // deleteStoreHealth: (data: any) =>
   //   callApi('post', '/auth/deleteStoreHealth/', data),
   // checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data),
   // updateOcr: (data: any) => callApi('post', '/auth/updateocr/', data),
-  //
-  // cupdflistcheck: () => callApi('get', `/auth/cupdflistcheck?`),
-  // cuvideolistcheck: () => callApi('get', `/auth/cuvideolistcheck?`),
-  // setvideocheck: (VIDEO_SEQ: string) =>
-  //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
-
-  // cuedulistcheck: () => callApi('get', `/auth/cuedulistcheck?`),
-  // storeHealthEmpList: (STORE_SEQ: string, STORE: string) =>
-  //   callApi(
-  //     'get',
-  //     `/auth/emphealthlist?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&`,
-  //   ),
   // storeHealthEmpDetail: (EMP_SEQ: string) =>
   //   callApi('get', `/auth/emphealthdetail?EMP_SEQ=${EMP_SEQ}&`),
-
   // saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data, true),
-
-  // getCuNotice: (STORE_SEQ: string) =>
-  //   callApi('get', `/auth/getCuNotice?STORE_SEQ=${STORE_SEQ}&`),
-
-  // seteducheck: (VIDEO_SEQ: string) =>
-  //   callApi('get', `/auth/setvideocheck?VIDEO_SEQ=${VIDEO_SEQ}&`),
-
-  // // oldApi
-
-  // setpdfcheck: (PDF_SEQ: string) =>
-  //   oldApi('get', `/Store/setpdfcheck?PDF_SEQ=${PDF_SEQ}&`),
 };

@@ -252,9 +252,7 @@ export default ({
             )}
             <Section
               onPress={() =>
-                navigation.navigate('HealthCertificateEmpListScreen', {
-                  type: '1',
-                })
+                navigation.navigate('HealthCertificateEmpListScreen')
               }>
               <TypeTitle>
                 <Row>

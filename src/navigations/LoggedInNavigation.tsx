@@ -65,7 +65,7 @@ import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCe
 import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
 import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
 import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
-// import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
+import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
 // import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
 // import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
 
@@ -460,6 +460,7 @@ export default () => {
             title: '직원 급여유형 (최초 가입시)',
           }}
         />
+        {/* 조기경보======================================================== */}
         <LoggedInNavigation.Screen
           name="HealthCertificateTypeScreen"
           component={HealthCertificateTypeScreen}
@@ -500,8 +501,6 @@ export default () => {
             title: '조기경보시스템 업체 수정',
           }}
         />
-        {/* 
-        조기경보========================================================
         <LoggedInNavigation.Screen
           name="HealthCertificateEmpListScreen"
           component={HealthCertificateEmpListScreen}
@@ -510,6 +509,8 @@ export default () => {
             title: '조기경보시스템 직원 목록',
           }}
         />
+        {/* 
+
         <LoggedInNavigation.Screen
           name="HealthCertificateEmpDetailScreen"
           component={HealthCertificateEmpDetailScreen}
