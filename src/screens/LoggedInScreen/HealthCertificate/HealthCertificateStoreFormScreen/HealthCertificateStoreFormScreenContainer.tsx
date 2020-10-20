@@ -178,9 +178,9 @@ export default ({route: {params}}) => {
         setStorename(data.storename);
         setEDUCATION_DATE(
           yearstr[0] +
-            '.' +
+            '-' +
             monthstr[0].replace(' ', '') +
-            '.' +
+            '-' +
             daystr[0].replace(' ', ''),
         );
         setBusinesstype(data.businesstype);

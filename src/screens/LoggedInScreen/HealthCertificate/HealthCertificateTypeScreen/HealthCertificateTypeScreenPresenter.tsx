@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 
 import {ForwardIcon, EllipseIcon, HelpCircleIcon} from '~/constants/Icons';
+import moment from 'moment';
 
 interface IText {
   isSubmited?: boolean;
@@ -228,7 +229,8 @@ export default ({
                           }
                         : {marginTop: 5, color: '#aaa'}
                     }>
-                    교육일시: {EDUCATION_DATA} (갱신 D{dday <= 0 ? '+' : '-'}
+                    교육일시: {moment(EDUCATION_DATA).format('YYYY.MM.DD')}
+                    &nbsp;(갱신 D{dday <= 0 ? '+' : '-'}
                     {Math.abs(Math.floor(dday))})
                   </Text>
                 </IconContainer>
