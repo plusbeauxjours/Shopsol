@@ -1,36 +1,41 @@
-import React, {useEffect, useState} from 'react';
-import moment from 'moment';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setSplashVisible} from '~/redux/splashSlice';
+import {removeHEALTH_STORE_DETAIL} from '~/redux/healthSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import HealthCertificateStoreFormScreenPresenter from './HealthCertificateStoreFormScreenPresenter';
+import HealthCertificateStoreUpdateScreenPresenter from './HealthCertificateStoreUpdateScreenPresenter';
+import moment from 'moment';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
+  const {STORE_SEQ = null, CEO_HEALTH_SEQ = null} = params;
   const {MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
 
   const [dateModalVisible, setDateModalVisible] = useState<boolean>(false);
-  const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
+  const [cameraPictureLast, setCameraPictureLast] = useState<any>(
+    params?.IMG_LIST || null,
+  );
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
   );
-  const [NAME, setNAME] = useState<string>(''); // 교육이수자성명 / 성명
-  const [owner, setOwner] = useState<string>(''); // 대표자성명
-  const [storename, setStorename] = useState<string>(''); // 영업소 명칭
-  const [businesstype, setBusinesstype] = useState<string>(''); // 영업의종류
-  const [position, setPosition] = useState<string>(''); // 직책
+  const [NAME, setNAME] = useState<string>(params?.NAME || ''); // 교육이수자성명 / 성명
+  const [owner, setOwner] = useState<string>(params?.owner || ''); // 대표자성명
+  const [storename, setStorename] = useState<string>(params?.storename || ''); // 영업소 명칭
+  const [businesstype, setBusinesstype] = useState<string>(
+    params?.businesstype || '',
+  ); // 영업의종류
+  const [position, setPosition] = useState<string>(params?.position || ''); // 직책
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(
-    moment().format('YYYY-MM-DD'),
+    params?.EDUCATION_DATE || moment().format('YYYY-MM-DD'),
   ); // 교육일시 / 검진일
   const [EDUCATION_TYPE, setEDUCATION_TYPE] = useState<'online' | 'offline'>(
-    'online',
+    params?.EDUCATION_TYPE || 'online',
   ); // 교육구분
 
   const alertModal = (title, text) => {
@@ -38,6 +43,21 @@ export default ({route: {params}}) => {
       alertType: 'alert',
       title,
       content: text,
+    };
+    dispatch(setAlertInfo(params));
+    dispatch(setAlertVisible(true));
+  };
+
+  const confirmModal = () => {
+    const params = {
+      alertType: 'confirm',
+      title: '',
+      content: '등록한 정보를 삭제하시겠습니까?',
+      okCallback: () => {
+        deleteFn();
+      },
+      okButtonText: '삭제',
+      cancelButtonText: '취소',
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
@@ -100,6 +120,7 @@ export default ({route: {params}}) => {
       formData.append('EDUCATION_TYPE', EDUCATION_TYPE);
       formData.append('EMP_NAME', NAME);
       formData.append('STORE_SEQ', STORE_SEQ);
+      formData.append('CEO_HEALTH_SEQ', CEO_HEALTH_SEQ);
       formData.append('MEMBER_SEQ', MEMBER_SEQ);
 
       const fileInfoArr = cameraPictureLast.split('/');
@@ -121,9 +142,9 @@ export default ({route: {params}}) => {
         name: fileName,
         type: fileType,
       });
-      const {data} = await api.saveOcr1(formData);
+      const {data} = await api.updateOcr1(formData);
       if (data.result == '1') {
-        params?.fetchData && params?.fetchData();
+        params?.fetchData();
         navigation.goBack();
         alertModal('', '저장 완료');
       }
@@ -195,8 +216,25 @@ export default ({route: {params}}) => {
     }
   };
 
+  const deleteFn = async () => {
+    try {
+      navigation.pop(2);
+      dispatch(removeHEALTH_STORE_DETAIL(CEO_HEALTH_SEQ));
+      alertModal(
+        '',
+        `${EDUCATION_DATE.slice(0, 4)}년 위생교육증을 삭제하였습니다.`,
+      );
+      const {data} = await api.deleteCeoHealth({CEO_HEALTH_SEQ});
+      if (data.resultmsg === '0') {
+        alertModal('', '연결에 실패하였습니다.');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    <HealthCertificateStoreFormScreenPresenter
+    <HealthCertificateStoreUpdateScreenPresenter
       submitFn={submitFn}
       setNAME={setNAME}
       NAME={NAME}
@@ -220,6 +258,7 @@ export default ({route: {params}}) => {
       setCameraPictureLast={setCameraPictureLast}
       takePictureFn={takePictureFn}
       checkOrcFn={checkOrcFn}
+      confirmModal={confirmModal}
     />
   );
 };

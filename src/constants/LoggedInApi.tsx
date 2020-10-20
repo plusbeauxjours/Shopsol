@@ -218,6 +218,10 @@ export default {
     callApi('post', '/auth/getAllCeoHealth/', data),
   saveOcr1: (data: any) => callApi('post', '/auth/saveocr1/', data),
   checkocr1: (data: any) => callApi('post', '/auth/checkocr1/', data),
+  updateOcr1: (data: any) => callApi('post', '/auth/updateocr1/', data),
+  deleteCeoHealth: (data: any) =>
+    callApi('post', '/auth/deleteCeoHealth/', data),
+
   // deleteStoreHealth: (data: any) =>
   //   callApi('post', '/auth/deleteStoreHealth/', data),
   // checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data),
@@ -238,11 +242,6 @@ export default {
   //   callApi('get', `/auth/emphealthdetail?EMP_SEQ=${EMP_SEQ}&`),
 
   // saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data, true),
-
-  // updateOcr1: (data: any) => callApi('post', '/auth/updateocr1/', data, true),
-
-  // deleteCeoHealth: (data: any) =>
-  //   callApi('post', '/auth/deleteCeoHealth/', data),
 
   // getCuNotice: (STORE_SEQ: string) =>
   //   callApi('get', `/auth/getCuNotice?STORE_SEQ=${STORE_SEQ}&`),

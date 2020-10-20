@@ -64,10 +64,10 @@ import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertifi
 import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
 import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
 import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
+import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
 // import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
 // import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
 // import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
-// import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
 
 // Components========================================================
 import SettingBtn from '../components/Header/SettingBtn';
@@ -492,6 +492,14 @@ export default () => {
             title: '조기경보시스템 직원 수정',
           }}
         />
+        <LoggedInNavigation.Screen
+          name="HealthCertificateStoreUpdateScreen"
+          component={HealthCertificateStoreUpdateScreen}
+          options={{
+            headerTitle: '위생교육증 수정',
+            title: '조기경보시스템 업체 수정',
+          }}
+        />
         {/* 
         조기경보========================================================
         <LoggedInNavigation.Screen
@@ -520,14 +528,7 @@ export default () => {
         />
       
  
-        <LoggedInNavigation.Screen
-          name="HealthCertificateStoreUpdateScreen"
-          component={HealthCertificateStoreUpdateScreen}
-          options={{
-            headerTitle: '위생교육증 수정',
-            title: '조기경보시스템 업체 수정',
-          }}
-        /> */}
+   */}
       </LoggedInNavigation.Navigator>
       {alert.visible && <RootModal alert={alert} />}
     </React.Fragment>
