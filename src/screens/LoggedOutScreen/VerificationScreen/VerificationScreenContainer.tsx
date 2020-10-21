@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
+import DeviceInfo from 'react-native-device-info';
 
 import VerificationScreenPresenter from './VerificationScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -142,6 +143,9 @@ export default () => {
   };
 
   useEffect(() => {
+    (async () => {
+      setMobileNo(await DeviceInfo.getPhoneNumber());
+    })();
     return () => {
       clearInterval(timer);
     };
