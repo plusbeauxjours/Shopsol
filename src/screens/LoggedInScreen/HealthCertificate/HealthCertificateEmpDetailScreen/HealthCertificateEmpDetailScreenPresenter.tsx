@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -8,7 +9,6 @@ import {
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import {ActivityIndicator} from 'react-native';
-import ImageViewer from 'react-native-image-zoom-viewer';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import moment from 'moment';
 
@@ -21,9 +21,8 @@ import {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: #f6f6f6; ;
 `;
-
 const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
 
@@ -53,9 +52,8 @@ const ContentLabelText = styled.Text`
   color: #000;
 `;
 
-const ContentDataText = styled.Text`
+const ContentDataText = styled(ContentLabelText)`
   font-weight: bold;
-  color: #000;
 `;
 
 const ImageButtonWrapper = styled.TouchableOpacity`
@@ -126,7 +124,6 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 12px;
   background-color: #eee;
 `;
-
 const DateArrowRight = styled(DateArrowLeft)``;
 const DateTextArea = styled.TouchableOpacity`
   flex: 1;
@@ -134,7 +131,6 @@ const DateTextArea = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;
-
 const DateToday = styled.TouchableOpacity`
   margin-right: 5px;
   width: ${wp('10%')}px;
@@ -144,12 +140,10 @@ const DateToday = styled.TouchableOpacity`
   border-radius: 12px;
   background-color: #eee;
 `;
-
 const DateText = styled.Text`
   font-weight: bold;
   font-size: 15px;
 `;
-
 const ContentWrapper = styled.View`
   width: ${wp('90%')}px;
   margin-top: ${hp('3%')}px;
@@ -164,7 +158,6 @@ const ModifyButton = styled.TouchableOpacity`
   justify-content: center;
   background-color: #e85356;
 `;
-
 const SaveButton = styled(ModifyButton)`
   background-color: #393939;
 `;
@@ -209,26 +202,27 @@ const CloseIconContainer = styled.TouchableOpacity`
 
 export default ({
   fetchData,
+  EMP_SEQ,
   onRefresh,
   alertModal,
-  HEALTH_STORE_DETAIL,
+  HEALTH_EMP_DETAIL,
   isImageViewVisible,
   setIsImageViewVisible,
   SELECT_INDEX,
   decreaseSELECT_INDEX,
   increaseSELECT_INDEX,
 }) => {
-  if (HEALTH_STORE_DETAIL) {
+  if (HEALTH_EMP_DETAIL) {
     const navigation = useNavigation();
     const images = [
       {
         url:
           'http://133.186.210.223/uploads/ocr/' +
-          HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+          HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
       },
     ];
 
-    const renderFooter = () => (
+    const renderFooter = (index: number) => (
       <Footer>
         <FooterText>1 / 1</FooterText>
       </Footer>
@@ -253,7 +247,7 @@ export default ({
         {label == '교육 구분' ? (
           <ContentDataWrapper>
             <ContentDataText>
-              {HEALTH_STORE_DETAIL[SELECT_INDEX]?.EDUCATION_TYPE === 'online'
+              {HEALTH_EMP_DETAIL[SELECT_INDEX]?.EDUCATION_TYPE == 'online'
                 ? '온라인교육'
                 : '집체교육'}
             </ContentDataText>
@@ -283,7 +277,10 @@ export default ({
               <Date>
                 <DateArrowLeft
                   onPress={() => {
-                    if (SELECT_INDEX == HEALTH_STORE_DETAIL?.length - 1) {
+                    if (
+                      SELECT_INDEX ==
+                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.length - 1
+                    ) {
                       alertModal('', '최초데이터 입니다.');
                     } else {
                       increaseSELECT_INDEX();
@@ -293,18 +290,10 @@ export default ({
                 </DateArrowLeft>
                 <DateTextArea onPress={() => onRefresh()}>
                   <DateText>
-                    {
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE.split(
-                        '-',
-                      )[0]
-                    }
-                    년
+                    {HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT}회차
                   </DateText>
                 </DateTextArea>
-                <DateToday
-                  onPress={() => {
-                    onRefresh();
-                  }}>
+                <DateToday onPress={() => onRefresh()}>
                   <ReloadCircleIcon size={22} />
                 </DateToday>
                 <DateArrowRight
@@ -320,40 +309,27 @@ export default ({
               </Date>
               <ContentWrapper>
                 <GetContent
-                  label={'교육 이수자'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME}
+                  label={'성명'}
+                  data={HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME}
                 />
                 <GetContent
-                  label={'직책'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.position}
+                  label={'회차'}
+                  data={HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT}
                 />
                 <GetContent
-                  label={'대표자성명'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.owner}
-                />
-                <GetContent
-                  label={'영업소명칭'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.storename}
-                />
-                <GetContent
-                  label={'교육 일시'}
+                  label={'검진일'}
                   data={moment(
-                    HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE,
+                    HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
                   ).format('YYYY.MM.DD')}
                 />
-                <GetContent
-                  label={'영업의종류'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.businesstype}
-                />
-                <GetContentComponent label={'교육 구분'} />
                 <GetContentComponent label={'사진'} />
               </ContentWrapper>
               <RegDateContainer>
                 <RegDate>
                   ※ 입력일자 :{' '}
-                  {moment(
-                    HEALTH_STORE_DETAIL[SELECT_INDEX]?.CREATE_TIME,
-                  ).format('YYYY.MM.DD')}
+                  {moment(HEALTH_EMP_DETAIL[SELECT_INDEX]?.CREATE_TIME).format(
+                    'YYYY.MM.DD',
+                  )}
                 </RegDate>
               </RegDateContainer>
             </Box>
@@ -362,35 +338,31 @@ export default ({
             <Row>
               <ModifyButton
                 onPress={() => {
-                  navigation.navigate('HealthCertificateStoreUpdateScreen', {
+                  navigation.navigate('HealthCertificateEmpUpdateScreen', {
                     fetchData,
-                    CEO_HEALTH_SEQ:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.CEO_HEALTH_SEQ,
-                    NAME: HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME,
-                    position: HEALTH_STORE_DETAIL[SELECT_INDEX]?.position,
-                    owner: HEALTH_STORE_DETAIL[SELECT_INDEX]?.owner,
-                    storename: HEALTH_STORE_DETAIL[SELECT_INDEX]?.storename,
+                    NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
+                    RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
                     EDUCATION_DATE:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE,
-                    businesstype:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.businesstype,
-                    EDUCATION_TYPE:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationTYPE,
+                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
                     IMG_LIST:
                       'http://133.186.210.223/uploads/ocr/' +
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    STORE_HEALTH_SEQ:
+                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_HEALTH_SEQ,
                   });
                 }}>
                 <Text style={{fontSize: 16, color: 'white'}}>수정하기</Text>
               </ModifyButton>
               <SaveButton
                 onPress={() => {
-                  navigation.navigate('HealthCertificateStoreFormScreen', {
+                  navigation.navigate('HealthCertificateEmpFormScreen', {
                     fetchData,
-                    NAME: HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME,
+                    EMP_SEQ,
+                    NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
+                    RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
                     IMG_LIST:
                       'http://133.186.210.223/uploads/ocr/' +
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
                   });
                 }}>
                 <Text style={{fontSize: 16, color: 'white'}}>갱신하기</Text>

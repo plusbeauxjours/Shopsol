@@ -226,11 +226,11 @@ export default {
       'get',
       `/Store/store_health_emp_list?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`,
     ),
-  // deleteStoreHealth: (data: any) =>
-  //   callApi('post', '/auth/deleteStoreHealth/', data),
-  // checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data),
-  // updateOcr: (data: any) => callApi('post', '/auth/updateocr/', data),
-  // storeHealthEmpDetail: (EMP_SEQ: string) =>
-  //   callApi('get', `/auth/emphealthdetail?EMP_SEQ=${EMP_SEQ}&`),
-  // saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data, true),
+  storeHealthEmpDetail: (EMP_SEQ: string) =>
+    oldApi('get', `/Store/store_health_emp_detail?EMP_SEQ=${EMP_SEQ}&`),
+  deleteStoreHealth: (data: any) =>
+    callApi('post', '/auth/deleteStoreHealth/', data),
+  checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data),
+  updateOcr: (data: any) => callApi('post', '/auth/updateocr/', data),
+  saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data),
 };

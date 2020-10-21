@@ -41,11 +41,11 @@
 	<string>Some ad content may access calendar</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Your own description of the purpose</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Program requires GPS to track cars and job orders</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Program requires GPS to track cars and job orders</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Program requires GPS to track cars and job orders</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Some ad content may access Microphone</string>

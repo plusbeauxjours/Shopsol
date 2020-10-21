@@ -16,9 +16,9 @@ interface Props {
 export default ({children, onNotificationOpened}: Props): JSX.Element => {
   const dispatch = useDispatch();
 
-  const CHANNEL_ID = 'com.wesop.cuwesop';
-  const APP_NAME = 'CUwesop';
-  const DESCRIPTION = 'CUwesop channel';
+  const CHANNEL_ID = 'com.shopsolwesop';
+  const APP_NAME = 'Shopsol';
+  const DESCRIPTION = 'Shopsol channel';
 
   let _onTokenRefreshListener: any = undefined;
   let _notificationDisplayedListener: any = undefined;

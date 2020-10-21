@@ -58,7 +58,6 @@ const healthSlice = createSlice({
     },
     removeHEALTH_STORE_DETAIL(state, action) {
       const {payload: CEO_HEALTH_SEQ} = action;
-      console.log('CEO_HEALTH_SEQ', CEO_HEALTH_SEQ);
       return {
         ...state,
         HEALTH_STORE_DETAIL: state.HEALTH_STORE_DETAIL.filter(

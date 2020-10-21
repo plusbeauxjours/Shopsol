@@ -66,8 +66,8 @@ import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/Health
 import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
 import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
 import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
-// import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
-// import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
+import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
+import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
 
 // Components========================================================
 import SettingBtn from '../components/Header/SettingBtn';
@@ -509,8 +509,6 @@ export default () => {
             title: '조기경보시스템 직원 목록',
           }}
         />
-        {/* 
-
         <LoggedInNavigation.Screen
           name="HealthCertificateEmpDetailScreen"
           component={HealthCertificateEmpDetailScreen}
@@ -527,9 +525,6 @@ export default () => {
             title: '조기경보시스템 직원 등록',
           }}
         />
-      
- 
-   */}
       </LoggedInNavigation.Navigator>
       {alert.visible && <RootModal alert={alert} />}
     </React.Fragment>

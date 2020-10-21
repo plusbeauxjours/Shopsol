@@ -1,31 +1,29 @@
 import React, {useState} from 'react';
+import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
-import HealthCertificateEmpUpdateScreenPresenter from './HealthCertificateEmpUpdateScreenPresenter';
+import HealthCertificateEmpFormScreenPresenter from './HealthCertificateEmpFormScreenPresenter';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
-import {removeHEALTH_EMP_DETAIL} from '~/redux/healthSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const {EMP_SEQ = null, STORE_SEQ = null, STORE_HEALTH_SEQ = null} = params;
+  const {EMP_SEQ = null} = params;
+  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const {MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
 
-  const [cameraPictureLast, setCameraPictureLast] = useState<any>(
-    params?.IMG_LIST || null,
-  );
+  const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
   );
   const [dateModalVisible, setDateModalVisible] = useState<boolean>(false);
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(
-    params?.EDUCATION_DATE || moment().format('YYYY-MM-DD'),
+    moment().format('YYYY-MM-DD'),
   ); // 교육일시 / 검진일
   const [NAME, setNAME] = useState<string>(params?.NAME || ''); // 교육이수자성명 / 성명
   const [RESULT_COUNT, setRESULT_COUNT] = useState<any>(params?.RESULT_COUNT); // 회차
@@ -40,21 +38,6 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
-  const confirmModal = () => {
-    const params = {
-      alertType: 'confirm',
-      title: '',
-      content: '등록한 정보를 삭제하시겠습니까?',
-      okCallback: () => {
-        deleteFn();
-      },
-      okButtonText: '삭제',
-      cancelButtonText: '취소',
-    };
-    dispatch(setAlertInfo(params));
-    dispatch(setAlertVisible(true));
-  };
-
   const takePictureFn = async (cameraRef) => {
     const options = {quality: 1.0, base64: true, width: 900, height: 900};
     const data = await cameraRef.current.takePictureAsync(options);
@@ -62,18 +45,19 @@ export default ({route: {params}}) => {
   };
 
   const submitFn = async () => {
-    if (NAME.length === 0 || !NAME) {
-      return alertModal('', '성명을 입력해주세요.');
-    }
-    if (RESULT_COUNT.length === 0 || !RESULT_COUNT) {
-      return alertModal('', '회차를 입력해주세요.');
-    }
     const reg = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/;
     if (reg.test(EDUCATION_DATE) === false) {
       return alertModal(
         '검진일 날짜형식',
         '검진일 날짜형식은 "2020-01-01"과 같은 형식이어야 합니다. 사진이 인식되지 않는다면 항목을 눌러 날짜를 직접 선택해주세요.',
       );
+    }
+
+    if (NAME.length === 0 || !NAME) {
+      return alertModal('', '성명을 입력해주세요.');
+    }
+    if (RESULT_COUNT.length === 0 || !RESULT_COUNT) {
+      alertModal('', '회차를 입력해주세요.');
     }
     try {
       dispatch(setSplashVisible(true));
@@ -83,7 +67,6 @@ export default ({route: {params}}) => {
       formData.append('STORE_SEQ', STORE_SEQ);
       formData.append('RESULT_DATE', EDUCATION_DATE);
       formData.append('RESULT_COUNT', RESULT_COUNT);
-      formData.append('STORE_HEALTH_SEQ', STORE_HEALTH_SEQ);
       formData.append('MEMBER_SEQ', MEMBER_SEQ);
 
       const fileInfoArr = cameraPictureLast.split('/');
@@ -105,11 +88,13 @@ export default ({route: {params}}) => {
         name: fileName,
         type: fileType,
       });
-      const {data} = await api.updateOcr(formData);
+      const {data} = await api.saveOcr(formData);
       if (data.result == '1') {
-        params?.fetchData();
+        {
+          params?.fetchData && params?.fetchData();
+        }
         navigation.goBack();
-        alertModal('', '수정 완료');
+        alertModal('', '저장 완료');
       }
     } catch (e) {
       console.log(e);
@@ -165,43 +150,23 @@ export default ({route: {params}}) => {
     }
   };
 
-  const deleteFn = async () => {
-    try {
-      navigation.pop(2);
-      dispatch(removeHEALTH_EMP_DETAIL(STORE_HEALTH_SEQ));
-      alertModal(
-        '',
-        `${EDUCATION_DATE.slice(0, 4)}년 위생교육증을 삭제하였습니다.`,
-      );
-      const {data} = await api.deleteStoreHealth({
-        STORE_HEALTH_SEQ,
-      });
-      if (data.resultmsg === '0') {
-        alertModal('', '연결에 실패하였습니다.');
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
-    <HealthCertificateEmpUpdateScreenPresenter
+    <HealthCertificateEmpFormScreenPresenter
+      submitFn={submitFn}
       checkOrcFn={checkOrcFn}
-      confirmModal={confirmModal}
-      takePictureFn={takePictureFn}
-      cameraPictureLast={cameraPictureLast}
-      setCameraPictureLast={setCameraPictureLast}
-      isCameraModalVisible={isCameraModalVisible}
-      setIsCameraModalVisible={setIsCameraModalVisible}
       dateModalVisible={dateModalVisible}
       setDateModalVisible={setDateModalVisible}
-      submitFn={submitFn}
       NAME={NAME}
       setNAME={setNAME}
       RESULT_COUNT={RESULT_COUNT}
       setRESULT_COUNT={setRESULT_COUNT}
       EDUCATION_DATE={EDUCATION_DATE}
       setEDUCATION_DATE={setEDUCATION_DATE}
+      isCameraModalVisible={isCameraModalVisible}
+      setIsCameraModalVisible={setIsCameraModalVisible}
+      cameraPictureLast={cameraPictureLast}
+      setCameraPictureLast={setCameraPictureLast}
+      takePictureFn={takePictureFn}
     />
   );
 };

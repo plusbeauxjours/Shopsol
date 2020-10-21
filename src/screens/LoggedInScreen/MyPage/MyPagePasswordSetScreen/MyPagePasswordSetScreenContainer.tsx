@@ -5,14 +5,12 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {userLogout} from '~/redux/userSlice';
 import {useNavigation} from '@react-navigation/native';
 
 let timer = null;
 
 export default () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const {MEMBER_SEQ, MOBILE_NO} = useSelector(
     (state: any) => state.userReducer,
   );
@@ -78,19 +76,8 @@ export default () => {
         alertModal('인증번호 오류입니다.');
       } else {
         setHasCheckedVerifyCode(false);
-        dispatch(userLogout());
         clearInterval(timer);
-        navigation.reset({
-          index: 0,
-          routes: [
-            {
-              name: 'LoggedOutNavigation',
-              state: {
-                routes: [{name: 'StartScreen'}],
-              },
-            },
-          ],
-        });
+        alertModal('비밀번호가 변경 되었습니다.');
       }
     } catch (e) {
       console.log(e);
