@@ -3,6 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import DeviceInfo from 'react-native-device-info';
+import SmsRetriever from 'react-native-sms-retriever';
 
 import VerificationScreenPresenter from './VerificationScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -112,6 +113,13 @@ export default () => {
     setHasCheckTimeOut(false);
     startCountDown();
     try {
+      const registered = await SmsRetriever.startSmsRetriever();
+      if (registered) {
+        SmsRetriever.addSmsListener((event) => {
+          console.log('event.message', event.message);
+          event.message && console.log('event.message', event.message);
+        });
+      }
       const {data} = await api.getSMS({
         PHONENUMBER: mobileNo,
       });
@@ -143,13 +151,19 @@ export default () => {
   };
 
   useEffect(() => {
-    (async () => {
-      setMobileNo(await DeviceInfo.getPhoneNumber());
-    })();
     return () => {
       clearInterval(timer);
+      SmsRetriever?.removeSmsListener();
     };
   });
+
+  useEffect(() => {
+    (async () => {
+      (await DeviceInfo?.getPhoneNumber()) !== 'unknown' &&
+        (await DeviceInfo?.getPhoneNumber()) &&
+        setMobileNo(await DeviceInfo.getPhoneNumber());
+    })();
+  }, []);
 
   return (
     <VerificationScreenPresenter

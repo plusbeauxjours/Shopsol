@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {useNavigation} from '@react-navigation/native';
+import SmsRetriever from 'react-native-sms-retriever';
 
 let timer = null;
 
@@ -155,6 +156,13 @@ export default () => {
     setHasCheckedTimeOut(false);
     startCountDown();
     try {
+      const registered = await SmsRetriever.startSmsRetriever();
+      if (registered) {
+        SmsRetriever.addSmsListener((event) => {
+          console.log('event.message', event.message);
+          event.message && console.log('event.message', event.message);
+        });
+      }
       const {data} = await api.getSMS({
         PHONENUMBER: MOBILE_NO,
       });
@@ -169,6 +177,7 @@ export default () => {
   useEffect(() => {
     return () => {
       clearInterval(timer);
+      SmsRetriever?.removeSmsListener();
     };
   });
 
