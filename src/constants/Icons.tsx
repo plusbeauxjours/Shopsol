@@ -277,6 +277,10 @@ export const PictureIcon: React.FC<IProps> = ({size, color}) => (
   />
 );
 
+export const PhoneIcon: React.FC<IProps> = ({size, color}) => (
+  <FontAwesome name={'phone'} size={size ?? 10} color={color ?? 'black'} />
+);
+
 export const CalendarTimesIcon: React.FC<IProps> = ({size, color}) => (
   <FontAwesome
     name={'calendar-times-o'}

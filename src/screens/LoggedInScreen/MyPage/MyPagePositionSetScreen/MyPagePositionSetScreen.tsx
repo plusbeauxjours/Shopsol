@@ -7,6 +7,7 @@ import api from '~/constants/LoggedInApi';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '../../../../constants/Icons';
+import {getSTORELIST_DATA} from '../../../../redux/userSlice';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -76,6 +77,7 @@ export default () => {
       alertModal('전환이 완료되었습니다.');
       navigation.goBack();
       dispatch(setSTORE(positionTypeCheck.indexOf(true)));
+      dispatch(getSTORELIST_DATA());
       const {data} = await api.changeStore({
         MobileNo: MOBILE_NO,
         MEMBER_SEQ,

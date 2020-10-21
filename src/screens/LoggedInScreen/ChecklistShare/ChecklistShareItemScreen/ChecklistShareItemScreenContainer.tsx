@@ -14,8 +14,7 @@ import {
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const {TITLE, NOTICE_SEQ, isFavorite} = params;
-
-  const {STORE, MEMBER_SEQ: ME} = useSelector(
+  const {STORE, MEMBER_SEQ: ME, MEMBER_NAME} = useSelector(
     (state: any) => state.userReducer,
   );
   const {
@@ -68,7 +67,8 @@ export default ({route: {params}}) => {
     try {
       dispatch(deleteCHECKLIST_SHARE_COMMENTS(selectedCOM_SEQ));
       const {data} = await api.delNoticeComment(selectedCOM_SEQ);
-      if (data.message === 'SUCCESS') {
+      console.log(data);
+      if (data.message !== 'SUCCESS') {
         alertModal('', '연결에 실패하였습니다.');
       }
     } catch (e) {
@@ -83,7 +83,7 @@ export default ({route: {params}}) => {
     try {
       const {data} = await api.setNoticeComment(
         NOTICE_SEQ,
-        item?.EMP_NAME,
+        MEMBER_NAME,
         comment,
         STORE,
         ME,

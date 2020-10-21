@@ -8,10 +8,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableHighlight,
+  Linking,
 } from 'react-native';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
-import {EllipseIcon} from '~/constants/Icons';
+
+import {EllipseIcon, PhoneIcon} from '~/constants/Icons';
 
 import {
   BackIcon,
@@ -34,6 +36,9 @@ const BackGround = styled.SafeAreaView`
 const ScrollView = styled.ScrollView``;
 
 const Touchable = styled.TouchableOpacity`
+  margin-bottom: 5px;
+`;
+const TouchableRow = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;
@@ -72,7 +77,6 @@ const NameText = styled.Text`
   margin-right: 10px;
   color: #707070;
   font-size: 17px;
-  margin-bottom: 5px;
 `;
 
 const DateText = styled.Text`
@@ -304,6 +308,7 @@ export default ({
   setTimeList,
   getNumberToday,
   gotoSetInfo,
+  mobileNo,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -494,12 +499,26 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <NameBox>
-                  <Row style={{justifyContent: 'flex-start'}}>
-                    <NameText>{data?.EMP_NAME}</NameText>
-                    <DateText>
-                      {data?.IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
-                    </DateText>
-                  </Row>
+                  <Touchable onPress={() => Linking.openURL(`tel:${mobileNo}`)}>
+                    <Row style={{justifyContent: 'flex-start'}}>
+                      <NameText>{data?.EMP_NAME}</NameText>
+                      <DateText>
+                        {data?.IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
+                      </DateText>
+                    </Row>
+                    <Row style={{justifyContent: 'flex-start'}}>
+                      <PhoneIcon color={'#707070'} />
+                      <DateText style={{marginLeft: 5}}>{mobileNo}</DateText>
+                      <DateText
+                        style={{
+                          marginLeft: 5,
+                          color: '#e85356',
+                          fontWeight: '600',
+                        }}>
+                        전화걸기
+                      </DateText>
+                    </Row>
+                  </Touchable>
                   <DateText>근무기간</DateText>
                   <DateText>
                     {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
@@ -583,7 +602,7 @@ export default ({
                     근무일정
                   </WorkTypeAndSalaryBoxTitle>
                   {STORE == '1' && (
-                    <Touchable
+                    <TouchableRow
                       onPress={() => {
                         if (isFreeWorkingType) {
                           explainModal(
@@ -598,7 +617,7 @@ export default ({
                         }
                       }}>
                       <HelpCircleIcon />
-                    </Touchable>
+                    </TouchableRow>
                   )}
                 </Row>
                 <WorkScheduleBox onPress={() => toggleWorkSchedule()}>
