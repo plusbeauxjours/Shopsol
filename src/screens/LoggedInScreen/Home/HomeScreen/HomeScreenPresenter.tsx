@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
@@ -10,7 +10,6 @@ import FastImage from 'react-native-fast-image';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
-import {WebView} from 'react-native-webview';
 import MapView, {PROVIDER_GOOGLE, Marker, Circle} from 'react-native-maps';
 
 import {
@@ -19,9 +18,16 @@ import {
   SettingIcon,
   QrCodeIcon,
 } from '~/constants/Icons';
+import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
+import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 
 interface IHasHeight {
   hasHeight: boolean;
+}
+
+interface ITheme {
+  distance?: string | number;
+  current?: string | number;
 }
 
 const BackGround = styled.View`
@@ -51,8 +57,8 @@ const IconContainer = styled.TouchableOpacity`
 
 const MyPage = styled.View`
   flex-direction: row;
-  flex: 1;
-  margin-right: ${wp('5%')}px;
+  margin-right: 10px;
+  margin-top: 20px;
   align-items: flex-end;
   justify-content: flex-end;
 `;
@@ -112,6 +118,10 @@ const QrText = styled.Text`
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+const Column = styled.View`
+  flex-direction: column;
 `;
 
 const StoreName = styled.View`
@@ -287,23 +297,51 @@ const MarkerWrapper = styled.View`
   align-items: center;
 `;
 
-const MarkerContainer = styled.View`
-  background-color: green;
+const ShopMarkerContainer = styled.View<ITheme>`
+  background-color: rgba(0, 0, 0, 0.8)
   padding: 10px;
   border-radius: 10px;
   position: relative;
 `;
 
-const MarkerText = styled.Text`
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const MarkerTriangle = styled.View`
+const ShopMarkerTriangle = styled.View<ITheme>`
   border: 10px solid transparent;
   width: 10px;
-  border-top-color: green;
+  border-top-color: rgba(0, 0, 0, 0.8);
+`;
+
+const UserMarkerContainer = styled.View<ITheme>`
+  background-color: ${(props) =>
+    props.distance === '제한 없음'
+      ? 'rgba(28, 182, 44, 0.9)'
+      : props.distance > props.current
+      ? 'rgba(28, 182, 44, 0.9)'
+      : 'rgba(240, 52, 52, 0.9)'};
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+`;
+
+const UserMarkerTriangle = styled.View<ITheme>`
+  border: 10px solid transparent;
+  width: 10px;
+  border-top-color: ${(props) =>
+    props.distance === '제한 없음'
+      ? 'rgba(28, 182, 44, 0.9)'
+      : props.distance > props.current
+      ? 'rgba(28, 182, 44, 0.9)'
+      : 'rgba(240, 52, 52, 0.9)'};
+`;
+
+const SpaceRow = styled.View`
+  justify-content: space-between;
+  flex-direction: row;
+`;
+
+const MarkerText = styled.Text`
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
 `;
 
 export default ({
@@ -313,13 +351,11 @@ export default ({
   STORE_NAME,
   TOTAL_COUNT,
   WORKING_COUNT,
-  qrModalOpen,
-  setQrModalOpen,
+  qrCameraModalOpen,
+  setQrCameraModalOpen,
+  qrWorkingModalOpen,
   setShowPictureModal,
   showPictureModal,
-  workingModalOpen,
-  setWorkingModalOpen,
-  modalRef,
   goWorkFn,
   leaveWorkFn,
   handleBarCodeScanned,
@@ -333,8 +369,14 @@ export default ({
   long,
   getDistance,
   GPS,
-  modalOpen,
-  setModalOpen,
+  mapWorkingModalOpen,
+  setMapWorkingModalOpen,
+  sucessModalOpen,
+  setSucessModalOpen,
+  failModalOpen,
+  setFailModalOpen,
+  actionTYPE,
+  errorMessage,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({selection, paging, count = 0}) => (
@@ -357,20 +399,68 @@ export default ({
     </MenuCnt>
   );
 
-  const RoomMarker = ({distance, current}) => (
-    <MarkerWrapper>
-      <MarkerContainer>
-        {distance !== '제한 없음' || current < distance ? (
-          <MarkerText>탭하여 출퇴근하기</MarkerText>
-        ) : (
-          <MarkerText>
-            허용거리: {distance}
-            {distance !== '제한 없음' && '미터'}
+  const ShopMarker = () => (
+    <MarkerWrapper style={{zIndex: 10}}>
+      <ShopMarkerContainer>
+        <MenuTitle style={{marginBottom: 5}}>{STORE_NAME}점</MenuTitle>
+        <SpaceRow>
+          <MarkerText>출퇴근 허용거리: </MarkerText>
+          <MarkerText style={{fontWeight: '600'}}>
+            {STORE_DATA.resultdata.JULI}M
           </MarkerText>
+        </SpaceRow>
+        {STORE_DATA.resultdata.LATE_FLAG === '1' && (
+          <SpaceRow>
+            <MarkerText>지각 허용시간:</MarkerText>
+            <MarkerText style={{fontWeight: '600'}}>
+              {STORE_DATA.resultdata.LATE_TIME}분
+            </MarkerText>
+          </SpaceRow>
         )}
-        <MarkerText>남은거리: {current}미터</MarkerText>
-      </MarkerContainer>
-      <MarkerTriangle />
+        {STORE_DATA.resultdata.EARLY_FLAG === '1' && (
+          <SpaceRow>
+            <MarkerText>조퇴 허용시간:</MarkerText>
+            <MarkerText style={{fontWeight: '600'}}>
+              {STORE_DATA.resultdata.EARLY_TIME}분
+            </MarkerText>
+          </SpaceRow>
+        )}
+      </ShopMarkerContainer>
+      <ShopMarkerTriangle />
+    </MarkerWrapper>
+  );
+
+  const UserMarker = ({distance, current}) => (
+    <MarkerWrapper style={{zIndex: 50}}>
+      <UserMarkerContainer distance={distance} current={current}>
+        <Row>
+          <FastImage
+            style={{width: 40, height: 40, borderRadius: 20, marginRight: 10}}
+            source={{
+              uri: 'http://133.186.210.223/uploads/3.png',
+              headers: {Authorization: 'someAuthToken'},
+              priority: FastImage.priority.low,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          {distance < current ? (
+            <Column>
+              <MarkerText style={{textAlign: 'right'}}>
+                {MEMBER_NAME}님
+              </MarkerText>
+              <MarkerText>
+                {STORE_DATA.resultdata.NAME}점까지 남은거리
+              </MarkerText>
+              <MarkerText style={{textAlign: 'right'}}>
+                {Math.round(getDistance() * 10) / 10}M
+              </MarkerText>
+            </Column>
+          ) : (
+            <MenuTitle>탭하여 출퇴근하기</MenuTitle>
+          )}
+        </Row>
+      </UserMarkerContainer>
+      <UserMarkerTriangle distance={distance} current={current} />
     </MarkerWrapper>
   );
 
@@ -425,7 +515,7 @@ export default ({
           source={require('../../../../assets/main/mainTopBg.png')}
           resizeMode={FastImage.resizeMode.cover}>
           <MyPage>
-            {STORE !== '1' && (
+            {STORE === '1' && (
               <IconContainer
                 onPress={() => {
                   navigation.navigate('HelpModalScreen');
@@ -503,13 +593,13 @@ export default ({
           {STORE == 0 && (
             <>
               {GPS == '0' ? (
-                <Qr onPress={() => setQrModalOpen(true)}>
+                <Qr onPress={() => setQrCameraModalOpen(true)}>
                   <QrText>출퇴근하기</QrText>
                   <QrCodeIcon />
                 </Qr>
               ) : (
                 <BoxContainer>
-                  <Box onPress={() => setQrModalOpen(true)}>
+                  <Box onPress={() => setQrCameraModalOpen(true)}>
                     <BoxText>QR출퇴근하기</BoxText>
                   </Box>
                   <Box onPress={() => setIsGpsVisible(!isGpsVisible)}>
@@ -527,8 +617,10 @@ export default ({
                 style={{width: wp('100%') - 40, height: 300}}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={{
-                  latitude: Number(STORE_DATA.resultdata.LAT) + 0.0002,
-                  longitude: Number(STORE_DATA.resultdata.LONG) + 0.0002,
+                  // latitude: lat,
+                  // longitude: long,
+                  latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                  longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   latitudeDelta: 0.005,
                   longitudeDelta: 0.005,
                 }}>
@@ -554,20 +646,14 @@ export default ({
                   />
                 )}
                 <Marker
+                  onPress={() => setMapWorkingModalOpen(true)}
                   coordinate={{
-                    latitude: Number(STORE_DATA.resultdata.LAT),
-                    longitude: Number(STORE_DATA.resultdata.LONG),
-                  }}
-                  title="this is a shop"
-                  description="this is a marker example"
-                />
-                <Marker
-                  onPress={() => {}}
-                  coordinate={{
-                    latitude: Number(STORE_DATA.resultdata.LAT) + 0.0002,
-                    longitude: Number(STORE_DATA.resultdata.LONG) + 0.0002,
+                    // latitude: lat,
+                    // longitude: long,
+                    latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                    longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   }}>
-                  <RoomMarker
+                  <UserMarker
                     distance={
                       STORE_DATA.resultdata.JULI == '-1'
                         ? '제한 없음'
@@ -575,6 +661,13 @@ export default ({
                     }
                     current={Math.round(getDistance() * 10) / 10}
                   />
+                </Marker>
+                <Marker
+                  coordinate={{
+                    latitude: Number(STORE_DATA.resultdata.LAT),
+                    longitude: Number(STORE_DATA.resultdata.LONG),
+                  }}>
+                  <ShopMarker />
                 </Marker>
               </MapView>
             </>
@@ -782,11 +875,10 @@ export default ({
         </MenuBox>
       </ScrollView>
       <Modal
-        ref={modalRef}
-        isVisible={workingModalOpen}
+        isVisible={qrWorkingModalOpen}
         animationOutTiming={1}
-        onRequestClose={() => setWorkingModalOpen(false)}
-        onBackdropPress={() => setWorkingModalOpen(false)}
+        onRequestClose={() => setQrCameraModalOpen(false)}
+        onBackdropPress={() => setQrCameraModalOpen(false)}
         style={{margin: 0, justifyContent: 'flex-end'}}>
         <WorkingModalContainer>
           <WorkStartButton onPress={() => goWorkFn('QR')}>
@@ -798,9 +890,24 @@ export default ({
         </WorkingModalContainer>
       </Modal>
       <Modal
-        isVisible={qrModalOpen}
-        onBackdropPress={() => setQrModalOpen(false)}
-        onRequestClose={() => setQrModalOpen(false)}
+        isVisible={mapWorkingModalOpen}
+        animationOutTiming={1}
+        onRequestClose={() => setMapWorkingModalOpen(false)}
+        onBackdropPress={() => setMapWorkingModalOpen(false)}
+        style={{margin: 0, justifyContent: 'flex-end'}}>
+        <WorkingModalContainer>
+          <WorkStartButton onPress={() => goWorkFn('GPS')}>
+            <WorkStartBtnText>출근</WorkStartBtnText>
+          </WorkStartButton>
+          <WorkEndButton onPress={() => leaveWorkFn('GPS')}>
+            <WorkEndBtnText>퇴근</WorkEndBtnText>
+          </WorkEndButton>
+        </WorkingModalContainer>
+      </Modal>
+      <Modal
+        isVisible={qrCameraModalOpen}
+        onBackdropPress={() => setQrCameraModalOpen(false)}
+        onRequestClose={() => setQrCameraModalOpen(false)}
         style={{margin: 0}}
         avoidKeyboard={true}>
         <QRCodeScanner
@@ -820,7 +927,7 @@ export default ({
           permissionDialogTitle={''}
           permissionDialogMessage={''}
           bottomContent={
-            <GoWork onPress={() => setQrModalOpen(false)}>
+            <GoWork onPress={() => setQrCameraModalOpen(false)}>
               <WorkText>닫기</WorkText>
             </GoWork>
           }
@@ -846,6 +953,77 @@ export default ({
             />
           </ShowPictureModalImage>
         </ShowPictureModalTouchable>
+      </Modal>
+      <Modal
+        animationIn={'fadeIn'}
+        animationOut={'fadeOut'}
+        isVisible={sucessModalOpen}
+        style={{
+          position: 'relative',
+          marginVertical: hp('5%'),
+          alignItems: 'center',
+        }}
+        onBackdropPress={() => setSucessModalOpen(false)}
+        onRequestClose={() => setSucessModalOpen(false)}>
+        <GoWorkingSuccessAnimation
+          STORE_NAME={STORE_NAME}
+          JULI={
+            STORE_DATA.resultdata.GPS === '0'
+              ? null
+              : STORE_DATA.resultdata.JULI == '-1'
+              ? '제한 없음'
+              : STORE_DATA.resultdata.JULI
+          }
+          EARLY_TIME={
+            STORE_DATA.resultdata.EARLY_FLAG === '1'
+              ? STORE_DATA.resultdata.EARLY_TIME
+              : null
+          }
+          LATE_TIME={
+            STORE_DATA.resultdata.LATE_FLAG === '1'
+              ? STORE_DATA.resultdata.LATE_TIME
+              : null
+          }
+          MEMBER_NAME={MEMBER_NAME}
+          setSucessModalOpen={setSucessModalOpen}
+          actionTYPE={actionTYPE}
+        />
+      </Modal>
+      <Modal
+        animationIn={'fadeIn'}
+        animationOut={'fadeOut'}
+        isVisible={failModalOpen}
+        style={{
+          position: 'relative',
+          marginVertical: hp('5%'),
+          alignItems: 'center',
+        }}
+        onBackdropPress={() => setFailModalOpen(false)}
+        onRequestClose={() => setFailModalOpen(false)}>
+        <GoWorkingFailAnimation
+          STORE_NAME={STORE_NAME}
+          JULI={
+            STORE_DATA.resultdata.GPS === '0'
+              ? null
+              : STORE_DATA.resultdata.JULI == '-1'
+              ? '제한 없음'
+              : STORE_DATA.resultdata.JULI
+          }
+          EARLY_TIME={
+            STORE_DATA.resultdata.EARLY_FLAG === '1'
+              ? STORE_DATA.resultdata.EARLY_TIME
+              : null
+          }
+          LATE_TIME={
+            STORE_DATA.resultdata.LATE_FLAG === '1'
+              ? STORE_DATA.resultdata.LATE_TIME
+              : null
+          }
+          MEMBER_NAME={MEMBER_NAME}
+          setFailModalOpen={setFailModalOpen}
+          actionTYPE={actionTYPE}
+          errorMessage={errorMessage}
+        />
       </Modal>
     </BackGround>
   );

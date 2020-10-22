@@ -20,7 +20,6 @@ import {getRESPONSE_EMPLOYEE} from '~/redux/employeeSlice';
 import {getHEALTH_CERTIFICATE_DATA} from '~/redux/healthSlice';
 
 export default ({route: {params}}) => {
-  const modalRef = useRef(null);
   const dispatch = useDispatch();
   const SharedStorage = NativeModules.SharedStorage;
   const {
@@ -36,17 +35,23 @@ export default ({route: {params}}) => {
     (state: any) => state.userReducer,
   );
 
-  const [qrModalOpen, setQrModalOpen] = useState<boolean>(false);
-  const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
-  const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
   const [QR, setQR] = useState<string>('');
   const [invitedEmpCount, setInvitedEmpCount] = useState<number>(0);
   const [checklistCount, setChecklistCount] = useState<number>(0);
   const [noticeCount, setNoticeCount] = useState<number>(0);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
+  const [qrCameraModalOpen, setQrCameraModalOpen] = useState<boolean>(false);
+  const [qrWorkingModalOpen, setQrWorkingModalOpen] = useState<boolean>(false);
+  const [mapWorkingModalOpen, setMapWorkingModalOpen] = useState<boolean>(
+    false,
+  );
+  const [sucessModalOpen, setSucessModalOpen] = useState<boolean>(false);
+  const [failModalOpen, setFailModalOpen] = useState<boolean>(false);
+  const [actionTYPE, setActionTYPE] = useState<string>('출근');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const alertModal = (title, text, okCallback = () => {}) => {
     const params = {
@@ -63,8 +68,8 @@ export default ({route: {params}}) => {
   const checkVersion = async () => {
     try {
       const {data} = await api.checkApp({
-        VERSION: utils.appVersion,
-        PLATFORM: DEVICE_PLATFORM,
+        appinfoversion: utils.appVersion,
+        Dplatform: DEVICE_PLATFORM,
       });
       if (data.RESULT_CODE == '1') {
         alertModal(
@@ -97,34 +102,39 @@ export default ({route: {params}}) => {
 
   // QR 출근하기
   const goWorkFn = async (TYPE) => {
-    setWorkingModalOpen(false);
+    setActionTYPE('출근');
+    setQrWorkingModalOpen(false);
     try {
       dispatch(setSplashVisible(true));
       const {data} = await api.attendanceWork({
         STORE_ID: STORE_SEQ,
-        LAT: lat,
-        LONG: long,
+        // LAT: lat,
+        // LONG: long,
+        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
       if (data.message === 'CONTRACT_END') {
-        alertModal('', '정확한 사업장 QR코드가 아닙니다');
+        setErrorMessage('정확한 사업장 QR코드가 아닙니다');
+        setFailModalOpen(true);
       } else if (data.message === 'WORK_ON_SUCCESS') {
-        if (data.resultCode == '2') {
-          alertModal('', '출근처리를 완료했습니다', data.resultMessage);
-        } else {
-          alertModal('', '출근처리를 완료했습니다');
-        }
+        setSucessModalOpen(true);
       } else if (data.message === 'SCHEDULE_EMPTY') {
-        alertModal('', '오늘은 근무일이 아닙니다');
+        setErrorMessage('오늘은 근무일이 아닙니다');
+        setFailModalOpen(true);
       } else if (data.message === 'SCHEDULE_EXIST') {
-        alertModal('', '이미 출근처리를 완료했습니다');
+        setErrorMessage('이미 출근처리를 완료했습니다');
+        setFailModalOpen(true);
       } else if (data.message === 'ALREADY_SUCCESS') {
-        alertModal('', '이미 출근처리를 완료했습니다');
+        setErrorMessage('이미 출근처리를 완료했습니다');
+        setFailModalOpen(true);
       } else if (data.message === 'FAIL') {
-        alertModal('', data.result);
+        setErrorMessage(data.result);
+        setFailModalOpen(true);
       } else {
-        alertModal('', data.result);
+        setErrorMessage(data.result);
+        setFailModalOpen(true);
       }
     } catch (e) {
       console.log(e);
@@ -135,28 +145,36 @@ export default ({route: {params}}) => {
 
   // QR 퇴근하기
   const leaveWorkFn = async (TYPE) => {
-    setWorkingModalOpen(false);
+    setActionTYPE('퇴근');
+    setQrWorkingModalOpen(false);
     try {
       dispatch(setSplashVisible(true));
       const {data} = await api.attendanceOffWork({
         STORE_ID: STORE_SEQ,
-        LAT: lat,
-        LONG: long,
+        // LAT: lat,
+        // LONG: long,
+        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
       if (data.message == 'CONTRACT_END') {
-        alertModal('', '정확한 사업장 QR코드가 아닙니다');
+        setErrorMessage('정확한 사업장 QR코드가 아닙니다');
+        setFailModalOpen(true);
       } else if (data.message == 'FAIL') {
-        alertModal('', '', data.result);
+        setErrorMessage(data.result);
+        setFailModalOpen(true);
       } else if (data.message == 'SCHEDULE_EMPTY') {
-        alertModal('', '일하는 시간이 아닙니다.');
+        setErrorMessage('일하는 시간이 아닙니다.');
+        setFailModalOpen(true);
       } else if (data.message == 'ALREADY_SUCCESS') {
-        alertModal('', '이미 퇴근하였습니다.');
+        setErrorMessage('이미 퇴근하였습니다.');
+        setFailModalOpen(true);
       } else if (data.message == 'WORK_OFF_SUCCESS') {
-        alertModal('', '정상 퇴근하였습니다.');
+        setSucessModalOpen(true);
       } else if (data.message == 'NOWORK') {
-        alertModal('', '출근기록이 없습니다.');
+        setErrorMessage('출근기록이 없습니다.');
+        setFailModalOpen(true);
       }
     } catch (e) {
       console.log(e);
@@ -173,13 +191,13 @@ export default ({route: {params}}) => {
     if (STORE_SEQ != bounds.data) {
       alertModal('', '정확한 사업장 QR코드가 아닙니다');
     } else {
-      setWorkingModalOpen(true);
-      setQrModalOpen(false);
+      setQrWorkingModalOpen(true);
+      setQrCameraModalOpen(false);
     }
   };
 
   const fetchData = async () => {
-    setWorkingModalOpen(false);
+    setQrWorkingModalOpen(false);
     try {
       if (!STORE_DATA) {
         dispatch(setSplashVisible(true));
@@ -284,8 +302,10 @@ export default ({route: {params}}) => {
   const getDistance = () => {
     const prevLatInRad = toRad(Number(STORE_DATA.resultdata.LAT));
     const prevLongInRad = toRad(Number(STORE_DATA.resultdata.LONG));
-    const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.0002);
-    const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.0002);
+    // const latInRad = lat;
+    // const longInRad = long;
+    const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
+    const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
 
     return (
       6377830.272 *
@@ -340,9 +360,7 @@ export default ({route: {params}}) => {
       WORKING_COUNT={WORKING_COUNT}
       setShowPictureModal={setShowPictureModal}
       showPictureModal={showPictureModal}
-      workingModalOpen={workingModalOpen}
-      setWorkingModalOpen={setWorkingModalOpen}
-      modalRef={modalRef}
+      qrWorkingModalOpen={qrWorkingModalOpen}
       goWorkFn={goWorkFn}
       leaveWorkFn={leaveWorkFn}
       handleBarCodeScanned={handleBarCodeScanned}
@@ -350,16 +368,22 @@ export default ({route: {params}}) => {
       checklistCount={checklistCount}
       noticeCount={noticeCount}
       QR={QR}
-      qrModalOpen={qrModalOpen}
-      setQrModalOpen={setQrModalOpen}
+      qrCameraModalOpen={qrCameraModalOpen}
+      setQrCameraModalOpen={setQrCameraModalOpen}
       isGpsVisible={isGpsVisible}
       setIsGpsVisible={setIsGpsVisible}
       lat={lat}
       long={long}
       getDistance={getDistance}
       GPS={GPS}
-      modalOpen={modalOpen}
-      setModalOpen={setModalOpen}
+      mapWorkingModalOpen={mapWorkingModalOpen}
+      setMapWorkingModalOpen={setMapWorkingModalOpen}
+      sucessModalOpen={sucessModalOpen}
+      setSucessModalOpen={setSucessModalOpen}
+      failModalOpen={failModalOpen}
+      setFailModalOpen={setFailModalOpen}
+      actionTYPE={actionTYPE}
+      errorMessage={errorMessage}
     />
   );
 };

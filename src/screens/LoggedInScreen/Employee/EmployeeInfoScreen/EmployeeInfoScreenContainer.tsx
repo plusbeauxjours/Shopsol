@@ -383,7 +383,6 @@ export default ({route: {params}}) => {
   const fetchData = async () => {
     try {
       const {data} = await api.getEmp(EMP_SEQ);
-      console.log(data.result.MobileNo);
       if (data.message === 'SUCCESS') {
         setMobileNo(data.result.MobileNo);
         calculateFn(

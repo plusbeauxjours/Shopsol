@@ -67,7 +67,6 @@ export default ({route: {params}}) => {
     try {
       dispatch(deleteCHECKLIST_SHARE_COMMENTS(selectedCOM_SEQ));
       const {data} = await api.delNoticeComment(selectedCOM_SEQ);
-      console.log(data);
       if (data.message !== 'SUCCESS') {
         alertModal('', '연결에 실패하였습니다.');
       }
