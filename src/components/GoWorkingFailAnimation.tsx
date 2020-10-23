@@ -48,9 +48,6 @@ const WhiteSpace = styled.View`
 
 export default ({
   STORE_NAME,
-  JULI,
-  LATE_TIME,
-  EARLY_TIME,
   MEMBER_NAME,
   setFailModalOpen,
   actionTYPE,

@@ -12,6 +12,7 @@ let timer = null;
 
 export default () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const {MEMBER_SEQ, MOBILE_NO} = useSelector(
     (state: any) => state.userReducer,
   );
@@ -79,6 +80,7 @@ export default () => {
         setHasCheckedVerifyCode(false);
         clearInterval(timer);
         alertModal('비밀번호가 변경 되었습니다.');
+        navigation.goBack();
       }
     } catch (e) {
       console.log(e);

@@ -406,7 +406,9 @@ export default ({
         <SpaceRow>
           <MarkerText>출퇴근 허용거리: </MarkerText>
           <MarkerText style={{fontWeight: '600'}}>
-            {STORE_DATA.resultdata.JULI}M
+            {Number(STORE_DATA.resultdata.JULI) < 1000
+              ? Number(STORE_DATA.resultdata.JULI) + 'm'
+              : Number(STORE_DATA.resultdata.JULI) / 1000 + 'km'}
           </MarkerText>
         </SpaceRow>
         {STORE_DATA.resultdata.LATE_FLAG === '1' && (
@@ -452,7 +454,9 @@ export default ({
                 {STORE_DATA.resultdata.NAME}점까지 남은거리
               </MarkerText>
               <MarkerText style={{textAlign: 'right'}}>
-                {Math.round(getDistance() * 10) / 10}M
+                {Number(Math.round(getDistance() * 10) / 10) < 1000
+                  ? Number(Math.round(getDistance() * 10) / 10) + 'm'
+                  : Number(Math.round(getDistance() * 10) / 10) / 1000 + 'km'}
               </MarkerText>
             </Column>
           ) : (
@@ -649,8 +653,7 @@ export default ({
                   onPress={() =>
                     STORE_DATA.resultdata.JULI >
                     Math.round(getDistance() * 10) / 10
-                      ? // ? setMapWorkingModalOpen(true)
-                        setSucessModalOpen(true)
+                      ? setMapWorkingModalOpen(true)
                       : {}
                   }
                   coordinate={{

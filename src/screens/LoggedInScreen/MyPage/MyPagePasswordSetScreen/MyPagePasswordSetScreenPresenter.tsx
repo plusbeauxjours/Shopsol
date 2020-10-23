@@ -202,7 +202,9 @@ export default ({
               <RequestButton
                 hasCheckedVerifyCode={hasCheckedVerifyCode}
                 onPress={() => requireVerifyCode()}
-                disabled={hasCheckedVerifyCode}>
+                disabled={
+                  hasCheckedVerifyCode || passwordCheck == '' || password == ''
+                }>
                 {hasCheckedVerifyCode ? (
                   <RequestText style={{color: '#aaa'}}>요청완료</RequestText>
                 ) : (
