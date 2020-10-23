@@ -646,7 +646,13 @@ export default ({
                   />
                 )}
                 <Marker
-                  onPress={() => setMapWorkingModalOpen(true)}
+                  onPress={() =>
+                    STORE_DATA.resultdata.JULI >
+                    Math.round(getDistance() * 10) / 10
+                      ? // ? setMapWorkingModalOpen(true)
+                        setSucessModalOpen(true)
+                      : {}
+                  }
                   coordinate={{
                     // latitude: lat,
                     // longitude: long,
@@ -967,23 +973,6 @@ export default ({
         onRequestClose={() => setSucessModalOpen(false)}>
         <GoWorkingSuccessAnimation
           STORE_NAME={STORE_NAME}
-          JULI={
-            STORE_DATA.resultdata.GPS === '0'
-              ? null
-              : STORE_DATA.resultdata.JULI == '-1'
-              ? '제한 없음'
-              : STORE_DATA.resultdata.JULI
-          }
-          EARLY_TIME={
-            STORE_DATA.resultdata.EARLY_FLAG === '1'
-              ? STORE_DATA.resultdata.EARLY_TIME
-              : null
-          }
-          LATE_TIME={
-            STORE_DATA.resultdata.LATE_FLAG === '1'
-              ? STORE_DATA.resultdata.LATE_TIME
-              : null
-          }
           MEMBER_NAME={MEMBER_NAME}
           setSucessModalOpen={setSucessModalOpen}
           actionTYPE={actionTYPE}
@@ -1002,23 +991,6 @@ export default ({
         onRequestClose={() => setFailModalOpen(false)}>
         <GoWorkingFailAnimation
           STORE_NAME={STORE_NAME}
-          JULI={
-            STORE_DATA.resultdata.GPS === '0'
-              ? null
-              : STORE_DATA.resultdata.JULI == '-1'
-              ? '제한 없음'
-              : STORE_DATA.resultdata.JULI
-          }
-          EARLY_TIME={
-            STORE_DATA.resultdata.EARLY_FLAG === '1'
-              ? STORE_DATA.resultdata.EARLY_TIME
-              : null
-          }
-          LATE_TIME={
-            STORE_DATA.resultdata.LATE_FLAG === '1'
-              ? STORE_DATA.resultdata.LATE_TIME
-              : null
-          }
           MEMBER_NAME={MEMBER_NAME}
           setFailModalOpen={setFailModalOpen}
           actionTYPE={actionTYPE}

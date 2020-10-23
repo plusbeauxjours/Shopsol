@@ -17,7 +17,7 @@ const View = styled.View`
   z-index: 10;
   background-color: white;
   border-radius: 20px;
-  padding: 20px;
+  padding: 40px 20px;
   padding-bottom: 60px;
   width: 300px;
   justify-content: center;
@@ -27,7 +27,7 @@ const View = styled.View`
 const Touchable = styled(Ripple)`
   position: absolute;
   bottom: 10px;
-  width: 80%;
+  width: 100%;
   height: 60px;
   align-items: center;
   justify-content: center;
@@ -43,14 +43,7 @@ const TextBox = styled.View`
 `;
 
 const WhiteSpace = styled.View`
-  height: 15px;
-`;
-
-const InfoTextBox = styled.View`
-  width: 80%;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
+  height: 30px;
 `;
 
 export default ({
@@ -74,23 +67,8 @@ export default ({
           {errorMessage}
         </BigText>
         <Text>현재시간 {moment().format('hh:mm')} 입니다.</Text>
-        <WhiteSpace />
-        {actionTYPE === '출근' ? (
-          <InfoTextBox>
-            {(JULI || LATE_TIME) && <Text>{STORE_NAME}점의&nbsp;</Text>}
-            {JULI && <Text>출퇴근 허용거리는 {JULI}M</Text>}
-            {LATE_TIME && <Text>지각 허용시간은 {LATE_TIME}분</Text>}
-            {(JULI || LATE_TIME) && <Text>입니다.</Text>}
-          </InfoTextBox>
-        ) : (
-          <InfoTextBox>
-            {(JULI || LATE_TIME) && <Text>{STORE_NAME}점의&nbsp;</Text>}
-            {JULI && <Text>출퇴근 허용거리는 {JULI}M</Text>}
-            {EARLY_TIME && <Text>조퇴 허용시간은 {EARLY_TIME}분</Text>}
-            {(JULI || LATE_TIME) && <Text>입니다.</Text>}
-          </InfoTextBox>
-        )}
       </TextBox>
+      <WhiteSpace />
       <Touchable
         onPress={() => setFailModalOpen(false)}
         rippleColor={'#e39a9c'}

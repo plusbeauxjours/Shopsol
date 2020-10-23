@@ -23,7 +23,7 @@ const View = styled.View`
   background-color: white;
   border-radius: 20px;
   width: 300px;
-  height: 350px;
+  height: 300px;
   justify-content: center;
   align-items: center;
   margin-bottom: 100px;
@@ -52,22 +52,7 @@ const WhiteSpace = styled.View`
   height: 15px;
 `;
 
-const InfoTextBox = styled.View`
-  width: 80%;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-`;
-
-export default ({
-  STORE_NAME,
-  JULI,
-  LATE_TIME,
-  EARLY_TIME,
-  MEMBER_NAME,
-  setSucessModalOpen,
-  actionTYPE,
-}) => {
+export default ({STORE_NAME, MEMBER_NAME, setSucessModalOpen, actionTYPE}) => {
   return (
     <>
       <FastImage
@@ -85,7 +70,7 @@ export default ({
       <LottieView
         style={{width: wp('100%'), zIndex: 1, position: 'absolute'}}
         source={require('../assets/animations/goWorkingSuccess.json')}
-        loop={true}
+        loop={false}
         autoPlay
       />
       <View>
@@ -98,21 +83,6 @@ export default ({
           </BigText>
           <Text>현재시간 {moment().format('hh:mm')} 입니다.</Text>
           <WhiteSpace />
-          {actionTYPE === '출근' ? (
-            <InfoTextBox>
-              {(JULI || LATE_TIME) && <Text>{STORE_NAME}점의&nbsp;</Text>}
-              {JULI && <Text>출퇴근 허용거리는 {JULI}M</Text>}
-              {LATE_TIME && <Text>지각 허용시간은 {LATE_TIME}분</Text>}
-              {(JULI || LATE_TIME) && <Text>입니다.</Text>}
-            </InfoTextBox>
-          ) : (
-            <InfoTextBox>
-              {(JULI || LATE_TIME) && <Text>{STORE_NAME}점의&nbsp;</Text>}
-              {JULI && <Text>출퇴근 허용거리는 {JULI}M</Text>}
-              {EARLY_TIME && <Text>조퇴 허용시간은 {EARLY_TIME}분</Text>}
-              {(JULI || LATE_TIME) && <Text>입니다.</Text>}
-            </InfoTextBox>
-          )}
         </TextBox>
         <Touchable
           onPress={() => setSucessModalOpen(false)}
