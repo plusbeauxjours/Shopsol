@@ -108,6 +108,14 @@ export default ({route: {params}}) => {
     setChoiceEmp(buffer);
   };
 
+  const toastFn = () => {
+    clearTimeout();
+    setIsToastVisible(true);
+    setTimeout(() => {
+      setIsToastVisible(false);
+    }, 1000);
+  };
+
   const fetchData = async () => {
     try {
       const {data} = await api.getEmployeeList({STORE_SEQ});
@@ -251,14 +259,6 @@ export default ({route: {params}}) => {
 
       setChoiceEmp(buffer);
     }
-  };
-
-  const toastFn = () => {
-    clearTimeout();
-    setIsToastVisible(true);
-    setTimeout(() => {
-      setIsToastVisible(false);
-    }, 1000);
   };
 
   useEffect(() => {

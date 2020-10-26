@@ -1,10 +1,7 @@
 import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {Keyboard} from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import moment from 'moment';
 
