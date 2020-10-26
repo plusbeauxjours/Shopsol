@@ -179,6 +179,7 @@ export default ({
   imageIndex,
   setImageIndex,
   STORE,
+  GENDER,
 }) => {
   const navigation = useNavigation();
 
@@ -192,7 +193,7 @@ export default ({
       <FastImage
         style={{width: 120, height: 120, borderRadius: 10, marginHorizontal: 5}}
         source={{
-          uri: 'http://133.186.210.223/uploads/' + item,
+          uri: `http://133.186.210.223/uploads/${item}`,
           headers: {Authorization: 'someAuthToken'},
           priority: FastImage.priority.low,
         }}
@@ -277,7 +278,7 @@ export default ({
                           <FastImage
                             style={{width: 60, height: 60, borderRadius: 30}}
                             source={{
-                              uri: 'http://133.186.210.223/uploads/3.png',
+                              uri: utils.avatarUrl(GENDER),
                               headers: {Authorization: 'someAuthToken'},
                               priority: FastImage.priority.low,
                             }}

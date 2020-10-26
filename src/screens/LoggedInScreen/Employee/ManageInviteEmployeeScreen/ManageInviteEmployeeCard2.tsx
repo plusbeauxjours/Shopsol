@@ -23,7 +23,8 @@ const Container = styled.View`
 
 const EmployeeBox = styled.View`
   width: ${wp('30%')}px;
-  align-items: center;
+  align-items: flex-start
+  padding-left: 20px;
 `;
 
 const NameText = styled.Text`

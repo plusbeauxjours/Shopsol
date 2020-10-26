@@ -8,9 +8,10 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import moment from 'moment';
 
 import {BackIcon, ForwardIcon, EllipseIcon} from '~/constants/Icons';
-import moment from 'moment';
+import utils from '~/constants/utils';
 
 interface IsSelected {
   isSelected: boolean;
@@ -213,6 +214,7 @@ export default ({
   setTimeList,
   getNumberToday,
   CALCULATE_DAY,
+  GENDER,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -393,7 +395,7 @@ export default ({
                 <FastImage
                   style={{width: 60, height: 60, borderRadius: 30}}
                   source={{
-                    uri: 'http://133.186.210.223/uploads/3.png',
+                    uri: utils.avatarUrl(GENDER),
                     headers: {Authorization: 'someAuthToken'},
                     priority: FastImage.priority.low,
                   }}

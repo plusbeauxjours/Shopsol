@@ -6,6 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import FastImage from 'react-native-fast-image';
 
 import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -21,7 +22,8 @@ const Container = styled.View`
 
 const EmployeeBox = styled.View`
   width: ${wp('30%')}px;
-  align-items: center;
+  align-items: flex-start;
+  padding-left: 20px;
 `;
 
 const AdmitText = styled.Text`
@@ -51,6 +53,12 @@ const NameText = styled.Text`
   font-weight: bold;
 `;
 
+const Row = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding-left: 20px;
+`;
+
 const PhoneText = styled.Text`
   margin-top: 5px;
   color: #555;
@@ -65,14 +73,15 @@ export default ({
   PHONE,
   STORE_SEQ,
   onRefresh,
+  IMAGE,
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const [isRefused, setIsRefused] = useState<boolean>(false);
 
-  const gotoElectronicContracts = () => {
-    navigation.navigate('ElectronicContractsScreen', {
+  const gotoSetEmployeeInfo = () => {
+    navigation.navigate('SetEmployeeInfoScreen', {
       data,
       from: 'ManageInviteEmployeeScreen',
       onRefresh,
@@ -87,7 +96,7 @@ export default ({
       cancelButtonText: '취소',
       okButtonText: '승인',
       okCallback: () => {
-        gotoElectronicContracts();
+        gotoSetEmployeeInfo();
       },
     };
     dispatch(setAlertInfo(params));
@@ -124,10 +133,22 @@ export default ({
 
   return (
     <Container key={key}>
-      <EmployeeBox>
-        <NameText>{EMP_NAME}</NameText>
-        <PhoneText>{PHONE}</PhoneText>
-      </EmployeeBox>
+      <Row>
+        {console.log()}
+        <FastImage
+          style={{width: 60, height: 60, borderRadius: 30}}
+          source={{
+            uri: `http://133.186.210.223/uploads/${IMAGE}`,
+            headers: {Authorization: 'someAuthToken'},
+            priority: FastImage.priority.low,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <EmployeeBox>
+          <NameText>{EMP_NAME}</NameText>
+          <PhoneText>{PHONE}</PhoneText>
+        </EmployeeBox>
+      </Row>
       {isRefused ? (
         <ButtonBox>
           <RefuseText>거절했습니다</RefuseText>

@@ -15,6 +15,7 @@ import {
 import {BackIcon, ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import moment from 'moment';
+import utils from '~/constants/utils';
 
 interface IsSelected {
   isSelected: boolean;
@@ -449,7 +450,7 @@ export default ({
                     marginRight: 10,
                   }}
                   source={{
-                    uri: 'http://133.186.210.223/uploads/3.png',
+                    uri: utils.avatarUrl(GENDER),
                     headers: {Authorization: 'someAuthToken'},
                     priority: FastImage.priority.low,
                   }}

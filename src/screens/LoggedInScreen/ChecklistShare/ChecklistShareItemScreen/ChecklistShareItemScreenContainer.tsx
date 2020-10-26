@@ -14,7 +14,7 @@ import {
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const {TITLE, NOTICE_SEQ, isFavorite} = params;
-  const {STORE, MEMBER_SEQ: ME, MEMBER_NAME} = useSelector(
+  const {STORE, MEMBER_SEQ: ME, MEMBER_NAME, GENDER} = useSelector(
     (state: any) => state.userReducer,
   );
   const {
@@ -104,7 +104,7 @@ export default ({route: {params}}) => {
       for (let i = 0; i < allimg.length; i++) {
         imgarr.push(allimg[i]);
         modalImgarr.push({
-          url: 'http://133.186.210.223/uploads/' + allimg[i],
+          url: `http://133.186.210.223/uploads/${allimg[i]}`,
         });
       }
       setModalImgarr(modalImgarr);
@@ -199,6 +199,7 @@ export default ({route: {params}}) => {
       imageIndex={imageIndex}
       setImageIndex={setImageIndex}
       STORE={STORE}
+      GENDER={GENDER}
     />
   );
 };

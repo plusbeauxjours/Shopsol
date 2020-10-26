@@ -26,6 +26,7 @@ export default ({route: {params}}) => {
       END_TIME = null,
       UPDATED_START = null,
       UPDATED_END = null,
+      IMAGE = null,
     } = {},
     date,
   } = params;
@@ -151,6 +152,7 @@ export default ({route: {params}}) => {
       NAME={NAME}
       START={START}
       END={END}
+      IMAGE={IMAGE}
       ATTENDANCE_TIME={ATTENDANCE_TIME}
       WORK_OFF_TIME={WORK_OFF_TIME}
       CHANGE_START={CHANGE_START}

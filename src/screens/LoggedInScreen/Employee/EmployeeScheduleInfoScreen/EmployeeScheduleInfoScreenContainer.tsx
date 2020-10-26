@@ -22,6 +22,7 @@ const constant = {
 };
 
 export default ({route: {params}}) => {
+  console.log(params);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE} = useSelector((state: any) => state.userReducer);

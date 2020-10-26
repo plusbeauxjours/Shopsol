@@ -216,9 +216,7 @@ export default ({
     const navigation = useNavigation();
     const images = [
       {
-        url:
-          'http://133.186.210.223/uploads/ocr/' +
-          HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+        url: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
       },
     ];
 
@@ -326,7 +324,7 @@ export default ({
               </ContentWrapper>
               <RegDateContainer>
                 <RegDate>
-                  ※ 입력일자 :{' '}
+                  ※ 입력일자 :&nbsp;
                   {moment(HEALTH_EMP_DETAIL[SELECT_INDEX]?.CREATE_TIME).format(
                     'YYYY.MM.DD',
                   )}
@@ -344,9 +342,7 @@ export default ({
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
                     EDUCATION_DATE:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
-                    IMG_LIST:
-                      'http://133.186.210.223/uploads/ocr/' +
-                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                     STORE_HEALTH_SEQ:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_HEALTH_SEQ,
                   });
@@ -360,9 +356,7 @@ export default ({
                     EMP_SEQ,
                     NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
-                    IMG_LIST:
-                      'http://133.186.210.223/uploads/ocr/' +
-                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                   });
                 }}>
                 <Text style={{fontSize: 16, color: 'white'}}>갱신하기</Text>

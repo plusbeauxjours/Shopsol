@@ -222,9 +222,7 @@ export default ({
     const navigation = useNavigation();
     const images = [
       {
-        url:
-          'http://133.186.210.223/uploads/ocr/' +
-          HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+        url: `http://133.186.210.223/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
       },
     ];
 
@@ -376,9 +374,7 @@ export default ({
                       HEALTH_STORE_DETAIL[SELECT_INDEX]?.businesstype,
                     EDUCATION_TYPE:
                       HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationTYPE,
-                    IMG_LIST:
-                      'http://133.186.210.223/uploads/ocr/' +
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                   });
                 }}>
                 <Text style={{fontSize: 16, color: 'white'}}>수정하기</Text>
@@ -388,9 +384,7 @@ export default ({
                   navigation.navigate('HealthCertificateStoreFormScreen', {
                     fetchData,
                     NAME: HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME,
-                    IMG_LIST:
-                      'http://133.186.210.223/uploads/ocr/' +
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                   });
                 }}>
                 <Text style={{fontSize: 16, color: 'white'}}>갱신하기</Text>

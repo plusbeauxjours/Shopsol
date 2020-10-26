@@ -110,7 +110,7 @@ export default ({
   STORE_SEQ,
   NAME,
   date,
-  image,
+  IMAGE,
   ICON,
   nowork,
   workoff,
@@ -135,7 +135,7 @@ export default ({
   const isNextDay2 = CHANGE_START > CHANGE_END;
   const isNextDay3 = START_TIME > END_TIME;
   const isNextDay4 = UPDATED_START > UPDATED_END;
-
+console.log('data',data)
   const confirmModal = () => {
     const params = {
       alertType: 'confirm',
@@ -288,7 +288,7 @@ export default ({
           <FastImage
             style={{width: 60, height: 60, borderRadius: 30}}
             source={{
-              uri: 'http://133.186.210.223/uploads/' + image,
+              uri: `http://133.186.210.223/uploads/${IMAGE}` ,
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.low,
             }}

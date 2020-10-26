@@ -34,6 +34,7 @@ export default () => {
   const {EMPLOYEE_INFO_DATA} = useSelector(
     (state: any) => state.employeeReducer,
   );
+  const {GENDER} = useSelector((state: any) => state.userReducer);
 
   const [isFreeWorkingType, setIsFreeWorkingType] = useState<boolean>(true); // true: 자율출퇴근 직원, false: 일정이 있는 직원
   const [timeTableIndex, setTimeTableIndex] = useState<any>(null); // 저장된 시간 목록 중 선택된 항목의 인덱스
@@ -303,6 +304,7 @@ export default () => {
       setTimeList={setTimeList}
       getNumberToday={getNumberToday}
       CALCULATE_DAY={CALCULATE_DAY}
+      GENDER={GENDER}
     />
   );
 };

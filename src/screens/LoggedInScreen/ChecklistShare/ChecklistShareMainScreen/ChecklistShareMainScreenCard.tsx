@@ -167,7 +167,7 @@ export default ({key, data, ME, type, confirmModal}) => {
             <FastImage
               style={{width: 100, height: 100, borderRadius: 10}}
               source={{
-                uri: 'http://133.186.210.223/uploads/' + imgarr[0],
+                uri: `http://133.186.210.223/uploads/${imgarr[0]}`,
                 headers: {Authorization: 'someAuthToken'},
                 priority: FastImage.priority.low,
               }}

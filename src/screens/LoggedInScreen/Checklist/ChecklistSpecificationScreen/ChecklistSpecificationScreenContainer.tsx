@@ -296,7 +296,7 @@ export default ({route: {params}}) => {
       for (let i = 0; i < allimg.length; i++) {
         setCameraPictureList((cameraPictureList) => [
           ...cameraPictureList,
-          {uri: 'http://133.186.210.223/uploads/' + allimg[i]},
+          {uri: `http://133.186.210.223/uploads/${allimg[i]}`},
         ]);
       }
     }

@@ -27,15 +27,13 @@ export default ({route: {params}}) => {
   const {
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
   } = useSelector((state: any) => state.storeReducer);
-  const {data: {EMP_SEQ = null} = {}} = params;
-
+  const {data: {EMP_SEQ = null, images = []} = {}} = params;
   const [isFreeWorkingType, setIsFreeWorkingType] = useState<boolean>(true); // true: 자율출퇴근 직원, false: 일정이 있는 직원
   const [timeTableIndex, setTimeTableIndex] = useState<any>(null); // 저장된 시간 목록 중 선택된 항목의 인덱스
   const [timeTable, setTimeTable] = useState<any>([]); // timeList를 근무 시작일 / 근무 종료일 별로 저장한 배열
   const [timeListIndex, setTimeListIndex] = useState<number>(0); // 저장된 근무 시간 목록 중 선택된 항목의 인덱스
   const [timeList, setTimeList] = useState<any>([]); // 저장된 근무 시간 목록
   const [originalDayList, setOriginalDayList] = useState<any>([]); // dayList 원본 값
-  const [empdata, setEmpdata] = useState<any>({});
   const [date, setDate] = useState<string>(moment().format('YYYY-MM-DD'));
   const [PAY, setPAY] = useState<number>(0);
   const [PAY_TYPE, setPAY_TYPE] = useState<string>('0');
@@ -390,7 +388,6 @@ export default ({route: {params}}) => {
           moment().add(1, 'month').format('YYYY'),
           moment().add(1, 'month').format('MM'),
         );
-        setEmpdata(data.result);
         if (data.result.CALENDAR === '1') {
           setIsFreeWorkingType(true);
         }
@@ -421,7 +418,6 @@ export default ({route: {params}}) => {
       calculateFn={calculateFn}
       EMP_SEQ={EMP_SEQ}
       date={date}
-      empdata={empdata}
       getPeriod={getPeriod}
       CALCULATE_DAY={CALCULATE_DAY}
       PAY_TYPE={PAY_TYPE}
@@ -441,6 +437,7 @@ export default ({route: {params}}) => {
       getNumberToday={getNumberToday}
       gotoSetInfo={gotoSetInfo}
       mobileNo={mobileNo}
+      IMAGE={images[0].IMAGE}
     />
   );
 };

@@ -14,7 +14,12 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const {
-    data: {EMP_NAME = null, STORE_SEQ = null, EMP_SEQ = null} = {},
+    data: {
+      EMP_NAME = null,
+      STORE_SEQ = null,
+      EMP_SEQ = null,
+      GENDER = null,
+    } = {},
     from = null,
     onRefresh,
   } = params;
@@ -338,7 +343,7 @@ export default ({route: {params}}) => {
         if (from === 'EmployeeInfoScreen') {
           alertModal('직원정보가 수정되었습니다.');
           navigation.goBack();
-        } else if (from === 'ElectronicContracts') {
+        } else if (from === 'ManageInviteEmployeeScreen') {
           navigation.navigate('EmployeeScheduleMainScreen', {
             CALCULATE_DAY: utils.calculateDay,
             EMP_SEQ,
@@ -605,7 +610,7 @@ export default ({route: {params}}) => {
       PYcheckDirectInput={PYcheckDirectInput}
       weekTypeCheck={weekTypeCheck}
       weekTime={weekTime}
-      isEditMode={params?.from !== 'ElectronicContracts'}
+      isEditMode={params?.from !== 'ManageInviteEmployeeScreen'}
       totalVacation={totalVacation}
       setTotalVacation={setTotalVacation}
       useVacation={useVacation}
@@ -614,6 +619,7 @@ export default ({route: {params}}) => {
       setRemainderVacation={setRemainderVacation}
       annual_START={annual_START}
       setAnnual_START={setAnnual_START}
+      GENDER={GENDER}
     />
   );
 };

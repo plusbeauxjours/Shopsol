@@ -290,7 +290,7 @@ export default ({
   EMP_SEQ,
   date,
   data,
-  empdata,
+  IMAGE,
   getPeriod,
   CALCULATE_DAY,
   PAY_TYPE,
@@ -492,7 +492,7 @@ export default ({
                 <FastImage
                   style={{width: 60, height: 60, borderRadius: 30}}
                   source={{
-                    uri: 'http://133.186.210.223/uploads/3.png',
+                    uri: `http://133.186.210.223/uploads/${IMAGE}`,
                     headers: {Authorization: 'someAuthToken'},
                     priority: FastImage.priority.low,
                   }}

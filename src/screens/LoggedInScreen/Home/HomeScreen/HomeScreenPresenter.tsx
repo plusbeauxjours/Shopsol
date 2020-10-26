@@ -20,6 +20,7 @@ import {
 } from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
+import utils from '~/constants/utils';
 
 interface IHasHeight {
   hasHeight: boolean;
@@ -440,7 +441,7 @@ export default ({
           <FastImage
             style={{width: 40, height: 40, borderRadius: 20, marginRight: 10}}
             source={{
-              uri: 'http://133.186.210.223/uploads/3.png',
+              uri: utils.avatarUrl(GENDER),
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.low,
             }}

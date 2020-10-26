@@ -427,6 +427,7 @@ export default ({
   setRemainderVacation,
   annual_START,
   setAnnual_START,
+  GENDER,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const py = Number(moment().format('YY'));
@@ -442,7 +443,7 @@ export default ({
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 30}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/3.png',
+                  uri: utils.avatarUrl(GENDER),
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}

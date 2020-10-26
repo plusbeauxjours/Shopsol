@@ -127,6 +127,7 @@ export default () => {
                   PHONE={data.MobileNo}
                   STORE_SEQ={STORE_SEQ}
                   onRefresh={onRefresh}
+                  IMAGE={data.images[0].IMAGE}
                 />
               ))}
             </EmployeeListBox>

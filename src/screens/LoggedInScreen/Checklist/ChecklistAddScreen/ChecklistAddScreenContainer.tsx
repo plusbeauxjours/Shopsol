@@ -245,7 +245,7 @@ export default ({route: {params}}) => {
         buffer.push({
           NAME: empNameArr[i],
           EMP_SEQ: empSeqArr[i],
-          IMAGE: '3.png',
+          IMAGE: '',
         });
       }
 

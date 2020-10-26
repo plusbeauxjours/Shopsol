@@ -75,7 +75,7 @@ export default ({
       STORE_SEQ={STORE_SEQ}
       NAME={data.NAME}
       date={data.WORKDATE}
-      image={data.IMAGE}
+      IMAGE={data.IMAGE}
       ICON={data.ICON}
       nowork={data.nowork}
       workoff={data.workoff}
@@ -147,7 +147,7 @@ export default ({
             return (
               <Row>
                 <Bold
-                  weekend={day}
+                  weekend={day.toString()}
                   style={{
                     color:
                       DAY == '토' ? 'skyblue' : DAY == '일' ? 'red' : 'black',
@@ -161,7 +161,7 @@ export default ({
               return (
                 <Row>
                   <Bold
-                    weekend={day}
+                    weekend={day.toString()}
                     style={{
                       color:
                         DAY == '토' ? 'skyblue' : DAY == '일' ? 'red' : 'black',
