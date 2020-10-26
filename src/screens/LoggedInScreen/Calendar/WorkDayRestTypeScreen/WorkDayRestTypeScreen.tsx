@@ -45,7 +45,6 @@ const BoxContainer = styled.View`
 const Section = styled.View`
   width: 100%;
   border-radius: 20px;
-  margin-top: 20px;
   padding: 20px;
   align-items: center;
   background-color: white;
@@ -87,18 +86,9 @@ const GreyText = styled.Text`
 
 const ContentsBoxLine = styled.View`
   width: ${wp('100') - 80}px;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
   border-color: #e5e5e5;
   margin: 10px 0;
-`;
-
-const ElementsBox = styled.View`
-  align-items: center;
-  width: ${wp('100%') - 40}px;
-  border-width: 1px;
-  border-radius: 10px;
-  border-color: #cccccc;
-  padding: 20px;
 `;
 
 const ModalContainer = styled.View`
@@ -253,12 +243,12 @@ export default ({route: {params}}) => {
             <BoxText>무급휴무 적용</BoxText>
           </Box>
         </BoxContainer>
-        <ElementsBox>
+        <Section>
           <Vacation key={'totalVacation'} title={'총 연차'} />
           <Vacation key={'useVacation'} title={'사용한 연차'} />
           <ContentsBoxLine />
           <Vacation key={'remainderVacation'} title={'남은 연차'} />
-        </ElementsBox>
+        </Section>
         <GreyText>
           * 직원정보의 연차설정에 입력된 값으로 셋팅이 됩니다.
         </GreyText>

@@ -32,7 +32,7 @@ const NameText = styled.Text`
 `;
 
 const RowSpace = styled(Row)`
-  margin-top:10px;
+  margin-top: 10px;
   width: 100%;
   justify-content: space-between;
 `;
@@ -48,13 +48,13 @@ const SelectBoxTouchable = styled.TouchableOpacity`
   width: ${wp('28%')}px;
   border-width: 1px;
   border-radius: 10px;
-  border-color:#999;
+  border-color: #999;
   justify-content: center;
   align-items: center;
 `;
 
 const BoxText = styled.Text`
-  color:#999;
+  color: #999;
   font-size: 12px;
 `;
 
@@ -287,7 +287,7 @@ export default ({
           <FastImage
             style={{width: 60, height: 60, borderRadius: 30}}
             source={{
-              uri: `http://133.186.210.223/uploads/${IMAGE}` ,
+              uri: `http://133.186.210.223/uploads/${IMAGE}`,
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.low,
             }}
@@ -310,9 +310,11 @@ export default ({
                 <WorkTimeText>
                   {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
                   {isNextDay1 && '익일 '}
-                  {(WORK_OFF_TIME || END)?.substring(0, 5)}&nbsp;>&nbsp;
+                  {(WORK_OFF_TIME || END)?.substring(0, 5)}
+                  {CHANGE_START && CHANGE_END && ' > '}
                   {CHANGE_START == null ? '' : CHANGE_START?.substring(0, 5)}
-                  &nbsp;~&nbsp;{isNextDay2 && '익일 '}
+                  {CHANGE_START && CHANGE_END && ' ~ '}
+                  {isNextDay2 && '익일 '}
                   {CHANGE_END == null ? '' : CHANGE_END?.substring(0, 5)}
                 </WorkTimeText>
               </WorkTime>
@@ -332,7 +334,7 @@ export default ({
                 <WorkTimeText>
                   {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
                   {isNextDay3 && '익일 '}
-                  {(END_TIME || '미퇴근')?.substring(0, 5)}&nbsp;>&nbsp;
+                  {(END_TIME || '미퇴근')?.substring(0, 5)}&nbsp;&gt;&nbsp;
                   {(UPDATED_START || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
                   {isNextDay4 && '익일 '}
                   {(UPDATED_END || '미퇴근')?.substring(0, 5)}

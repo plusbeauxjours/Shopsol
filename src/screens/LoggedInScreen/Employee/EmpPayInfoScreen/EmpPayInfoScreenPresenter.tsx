@@ -45,8 +45,8 @@ const Profile = styled.View`
 const NameText = styled.Text`
   font-size: 20px;
   margin-right: 3px;
-  color: #e85356;
   justify-content: flex-end;
+  font-weight: bold;
 `;
 
 const GreyText = styled.Text`

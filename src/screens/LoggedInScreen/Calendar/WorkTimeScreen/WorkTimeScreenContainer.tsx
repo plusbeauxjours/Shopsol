@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {setSplashVisible} from '~/redux/splashSlice';
 import api from '~/constants/LoggedInApi';
 import {updateWORKTIME} from '~/redux/calendarSlice';
 
@@ -28,6 +27,7 @@ export default ({route: {params}}) => {
       END_TIME = null,
       UPDATED_START = null,
       UPDATED_END = null,
+      TYPE = null,
     },
     date,
   } = params;
@@ -150,6 +150,7 @@ export default ({route: {params}}) => {
       setIsEndTimeModalVisible={setIsEndTimeModalVisible}
       setStartTime={setStartTime}
       setEndTime={setEndTime}
+      TYPE={TYPE}
     />
   );
 };

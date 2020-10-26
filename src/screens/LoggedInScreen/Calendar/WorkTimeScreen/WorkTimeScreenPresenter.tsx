@@ -145,15 +145,19 @@ export default ({
   isEndTimeModalVisible,
   setIsEndTimeModalVisible,
   setStartTime,
-  setEndTime,
+  TYPE,
 }) => {
+  const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);
+  const isNextDay2 = CHANGE_START > CHANGE_END;
+  const isNextDay3 = START_TIME > END_TIME;
+  const isNextDay4 = UPDATED_START > UPDATED_END;
   const FixScheduleStepOne = () => (
     <Section>
       <Row>
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30}}
           source={{
-            uri: `http://133.186.210.223/uploads/${IMAGE}` ,
+            uri: `http://133.186.210.223/uploads/${IMAGE}`,
             headers: {Authorization: 'someAuthToken'},
             priority: FastImage.priority.low,
           }}
@@ -161,31 +165,43 @@ export default ({
         />
         <CntArea>
           <NameText style={{marginBottom: 10}}>{NAME}</NameText>
-          {CHANGE_START != null ? (
+          {CHANGE_START == null && CHANGE_END == null ? (
             <WorkTime>
               <WorkTitleText>근무시간 </WorkTitleText>
-              <WorkTimeText>
-                {(ATTENDANCE_TIME || START)?.substring(0, 5)} ~&nbsp;
-                {(WORK_OFF_TIME || END)?.substring(0, 5)}
-              </WorkTimeText>
+              {TYPE == '4' ? (
+                <WorkTimeText>자율출퇴근</WorkTimeText>
+              ) : (
+                <WorkTimeText>
+                  {(ATTENDANCE_TIME || START)?.substring(0, 5)} ~&nbsp;
+                  {(WORK_OFF_TIME || END)?.substring(0, 5)}
+                </WorkTimeText>
+              )}
             </WorkTime>
           ) : (
             <WorkTime>
               <WorkTitleText>근무시간 </WorkTitleText>
-              <WorkTimeText>
-                {(ATTENDANCE_TIME || START)?.substring(0, 5)} ~&nbsp;
-                {(WORK_OFF_TIME || END)?.substring(0, 5)} >&nbsp;
-                {CHANGE_START == null ? '' : CHANGE_START?.substring(0, 5)}{' '}
-                ~&nbsp;
-                {CHANGE_END == null ? '' : CHANGE_END?.substring(0, 5)}
-              </WorkTimeText>
+              {TYPE == '4' ? (
+                <WorkTimeText>자율출퇴근</WorkTimeText>
+              ) : (
+                <WorkTimeText>
+                  {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
+                  {isNextDay1 && '익일 '}
+                  {(WORK_OFF_TIME || END)?.substring(0, 5)}
+                  {CHANGE_START && CHANGE_END && ' > '}
+                  {CHANGE_START == null ? '' : CHANGE_START?.substring(0, 5)}
+                  {CHANGE_START && CHANGE_END && ' ~ '}
+                  {isNextDay2 && '익일 '}
+                  {CHANGE_END == null ? '' : CHANGE_END?.substring(0, 5)}
+                </WorkTimeText>
+              )}
             </WorkTime>
           )}
           {UPDATED_START == null && UPDATED_END == null ? (
             <WorkTime>
               <WorkTitleText>출퇴근시간 </WorkTitleText>
               <WorkTimeText>
-                {(START_TIME || '미출근')?.substring(0, 5)} ~&nbsp;
+                {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
+                {isNextDay3 && '익일 '}
                 {(END_TIME || '미퇴근')?.substring(0, 5)}
               </WorkTimeText>
             </WorkTime>
@@ -193,9 +209,11 @@ export default ({
             <WorkTime>
               <WorkTitleText>출퇴근시간 </WorkTitleText>
               <WorkTimeText>
-                {(START_TIME || '미출근')?.substring(0, 5)} ~&nbsp;
-                {(END_TIME || '미퇴근')?.substring(0, 5)} >&nbsp;
-                {(UPDATED_START || '미출근')?.substring(0, 5)} ~&nbsp;
+                {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
+                {isNextDay3 && '익일 '}
+                {(END_TIME || '미퇴근')?.substring(0, 5)}&nbsp;&gt;&nbsp;
+                {(UPDATED_START || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
+                {isNextDay4 && '익일 '}
                 {(UPDATED_END || '미퇴근')?.substring(0, 5)}
               </WorkTimeText>
             </WorkTime>

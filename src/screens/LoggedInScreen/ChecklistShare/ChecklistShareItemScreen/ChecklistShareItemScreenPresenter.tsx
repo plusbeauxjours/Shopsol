@@ -294,10 +294,6 @@ export default ({
                                 }}>
                                 {data.EMP_NAME} [{data.IS_MANAGER}]
                               </Text>
-                              <EllipseIcon color={'#999'} size={5} />
-                              <Bold style={{color: '#C8C8C8', marginLeft: 5}}>
-                                {moment(data.CREATE_TIME).format('YYYY.MM.DD')}
-                              </Bold>
                             </Row>
                             <Text
                               ellipsizeMode={'tail'}
@@ -305,27 +301,41 @@ export default ({
                               style={{flexWrap: 'wrap', marginTop: 5}}>
                               {data.CONTENTS}
                             </Text>
+                            <Row
+                              style={{
+                                width: wp('100%') - 140,
+                                justifyContent: 'space-between',
+                              }}>
+                              <Text style={{color: '#C8C8C8', marginLeft: 5}}>
+                                {moment(data.CREATE_TIME).format('YYYY.MM.DD')}
+                              </Text>
+                              {(data.MEMBER_SEQ == ME || STORE == '1') && (
+                                <Row
+                                  style={{
+                                    width: 120,
+                                    marginRight: 10,
+                                    justifyContent: 'space-between',
+                                  }}>
+                                  <RowTouchable
+                                    onPress={() => {
+                                      setIsEditMode(true);
+                                      setCommentInputBox(true);
+                                      setComment(data.CONTENTS);
+                                      setSelectedCOM_SEQ(data.COM_SEQ);
+                                    }}>
+                                    <SettingIcon color={'#AACE36'} size={20} />
+                                    <Text style={{color: '#AACE36'}}>수정</Text>
+                                  </RowTouchable>
+                                  <RowTouchable
+                                    onPress={() => deleteFn(data.COM_SEQ)}>
+                                    <DeleteIcon />
+                                    <Text style={{color: '#B91C1B'}}>삭제</Text>
+                                  </RowTouchable>
+                                </Row>
+                              )}
+                            </Row>
                           </Column>
                         </Row>
-                        {(data.MEMBER_SEQ == ME || STORE == '1') && (
-                          <Row style={{justifyContent: 'flex-end'}}>
-                            <RowTouchable
-                              onPress={() => {
-                                setIsEditMode(true);
-                                setCommentInputBox(true);
-                                setComment(data.CONTENTS);
-                                setSelectedCOM_SEQ(data.COM_SEQ);
-                              }}>
-                              <SettingIcon color={'#AACE36'} size={20} />
-                              <Text style={{color: '#AACE36'}}>수정</Text>
-                            </RowTouchable>
-                            <RowTouchable
-                              onPress={() => deleteFn(data.COM_SEQ)}>
-                              <DeleteIcon />
-                              <Text style={{color: '#B91C1B'}}>삭제</Text>
-                            </RowTouchable>
-                          </Row>
-                        )}
                       </CommentBox>
                     ))
                   )}
