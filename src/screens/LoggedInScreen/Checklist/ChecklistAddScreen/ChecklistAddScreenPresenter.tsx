@@ -21,6 +21,10 @@ interface IsSelected {
   isSelected?: boolean;
 }
 
+interface IsError {
+  isError: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: #f6f6f6;
@@ -56,6 +60,7 @@ const RowTitle = styled(Row)`
 
 const TextInput = styled.TextInput`
   width: 100%;
+  flex-wrap: wrap;
   font-size: 15px;
   border-bottom-width: 1px;
   border-color: #e5e5e5;
@@ -134,16 +139,10 @@ const Bold = styled.Text`
 `;
 
 const ChecklistItem = styled.View`
-  padding: 6px 20px;
+  padding: 6px 10px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`;
-
-const GreyText = styled.Text`
-  max-width: 230px;
-  font-size: 15px;
-  color: #999;
 `;
 
 const ChecklistBox = styled.View`
@@ -179,6 +178,13 @@ const ModalPopup = styled.View`
   shadow-opacity: 0.5;
   shadow-radius: 3px;
   background-color: ${utils.isAndroid ? '#888' : 'rgba(0,0,0,0.7)'};
+`;
+
+const GreyText = styled.Text<IsError>`
+  font-size: 12px;
+  color: ${(props) => (props.isError ? 'red' : '#aaa')};
+  width: ${wp('100%') - 140}px;
+  flex-wrap: wrap;
 `;
 
 export default ({
@@ -230,6 +236,15 @@ export default ({
               onChangeText={(text) => setTITLE(text)}
               value={TITLE}
             />
+            {TITLE?.length > 16 ? (
+              <GreyText isError={true}>
+                * 체크항목은 16자 이하로 입력해주세요.
+              </GreyText>
+            ) : (
+              <GreyText isError={false}>
+                * 체크항목은 16자 이하로 입력해주세요.
+              </GreyText>
+            )}
           </Section>
           <Section>
             <Row>
@@ -243,6 +258,15 @@ export default ({
               onChangeText={(text) => setChecklistInput(text)}
               value={checklistInput}
             />
+            {checklistInput?.length > 50 ? (
+              <GreyText isError={true}>
+                * 체크리스트는 50자 이하로 입력해주세요.
+              </GreyText>
+            ) : (
+              <GreyText isError={false}>
+                * 체크리스트는 50자 이하로 입력해주세요.
+              </GreyText>
+            )}
             <RoundBtn
               isInSection={true}
               text={'목록에 추가하기'}
@@ -253,17 +277,17 @@ export default ({
                 setChecklistInput('');
                 setLIST(value);
               }}
-              isRegisted={checklistInput !== ''}
+              isRegisted={checklistInput !== '' && checklistInput?.length < 51}
             />
             <ChecklistBox>
               {LIST?.length === 0 && (
                 <ChecklistItem>
-                  <GreyText>ex. 가스벨브 잠그기</GreyText>
+                  <GreyText isError={false}>ex. 가스벨브 잠그기</GreyText>
                 </ChecklistItem>
               )}
               {LIST?.map((data, index) => (
                 <ChecklistItem key={index}>
-                  <GreyText>{data}</GreyText>
+                  <GreyText isError={false}>{data}</GreyText>
                   <Touchable
                     onPress={() => {
                       let value = JSON.parse(JSON.stringify(LIST));
@@ -385,7 +409,8 @@ export default ({
             text={`${type}완료`}
             onPress={() => submitFn()}
             isRegisted={
-              (LIST?.length !== 0 && isNoCheckedtime) || customChecktime
+              (TITLE?.length < 17 && LIST?.length !== 0 && isNoCheckedtime) ||
+              customChecktime
             }
           />
         </Container>

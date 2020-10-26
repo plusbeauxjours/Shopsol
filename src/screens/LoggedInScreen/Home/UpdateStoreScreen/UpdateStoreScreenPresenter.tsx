@@ -24,6 +24,10 @@ interface IIsBefore {
   isBefore?: boolean;
 }
 
+interface IsError {
+  isError: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: #f6f6f6;
@@ -113,10 +117,10 @@ const TypeText = styled.Text`
   font-weight: 300;
 `;
 
-const GreyText = styled.Text`
+const GreyText = styled.Text<IsError>`
+  font-size: 12px;
+  color: ${(props) => (props.isError ? 'red' : '#aaa')};
   margin-top: 5px;
-  color: #aaa;
-  font-size: 11px;
 `;
 
 const TitleText = styled.Text`
@@ -364,6 +368,15 @@ export default ({
               />
             </Row>
             <InputLine isBefore={NAME === ''} />
+            {NAME?.length > 10 ? (
+              <GreyText isError={true}>
+                * 사업장명은 10자 이하로 입력해주세요.
+              </GreyText>
+            ) : (
+              <GreyText isError={false}>
+                * 사업장명은 10자 이하로 입력해주세요.
+              </GreyText>
+            )}
             <WhiteSpace />
             <InputCaseRow>
               <RowTouchable
@@ -413,9 +426,7 @@ export default ({
                 <TextInput
                   placeholder={'기타 사업장 분류를 입력해주세요.'}
                   placeholderTextColor={'#E5E5E5'}
-                  onChangeText={(text) => {
-                    setStoreCategoryTypeEtc(text);
-                  }}
+                  onChangeText={(text) => setStoreCategoryTypeEtc(text)}
                   value={storeCategoryTypeEtc}
                 />
                 <InputLine isBefore={storeCategoryTypeEtc === ''} />
@@ -549,7 +560,7 @@ export default ({
               </InputText>
               <InputLine isBefore={dayCheck === false} />
             </Touchable>
-            <GreyText>
+            <GreyText isError={false}>
               * 급여산정 기간 설정으로 급여지급일과 혼동하지 마세요
             </GreyText>
           </GreyBox>
@@ -708,6 +719,7 @@ export default ({
             onPress={() => submit()}
             isRegisted={
               NAME !== '' &&
+              NAME?.length < 11 &&
               ADDR1 !== '' &&
               ADDR2 !== '' &&
               timeCheck == true &&
