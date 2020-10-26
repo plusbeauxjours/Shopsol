@@ -683,7 +683,7 @@ export default ({
               </MapView>
             </>
           )}
-          {STORE == '1' ? ( // 점주 ============================
+          {STORE == '1' ? ( // 점장 ============================
             <>
               <MenuTitleArea style={{zIndex: 3}}>
                 <MenuTitle>더욱 쉬워진,</MenuTitle>

@@ -460,7 +460,7 @@ export default ({
                   <Row>
                     <NameText>{data.EMP_NAME}</NameText>
                     <DateText>
-                      {data.IS_MANAGER === '1' ? '[점장]' : '[스태프]'}
+                      {data.IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
                     </DateText>
                   </Row>
                   <Row>

@@ -223,7 +223,7 @@ export const PositionType = ({
         <Touchable
           onPress={() => {
             explainModal(
-              '매니저는 점장의 권한을 부분적으로 부여받아 점주의 업무를 대행할 수 있습니다. 하단의 선택사항에 따라 권한이 부여됩니다.',
+              '매니저는 점장의 권한을 부분적으로 부여받아 점장의 업무를 대행할 수 있습니다. 하단의 선택사항에 따라 권한이 부여됩니다.',
             );
           }}>
           <HelpCircleIcon />

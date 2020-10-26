@@ -145,7 +145,7 @@ export default () => {
           <PersonInfo>
             <Name>
               <NameText>{MEMBER_NAME}</NameText>
-              <PositionText>{STORE == 1 ? '[점주]' : '[직원]'}</PositionText>
+              <PositionText>{STORE == 1 ? '[점장]' : '[직원]'}</PositionText>
             </Name>
 
             <Phone>

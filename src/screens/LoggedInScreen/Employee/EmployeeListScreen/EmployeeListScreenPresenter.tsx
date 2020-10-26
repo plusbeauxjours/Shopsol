@@ -115,7 +115,7 @@ export default ({
                   <EmployeeListCard
                     key={index}
                     EMP_NAME={data.EMP_NAME}
-                    IS_MANAGER={data.IS_MANAGER == 0 ? '스태프' : '점장'}
+                    IS_MANAGER={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
                     image={
                       data.images.length == 0 ? '3.png' : data.images[0].IMAGE
                     }
@@ -152,7 +152,7 @@ export default ({
                 <EmployeeListCard
                   key={index}
                   EMP_NAME={data.EMP_NAME}
-                  IS_MANAGER={data.IS_MANAGER == 0 ? '스태프' : '점장'}
+                  IS_MANAGER={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
                   image={
                     data.images.length == 0 ? '3.png' : data.images[0].IMAGE
                   }

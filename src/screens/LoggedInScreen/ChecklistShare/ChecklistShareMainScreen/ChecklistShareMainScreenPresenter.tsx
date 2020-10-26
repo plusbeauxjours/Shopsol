@@ -390,7 +390,7 @@ export default ({
         <Container>
           <DateController
             location={'secondRoute'}
-            text={'직원이 점포 운영현황을 점주에게 전달합니다.'}
+            text={'직원이 점포 운영현황을 점장에게 전달합니다.'}
           />
           {CHECKLIST_SHARE_DATA2?.basic?.length == 0 &&
           CHECKLIST_SHARE_DATA2?.favorite?.length == 0 ? (

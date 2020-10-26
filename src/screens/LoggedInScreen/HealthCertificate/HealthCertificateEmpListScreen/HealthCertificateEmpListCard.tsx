@@ -45,7 +45,7 @@ export default ({
     return (
       <Container key={key} onPress={() => gotoHealthCertificateEmpDetail(data)}>
         <NameText>
-          {data?.NAME}[{data?.IS_MANAGER === '1' ? '점장' : '스태프'}]
+          {data?.NAME}[{data?.IS_MANAGER === '1' ? '매니저' : '스태프'}]
         </NameText>
         <AddressBox>
           {data?.RESULT_DATE && dday > 0 ? (
@@ -82,7 +82,7 @@ export default ({
           )
         }>
         <NameText>
-          {data?.NAME}[{data?.IS_MANAGER == '1' ? '점장' : '스태프'}]
+          {data?.NAME}[{data?.IS_MANAGER == '1' ? '매니저' : '스태프'}]
         </NameText>
         <AddressBox>
           {data?.RESULT_DATE ? (

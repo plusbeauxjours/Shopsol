@@ -88,7 +88,7 @@ export default () => {
         udpateSHELFLIFE({
           shelfLife_SEQ,
           shelfLifeDate,
-          checkEmpName: STORE === '1' ? '점주' : MEMBER_NAME,
+          checkEmpName: STORE === '1' ? '점장' : MEMBER_NAME,
           checkTime: moment().format('YYYY-MM-DD HH:mm:ss'),
         }),
       );
