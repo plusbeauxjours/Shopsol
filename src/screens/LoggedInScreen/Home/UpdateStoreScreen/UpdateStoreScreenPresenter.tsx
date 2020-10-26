@@ -222,15 +222,21 @@ const SubmitBtnText = styled.Text`
   padding-top: 5px;
 `;
 
-const GreyBox = styled.View`
-  width: ${wp('100%') - 40}px;
-  border-width: 1px;
-  border-color: #999;
-  border-radius: 10px;
-  background-color: #eee;
+const InputCase = styled.View`
+  margin-top: 20px;
+`;
+
+const DeleteBtn = styled.TouchableOpacity`
+  height: ${hp('5%')}px;
+  align-items: center;
   justify-content: center;
-  padding: 20px;
-  padding-bottom: 30px;
+`;
+
+const DeleteBtnText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff3d3d;
+  text-decoration-line: underline;
 `;
 
 export default ({
@@ -280,6 +286,8 @@ export default ({
   categoryCheck,
   setStoreCategoryTypeEtc,
   storeCategoryTypeEtc,
+  STORE,
+  confirmModal,
 }) => {
   const RenderDayRowData = ({rowData, rowNum}) => {
     let value = JSON.parse(JSON.stringify(days));
@@ -708,20 +716,34 @@ export default ({
               </SubmitBtnContainer>
             </ModalContainer>
           </Modal>
-          <SubmitBtn
-            text={'등록하기'}
-            onPress={() => submit()}
-            isRegisted={
-              NAME !== '' &&
-              NAME?.length < 11 &&
-              ADDR1 !== '' &&
-              ADDR2 !== '' &&
-              timeCheck == true &&
-              EARLYtimeCheck == true &&
-              dayCheck == true &&
-              storeCategoryType !== '분류 선택'
-            }
-          />
+          {console.log(STORE)}
+          {STORE == '1' && (
+            <>
+              <SubmitBtn
+                text={'수정하기'}
+                onPress={() => submit()}
+                isRegisted={
+                  NAME !== '' &&
+                  NAME?.length < 11 &&
+                  ADDR1 !== '' &&
+                  ADDR2 !== '' &&
+                  timeCheck == true &&
+                  EARLYtimeCheck == true &&
+                  dayCheck == true &&
+                  storeCategoryType !== '분류 선택'
+                }
+              />
+              <InputCase>
+                <DeleteBtn
+                  onPress={() =>
+                    confirmModal('매장을 폐업상태로 변경하시겠습니까?')
+                  }>
+                  <DeleteBtnText>매장 폐업하기</DeleteBtnText>
+                </DeleteBtn>
+              </InputCase>
+              <WhiteSpace />
+            </>
+          )}
         </Container>
       </ScrollView>
     </BackGround>

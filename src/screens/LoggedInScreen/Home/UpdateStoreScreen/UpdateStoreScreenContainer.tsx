@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/native';
 
 import UpdateStoreScreenPresenter from './UpdateStoreScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {setSplashVisible} from '~/redux/splashSlice';
 import {getSTORELIST_DATA} from '~/redux/userSlice';
 import api from '~/constants/LoggedInApi';
 import {closeSTORE_DATA, updateSTORE} from '~/redux/storeSlice';
@@ -12,6 +11,7 @@ import {closeSTORE_DATA, updateSTORE} from '~/redux/storeSlice';
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const {STORE} = useSelector((state: any) => state.userReducer);
   const {STORE_SEQ, STORE_DATA} = useSelector(
     (state: any) => state.storeReducer,
   );
@@ -110,6 +110,21 @@ export default ({route: {params}}) => {
       alertType: 'explain',
       title: title,
       content: text,
+    };
+    dispatch(setAlertInfo(params));
+    dispatch(setAlertVisible(true));
+  };
+
+  const confirmModal = (content) => {
+    const params = {
+      alertType: 'confirm',
+      title: '',
+      content,
+      okCallback: () => {
+        submit('close');
+      },
+      okButtonText: '변경',
+      cancelButtonText: '취소',
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
@@ -299,6 +314,8 @@ export default ({route: {params}}) => {
       categoryCheck={categoryCheck}
       setStoreCategoryTypeEtc={setStoreCategoryTypeEtc}
       storeCategoryTypeEtc={storeCategoryTypeEtc}
+      STORE={STORE}
+      confirmModal={confirmModal}
     />
   );
 };

@@ -93,7 +93,7 @@ const ChecklistTitle = styled.View`
 `;
 
 const ChecklistText = styled.Text`
-  max-width: 230px;
+  width: ${wp('100%') - 180}px;
   flex-wrap: wrap;
   font-size: 15px;
   color: #999;
