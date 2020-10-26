@@ -236,15 +236,9 @@ export default ({
               onChangeText={(text) => setTITLE(text)}
               value={TITLE}
             />
-            {TITLE?.length > 16 ? (
-              <GreyText isError={true}>
-                * 체크항목은 16자 이하로 입력해주세요.
-              </GreyText>
-            ) : (
-              <GreyText isError={false}>
-                * 체크항목은 16자 이하로 입력해주세요.
-              </GreyText>
-            )}
+            <GreyText isError={TITLE?.length > 15}>
+              * 체크항목은 15자 이하로 입력해주세요.
+            </GreyText>
           </Section>
           <Section>
             <Row>
@@ -258,15 +252,9 @@ export default ({
               onChangeText={(text) => setChecklistInput(text)}
               value={checklistInput}
             />
-            {checklistInput?.length > 50 ? (
-              <GreyText isError={true}>
-                * 체크리스트는 50자 이하로 입력해주세요.
-              </GreyText>
-            ) : (
-              <GreyText isError={false}>
-                * 체크리스트는 50자 이하로 입력해주세요.
-              </GreyText>
-            )}
+            <GreyText isError={checklistInput?.length > 50}>
+              * 체크리스트는 50자 이하로 입력해주세요.
+            </GreyText>
             <RoundBtn
               isInSection={true}
               text={'목록에 추가하기'}
@@ -409,7 +397,7 @@ export default ({
             text={`${type}완료`}
             onPress={() => submitFn()}
             isRegisted={
-              (TITLE?.length < 17 && LIST?.length !== 0 && isNoCheckedtime) ||
+              (TITLE?.length < 16 && LIST?.length !== 0 && isNoCheckedtime) ||
               customChecktime
             }
           />

@@ -222,17 +222,6 @@ const SubmitBtnText = styled.Text`
   padding-top: 5px;
 `;
 
-const GreyBox = styled.View`
-  width: ${wp('100%') - 40}px;
-  border-width: 1px;
-  border-color: #999;
-  border-radius: 10px;
-  background-color: #eee;
-  justify-content: center;
-  padding: 20px;
-  padding-bottom: 30px;
-`;
-
 export default ({
   days,
   sizeTypeCheck,
@@ -367,15 +356,9 @@ export default ({
               />
             </Row>
             <InputLine isBefore={NAME === ''} />
-            {NAME?.length > 10 ? (
-              <GreyText isError={true}>
-                * 사업장명은 10자 이하로 입력해주세요.
-              </GreyText>
-            ) : (
-              <GreyText isError={false}>
-                * 사업장명은 10자 이하로 입력해주세요.
-              </GreyText>
-            )}
+            <GreyText isError={NAME?.length > 10}>
+              * 사업장명은 10자 이하로 입력해주세요.
+            </GreyText>
             <WhiteSpace />
             <InputCaseRow>
               <RowTouchable
@@ -435,7 +418,7 @@ export default ({
             )}
           </Section>
           <WhiteSpace />
-          <GreyBox>
+          <Section>
             <TitleText>출퇴근정보 설정</TitleText>
             <RowTouchable
               onPress={() => {
@@ -513,9 +496,9 @@ export default ({
               </InputText>
               <InputLine isBefore={EARLYtimeCheck === false} />
             </Touchable>
-          </GreyBox>
+          </Section>
           <WhiteSpace />
-          <GreyBox>
+          <Section>
             <TitleText>급여정보 설정</TitleText>
             <RowTouchable
               onPress={() => {
@@ -564,7 +547,7 @@ export default ({
             <GreyText>
               * 급여산정 기간 설정으로 급여지급일과 혼동하지 마세요
             </GreyText>
-          </GreyBox>
+          </Section>
           <Modal
             isVisible={modalVisible1}
             onRequestClose={() => setModalVisible1(false)}
