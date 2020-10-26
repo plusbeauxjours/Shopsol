@@ -71,7 +71,7 @@ const TypeCheckCase = styled.View`
 `;
 
 const WhiteSpace = styled.View`
-  height: ${hp('3%')}px;
+  height: 30px;
 `;
 
 const Case = styled.View`
@@ -200,7 +200,6 @@ export default ({
             <NameText>이름</NameText>
             <TextinputCase>
               <TextInput
-                style={{height: 30}}
                 placeholder={'이름'}
                 placeholderTextColor={'#E5E5E5'}
                 onChangeText={(text) => onChangeName(text)}
@@ -259,7 +258,7 @@ export default ({
             <Case>
               <NameText>가입경로</NameText>
               <Touchable onPress={() => sheetRef.current.open()}>
-                <TypeCheckCase>
+                <TypeCheckCase style={{marginBottom: 10}}>
                   {joinRoute === '가입경로' ? (
                     <Placeholder>가입경로</Placeholder>
                   ) : (
@@ -270,12 +269,10 @@ export default ({
               <InputLine isBefore={joinRoute == '가입경로' ? true : false} />
             </Case>
           )}
-          <WhiteSpace />
           {positionTypeCheck[1] == true && joinRoute == '기타' && (
             <Case>
               <TextinputCase>
                 <TextInput
-                  style={{height: 30}}
                   placeholder={'기타사항을 입력해주세요.'}
                   placeholderTextColor={'#E5E5E5'}
                   onChangeText={(text) => setOtherJoinRoute(text)}

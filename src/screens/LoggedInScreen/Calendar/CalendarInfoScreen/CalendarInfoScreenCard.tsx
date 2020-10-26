@@ -135,7 +135,6 @@ export default ({
   const isNextDay2 = CHANGE_START > CHANGE_END;
   const isNextDay3 = START_TIME > END_TIME;
   const isNextDay4 = UPDATED_START > UPDATED_END;
-console.log('data',data)
   const confirmModal = () => {
     const params = {
       alertType: 'confirm',

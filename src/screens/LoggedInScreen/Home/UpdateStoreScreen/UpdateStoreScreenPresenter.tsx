@@ -716,7 +716,6 @@ export default ({
               </SubmitBtnContainer>
             </ModalContainer>
           </Modal>
-          {console.log(STORE)}
           {STORE == '1' && (
             <>
               <SubmitBtn

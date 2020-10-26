@@ -77,7 +77,7 @@ export default ({
           <SubText>[{isManager}]</SubText>
         </TitleArea>
       </ImageArea>
-      <ForwardIcon size={22} color={'black'} />
+      <ForwardIcon size={22} />
     </Touchable>
   );
 };

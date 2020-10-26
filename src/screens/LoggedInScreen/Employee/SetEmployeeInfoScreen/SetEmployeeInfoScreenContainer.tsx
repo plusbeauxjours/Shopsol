@@ -14,14 +14,10 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const {
-    data: {
-      EMP_NAME = null,
-      STORE_SEQ = null,
-      EMP_SEQ = null,
-      GENDER = null,
-    } = {},
+    data: {EMP_NAME = null, STORE_SEQ = null, EMP_SEQ = null} = {},
     from = null,
     onRefresh,
+    IMAGE,
   } = params;
   const [START_TYPE, setSTART_TYPE] = useState<string>('0');
   const [isSalaryModalVisible1, setIsSalaryModalVisible1] = useState<boolean>(
@@ -436,7 +432,6 @@ export default ({route: {params}}) => {
         } else {
           insuranceChecked[3] = false;
         }
-
         if (from === 'EmployeeInfoScreen') {
           setStartDay(data.result.START);
           setEndDay(data.result.END ? data.result.END : '');
@@ -619,7 +614,7 @@ export default ({route: {params}}) => {
       setRemainderVacation={setRemainderVacation}
       annual_START={annual_START}
       setAnnual_START={setAnnual_START}
-      GENDER={GENDER}
+      IMAGE={IMAGE}
     />
   );
 };

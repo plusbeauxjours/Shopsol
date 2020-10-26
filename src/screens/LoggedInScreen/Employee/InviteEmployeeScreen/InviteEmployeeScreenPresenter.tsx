@@ -57,7 +57,6 @@ const TitleText = styled.Text`
 `;
 
 const TextInput = styled.TextInput`
-  width: 100%;
   padding: 15px 0;
   font-size: 15px;
   font-weight: bold;
@@ -114,6 +113,7 @@ const NameContainer = styled.View`
   flex: 1.5;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-color: #e2e2e2;
   border-width: 1px;
   background-color: white;
@@ -249,9 +249,7 @@ export default ({
                   placeholder={'홍길동'}
                   selectionColor={'#999'}
                   placeholderTextColor={'#CCCCCC'}
-                  onChangeText={(text) => {
-                    setName(text);
-                  }}
+                  onChangeText={(text) => setName(text)}
                   value={name}
                   maxLength={6}
                 />
@@ -261,9 +259,7 @@ export default ({
                   placeholder={'01012345678'}
                   selectionColor={'#999'}
                   placeholderTextColor={'#CCCCCC'}
-                  onChangeText={(text) => {
-                    setPhone(text);
-                  }}
+                  onChangeText={(text) => setPhone(text)}
                   value={phone}
                   maxLength={11}
                   keyboardType={'number-pad'}

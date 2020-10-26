@@ -158,7 +158,7 @@ export default () => {
     setHasCheckedTimeOut(false);
     startCountDown();
     try {
-      const registered = await SmsRetriever.startSmsRetriever();
+      const registered = await SmsRetriever?.startSmsRetriever();
       if (registered) {
         SmsRetriever.addSmsListener((event) => {
           console.log('event.message', event.message);

@@ -134,7 +134,6 @@ export default ({
   return (
     <Container key={key}>
       <Row>
-        {console.log()}
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30}}
           source={{

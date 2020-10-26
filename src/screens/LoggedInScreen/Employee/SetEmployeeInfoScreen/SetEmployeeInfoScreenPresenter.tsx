@@ -33,7 +33,7 @@ import {
 import InputLine from '~/components/InputLine';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
-import {BackIcon, ForwardIcon} from '../../../../constants/Icons';
+import {BackIcon, ForwardIcon} from '~/constants/Icons';
 
 interface IBox {
   isBold: boolean;
@@ -427,7 +427,7 @@ export default ({
   setRemainderVacation,
   annual_START,
   setAnnual_START,
-  GENDER,
+  IMAGE,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const py = Number(moment().format('YY'));
@@ -443,7 +443,7 @@ export default ({
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 30}}
                 source={{
-                  uri: utils.avatarUrl(GENDER),
+                  uri: `http://133.186.210.223/uploads/${IMAGE}`,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}

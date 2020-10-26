@@ -527,7 +527,7 @@ export default ({
                       : '계속'}
                   </DateText>
                 </NameBox>
-                <NavigationButton onPress={() => gotoSetInfo(data)}>
+                <NavigationButton onPress={() => gotoSetInfo(data, IMAGE)}>
                   <Bold>정보수정</Bold>
                 </NavigationButton>
               </EmployeeBox>
