@@ -4,10 +4,9 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
+import utils from '~/constants/utils';
 
 const BigText = styled.Text`
   color: #000;
@@ -52,7 +51,13 @@ const WhiteSpace = styled.View`
   height: 15px;
 `;
 
-export default ({STORE_NAME, MEMBER_NAME, setSucessModalOpen, actionTYPE}) => {
+export default ({
+  GENDER,
+  STORE_NAME,
+  MEMBER_NAME,
+  setSucessModalOpen,
+  actionTYPE,
+}) => {
   return (
     <>
       <FastImage
@@ -64,7 +69,7 @@ export default ({STORE_NAME, MEMBER_NAME, setSucessModalOpen, actionTYPE}) => {
           top: 60,
           zIndex: 15,
         }}
-        source={{uri: 'http://133.186.210.223/uploads/3.png'}}
+        source={{uri: utils.avatarUrl(GENDER)}}
         resizeMode={FastImage.resizeMode.contain}
       />
       <LottieView

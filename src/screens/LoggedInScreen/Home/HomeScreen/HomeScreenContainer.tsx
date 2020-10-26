@@ -31,7 +31,7 @@ export default ({route: {params}}) => {
     GPS,
   } = params;
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
-  const {MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM} = useSelector(
+  const {MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM, GENDER} = useSelector(
     (state: any) => state.userReducer,
   );
 
@@ -108,10 +108,10 @@ export default ({route: {params}}) => {
       dispatch(setSplashVisible(true));
       const {data} = await api.attendanceWork({
         STORE_ID: STORE_SEQ,
-        // LAT: lat,
-        // LONG: long,
-        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
@@ -151,10 +151,10 @@ export default ({route: {params}}) => {
       dispatch(setSplashVisible(true));
       const {data} = await api.attendanceOffWork({
         STORE_ID: STORE_SEQ,
-        // LAT: lat,
-        // LONG: long,
-        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
@@ -302,10 +302,10 @@ export default ({route: {params}}) => {
   const getDistance = () => {
     const prevLatInRad = toRad(Number(STORE_DATA.resultdata.LAT));
     const prevLongInRad = toRad(Number(STORE_DATA.resultdata.LONG));
-    // const latInRad = lat;
-    // const longInRad = long;
-    const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
-    const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
+    const latInRad = lat;
+    const longInRad = long;
+    // const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
+    // const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
 
     return (
       6377830.272 *
@@ -384,6 +384,7 @@ export default ({route: {params}}) => {
       setFailModalOpen={setFailModalOpen}
       actionTYPE={actionTYPE}
       errorMessage={errorMessage}
+      GENDER={GENDER}
     />
   );
 };

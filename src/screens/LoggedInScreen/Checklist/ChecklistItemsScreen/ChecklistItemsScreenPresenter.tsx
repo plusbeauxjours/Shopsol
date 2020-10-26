@@ -14,13 +14,14 @@ import {
   BackIcon,
   ReloadCircleIcon,
   CalendarIcon,
-  CreateIcon,
   CheckMarkIcon,
 } from '~/constants/Icons';
 import moment from 'moment';
-import {AddCircleIcon, CloseCircleIcon} from '~/constants/Icons';
 import ChecklistItemsScreenCard from './ChecklistItemsScreenCard';
 import Ripple from 'react-native-material-ripple';
+import LottieView from 'lottie-react-native';
+
+import {AddCircleIcon, CloseCircleIcon} from '~/constants/Icons';
 
 interface IsEmpName {
   isEmpName: string;
@@ -155,8 +156,7 @@ const CalendarTitleText2 = styled.Text`
 `;
 
 const EmptyText = styled.Text`
-  color: #aaa;
-  margin-left: 5px;
+  color: #999;
 `;
 
 const CircleBotton = styled.TouchableOpacity`
@@ -173,15 +173,15 @@ const CircleBotton = styled.TouchableOpacity`
   elevation: 6;
 `;
 
-const Empty = styled.TouchableOpacity`
-  margin-top: 20px;
+const EmptyBox = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: ${hp('4%')}px 0;
+  height: 100px;
+  padding: 20px;
   border-width: 1px;
-  border-color: #aaa;
+  border-color: #999;
   border-radius: 20px;
 `;
 
@@ -414,15 +414,31 @@ export default ({
           </Section>
           {CHECKLIST_DATA?.length == 0 ? (
             STORE == '1' ? (
-              <Empty disabled={true}>
-                <CreateIcon color={'#999'} />
-                <EmptyText>체크리스트를 등록해주세요!</EmptyText>
-              </Empty>
+              <EmptyBox>
+                <LottieView
+                  style={{
+                    width: 60,
+                    height: 60,
+                  }}
+                  source={require('../../../../assets/animations/emptyContents.json')}
+                  loop
+                  autoPlay
+                />
+                <EmptyText>체크리스트를 등록해주세요.</EmptyText>
+              </EmptyBox>
             ) : (
-              <Empty disabled={true}>
-                <CreateIcon color={'#999'} />
-                <EmptyText>등록된 체크리스트가 없습니다!</EmptyText>
-              </Empty>
+              <EmptyBox>
+                <LottieView
+                  style={{
+                    width: 60,
+                    height: 60,
+                  }}
+                  source={require('../../../../assets/animations/emptyContents.json')}
+                  loop
+                  autoPlay
+                />
+                <EmptyText>등록된 체크리스트가 없습니다.</EmptyText>
+              </EmptyBox>
             )
           ) : (
             <>
