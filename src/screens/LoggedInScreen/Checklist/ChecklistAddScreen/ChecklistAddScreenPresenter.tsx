@@ -213,6 +213,7 @@ export default ({
   setIsCustomModalVisible,
   toastFn,
   isToastVisible,
+  alertModal,
 }) => {
   const RBSheetRef = useRef(null);
 
@@ -352,7 +353,14 @@ export default ({
                 <RedText>*</RedText>
               </Row>
               {isCheckedEmpChoise && (
-                <ChecktimeButton onPress={() => RBSheetRef.current.open()}>
+                <ChecktimeButton
+                  onPress={() =>
+                    emplist.length === 0
+                      ? alertModal(
+                          '선택 할 수 있는 직원이 없습니다. 직원 합류 후 진행해주세요.',
+                        )
+                      : RBSheetRef.current.open()
+                  }>
                   <ChecktimeButtonText>직원 선택하기</ChecktimeButtonText>
                 </ChecktimeButton>
               )}

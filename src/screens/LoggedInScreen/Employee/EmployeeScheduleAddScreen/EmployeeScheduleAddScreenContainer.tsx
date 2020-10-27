@@ -82,7 +82,7 @@ export default ({route: {params}}) => {
     let markedDates = {};
     markedDates[date.dateString] = {
       selected: true,
-      selectedColor: '#642A8C',
+      selectedColor: '#7e7c7c',
     };
     if (calendarModalType === 'start') {
       setStartDate(date.dateString);

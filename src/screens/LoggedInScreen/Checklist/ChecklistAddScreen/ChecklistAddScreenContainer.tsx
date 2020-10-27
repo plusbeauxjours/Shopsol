@@ -293,6 +293,7 @@ export default ({route: {params}}) => {
       setIsCustomModalVisible={setIsCustomModalVisible}
       toastFn={toastFn}
       isToastVisible={isToastVisible}
+      alertModal={alertModal}
     />
   );
 };

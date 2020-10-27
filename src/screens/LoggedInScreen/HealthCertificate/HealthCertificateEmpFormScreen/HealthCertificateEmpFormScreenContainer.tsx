@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
+import {updateHEALTH_EMP_LIST} from '~/redux/healthSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import HealthCertificateEmpFormScreenPresenter from './HealthCertificateEmpFormScreenPresenter';
 import utils from '~/constants/utils';
@@ -93,6 +94,19 @@ export default ({route: {params}}) => {
         {
           params?.fetchData && params?.fetchData();
         }
+        dispatch(
+          updateHEALTH_EMP_LIST({
+            EMP_SEQ,
+            RESULT_DATE: EDUCATION_DATE,
+            NAME,
+            PUSH_DAY: moment(EDUCATION_DATE)
+              .add(1, 'year')
+              .subtract(1, 'day')
+              .format('YYYY-MM-DD'),
+            RESULT_COUNT,
+            SELECT_INDEX: 0,
+          }),
+        );
         navigation.goBack();
         alertModal('', '저장 완료');
       }
@@ -167,6 +181,7 @@ export default ({route: {params}}) => {
       cameraPictureLast={cameraPictureLast}
       setCameraPictureLast={setCameraPictureLast}
       takePictureFn={takePictureFn}
+      RESULT_DATE={params?.RESULT_DATE}
     />
   );
 };

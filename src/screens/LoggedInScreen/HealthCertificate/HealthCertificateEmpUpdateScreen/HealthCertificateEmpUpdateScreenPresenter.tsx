@@ -97,7 +97,9 @@ const GreyText = styled.Text`
   font-weight: bold;
 `;
 
-const Touchable = styled.TouchableOpacity``;
+const Touchable = styled.TouchableOpacity`
+  width: 100%;
+`;
 
 const Row = styled.View`
   flex-direction: row;
@@ -273,7 +275,7 @@ export default ({
             <SubmitBtn
               text={'수정완료'}
               onPress={() => submitFn()}
-              isRegisted={true}
+              isRegisted={NAME?.length !== 0 && RESULT_COUNT?.length !== 0}
             />
             <DeleteButton
               onPress={() => {

@@ -275,10 +275,7 @@ export default ({
               <Date>
                 <DateArrowLeft
                   onPress={() => {
-                    if (
-                      SELECT_INDEX ==
-                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.length - 1
-                    ) {
+                    if (SELECT_INDEX == HEALTH_EMP_DETAIL?.length - 1) {
                       alertModal('', '최초데이터 입니다.');
                     } else {
                       increaseSELECT_INDEX();
@@ -339,12 +336,15 @@ export default ({
                   navigation.navigate('HealthCertificateEmpUpdateScreen', {
                     fetchData,
                     NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
+                    EMP_SEQ: HEALTH_EMP_DETAIL[SELECT_INDEX]?.EMP_SEQ,
+                    STORE_SEQ: HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_SEQ,
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
                     EDUCATION_DATE:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
                     IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                     STORE_HEALTH_SEQ:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_HEALTH_SEQ,
+                    SELECT_INDEX,
                   });
                 }}>
                 <Text style={{fontSize: 16, color: 'white'}}>수정하기</Text>
@@ -354,9 +354,11 @@ export default ({
                   navigation.navigate('HealthCertificateEmpFormScreen', {
                     fetchData,
                     EMP_SEQ,
+                    RESULT_DATE: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
                     NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
                     IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+                    SELECT_INDEX,
                   });
                 }}>
                 <Text style={{fontSize: 16, color: 'white'}}>갱신하기</Text>

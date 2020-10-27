@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -24,6 +24,7 @@ export default () => {
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
   } = useSelector((state: any) => state.storeReducer);
+
   const [markedDates, setMarkedDates] = useState<any>(null);
 
   // INIT으로 받은 데이터를 가공
@@ -146,7 +147,7 @@ export default () => {
 
   // useEffect(() => {
   //   fetchData(moment().format('YYYY-MM-DD'));
-  // });
+  // }, []);
 
   return (
     <CalendarInfoScreenPresenter

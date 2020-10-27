@@ -220,6 +220,7 @@ export default ({route: {params}}) => {
       setCameraPictureLast={setCameraPictureLast}
       takePictureFn={takePictureFn}
       checkOrcFn={checkOrcFn}
+      EDUCATION_DATEprops={params?.EDUCATION_DATEprops}
     />
   );
 };

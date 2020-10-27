@@ -25,7 +25,7 @@ const Container = styled.View`
 const Text = styled.Text<IText>`
   margin-left: 3px;
   font-size: 13px;
-  color: ${(props) => (props.isSubmited ? '#642A8C' : '#CE0505')};
+  color: ${(props) => (props.isSubmited ? '#7e7c7c' : '#CE0505')};
 `;
 
 const Section = styled.TouchableOpacity`
@@ -60,7 +60,7 @@ const TypeTitleText = styled.Text`
 `;
 
 const GreyText = styled.Text`
-  color: #bbb;
+  color: #7e7c7c;
   font-size: 13px;
 `;
 
@@ -111,7 +111,7 @@ export default ({
               '위생교육증을 등록하시면 갱신시점 알람 및 기존 교육증 이력관리가 가능합니다.\n(현재는 한국휴게음식업중앙회 발급 수료증에 한하여 등록이 가능합니다. 추후 종류 추가 예정)',
             );
           }}>
-          <HelpCircleIcon color="#bbb" />
+          <HelpCircleIcon color="#aaa" />
         </Touchable>
       </Row>
       <Row>
@@ -160,7 +160,7 @@ export default ({
                     alignItems: 'flex-start',
                   }}>
                   <Row>
-                    <EllipseIcon size={8} color={'#642A8C'} />
+                    <EllipseIcon size={8} color={'#7e7c7c'} />
                     <Text isSubmited={true}>위생교육증 등록완료</Text>
                   </Row>
                   <Row>
@@ -216,7 +216,7 @@ export default ({
                     alignItems: 'flex-start',
                   }}>
                   <Row>
-                    <EllipseIcon size={8} color={'#642A8C'} />
+                    <EllipseIcon size={8} color={'#7e7c7c'} />
                     <Text isSubmited={true}>위생교육증 등록완료</Text>
                   </Row>
                   <Text
@@ -227,7 +227,7 @@ export default ({
                             marginTop: 5,
                             color: 'red',
                           }
-                        : {marginTop: 5, color: '#aaa'}
+                        : {marginTop: 5, color: '#7e7c7c'}
                     }>
                     교육일시: {moment(EDUCATION_DATA).format('YYYY.MM.DD')}
                     &nbsp;(갱신 D{dday <= 0 ? '+' : '-'}
@@ -266,7 +266,7 @@ export default ({
                         '직원별 보건증 등록이 가능하며, 등록 후 갱신시점 알람 및 보건증 이력관리가 가능합니다.',
                       );
                     }}>
-                    <HelpCircleIcon color="#bbb" />
+                    <HelpCircleIcon color="#7e7c7c" />
                   </Touchable>
                 </Row>
                 <Row>
@@ -282,7 +282,7 @@ export default ({
               ) : Number(HEALTH_CERTIFICATE_APPLY) ==
                 Number(HEALTH_CERTIFICATE_TARGET) ? (
                 <IconContainer>
-                  <EllipseIcon size={8} color={'#642A8C'} />
+                  <EllipseIcon size={8} color={'#7e7c7c'} />
                   <Text isSubmited={true}>
                     등록 중({HEALTH_CERTIFICATE_TARGET}명 중&nbsp;
                     {HEALTH_CERTIFICATE_APPLY}명 완료)

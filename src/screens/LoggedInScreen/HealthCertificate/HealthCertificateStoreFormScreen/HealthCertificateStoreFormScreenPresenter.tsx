@@ -175,6 +175,7 @@ export default ({
   setCameraPictureLast,
   takePictureFn,
   checkOrcFn,
+  EDUCATION_DATEprops,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -276,7 +277,9 @@ export default ({
               <InputLine isBefore={storename.length === 0 ? true : false} />
               <WhiteSpace />
               <TextInputContainer>
-                <Touchable onPress={() => setDateModalVisible(true)}>
+                <Touchable
+                  style={{width: '100%'}}
+                  onPress={() => setDateModalVisible(true)}>
                   <GreyText>교육 일시</GreyText>
                   <DateText>
                     {moment(EDUCATION_DATE).format('YYYY.MM.DD')}
@@ -342,6 +345,7 @@ export default ({
               }}
               onCancel={() => setDateModalVisible(false)}
               display="default"
+              minimumDate={moment(EDUCATION_DATEprops).add(1, 'days').toDate()}
             />
             <SubmitBtn
               text={'입력완료'}

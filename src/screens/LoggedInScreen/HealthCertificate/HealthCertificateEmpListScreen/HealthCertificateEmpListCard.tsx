@@ -49,13 +49,13 @@ export default ({
         </NameText>
         <AddressBox>
           {data?.RESULT_DATE && dday > 0 ? (
-            <EllipseIcon size={8} color={'#642A8C'} />
+            <EllipseIcon size={8} color={'#7e7c7c'} />
           ) : (
             <EllipseIcon size={8} color={'#CE0505'} />
           )}
           {data?.RESULT_DATE ? (
             <AddressText
-              color={dday <= 0 ? '#CE0505' : '#642A8C'}
+              color={dday <= 0 ? '#CE0505' : '#7e7c7c'}
               style={dday <= 0 && {textDecorationLine: 'underline'}}>
               검진일 : {data?.RESULT_DATE} (갱신 D{dday <= 0 ? '+' : '-'}
               {Math.abs(Math.floor(dday))})
@@ -86,13 +86,13 @@ export default ({
         </NameText>
         <AddressBox>
           {data?.RESULT_DATE ? (
-            <EllipseIcon size={8} color={'#642A8C'} />
+            <EllipseIcon size={8} color={'#7e7c7c'} />
           ) : (
             <EllipseIcon size={8} color={'#CE0505'} />
           )}
           {data?.RESULT_DATE ? (
             <AddressText
-              color={dday <= 0 ? '#CE0505' : '#642A8C'}
+              color={dday <= 0 ? '#CE0505' : '#7e7c7c'}
               style={dday <= 0 && {textDecorationLine: 'underline'}}>
               검진일 : {data?.RESULT_DATE}
             </AddressText>

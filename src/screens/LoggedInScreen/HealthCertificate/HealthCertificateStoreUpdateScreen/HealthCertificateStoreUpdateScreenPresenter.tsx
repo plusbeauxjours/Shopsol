@@ -285,7 +285,9 @@ export default ({
               <InputLine isBefore={storename == '' ? true : false} />
               <WhiteSpace />
               <TextInputContainer>
-                <Touchable onPress={() => setDateModalVisible(true)}>
+                <Touchable
+                  style={{width: '100%'}}
+                  onPress={() => setDateModalVisible(true)}>
                   <GreyText>교육 일시</GreyText>
                   <DateText>
                     {moment(EDUCATION_DATE).format('YYYY.MM.DD')}

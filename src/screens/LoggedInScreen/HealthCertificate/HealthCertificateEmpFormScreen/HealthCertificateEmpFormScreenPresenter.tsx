@@ -98,7 +98,9 @@ const GreyText = styled.Text`
   font-weight: bold;
 `;
 
-const Touchable = styled.TouchableOpacity``;
+const Touchable = styled.TouchableOpacity`
+  width: 100%;
+`;
 
 const Row = styled.View`
   flex-direction: row;
@@ -168,6 +170,7 @@ export default ({
   cameraPictureLast,
   setCameraPictureLast,
   takePictureFn,
+  RESULT_DATE,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -265,6 +268,7 @@ export default ({
               }}
               onCancel={() => setDateModalVisible(false)}
               display="default"
+              minimumDate={moment(RESULT_DATE).toDate()}
             />
             <SubmitBtn
               text={'입력완료'}

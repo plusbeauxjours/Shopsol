@@ -7,6 +7,7 @@ import {setUSER, setMOBILE_NO, userLogin} from '~/redux/userSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default () => {
   const navigation = useNavigation();
@@ -45,6 +46,7 @@ export default () => {
       alertModal('휴대폰번호 또는 비밀번호가 입력되지 않았습니다.');
     }
     try {
+      dispatch(setSplashVisible(true));
       const {data} = await api.logIn({
         MobileNo: mobileNo,
         PASSWORD: password,
