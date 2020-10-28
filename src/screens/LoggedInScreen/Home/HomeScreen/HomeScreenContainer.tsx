@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Linking,
@@ -18,6 +18,7 @@ import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {getRESPONSE_EMPLOYEE} from '~/redux/employeeSlice';
 import {getHEALTH_CERTIFICATE_DATA} from '~/redux/healthSlice';
+import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ export default ({route: {params}}) => {
   const {MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM, GENDER} = useSelector(
     (state: any) => state.userReducer,
   );
+  const {NOTICE_COUNT} = useSelector(
+    (state: any) => state.checklistshareReducer,
+  );
 
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
@@ -41,7 +45,6 @@ export default ({route: {params}}) => {
   const [QR, setQR] = useState<string>('');
   const [invitedEmpCount, setInvitedEmpCount] = useState<number>(0);
   const [checklistCount, setChecklistCount] = useState<number>(0);
-  const [noticeCount, setNoticeCount] = useState<number>(0);
   const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
   const [qrCameraModalOpen, setQrCameraModalOpen] = useState<boolean>(false);
   const [qrWorkingModalOpen, setQrWorkingModalOpen] = useState<boolean>(false);
@@ -213,7 +216,7 @@ export default ({route: {params}}) => {
         setQR(data.resultdata.QR);
         setInvitedEmpCount(data.inviteemp);
         setChecklistCount(data.checklength);
-        setNoticeCount(data.noticelength);
+        dispatch(setNOTICE_COUNT(data.noticelength));
       }
       await dispatch(getRESPONSE_EMPLOYEE());
       await dispatch(getHEALTH_CERTIFICATE_DATA());
@@ -366,7 +369,7 @@ export default ({route: {params}}) => {
       handleBarCodeScanned={handleBarCodeScanned}
       invitedEmpCount={invitedEmpCount}
       checklistCount={checklistCount}
-      noticeCount={noticeCount}
+      NOTICE_COUNT={NOTICE_COUNT}
       QR={QR}
       qrCameraModalOpen={qrCameraModalOpen}
       setQrCameraModalOpen={setQrCameraModalOpen}

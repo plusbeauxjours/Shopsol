@@ -362,7 +362,7 @@ export default ({
   handleBarCodeScanned,
   invitedEmpCount,
   checklistCount,
-  noticeCount,
+  NOTICE_COUNT,
   QR,
   isGpsVisible,
   setIsGpsVisible,
@@ -737,7 +737,7 @@ export default ({
                 <MenuCntContainer
                   selection={'업무일지'}
                   paging={'ChecklistShareMainScreen'}
-                  count={noticeCount}
+                  count={NOTICE_COUNT}
                 />
                 <MenuCntContainer
                   selection={'유통기한'}
@@ -818,7 +818,7 @@ export default ({
                     <MenuCntContainer
                       selection={'업무일지'}
                       paging={'ChecklistShareMainScreen'}
-                      count={noticeCount}
+                      count={NOTICE_COUNT}
                     />
                     <MenuCntContainer
                       selection={'유통기한'}
@@ -860,7 +860,7 @@ export default ({
                     <MenuCntContainer
                       selection={'업무일지'}
                       paging={'ChecklistShareMainScreen'}
-                      count={noticeCount}
+                      count={NOTICE_COUNT}
                     />
                     <MenuCntContainer
                       selection={'유통기한'}

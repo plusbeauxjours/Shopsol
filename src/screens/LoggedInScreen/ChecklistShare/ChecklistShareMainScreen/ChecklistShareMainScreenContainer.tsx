@@ -9,7 +9,7 @@ import {
   getCHECKLIST_SHARE_DATA1,
   getCHECKLIST_SHARE_DATA2,
   setCHECKLIST_SHARE_MARKED,
-  updateNOTICECHECK_SEQ,
+  reduceNOTICECHECK_SEQ,
 } from '~/redux/checklistshareSlice';
 import ChecklistShareMainScreenPresenter from './ChecklistShareMainScreenPresenter';
 import api from '~/constants/LoggedInApi';
@@ -196,7 +196,7 @@ export default ({route: {params}}) => {
   };
 
   const gotoChecklistShareItem = (TITLE, NOTICE_SEQ, isFavorite) => {
-    dispatch(updateNOTICECHECK_SEQ({TITLE, NOTICE_SEQ, isFavorite}));
+    dispatch(reduceNOTICECHECK_SEQ({TITLE, NOTICE_SEQ, isFavorite}));
     navigation.navigate('ChecklistShareItemScreen', {
       TITLE,
       NOTICE_SEQ,
