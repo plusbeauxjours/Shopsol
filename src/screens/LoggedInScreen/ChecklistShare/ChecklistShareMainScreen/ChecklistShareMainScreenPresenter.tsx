@@ -249,6 +249,7 @@ export default ({
   IS_MANAGER,
   isCalendarModalVisible,
   setIsCalendarModalVisible,
+  gotoChecklistShareItem,
 }) => {
   const Tab = createMaterialTopTabNavigator();
 
@@ -348,6 +349,7 @@ export default ({
                   confirmModal={(noticeSeq) =>
                     fixControlFn(noticeSeq, 'unFix', '지시사항')
                   }
+                  gotoChecklistShareItem={gotoChecklistShareItem}
                 />
               ))}
               {CHECKLIST_SHARE_DATA1?.basic?.map((data, index) => (
@@ -359,6 +361,7 @@ export default ({
                   confirmModal={(noticeSeq) =>
                     fixControlFn(noticeSeq, 'fix', '지시사항')
                   }
+                  gotoChecklistShareItem={gotoChecklistShareItem}
                 />
               ))}
             </>
@@ -406,6 +409,7 @@ export default ({
                   confirmModal={(noticeSeq) =>
                     fixControlFn(noticeSeq, 'unFix', '특이사항')
                   }
+                  gotoChecklistShareItem={gotoChecklistShareItem}
                 />
               ))}
               {CHECKLIST_SHARE_DATA2?.basic?.map((data, index) => (
@@ -417,6 +421,7 @@ export default ({
                   confirmModal={(noticeSeq) =>
                     fixControlFn(noticeSeq, 'fix', '특이사항')
                   }
+                  gotoChecklistShareItem={gotoChecklistShareItem}
                 />
               ))}
             </>

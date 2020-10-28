@@ -17,7 +17,6 @@ import utils from '~/constants/utils';
 import {KeyboardAvoidingView, ActivityIndicator} from 'react-native';
 import {
   ForwardIcon,
-  EllipseIcon,
   DeleteIcon,
   SettingIcon,
   CloseCircleIcon,

@@ -2,16 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
+import firebase from 'react-native-firebase';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {
   getCHECKLIST_SHARE_DATA1,
   getCHECKLIST_SHARE_DATA2,
   setCHECKLIST_SHARE_MARKED,
+  updateNOTICECHECK_SEQ,
 } from '~/redux/checklistshareSlice';
 import ChecklistShareMainScreenPresenter from './ChecklistShareMainScreenPresenter';
 import api from '~/constants/LoggedInApi';
-import firebase from 'react-native-firebase';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -194,6 +195,14 @@ export default ({route: {params}}) => {
     setIndex(page ? Number(page) : 0);
   };
 
+  const gotoChecklistShareItem = (TITLE, NOTICE_SEQ, isFavorite) => {
+    dispatch(updateNOTICECHECK_SEQ({TITLE, NOTICE_SEQ, isFavorite}));
+    navigation.navigate('ChecklistShareItemScreen', {
+      TITLE,
+      NOTICE_SEQ,
+      isFavorite,
+    });
+  };
   useEffect(() => {
     Init(index);
     console.log('===================', '업무일지', '===================');
@@ -223,6 +232,7 @@ export default ({route: {params}}) => {
       IS_MANAGER={IS_MANAGER === 1 ? true : false}
       isCalendarModalVisible={isCalendarModalVisible}
       setIsCalendarModalVisible={setIsCalendarModalVisible}
+      gotoChecklistShareItem={gotoChecklistShareItem}
     />
   );
 };

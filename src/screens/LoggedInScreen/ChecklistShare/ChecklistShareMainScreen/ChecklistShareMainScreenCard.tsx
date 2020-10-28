@@ -114,9 +114,15 @@ const BorderBox = styled.View`
   align-items: center;
 `;
 
-export default ({key, data, ME, type, confirmModal}) => {
-  const navigation = useNavigation();
-
+export default ({
+  key,
+  data,
+  ME,
+  type,
+  confirmModal,
+  gotoChecklistShareItem,
+}) => {
+  console.log('data', data);
   let imgarr = [];
   let allimg = [];
   if (data.IMG_LIST != null) {
@@ -126,13 +132,9 @@ export default ({key, data, ME, type, confirmModal}) => {
   return (
     <Touchable
       key={key}
-      onPress={() => {
-        navigation.navigate('ChecklistShareItemScreen', {
-          TITLE: `${type}`,
-          NOTICE_SEQ: data.NOTICE_SEQ,
-          isFavorite: data.favorite,
-        });
-      }}>
+      onPress={() =>
+        gotoChecklistShareItem(type, data.NOTICE_SEQ, data.favorite)
+      }>
       <Section>
         {ME !== data.MEMBER_SEQ && data.NoticeCheck_SEQ == null && (
           <NewBadge>
