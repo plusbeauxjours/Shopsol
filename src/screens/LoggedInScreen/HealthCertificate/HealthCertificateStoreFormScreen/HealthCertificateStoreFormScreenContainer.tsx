@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
+import HealthCertificateStoreFormScreenPresenter from './HealthCertificateStoreFormScreenPresenter';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setSplashVisible} from '~/redux/splashSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import HealthCertificateStoreFormScreenPresenter from './HealthCertificateStoreFormScreenPresenter';
+import {getHEALTH_CERTIFICATE_DATA} from '~/redux/healthSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -123,6 +124,7 @@ export default ({route: {params}}) => {
       });
       const {data} = await api.saveOcr1(formData);
       if (data.result == '1') {
+        dispatch(getHEALTH_CERTIFICATE_DATA());
         params?.fetchData && params?.fetchData();
         navigation.goBack();
         alertModal('', '저장 완료');

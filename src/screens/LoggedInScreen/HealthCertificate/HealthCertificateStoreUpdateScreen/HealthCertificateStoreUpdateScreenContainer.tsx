@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
+import HealthCertificateStoreUpdateScreenPresenter from './HealthCertificateStoreUpdateScreenPresenter';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setSplashVisible} from '~/redux/splashSlice';
-import {removeHEALTH_STORE_DETAIL} from '~/redux/healthSlice';
+import {
+  removeHEALTH_STORE_DETAIL,
+  getHEALTH_CERTIFICATE_DATA,
+} from '~/redux/healthSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import HealthCertificateStoreUpdateScreenPresenter from './HealthCertificateStoreUpdateScreenPresenter';
-import moment from 'moment';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -144,6 +147,7 @@ export default ({route: {params}}) => {
       });
       const {data} = await api.updateOcr1(formData);
       if (data.result == '1') {
+        dispatch(getHEALTH_CERTIFICATE_DATA());
         params?.fetchData();
         navigation.goBack();
         alertModal('', '저장 완료');
@@ -218,8 +222,9 @@ export default ({route: {params}}) => {
 
   const deleteFn = async () => {
     try {
-      navigation.pop(2);
+      dispatch(getHEALTH_CERTIFICATE_DATA());
       dispatch(removeHEALTH_STORE_DETAIL(CEO_HEALTH_SEQ));
+      navigation.pop(2);
       alertModal(
         '',
         `${EDUCATION_DATE.slice(0, 4)}년 위생교육증을 삭제하였습니다.`,

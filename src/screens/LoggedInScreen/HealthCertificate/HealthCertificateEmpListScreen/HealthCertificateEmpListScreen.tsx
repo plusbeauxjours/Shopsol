@@ -5,10 +5,8 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
 import HealthCertificateEmpListCard from './HealthCertificateEmpListCard';
-import api from '~/constants/LoggedInApi';
 import {CheckMarkIcon} from '~/constants/Icons';
-import {setHEALTH_EMP_LIST} from '~/redux/healthSlice';
-import {setSplashVisible} from '~/redux/splashSlice';
+import {getSTORE_HEALTH_EMP_LIST} from '~/redux/healthSlice';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -43,8 +41,7 @@ export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
-  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
+  const {STORE} = useSelector((state: any) => state.userReducer);
   const {HEALTH_EMP_LIST} = useSelector((state: any) => state.healthReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -57,22 +54,6 @@ export default () => {
       console.log(e);
     } finally {
       setRefreshing(false);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      if (!HEALTH_EMP_LIST || HEALTH_EMP_LIST.length === 0) {
-        dispatch(setSplashVisible(true));
-      }
-      const {data} = await api.storeHealthEmpList(STORE_SEQ, STORE, MEMBER_SEQ);
-      if (data.message === 'SUCCESS') {
-        dispatch(setHEALTH_EMP_LIST(data.result));
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      dispatch(setSplashVisible(false));
     }
   };
 
@@ -89,7 +70,7 @@ export default () => {
   };
 
   useEffect(() => {
-    fetchData();
+    dispatch(getSTORE_HEALTH_EMP_LIST());
   }, []);
 
   return (

@@ -123,4 +123,29 @@ export const getHEALTH_CERTIFICATE_DATA = () => async (dispatch, getState) => {
   }
 };
 
+export const getSTORE_HEALTH_EMP_LIST = () => async (dispatch, getState) => {
+  const {
+    storeReducer: {STORE_SEQ},
+  } = getState();
+  const {
+    userReducer: {STORE, MEMBER_SEQ},
+  } = getState();
+  const {
+    healthReducer: {HEALTH_EMP_LIST},
+  } = getState();
+  try {
+    if (!HEALTH_EMP_LIST) {
+      dispatch(setSplashVisible(true));
+    }
+    const {data} = await api.storeHealthEmpList(STORE_SEQ, STORE, MEMBER_SEQ);
+    if (data.message === 'SUCCESS') {
+      dispatch(setHEALTH_EMP_LIST(data.result));
+    }
+  } catch (e) {
+    console.log(e);
+  } finally {
+    dispatch(setSplashVisible(false));
+  }
+};
+
 export default healthSlice.reducer;

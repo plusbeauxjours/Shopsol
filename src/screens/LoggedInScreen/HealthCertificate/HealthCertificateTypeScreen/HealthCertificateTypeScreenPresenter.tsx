@@ -98,6 +98,8 @@ export default ({
   onRefresh,
   dday,
 }) => {
+  const navigation = useNavigation();
+
   const SanitaryEducation = () => (
     <TypeTitle>
       <Row>
@@ -120,7 +122,7 @@ export default ({
       </Row>
     </TypeTitle>
   );
-  const navigation = useNavigation();
+
   if (STORE == '0') {
     return (
       <BackGround>

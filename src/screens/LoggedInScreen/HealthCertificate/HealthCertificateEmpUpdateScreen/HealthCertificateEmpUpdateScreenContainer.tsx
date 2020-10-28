@@ -9,6 +9,7 @@ import HealthCertificateEmpUpdateScreenPresenter from './HealthCertificateEmpUpd
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {
+  getSTORE_HEALTH_EMP_LIST,
   removeHEALTH_EMP_DETAIL,
   updateHEALTH_EMP_LIST,
 } from '~/redux/healthSlice';
@@ -110,19 +111,7 @@ export default ({route: {params}}) => {
       });
       const {data} = await api.updateOcr(formData);
       if (data.result == '1') {
-        dispatch(
-          updateHEALTH_EMP_LIST({
-            EMP_SEQ,
-            RESULT_DATE: EDUCATION_DATE,
-            NAME,
-            PUSH_DAY: moment(EDUCATION_DATE)
-              .add(1, 'year')
-              .subtract(1, 'day')
-              .format('YYYY-MM-DD'),
-            RESULT_COUNT,
-            SELECT_INDEX: params?.SELECT_INDEX,
-          }),
-        );
+        dispatch(getSTORE_HEALTH_EMP_LIST());
         params?.fetchData();
         navigation.goBack();
         alertModal('', '수정 완료');
@@ -183,18 +172,9 @@ export default ({route: {params}}) => {
 
   const deleteFn = async () => {
     try {
-      navigation.pop(2);
+      dispatch(getSTORE_HEALTH_EMP_LIST());
       dispatch(removeHEALTH_EMP_DETAIL(STORE_HEALTH_SEQ));
-      dispatch(
-        updateHEALTH_EMP_LIST({
-          EMP_SEQ,
-          RESULT_DATE: null,
-          NAME,
-          PUSH_DAY: null,
-          RESULT_COUNT: null,
-          SELECT_INDEX: params?.SELECT_INDEX,
-        }),
-      );
+      navigation.pop(2);
       alertModal(
         '',
         `${EDUCATION_DATE.slice(0, 4)}년 위생교육증을 삭제하였습니다.`,

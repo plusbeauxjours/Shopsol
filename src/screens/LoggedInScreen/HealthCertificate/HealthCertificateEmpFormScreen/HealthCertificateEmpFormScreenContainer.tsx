@@ -4,11 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {updateHEALTH_EMP_LIST} from '~/redux/healthSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import HealthCertificateEmpFormScreenPresenter from './HealthCertificateEmpFormScreenPresenter';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
+import {getSTORE_HEALTH_EMP_LIST} from '~/redux/healthSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -94,19 +94,7 @@ export default ({route: {params}}) => {
         {
           params?.fetchData && params?.fetchData();
         }
-        dispatch(
-          updateHEALTH_EMP_LIST({
-            EMP_SEQ,
-            RESULT_DATE: EDUCATION_DATE,
-            NAME,
-            PUSH_DAY: moment(EDUCATION_DATE)
-              .add(1, 'year')
-              .subtract(1, 'day')
-              .format('YYYY-MM-DD'),
-            RESULT_COUNT,
-            SELECT_INDEX: 0,
-          }),
-        );
+        dispatch(getSTORE_HEALTH_EMP_LIST());
         navigation.goBack();
         alertModal('', '저장 완료');
       }
