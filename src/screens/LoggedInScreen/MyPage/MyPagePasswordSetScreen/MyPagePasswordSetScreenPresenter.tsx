@@ -2,10 +2,10 @@ import React from 'react';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
-import {useNavigation} from '@react-navigation/native';
 
 interface IsError {
   isError: boolean;
@@ -120,7 +120,6 @@ export default ({
   isPasswordCheckError,
   passwordCheckerFn,
 }) => {
-  const navigation = useNavigation();
   return (
     <BackGround>
       <KeyboardAwareScrollView keyboardShouldPersistTaps="always">

@@ -49,7 +49,7 @@ export default () => {
   const onRefresh = async () => {
     try {
       setRefreshing(true);
-      await fetchData();
+      await dispatch(getSTORE_HEALTH_EMP_LIST());
     } catch (e) {
       console.log(e);
     } finally {

@@ -65,27 +65,6 @@ const healthSlice = createSlice({
         ),
       };
     },
-    updateHEALTH_EMP_LIST(state, action) {
-      const {
-        payload: {
-          EMP_SEQ,
-          RESULT_DATE,
-          NAME,
-          PUSH_DAY,
-          RESULT_COUNT,
-          SELECT_INDEX,
-        },
-      } = action;
-      if (SELECT_INDEX === 0) {
-        const item = state.HEALTH_EMP_LIST.find((i) => i.EMP_SEQ == EMP_SEQ);
-        if (item) {
-          item.NAME = NAME;
-          item.RESULT_DATE = RESULT_DATE;
-          item.PUSH_DAY = PUSH_DAY;
-          item.RESULT_COUNT = RESULT_COUNT;
-        }
-      }
-    },
   },
 });
 
@@ -97,7 +76,6 @@ export const {
   setSELECT_INDEX,
   removeHEALTH_EMP_DETAIL,
   removeHEALTH_STORE_DETAIL,
-  updateHEALTH_EMP_LIST,
 } = healthSlice.actions;
 
 export const getHEALTH_CERTIFICATE_DATA = () => async (dispatch, getState) => {

@@ -135,7 +135,7 @@ const checklistshareSlice = createSlice({
         payload: {TITLE, title, content, NOTICE_SEQ, image, isFavorite},
       } = action;
       if (TITLE === '지시사항') {
-        if (isFavorite == '1') {
+        if (isFavorite) {
           const favoriteItem = state.CHECKLIST_SHARE_DATA1.favorite.find(
             (i) => i.NOTICE_SEQ === NOTICE_SEQ,
           );
@@ -155,7 +155,7 @@ const checklistshareSlice = createSlice({
           }
         }
       } else {
-        if (isFavorite == '1') {
+        if (isFavorite) {
           const favoriteItem = state.CHECKLIST_SHARE_DATA2.favorite.find(
             (i) => i.NOTICE_SEQ === NOTICE_SEQ,
           );

@@ -11,7 +11,6 @@ import api from '~/constants/LoggedInApi';
 import {
   getSTORE_HEALTH_EMP_LIST,
   removeHEALTH_EMP_DETAIL,
-  updateHEALTH_EMP_LIST,
 } from '~/redux/healthSlice';
 
 export default ({route: {params}}) => {
