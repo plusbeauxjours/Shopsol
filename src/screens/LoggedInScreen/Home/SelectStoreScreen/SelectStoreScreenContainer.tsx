@@ -22,7 +22,6 @@ export default () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const onRefresh = async () => {
-    p;
     try {
       setRefreshing(true);
       await dispatch(getSTORELIST_DATA());

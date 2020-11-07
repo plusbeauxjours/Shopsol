@@ -8,6 +8,7 @@ import utils from '~/constants/utils';
 import {setDEVICE_PLATFORM} from '~/redux/userSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import StartScreenPresenter from './StartScreenPresenter';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default ({route: {params}}) => {
   const navigation = useNavigation();
@@ -69,6 +70,7 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
+    dispatch(setSplashVisible(false));
     dispatch(setDEVICE_PLATFORM(Platform.OS));
     checkVersion();
   }, []);

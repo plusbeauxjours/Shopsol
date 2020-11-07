@@ -139,7 +139,7 @@ export default ({route: {params}}) => {
       </Row>
     </React.Fragment>
   );
-
+  console.log(params);
   return (
     <BackGround>
       <Container>
@@ -162,6 +162,7 @@ export default ({route: {params}}) => {
               EMP_SEQ,
               PAY,
               PAY_TYPE,
+              IMAGE: params?.IMAGE,
             });
           }}
           isRegisted={true}

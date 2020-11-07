@@ -263,6 +263,7 @@ export default ({
   getNumberToday,
   alertModal,
   joinModal,
+  IMAGE,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -450,7 +451,7 @@ export default ({
                     marginRight: 10,
                   }}
                   source={{
-                    uri: utils.avatarUrl(GENDER),
+                    uri: `http://133.186.210.223/uploads/${IMAGE}`,
                     headers: {Authorization: 'someAuthToken'},
                     priority: FastImage.priority.low,
                   }}

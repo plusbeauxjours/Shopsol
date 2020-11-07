@@ -232,7 +232,6 @@ export default ({
   isToastVisible,
 }) => {
   const RBSheetRef = useRef(null);
-
   const FixScheduleStepOne = () => (
     <Section>
       <RowTitle>
@@ -494,7 +493,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsStartTimeModalVisible(false)}
-        display="default"
       />
       <DatePickerModal
         headerTextIOS={'시간을 선택하세요.'}

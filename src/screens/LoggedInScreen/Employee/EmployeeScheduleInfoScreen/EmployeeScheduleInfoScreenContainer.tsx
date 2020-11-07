@@ -446,6 +446,7 @@ export default ({route: {params}}) => {
       getNumberToday={getNumberToday}
       alertModal={alertModal}
       joinModal={joinModal}
+      IMAGE={params?.IMAGE}
     />
   );
 };

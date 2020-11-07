@@ -1343,6 +1343,11 @@ export default ({
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         keyboardType={'number-pad'}
+                        maxLength={3}
+                        style={{
+                          width: 100,
+                          textAlign: 'right',
+                        }}
                       />
                       <Text>일</Text>
                     </Row>
@@ -1364,6 +1369,11 @@ export default ({
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         keyboardType={'number-pad'}
+                        maxLength={3}
+                        style={{
+                          width: 100,
+                          textAlign: 'right',
+                        }}
                       />
                       <Text>일</Text>
                     </Row>

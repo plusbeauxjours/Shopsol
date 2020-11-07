@@ -14,10 +14,9 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const {
-    data: {EMP_NAME = null, STORE_SEQ = null, EMP_SEQ = null} = {},
+    data: {EMP_NAME = null, STORE_SEQ = null, EMP_SEQ = null, images = []} = {},
     from = null,
     onRefresh,
-    IMAGE,
   } = params;
   const [START_TYPE, setSTART_TYPE] = useState<string>('0');
   const [isSalaryModalVisible1, setIsSalaryModalVisible1] = useState<boolean>(
@@ -345,6 +344,7 @@ export default ({route: {params}}) => {
             EMP_SEQ,
             PAY_TYPE: payChecked,
             PAY: pay,
+            IMAGE: images[0].IMAGE,
           });
         }
       }
@@ -614,7 +614,7 @@ export default ({route: {params}}) => {
       setRemainderVacation={setRemainderVacation}
       annual_START={annual_START}
       setAnnual_START={setAnnual_START}
-      IMAGE={IMAGE}
+      IMAGE={images[0].IMAGE}
     />
   );
 };

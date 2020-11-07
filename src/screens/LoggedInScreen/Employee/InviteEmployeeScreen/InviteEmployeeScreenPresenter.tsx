@@ -252,6 +252,7 @@ export default ({
                   onChangeText={(text) => setName(text)}
                   value={name}
                   maxLength={6}
+                  style={{width: 100}}
                 />
               </NameContainer>
               <PhoneContainer>
@@ -263,6 +264,7 @@ export default ({
                   value={phone}
                   maxLength={11}
                   keyboardType={'number-pad'}
+                  style={{width: 200}}
                 />
               </PhoneContainer>
             </Box>
