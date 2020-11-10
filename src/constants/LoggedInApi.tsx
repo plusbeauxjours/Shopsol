@@ -113,7 +113,12 @@ export default {
       'get',
       `/Store/noticeAll?STORE_SEQ=${STORE_SEQ}&YEAR=${YEAR}&MONTH=${MONTH}&TYPE=${TYPE}`,
     ),
-  getNotice: (STORE_SEQ: string, DATE: string, STORE: string) =>
+  getNotice: (
+    STORE_SEQ: string,
+    DATE: string,
+    STORE: string,
+    MEMBER_SEQ: string,
+  ) =>
     oldApi(
       'get',
       `/Employee/getNotice2?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&DATE=${DATE}&MEMBER_SEQ=${MEMBER_SEQ}`,

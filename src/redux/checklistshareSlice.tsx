@@ -214,26 +214,27 @@ export const getCHECKLIST_SHARE_DATA1 = (date) => async (
     storeReducer: {STORE_SEQ},
   } = getState();
   const {
+    userReducer: {MEMBER_SEQ},
+  } = getState();
+  const {
     checklistshareReducer: {CHECKLIST_SHARE_DATA1},
   } = getState();
   if (!CHECKLIST_SHARE_DATA1 || CHECKLIST_SHARE_DATA1?.length === 0) {
     dispatch(setSplashVisible(true));
   }
   try {
-    const {data} = await api.getNotice(STORE_SEQ, date, '1');
-    if (data.resultmsg === '1') {
-      for (let a = 0; a < data.basic.length; a++) {
-        if (data.basic[a].NoticeCheck_SEQ == null) {
-          dispatch(increaseNEW_CNT1());
-        }
+    const {data} = await api.getNotice(STORE_SEQ, date, '1', MEMBER_SEQ);
+    for (let a = 0; a < data.basic.length; a++) {
+      if (data.basic[a].NoticeCheck_SEQ == null) {
+        dispatch(increaseNEW_CNT1());
       }
-      for (let b = 0; b < data.favorite.length; b++) {
-        if (data.favorite[b].NoticeCheck_SEQ == null) {
-          dispatch(increaseNEW_CNT1());
-        }
-      }
-      dispatch(setCHECKLIST_SHARE_DATA1(data));
     }
+    for (let b = 0; b < data.favorite.length; b++) {
+      if (data.favorite[b].NoticeCheck_SEQ == null) {
+        dispatch(increaseNEW_CNT1());
+      }
+    }
+    dispatch(setCHECKLIST_SHARE_DATA1(data));
   } catch (e) {
     console.log(e);
   } finally {
@@ -247,6 +248,9 @@ export const getCHECKLIST_SHARE_DATA2 = (date) => async (
 ) => {
   const {
     storeReducer: {STORE_SEQ},
+  } = getState();
+  const {
+    userReducer: {MEMBER_SEQ},
   } = getState();
   const {
     checklistshareReducer: {CHECKLIST_SHARE_DATA2},
