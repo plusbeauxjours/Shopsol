@@ -11,7 +11,7 @@ import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {ActivityIndicator} from 'react-native';
 
-import {CheckBoxIcon, CloseCircleIcon} from '~/constants/Icons';
+import {CheckBoxIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
 interface ISelected {
@@ -420,7 +420,7 @@ export default ({
             height: '100%',
           }}>
           <CloseIconContainer onPress={() => setIsImageViewVisible(false)}>
-            <CloseCircleIcon size={33} color={'white'} />
+            <CloseCircleOutlineIcon size={33} color={'white'} />
           </CloseIconContainer>
           <ImageViewer
             index={imageIndex}

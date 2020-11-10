@@ -26,9 +26,7 @@ export default () => {
   const [result, setResult] = useState<any>([]);
   const [contacts, setContacts] = useState<any>([]);
   const [choice, setChoice] = useState<any>([]);
-  const [permission, setPermission] = useState<
-    'undefined' | 'authorized' | 'denied'
-  >('denied');
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
 
@@ -191,7 +189,6 @@ export default () => {
   const requestPermissionsIOS = async () => {
     try {
       Contacts.checkPermission((err, permission) => {
-        setPermission(permission);
         if (permission !== 'authorized') {
           Alert.alert(
             '연락처 탐색 동의',

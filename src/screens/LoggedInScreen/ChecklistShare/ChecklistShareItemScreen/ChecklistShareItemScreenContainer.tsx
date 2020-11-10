@@ -5,8 +5,10 @@ import firebase from 'react-native-firebase';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import ChecklistShareItemScreenPresenter from './ChecklistShareItemScreenPresenter';
+import moment from 'moment';
 import {
   getCHECKLIST_COMMENTS,
+  addCHECKLIST_SHARE_COMMENTS,
   editCHECKLIST_SHARE_COMMENTS,
   deleteCHECKLIST_SHARE_COMMENTS,
 } from '~/redux/checklistshareSlice';
@@ -14,6 +16,7 @@ import {
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const {TITLE, NOTICE_SEQ, isFavorite} = params;
+
   const {STORE, MEMBER_SEQ: ME, MEMBER_NAME, GENDER} = useSelector(
     (state: any) => state.userReducer,
   );
@@ -21,7 +24,6 @@ export default ({route: {params}}) => {
     CHECKLIST_SHARE_COMMENTS,
     CHECKLIST_SHARE_DATA1,
     CHECKLIST_SHARE_DATA2,
-    CHECKLIST_SHARE_DATA3,
   } = useSelector((state: any) => state.checklistshareReducer);
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -34,6 +36,15 @@ export default ({route: {params}}) => {
   const [item, setItem] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [imageIndex, setImageIndex] = useState<number>(0);
+  const [isAddedToastVisible, setIsAddedToastVisible] = useState<boolean>(
+    false,
+  );
+  const [isUpdatedToastVisible, setIsUpdatedToastVisible] = useState<boolean>(
+    false,
+  );
+  const [isRemovedToastVisible, setIsRemovedToastVisible] = useState<boolean>(
+    false,
+  );
 
   const alertModal = (title, text) => {
     const params = {
@@ -45,27 +56,60 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  const addedToastFn = () => {
+    clearTimeout();
+    setTimeout(() => {
+      setIsAddedToastVisible(true);
+    }, 50);
+    setTimeout(() => {
+      setIsAddedToastVisible(false);
+    }, 1500);
+  };
+
+  const updatedToastFn = () => {
+    clearTimeout();
+    setTimeout(() => {
+      setIsUpdatedToastVisible(true);
+    }, 50);
+    setTimeout(() => {
+      setIsUpdatedToastVisible(false);
+    }, 1500);
+  };
+
+  const removedToastFn = () => {
+    clearTimeout();
+    setIsRemovedToastVisible(true);
+    setTimeout(() => {
+      setIsRemovedToastVisible(false);
+    }, 1000);
+  };
+
   const editFn = async () => {
     if (comment == '') {
       return alertModal('', '댓글을 입력해주세요.');
     }
     try {
-      const {data} = await api.editNoticeComment(selectedCOM_SEQ, comment);
-      if (data.message === 'SUCCESS') {
-        dispatch(editCHECKLIST_SHARE_COMMENTS({selectedCOM_SEQ, comment}));
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
       setCommentInputBox(false);
       setComment('');
       setSelectedCOM_SEQ('');
+      dispatch(editCHECKLIST_SHARE_COMMENTS({selectedCOM_SEQ, comment}));
+      updatedToastFn();
+      const {data} = await api.editNoticeComment(selectedCOM_SEQ, comment);
+      if (data.message === 'SUCCESS') {
+        alertModal('', '연결에 실패하였습니다.');
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const deleteFn = async (selectedCOM_SEQ) => {
     try {
-      dispatch(deleteCHECKLIST_SHARE_COMMENTS(selectedCOM_SEQ));
+      clearTimeout();
+      setTimeout(() => {
+        dispatch(deleteCHECKLIST_SHARE_COMMENTS(selectedCOM_SEQ));
+      }, 50);
+      removedToastFn();
       const {data} = await api.delNoticeComment(selectedCOM_SEQ);
       if (data.message !== 'SUCCESS') {
         alertModal('', '연결에 실패하였습니다.');
@@ -80,6 +124,20 @@ export default ({route: {params}}) => {
       return alertModal('', '댓글을 입력해주세요.');
     }
     try {
+      setCommentInputBox(false);
+      setComment('');
+      dispatch(
+        addCHECKLIST_SHARE_COMMENTS({
+          COM_SEQ: Math.ceil(Math.random() * 10000000),
+          CONTENTS: comment,
+          CREATE_TIME: moment().format('YYYY-MM-DD'),
+          EMP_NAME: MEMBER_NAME,
+          IS_MANAGER: STORE == '1' ? '점주' : '직원',
+          MEMBER_SEQ: ME.toString(),
+          NOTICE_SEQ: NOTICE_SEQ.toString(),
+        }),
+      );
+      addedToastFn();
       const {data} = await api.setNoticeComment(
         NOTICE_SEQ,
         MEMBER_NAME,
@@ -157,6 +215,10 @@ export default ({route: {params}}) => {
     }
   };
 
+  const openRow = (rowRef) => {
+    rowRef.manuallySwipeRow(-100);
+  };
+
   useEffect(() => {
     fetchData();
     fetchImage(item);
@@ -200,6 +262,10 @@ export default ({route: {params}}) => {
       setImageIndex={setImageIndex}
       STORE={STORE}
       GENDER={GENDER}
+      isAddedToastVisible={isAddedToastVisible}
+      isUpdatedToastVisible={isUpdatedToastVisible}
+      isRemovedToastVisible={isRemovedToastVisible}
+      openRow={openRow}
     />
   );
 };

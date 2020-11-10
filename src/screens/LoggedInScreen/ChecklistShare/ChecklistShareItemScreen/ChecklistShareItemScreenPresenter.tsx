@@ -11,15 +11,18 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {isIphoneX} from 'react-native-iphone-x-helper';
+import {SwipeRow, SwipeListView} from 'react-native-swipe-list-view';
+import {KeyboardAvoidingView, ActivityIndicator} from 'react-native';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
-import {KeyboardAvoidingView, ActivityIndicator} from 'react-native';
+import LottieView from 'lottie-react-native';
+import Ripple from 'react-native-material-ripple';
 import {
   ForwardIcon,
   DeleteIcon,
   SettingIcon,
-  CloseCircleIcon,
+  CloseCircleOutlineIcon,
 } from '~/constants/Icons';
 
 const BackGround = styled.SafeAreaView`
@@ -42,12 +45,6 @@ const Row = styled.View`
   align-items: center;
 `;
 
-const RowTouchable = styled.TouchableOpacity`
-  margin-right: 10px;
-  flex-direction: row;
-  align-items: center;
-`;
-
 const Section = styled.View`
   flex: 1;
   width: 100%;
@@ -62,12 +59,15 @@ const Bold = styled.Text`
 `;
 
 const CommentTextInputContainer = styled.View`
-  padding: 10px;
+  padding-right: 20px;
+  padding-left: 10px;
   border-width: 1px;
+  margin: 3px;
+  margin-top: 0;
+  border-radius: 20px;
   border-color: #e85356;
   flex-direction: row;
   align-items: center;
-  background-color: white;
 `;
 
 const TextInput = styled.TextInput`
@@ -77,13 +77,21 @@ const TextInput = styled.TextInput`
   padding: 10px 0;
 `;
 
-const ForwardIconContainer = styled.TouchableOpacity`
+const ForwardIconContainer = styled.View`
   align-items: center;
   justify-content: center;
   width: 20px;
   height: 20px;
   border-radius: 20px;
   background-color: #e85356;
+`;
+
+const ForwardIconTouchable = styled.TouchableOpacity`
+  align-items: center;
+  justify-content: center;
+  right: -20px;
+  width: 60px;
+  height: 50px;
 `;
 
 const MemoText = styled.Text`
@@ -108,33 +116,39 @@ const MemoBox = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const Comment = styled.View`
-  margin: 20px 0;
+const CommentBox = styled(Ripple)`
+  padding: 10px 0;
   border-bottom-width: 0.7px;
   border-color: #ddd;
-`;
-
-const CommentBox = styled.View`
-  padding: 5px 0;
-  border-top-width: 0.7px;
-  border-color: #ddd;
-  min-height: 100px;
+  min-height: 70px;
   justify-content: center;
+  background-color: white;
 `;
 
 const Column = styled.View`
   margin-left: 10px;
   flex-direction: column;
   justify-content: center;
+  min-height: 50px;
 `;
 
+const CommentIconContainer = styled.View`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  overflow: hidden;
+`;
 const Footer = styled.View`
   width: ${wp('100%')}px;
 `;
 
 const FooterText = styled.Text`
   text-align: center;
-  color: white;
+  color: #fcc0c0;
   font-size: 18px;
   margin-bottom: 20px;
 `;
@@ -146,6 +160,59 @@ const CloseIconContainer = styled.TouchableOpacity`
   height: 30px;
   right: 20px;
   top: ${(props) => (isIphoneX() ? 35 : 10)};
+`;
+
+const RowTouchable = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  width: 50;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BackBtn = styled.View`
+  background-color: white;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-bottom-width: 0.7px;
+  border-color: #ddd;
+  height: 100%;
+`;
+
+const Line = styled.View`
+  margin: 10px 0;
+  height: 0.7px;
+  background-color: #ccc;
+`;
+
+const ModalPopupArea = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100px;
+  align-items: center;
+`;
+
+const ModalPopupText = styled.Text`
+  color: white;
+`;
+
+const ModalPopup = styled.View`
+  padding: 15px;
+  border-radius: 10px;
+  elevation: 6;
+  shadow-color: grey;
+  shadow-offset: 3px 3px;
+  shadow-opacity: 0.5;
+  shadow-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.7);
 `;
 
 export default ({
@@ -179,6 +246,10 @@ export default ({
   setImageIndex,
   STORE,
   GENDER,
+  isAddedToastVisible,
+  isUpdatedToastVisible,
+  isRemovedToastVisible,
+  openRow,
 }) => {
   const navigation = useNavigation();
 
@@ -215,28 +286,27 @@ export default ({
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           keyboardDismissMode="on-drag"
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{alignItems: 'center'}}>
           <Container>
             <Section>
-              <Row style={{justifyContent: 'center', marginBottom: 5}}>
-                <Bold style={{fontSize: 18}}>{NOTI_TITLE}</Bold>
-              </Row>
-              <Row style={{justifyContent: 'center'}}>
-                <Bold style={{color: '#C8C8C8'}}>
-                  {moment(CREATE_TIME).format('YYYY.MM.DD')}
-                </Bold>
-                {TITLE !== 'CU소식' && (
+              <Row style={{justifyContent: 'space-between'}}>
+                <Column style={{marginLeft: 0}}>
+                  <Bold style={{fontSize: 18}}>{NOTI_TITLE}</Bold>
+                  <Bold style={{color: '#C8C8C8'}}>{EMP_NAME}</Bold>
+                </Column>
+                <Column style={{alignItems: 'flex-end'}}>
                   <Bold style={{color: '#C8C8C8'}}>
-                    &nbsp;-&nbsp;{EMP_NAME}
+                    {moment(CREATE_TIME).format('YYYY.MM.DD')}
                   </Bold>
-                )}
+                  <Bold style={{color: '#C8C8C8'}}>
+                    {moment(CREATE_TIME).format('HH:mm:ss')}
+                  </Bold>
+                </Column>
               </Row>
-            </Section>
-            <Section>
+              <Line />
               <Text>{CONTENTS}</Text>
-            </Section>
-            {imgarr?.length > 0 && (
-              <Section>
+              {imgarr?.length > 0 && (
                 <FlatList
                   horizontal
                   keyExtractor={(_, index) => index.toString()}
@@ -249,33 +319,71 @@ export default ({
                   data={imgarr}
                   renderItem={({item, index}) => renderImage(item, index)}
                 />
-              </Section>
-            )}
+              )}
+            </Section>
 
-            {TITLE !== 'CU소식' && (
-              <Section>
-                <MemoContainer>
-                  <CommentTitleText>댓글달기</CommentTitleText>
-                  <MemoBox
-                    onPress={() => {
-                      setIsEditMode(false);
-                      setCommentInputBox(true);
-                    }}>
-                    <MemoText>댓글을 입력하세요...</MemoText>
-                  </MemoBox>
-                </MemoContainer>
-                <Comment>
-                  {loading ? (
-                    <CommentBox>
-                      <ActivityIndicator color={'grey'} size={'small'} />
-                    </CommentBox>
-                  ) : (
-                    !loading &&
-                    CHECKLIST_SHARE_COMMENTS?.map((data, index) => (
-                      <CommentBox key={index}>
-                        <Row>
+            <Section>
+              <MemoContainer>
+                <CommentTitleText>댓글달기</CommentTitleText>
+                <MemoBox
+                  onPress={() => {
+                    setIsEditMode(false);
+                    setCommentInputBox(true);
+                  }}>
+                  <MemoText>댓글을 입력하세요...</MemoText>
+                </MemoBox>
+              </MemoContainer>
+              {loading ? (
+                <CommentBox>
+                  <ActivityIndicator color={'grey'} size={'small'} />
+                </CommentBox>
+              ) : (
+                <SwipeListView
+                  useFlatList={true}
+                  closeOnRowOpen={true}
+                  closeOnRowBeginSwipe={true}
+                  data={CHECKLIST_SHARE_COMMENTS}
+                  previewOpenValue={100}
+                  renderItem={({item, index}, rowMap) => (
+                    <SwipeRow
+                      key={index}
+                      rightOpenValue={-100}
+                      disableLeftSwipe={item.MEMBER_SEQ != ME && STORE == '0'}
+                      disableRightSwipe={true}>
+                      <BackBtn>
+                        <RowTouchable
+                          style={{backgroundColor: 'white'}}
+                          onPress={() => {
+                            rowMap[index].closeRow();
+                            setIsEditMode(true);
+                            setCommentInputBox(true);
+                            setComment(item.CONTENTS);
+                            setSelectedCOM_SEQ(item.COM_SEQ);
+                          }}>
+                          <SettingIcon color={'#aaa'} size={22} />
+                        </RowTouchable>
+                        <RowTouchable
+                          style={{backgroundColor: '#D93F12'}}
+                          onPress={() => {
+                            rowMap[index].closeRow();
+                            deleteFn(item.COM_SEQ);
+                          }}>
+                          <DeleteIcon color={'white'} />
+                        </RowTouchable>
+                      </BackBtn>
+                      <CommentBox
+                        key={index}
+                        onPress={() => {
+                          openRow(rowMap[index]);
+                        }}
+                        rippleColor={'#666'}
+                        rippleDuration={1500}
+                        rippleSize={1700}
+                        rippleContainerBorderRadius={0}
+                        rippleOpacity={0.1}>
+                        <Row style={{alignItems: 'flex-start'}}>
                           <FastImage
-                            style={{width: 60, height: 60, borderRadius: 30}}
+                            style={{width: 50, height: 50, borderRadius: 25}}
                             source={{
                               uri: utils.avatarUrl(GENDER),
                               headers: {Authorization: 'someAuthToken'},
@@ -284,63 +392,55 @@ export default ({
                             resizeMode={FastImage.resizeMode.cover}
                           />
                           <Column>
-                            <Row>
-                              <Text
-                                style={{
-                                  color: '#aaa',
-                                  fontSize: 13,
-                                  marginRight: 15,
-                                }}>
-                                {data.EMP_NAME} [{data.IS_MANAGER}]
-                              </Text>
-                            </Row>
                             <Text
                               ellipsizeMode={'tail'}
                               numberOfLines={100}
-                              style={{flexWrap: 'wrap', marginTop: 5}}>
-                              {data.CONTENTS}
+                              style={{
+                                width: wp('100%') - 140,
+                                flexWrap: 'wrap',
+                                marginBottom: 5,
+                              }}>
+                              <Text
+                                style={{
+                                  fontWeight: 'bold',
+                                  color: '#aaa',
+                                }}>
+                                {item.EMP_NAME} [{item.IS_MANAGER}
+                                ]&nbsp;&nbsp;
+                              </Text>
+                              {item.CONTENTS}
                             </Text>
                             <Row
                               style={{
-                                width: wp('100%') - 140,
-                                justifyContent: 'space-between',
+                                justifyContent: 'flex-start',
                               }}>
-                              <Text style={{color: '#C8C8C8', marginLeft: 5}}>
-                                {moment(data.CREATE_TIME).format('YYYY.MM.DD')}
+                              <Text style={{color: '#aaa'}}>
+                                {moment(item.CREATE_TIME).format('YYYY.MM.DD')}
                               </Text>
-                              {(data.MEMBER_SEQ == ME || STORE == '1') && (
-                                <Row
-                                  style={{
-                                    width: 120,
-                                    marginRight: 10,
-                                    justifyContent: 'space-between',
-                                  }}>
-                                  <RowTouchable
-                                    onPress={() => {
-                                      setIsEditMode(true);
-                                      setCommentInputBox(true);
-                                      setComment(data.CONTENTS);
-                                      setSelectedCOM_SEQ(data.COM_SEQ);
-                                    }}>
-                                    <SettingIcon color={'#AACE36'} size={20} />
-                                    <Text style={{color: '#AACE36'}}>수정</Text>
-                                  </RowTouchable>
-                                  <RowTouchable
-                                    onPress={() => deleteFn(data.COM_SEQ)}>
-                                    <DeleteIcon />
-                                    <Text style={{color: '#B91C1B'}}>삭제</Text>
-                                  </RowTouchable>
-                                </Row>
-                              )}
                             </Row>
                           </Column>
+                          {(item.MEMBER_SEQ == ME || STORE == '1') && (
+                            <CommentIconContainer>
+                              <LottieView
+                                speed={0.25}
+                                style={{
+                                  width: 30,
+                                  height: 120,
+                                }}
+                                source={require('../../../../assets/animations/menuArrow.json')}
+                                loop
+                                autoPlay
+                              />
+                            </CommentIconContainer>
+                          )}
                         </Row>
                       </CommentBox>
-                    ))
+                    </SwipeRow>
                   )}
-                </Comment>
-              </Section>
-            )}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+              )}
+            </Section>
             {ME == MEMBER_SEQ && (
               <SubmitBtn
                 text={`${TITLE} 수정하기`}
@@ -353,6 +453,7 @@ export default ({
                     CONTENTS,
                     NOTI_TITLE,
                     isFavorite,
+                    CREATE_TIME,
                   })
                 }
                 isRegisted={true}
@@ -360,15 +461,11 @@ export default ({
             )}
           </Container>
         </ScrollView>
+
         {commentInputBox && (
           <KeyboardAvoidingView
             behavior={utils.isAndroid ? 'height' : 'padding'}
             keyboardVerticalOffset={0}
-            style={
-              utils.isAndroid
-                ? {backgroundColor: '#dddee2'}
-                : {backgroundColor: '#cfd3d6'}
-            }
             enabled>
             <CommentTextInputContainer>
               <TextInput
@@ -383,16 +480,33 @@ export default ({
                 }}
                 multiline={true}
               />
-              <ForwardIconContainer
-                onPress={() => {
-                  isEditMode ? editFn() : registFn();
-                }}>
-                <ForwardIcon color={'white'} />
-              </ForwardIconContainer>
+              <ForwardIconTouchable
+                onPress={() => (isEditMode ? editFn() : registFn())}>
+                <ForwardIconContainer>
+                  <ForwardIcon color={'white'} />
+                </ForwardIconContainer>
+              </ForwardIconTouchable>
             </CommentTextInputContainer>
           </KeyboardAvoidingView>
         )}
       </BackGround>
+      {(isAddedToastVisible ||
+        isUpdatedToastVisible ||
+        isRemovedToastVisible) && (
+        <ModalPopupArea>
+          <ModalPopup>
+            {isAddedToastVisible && (
+              <ModalPopupText>댓글을 추가하였습니다</ModalPopupText>
+            )}
+            {isUpdatedToastVisible && (
+              <ModalPopupText>댓글을 수정하였습니다</ModalPopupText>
+            )}
+            {isRemovedToastVisible && (
+              <ModalPopupText>댓글을 삭제하였습니다</ModalPopupText>
+            )}
+          </ModalPopup>
+        </ModalPopupArea>
+      )}
       <Modal
         onRequestClose={() => setIsImageViewVisible(false)}
         onBackdropPress={() => setIsImageViewVisible(false)}
@@ -404,7 +518,7 @@ export default ({
           height: '100%',
         }}>
         <CloseIconContainer onPress={() => setIsImageViewVisible(false)}>
-          <CloseCircleIcon size={33} color={'white'} />
+          <CloseCircleOutlineIcon size={33} color={'white'} />
         </CloseIconContainer>
         <ImageViewer
           index={imageIndex}

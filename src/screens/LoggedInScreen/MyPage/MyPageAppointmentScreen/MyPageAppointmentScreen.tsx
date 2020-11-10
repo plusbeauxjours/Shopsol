@@ -69,6 +69,9 @@ export default () => {
       openDuration={250}
       customStyles={{
         container: {
+          paddingTop: 10,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           justifyContent: 'center',
           alignItems: 'center',
         },

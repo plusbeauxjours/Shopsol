@@ -330,10 +330,11 @@ export default ({
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.off}
             androidCameraPermissionOptions={{
-              title: 'Permission to use camera',
-              message: 'We need your permission to use your camera',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
+              title: '카메라 권한 설정',
+              message:
+                '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "퇴근해씨유" 앱의 권한 허용을 해야 합니다.',
+              buttonPositive: '확인',
+              buttonNegative: '취소',
             }}>
             <CameraPictureButton onPress={() => takePictureFn(cameraRef)}>
               <CameraIcon size={40} />

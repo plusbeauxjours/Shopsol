@@ -62,6 +62,10 @@ const checklistshareSlice = createSlice({
         CHECKLIST_SHARE_COMMENTS,
       };
     },
+    addCHECKLIST_SHARE_COMMENTS(state, action) {
+      const {payload: CHECKLIST_SHARE_COMMENTS} = action;
+      state.CHECKLIST_SHARE_COMMENTS.unshift(CHECKLIST_SHARE_COMMENTS);
+    },
     editCHECKLIST_SHARE_COMMENTS(state, action) {
       const {
         payload: {selectedCOM_SEQ, comment},
@@ -143,6 +147,8 @@ const checklistshareSlice = createSlice({
           favoriteItem.CONTENTS = content;
           if (image) {
             favoriteItem.IMG_LIST = image;
+          } else {
+            favoriteItem.IMG_LIST = null;
           }
         } else {
           const basicItem = state.CHECKLIST_SHARE_DATA1.basic.find(
@@ -152,6 +158,8 @@ const checklistshareSlice = createSlice({
           basicItem.CONTENTS = content;
           if (image) {
             basicItem.IMG_LIST = image;
+          } else {
+            basicItem.IMG_LIST = null;
           }
         }
       } else {
@@ -163,6 +171,8 @@ const checklistshareSlice = createSlice({
           favoriteItem.CONTENTS = content;
           if (image) {
             favoriteItem.IMG_LIST = image;
+          } else {
+            favoriteItem.IMG_LIST = null;
           }
         } else {
           const basicItem = state.CHECKLIST_SHARE_DATA2.basic.find(
@@ -172,48 +182,8 @@ const checklistshareSlice = createSlice({
           basicItem.CONTENTS = content;
           if (image) {
             basicItem.IMG_LIST = image;
-          }
-        }
-      }
-    },
-    reduceNOTICECHECK_SEQ(state, action) {
-      const {
-        payload: {TITLE, NOTICE_SEQ, isFavorite},
-      } = action;
-      if (TITLE === '지시사항') {
-        if (isFavorite) {
-          const favoriteItem = state.CHECKLIST_SHARE_DATA1.favorite.find(
-            (i) => i.NOTICE_SEQ === NOTICE_SEQ,
-          );
-          if (favoriteItem.NoticeCheck_SEQ == null) {
-            favoriteItem.NoticeCheck_SEQ = '0';
-            state.NOTICE_COUNT = state.NOTICE_COUNT - 1;
-          }
-        } else {
-          const basicItem = state.CHECKLIST_SHARE_DATA1.basic.find(
-            (i) => i.NOTICE_SEQ === NOTICE_SEQ,
-          );
-          if (basicItem.NoticeCheck_SEQ == null) {
-            basicItem.NoticeCheck_SEQ = '0';
-            state.NOTICE_COUNT = state.NOTICE_COUNT - 1;
-          }
-        }
-      } else {
-        if (isFavorite) {
-          const favoriteItem = state.CHECKLIST_SHARE_DATA2.favorite.find(
-            (i) => i.NOTICE_SEQ === NOTICE_SEQ,
-          );
-          if (favoriteItem.NoticeCheck_SEQ == null) {
-            favoriteItem.NoticeCheck_SEQ = '0';
-            state.NOTICE_COUNT = state.NOTICE_COUNT - 1;
-          }
-        } else {
-          const basicItem = state.CHECKLIST_SHARE_DATA2.basic.find(
-            (i) => i.NOTICE_SEQ === NOTICE_SEQ,
-          );
-          if (basicItem.NoticeCheck_SEQ == null) {
-            basicItem.NoticeCheck_SEQ = '0';
-            state.NOTICE_COUNT = state.NOTICE_COUNT - 1;
+          } else {
+            basicItem.IMG_LIST = null;
           }
         }
       }
@@ -229,11 +199,11 @@ export const {
   increaseNEW_CNT1,
   increaseNEW_CNT2,
   setCHECKLIST_SHARE_COMMENTS,
+  addCHECKLIST_SHARE_COMMENTS,
   editCHECKLIST_SHARE_COMMENTS,
   deleteCHECKLIST_SHARE_COMMENTS,
   updateCHECKLIST_SHARE_DATA,
   deleteCHECKLIST_SHARE_DATA,
-  reduceNOTICECHECK_SEQ,
 } = checklistshareSlice.actions;
 
 export const getCHECKLIST_SHARE_DATA1 = (date) => async (
@@ -244,27 +214,26 @@ export const getCHECKLIST_SHARE_DATA1 = (date) => async (
     storeReducer: {STORE_SEQ},
   } = getState();
   const {
-    userReducer: {MEMBER_SEQ},
-  } = getState();
-  const {
     checklistshareReducer: {CHECKLIST_SHARE_DATA1},
   } = getState();
   if (!CHECKLIST_SHARE_DATA1 || CHECKLIST_SHARE_DATA1?.length === 0) {
     dispatch(setSplashVisible(true));
   }
   try {
-    const {data} = await api.getNotice(STORE_SEQ, date, '1', MEMBER_SEQ);
-    for (let a = 0; a < data.basic.length; a++) {
-      if (data.basic[a].NoticeCheck_SEQ == null) {
-        dispatch(increaseNEW_CNT1());
+    const {data} = await api.getNotice(STORE_SEQ, date, '1');
+    if (data.resultmsg === '1') {
+      for (let a = 0; a < data.basic.length; a++) {
+        if (data.basic[a].NoticeCheck_SEQ == null) {
+          dispatch(increaseNEW_CNT1());
+        }
       }
-    }
-    for (let b = 0; b < data.favorite.length; b++) {
-      if (data.favorite[b].NoticeCheck_SEQ == null) {
-        dispatch(increaseNEW_CNT1());
+      for (let b = 0; b < data.favorite.length; b++) {
+        if (data.favorite[b].NoticeCheck_SEQ == null) {
+          dispatch(increaseNEW_CNT1());
+        }
       }
+      dispatch(setCHECKLIST_SHARE_DATA1(data));
     }
-    dispatch(setCHECKLIST_SHARE_DATA1(data));
   } catch (e) {
     console.log(e);
   } finally {
@@ -278,9 +247,6 @@ export const getCHECKLIST_SHARE_DATA2 = (date) => async (
 ) => {
   const {
     storeReducer: {STORE_SEQ},
-  } = getState();
-  const {
-    userReducer: {MEMBER_SEQ},
   } = getState();
   const {
     checklistshareReducer: {CHECKLIST_SHARE_DATA2},

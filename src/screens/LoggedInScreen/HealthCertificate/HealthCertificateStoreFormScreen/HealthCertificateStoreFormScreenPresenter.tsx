@@ -408,8 +408,8 @@ export default ({
               title: '카메라 권한 설정',
               message:
                 '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
+              buttonPositive: '확인',
+              buttonNegative: '취소',
             }}>
             <CameraPictureButton onPress={() => takePictureFn(cameraRef)}>
               <CameraIcon size={40} />

@@ -129,6 +129,10 @@ const AddCheckilistButton = styled.TouchableOpacity`
   margin-top: 20px;
 `;
 
+const WhiteSpace = styled.View`
+  height: 30px;
+`;
+
 const AddChecklistButtonText = styled.Text`
   color: #e85356;
   font-weight: bold;

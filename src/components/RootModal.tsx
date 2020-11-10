@@ -18,11 +18,15 @@ interface IWarning {
 const BackGround = styled.View`
   flex: 1;
   background-color: #ffffff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 const WhiteBox = styled.View`
   height: 280px;
   background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 const Box = styled.View`

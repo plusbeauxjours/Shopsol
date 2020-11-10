@@ -107,7 +107,7 @@ export const HelpCircleIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'help-circle'}
     size={size ?? 22}
-    color={color ?? '#bbb'}
+    color={color ?? '#aaa'}
     style={{marginLeft: 5}}
   />
 );
@@ -147,10 +147,14 @@ export const DownIcon: React.FC<IProps> = ({size, color}) => (
 );
 
 export const CloseCircleIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons name={'close'} size={size ?? 20} color={color ?? 'white'} />
+);
+
+export const CloseCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'close-circle-outline'}
     size={size ?? 22}
-    color={color ?? 'black'}
+    color={color ?? '#aaa'}
   />
 );
 
@@ -279,6 +283,10 @@ export const PictureIcon: React.FC<IProps> = ({size, color}) => (
 
 export const PhoneIcon: React.FC<IProps> = ({size, color}) => (
   <FontAwesome name={'phone'} size={size ?? 10} color={color ?? 'black'} />
+);
+
+export const BarCodeIcon: React.FC<IProps> = ({size, color}) => (
+  <FontAwesome name={'barcode'} size={size ?? 40} color={color ?? '#e85356'} />
 );
 
 export const CalendarTimesIcon: React.FC<IProps> = ({size, color}) => (

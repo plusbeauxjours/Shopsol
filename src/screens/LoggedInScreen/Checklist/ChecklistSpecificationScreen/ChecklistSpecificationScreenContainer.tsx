@@ -94,7 +94,6 @@ export default ({route: {params}}) => {
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
   );
-  const [cameraPictureFlash, setCameraPictureFlash] = useState<boolean>(false);
   const [cameraPictureList, setCameraPictureList] = useState<any>([]);
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
   const [LIST, setLIST] = useState<any>([]);
@@ -329,8 +328,6 @@ export default ({route: {params}}) => {
       onPressImageFn={onPressImageFn}
       launchImageLibraryFn={launchImageLibraryFn}
       registerFn={registerFn}
-      cameraPictureFlash={cameraPictureFlash}
-      setCameraPictureFlash={setCameraPictureFlash}
       takePictureFn={takePictureFn}
       cameraPictureLast={cameraPictureLast}
       setCameraPictureLast={setCameraPictureLast}

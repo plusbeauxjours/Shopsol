@@ -77,8 +77,6 @@ export default {
   updateStore: (data: any) => oldApi('put', '/Store/update2', data),
   getShelfLifeData: (data: any) =>
     callApi('post', '/auth/getshelfLifeData/', data),
-  getAllShelfLifeData: (data: any) =>
-    callApi('post', '/auth/getAllshelfLifeData/', data),
   checkShelfLifeData: (data: any) =>
     callApi('post', '/auth/checkShelfLifeData/', data),
   cancelShelfLifeData: (data: any) =>
@@ -115,12 +113,7 @@ export default {
       'get',
       `/Store/noticeAll?STORE_SEQ=${STORE_SEQ}&YEAR=${YEAR}&MONTH=${MONTH}&TYPE=${TYPE}`,
     ),
-  getNotice: (
-    STORE_SEQ: string,
-    DATE: string,
-    STORE: string,
-    MEMBER_SEQ: string,
-  ) =>
+  getNotice: (STORE_SEQ: string, DATE: string, STORE: string) =>
     oldApi(
       'get',
       `/Employee/getNotice2?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&DATE=${DATE}&MEMBER_SEQ=${MEMBER_SEQ}`,

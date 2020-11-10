@@ -21,6 +21,7 @@ import {
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 import utils from '~/constants/utils';
+import Ripple from 'react-native-material-ripple';
 
 interface IHasHeight {
   hasHeight: boolean;
@@ -64,7 +65,7 @@ const MyPage = styled.View`
   justify-content: flex-end;
 `;
 
-const MenuCnt = styled.TouchableOpacity`
+const MenuCnt = styled(Ripple)`
   width: ${(wp('100%') - 20) / 3}px;
   height: ${wp('40%')}px;
   justify-content: center;
@@ -383,8 +384,13 @@ export default ({
   const navigation = useNavigation();
   const MenuCntContainer = ({selection, paging, count = 0}) => (
     <MenuCnt
+      rippleColor={'#fff'}
+      rippleDuration={300}
+      rippleSize={200}
+      rippleContainerBorderRadius={0}
+      rippleOpacity={0.9}
       style={{zIndex: 4}}
-      activeOpacity={0.6}
+      activeOpacity={0.3}
       onPress={() => {
         selection == 'QR보기'
           ? setShowPictureModal(true)
@@ -932,8 +938,8 @@ export default ({
             title: '카메라 권한 설정',
             message:
               '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
+            buttonPositive: '확인',
+            buttonNegative: '취소',
           }}
           permissionDialogTitle={''}
           permissionDialogMessage={''}

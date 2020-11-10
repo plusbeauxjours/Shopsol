@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -17,13 +17,13 @@ import {
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const scrollRef = createRef(0);
 
   const {STORE, MEMBER_SEQ, MEMBER_NAME} = useSelector(
     (state: any) => state.userReducer,
   );
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
-  const [cameraPictureFlash, setCameraPictureFlash] = useState<boolean>(false);
   const [cameraPictureList, setCameraPictureList] = useState<any>([]);
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
@@ -160,6 +160,13 @@ export default ({route: {params}}) => {
       }
     }
   };
+
+  const selectPicture = () => {
+    setCameraPictureList([...cameraPictureList, {uri: cameraPictureLast}]);
+    setIsCameraModalVisible(false);
+    setCameraPictureLast(null);
+  };
+
   useEffect(() => {
     console.log(
       '===================',
@@ -185,13 +192,12 @@ export default ({route: {params}}) => {
       registerFn={registerFn}
       onPressImageFn={onPressImageFn}
       launchImageLibraryFn={launchImageLibraryFn}
-      cameraPictureFlash={cameraPictureFlash}
-      setCameraPictureFlash={setCameraPictureFlash}
       takePictureFn={takePictureFn}
       cameraPictureLast={cameraPictureLast}
       setCameraPictureLast={setCameraPictureLast}
       cameraPictureList={cameraPictureList}
-      setCameraPictureList={setCameraPictureList}
+      selectPicture={selectPicture}
+      scrollRef={scrollRef}
     />
   );
 };

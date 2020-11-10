@@ -9,10 +9,10 @@ import {
   getCHECKLIST_SHARE_DATA1,
   getCHECKLIST_SHARE_DATA2,
   setCHECKLIST_SHARE_MARKED,
-  reduceNOTICECHECK_SEQ,
 } from '~/redux/checklistshareSlice';
 import ChecklistShareMainScreenPresenter from './ChecklistShareMainScreenPresenter';
 import api from '~/constants/LoggedInApi';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -196,15 +196,16 @@ export default ({route: {params}}) => {
   };
 
   const gotoChecklistShareItem = (TITLE, NOTICE_SEQ, isFavorite) => {
-    dispatch(reduceNOTICECHECK_SEQ({TITLE, NOTICE_SEQ, isFavorite}));
     navigation.navigate('ChecklistShareItemScreen', {
       TITLE,
       NOTICE_SEQ,
       isFavorite,
     });
   };
+
   useEffect(() => {
     Init(index);
+    dispatch(setSplashVisible(false));
     console.log('===================', '업무일지', '===================');
     firebase.analytics().setCurrentScreen('업무일지');
   }, []);

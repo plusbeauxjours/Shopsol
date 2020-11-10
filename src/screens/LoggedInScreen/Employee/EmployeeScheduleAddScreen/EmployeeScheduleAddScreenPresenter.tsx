@@ -210,7 +210,7 @@ export default ({
               <Row>
                 <RowTouchable
                   onPress={() =>
-                    explainModal('퇴근해CU 출퇴근관리가 시작되는 일자입니다.')
+                    explainModal('샵솔 출퇴근관리가 시작되는 일자입니다.')
                   }>
                   <NameText>일정 시작일</NameText>
                   <HelpCircleIcon />

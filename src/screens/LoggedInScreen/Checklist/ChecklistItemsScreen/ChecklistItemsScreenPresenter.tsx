@@ -21,7 +21,7 @@ import ChecklistItemsScreenCard from './ChecklistItemsScreenCard';
 import Ripple from 'react-native-material-ripple';
 import LottieView from 'lottie-react-native';
 
-import {AddCircleIcon, CloseCircleIcon} from '~/constants/Icons';
+import {AddCircleIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 
 interface IsEmpName {
   isEmpName: string;
@@ -96,9 +96,8 @@ const DateText = styled.Text`
 
 const Container = styled.View`
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
   align-items: center;
-  margin-top: 20px;
 `;
 
 const Section = styled.View`
@@ -475,7 +474,7 @@ export default ({
           <Row style={{top: -10, marginBottom: 20, justifyContent: 'center'}}>
             <WhiteBigText>체크항목를 선택해주세요.</WhiteBigText>
             <IconContainer onPress={() => setIsChecklistModalVisible(false)}>
-              <CloseCircleIcon size={30} color={'white'} />
+              <CloseCircleOutlineIcon size={30} color={'white'} />
             </IconContainer>
           </Row>
         )}

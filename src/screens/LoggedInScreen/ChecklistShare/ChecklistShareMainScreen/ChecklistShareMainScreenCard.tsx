@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
+import Ripple from 'react-native-material-ripple';
 
 import {NewBoxIcon, PinIcon} from '~/constants/Icons';
 
@@ -20,7 +20,6 @@ const Section = styled.View`
   padding: 20px;
   flex-direction: row;
   background-color: white;
-  margin-bottom: 20px;
   min-height: 100px;
 `;
 const Row = styled.View`
@@ -37,7 +36,9 @@ const ContentText = styled.Text`
   color: #7b7b7b;
 `;
 
-const Touchable = styled.TouchableOpacity``;
+const Touchable = styled(Ripple)`
+  margin-bottom: 20px;
+`;
 
 const NewBadge = styled.View`
   position: absolute;
@@ -122,7 +123,6 @@ export default ({
   confirmModal,
   gotoChecklistShareItem,
 }) => {
-  console.log('data', data);
   let imgarr = [];
   let allimg = [];
   if (data.IMG_LIST != null) {
@@ -133,8 +133,15 @@ export default ({
     <Touchable
       key={key}
       onPress={() =>
-        gotoChecklistShareItem(type, data.NOTICE_SEQ, data.favorite)
-      }>
+        setTimeout(() => {
+          gotoChecklistShareItem(type, data.NOTICE_SEQ, data.favorite);
+        }, 100)
+      }
+      rippleColor={'#666'}
+      rippleDuration={600}
+      rippleSize={1700}
+      rippleContainerBorderRadius={20}
+      rippleOpacity={0.1}>
       <Section>
         {ME !== data.MEMBER_SEQ && data.NoticeCheck_SEQ == null && (
           <NewBadge>

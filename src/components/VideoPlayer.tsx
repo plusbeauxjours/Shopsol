@@ -15,7 +15,11 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import {PlayerControls} from './PlayerControls';
 import {ProgressBar} from './ProgressBar';
-import {PortraitIcon, LandscapeIcon, CloseCircleIcon} from '../constants/Icons';
+import {
+  PortraitIcon,
+  LandscapeIcon,
+  CloseCircleOutlineIcon,
+} from '../constants/Icons';
 
 interface IsFullScreen {
   isFullScreen: boolean;
@@ -171,7 +175,7 @@ export default ({url, setModalVisible}) => {
                   StatusBar.setHidden(false);
                   Orientation.lockToPortrait();
                 }}>
-                <CloseCircleIcon size={33} color={'white'} />
+                <CloseCircleOutlineIcon size={33} color={'white'} />
               </CloseIconContainer>
             </>
           )}

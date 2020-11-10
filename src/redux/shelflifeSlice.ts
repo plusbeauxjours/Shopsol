@@ -1,34 +1,27 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import api from '../constants/LoggedInApi';
 import moment from 'moment';
+import { resultdata } from '../assets/dummy';
+import { setSplashVisible } from '~/redux/splashSlice';
 
 const shelflifetSlice = createSlice({
   name: 'shelflife',
   initialState: {
-    SHELFLIFE_DATA: {},
-    SHELFLIFE_MARKED: {},
+    SHELFLIFE_DATA: [],
   },
   reducers: {
     setSHELFLIFE_DATA(state, action) {
-      const {payload: SHELFLIFE_DATA} = action;
+      const { payload: SHELFLIFE_DATA } = action;
       return {
         ...state,
         SHELFLIFE_DATA,
       };
     },
-
-    setSHELFLIFE_MARKED(state, action) {
-      const {payload: SHELFLIFE_MARKED} = action;
-      return {
-        ...state,
-        SHELFLIFE_MARKED,
-      };
-    },
-    udpateSHELFLIFE(state, action) {
+    checkSHELFLIFE(state, action) {
       const {
-        payload: {shelfLife_SEQ, shelfLifeDate, checkEmpName, checkTime},
+        payload: { name, shelfLife_SEQ, checkEmpName, checkTime },
       } = action;
-      const item = state.SHELFLIFE_DATA[shelfLifeDate].find(
+      const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
         (i) => i.shelfLife_SEQ === shelfLife_SEQ,
       );
       if (item) {
@@ -39,9 +32,9 @@ const shelflifetSlice = createSlice({
     },
     cancelSHELFLIFE(state, action) {
       const {
-        payload: {shelfLife_SEQ, shelfLifeDate},
+        payload: { name, shelfLife_SEQ },
       } = action;
-      const item = state.SHELFLIFE_DATA[shelfLifeDate].find(
+      const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
         (i) => i.shelfLife_SEQ === shelfLife_SEQ,
       );
       if (item) {
@@ -51,14 +44,14 @@ const shelflifetSlice = createSlice({
     updateSHELFLIFE_DATA(state, action) {
       const {
         payload: {
+          name,
           shelfLife_SEQ,
           shelfLifeName,
-          prevShelfLifeDate,
           shelfLifeDate,
           shelfLifeMemo,
         },
       } = action;
-      const item = state.SHELFLIFE_DATA[prevShelfLifeDate].find(
+      const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
         (i) => i.shelfLife_SEQ === shelfLife_SEQ,
       );
       if (item) {
@@ -69,17 +62,22 @@ const shelflifetSlice = createSlice({
     },
     removeSHELFLIFE_DATA(state, action) {
       const {
-        payload: {shelfLife_SEQ, shelfLifeDate},
+        payload: { name, shelfLife_SEQ },
       } = action;
-      const item = state.SHELFLIFE_DATA[shelfLifeDate].filter(
-        (i) => i.shelfLife_SEQ !== shelfLife_SEQ,
-      );
+      const items = state.SHELFLIFE_DATA.find(
+        (i) => i.name === name,
+      ).items.filter((i) => i.shelfLife_SEQ !== shelfLife_SEQ);
       return {
         ...state,
-        SHELFLIFE_DATA: {
-          ...state.SHELFLIFE_DATA,
-          [shelfLifeDate]: item,
-        },
+        SHELFLIFE_DATA: state.SHELFLIFE_DATA.map((item) => {
+          if (item.name === name) {
+            return {
+              ...item,
+              items: [...items],
+            };
+          }
+          return item;
+        }),
       };
     },
   },
@@ -87,8 +85,7 @@ const shelflifetSlice = createSlice({
 
 export const {
   setSHELFLIFE_DATA,
-  setSHELFLIFE_MARKED,
-  udpateSHELFLIFE,
+  checkSHELFLIFE,
   cancelSHELFLIFE,
   updateSHELFLIFE_DATA,
   removeSHELFLIFE_DATA,
@@ -100,26 +97,21 @@ export const getSHELFLIFE_DATA = (
   DAY: string = moment().format('DD'),
 ) => async (dispatch, getState) => {
   const {
-    storeReducer: {STORE_SEQ},
+    storeReducer: { STORE_SEQ },
   } = getState();
   try {
-    const {data: SHELFLIFE_DATA} = await api.getShelfLifeData({
+    dispatch(setSplashVisible(true));
+    const { data } = await api.getShelfLifeData({
       STORE_SEQ,
       YEAR,
       MONTH,
       DAY,
     });
-    dispatch(setSHELFLIFE_DATA(SHELFLIFE_DATA.resultdata));
+    return data.resultdata;
   } catch (e) {
     console.log(e);
-  }
-  try {
-    const {data: SHELFLIFE_MARKED} = await api.getAllShelfLifeData({
-      STORE_SEQ,
-    });
-    dispatch(setSHELFLIFE_MARKED(SHELFLIFE_MARKED.result));
-  } catch (e) {
-    console.log(e);
+  } finally {
+    dispatch(setSplashVisible(false));
   }
 };
 

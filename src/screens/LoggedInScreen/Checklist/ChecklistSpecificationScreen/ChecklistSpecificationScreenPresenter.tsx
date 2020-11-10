@@ -11,13 +11,7 @@ import moment from 'moment';
 import {RNCamera} from 'react-native-camera';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import {
-  CheckBoxIcon,
-  CameraIcon,
-  PictureIcon,
-  FlashIcon,
-  NoFlashIcon,
-} from '~/constants/Icons';
+import {CheckBoxIcon, CameraIcon, PictureIcon} from '~/constants/Icons';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -29,7 +23,6 @@ const Text = styled.Text``;
 const Touchable = styled.TouchableOpacity``;
 const Container = styled.View`
   width: 100%;
-  margin-top: 20px;
   padding: 20px;
   align-items: center;
 `;
@@ -493,22 +486,14 @@ export default ({
               justifyContent: 'flex-end',
             }}
             type={RNCamera.Constants.Type.back}
-            flashMode={
-              cameraPictureFlash
-                ? RNCamera.Constants.FlashMode.on
-                : RNCamera.Constants.FlashMode.off
-            }
+            flashMode={RNCamera.Constants.FlashMode.off}
             androidCameraPermissionOptions={{
               title: '카메라 권한 설정',
               message:
                 '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
+              buttonPositive: '확인',
+              buttonNegative: '취소',
             }}>
-            <CameraFlashButton
-              onPress={() => setCameraPictureFlash(!cameraPictureFlash)}>
-              {cameraPictureFlash ? <FlashIcon /> : <NoFlashIcon />}
-            </CameraFlashButton>
             <CameraPictureButton onPress={() => takePictureFn(cameraRef)}>
               <CameraIcon size={40} />
             </CameraPictureButton>

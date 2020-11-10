@@ -1,28 +1,23 @@
 import React, {useRef} from 'react';
-import styled from 'styled-components/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import styled from 'styled-components/native';
 import DatePickerModal from 'react-native-modal-datetime-picker';
-import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import {RNCamera} from 'react-native-camera';
+import FastImage from 'react-native-fast-image';
 import moment from 'moment';
-import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import AddShelfLifeScreenCard from './AddShelfLifeScreenCard';
-import RoundBtn from '~/components/Btn/RoundBtn';
+import {PictureIcon, CameraIcon, BarCodeIcon} from '~/constants/Icons';
+import {CloseCircleIcon} from '../../../../constants/Icons';
 import utils from '~/constants/utils';
-import {CloseCircleOutlineIcon} from '../../../../constants/Icons';
-import {
-  HelpCircleIcon,
-  CloseCircleIcon,
-  CameraIcon,
-  PictureIcon,
-  BarCodeIcon,
-} from '~/constants/Icons';
+
+interface ITextInput {
+  isBefore: boolean;
+}
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -30,15 +25,7 @@ const BackGround = styled.SafeAreaView`
 `;
 
 const ScrollView = styled.ScrollView``;
-
-const View = styled.View`
-  position: absolute;
-  left: 20px;
-  width: 60px;
-  height: 100%;
-  padding-top: 80px;
-  top: 90px;
-`;
+const Text = styled.Text``;
 
 const Container = styled.View`
   padding: 20px;
@@ -53,24 +40,10 @@ const Section = styled.View`
   background-color: white;
 `;
 
-const Center = styled.View`
-  align-items: center;
-`;
-
 const TextContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-`;
-
-const ListContasiner = styled(TextContainer)`
-  justify-content: space-between;
-`;
-
-const TitleText = styled.Text`
-  font-size: 20px;
-  color: #e85356;
-  font-weight: bold;
 `;
 
 const Row = styled.View`
@@ -83,21 +56,14 @@ const GreyText = styled.Text`
   color: #aaa;
 `;
 
-const TextInput = styled.TextInput`
+const TextInput = styled.TextInput<ITextInput>`
+  border-color: ${(props) => (props.isBefore ? '#ddd' : '#e85356')};
   justify-content: center;
   align-items: center;
   padding: 10px;
+  border-width: 1px;
   width: ${wp('50%')}px;
   min-height: 40px;
-`;
-
-const VerticalLine = styled.View`
-  width: 0.6px;
-  left: 30px;
-  background-color: #ddd;
-  position: absolute;
-  height: 100%;
-  top: 0;
 `;
 
 const Name = styled.View`
@@ -191,13 +157,10 @@ const HalfBottonText = styled.Text`
   font-size: 16px;
 `;
 
-const CloseIconContainer = styled.TouchableOpacity`
-  z-index: 5;
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 10)};
+const DeleteButton = styled.TouchableOpacity`
+  margin: 50px 0;
+  justify-content: center;
+  align-items: center;
 `;
 
 const IconContainer = styled.View`
@@ -216,29 +179,22 @@ const IconContainer = styled.View`
 `;
 
 export default ({
-  addFn,
-  explainModal,
-  deleteBuffer,
-  submitFn,
-  list,
-  shelfLifeName,
-  setShelfLifeName,
-  shelfLifeMemo,
-  setShelfLifeMemo,
-  shelfLifeDate,
-  setShelfLifeDate,
-  isDateModalVisible,
-  setIsDateModalVisible,
+  deleteModal,
   cameraPictureLast,
   setCameraPictureLast,
-  takePictureFn,
   isCameraModalVisible,
   setIsCameraModalVisible,
+  shelfLifeName,
+  setShelfLifeName,
+  shelfLifeDate,
+  setShelfLifeDate,
+  shelfLifeMemo,
+  setShelfLifeMemo,
+  takePictureFn,
   launchImageLibraryFn,
-  isImageViewVisible,
-  setIsImageViewVisible,
-  selectedIndex,
-  setSelectedIndex,
+  setIsDateModalVisible,
+  isDateModalVisible,
+  submit,
   alertModal,
 }) => {
   const cameraRef = useRef(null);
@@ -250,24 +206,7 @@ export default ({
         showsVerticalScrollIndicator={false}>
         <Container>
           <Section>
-            <TextContainer>
-              <Touchable
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                  marginBottom: 10,
-                }}
-                onPress={() => {
-                  explainModal(
-                    '',
-                    '상품을 등록하시면 직원이 출근 시 유통기한 도래 상품을 알려드립니다.\n\nEx)금일(6/23) 유통기한 경과 상품이 있습니다. (치토스 외 4개)\n유통기한 캘린더를 통해 상품을 확인해주시고, 진열대에서 철수해주세요.',
-                  );
-                }}>
-                <TitleText>상품정보</TitleText>
-                <HelpCircleIcon />
-              </Touchable>
-            </TextContainer>
-            <Row style={{marginTop: 10, marginBottom: 20}}>
+            <Row>
               {cameraPictureLast ? (
                 <Touchable
                   onPress={() => setCameraPictureLast(null)}
@@ -286,9 +225,6 @@ export default ({
                   />
                 </Touchable>
               ) : (
-                // <BorderBox >
-                //   <GreyText>사진 미등록</GreyText>
-                // </BorderBox>
                 <Column>
                   <Touchable onPress={() => setIsCameraModalVisible(true)}>
                     <BorderBox>
@@ -313,10 +249,10 @@ export default ({
                   </Touchable>
                 </Column>
               )}
-
               <WhiteItem style={{justifyContent: 'flex-start'}}>
                 <Name>
                   <TextInput
+                    isBefore={shelfLifeName == ''}
                     placeholder="상품명"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
@@ -352,6 +288,7 @@ export default ({
                 <Line />
                 <TextContainer>
                   <TextInput
+                    isBefore={shelfLifeMemo == ''}
                     placeholder="메모 입력"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
@@ -372,52 +309,26 @@ export default ({
                 </TextContainer>
               </WhiteItem>
             </Row>
-            <Center>
-              <RoundBtn
-                isInSection={true}
-                text={'목록에 추가하기'}
-                onPress={() => addFn()}
-                isRegisted={true}
-              />
-            </Center>
-          </Section>
-          <Section>
-            <ListContasiner>
-              <TitleText>상품목록</TitleText>
-              <TitleText>{list.length}&nbsp;&nbsp;</TitleText>
-            </ListContasiner>
-            {list && list.length !== 0 && (
-              <GreyText style={{marginTop: 10}}>
-                상품을 탭하고 있으면 리스트에서 삭제할 수 있습니다.
-              </GreyText>
-            )}
-            {list.length > 1 && (
-              <View>
-                <VerticalLine />
-              </View>
-            )}
-            {list &&
-              list.length !== 0 &&
-              list.map((data, index) => (
-                <AddShelfLifeScreenCard
-                  key={index}
-                  deleteBuffer={deleteBuffer}
-                  onPress={() => {
-                    setIsImageViewVisible(true);
-                    setSelectedIndex(index);
-                  }}
-                  IMAGE={data.shelfLifeIMAGE}
-                  NAME={data.shelfLifeNAME}
-                  DATE={data.shelfLifeDATE}
-                  MEMO={data.shelfLifeMEMO}
-                />
-              ))}
           </Section>
           <SubmitBtn
-            text={'상품 등록완료'}
-            isRegisted={list && list.length !== 0}
-            onPress={() => submitFn()}
+            text={'수정완료'}
+            onPress={() => submit()}
+            isRegisted={true}
           />
+          <DeleteButton
+            onPress={() =>
+              deleteModal('', '등록하신 상품을 삭제하시겠습니까?')
+            }>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: '#FF3D3D',
+                textDecorationLine: 'underline',
+              }}>
+              삭제하기
+            </Text>
+          </DeleteButton>
         </Container>
         <DatePickerModal
           headerTextIOS={'날짜를 선택하세요.'}
@@ -500,39 +411,6 @@ export default ({
               </CameraPictureCloseButton>
             </RNCamera>
           )}
-        </Modal>
-        <Modal
-          onRequestClose={() => {
-            setSelectedIndex(0);
-            setIsImageViewVisible(false);
-          }}
-          onBackdropPress={() => {
-            setSelectedIndex(0);
-            setIsImageViewVisible(false);
-          }}
-          isVisible={isImageViewVisible}
-          style={{
-            margin: 0,
-            justifyContent: 'flex-end',
-            width: '100%',
-            height: '100%',
-          }}>
-          <CloseIconContainer
-            onPress={() => {
-              setSelectedIndex(0);
-              setIsImageViewVisible(false);
-            }}>
-            <CloseCircleOutlineIcon size={33} color={'white'} />
-          </CloseIconContainer>
-          <FastImage
-            style={{width: '100%', height: '100%'}}
-            source={{
-              uri: list[selectedIndex]?.shelfLifeIMAGE,
-              headers: {Authorization: 'someAuthToken'},
-              priority: FastImage.priority.low,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-          />
         </Modal>
       </ScrollView>
     </BackGround>

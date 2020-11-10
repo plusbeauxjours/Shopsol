@@ -7,24 +7,30 @@ import AddShelfLifeScreenPresenter from './AddShelfLifeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {getSHELFLIFE_DATA} from '~/redux/shelflifeSlice';
 import api from '~/constants/LoggedInApi';
+import ImagePicker from 'react-native-image-crop-picker';
 
 export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const [shelfLifeName, setShelfLifeName] = useState<string>('');
-  const [shelfLifeDate, setShelfLifeDate] = useState<string>(
-    moment().format('YYYY-MM-DD'),
-  );
+  const [shelfLifeDate, setShelfLifeDate] = useState<string>('');
   const [shelfLifeMemo, setShelfLifeMemo] = useState<string>('');
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
   const [list, setList] = useState<any>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
+  const [isImageViewVisible, setIsImageViewVisible] = useState<boolean>(false);
+  const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
+    false,
+  );
 
-  const alertModal = (title, text) => {
+  const alertModal = (title, text, okCallback = () => {}) => {
     const params = {
       alertType: 'alert',
       title: title,
       content: text,
+      okCallback,
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
@@ -45,7 +51,9 @@ export default () => {
       return alertModal('', '상품명을 입력해주세요.');
     }
     if (shelfLifeDate == '') {
-      return alertModal('', '기한을 입력해주세요.');
+      return alertModal('', '기한을 입력해주세요.', () =>
+        setIsDateModalVisible(true),
+      );
     }
     for (let i = 0; i < list.length; i++) {
       if (shelfLifeName == list[i].NAME && shelfLifeDate == list[i].DATE) {
@@ -57,19 +65,23 @@ export default () => {
       shelfLifeNAME: shelfLifeName,
       shelfLifeDATE: shelfLifeDate,
       shelfLifeMEMO: shelfLifeMemo,
+      shelfLifeIMAGE: cameraPictureLast,
     });
+    setCameraPictureLast(null);
     setShelfLifeName('');
-    setShelfLifeDate(moment().format('YYYY-MM-DD'));
+    setShelfLifeDate('');
     setShelfLifeMemo('');
     setList(buffer);
   };
 
   const deleteBuffer = (name, date) => {
-    setList((buffer) =>
-      buffer.filter(
-        (item) => item.shelfLifeNAME !== name || item.shelfLifeDATE !== date,
-      ),
-    );
+    setTimeout(() => {
+      setList((buffer) =>
+        buffer.filter(
+          (item) => item.shelfLifeNAME !== name || item.shelfLifeDATE !== date,
+        ),
+      );
+    }, 200);
   };
 
   const submitFn = async () => {
@@ -98,6 +110,27 @@ export default () => {
     }
   };
 
+  const takePictureFn = async (cameraRef) => {
+    const options = {quality: 1.0, base64: true, width: 900, height: 900};
+    const data = await cameraRef.current.takePictureAsync(options);
+    setCameraPictureLast(data.uri);
+  };
+
+  const launchImageLibraryFn = () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      multiple: false,
+      includeBase64: true,
+      compressImageQuality: 0.8,
+      compressImageMaxWidth: 720,
+      compressImageMaxHeight: 720,
+      cropperChooseText: '선택',
+      cropperCancelText: '취소',
+    }).then((images: any) => {
+      setCameraPictureLast(images.path);
+    });
+  };
+
   return (
     <AddShelfLifeScreenPresenter
       addFn={addFn}
@@ -113,6 +146,17 @@ export default () => {
       setShelfLifeDate={setShelfLifeDate}
       isDateModalVisible={isDateModalVisible}
       setIsDateModalVisible={setIsDateModalVisible}
+      cameraPictureLast={cameraPictureLast}
+      setCameraPictureLast={setCameraPictureLast}
+      takePictureFn={takePictureFn}
+      isCameraModalVisible={isCameraModalVisible}
+      setIsCameraModalVisible={setIsCameraModalVisible}
+      launchImageLibraryFn={launchImageLibraryFn}
+      isImageViewVisible={isImageViewVisible}
+      setIsImageViewVisible={setIsImageViewVisible}
+      selectedIndex={selectedIndex}
+      setSelectedIndex={setSelectedIndex}
+      alertModal={alertModal}
     />
   );
 };

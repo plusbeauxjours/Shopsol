@@ -1,2 +1,2 @@
-import ShelfLifeUpdateScreen from "./ShelfLifeUpdateScreen"
-export default ShelfLifeUpdateScreen
+import ShelfLifeUpdateScreenContainer from "./ShelfLifeUpdateScreenContainer"
+export default ShelfLifeUpdateScreenContainer
