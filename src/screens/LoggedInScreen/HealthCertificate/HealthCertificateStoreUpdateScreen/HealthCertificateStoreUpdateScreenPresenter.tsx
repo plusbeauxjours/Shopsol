@@ -30,8 +30,6 @@ const BackGround = styled.SafeAreaView`
 const ScrollView = styled.ScrollView``;
 
 const Container = styled.View`
-  width: 100%;
-  margin-top: 20px;
   padding: 20px;
 `;
 
@@ -74,9 +72,10 @@ const TextInput = styled.TextInput`
 const Bold = styled(Text)``;
 
 const Section = styled.View`
-  padding: 30px 0;
+  width: 100%;
+  padding: 20px;
   border-radius: 20px;
-  align-items: center;
+  margin-bottom: 20px;
   background-color: white;
 `;
 
@@ -85,12 +84,6 @@ const TextInputContainer = styled.View`
   justify-content: center;
   margin-left: 5px;
   margin-bottom: 5px;
-`;
-
-const TextInputBox = styled.View`
-  padding: 30px 20px;
-  border-radius: 20px;
-  background-color: white;
 `;
 
 const GreyText = styled.Text`
@@ -192,8 +185,7 @@ export default ({
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           keyboardDismissMode="on-drag"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{alignItems: 'center'}}>
+          showsVerticalScrollIndicator={false}>
           <Container>
             <Section>
               <TextContainer>
@@ -226,8 +218,7 @@ export default ({
               )}
               <Bold>* 인식이 불안정할 경우 직접입력하여 진행해 주세요.</Bold>
             </Section>
-            <WhiteSpace />
-            <TextInputBox>
+            <Section>
               <TextInputContainer>
                 <GreyText>성명</GreyText>
                 <TextInput
@@ -337,7 +328,7 @@ export default ({
                   </Touchable>
                 </Row>
               </TextInputContainer>
-            </TextInputBox>
+            </Section>
             <DatePickerModal
               headerTextIOS={'날짜를 선택하세요.'}
               cancelTextIOS={'취소'}

@@ -267,6 +267,9 @@ export default ({route: {params}}) => {
 
   useEffect(() => {
     initialize();
+    TYPE == '수정'
+      ? navigation.setOptions({headerTitle: '일정 수정'})
+      : navigation.setOptions({headerTitle: '일정 추가'});
   }, []);
 
   return (

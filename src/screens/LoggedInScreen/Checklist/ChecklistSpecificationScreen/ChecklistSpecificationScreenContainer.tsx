@@ -290,8 +290,8 @@ export default ({route: {params}}) => {
     setChecklistGoodState(checklistGoodStat);
     setChecklistBadState(checklistBadStat);
     setLIST(list);
-    if (cameraPictureList?.length === 0 && IMAGE_LIST) {
-      const allimg = IMAGE_LIST.split('@');
+    if (cameraPictureList?.length === 0 && IMAGE_LIST?.length > 0) {
+      const allimg = IMAGE_LIST?.split('@');
       for (let i = 0; i < allimg.length; i++) {
         setCameraPictureList((cameraPictureList) => [
           ...cameraPictureList,

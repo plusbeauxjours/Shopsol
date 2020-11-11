@@ -25,7 +25,7 @@ interface IIsBefore {
 }
 
 interface IsError {
-  isError: boolean;
+  isError?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -49,6 +49,7 @@ const Section = styled.View`
   width: 100%;
   padding: 20px;
   border-radius: 20px;
+  margin-bottom: 20px;
   background-color: white;
 `;
 
@@ -417,7 +418,6 @@ export default ({
               </>
             )}
           </Section>
-          <WhiteSpace />
           <Section>
             <TitleText>출퇴근정보 설정</TitleText>
             <RowTouchable
@@ -497,7 +497,6 @@ export default ({
               <InputLine isBefore={EARLYtimeCheck === false} />
             </Touchable>
           </Section>
-          <WhiteSpace />
           <Section>
             <TitleText>급여정보 설정</TitleText>
             <RowTouchable

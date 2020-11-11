@@ -30,7 +30,6 @@ const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
 
 const Container = styled.View`
-  margin-top: 20px;
   padding: 20px;
   align-items: center;
 `;
@@ -79,6 +78,7 @@ const DayPickRowBox = styled.View`
   margin-top: 10px;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 const WorkTypeCheckSection = styled.View``;

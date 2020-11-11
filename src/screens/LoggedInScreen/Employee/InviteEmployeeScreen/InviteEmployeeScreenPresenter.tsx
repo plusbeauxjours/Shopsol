@@ -26,7 +26,6 @@ const ScrollView = styled.ScrollView``;
 
 const Container = styled.View`
   padding: 20px;
-  background-color: #f6f6f6;
 `;
 
 const Line = styled.View`

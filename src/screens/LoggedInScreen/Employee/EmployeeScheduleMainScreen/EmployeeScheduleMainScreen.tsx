@@ -22,7 +22,7 @@ const BackGround = styled.SafeAreaView`
 
 const Section = styled.View`
   width: 100%;
-  margin-top: 20px;
+  margin: 20px 0;
   border-radius: 20px;
   padding: 20px;
   background-color: white;

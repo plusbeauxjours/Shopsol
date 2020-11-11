@@ -1506,6 +1506,7 @@ export default ({
                 )}
               </ContentsBox>
             )}
+            <WhiteSpace />
             <SubmitBtn
               isRegisted={true}
               onPress={() => submitFn()}

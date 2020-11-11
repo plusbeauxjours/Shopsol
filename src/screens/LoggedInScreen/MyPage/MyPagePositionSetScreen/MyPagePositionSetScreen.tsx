@@ -19,8 +19,7 @@ const WhiteSpace = styled.View`
 `;
 
 const Container = styled.View`
-  width: 100%;
-  padding: 0 20px;
+  padding: 20px;
 `;
 
 const NameText = styled.Text`
@@ -43,11 +42,21 @@ const TypeCheckCase = styled.View`
   flex-direction: row;
   justify-content: space-around;
 `;
+
 const TypeText = styled.Text`
   margin-left: 5px;
   font-size: 15px;
 `;
+
 const View = styled.View``;
+
+const Section = styled.View`
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+`;
 
 export default () => {
   const dispatch = useDispatch();
@@ -112,15 +121,16 @@ export default () => {
 
   return (
     <BackGround>
-      <WhiteSpace />
       <Container>
-        <Row style={{justifyContent: 'space-between', alignItems: 'center'}}>
-          <NameText>가입유형</NameText>
-          <TypeCheckCase>
-            <View>{positionType(1, '점장')}</View>
-            <View>{positionType(0, '직원')}</View>
-          </TypeCheckCase>
-        </Row>
+        <Section>
+          <Row style={{justifyContent: 'space-between', alignItems: 'center'}}>
+            <NameText>가입유형</NameText>
+            <TypeCheckCase>
+              <View>{positionType(1, '점장')}</View>
+              <View>{positionType(0, '직원')}</View>
+            </TypeCheckCase>
+          </Row>
+        </Section>
         <SubmitBtn
           onPress={() => submitFn()}
           text={'수정하기'}

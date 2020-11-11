@@ -17,13 +17,8 @@ const BackGround = styled.SafeAreaView`
   background-color: #f6f6f6; ;
 `;
 
-const WhiteSpace = styled.View`
-  height: 30px;
-`;
-
 const Container = styled.View`
-  width: 100%;
-  padding: 0 20px;
+  padding: 20px;
 `;
 
 const NameText = styled.Text`
@@ -43,6 +38,14 @@ const GreyText = styled.Text<IsError>`
   font-size: 12px;
   color: ${(props) => (props.isError ? 'red' : '#aaa')};
   margin-top: 5px;
+`;
+
+const Section = styled.View`
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background-color: white;
 `;
 
 export default () => {
@@ -87,23 +90,24 @@ export default () => {
   };
   return (
     <BackGround>
-      <WhiteSpace />
       <Container>
-        <NameText>이름</NameText>
-        <TextInput
-          placeholder={'변경하실 이름을 입력해주세요.'}
-          selectionColor={'#999'}
-          placeholderTextColor={'#CCCCCC'}
-          onChangeText={(text) => {
-            setNAME(text);
-          }}
-          value={NAME}
-          maxLength={10}
-        />
-        <InputLine isBefore={NAME === '' ? true : false} />
-        <GreyText isError={NAME?.length > 6}>
-          * 이름은 6자 이하로 입력해주세요.
-        </GreyText>
+        <Section>
+          <NameText>이름</NameText>
+          <TextInput
+            placeholder={'변경하실 이름을 입력해주세요.'}
+            selectionColor={'#999'}
+            placeholderTextColor={'#CCCCCC'}
+            onChangeText={(text) => {
+              setNAME(text);
+            }}
+            value={NAME}
+            maxLength={10}
+          />
+          <InputLine isBefore={NAME === '' ? true : false} />
+          <GreyText isError={NAME?.length > 6}>
+            * 이름은 6자 이하로 입력해주세요.
+          </GreyText>
+        </Section>
         <SubmitBtn
           onPress={() => submitFn()}
           text={'수정하기'}

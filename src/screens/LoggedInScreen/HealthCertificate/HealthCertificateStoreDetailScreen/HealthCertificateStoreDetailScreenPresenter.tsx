@@ -82,19 +82,7 @@ const WhiteSpace = styled.View`
 `;
 
 const Container = styled.View`
-  flex: 1;
-  padding-top: 30px;
-  align-items: center;
-`;
-
-const HelpWrapper = styled.View`
-  height: ${hp('8%')}px;
-  width: ${wp('90%')}px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: 40px;
-  background-color: white;
+  padding: 20px;
 `;
 
 const HelpText = styled.Text`
@@ -102,25 +90,24 @@ const HelpText = styled.Text`
   font-size: 18px;
 `;
 
-const Box = styled.View`
-  margin: ${hp('3%')}px 0;
-  width: ${wp('90%')}px;
-  align-items: center;
-  padding: 20px 0;
+const Section = styled.View`
+  width: 100%;
+  padding: 20px;
   border-radius: 20px;
-  background-color: #fff;
+  margin-bottom: 20px;
+  background-color: white;
 `;
 
 const Date = styled.View`
-  width: 90%;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
 
 const DateArrowLeft = styled.TouchableOpacity`
-  width: ${wp('10%')}px;
-  height: ${wp('10%')}px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
@@ -130,15 +117,15 @@ const DateArrowLeft = styled.TouchableOpacity`
 const DateArrowRight = styled(DateArrowLeft)``;
 const DateTextArea = styled.TouchableOpacity`
   flex: 1;
-  height: ${wp('10%')}px;
+  height: 40px;
   align-items: center;
   justify-content: center;
 `;
 
 const DateToday = styled.TouchableOpacity`
   margin-right: 5px;
-  width: ${wp('10%')}px;
-  height: ${wp('10%')}px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
@@ -151,8 +138,8 @@ const DateText = styled.Text`
 `;
 
 const ContentWrapper = styled.View`
-  width: ${wp('90%')}px;
-  margin-top: ${hp('3%')}px;
+  width: 100%;
+  margin-top: 30px;
   border-bottom-width: 1px;
   border-color: #ddd;
 `;
@@ -172,23 +159,22 @@ const SaveButton = styled(ModifyButton)`
 const RegDate = styled.Text`
   color: #9b9b9b;
   font-size: 12px;
-  margin-right: 10px;
 `;
 
 const Row = styled.View`
-  width: ${wp('90%')}px;
+  width: 100%;
   flex-direction: row;
   justify-content: space-around;
 `;
 
 const RegDateContainer = styled.View`
   margin-top: 10px;
-  width: ${wp('90%')}px;
+  width: 100%;
   align-items: flex-end;
 `;
 
 const Footer = styled.View`
-  width: ${wp('100%')}px;
+  width: 100%;
 `;
 
 const FooterText = styled.Text`
@@ -274,10 +260,10 @@ export default ({
       <BackGround>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Container>
-            <HelpWrapper>
+            <Section style={{alignItems: 'center'}}>
               <HelpText>보건증 조기경보시스템</HelpText>
-            </HelpWrapper>
-            <Box>
+            </Section>
+            <Section>
               <Date>
                 <DateArrowLeft
                   onPress={() => {
@@ -348,15 +334,13 @@ export default ({
               </ContentWrapper>
               <RegDateContainer>
                 <RegDate>
-                  ※ 입력일자 :{' '}
+                  ※ 입력일자 :
                   {moment(
                     HEALTH_STORE_DETAIL[SELECT_INDEX]?.CREATE_TIME,
                   ).format('YYYY.MM.DD')}
                 </RegDate>
               </RegDateContainer>
-            </Box>
-          </Container>
-          <Container style={{marginTop: 20, alignItems: 'center'}}>
+            </Section>
             <Row>
               <ModifyButton
                 onPress={() => {

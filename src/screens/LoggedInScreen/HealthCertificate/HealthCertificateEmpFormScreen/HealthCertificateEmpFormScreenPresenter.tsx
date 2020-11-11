@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 import Modal from 'react-native-modal';
-import styled from 'styled-components/native';
-import DatePickerModal from 'react-native-modal-datetime-picker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import styled from 'styled-components/native';
+import DatePickerModal from 'react-native-modal-datetime-picker';
 import FastImage from 'react-native-fast-image';
 import {RNCamera} from 'react-native-camera';
 import moment from 'moment';
@@ -31,7 +31,6 @@ const BackGround = styled.SafeAreaView`
 const ScrollView = styled.ScrollView``;
 
 const Container = styled.View`
-  margin-top: 20px;
   padding: 20px;
 `;
 
@@ -67,6 +66,7 @@ const DateText = styled.Text`
 const TextInput = styled.TextInput`
   width: 100%;
   font-size: 17px;
+  color: black;
   margin-left: 5px;
   height: 40px;
 `;
@@ -74,9 +74,10 @@ const TextInput = styled.TextInput`
 const Bold = styled(Text)``;
 
 const Section = styled.View`
-  padding: 30px 0;
+  width: 100%;
+  padding: 20px;
   border-radius: 20px;
-  align-items: center;
+  margin-bottom: 20px;
   background-color: white;
 `;
 
@@ -84,12 +85,6 @@ const TextInputContainer = styled.View`
   align-items: flex-start;
   justify-content: center;
   margin-left: 5px;
-`;
-
-const TextInputBox = styled.View`
-  padding: 30px 20px;
-  border-radius: 20px;
-  background-color: white;
 `;
 
 const GreyText = styled.Text`
@@ -179,8 +174,7 @@ export default ({
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           keyboardDismissMode="on-drag"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{alignItems: 'center'}}>
+          showsVerticalScrollIndicator={false}>
           <Container>
             <Section>
               <TextContainer>
@@ -213,8 +207,7 @@ export default ({
               )}
               <Bold>* 인식이 불안정할 경우 직접입력하여 진행해 주세요.</Bold>
             </Section>
-            <WhiteSpace />
-            <TextInputBox>
+            <Section>
               <TextInputContainer>
                 <GreyText>성명</GreyText>
                 <TextInput
@@ -254,7 +247,7 @@ export default ({
               </TextInputContainer>
               <SmallWhiteSpace />
               <InputLine isBefore={EDUCATION_DATE == '' ? true : false} />
-            </TextInputBox>
+            </Section>
             <DatePickerModal
               headerTextIOS={'날짜를 선택하세요.'}
               cancelTextIOS={'취소'}

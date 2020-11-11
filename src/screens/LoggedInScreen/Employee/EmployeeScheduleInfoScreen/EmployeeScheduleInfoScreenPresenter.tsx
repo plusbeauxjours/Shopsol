@@ -16,6 +16,7 @@ import {BackIcon, ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import moment from 'moment';
 import utils from '~/constants/utils';
+import {ActivityIndicator} from 'react-native';
 
 interface IsSelected {
   isSelected: boolean;

@@ -21,16 +21,14 @@ interface IPolicyCheck {
 }
 
 const ScrollView = styled.ScrollView``;
+
 const Container = styled.View`
-  width: 100%;
-  padding: 0 20px;
-  align-items: center;
-  margin-top: ${hp('5%')}px;
+  padding: 20px;
 `;
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: white;
+  background-color: #f6f6f6;
 `;
 
 const RequestText = styled.Text`
@@ -167,6 +165,14 @@ const BoxTouchable = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+const Section = styled.View`
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+`;
+
 export default ({
   verifyCode,
   mobileNo,
@@ -244,57 +250,59 @@ export default ({
           </Row>
           {policyCheck ? (
             <>
-              <Case>
-                <NameText>휴대폰 번호</NameText>
-                <TextinputCase>
-                  <TextInput
-                    placeholder={'휴대폰번호를 입력해주세요'}
-                    placeholderTextColor={'#CCCCCC'}
-                    selectionColor={'#999'}
-                    onChangeText={(text) => {
-                      onChangeMobileNum(text);
-                    }}
-                    value={mobileNo}
-                    keyboardType={'number-pad'}
-                    maxLength={11}
-                  />
-                  <RequestButton
-                    onPress={() => requireVerifyCode()}
-                    disabled={hasCheckedVerifyCode}>
-                    <RequestText>인증요청</RequestText>
-                  </RequestButton>
-                </TextinputCase>
-                <InputLine isBefore={mobileNo == '' ? true : false} />
-              </Case>
-              <WhiteSpace />
-              <Case>
-                <NameText>인증번호입력</NameText>
-                <TextinputCase>
-                  <TextInput
-                    placeholder={'인증번호를 입력해주세요'}
-                    placeholderTextColor={'#CCCCCC'}
-                    selectionColor={'#999'}
-                    onChangeText={(text) => {
-                      onChangeVerifyNum(text);
-                    }}
-                    value={verifyCode}
-                    keyboardType={'number-pad'}
-                    maxLength={6}
-                  />
-                  {isCountDownStarted && <CountText>{countdown}초</CountText>}
-                  <VerifyButton
-                    onPress={() => onVerifyCode()}
-                    isBefore={verifyCode == '' ? true : false}>
-                    <VerifyText>인증확인</VerifyText>
-                  </VerifyButton>
-                </TextinputCase>
-                <InputLine isBefore={verifyCode == '' ? true : false} />
-              </Case>
-              {hasCheckTimeOut && (
-                <TimeText>
-                  인증시간이 초과되었습니다. 인증을 다시 시도해주세요
-                </TimeText>
-              )}
+              <Section>
+                <Case>
+                  <NameText>휴대폰 번호</NameText>
+                  <TextinputCase>
+                    <TextInput
+                      placeholder={'휴대폰번호를 입력해주세요'}
+                      placeholderTextColor={'#CCCCCC'}
+                      selectionColor={'#999'}
+                      onChangeText={(text) => {
+                        onChangeMobileNum(text);
+                      }}
+                      value={mobileNo}
+                      keyboardType={'number-pad'}
+                      maxLength={11}
+                    />
+                    <RequestButton
+                      onPress={() => requireVerifyCode()}
+                      disabled={hasCheckedVerifyCode}>
+                      <RequestText>인증요청</RequestText>
+                    </RequestButton>
+                  </TextinputCase>
+                  <InputLine isBefore={mobileNo == '' ? true : false} />
+                </Case>
+                <WhiteSpace />
+                <Case>
+                  <NameText>인증번호입력</NameText>
+                  <TextinputCase>
+                    <TextInput
+                      placeholder={'인증번호를 입력해주세요'}
+                      placeholderTextColor={'#CCCCCC'}
+                      selectionColor={'#999'}
+                      onChangeText={(text) => {
+                        onChangeVerifyNum(text);
+                      }}
+                      value={verifyCode}
+                      keyboardType={'number-pad'}
+                      maxLength={6}
+                    />
+                    {isCountDownStarted && <CountText>{countdown}초</CountText>}
+                    <VerifyButton
+                      onPress={() => onVerifyCode()}
+                      isBefore={verifyCode == '' ? true : false}>
+                      <VerifyText>인증확인</VerifyText>
+                    </VerifyButton>
+                  </TextinputCase>
+                  <InputLine isBefore={verifyCode == '' ? true : false} />
+                </Case>
+                {hasCheckTimeOut && (
+                  <TimeText>
+                    인증시간이 초과되었습니다. 인증을 다시 시도해주세요
+                  </TimeText>
+                )}
+              </Section>
               <SubmitBtn
                 text={'다음단계로'}
                 onPress={() => gotoSignup()}

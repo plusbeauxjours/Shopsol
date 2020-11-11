@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {setSplashVisible} from '~/redux/splashSlice';
 import {updateREST_TIME} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
@@ -23,7 +22,7 @@ const Container = styled.View`
 const Section = styled.View`
   width: 100%;
   border-radius: 20px;
-  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 20px;
   background-color: white;
   align-items: flex-end;

@@ -17,12 +17,12 @@ import InputLine from '~/components/InputLine';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
 
 interface IsError {
-  isError: boolean;
+  isError?: boolean;
 }
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: white;
+  background-color: #f6f6f6;
 `;
 
 const TypeContainer = styled.TouchableOpacity`
@@ -36,9 +36,7 @@ const TypeText = styled.Text`
 `;
 
 const Container = styled.View`
-  width: 100%;
   padding: 20px;
-  align-items: center;
 `;
 
 const NameText = styled.Text`
@@ -103,6 +101,14 @@ const SheetTouchable = styled.TouchableOpacity`
   padding: 20px 0;
   border-bottom-width: 1px;
   border-color: #aaa;
+`;
+
+const Section = styled.View`
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background-color: white;
 `;
 
 export default ({
@@ -185,172 +191,179 @@ export default ({
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{alignItems: 'center'}}>
+        showsVerticalScrollIndicator={false}>
         <Container>
-          <Case>
-            <NameText>ID</NameText>
-            <TextinputCase>
-              <TextId>{mobileNo}</TextId>
-            </TextinputCase>
-            <InputLine isBefore={false} />
-          </Case>
-          <WhiteSpace />
-          <Case>
-            <NameText>이름</NameText>
-            <TextinputCase>
-              <TextInput
-                placeholder={'이름'}
-                placeholderTextColor={'#E5E5E5'}
-                onChangeText={(text) => onChangeName(text)}
-                value={name}
-              />
-            </TextinputCase>
-            <InputLine isBefore={name == '' ? true : false} />
-          </Case>
-          <WhiteSpace />
-          <Case>
-            <NameText>성별</NameText>
-            <TypeCheckCase>
-              <View>{genderType(0, '남자')}</View>
-              <View>{genderType(1, '여자')}</View>
-            </TypeCheckCase>
-          </Case>
-          <WhiteSpace />
-          <Case>
-            <NameText>생일</NameText>
-            <Touchable onPress={() => setIsBirthDateVisible(true)}>
+          <Section>
+            <Case>
+              <NameText>ID</NameText>
               <TextinputCase>
-                <TextId>
-                  {birthDate !== '' && moment(birthDate).format('YYYY.MM.DD')}{' '}
-                </TextId>
+                <TextId>{mobileNo}</TextId>
               </TextinputCase>
-            </Touchable>
-            <InputLine isBefore={birthDate == '' ? true : false} />
-          </Case>
-          <WhiteSpace />
-          <DatePickerModal
-            headerTextIOS={'생일을 선택하세요.'}
-            cancelTextIOS={'취소'}
-            confirmTextIOS={'확인'}
-            isVisible={isBirthDateVisible}
-            mode="date"
-            maximumDate={moment().toDate()}
-            locale="ko_KRus_EN"
-            onConfirm={(date) => {
-              setIsBirthDateVisible(false);
-              setBirthDate(moment(date).format('YYYY-MM-DD'));
-            }}
-            onCancel={() => {
-              setIsBirthDateVisible(false);
-            }}
-            display="default"
-          />
-          <Case>
-            <NameText>가입유형</NameText>
-            <TypeCheckCase>
-              <View>{positionType(1, '점장')}</View>
-              <View>{positionType(0, '직원')}</View>
-            </TypeCheckCase>
-          </Case>
-          <WhiteSpace />
-          {positionTypeCheck[1] == true && (
-            <Case>
-              <NameText>가입경로</NameText>
-              <Touchable onPress={() => sheetRef.current.open()}>
-                <TypeCheckCase style={{marginBottom: 10}}>
-                  {joinRoute === '가입경로' ? (
-                    <Placeholder>가입경로</Placeholder>
-                  ) : (
-                    <TextId>{joinRoute}</TextId>
-                  )}
-                </TypeCheckCase>
-              </Touchable>
-              <InputLine isBefore={joinRoute == '가입경로' ? true : false} />
+              <InputLine isBefore={false} />
             </Case>
-          )}
-          {positionTypeCheck[1] == true && joinRoute == '기타' && (
+            <WhiteSpace />
             <Case>
+              <NameText>이름</NameText>
               <TextinputCase>
                 <TextInput
-                  placeholder={'기타사항을 입력해주세요.'}
+                  placeholder={'이름'}
                   placeholderTextColor={'#E5E5E5'}
-                  onChangeText={(text) => setOtherJoinRoute(text)}
-                  value={otherJoinRoute}
+                  onChangeText={(text) => onChangeName(text)}
+                  value={name}
                 />
               </TextinputCase>
-              <InputLine isBefore={otherJoinRoute == '' ? true : false} />
+              <InputLine isBefore={name == '' ? true : false} />
             </Case>
-          )}
-          <WhiteSpace />
-          <Case>
-            <NameText>비밀번호</NameText>
-            <TextinputCase>
-              <TextInput
-                placeholder={'영문, 숫자 조합 6자 이상'}
-                placeholderTextColor={'#E5E5E5'}
-                selectionColor={'#999'}
-                onFocus={() => {
-                  setPassword('');
-                  setPasswordCheck('');
-                }}
-                onChangeText={(text) => passwordCheckerFn(text, false)}
-                value={password}
-                secureTextEntry={isPasswordSeen ? false : true}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              <CheckPasswordBtn
-                onPress={() => setIsPasswordSeen(!isPasswordSeen)}
-                isPasswordSeen={isPasswordSeen}
-              />
-            </TextinputCase>
-            <InputLine isBefore={password == '' ? true : false} />
-            {password.length > 0 && /(\w)\1\1\1/.test(password) ? (
-              <GreyText isError={true}>
-                * 444같은 문자를 4번 이상 사용하실 수 없습니다.
-              </GreyText>
-            ) : password.length > 15 ? (
-              <GreyText isError={true}>
-                * 영문, 숫자 조합하여 15자 이하 입력해주세요.
-              </GreyText>
-            ) : (
-              <GreyText isError={isPasswordError}>
-                * 영문, 숫자 조합하여 6자 이상 입력해주세요.
-              </GreyText>
+            <WhiteSpace />
+            <Case>
+              <NameText>성별</NameText>
+              <TypeCheckCase>
+                <View>{genderType(0, '남자')}</View>
+                <View>{genderType(1, '여자')}</View>
+              </TypeCheckCase>
+            </Case>
+            <WhiteSpace />
+            <Case>
+              <NameText>생일</NameText>
+              <Touchable onPress={() => setIsBirthDateVisible(true)}>
+                <TextinputCase>
+                  {birthDate !== '' ? (
+                    <TextId>moment(birthDate).format('YYYY.MM.DD')</TextId>
+                  ) : (
+                    <GreyText
+                      style={{fontSize: 14, margin: 10, color: '#e5e5e5'}}>
+                      탭하여 생일을 선택하세요
+                    </GreyText>
+                  )}
+                </TextinputCase>
+              </Touchable>
+              <InputLine isBefore={birthDate == '' ? true : false} />
+            </Case>
+            <WhiteSpace />
+            <DatePickerModal
+              headerTextIOS={'생일을 선택하세요.'}
+              cancelTextIOS={'취소'}
+              confirmTextIOS={'확인'}
+              isVisible={isBirthDateVisible}
+              mode="date"
+              maximumDate={moment().toDate()}
+              locale="ko_KRus_EN"
+              onConfirm={(date) => {
+                setIsBirthDateVisible(false);
+                setBirthDate(moment(date).format('YYYY-MM-DD'));
+              }}
+              onCancel={() => {
+                setIsBirthDateVisible(false);
+              }}
+              display="default"
+            />
+            <Case>
+              <NameText>가입유형</NameText>
+              <TypeCheckCase>
+                <View>{positionType(1, '점장')}</View>
+                <View>{positionType(0, '직원')}</View>
+              </TypeCheckCase>
+            </Case>
+            <WhiteSpace />
+            {positionTypeCheck[1] == true && (
+              <Case>
+                <NameText>가입경로</NameText>
+                <Touchable onPress={() => sheetRef.current.open()}>
+                  <TypeCheckCase
+                    style={{fontSize: 14, margin: 10, color: '#e5e5e5'}}>
+                    {joinRoute === '가입경로' ? (
+                      <Placeholder>가입경로</Placeholder>
+                    ) : (
+                      <TextId>{joinRoute}</TextId>
+                    )}
+                  </TypeCheckCase>
+                </Touchable>
+                <InputLine isBefore={joinRoute == '가입경로' ? true : false} />
+              </Case>
             )}
-          </Case>
-          <WhiteSpace />
-          <Case>
-            <NameText>비밀번호 확인</NameText>
-            <TextinputCase>
-              <TextInput
-                placeholder={'새 비밀번호 확인'}
-                placeholderTextColor={'#E5E5E5'}
-                selectionColor={'#999'}
-                onChangeText={(text) => passwordCheckerFn(text, true)}
-                value={passwordCheck}
-                secureTextEntry={isPasswordCheckSeen ? false : true}
-                onFocus={() => {}}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              <CheckPasswordBtn
-                onPress={() => setIsPasswordCheckSeen(!isPasswordCheckSeen)}
-                isPasswordSeen={isPasswordCheckSeen}
-              />
-            </TextinputCase>
-            <InputLine isBefore={passwordCheck == '' ? true : false} />
-            {passwordCheck.length > 6 && password !== passwordCheck ? (
-              <GreyText isError={true}>
-                * 비밀번호가 일치하지 않습니다.
-              </GreyText>
-            ) : (
-              <GreyText isError={isPasswordCheckError}>
-                * 영문, 숫자 조합하여 6자 이상 입력해주세요.
-              </GreyText>
+            {positionTypeCheck[1] == true && joinRoute == '기타' && (
+              <Case>
+                <TextinputCase>
+                  <TextInput
+                    placeholder={'기타사항을 입력해주세요.'}
+                    placeholderTextColor={'#E5E5E5'}
+                    onChangeText={(text) => setOtherJoinRoute(text)}
+                    value={otherJoinRoute}
+                  />
+                </TextinputCase>
+                <InputLine isBefore={otherJoinRoute == '' ? true : false} />
+              </Case>
             )}
-          </Case>
+            <WhiteSpace />
+            <Case>
+              <NameText>비밀번호</NameText>
+              <TextinputCase>
+                <TextInput
+                  placeholder={'영문, 숫자 조합 6자 이상'}
+                  placeholderTextColor={'#E5E5E5'}
+                  selectionColor={'#999'}
+                  onFocus={() => {
+                    setPassword('');
+                    setPasswordCheck('');
+                  }}
+                  onChangeText={(text) => passwordCheckerFn(text, false)}
+                  value={password}
+                  secureTextEntry={isPasswordSeen ? false : true}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+                <CheckPasswordBtn
+                  onPress={() => setIsPasswordSeen(!isPasswordSeen)}
+                  isPasswordSeen={isPasswordSeen}
+                />
+              </TextinputCase>
+              <InputLine isBefore={password == '' ? true : false} />
+              {password.length > 0 && /(\w)\1\1\1/.test(password) ? (
+                <GreyText isError={true}>
+                  * 444같은 문자를 4번 이상 사용하실 수 없습니다.
+                </GreyText>
+              ) : password.length > 15 ? (
+                <GreyText isError={true}>
+                  * 영문, 숫자 조합하여 15자 이하 입력해주세요.
+                </GreyText>
+              ) : (
+                <GreyText isError={isPasswordError}>
+                  * 영문, 숫자 조합하여 6자 이상 입력해주세요.
+                </GreyText>
+              )}
+            </Case>
+            <WhiteSpace />
+            <Case>
+              <NameText>비밀번호 확인</NameText>
+              <TextinputCase>
+                <TextInput
+                  placeholder={'새 비밀번호 확인'}
+                  placeholderTextColor={'#E5E5E5'}
+                  selectionColor={'#999'}
+                  onChangeText={(text) => passwordCheckerFn(text, true)}
+                  value={passwordCheck}
+                  secureTextEntry={isPasswordCheckSeen ? false : true}
+                  onFocus={() => {}}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+                <CheckPasswordBtn
+                  onPress={() => setIsPasswordCheckSeen(!isPasswordCheckSeen)}
+                  isPasswordSeen={isPasswordCheckSeen}
+                />
+              </TextinputCase>
+              <InputLine isBefore={passwordCheck == '' ? true : false} />
+              {passwordCheck.length > 6 && password !== passwordCheck ? (
+                <GreyText isError={true}>
+                  * 비밀번호가 일치하지 않습니다.
+                </GreyText>
+              ) : (
+                <GreyText isError={isPasswordCheckError}>
+                  * 영문, 숫자 조합하여 6자 이상 입력해주세요.
+                </GreyText>
+              )}
+            </Case>
+          </Section>
           <SubmitBtn
             text={'회원가입 완료'}
             onPress={() =>

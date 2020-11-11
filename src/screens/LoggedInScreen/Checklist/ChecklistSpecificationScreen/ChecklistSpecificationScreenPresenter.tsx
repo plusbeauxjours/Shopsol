@@ -125,18 +125,6 @@ const IconBox = styled.View`
   align-items: center;
 `;
 
-const CameraFlashButton = styled.TouchableOpacity`
-  top: 50px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  justify-content: center;
-  align-items: center;
-  background-color: grey;
-  position: absolute;
-`;
-
 const CameraPictureCloseButtonText = styled.Text`
   font-size: 16px;
   color: #ffffff;
@@ -205,8 +193,6 @@ export default ({
   onPressImageFn,
   launchImageLibraryFn,
   registerFn,
-  cameraPictureFlash,
-  setCameraPictureFlash,
   takePictureFn,
   cameraPictureLast,
   setCameraPictureLast,

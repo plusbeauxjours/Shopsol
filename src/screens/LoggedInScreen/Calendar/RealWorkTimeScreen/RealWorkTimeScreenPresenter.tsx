@@ -123,6 +123,8 @@ const RowTouchable = styled.TouchableOpacity`
 
 const RowSpaceTouchable = styled(RowTouchable)`
   justify-content: space-around;
+  align-items: center;
+  height: 22px;
 `;
 
 const SideText = styled.Text`
