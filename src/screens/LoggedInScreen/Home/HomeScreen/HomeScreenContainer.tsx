@@ -16,8 +16,6 @@ import {setSplashVisible} from '~/redux/splashSlice';
 import {setSTORE_DATA, setEMP_SEQ} from '~/redux/storeSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
-import {getRESPONSE_EMPLOYEE} from '~/redux/employeeSlice';
-import {getHEALTH_CERTIFICATE_DATA} from '~/redux/healthSlice';
 import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
 
 export default ({route: {params}}) => {
@@ -218,8 +216,6 @@ export default ({route: {params}}) => {
         setChecklistCount(data.checklength);
         dispatch(setNOTICE_COUNT(data.noticelength));
       }
-      await dispatch(getRESPONSE_EMPLOYEE());
-      await dispatch(getHEALTH_CERTIFICATE_DATA());
     } catch (e) {
       console.log(e);
     } finally {
@@ -326,12 +322,6 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
-    locationPermission();
-    fetchData();
-    checkVersion();
-  }, []);
-
-  useEffect(() => {
     if (utils.isAndroid()) {
       STORE === '1'
         ? SharedStorage.set(
@@ -349,6 +339,7 @@ export default ({route: {params}}) => {
             }),
           );
     }
+    locationPermission();
     fetchData();
     checkVersion();
   }, []);

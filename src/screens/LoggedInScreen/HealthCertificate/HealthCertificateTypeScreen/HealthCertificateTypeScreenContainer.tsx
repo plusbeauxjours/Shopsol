@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import HealthCertificateTypeScreenPresenter from './HealthCertificateTypeScreenPresenter';
 import {useDispatch, useSelector} from 'react-redux';
@@ -40,6 +40,10 @@ export default () => {
     moment().subtract(1, 'year'),
     'days',
   );
+
+  useEffect(() => {
+    dispatch(getHEALTH_CERTIFICATE_DATA());
+  }, []);
 
   return (
     <HealthCertificateTypeScreenPresenter
