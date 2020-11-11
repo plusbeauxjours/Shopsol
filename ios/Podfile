@@ -14,12 +14,12 @@ target 'ShopsolWesop' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
   pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
 
-  # react-native-maps dependencies
   pod 'react-native-maps', path: '../node_modules/react-native-maps'
-  pod 'react-native-google-maps', path: '../node_modules/react-native-maps'  # Remove this line if you don't want to support GoogleMaps on iOS
-  pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
-  pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
+  pod 'react-native-google-maps', path: '../node_modules/react-native-maps' 
+  pod 'GoogleMaps' 
+  pod 'Google-Maps-iOS-Utils'
 
   target 'ShopsolWesopTests' do
     inherit! :complete
@@ -47,3 +47,4 @@ target 'ShopsolWesop-tvOS' do
     # Pods for testing
   end
 end
+
