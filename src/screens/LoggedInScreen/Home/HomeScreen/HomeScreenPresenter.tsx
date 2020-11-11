@@ -382,7 +382,7 @@ export default ({
   GENDER,
 }) => {
   const navigation = useNavigation();
-  const MenuCntContainer = ({selection, paging, count = 0}) => (
+  const MenuCntContainer = ({selection, paging, source, count = 0}) => (
     <MenuCnt
       rippleColor={'#fff'}
       rippleDuration={300}
@@ -403,7 +403,11 @@ export default ({
             <NewCntText>{count < 10 ? count : '9+'}</NewCntText>
           </NewCnt>
         )}
-      <AdrChange paging={paging} />
+      <FastImage
+        style={{width: '100%', height: '100%'}}
+        source={source}
+        resizeMode={FastImage.resizeMode.contain}
+      />
     </MenuCnt>
   );
 
@@ -476,49 +480,6 @@ export default ({
     </MarkerWrapper>
   );
 
-  const AdrChange = ({paging}) => {
-    let source;
-    if (paging == 'InviteEmployeeScreen') {
-      source = require(`../../../../assets/main/Invite.png`);
-    } else if (paging == 'EmployeeListScreen') {
-      source = require(`../../../../assets/main/EmployeeList.png`);
-    } else if (paging == 'ManageInviteEmployeeScreen') {
-      source = require(`../../../../assets/main/ManageInviteEmployee.png`);
-    } else if (
-      paging == 'CalendarInfoScreen' &&
-      STORE_DATA?.CalendarEdit == 1
-    ) {
-      source = require(`../../../../assets/main/CalendarInfo.png`);
-    } else if (
-      paging == 'CalendarInfoScreen' &&
-      STORE_DATA?.CalendarEdit !== 1
-    ) {
-      source = require(`../../../../assets/main/CalendarInfoEmp.png`);
-    } else if (paging == 'PaymentInfoScreen') {
-      source = require(`../../../../assets/main/PaymentInfo.png`);
-    } else if (paging == 'EmpPaymentInfoScreen') {
-      source = require(`../../../../assets/main/PaymentInfo.png`);
-    } else if (paging == 'EmployeeInfoEMPScreen') {
-      source = require(`../../../../assets/main/EmployeeInfoEmp.png`);
-    } else if (paging == 'qrViewScreen') {
-      source = require(`../../../../assets/main/qrView.png`);
-    } else if (paging == 'ChecklistItemsScreen') {
-      source = require(`../../../../assets/main/ChecklistItems.png`);
-    } else if (paging == 'ChecklistShareMainScreen') {
-      source = require(`../../../../assets/main/ChecklistShareMain.png`);
-    } else if (paging == 'ShelfLifeCheckScreen') {
-      source = require(`../../../../assets/main/shelfLifeCheck.png`);
-    } else if (paging == 'HealthCertificateTypeScreen') {
-      source = require(`../../../../assets/main/HealthCertificateType.png`);
-    }
-    return (
-      <FastImage
-        style={{width: '100%', height: '100%'}}
-        source={source}
-        resizeMode={FastImage.resizeMode.contain}
-      />
-    );
-  };
   return (
     <BackGround>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -699,34 +660,44 @@ export default ({
                 <MenuCntContainer
                   selection={'직원초대'}
                   paging={'InviteEmployeeScreen'}
+                  source={require(`../../../../assets/main/Invite.png`)}
                 />
                 {TOTAL_COUNT !== 0 && (
                   <MenuCntContainer
                     selection={'직원목록'}
                     paging={'EmployeeListScreen'}
+                    source={require(`../../../../assets/main/EmployeeList.png`)}
                   />
                 )}
                 <MenuCntContainer
                   selection={'직원합류승인'}
                   paging={'ManageInviteEmployeeScreen'}
                   count={invitedEmpCount}
+                  source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
                 />
                 {TOTAL_COUNT !== 0 && (
                   <MenuCntContainer
                     selection={'캘린더'}
                     paging={'CalendarInfoScreen'}
+                    source={
+                      STORE_DATA?.CalendarEdit == 1
+                        ? require('../../../../assets/main/CalendarInfo.png')
+                        : require('../../../../assets/main/CalendarInfoEmp.png')
+                    }
                   />
                 )}
                 {TOTAL_COUNT !== 0 && (
                   <MenuCntContainer
                     selection={'급여정보'}
                     paging={'PaymentInfoScreen'}
+                    source={require(`../../../../assets/main/PaymentInfo.png`)}
                   />
                 )}
                 {TOTAL_COUNT !== 0 && (
                   <MenuCntContainer
                     selection={'QR보기'}
                     paging={'qrViewScreen'}
+                    source={require(`../../../../assets/main/qrView.png`)}
                   />
                 )}
               </Container>
@@ -739,19 +710,23 @@ export default ({
                   selection={'체크리스트'}
                   paging={'ChecklistItemsScreen'}
                   count={checklistCount}
+                  source={require(`../../../../assets/main/ChecklistItems.png`)}
                 />
                 <MenuCntContainer
                   selection={'업무일지'}
                   paging={'ChecklistShareMainScreen'}
                   count={NOTICE_COUNT}
+                  source={require(`../../../../assets/main/ChecklistShareMain.png`)}
                 />
                 <MenuCntContainer
                   selection={'유통기한'}
                   paging={'ShelfLifeCheckScreen'}
+                  source={require(`../../../../assets/main/shelfLifeCheck.png`)}
                 />
                 <MenuCntContainer
                   selection={'조기경보'}
                   paging={'HealthCertificateTypeScreen'}
+                  source={require(`../../../../assets/main/HealthCertificateType.png`)}
                 />
               </Container>
             </>
@@ -767,40 +742,51 @@ export default ({
                     <MenuCntContainer
                       selection={'직원초대'}
                       paging={'InviteEmployeeScreen'}
+                      source={require(`../../../../assets/main/Invite.png`)}
                     />
                     {TOTAL_COUNT !== 0 &&
                       (STORE_DATA?.OTHERPAY_SHOW == 1 ? (
                         <MenuCntContainer
                           selection={'직원목록'}
                           paging={'EmployeeListScreen'}
+                          source={require(`../../../../assets/main/EmployeeList.png`)}
                         />
                       ) : (
                         <MenuCntContainer
                           selection={'직원정보'}
                           paging={'EmployeeInfoEMPScreen'}
+                          source={require(`../../../../assets/main/EmployeeInfoEmp.png`)}
                         />
                       ))}
                     <MenuCntContainer
                       selection={'직원합류승인'}
                       paging={'ManageInviteEmployeeScreen'}
                       count={invitedEmpCount}
+                      source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
                     />
                     {TOTAL_COUNT !== 0 && STORE_DATA?.CalendarEdit == '1' && (
                       <MenuCntContainer
                         selection={'캘린더'}
                         paging={'CalendarInfoScreen'}
+                        source={
+                          STORE_DATA?.CalendarEdit == 1
+                            ? require(`../../../../assets/main/CalendarInfo.png`)
+                            : require(`../../../../assets/main/CalendarInfoEmp.png`)
+                        }
                       />
                     )}
                     {TOTAL_COUNT !== 0 && STORE_DATA?.STOREPAY_SHOW == '1' ? (
                       <MenuCntContainer
                         selection={'급여정보'}
                         paging={'PaymentInfoScreen'}
+                        source={require(`../../../../assets/main/PaymentInfo.png`)}
                       />
                     ) : (
                       STORE_DATA?.PAY_SHOW == 1 && (
                         <MenuCntContainer
                           selection={'급여정보'}
                           paging={'EmpPaymentInfoScreen'}
+                          source={require(`../../../../assets/main/PaymentInfo.png`)}
                         />
                       )
                     )}
@@ -808,6 +794,7 @@ export default ({
                       <MenuCntContainer
                         selection={'QR보기'}
                         paging={'qrViewScreen'}
+                        source={require(`../../../../assets/main/qrView.png`)}
                       />
                     )}
                   </Container>
@@ -820,19 +807,23 @@ export default ({
                       selection={'체크리스트'}
                       paging={'ChecklistItemsScreen'}
                       count={checklistCount}
+                      source={require(`../../../../assets/main/ChecklistItems.png`)}
                     />
                     <MenuCntContainer
                       selection={'업무일지'}
                       paging={'ChecklistShareMainScreen'}
                       count={NOTICE_COUNT}
+                      source={require(`../../../../assets/main/ChecklistShareMain.png`)}
                     />
                     <MenuCntContainer
                       selection={'유통기한'}
                       paging={'ShelfLifeCheckScreen'}
+                      source={require(`../../../../assets/main/shelfLifeCheck.png`)}
                     />
                     <MenuCntContainer
                       selection={'조기경보'}
                       paging={'HealthCertificateTypeScreen'}
+                      source={require(`../../../../assets/main/HealthCertificateType.png`)}
                     />
                   </Container>
                 </>
@@ -847,34 +838,45 @@ export default ({
                     <MenuCntContainer
                       selection={'캘린더'}
                       paging={'CalendarInfoScreen'}
+                      source={
+                        STORE_DATA?.CalendarEdit == 1
+                          ? require(`../../../../assets/main/CalendarInfo.png`)
+                          : require(`../../../../assets/main/CalendarInfoEmp.png`)
+                      }
                     />
                     <MenuCntContainer
                       selection={'직원정보'}
                       paging={'EmployeeInfoEMPScreen'}
+                      source={require(`../../../../assets/main/EmployeeInfoEmp.png`)}
                     />
                     {STORE_DATA?.PAY_SHOW == 1 && (
                       <MenuCntContainer
                         selection={'급여정보'}
                         paging={'EmpPaymentInfoScreen'}
+                        source={require(`../../../../assets/main/PaymentInfo.png`)}
                       />
                     )}
                     <MenuCntContainer
                       selection={'체크리스트'}
                       paging={'ChecklistItemsScreen'}
                       count={checklistCount}
+                      source={require(`../../../../assets/main/ChecklistItems.png`)}
                     />
                     <MenuCntContainer
                       selection={'업무일지'}
                       paging={'ChecklistShareMainScreen'}
                       count={NOTICE_COUNT}
+                      source={require(`../../../../assets/main/ChecklistShareMain.png`)}
                     />
                     <MenuCntContainer
                       selection={'유통기한'}
                       paging={'ShelfLifeCheckScreen'}
+                      source={require(`../../../../assets/main/shelfLifeCheck.png`)}
                     />
                     <MenuCntContainer
                       selection={'조기경보'}
                       paging={'HealthCertificateTypeScreen'}
+                      source={require(`../../../../assets/main/HealthCertificateType.png`)}
                     />
                   </Container>
                 </>
