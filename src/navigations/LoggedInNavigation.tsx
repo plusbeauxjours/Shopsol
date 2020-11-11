@@ -123,6 +123,7 @@ export default () => {
           options={{
             headerTitle: '사업장 등록',
             title: '사업장 등록',
+            headerRight: null,
           }}
         />
         <LoggedInNavigation.Screen

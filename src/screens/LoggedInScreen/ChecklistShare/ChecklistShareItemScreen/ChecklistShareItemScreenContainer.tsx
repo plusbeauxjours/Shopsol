@@ -137,11 +137,12 @@ export default ({route: {params}}) => {
           NOTICE_SEQ: NOTICE_SEQ.toString(),
         }),
       );
+
       addedToastFn();
       const {data} = await api.setNoticeComment(
         NOTICE_SEQ,
         MEMBER_NAME,
-        comment,
+        comment.replace(/\n/gi, '%0A'),
         STORE,
         ME,
       );
@@ -199,12 +200,6 @@ export default ({route: {params}}) => {
         fetchImage(item);
         setItem(item);
       }
-    } else {
-      const item = CHECKLIST_SHARE_DATA3.resultdata.find(
-        (i) => i.NOTICE_SEQ === NOTICE_SEQ,
-      );
-      fetchImage(item);
-      setItem(item);
     }
     try {
       await dispatch(getCHECKLIST_COMMENTS(NOTICE_SEQ, TITLE));

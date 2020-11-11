@@ -396,7 +396,7 @@ export default ({
                               ellipsizeMode={'tail'}
                               numberOfLines={100}
                               style={{
-                                width: wp('100%') - 140,
+                                width: wp('100%') - 180,
                                 flexWrap: 'wrap',
                                 marginBottom: 5,
                               }}>
@@ -470,6 +470,7 @@ export default ({
             <CommentTextInputContainer>
               <TextInput
                 autoFocus={true}
+                returnKeyType="next"
                 onChangeText={(text) => setComment(text)}
                 value={comment}
                 placeholder={'댓글을 입력하세요.'}
