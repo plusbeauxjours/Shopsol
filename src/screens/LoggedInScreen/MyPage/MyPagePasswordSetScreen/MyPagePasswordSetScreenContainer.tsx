@@ -162,7 +162,7 @@ export default () => {
       if (registered) {
         SmsRetriever.addSmsListener((event) => {
           console.log('event.message', event.message);
-          event.message && console.log('event.message', event.message);
+          SmsRetriever.removeSmsListener();
         });
       }
       const {data} = await api.getSMS({

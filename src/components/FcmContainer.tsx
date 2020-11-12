@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Platform, Alert, Linking} from 'react-native';
-import firebase from 'react-native-firebase';
+import RNFirebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import {useDispatch} from 'react-redux';
 import {openSettings} from 'react-native-permissions';
@@ -26,8 +26,7 @@ export default ({children, onNotificationOpened}: Props): JSX.Element => {
   let _notificationOpenedListener: any = undefined;
 
   const _registerMessageListener = (): void => {
-    firebase
-      .notifications()
+    RNFirebase.notifications()
       .getInitialNotification()
       .then((notificationOpen) => {
         if (
@@ -42,37 +41,37 @@ export default ({children, onNotificationOpened}: Props): JSX.Element => {
         }
       });
 
-    const channel = new firebase.notifications.Android.Channel(
+    const channel = new RNFirebase.notifications.Android.Channel(
       CHANNEL_ID,
       APP_NAME,
-      firebase.notifications.Android.Importance.Max,
+      RNFirebase.notifications.Android.Importance.Max,
     ).setDescription(DESCRIPTION);
-    firebase.notifications().android.createChannel(channel);
+    RNFirebase.notifications().android.createChannel(channel);
 
-    _notificationListener = firebase
-      .notifications()
-      .onNotification((notification) => {
+    _notificationListener = RNFirebase.notifications().onNotification(
+      (notification) => {
         // Process your notification as required
         notification.android.setPriority(
-          firebase.notifications.Android.Priority.Max,
+          RNFirebase.notifications.Android.Priority.Max,
         );
         notification.android.setChannelId(CHANNEL_ID);
 
-        firebase.notifications().displayNotification(notification);
-      });
-    _notificationDisplayedListener = firebase
-      .notifications()
-      .onNotificationDisplayed(() => {});
-    _notificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened((notificationOpen) => {
+        RNFirebase.notifications().displayNotification(notification);
+      },
+    );
+    _notificationDisplayedListener = RNFirebase.notifications().onNotificationDisplayed(
+      () => {},
+    );
+    _notificationOpenedListener = RNFirebase.notifications().onNotificationOpened(
+      (notificationOpen) => {
         if (
           onNotificationOpened &&
           typeof onNotificationOpened === 'function'
         ) {
           onNotificationOpened(notificationOpen.notification.data);
         }
-      });
+      },
+    );
   };
 
   const _registerToken = (fcmToken: string) => {
@@ -93,16 +92,16 @@ export default ({children, onNotificationOpened}: Props): JSX.Element => {
       _onTokenRefreshListener = undefined;
     }
 
-    _onTokenRefreshListener = firebase
-      .messaging()
-      .onTokenRefresh((fcmToken) => {
+    _onTokenRefreshListener = RNFirebase.messaging().onTokenRefresh(
+      (fcmToken) => {
         // Process your token as required
         _registerToken(fcmToken);
-      });
+      },
+    );
   };
   const _updateTokenToServer = async (): Promise<void> => {
     try {
-      const fcmToken = await firebase.messaging().getToken();
+      const fcmToken = await RNFirebase.messaging().getToken();
       _registerMessageListener();
       _registerToken(fcmToken);
     } catch (e) {
@@ -112,7 +111,7 @@ export default ({children, onNotificationOpened}: Props): JSX.Element => {
 
   const _requestPermission = async (): Promise<void> => {
     try {
-      await firebase.messaging().requestPermission();
+      await RNFirebase.messaging().requestPermission();
       await _updateTokenToServer();
     } catch (error) {
       Alert.alert(
@@ -138,7 +137,7 @@ export default ({children, onNotificationOpened}: Props): JSX.Element => {
 
   const _checkPermission = async (): Promise<void> => {
     try {
-      const enabled = await firebase.messaging().hasPermission();
+      const enabled = await RNFirebase.messaging().hasPermission();
       if (enabled) {
         _updateTokenToServer();
         _registerTokenRefreshListener();
@@ -173,7 +172,7 @@ export default ({children, onNotificationOpened}: Props): JSX.Element => {
   }, []);
 
   if (Platform.OS === 'ios') {
-    firebase.notifications().setBadge(0);
+    RNFirebase.notifications().setBadge(0);
   }
 
   return children;

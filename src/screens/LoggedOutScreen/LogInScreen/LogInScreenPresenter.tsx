@@ -85,65 +85,65 @@ export default ({
   logIn,
 }) => {
   return (
-    <FcmContainer>
-      <BackGround>
-        <KeyboardAwareScrollView>
-          <Container>
-            <LogoText isIphoneX={isIphoneX()}>
-              <FastImage
-                style={{height: 100, width: 200}}
-                source={require('../../../assets/images/shopSol.png')}
-                resizeMode={FastImage.resizeMode.stretch}
-              />
-            </LogoText>
-            <WhiteSpace />
-            <TextInputBox>
-              <TextInputContainer>
-                <GreyText>ID</GreyText>
-                <TextInput
-                  placeholder={'휴대폰번호'}
-                  placeholderTextColor={'#999'}
-                  onChangeText={(text) => onChangeMobileNum(text)}
-                  value={mobileNo}
-                  keyboardType={'number-pad'}
-                  maxLength={11}
-                  clearButtonMode={'always'}
-                />
-              </TextInputContainer>
-              <InputLine isBefore={mobileNo == '' ? true : false} />
-              <WhiteSpace />
-              <TextInputContainer>
-                <GreyText>Password</GreyText>
-                <TextInput
-                  placeholder={'영문, 숫자 조합 6자 이상'}
-                  placeholderTextColor={'#999'}
-                  onChangeText={(text) => setPassword(text)}
-                  value={password}
-                  secureTextEntry={true}
-                  clearButtonMode={'always'}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </TextInputContainer>
-              <InputLine isBefore={password == '' ? true : false} />
-            </TextInputBox>
-            <WhiteSpace />
-            <RoundBtn
-              isInSection={true}
-              isWhiteBack={false}
-              text={'로그인'}
-              onPress={() => logIn()}
-              isRegisted={mobileNo || password}
+    // <FcmContainer>
+    <BackGround>
+      <KeyboardAwareScrollView>
+        <Container>
+          <LogoText isIphoneX={isIphoneX()}>
+            <FastImage
+              style={{height: 100, width: 200}}
+              source={require('../../../assets/images/shopSol.png')}
+              resizeMode={FastImage.resizeMode.stretch}
             />
+          </LogoText>
+          <WhiteSpace />
+          <TextInputBox>
+            <TextInputContainer>
+              <GreyText>ID</GreyText>
+              <TextInput
+                placeholder={'휴대폰번호'}
+                placeholderTextColor={'#999'}
+                onChangeText={(text) => onChangeMobileNum(text)}
+                value={mobileNo}
+                keyboardType={'number-pad'}
+                maxLength={11}
+                clearButtonMode={'always'}
+              />
+            </TextInputContainer>
+            <InputLine isBefore={mobileNo == '' ? true : false} />
             <WhiteSpace />
-            <Space>
-              <Touchable onPress={() => gotoFind()}>
-                <UnderLineText>비밀번호 찾기기</UnderLineText>
-              </Touchable>
-            </Space>
-          </Container>
-        </KeyboardAwareScrollView>
-      </BackGround>
-    </FcmContainer>
+            <TextInputContainer>
+              <GreyText>Password</GreyText>
+              <TextInput
+                placeholder={'영문, 숫자 조합 6자 이상'}
+                placeholderTextColor={'#999'}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                secureTextEntry={true}
+                clearButtonMode={'always'}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </TextInputContainer>
+            <InputLine isBefore={password == '' ? true : false} />
+          </TextInputBox>
+          <WhiteSpace />
+          <RoundBtn
+            isInSection={true}
+            isWhiteBack={false}
+            text={'로그인'}
+            onPress={() => logIn()}
+            isRegisted={mobileNo || password}
+          />
+          <WhiteSpace />
+          <Space>
+            <Touchable onPress={() => gotoFind()}>
+              <UnderLineText>비밀번호 찾기기</UnderLineText>
+            </Touchable>
+          </Space>
+        </Container>
+      </KeyboardAwareScrollView>
+    </BackGround>
+    // </FcmContainer>
   );
 };

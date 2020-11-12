@@ -117,7 +117,7 @@ export default () => {
       if (registered) {
         SmsRetriever.addSmsListener((event) => {
           console.log('event.message', event.message);
-          event.message && console.log('event.message', event.message);
+          SmsRetriever.removeSmsListener();
         });
       }
       const {data} = await api.getSMS({
@@ -158,10 +158,12 @@ export default () => {
   });
 
   useEffect(() => {
+    console.log('DeviceInfo.getPhoneNumber()');
     (async () => {
       (await DeviceInfo?.getPhoneNumber()) !== 'unknown' &&
         (await DeviceInfo?.getPhoneNumber()) &&
-        setMobileNo(await DeviceInfo.getPhoneNumber());
+        console.log(DeviceInfo.getPhoneNumber());
+      setMobileNo(await DeviceInfo.getPhoneNumber());
     })();
   }, []);
 

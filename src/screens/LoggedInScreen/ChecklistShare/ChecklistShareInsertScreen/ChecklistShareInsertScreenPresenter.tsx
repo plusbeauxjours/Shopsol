@@ -73,7 +73,7 @@ const CameraPictureCloseButtonText = styled.Text`
 const CameraPictureCloseButton = styled.TouchableOpacity`
   height: 60px;
   width: 100%;
-  background-color: #642a8c;
+  background-color: #e85356;
   align-self: flex-end;
   align-items: center;
   justify-content: center;
@@ -83,7 +83,7 @@ const CameraPictureButton = styled.TouchableOpacity`
   width: 60px;
   height: 60px;
   border-radius: 60px;
-  border-color: #642a8c;
+  border-color: #e85356;
   background-color: #ffffff;
   align-items: center;
   justify-content: center;
