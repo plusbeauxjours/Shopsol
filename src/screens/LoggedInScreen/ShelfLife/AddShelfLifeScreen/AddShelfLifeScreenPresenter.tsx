@@ -447,7 +447,7 @@ export default ({
                     width: wp('100%') - 40,
                     height: hp('100%') - 120,
                     borderRadius: 10,
-                    marginTop: 20,
+                    marginTop: isIphoneX() ? 20 : 40,
                   }}
                   source={{
                     uri: cameraPictureLast,

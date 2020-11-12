@@ -13,6 +13,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {CloseCircleIcon} from '~/constants/Icons';
 import {CameraIcon, PictureIcon} from '~/constants/Icons';
 import Animated from 'react-native-reanimated';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -349,7 +350,7 @@ export default ({
                       width: wp('100%') - 40,
                       height: hp('100%') - 120,
                       borderRadius: 10,
-                      marginTop: 20,
+                      marginTop: isIphoneX() ? 20 : 40,
                     }}
                     source={{
                       uri: cameraPictureLast,

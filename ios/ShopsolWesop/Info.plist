@@ -41,6 +41,8 @@
 	<string>Some ad content may access calendar</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Your own description of the purpose</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Your own description of the purpose</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Program requires GPS to track cars and job orders</string>
 	<key>NSLocationAlwaysUsageDescription</key>

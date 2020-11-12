@@ -14,6 +14,7 @@ import {CameraIcon, CheckBoxIcon} from '~/constants/Icons';
 import FastImage from 'react-native-fast-image';
 import {RNCamera} from 'react-native-camera';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
 const WhiteSpace = styled.View`
   height: 20px;
@@ -40,7 +41,7 @@ const TitleText = styled.Text`
 `;
 
 const CameraBox = styled.TouchableOpacity`
-  margin: 20px;
+  margin: 20px 0;
   width: 300px;
   height: 120px;
   align-items: center;
@@ -378,7 +379,7 @@ export default ({
                   width: wp('100%') - 40,
                   height: hp('100%') - 120,
                   borderRadius: 10,
-                  marginTop: 20,
+                  marginTop: isIphoneX() ? 20 : 40,
                 }}
                 source={{
                   uri: cameraPictureLast,

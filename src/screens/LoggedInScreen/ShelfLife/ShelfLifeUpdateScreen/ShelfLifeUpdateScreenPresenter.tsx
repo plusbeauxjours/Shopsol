@@ -14,6 +14,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {PictureIcon, CameraIcon, BarCodeIcon} from '~/constants/Icons';
 import {CloseCircleIcon} from '../../../../constants/Icons';
 import utils from '~/constants/utils';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
 interface ITextInput {
   isBefore: boolean;
@@ -358,7 +359,7 @@ export default ({
                     width: wp('100%') - 40,
                     height: hp('100%') - 120,
                     borderRadius: 10,
-                    marginTop: 20,
+                    marginTop: isIphoneX() ? 20 : 40,
                   }}
                   source={{
                     uri: cameraPictureLast,
