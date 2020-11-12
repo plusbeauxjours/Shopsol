@@ -282,7 +282,8 @@ export default ({
                 horizontal={true}>
                 <EndRow>
                   <Column>
-                    <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                    {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
+                    <Touchable onPress={() => console.log('photo')}>
                       <BorderBox>
                         <CameraIcon size={25} color={'#ccc'} />
                         <GreyText style={{fontSize: 10}}>사진촬영</GreyText>
