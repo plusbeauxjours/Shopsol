@@ -38,23 +38,23 @@
 		</dict>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Some ad content may access calendar</string>
+	<string>$(PRODUCT_NAME) 캘린더 접근을 허용하시겠습니까?</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Your own description of the purpose</string>
+	<string>$(PRODUCT_NAME) 업로드를 위한 카메라 사용을 허용하시겠습니까?</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Your own description of the purpose</string>
+	<string>$(PRODUCT_NAME) 직원초대를 위한 연락처 접근을 허용하시겠습니까?</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Program requires GPS to track cars and job orders</string>
+	<string>$(PRODUCT_NAME) GPS출퇴근을 위한 위치 공유를 허용하시겠습니까?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Program requires GPS to track cars and job orders</string>
+	<string>$(PRODUCT_NAME) GPS출퇴근을 위한 위치 공유를 허용하시겠습니까?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Program requires GPS to track cars and job orders</string>
+	<string>$(PRODUCT_NAME) GPS출퇴근을 위한 위치 공유를 허용하시겠습니까?</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Some ad content may access Microphone</string>
+	<string>$(PRODUCT_NAME) 업로드를 위한 카메라 사용을 허용하시겠습니까?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) Need permission to access to your Photo library</string>
+	<string>$(PRODUCT_NAME) 업로드를 위한 앨범 접근을 허용하시겠습니까?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Some ad content may access PhotoLibrary</string>
+	<string>$(PRODUCT_NAME) 업로드를 위한 앨범 접근을 허용하시겠습니까?</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>Some ad content may access reminder</string>
 	<key>UIAppFonts</key>

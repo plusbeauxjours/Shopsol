@@ -302,7 +302,8 @@ export default ({
               <FastImage
                 style={{
                   width: wp('100%') - 40,
-                  height: hp('100%') - 120,
+                  flex: 1,
+                  marginBottom: 80,
                   borderRadius: 10,
                   marginTop: isIphoneX() ? 20 : 40,
                 }}
@@ -313,7 +314,7 @@ export default ({
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
-              <Row>
+              <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
                 <HalfBotton onPress={() => setCameraPictureLast(null)}>
                   <HalfBottonText style={{color: '#e85356'}}>
                     재촬영

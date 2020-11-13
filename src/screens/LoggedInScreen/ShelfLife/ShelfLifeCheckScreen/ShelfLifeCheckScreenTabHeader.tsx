@@ -18,7 +18,6 @@ const Row = styled.View`
   flex-direction: row;
   width: ${wp('100%') - 40}px;
   justify-content: space-between;
-  bottom: 20px;
 `;
 
 const LineTextContainer = styled.View`
@@ -31,7 +30,7 @@ const LineTextContainer = styled.View`
   justify-content: center;
   align-items: center;
   margin-top: 30px;
-  margin-bottom: 10px;
+  bottom: ${utils.isAndroid() ? 20 : 40};
 `;
 
 const LineText = styled.Text`
@@ -40,9 +39,7 @@ const LineText = styled.Text`
   color: white;
 `;
 
-const Touchable = styled.TouchableOpacity`
-  bottom: ${utils.isAndroid() ? 0 : 44};
-`;
+const Touchable = styled.TouchableOpacity``;
 
 export default ({transition, tabs, gotoCategory, y, ready}) => {
   const opacity = transition;
