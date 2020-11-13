@@ -481,6 +481,7 @@ export default ({
         )}
       </RBSheet>
       <DatePickerModal
+        isDarkModeEnabled={false}
         headerTextIOS={'시간을 선택하세요.'}
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
@@ -495,6 +496,7 @@ export default ({
         onCancel={() => setIsStartTimeModalVisible(false)}
       />
       <DatePickerModal
+        isDarkModeEnabled={false}
         headerTextIOS={'시간을 선택하세요.'}
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}

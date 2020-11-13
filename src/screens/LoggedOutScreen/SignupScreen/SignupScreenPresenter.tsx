@@ -241,6 +241,7 @@ export default ({
             </Case>
             <WhiteSpace />
             <DatePickerModal
+              isDarkModeEnabled={false}
               headerTextIOS={'생일을 선택하세요.'}
               cancelTextIOS={'취소'}
               confirmTextIOS={'확인'}

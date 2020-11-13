@@ -43,8 +43,9 @@ const Row = styled.View`
 
 const DateBox = styled(Row)`
   padding: 20px 15px;
-  height: 100px;
+  height: 50px;
   flex: 1;
+  margin-bottom: 20px;
 `;
 
 const DateArrow = styled.TouchableOpacity`

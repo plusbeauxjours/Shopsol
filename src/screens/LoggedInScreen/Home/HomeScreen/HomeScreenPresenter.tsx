@@ -785,7 +785,7 @@ export default ({
                       STORE_DATA?.PAY_SHOW == 1 && (
                         <MenuCntContainer
                           selection={'급여정보'}
-                          paging={'EmpPaymentInfoScreen'}
+                          paging={'EmpPayInfoScreen'}
                           source={require(`../../../../assets/main/PaymentInfo.png`)}
                         />
                       )
@@ -852,7 +852,7 @@ export default ({
                     {STORE_DATA?.PAY_SHOW == 1 && (
                       <MenuCntContainer
                         selection={'급여정보'}
-                        paging={'EmpPaymentInfoScreen'}
+                        paging={'EmpPayInfoScreen'}
                         source={require(`../../../../assets/main/PaymentInfo.png`)}
                       />
                     )}

@@ -7,12 +7,18 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import EmpPayInfoScreenPresenter from './EmpPayInfoScreenPresenter';
 
-export default ({route: {params}}) => {
+export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {STORE_SEQ, EMP_SEQ, STORE, STOREPAY_SHOW, NAME, ISMANAGER} = params;
 
-  const {NAME: NAMEreducer} = useSelector((state: any) => state.userReducer);
+  const {STORE} = useSelector((state: any) => state.userReducer);
+  const {
+    STORE_SEQ,
+    EMP_SEQ,
+    IS_MANAGER,
+    STORE_DATA: {resultdata: {STOREPAY_SHOW = null} = {}} = {},
+  } = useSelector((state: any) => state.storeReducer);
+  const {MEMBER_NAME} = useSelector((state: any) => state.userReducer);
   const [year, setYear] = useState<number>();
   const [month, setMonth] = useState<number>();
   const [boxButton, setBoxButton] = useState<boolean>(true);
@@ -163,7 +169,7 @@ export default ({route: {params}}) => {
 
   return (
     <EmpPayInfoScreenPresenter
-      NAME={NAME || NAMEreducer}
+      MEMBER_NAME={MEMBER_NAME}
       maindata={maindata}
       PAY_TYPE={maindata.PAY_TYPE}
       backpay={backpay}
@@ -171,7 +177,7 @@ export default ({route: {params}}) => {
       nextpay={nextpay}
       STORE={STORE}
       STOREPAY_SHOW={STOREPAY_SHOW}
-      ISMANAGER={ISMANAGER}
+      IS_MANAGER={IS_MANAGER}
       boxButton={boxButton}
       setBoxButton={setBoxButton}
       boxButton2={boxButton2}

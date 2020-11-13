@@ -409,6 +409,7 @@ export default ({
         </ScrollView>
       </BackGround>
       <DatePickerModal
+        isDarkModeEnabled={false}
         headerTextIOS={'날짜를 선택하세요.'}
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
