@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {ActivityIndicator, StatusBar, LogBox} from 'react-native';
 import {useSelector} from 'react-redux';
 import firebase from 'react-native-firebase';
-import * as Sentry from '@sentry/react-native';
+// import * as Sentry from '@sentry/react-native';
 
 import CloseBtn from './Header/CloseBtn';
 import LoggedInNavigation from '../navigations/LoggedInNavigation';
@@ -21,12 +21,12 @@ export default () => {
   const {isLoggedIn} = useSelector((state: any) => state.userReducer);
   const RootStack = createStackNavigator();
 
-  Sentry.init({
-    dsn:
-      'https://920fb530d09442768b04ec6825a3a2b4@o450648.ingest.sentry.io/5457931',
-    enableAutoSessionTracking: true,
-    sessionTrackingIntervalMillis: 10000,
-  });
+  // Sentry.init({
+  //   dsn:
+  //     'https://920fb530d09442768b04ec6825a3a2b4@o450648.ingest.sentry.io/5457931',
+  //   enableAutoSessionTracking: true,
+  //   sessionTrackingIntervalMillis: 10000,
+  // });
 
   return (
     <NavigationContainer

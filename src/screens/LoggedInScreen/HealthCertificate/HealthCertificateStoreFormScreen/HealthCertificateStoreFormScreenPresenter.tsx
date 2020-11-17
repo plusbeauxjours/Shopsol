@@ -40,8 +40,14 @@ const TitleText = styled.Text`
   font-size: 22px;
 `;
 
+const CameraBoxContainer = styled.View`
+  width: 100%;
+  align-items: center;
+`;
+
 const CameraBox = styled.TouchableOpacity`
-  margin: 20px 0;
+  margin-top: 20px;
+  margin-bottom: 5px;
   width: 300px;
   height: 120px;
   align-items: center;
@@ -189,29 +195,38 @@ export default ({
                 <Text>정보를 자동으로 입력할 수 있습니다</Text>
               </TextContainer>
               {cameraPictureLast ? (
-                <CameraBox onPress={() => setCameraPictureLast(null)}>
-                  <FastImage
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 10,
-                      marginHorizontal: 5,
-                    }}
-                    source={{
-                      uri: cameraPictureLast,
-                      headers: {Authorization: 'someAuthToken'},
-                      priority: FastImage.priority.low,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                </CameraBox>
+                <CameraBoxContainer>
+                  <CameraBox onPress={() => setCameraPictureLast(null)}>
+                    <FastImage
+                      style={{
+                        width: 100,
+                        height: 100,
+                        borderRadius: 10,
+                        marginHorizontal: 5,
+                      }}
+                      source={{
+                        uri: cameraPictureLast,
+                        headers: {Authorization: 'someAuthToken'},
+                        priority: FastImage.priority.low,
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </CameraBox>
+                  <Bold>
+                    * 인식이 불안정할 경우 직접입력하여 진행해 주세요.
+                  </Bold>
+                </CameraBoxContainer>
               ) : (
-                <CameraBox onPress={() => setIsCameraModalVisible(true)}>
-                  <Bold style={{color: '#e85356'}}>촬영하기</Bold>
-                  <CameraIcon size={40} />
-                </CameraBox>
+                <CameraBoxContainer>
+                  <CameraBox onPress={() => setIsCameraModalVisible(true)}>
+                    <Bold style={{color: '#e85356'}}>촬영하기</Bold>
+                    <CameraIcon size={40} />
+                  </CameraBox>
+                  <Bold>
+                    * 인식이 불안정할 경우 직접입력하여 진행해 주세요.
+                  </Bold>
+                </CameraBoxContainer>
               )}
-              <Bold>* 인식이 불안정할 경우 직접입력하여 진행해 주세요.</Bold>
             </Section>
             <Section>
               <TextInputContainer>
