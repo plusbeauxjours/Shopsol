@@ -1,0 +1,2 @@
+import WeeklyDashBoardScreenContainer from "./WeeklyDashBoardScreenContainer"
+export default WeeklyDashBoardScreenContainer

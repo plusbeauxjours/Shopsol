@@ -59,6 +59,7 @@ const DateArrow = styled.TouchableOpacity`
 
 const Date = styled.View`
   flex: 1;
+  height: 20px;
   align-items: center;
 `;
 

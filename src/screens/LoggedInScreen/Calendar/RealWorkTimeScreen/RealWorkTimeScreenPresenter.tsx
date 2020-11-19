@@ -293,6 +293,7 @@ export default ({
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
         mode="time"
+        minuteInterval={5}
         locale="ko_KRus_EN"
         onConfirm={(time) => {
           setStartTime(moment(time).format('HH:mm'));

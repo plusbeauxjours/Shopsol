@@ -11,6 +11,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  if (@available(iOS 14, *)) {
+    UIDatePicker *picker = [UIDatePicker appearance];
+    picker.preferredDatePickerStyle = UIDatePickerStyleWheels;
+  }
   [GMSServices provideAPIKey:@"AIzaSyADKGFHRVwkoFG-OXKlqovutibiqVIeN3E"];
 
   [FIRApp configure];

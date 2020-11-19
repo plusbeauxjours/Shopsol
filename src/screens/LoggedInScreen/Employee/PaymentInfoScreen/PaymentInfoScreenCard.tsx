@@ -57,7 +57,7 @@ export default ({
       STORE,
       STOREPAY_SHOW,
       NAME: name,
-      ISMANAGER: isManager,
+      IS_MANAGER: isManager,
     });
   };
   return (

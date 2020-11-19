@@ -8,6 +8,7 @@ import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen'
 import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
 import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
 import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
+import DashBoardScreen from '../screens/LoggedInScreen/DashBoard';
 
 // 유통기한========================================================
 import ShelfLifeCheckScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLifeCheckScreen';
@@ -85,7 +86,7 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SelectStoreScreen'}
+        initialRouteName={'DashBoardScreen'}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#e85356',
@@ -99,6 +100,14 @@ export default () => {
           headerRight: () => <HomeBtn />,
           headerLeftContainerStyle: {marginLeft: 10},
         }}>
+        <LoggedInNavigation.Screen
+          name="DashBoardScreen"
+          component={DashBoardScreen}
+          options={{
+            headerTitle: '사업장 현황',
+            title: '사업장 현황',
+          }}
+        />
         <LoggedInNavigation.Screen
           name="SelectStoreScreen"
           component={SelectStoreScreen}

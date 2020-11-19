@@ -1,0 +1,2 @@
+import MonthlyDashBoardScreenContainer from "./MonthlyDashBoardScreenContainer"
+export default MonthlyDashBoardScreenContainer
