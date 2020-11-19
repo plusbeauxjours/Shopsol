@@ -22,18 +22,36 @@ const Section = styled.View`
   border-radius: 20px;
   padding: 10px;
   background-color: white;
+  margin-bottom: 20px;
 `;
 
-export default ({toDay}) => {
+export default ({empList, toDay, data}) => {
   return (
     <BackGround>
+      {console.log('empList', empList)}
+
       <ScrollView
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{alignItems: 'center'}}>
         <Container>
           <Section>
-            <Text>toDay = {toDay}</Text>
+            <Text>출근미체크율 = API 대기중</Text>
+          </Section>
+          <Section>
+            <Text>퇴근미체크율 = API 대기중</Text>
+          </Section>
+          <Section>
+            <Text>지각률 = {toDay}</Text>
+          </Section>
+          <Section>
+            <Text>조퇴률 = {toDay}</Text>
+          </Section>
+          <Section>
+            <Text>평균 휴게시간 = {data.length}</Text>
+          </Section>
+          <Section>
+            <Text>휴가중인 직원 = {toDay}</Text>
           </Section>
         </Container>
       </ScrollView>

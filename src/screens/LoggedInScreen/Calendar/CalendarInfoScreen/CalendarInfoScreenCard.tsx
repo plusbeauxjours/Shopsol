@@ -312,10 +312,10 @@ export default ({
                   {isNextDay1 && '익일 '}
                   {(WORK_OFF_TIME || END)?.substring(0, 5)}
                   {CHANGE_START && CHANGE_END && ' > '}
-                  {CHANGE_START == null ? '' : CHANGE_START?.substring(0, 5)}
+                  {CHANGE_START && CHANGE_START?.substring(0, 5)}
                   {CHANGE_START && CHANGE_END && ' ~ '}
                   {isNextDay2 && '익일 '}
-                  {CHANGE_END == null ? '' : CHANGE_END?.substring(0, 5)}
+                  {CHANGE_END && CHANGE_END?.substring(0, 5)}
                 </WorkTimeText>
               </WorkTime>
             )}

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
-import styled from 'styled-components/native';
 import firebase from 'react-native-firebase';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
@@ -11,17 +10,10 @@ import DailyDashBoardScreen from './DailyDashBoardScreen';
 import WeeklyDashBoardScreen from './WeeklyDashBoardScreen';
 import MonthlyDashBoardScreen from './MonthlyDashBoardScreen';
 
-const View = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-const Text = styled.Text``;
-
 export default () => {
   const dispatch = useDispatch();
   const Tab = createMaterialTopTabNavigator();
-
+  const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {
     STORE_SEQ,
@@ -60,18 +52,18 @@ export default () => {
   };
 
   useEffect(() => {
-    fetchData(moment().format('YYYY-MM-DD'));
-    console.log(
-      moment().startOf('isoWeek').format('MM'),
-      moment().endOf('isoWeek').format('MM'),
-    );
-    // if (
-    //   moment().startOf('isoWeek').format('MM') !==
-    //   moment().endOf('isoWeek').format('MM')
-    // ) {
-    //   // fetchData(moment().add('month', 1).format('YYYY-MM-DD'));
-    //   console.log('koko');
-    // }
+    if (!CALENDAR_DATA[moment().format('YYYY-MM-DD')]) {
+      fetchData(moment().format('YYYY-MM-DD'));
+      console.log('----------------fetching data THIS MONTH----------------');
+    }
+    if (
+      moment().startOf('isoWeek').format('MM') !==
+        moment().endOf('isoWeek').format('MM') &&
+      !CALENDAR_DATA[moment().add(1, 'month').format('YYYY-MM-DD')]
+    ) {
+      fetchData(moment().add(1, 'month').format('YYYY-MM-DD'));
+      console.log('----------------fetching data NEXT MONTH----------------');
+    }
     firebase.analytics().setCurrentScreen('사업장 현황');
   }, []);
 
