@@ -29,6 +29,7 @@
     "react-native": "0.63.2",
     "react-native-calendars": "1.314.0",
     "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera.git",
+    "react-native-chart-kit": "6.7.0",
     "react-native-contacts": "5.2.7",
     "react-native-datepicker": "1.7.2",
     "react-native-device-info": "6.0.3",
