@@ -19,7 +19,7 @@ export default () => {
   const [totalVACATION, setTotalVACATION] = useState<number>(0);
   const [VACATION_EMP_LIST, setVACATION_EMP_LIST] = useState<any>([]);
   const [totalWORKING, setTotalWORKING] = useState<number>(0);
-  const [WORKING_EMP_LIST, setWORKING_EMP_LIST] = useState<any>([]);
+  const [pieData, setPieData] = useState<any>([]);
 
   const toDay = moment().format('YYYY-MM-DD');
 
@@ -32,6 +32,7 @@ export default () => {
         IS_MANAGER: i.IS_MANAGER,
       });
     });
+    console.log('===========', CALENDAR_DATA[toDay]);
     CALENDAR_DATA[toDay]?.map((i) => {
       let emp = empListTemp.find((emp) => emp.EMP_SEQ == i.EMP_ID);
       emp['EARLY'] = i.alear ?? '0';
@@ -132,7 +133,6 @@ export default () => {
       totalVACATION={totalVACATION}
       VACATION_EMP_LIST={VACATION_EMP_LIST}
       totalWORKING={totalWORKING}
-      WORKING_EMP_LIST={WORKING_EMP_LIST}
     />
   );
 };

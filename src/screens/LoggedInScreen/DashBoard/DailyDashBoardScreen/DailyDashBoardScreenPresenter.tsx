@@ -8,6 +8,7 @@ import {
 
 import DonutCard from '~/components/DonutCard';
 import FastImage from 'react-native-fast-image';
+import moment from 'moment';
 
 interface IColor {
   color: string;
@@ -34,10 +35,10 @@ const Container = styled.View`
 
 const Section = styled.View`
   width: 100%;
-  height: 140px;
+  height: 220px;
   border-radius: 20px;
   padding: 10px;
-  background-color: white;
+  background-color: grey;
   margin-bottom: 20px;
 `;
 
@@ -63,7 +64,9 @@ const TitleWord = styled.Text<IColor>`
 `;
 
 const DodnutTextContainer = styled.View`
+  width: 70px;
   top: 115px;
+  text-align: center;
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -114,7 +117,6 @@ export default ({
   totalVACATION,
   VACATION_EMP_LIST,
   totalWORKING,
-  WORKING_EMP_LIST,
 }) => {
   return (
     <BackGround>
@@ -123,7 +125,26 @@ export default ({
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{alignItems: 'center'}}>
-        <Container></Container>
+        <Container>
+          <Section>
+            <DonutCard
+              percentage={totalWORKING / EMP_LIST.length}
+              color={'red'}
+              max={86400000}
+            />
+            <DodnutTextContainer style={{left: 75, top: 90, height: 40}}>
+              <PercentageSubText color={'red'}>
+                {moment.duration(totalWORKING / EMP_LIST.length).hours()}시간
+              </PercentageSubText>
+              {moment.duration(totalWORKING / EMP_LIST.length).minutes() !=
+                0 && (
+                <PercentageSubText color={'red'}>
+                  {moment.duration(totalWORKING / EMP_LIST.length).minutes()}분
+                </PercentageSubText>
+              )}
+            </DodnutTextContainer>
+          </Section>
+        </Container>
 
         <ScrollView
           horizontal
@@ -131,7 +152,7 @@ export default ({
           decelerationRate="fast"
           showsHorizontalScrollIndicator={false}>
           {/* <Card
-            onPress={() => console.log('index')}
+            onPress={() => {}}
             rippleColor={'#666'}
             rippleDuration={600}
             rippleSize={1700}
@@ -140,7 +161,7 @@ export default ({
             <Text>출근미체크율 = API 대기중</Text>
           </Card>
           <Card
-            onPress={() => console.log('index')}
+            onPress={() => {}}
             rippleColor={'#666'}
             rippleDuration={600}
             rippleSize={1700}
@@ -149,7 +170,7 @@ export default ({
             <Text>퇴근미체크율 = API 대기중</Text>
           </Card> */}
           <Card
-            onPress={() => console.log('index')}
+            onPress={() => {}}
             rippleColor={'#666'}
             rippleDuration={600}
             rippleSize={1700}
@@ -173,9 +194,9 @@ export default ({
                 <Text style={{marginTop: 20}}>금일 지각 직원이 없습니다. </Text>
               ) : (
                 LATE_EMP_LIST.map(
-                  (i) =>
+                  (i, index) =>
                     i.LATE !== '0' && (
-                      <EmpCard>
+                      <EmpCard key={index}>
                         <FastImage
                           style={{
                             margin: 10,
@@ -204,7 +225,7 @@ export default ({
             </EmpConatainer>
           </Card>
           <Card
-            onPress={() => console.log('index')}
+            onPress={() => {}}
             rippleColor={'#666'}
             rippleDuration={600}
             rippleSize={1700}
@@ -232,7 +253,7 @@ export default ({
                 EARLY_EMP_LIST.map(
                   (i) =>
                     i.EARLY !== '0' && (
-                      <EmpCard>
+                      <EmpCard key={index}>
                         <FastImage
                           style={{
                             margin: 10,
@@ -261,7 +282,7 @@ export default ({
             </EmpConatainer>
           </Card>
           <Card
-            onPress={() => console.log('index')}
+            onPress={() => {}}
             rippleColor={'#666'}
             rippleDuration={600}
             rippleSize={1700}
@@ -320,7 +341,7 @@ export default ({
           </Card>
           <Card
             isLast={true}
-            onPress={() => console.log('index')}
+            onPress={() => {}}
             rippleColor={'#666'}
             rippleDuration={600}
             rippleSize={1700}
