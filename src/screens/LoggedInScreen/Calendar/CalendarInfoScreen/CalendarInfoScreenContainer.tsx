@@ -3,7 +3,10 @@ import moment from 'moment';
 import {useSelector, useDispatch} from 'react-redux';
 
 import CalendarInfoScreenPresenter from './CalendarInfoScreenPresenter';
-import {setCALENDAR_DATA} from '~/redux/calendarSlice';
+import {
+  setCALENDAR_DATA,
+  setCALENDAR_DATA_STORE_SEQ,
+} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
 
 export default () => {
@@ -106,6 +109,7 @@ export default () => {
 
   const fetchData = async (date) => {
     try {
+      dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       const {data} = await api.getAllSchedules(
         STORE_SEQ,
         moment(date).format('YYYY'),

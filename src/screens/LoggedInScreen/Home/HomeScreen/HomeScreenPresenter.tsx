@@ -658,6 +658,11 @@ export default ({
               </MenuTitleArea>
               <Container>
                 <MenuCntContainer
+                  selection={'사업장현황'}
+                  paging={'DashBoardScreen'}
+                  source={require(`../../../../assets/main/Invite.png`)}
+                />
+                <MenuCntContainer
                   selection={'직원초대'}
                   paging={'InviteEmployeeScreen'}
                   source={require(`../../../../assets/main/Invite.png`)}

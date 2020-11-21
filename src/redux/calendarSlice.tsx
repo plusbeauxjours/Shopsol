@@ -4,9 +4,25 @@ import moment from 'moment';
 const calendarSlice = createSlice({
   name: 'calendar',
   initialState: {
+    LOADING: false,
+    CALENDAR_DATA_STORE_SEQ: '',
     CALENDAR_DATA: {},
   },
   reducers: {
+    setLOADING(state, action) {
+      const {payload: LOADING} = action;
+      return {
+        ...state,
+        LOADING,
+      };
+    },
+    setCALENDAR_DATA_STORE_SEQ(state, action) {
+      const {payload: CALENDAR_DATA_STORE_SEQ} = action;
+      return {
+        ...state,
+        CALENDAR_DATA_STORE_SEQ,
+      };
+    },
     setCALENDAR_DATA(state, action) {
       const {
         payload: {CALENDAR_DATA, date},
@@ -103,6 +119,8 @@ const calendarSlice = createSlice({
 });
 
 export const {
+  setLOADING,
+  setCALENDAR_DATA_STORE_SEQ,
   setCALENDAR_DATA,
   toggleVACATION,
   updateREST_TIME,

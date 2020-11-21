@@ -116,7 +116,6 @@ export default () => {
       const registered = await SmsRetriever?.startSmsRetriever();
       if (registered) {
         SmsRetriever.addSmsListener((event) => {
-          console.log('event.message', event.message);
           SmsRetriever.removeSmsListener();
         });
       }
@@ -158,12 +157,9 @@ export default () => {
   });
 
   useEffect(() => {
-    console.log('DeviceInfo.getPhoneNumber()');
     (async () => {
       (await DeviceInfo?.getPhoneNumber()) !== 'unknown' &&
-        (await DeviceInfo?.getPhoneNumber()) &&
-        console.log(DeviceInfo.getPhoneNumber());
-      setMobileNo(await DeviceInfo.getPhoneNumber());
+        setMobileNo(await DeviceInfo.getPhoneNumber());
     })();
   }, []);
 

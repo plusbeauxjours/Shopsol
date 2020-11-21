@@ -139,7 +139,6 @@ export default ({route: {params}}) => {
       </Row>
     </React.Fragment>
   );
-  console.log(params);
   return (
     <BackGround>
       <Container>
