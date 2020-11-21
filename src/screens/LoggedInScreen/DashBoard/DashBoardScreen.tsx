@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import firebase from 'react-native-firebase';
@@ -30,6 +30,8 @@ export default () => {
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
   } = useSelector((state: any) => state.storeReducer);
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetcEmphData = async () => {
     try {
@@ -123,7 +125,8 @@ export default () => {
     } catch (e) {
       console.log(e);
     } finally {
-      console.log('==============done==============');
+      console.log('[][][][][][][][][]DONE[][][][][][][][][]');
+      setLoading(false);
       dispatch(setSplashVisible(false));
     }
   };
@@ -143,7 +146,7 @@ export default () => {
     firebase.analytics().setCurrentScreen('사업장 현황');
   }, []);
 
-  if (visible) {
+  if (visible || loading) {
     return null;
   } else {
     return (

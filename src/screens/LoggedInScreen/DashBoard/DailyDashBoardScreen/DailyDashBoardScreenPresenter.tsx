@@ -103,7 +103,6 @@ const DonutColumn = styled(Column)`
   width: 130px;
   height: 200px;
   justify-content: center;
-  background-color: red;
   margin-right: 10px;
 `;
 
@@ -137,9 +136,11 @@ export default ({
   totalWORKING,
   totlaWORKING_EMP,
   toDay,
+  loading,
   visible,
+  STORE_NAME,
 }) => {
-  if (visible) {
+  if (loading || visible || EMP_LIST.length == 0) {
     return null;
   } else {
     if (totlaWORKING_EMP == 0) {
@@ -196,7 +197,7 @@ export default ({
                     <DonutColumnText>
                       {moment(toDay).format('MM월 DD일')}
                     </DonutColumnText>
-                    <Text>Text</Text>
+                    <DonutColumnText>{STORE_NAME}</DonutColumnText>
                     <Text>Text</Text>
                     <Text>Text</Text>
                     <Text>Text</Text>

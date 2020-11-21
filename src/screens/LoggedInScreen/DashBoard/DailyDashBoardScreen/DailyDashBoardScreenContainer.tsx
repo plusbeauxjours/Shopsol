@@ -4,13 +4,18 @@ import moment from 'moment';
 
 import DailyDashBoardScreenPresenter from './DailyDashBoardScreenPresenter';
 import colors from '~/constants/colors';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default () => {
   const dispatch = useDispatch();
   const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
   const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
+  const {STORE_NAME, STORE_SEQ} = useSelector(
+    (state: any) => state.storeReducer,
+  );
   const {visible} = useSelector((state: any) => state.splashReducer);
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
   const [totalEARLY, setTotalEARLY] = useState<number>(0);
   const [EARLY_EMP_LIST, setEARLY_EMP_LIST] = useState<any>([]);
@@ -186,6 +191,8 @@ export default () => {
       );
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -207,7 +214,9 @@ export default () => {
       totalWORKING={totalWORKING}
       totlaWORKING_EMP={totlaWORKING_EMP}
       toDay={toDay}
+      loading={loading}
       visible={visible}
+      STORE_NAME={STORE_NAME}
     />
   );
 };
