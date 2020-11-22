@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {PieChart} from 'react-native-chart-kit';
+import Animated from 'react-native-reanimated';
 
 import DonutCard from '~/components/DonutCard';
 import FastImage from 'react-native-fast-image';
@@ -34,7 +35,7 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Section = styled.View`
+const Section = styled(Ripple)`
   width: 100%;
   border-radius: 20px;
   padding: 10px;
@@ -57,10 +58,9 @@ const TitleWord = styled.Text<IColor>`
   color: ${(props) => props.color};
   align-self: flex-start;
   font-weight: bold;
-  font-size: 22px;
   margin-top: 20px;
   margin-left: 20px;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const DodnutTextContainer = styled.View`
@@ -106,9 +106,16 @@ const DonutColumn = styled(Column)`
   margin-right: 10px;
 `;
 
-const DonutColumnText = styled.Text`
+const DonutColumnTitle = styled.Text`
+  color: #7f7f7f;
   font-size: 18px;
   font-weight: bold;
+  margin: 3px 0;
+`;
+
+const DonutColumnText = styled(DonutColumnTitle)`
+  font-size: 12px;
+  font-weight: 400;
 `;
 
 const EmpConatainer = styled.View`
@@ -116,6 +123,10 @@ const EmpConatainer = styled.View`
   height: 180px;
   justify-content: flex-start;
   align-items: center;
+`;
+
+const WhiteSpace = styled.View`
+  height: 10px;
 `;
 
 const Row = styled.View`
@@ -139,6 +150,8 @@ export default ({
   loading,
   visible,
   STORE_NAME,
+  scrollRef,
+  onPressSection,
 }) => {
   if (loading || visible || EMP_LIST.length == 0) {
     return null;
@@ -154,13 +167,20 @@ export default ({
     } else {
       return (
         <BackGround>
-          <ScrollView
+          <Animated.ScrollView
+            ref={scrollRef}
             style={{paddingBottom: hp('100%') - 420}}
             keyboardDismissMode="on-drag"
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{alignItems: 'center'}}>
             <Container>
-              <Section>
+              <Section
+                onPress={() => onPressSection()}
+                rippleColor={'#666'}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
                 <Row>
                   <DonutCard
                     percentage={totalWORKING / totlaWORKING_EMP}
@@ -194,15 +214,30 @@ export default ({
                     )}
                   </DodnutTextContainer>
                   <DonutColumn>
-                    <DonutColumnText>
+                    <DonutColumnTitle>
                       {moment(toDay).format('MM월 DD일')}
+                    </DonutColumnTitle>
+                    <DonutColumnTitle>{STORE_NAME}점</DonutColumnTitle>
+                    <WhiteSpace />
+                    <DonutColumnText>
+                      {(totlaWORKING_EMP / EMP_LIST.length) * 100}% 근무중&nbsp;
+                      ({totlaWORKING_EMP}명)
                     </DonutColumnText>
-                    <DonutColumnText>{STORE_NAME}</DonutColumnText>
-                    <Text>Text</Text>
-                    <Text>Text</Text>
-                    <Text>Text</Text>
-                    <Text>Text</Text>
-                    <Text>Text</Text>
+                    <DonutColumnText>
+                      {(totalLATE / EMP_LIST.length) * 100}% 지각&nbsp; (
+                      {totalLATE}명)
+                    </DonutColumnText>
+                    <DonutColumnText>
+                      {(totalEARLY / EMP_LIST.length) * 100}% 조퇴&nbsp; (
+                      {totalEARLY}명)
+                    </DonutColumnText>
+                    <DonutColumnText>
+                      {totalREST_TIME / totlaWORKING_EMP}분 평균휴게시간
+                    </DonutColumnText>
+                    <DonutColumnText>
+                      {(totalVACATION / totlaWORKING_EMP) * 100}% 휴가&nbsp; (
+                      {totalVACATION}명)
+                    </DonutColumnText>
                   </DonutColumn>
                 </Row>
                 <PieChart
@@ -279,7 +314,7 @@ export default ({
                       금일 지각 직원이 없습니다.{' '}
                     </Text>
                   ) : (
-                    LATE_EMP_LIST.map(
+                    LATE_EMP_LIST.slice(0, 3).map(
                       (i, index) =>
                         i.LATE &&
                         i.LATE !== '0' && (
@@ -340,7 +375,7 @@ export default ({
                       금일 조퇴 직원이 없습니다.{' '}
                     </Text>
                   ) : (
-                    EARLY_EMP_LIST.map(
+                    EARLY_EMP_LIST.slice(0, 3).map(
                       (i, index) =>
                         i.EARLY &&
                         i.EARLY !== '0' && (
@@ -399,7 +434,7 @@ export default ({
                       휴게시간이 있는 직원이 없습니다.
                     </Text>
                   ) : (
-                    REST_TIME_EMP_LIST.map(
+                    REST_TIME_EMP_LIST.slice(0, 3).map(
                       (i, index) =>
                         i.REST_TIME &&
                         i.REST_TIME !== '0' && (
@@ -449,9 +484,12 @@ export default ({
                   max={totlaWORKING_EMP}
                 />
                 <DodnutTextContainer>
-                  <PercentageText color={'#e85356'} style={{marginTop: 10}}>
-                    {totalVACATION}명
+                  <PercentageText color={'#e85356'}>
+                    {(totalVACATION / totlaWORKING_EMP) * 100}%
                   </PercentageText>
+                  <PercentageSubText color={'#e85356'}>
+                    {totalVACATION}명
+                  </PercentageSubText>
                 </DodnutTextContainer>
                 <TitleWord color={'#e85356'}>금일 휴가 직원</TitleWord>
                 <EmpConatainer>
@@ -462,7 +500,7 @@ export default ({
                       금일 휴가중인 직원이 없습니다.
                     </Text>
                   ) : (
-                    VACATION_EMP_LIST.map(
+                    VACATION_EMP_LIST.slice(0, 3).map(
                       (i, index) =>
                         i.VACATION &&
                         i.VACATION !== '0' && (
@@ -495,7 +533,7 @@ export default ({
                 </EmpConatainer>
               </Card>
             </ScrollView>
-          </ScrollView>
+          </Animated.ScrollView>
         </BackGround>
       );
     }

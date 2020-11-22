@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, {createRef, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 import moment from 'moment';
 
 import DailyDashBoardScreenPresenter from './DailyDashBoardScreenPresenter';
 import colors from '~/constants/colors';
-import {setSplashVisible} from '~/redux/splashSlice';
 
 export default () => {
-  const dispatch = useDispatch();
+  const scrollRef = createRef(0);
   const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
   const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
-  const {STORE_NAME, STORE_SEQ} = useSelector(
-    (state: any) => state.storeReducer,
-  );
+  const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,6 +26,10 @@ export default () => {
   const [totlaWORKING_EMP, setTotalWORKING_EMP] = useState<number>(0);
 
   const toDay = moment().format('YYYY-MM-DD');
+
+  const onPressSection = () => {
+    return scrollRef.current?.getNode()?.scrollToEnd({animated: true});
+  };
 
   const init = async () => {
     try {
@@ -160,34 +161,25 @@ export default () => {
               setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1));
         }
       });
-      setEMP_LIST(
-        empListTemp.sort((a, b) =>
-          a.WORKING > b.WORKING ? -1 : b.WORKING > a.WORKING ? 1 : 0,
-        ),
-      );
+      const orderByWORKING = [...empListTemp];
+      setEMP_LIST(orderByWORKING.sort((a, b) => b.WORKING - a.WORKING));
 
-      setEARLY_EMP_LIST(
-        empListTemp.sort((a, b) =>
-          a.EARLY > b.EARLY ? -1 : b.EARLY > a.EARLY ? 1 : 0,
-        ),
-      );
+      const orderByEARLY = [...empListTemp];
+      setEARLY_EMP_LIST(orderByEARLY.sort((a, b) => b.EARLY - a.EARLY));
 
-      setLATE_EMP_LIST(
-        empListTemp.sort((a, b) =>
-          a.LATE > b.LATE ? -1 : b.LATE > a.LATE ? 1 : 0,
-        ),
-      );
+      const orderByLATE = [...empListTemp];
+      setLATE_EMP_LIST(orderByLATE.sort((a, b) => b.LATE - a.LATE));
 
+      const orderByREST_TIME = [...empListTemp];
       setREST_TIME_EMP_LIST(
-        empListTemp.sort((a, b) =>
-          a.REST_TIME > b.REST_TIME ? -1 : b.REST_TIME > a.REST_TIME ? 1 : 0,
+        orderByREST_TIME.sort(
+          (a, b) => Number(b.REST_TIME) - Number(a.REST_TIME),
         ),
       );
 
+      const orderByVACATION = [...empListTemp];
       setVACATION_EMP_LIST(
-        empListTemp.sort((a, b) =>
-          a.VACATION > b.VACATION ? -1 : b.VACATION > a.VACATION ? 1 : 0,
-        ),
+        orderByVACATION.sort((a, b) => b.VACATION - a.VACATION),
       );
     } catch (e) {
       console.log(e);
@@ -217,6 +209,8 @@ export default () => {
       loading={loading}
       visible={visible}
       STORE_NAME={STORE_NAME}
+      scrollRef={scrollRef}
+      onPressSection={onPressSection}
     />
   );
 };
