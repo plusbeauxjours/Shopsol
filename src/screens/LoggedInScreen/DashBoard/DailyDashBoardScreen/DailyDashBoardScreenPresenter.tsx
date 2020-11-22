@@ -214,7 +214,7 @@ export default ({
                     )}
                   </DodnutTextContainer>
                   <DonutColumn>
-                    <DonutColumnTitle>
+                    <DonutColumnTitle style={{fontSize: 12}}>
                       {moment(toDay).format('MM월 DD일')}
                     </DonutColumnTitle>
                     <DonutColumnTitle>{STORE_NAME}점</DonutColumnTitle>

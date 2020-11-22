@@ -3,6 +3,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 import {interpolateColor} from 'react-native-redash';
 
 import utils from '~/constants/utils';
@@ -30,7 +31,7 @@ const LineTextContainer = styled.View`
   justify-content: center;
   align-items: center;
   margin-top: 30px;
-  bottom: ${utils.isAndroid() ? 20 : 40}px;
+  bottom: ${utils.isAndroid() ? 20 : isIphoneX() ? 68 : 40}px;
 `;
 
 const LineText = styled.Text`
