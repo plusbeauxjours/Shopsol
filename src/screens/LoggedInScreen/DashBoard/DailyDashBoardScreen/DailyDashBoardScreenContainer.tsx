@@ -46,8 +46,7 @@ export default () => {
           WORKING: 0,
         });
       });
-      // CALENDAR_DATA[toDay]?.map((i) => {
-      await CALENDAR_DATA['2020-11-20']?.map((i) => {
+      CALENDAR_DATA[toDay]?.map((i) => {
         let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
         if (emp) {
           emp['EARLY'] = i?.alear ?? '0';

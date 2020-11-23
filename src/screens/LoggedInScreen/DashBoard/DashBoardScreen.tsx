@@ -125,7 +125,6 @@ export default () => {
     } catch (e) {
       console.log(e);
     } finally {
-      console.log('[][][][][][][][][]DONE[][][][][][][][][]');
       setLoading(false);
       dispatch(setSplashVisible(false));
     }

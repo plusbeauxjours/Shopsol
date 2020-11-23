@@ -65,7 +65,7 @@ const TitleWord = styled.Text<IColor>`
 
 const DodnutTextContainer = styled.View`
   width: 70px;
-  top: 115px;
+  top: 110px;
   text-align: center;
   position: absolute;
   justify-content: center;
@@ -153,10 +153,10 @@ export default ({
   scrollRef,
   onPressSection,
 }) => {
-  if (loading || visible || EMP_LIST.length == 0) {
+  if (loading || visible) {
     return null;
   } else {
-    if (totlaWORKING_EMP == 0) {
+    if (totlaWORKING_EMP == 0 || EMP_LIST.length == 0) {
       return (
         <BackGround>
           <Container>
@@ -220,19 +220,19 @@ export default ({
                     <DonutColumnTitle>{STORE_NAME}점</DonutColumnTitle>
                     <WhiteSpace />
                     <DonutColumnText>
-                      {(totlaWORKING_EMP / EMP_LIST.length) * 100}% 근무중&nbsp;
-                      ({totlaWORKING_EMP}명)
+                      {(totlaWORKING_EMP / EMP_LIST.length) * 100}% 근무&nbsp; (
+                      {totlaWORKING_EMP}명)
                     </DonutColumnText>
                     <DonutColumnText>
-                      {(totalLATE / EMP_LIST.length) * 100}% 지각&nbsp; (
+                      {(totalLATE / totlaWORKING_EMP) * 100}% 지각&nbsp; (
                       {totalLATE}명)
                     </DonutColumnText>
                     <DonutColumnText>
-                      {(totalEARLY / EMP_LIST.length) * 100}% 조퇴&nbsp; (
+                      {(totalEARLY / totlaWORKING_EMP) * 100}% 조퇴&nbsp; (
                       {totalEARLY}명)
                     </DonutColumnText>
                     <DonutColumnText>
-                      {totalREST_TIME / totlaWORKING_EMP}분 평균휴게시간
+                      {totalREST_TIME / totlaWORKING_EMP}분 평균 휴게시간
                     </DonutColumnText>
                     <DonutColumnText>
                       {(totalVACATION / totlaWORKING_EMP) * 100}% 휴가&nbsp; (
@@ -260,6 +260,34 @@ export default ({
                   absolute={false}
                 />
               </Section>
+              {EMP_LIST.map((i, index) => {
+                return (
+                  <EmpCard key={index}>
+                    <FastImage
+                      style={{
+                        margin: 10,
+                        marginLeft: 20,
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                      }}
+                      source={{
+                        uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                        headers: {Authorization: 'someAuthToken'},
+                        priority: FastImage.priority.low,
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <Column>
+                      <Bold>
+                        {i.EMP_NAME} [
+                        {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                      </Bold>
+                      <Text style={{marginTop: 5}}>ㅇ</Text>
+                    </Column>
+                  </EmpCard>
+                );
+              })}
             </Container>
 
             <ScrollView
