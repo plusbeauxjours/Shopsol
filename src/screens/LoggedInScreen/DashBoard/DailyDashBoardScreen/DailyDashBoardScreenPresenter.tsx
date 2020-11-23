@@ -7,10 +7,11 @@ import {
 } from 'react-native-responsive-screen';
 import {PieChart} from 'react-native-chart-kit';
 import Animated from 'react-native-reanimated';
+import moment from 'moment';
 
 import DonutCard from '~/components/DonutCard';
 import FastImage from 'react-native-fast-image';
-import moment from 'moment';
+import Graph from '~/components/Graph';
 
 interface IColor {
   color: string;
@@ -132,6 +133,17 @@ const WhiteSpace = styled.View`
 const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const EmpCardRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: ${wp('100%') - 100}px;
+  border-bottom-width: 0.7px;
+  border-bottom-color: #7f7f7f;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
 `;
 
 export default ({
@@ -260,13 +272,18 @@ export default ({
                   absolute={false}
                 />
               </Section>
-              {EMP_LIST.map((i, index) => {
+              {EMP_LIST.sort(
+                (a, b) =>
+                  moment(a.START_TIME, 'kk:mm').valueOf() -
+                  moment(b.START_TIME, 'kk:mm').valueOf(),
+              ).map((i, index) => {
                 return (
-                  <EmpCard key={index}>
+                  <EmpCard
+                    key={index}
+                    style={{marginBottom: 20, alignItems: 'flex-start'}}>
                     <FastImage
                       style={{
-                        margin: 10,
-                        marginLeft: 20,
+                        marginRight: 10,
                         width: 40,
                         height: 40,
                         borderRadius: 20,
@@ -279,11 +296,40 @@ export default ({
                       resizeMode={FastImage.resizeMode.cover}
                     />
                     <Column>
-                      <Bold>
-                        {i.EMP_NAME} [
-                        {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                      </Bold>
-                      <Text style={{marginTop: 5}}>ㅇ</Text>
+                      <EmpCardRow>
+                        <Bold>
+                          {i.EMP_NAME} [
+                          {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                        </Bold>
+                        <Bold>
+                          근무시간&nbsp;
+                          {moment.duration(i.WORKING).hours() > 0 &&
+                            `${moment.duration(i.WORKING).hours()}시간`}
+                          {moment.duration(i.WORKING).minutes() > 0 &&
+                            `${moment.duration(i.WORKING).minutes()}분`}
+                        </Bold>
+                      </EmpCardRow>
+                      <Graph />
+
+                      <Text style={{marginTop: 5}}>
+                        시작시간&nbsp;
+                        {moment(i.START_TIME, 'kk:mm').format('h시 m분')}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        종료시간&nbsp;
+                        {moment(i.END_TIME, 'kk:mm').format('h시 m분')}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        근무시간&nbsp;{i.WORKING}
+                      </Text>
+                      {i.VACATION != 0 && (
+                        <Text style={{marginTop: 5}}>휴가</Text>
+                      )}
+                      {i.REST_TIME !== '0' && (
+                        <Text style={{marginTop: 5}}>
+                          휴게시간 {i.REST_TIME}분
+                        </Text>
+                      )}
                     </Column>
                   </EmpCard>
                 );
@@ -326,14 +372,22 @@ export default ({
                   color={'#e85356'}
                   max={100}
                 />
-                <DodnutTextContainer>
-                  <PercentageText color={'#e85356'}>
-                    {(totalLATE / totlaWORKING_EMP) * 100}%
-                  </PercentageText>
-                  <PercentageSubText color={'#e85356'}>
-                    {totalLATE}명
-                  </PercentageSubText>
-                </DodnutTextContainer>
+                {totalLATE / totlaWORKING_EMP == 0 ? (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      {(totalLATE / totlaWORKING_EMP) * 100}%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                ) : (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'}>
+                      {(totalLATE / totlaWORKING_EMP) * 100}%
+                    </PercentageText>
+                    <PercentageSubText color={'#e85356'}>
+                      {totalLATE}명
+                    </PercentageSubText>
+                  </DodnutTextContainer>
+                )}
                 <TitleWord color={'#e85356'}>금일 지각 직원</TitleWord>
                 <EmpConatainer>
                   {LATE_EMP_LIST.filter((i) => i.LATE && i.LATE !== '0')
@@ -387,14 +441,22 @@ export default ({
                   color={'#e85356'}
                   max={100}
                 />
-                <DodnutTextContainer>
-                  <PercentageText color={'#e85356'}>
-                    {(totalEARLY / totlaWORKING_EMP) * 100}%
-                  </PercentageText>
-                  <PercentageSubText color={'#e85356'}>
-                    {totalEARLY}명
-                  </PercentageSubText>
-                </DodnutTextContainer>
+                {totalEARLY / totlaWORKING_EMP == 0 ? (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      {(totalEARLY / totlaWORKING_EMP) * 100}%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                ) : (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'}>
+                      {(totalEARLY / totlaWORKING_EMP) * 100}%
+                    </PercentageText>
+                    <PercentageSubText color={'#e85356'}>
+                      {totalEARLY}명
+                    </PercentageSubText>
+                  </DodnutTextContainer>
+                )}
                 <TitleWord color={'#e85356'}>금일 조퇴 직원</TitleWord>
                 <EmpConatainer>
                   {EARLY_EMP_LIST.filter((i) => i.EARLY && i.EARLY !== '0')
@@ -511,14 +573,23 @@ export default ({
                   color={'#e85356'}
                   max={totlaWORKING_EMP}
                 />
-                <DodnutTextContainer>
-                  <PercentageText color={'#e85356'}>
-                    {(totalVACATION / totlaWORKING_EMP) * 100}%
-                  </PercentageText>
-                  <PercentageSubText color={'#e85356'}>
-                    {totalVACATION}명
-                  </PercentageSubText>
-                </DodnutTextContainer>
+                {totalVACATION / totlaWORKING_EMP == 0 ? (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      {(totalVACATION / totlaWORKING_EMP) * 100}%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                ) : (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'}>
+                      {(totalVACATION / totlaWORKING_EMP) * 100}%
+                    </PercentageText>
+                    <PercentageSubText color={'#e85356'}>
+                      {totalVACATION}명
+                    </PercentageSubText>
+                  </DodnutTextContainer>
+                )}
+
                 <TitleWord color={'#e85356'}>금일 휴가 직원</TitleWord>
                 <EmpConatainer>
                   {VACATION_EMP_LIST.filter(

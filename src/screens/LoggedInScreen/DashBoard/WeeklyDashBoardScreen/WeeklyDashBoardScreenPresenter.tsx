@@ -7,10 +7,11 @@ import {
 } from 'react-native-responsive-screen';
 import {PieChart} from 'react-native-chart-kit';
 import Animated from 'react-native-reanimated';
-
-import DonutCard from '~/components/DonutCard';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+
+import DonutCard from '~/components/DonutCard';
+import Graph from '~/components/Graph';
 
 interface IColor {
   color: string;
@@ -89,6 +90,17 @@ const EmpCard = styled.View`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+`;
+
+const EmpCardRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: ${wp('100%') - 100}px;
+  border-bottom-width: 0.7px;
+  border-bottom-color: #7f7f7f;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
 `;
 
 const Bold = styled.Text`
@@ -222,7 +234,9 @@ export default ({
                     {moment
                       .duration(totalWORKING_COUNT / totalWORKING_EMP)
                       .minutes() != 0 && (
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText
+                        color={'#e85356'}
+                        style={{fontSize: 18}}>
                         {moment
                           .duration(totalWORKING_COUNT / totalWORKING_EMP)
                           .minutes()}
@@ -244,11 +258,11 @@ export default ({
                       {totalWORKING_DAY}일 직원 근무일
                     </DonutColumnText>
                     <DonutColumnText>
-                      {(EMP_LIST.filter((i) => i.WORKING !== 0).length /
+                      {(EMP_LIST.filter((i) => i.TOTAL_WORKING !== 0).length /
                         EMP_LIST.length) *
                         100}
-                      % 근무&nbsp; (
-                      {EMP_LIST.filter((i) => i.WORKING !== 0).length}명)
+                      % 직원 근무&nbsp; (
+                      {EMP_LIST.filter((i) => i.TOTAL_WORKING !== 0).length}명)
                     </DonutColumnText>
                     <DonutColumnText>
                       {(totalLATE_COUNT / totalSUB_WORKING_EMP) * 100}% 평균
@@ -281,19 +295,24 @@ export default ({
                     barPercentage: 0.5,
                     useShadowColorFromDataset: false, // optional
                   }}
-                  accessor="WORKING"
+                  accessor="TOTAL_WORKING"
                   backgroundColor="transparent"
                   paddingLeft="10"
                   absolute={false}
                 />
               </Section>
-              {EMP_LIST.map((i, index) => {
+              {EMP_LIST.sort(
+                (a, b) =>
+                  moment(a.START_TIME, 'kk:mm').valueOf() -
+                  moment(b.START_TIME, 'kk:mm').valueOf(),
+              ).map((i, index) => {
                 return (
-                  <EmpCard key={index}>
+                  <EmpCard
+                    key={index}
+                    style={{marginBottom: 20, alignItems: 'flex-start'}}>
                     <FastImage
                       style={{
-                        margin: 10,
-                        marginLeft: 20,
+                        marginRight: 10,
                         width: 40,
                         height: 40,
                         borderRadius: 20,
@@ -306,13 +325,123 @@ export default ({
                       resizeMode={FastImage.resizeMode.cover}
                     />
                     <Column>
-                      <Bold>
-                        {i.EMP_NAME} [
-                        {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                      </Bold>
-                      <Text style={{marginTop: 5}}>ㅇ</Text>
+                      <EmpCardRow>
+                        <Bold>
+                          {i.EMP_NAME} [
+                          {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                        </Bold>
+                        <Bold>
+                          주 근무시간&nbsp;
+                          {moment.duration(i.TOTAL_WORKING).hours() > 0 &&
+                            `${moment.duration(i.TOTAL_WORKING).hours()}시간`}
+                          {moment.duration(i.TOTAL_WORKING).minutes() > 0 &&
+                            `${moment.duration(i.TOTAL_WORKING).minutes()}분`}
+                        </Bold>
+                      </EmpCardRow>
+                      <Graph />
+                      <Text style={{marginTop: 5}}>
+                        시작시간&nbsp;
+                        {moment(i.WORKING['0'][1], 'kk:mm').format('k시 m분')}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        종료시간&nbsp;
+                        {moment(i.WORKING['0'][2], 'kk:mm').format('k시 m분')}
+                      </Text>
+
+                      {i.REST_TIME !== '0' && (
+                        <Text style={{marginTop: 5}}>
+                          휴게시간 {i.REST_TIME}분
+                        </Text>
+                      )}
+                      <Text style={{marginTop: 5}}>
+                        월요일
+                        {moment.duration(i.WORKING['0'][0]).hours() > 0 &&
+                          `${moment.duration(i.WORKING['0'][0]).hours()}시간`}
+                        {moment.duration(i.WORKING['0'][0]).minutes() > 0 &&
+                          `${moment.duration(i.WORKING['0'][0]).minutes()}분`}
+                        {i.WORKING['0'][3] && '휴가'}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        화요일
+                        {moment.duration(i.WORKING['1'][0]).hours() > 0 &&
+                          `${moment.duration(i.WORKING['1'][0]).hours()}시간`}
+                        {moment.duration(i.WORKING['1'][0]).minutes() > 0 &&
+                          `${moment.duration(i.WORKING['1'][0]).minutes()}분`}
+                        {i.WORKING['1'][3] && '휴가'}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        수요일
+                        {moment.duration(i.WORKING['2'][0]).hours() > 0 &&
+                          `${moment.duration(i.WORKING['2'][0]).hours()}시간`}
+                        {moment.duration(i.WORKING['2'][0]).minutes() > 0 &&
+                          `${moment.duration(i.WORKING['2'][0]).minutes()}분`}
+                        {i.WORKING['2'][3] && '휴가'}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        목요일
+                        {moment.duration(i.WORKING['3'][0]).hours() > 0 &&
+                          `${moment.duration(i.WORKING['3'][0]).hours()}시간`}
+                        {moment.duration(i.WORKING['3'][0]).minutes() > 0 &&
+                          `${moment.duration(i.WORKING['3'][0]).minutes()}분`}
+                        {i.WORKING['3'][3] && '휴가'}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        금요일
+                        {moment.duration(i.WORKING['4'][0]).hours() > 0 &&
+                          `${moment.duration(i.WORKING['4'][0]).hours()}시간`}
+                        {moment.duration(i.WORKING['4'][0]).minutes() > 0 &&
+                          `${moment.duration(i.WORKING['4'][0]).minutes()}분`}
+                        {i.WORKING['4'][3] && '휴가'}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        토요일
+                        {moment.duration(i.WORKING['5'][0]).hours() > 0 &&
+                          `${moment.duration(i.WORKING['5'][0]).hours()}시간`}
+                        {moment.duration(i.WORKING['5'][0]).minutes() > 0 &&
+                          `${moment.duration(i.WORKING['5'][0]).minutes()}분`}
+                        {i.WORKING['5'][3] && '휴가'}
+                      </Text>
+                      <Text style={{marginTop: 5}}>
+                        일요일
+                        {moment.duration(i.WORKING['6'][0]).hours() > 0 &&
+                          `${moment.duration(i.WORKING['6'][0]).hours()}시간`}
+                        {moment.duration(i.WORKING['6'][0]).minutes() > 0 &&
+                          `${moment.duration(i.WORKING['6'][0]).minutes()}분`}
+                        {i.WORKING['6'][3] && '휴가'}
+                      </Text>
                     </Column>
                   </EmpCard>
+                );
+              })}
+              {EARLY_EMP_LIST.map((i, index) => {
+                return (
+                  <Text key={index}>
+                    {i.EMP_NAME}/{i.TOTAL_EARLY}
+                  </Text>
+                );
+              })}
+              <Text>===============</Text>
+              {LATE_EMP_LIST.map((i, index) => {
+                return (
+                  <Text key={index}>
+                    {i.EMP_NAME}/{i.TOTAL_LATE}
+                  </Text>
+                );
+              })}
+              <Text>===============</Text>
+              {REST_TIME_EMP_LIST.map((i, index) => {
+                return (
+                  <Text key={index}>
+                    {i.EMP_NAME}/{i.REST_TIME}
+                  </Text>
+                );
+              })}
+              <Text>===============</Text>
+              {VACATION_EMP_LIST.map((i, index) => {
+                return (
+                  <Text key={index}>
+                    {i.EMP_NAME}/{i.TOTAL_VACATION}
+                  </Text>
                 );
               })}
             </Container>
@@ -359,7 +488,7 @@ export default ({
                     </PercentageText>
                   </DodnutTextContainer>
                 ) : (
-                  <DodnutTextContainer>
+                  <DodnutTextContainer style={{marginTop: 5}}>
                     <PercentageText color={'#e85356'}>
                       {(totalLATE_COUNT / totalSUB_WORKING_EMP) * 100}%
                     </PercentageText>
@@ -428,7 +557,7 @@ export default ({
                     </PercentageText>
                   </DodnutTextContainer>
                 ) : (
-                  <DodnutTextContainer>
+                  <DodnutTextContainer style={{marginTop: 5}}>
                     <PercentageText color={'#e85356'}>
                       {(totalEARLY_COUNT / totalSUB_WORKING_EMP) * 100}%
                     </PercentageText>
@@ -559,7 +688,7 @@ export default ({
                     </PercentageText>
                   </DodnutTextContainer>
                 ) : (
-                  <DodnutTextContainer>
+                  <DodnutTextContainer style={{marginTop: 5}}>
                     <PercentageText color={'#e85356'}>
                       {(totalVACATION_COUNT / totalSUB_WORKING_EMP) * 100}%
                     </PercentageText>
@@ -570,15 +699,16 @@ export default ({
                 )}
                 <TitleWord color={'#e85356'}>금주 휴가 상위직원</TitleWord>
                 <EmpConatainer>
-                  {VACATION_EMP_LIST.filter((i) => i.VACATION && i.VACATION > 0)
-                    .length === 0 ? (
+                  {VACATION_EMP_LIST.filter(
+                    (i) => i.TOTAL_VACATION && i.TOTAL_VACATION > 0,
+                  ).length === 0 ? (
                     <Text style={{marginTop: 20}}>
                       금주 휴가 직원이 없습니다.
                     </Text>
                   ) : (
                     VACATION_EMP_LIST.slice(0, 3).map(
                       (i, index) =>
-                        i.VACATION > 0 && (
+                        i.TOTAL_VACATION == 1 && (
                           <EmpCard key={index}>
                             <FastImage
                               style={{
@@ -600,7 +730,9 @@ export default ({
                                 {i.EMP_NAME} [
                                 {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                               </Bold>
-                              <Text style={{marginTop: 5}}>{i.VACATION}일</Text>
+                              <Text style={{marginTop: 5}}>
+                                {i.TOTAL_VACATION}일
+                              </Text>
                             </Column>
                           </EmpCard>
                         ),

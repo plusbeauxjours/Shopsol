@@ -211,7 +211,10 @@ export default ({route: {params}}) => {
   };
 
   const openRow = (rowRef) => {
-    rowRef.manuallySwipeRow(-100);
+    console.log(rowRef);
+    if (!rowRef.isOpen) {
+      rowRef.manuallySwipeRow(-100);
+    }
   };
 
   useEffect(() => {
