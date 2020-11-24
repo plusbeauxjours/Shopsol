@@ -1,15 +1,33 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {StyleSheet} from 'react-native';
+import moment from 'moment';
 
+const BoxContainer = styled.View`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: -30;
+`;
+const MainBox = styled.View`
+  flex: 1;
+  justify-content: space-between;
+`;
+const TextBox = styled.View`
+  width: 30px;
+  align-items: center;
+`;
 const Box = styled.View``;
-const Text = styled.Text``;
+const Text = styled.Text`
+  font-size: 10px;
+  color: #7f7f7f;
+`;
 
-export default ({dates, minY, maxY, step}) => {
+export default ({minY, maxY}) => {
   const lerp = (v0: number, v1: number, t: number) => (1 - t) * v0 + t * v1;
   return (
-    <Box style={StyleSheet.absoluteFill}>
-      <Box style={{flex: 1, justifyContent: 'space-between'}}>
+    <BoxContainer>
+      <MainBox>
         {[1, 0.66, 0.33, 0].map((t) => {
           return (
             <Box
@@ -20,16 +38,27 @@ export default ({dates, minY, maxY, step}) => {
                 height: 30,
                 top: t === 0 ? 15 : t === 1 ? -15 : 0,
               }}>
-              <Box>
-                <Text style={{color: 'darkGrey', textAlign: 'right'}}>
-                  {Math.round(lerp(minY, maxY, t))}
-                </Text>
-              </Box>
-              <Box style={{flex: 1, height: 1, backgroundColor: 'grey'}} />
+              <TextBox>
+                {moment.duration(Math.round(lerp(minY, maxY, t))).hours() >
+                  0 && (
+                  <Text>
+                    {moment.duration(Math.round(lerp(minY, maxY, t))).hours()}
+                    시간
+                  </Text>
+                )}
+                {moment.duration(Math.round(lerp(minY, maxY, t))).minutes() >
+                  0 && (
+                  <Text>
+                    {moment.duration(Math.round(lerp(minY, maxY, t))).minutes()}
+                    분
+                  </Text>
+                )}
+              </TextBox>
+              <Box style={{flex: 1, height: 0.5, backgroundColor: '#ccc'}} />
             </Box>
           );
         })}
-      </Box>
-    </Box>
+      </MainBox>
+    </BoxContainer>
   );
 };

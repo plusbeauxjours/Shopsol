@@ -35,10 +35,6 @@ export default () => {
 
   const fetcEmphData = async () => {
     try {
-      const {data} = await api.getEmpLists(STORE_SEQ);
-      if (data.message == 'SUCCESS') {
-        dispatch(setEMPLOYEE_LIST(data));
-      }
     } catch (e) {
       console.log(e);
     }
@@ -53,16 +49,20 @@ export default () => {
         CALENDAR_DATA_STORE_SEQ != STORE_SEQ ||
         !CALENDAR_DATA[moment().format('YYYY-MM-DD')]
       ) {
-        const {data} = await api.getAllSchedules(
+        const {data: empData} = await api.getEmpLists(STORE_SEQ);
+        if (empData.message == 'SUCCESS') {
+          dispatch(setEMPLOYEE_LIST(empData));
+        }
+        const {data: scheduleData} = await api.getAllSchedules(
           STORE_SEQ,
           moment().format('YYYY'),
           moment().format('M'),
         );
-        if (data.message === 'SUCCESS') {
+        if (scheduleData.message === 'SUCCESS') {
           let buffer = {};
-          const iterator = Object.keys(data.result);
+          const iterator = Object.keys(scheduleData.result);
           for (const key of iterator) {
-            buffer[key] = data.result[key]['EMP_LIST'];
+            buffer[key] = scheduleData.result[key]['EMP_LIST'];
             if (buffer[key].length !== 0) {
               for (let k = 0; k < buffer[key].length; k++) {
                 buffer[key][k] = {...buffer[key][k], WORKDATE: key};
@@ -91,16 +91,16 @@ export default () => {
           moment().endOf('isoWeek').format('MM') &&
           !CALENDAR_DATA[moment().add(1, 'month').format('YYYY-MM-DD')])
       ) {
-        const {data} = await api.getAllSchedules(
+        const {data: scheduleData} = await api.getAllSchedules(
           STORE_SEQ,
           moment().add(1, 'month').format('YYYY'),
           moment().add(1, 'month').format('M'),
         );
-        if (data.message === 'SUCCESS') {
+        if (scheduleData.message === 'SUCCESS') {
           let buffer = {};
-          const iterator = Object.keys(data.result);
+          const iterator = Object.keys(scheduleData.result);
           for (const key of iterator) {
-            buffer[key] = data.result[key]['EMP_LIST'];
+            buffer[key] = scheduleData.result[key]['EMP_LIST'];
             if (buffer[key].length !== 0) {
               for (let k = 0; k < buffer[key].length; k++) {
                 buffer[key][k] = {...buffer[key][k], WORKDATE: key};

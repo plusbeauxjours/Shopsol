@@ -25,6 +25,22 @@ export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
   />
 );
 
+export const PlayCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons
+    name={'play-circle-outline'}
+    size={size ?? 22}
+    color={color ?? '#e85356'}
+  />
+);
+
+export const StopCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons
+    name={'stop-circle-outline'}
+    size={size ?? 22}
+    color={color ?? '#e85356'}
+  />
+);
+
 export const BackIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={

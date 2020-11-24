@@ -11,7 +11,6 @@ import moment from 'moment';
 
 import DonutCard from '~/components/DonutCard';
 import FastImage from 'react-native-fast-image';
-import Graph from '~/components/Graph';
 
 interface IColor {
   color: string;
@@ -232,23 +231,23 @@ export default ({
                     <DonutColumnTitle>{STORE_NAME}점</DonutColumnTitle>
                     <WhiteSpace />
                     <DonutColumnText>
-                      {(totlaWORKING_EMP / EMP_LIST.length) * 100}% 근무&nbsp; (
-                      {totlaWORKING_EMP}명)
+                      {Math.ceil((totlaWORKING_EMP / EMP_LIST.length) * 100)}%
+                      근무&nbsp; ({totlaWORKING_EMP}명)
                     </DonutColumnText>
                     <DonutColumnText>
-                      {(totalLATE / totlaWORKING_EMP) * 100}% 지각&nbsp; (
-                      {totalLATE}명)
+                      {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
+                      지각&nbsp; ({totalLATE}명)
                     </DonutColumnText>
                     <DonutColumnText>
-                      {(totalEARLY / totlaWORKING_EMP) * 100}% 조퇴&nbsp; (
-                      {totalEARLY}명)
+                      {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
+                      조퇴&nbsp; ({totalEARLY}명)
                     </DonutColumnText>
                     <DonutColumnText>
                       {totalREST_TIME / totlaWORKING_EMP}분 평균 휴게시간
                     </DonutColumnText>
                     <DonutColumnText>
-                      {(totalVACATION / totlaWORKING_EMP) * 100}% 휴가&nbsp; (
-                      {totalVACATION}명)
+                      {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
+                      휴가&nbsp; ({totalVACATION}명)
                     </DonutColumnText>
                   </DonutColumn>
                 </Row>
@@ -302,15 +301,14 @@ export default ({
                           {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                         </Bold>
                         <Bold>
-                          근무시간&nbsp;
+                          일&nbsp;
                           {moment.duration(i.WORKING).hours() > 0 &&
                             `${moment.duration(i.WORKING).hours()}시간`}
+                          &nbsp;
                           {moment.duration(i.WORKING).minutes() > 0 &&
                             `${moment.duration(i.WORKING).minutes()}분`}
                         </Bold>
                       </EmpCardRow>
-                      <Graph />
-
                       <Text style={{marginTop: 5}}>
                         시작시간&nbsp;
                         {moment(i.START_TIME, 'kk:mm').format('h시 m분')}
@@ -368,20 +366,20 @@ export default ({
                 rippleOpacity={0.1}>
                 <TitleWord color={'#e85356'}>지각률</TitleWord>
                 <DonutCard
-                  percentage={(totalLATE / totlaWORKING_EMP) * 100}
+                  percentage={Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}
                   color={'#e85356'}
                   max={100}
                 />
                 {totalLATE / totlaWORKING_EMP == 0 ? (
                   <DodnutTextContainer>
                     <PercentageText color={'#e85356'} style={{marginTop: 10}}>
-                      {(totalLATE / totlaWORKING_EMP) * 100}%
+                      {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
                     </PercentageText>
                   </DodnutTextContainer>
                 ) : (
                   <DodnutTextContainer>
                     <PercentageText color={'#e85356'}>
-                      {(totalLATE / totlaWORKING_EMP) * 100}%
+                      {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
                     </PercentageText>
                     <PercentageSubText color={'#e85356'}>
                       {totalLATE}명
@@ -437,20 +435,20 @@ export default ({
                 rippleOpacity={0.1}>
                 <TitleWord color={'#e85356'}>조퇴률</TitleWord>
                 <DonutCard
-                  percentage={(totalEARLY / totlaWORKING_EMP) * 100}
+                  percentage={Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}
                   color={'#e85356'}
                   max={100}
                 />
                 {totalEARLY / totlaWORKING_EMP == 0 ? (
                   <DodnutTextContainer>
                     <PercentageText color={'#e85356'} style={{marginTop: 10}}>
-                      {(totalEARLY / totlaWORKING_EMP) * 100}%
+                      {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
                     </PercentageText>
                   </DodnutTextContainer>
                 ) : (
                   <DodnutTextContainer>
                     <PercentageText color={'#e85356'}>
-                      {(totalEARLY / totlaWORKING_EMP) * 100}%
+                      {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
                     </PercentageText>
                     <PercentageSubText color={'#e85356'}>
                       {totalEARLY}명
@@ -576,13 +574,13 @@ export default ({
                 {totalVACATION / totlaWORKING_EMP == 0 ? (
                   <DodnutTextContainer>
                     <PercentageText color={'#e85356'} style={{marginTop: 10}}>
-                      {(totalVACATION / totlaWORKING_EMP) * 100}%
+                      {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
                     </PercentageText>
                   </DodnutTextContainer>
                 ) : (
                   <DodnutTextContainer>
                     <PercentageText color={'#e85356'}>
-                      {(totalVACATION / totlaWORKING_EMP) * 100}%
+                      {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
                     </PercentageText>
                     <PercentageSubText color={'#e85356'}>
                       {totalVACATION}명

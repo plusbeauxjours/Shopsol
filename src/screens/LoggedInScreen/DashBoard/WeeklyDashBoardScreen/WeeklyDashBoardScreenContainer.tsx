@@ -30,6 +30,10 @@ export default () => {
   const [totalWORKING_EMP, setTotalWORKING_EMP] = useState<number>(0);
   const [totalSUB_WORKING_EMP, setTotalSUB_WORKING_EMP] = useState<number>(0);
   const [totalWORKING_DAY, setTotalWORKING_DAY] = useState<number>(0);
+  const [modalEARLY, setModalEARLY] = useState<boolean>(false);
+  const [modalLATE, setModalLATE] = useState<boolean>(false);
+  const [modalREST_TIME, setModalREST_TIME] = useState<boolean>(false);
+  const [modalVACATION, setModalVACATION] = useState<boolean>(false);
 
   const weekStartDate = moment().startOf('isoWeek');
   const weekEndDate = moment().endOf('isoWeek');
@@ -68,18 +72,18 @@ export default () => {
           color: colors[index],
           TOTAL_WORKING: 0,
           WORKING: {
-            '0': [0],
-            '1': [0],
-            '2': [0],
-            '3': [0],
-            '4': [0],
-            '5': [0],
-            '6': [0],
+            '0': [0, '00:00', '00:00', false, false, false],
+            '1': [0, '00:00', '00:00', false, false, false],
+            '2': [0, '00:00', '00:00', false, false, false],
+            '3': [0, '00:00', '00:00', false, false, false],
+            '4': [0, '00:00', '00:00', false, false, false],
+            '5': [0, '00:00', '00:00', false, false, false],
+            '6': [0, '00:00', '00:00', false, false, false],
           },
           TOTAL_EARLY: 0,
           TOTAL_LATE: 0,
           TOTAL_VACATION: 0,
-          REST_TIME: 0,
+          REST_TIME: '0',
           IMAGE: '',
         });
       });
@@ -301,7 +305,9 @@ export default () => {
       );
 
       const orderByWORKING = [...empListTemp];
-      setEMP_LIST(orderByWORKING.sort((a, b) => b.WORKING - a.WORKING));
+      setEMP_LIST(
+        orderByWORKING.sort((a, b) => b.TOTAL_WORKING - a.TOTAL_WORKING),
+      );
 
       const orderByEARLY = [...empListTemp];
       setEARLY_EMP_LIST(
@@ -358,6 +364,14 @@ export default () => {
       totalLATE_EMP={totalLATE_EMP}
       totalVACATION_EMP={totalVACATION_EMP}
       totalSUB_WORKING_EMP={totalSUB_WORKING_EMP}
+      modalEARLY={modalEARLY}
+      setModalEARLY={setModalEARLY}
+      modalLATE={modalLATE}
+      setModalLATE={setModalLATE}
+      modalREST_TIME={modalREST_TIME}
+      setModalREST_TIME={setModalREST_TIME}
+      modalVACATION={modalVACATION}
+      setModalVACATION={setModalVACATION}
     />
   );
 };
