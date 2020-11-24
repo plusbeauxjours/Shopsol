@@ -24,6 +24,10 @@ export default () => {
   const [VACATION_EMP_LIST, setVACATION_EMP_LIST] = useState<any>([]);
   const [totalWORKING, setTotalWORKING] = useState<number>(0);
   const [totlaWORKING_EMP, setTotalWORKING_EMP] = useState<number>(0);
+  const [modalEARLY, setModalEARLY] = useState<boolean>(false);
+  const [modalLATE, setModalLATE] = useState<boolean>(false);
+  const [modalREST_TIME, setModalREST_TIME] = useState<boolean>(false);
+  const [modalVACATION, setModalVACATION] = useState<boolean>(false);
 
   const toDay = moment().format('YYYY-MM-DD');
 
@@ -210,6 +214,14 @@ export default () => {
       STORE_NAME={STORE_NAME}
       scrollRef={scrollRef}
       onPressSection={onPressSection}
+      modalEARLY={modalEARLY}
+      setModalEARLY={setModalEARLY}
+      modalLATE={modalLATE}
+      setModalLATE={setModalLATE}
+      modalREST_TIME={modalREST_TIME}
+      setModalREST_TIME={setModalREST_TIME}
+      modalVACATION={modalVACATION}
+      setModalVACATION={setModalVACATION}
     />
   );
 };
