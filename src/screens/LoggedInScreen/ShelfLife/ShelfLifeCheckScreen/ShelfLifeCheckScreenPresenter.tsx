@@ -6,7 +6,6 @@ import Ripple from 'react-native-material-ripple';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import DonutCard from '~/components/DonutCard';
-import MainDonut from '~/components/MainDonut';
 import ShelfLifeCheckScreenCard from './ShelfLifeCheckScreenCard';
 import ShelfLifeCheckScreenHeader from './ShelfLifeCheckScreenHeader';
 
@@ -30,14 +29,6 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Section = styled.View`
-  width: 100%;
-  height: 140px;
-  border-radius: 20px;
-  padding: 10px;
-  background-color: white;
-`;
-
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
@@ -46,10 +37,6 @@ const Row = styled.View`
 const SpaceRow = styled(Row)`
   width: 80px;
   justify-content: space-between;
-`;
-
-const WideSpaceRow = styled(SpaceRow)`
-  width: 110px;
 `;
 
 const Card = styled(Ripple)<ICard>`
@@ -105,21 +92,6 @@ const SmallBold = styled(SmallText)<IColor>`
   font-weight: bold;
 `;
 
-const Donut = styled.View`
-  position: absolute;
-  top: 70px;
-  left: 100px;
-`;
-
-const Column = styled.View`
-  width: 100%;
-  position: absolute;
-  align-items: flex-end;
-  right: 50px;
-  top: 30px;
-  flex-direction: column;
-`;
-
 const LineTextContainer = styled.View<IColor>`
   align-self: flex-end;
   background-color: white;
@@ -138,11 +110,6 @@ const LineText = styled.Text<IColor>`
   font-size: 16px;
   font-weight: bold;
   color: ${(props) => props.color ?? 'white'};
-`;
-
-const MainDonutText = styled(LineText)<IColor>`
-  text-align: right;
-  margin-bottom: 10px;
 `;
 
 const VerticalLine = styled.View`
@@ -177,7 +144,7 @@ export default ({
           ref={scrollRef}
           style={StyleSheet.absoluteFill}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{alignItems: 'center'}}
+          contentContainerStyle={{alignItems: 'center', paddingTop: 20}}
           scrollEventThrottle={16}
           onScroll={onScroll}
           refreshControl={
@@ -186,75 +153,6 @@ export default ({
               onRefresh={() => onRefresh('firstRoute')}
             />
           }>
-          <Container>
-            <Section>
-              <Donut>
-                <MainDonut
-                  percentage={data[0].totalQTY}
-                  color={data[0].textColor}
-                  radius={data[0].radius}
-                  max={data[3].totalQTY}
-                />
-                <MainDonut
-                  percentage={data[1].totalQTY}
-                  color={data[1].textColor}
-                  radius={data[1].radius}
-                  max={data[3].totalQTY}
-                />
-                <MainDonut
-                  percentage={data[2].totalQTY}
-                  color={data[2].textColor}
-                  radius={data[2].radius}
-                  max={data[3].totalQTY}
-                />
-                <MainDonut
-                  percentage={data[3].totalQTY}
-                  color={data[3].textColor}
-                  radius={data[3].radius}
-                  max={data[3].totalQTY}
-                />
-              </Donut>
-              <Column>
-                <MainDonutText color={data[3].textColor}>
-                  유통기한 등록 상품&nbsp;
-                </MainDonutText>
-                <WideSpaceRow>
-                  <SmallText
-                    color={data[0].textColor}
-                    style={{fontWeight: 'bold'}}>
-                    1일전 전체 수량
-                  </SmallText>
-                  <SmallBold color={data[0].textColor}>
-                    {data[0].totalQTY}&nbsp;개
-                  </SmallBold>
-                </WideSpaceRow>
-                <WideSpaceRow>
-                  <SmallText color={data[3].textColor}>
-                    1주전 전체 수량
-                  </SmallText>
-                  <SmallBold color={data[3].textColor}>
-                    {data[1].totalQTY}&nbsp;개
-                  </SmallBold>
-                </WideSpaceRow>
-                <WideSpaceRow>
-                  <SmallText color={data[3].textColor}>
-                    2주전 전체 수량
-                  </SmallText>
-                  <SmallBold color={data[3].textColor}>
-                    {data[2].totalQTY}&nbsp;개
-                  </SmallBold>
-                </WideSpaceRow>
-                <WideSpaceRow>
-                  <SmallText color={data[3].textColor}>
-                    1달전 전체 수량
-                  </SmallText>
-                  <SmallBold color={data[3].textColor}>
-                    {data[3].totalQTY}&nbsp;개
-                  </SmallBold>
-                </WideSpaceRow>
-              </Column>
-            </Section>
-          </Container>
           <FlatList
             data={data}
             keyExtractor={(item) => item.id}
