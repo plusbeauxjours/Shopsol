@@ -1264,7 +1264,8 @@ export const resultdata = {
     IS_MANAGER: '1',
     REST_TIME: '0',
     TOTAL_EARLY: 0,
-    TOTAL_LATE: 1,
+    TOTAL_LATE: 0,
+    TOTAL_NOWORK: 1,
     TOTAL_VACATION: 1,
     TOTAL_WORKING: 162000000,
     WORKING: {
@@ -1288,7 +1289,8 @@ export const resultdata = {
     IS_MANAGER: '1',
     REST_TIME: '30',
     TOTAL_EARLY: 0,
-    TOTAL_LATE: 1,
+    TOTAL_LATE: 0,
+    TOTAL_NOWORK: 2,
     TOTAL_VACATION: 0,
     TOTAL_WORKING: 162000000,
     WORKING: {
@@ -1306,30 +1308,6 @@ export const resultdata = {
     name: '김규한',
   },
   {
-    EMP_NAME: '양오성',
-    EMP_SEQ: '6077',
-    IMAGE: '2.png',
-    IS_MANAGER: '1',
-    REST_TIME: '0',
-    TOTAL_EARLY: 0,
-    TOTAL_LATE: 1,
-    TOTAL_VACATION: 0,
-    TOTAL_WORKING: 162000000,
-    WORKING: {
-      '0': [Array],
-      '1': [Array],
-      '2': [Array],
-      '3': [Array],
-      '4': [Array],
-      '5': [Array],
-      '6': [Array],
-    },
-    color: '#AE3E40',
-    legendFontColor: '#7F7F7F',
-    legendFontSize: 12,
-    name: '양오성',
-  },
-  {
     EMP_NAME: '김태현',
     EMP_SEQ: '6059',
     IMAGE: '2.png',
@@ -1337,6 +1315,7 @@ export const resultdata = {
     REST_TIME: '30',
     TOTAL_EARLY: 0,
     TOTAL_LATE: 0,
+    TOTAL_NOWORK: 0,
     TOTAL_VACATION: 0,
     TOTAL_WORKING: 159480000,
     WORKING: {
@@ -1354,6 +1333,31 @@ export const resultdata = {
     name: '김태현',
   },
   {
+    EMP_NAME: '양오성',
+    EMP_SEQ: '6077',
+    IMAGE: '2.png',
+    IS_MANAGER: '1',
+    REST_TIME: '0',
+    TOTAL_EARLY: 0,
+    TOTAL_LATE: 0,
+    TOTAL_NOWORK: 2,
+    TOTAL_VACATION: 0,
+    TOTAL_WORKING: 162000000,
+    WORKING: {
+      '0': [Array],
+      '1': [Array],
+      '2': [Array],
+      '3': [Array],
+      '4': [Array],
+      '5': [Array],
+      '6': [Array],
+    },
+    color: '#AE3E40',
+    legendFontColor: '#7F7F7F',
+    legendFontSize: 12,
+    name: '양오성',
+  },
+  {
     EMP_NAME: '안혜림',
     EMP_SEQ: '6217',
     IMAGE: '2.png',
@@ -1361,6 +1365,7 @@ export const resultdata = {
     REST_TIME: '0',
     TOTAL_EARLY: 0,
     TOTAL_LATE: 0,
+    TOTAL_NOWORK: 0,
     TOTAL_VACATION: 0,
     TOTAL_WORKING: 162000000,
     WORKING: {
@@ -1378,7 +1383,6 @@ export const resultdata = {
     name: '안혜림',
   },
 ];
-
 [
   {
     EMP_NAME: '김태현',

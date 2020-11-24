@@ -132,7 +132,6 @@ export default ({data}) => {
   const minY = Math.min(...values);
   const maxY = Math.max(...values);
   const lerp = (v0: number, v1: number, t: number) => (1 - t) * v0 + t * v1;
-  console.log(data);
   const [selectedIndex, setSelectedIndex] = useState<string>(
     (moment().isoWeekday() - 1).toString(),
   );
@@ -216,7 +215,7 @@ export default ({data}) => {
               <SmallText>조퇴</SmallText>
             </SmallTextRound>
           )}
-          {data.WORKING[selectedIndex][4] && (
+          {data.WORKING[selectedIndex][6] && (
             <SmallTextRound>
               <SmallText>결근</SmallText>
             </SmallTextRound>

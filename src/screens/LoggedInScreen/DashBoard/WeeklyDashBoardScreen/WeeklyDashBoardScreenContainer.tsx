@@ -26,6 +26,9 @@ export default () => {
   const [totalVACATION_COUNT, setTotalVACATION_COUNT] = useState<number>(0);
   const [totalVACATION_EMP, setTotalVACATION_EMP] = useState<number>(0);
   const [VACATION_EMP_LIST, setVACATION_EMP_LIST] = useState<any>([]);
+  const [totalNOWORK_COUNT, setTotalNOWORK_COUNT] = useState<number>(0);
+  const [totalNOWORK_EMP, setTotalNOWORK_EMP] = useState<number>(0);
+  const [NOWORK_EMP_LIST, setNOWORK_EMP_LIST] = useState<any>([]);
   const [totalWORKING_COUNT, setTotalWORKING_COUNT] = useState<number>(0);
   const [totalWORKING_EMP, setTotalWORKING_EMP] = useState<number>(0);
   const [totalSUB_WORKING_EMP, setTotalSUB_WORKING_EMP] = useState<number>(0);
@@ -34,6 +37,7 @@ export default () => {
   const [modalLATE, setModalLATE] = useState<boolean>(false);
   const [modalREST_TIME, setModalREST_TIME] = useState<boolean>(false);
   const [modalVACATION, setModalVACATION] = useState<boolean>(false);
+  const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
 
   const weekStartDate = moment().startOf('isoWeek');
   const weekEndDate = moment().endOf('isoWeek');
@@ -72,17 +76,18 @@ export default () => {
           color: colors[index],
           TOTAL_WORKING: 0,
           WORKING: {
-            '0': [0, '00:00', '00:00', false, false, false],
-            '1': [0, '00:00', '00:00', false, false, false],
-            '2': [0, '00:00', '00:00', false, false, false],
-            '3': [0, '00:00', '00:00', false, false, false],
-            '4': [0, '00:00', '00:00', false, false, false],
-            '5': [0, '00:00', '00:00', false, false, false],
-            '6': [0, '00:00', '00:00', false, false, false],
+            '0': [0, '00:00', '00:00', false, false, false, false],
+            '1': [0, '00:00', '00:00', false, false, false, false],
+            '2': [0, '00:00', '00:00', false, false, false, false],
+            '3': [0, '00:00', '00:00', false, false, false, false],
+            '4': [0, '00:00', '00:00', false, false, false, false],
+            '5': [0, '00:00', '00:00', false, false, false, false],
+            '6': [0, '00:00', '00:00', false, false, false, false],
           },
           TOTAL_EARLY: 0,
           TOTAL_LATE: 0,
           TOTAL_VACATION: 0,
+          TOTAL_NOWORK: 0,
           REST_TIME: '0',
           IMAGE: '',
         });
@@ -110,6 +115,10 @@ export default () => {
             setTotalVACATION_COUNT(
               (totalVACATION_COUNT) =>
                 totalVACATION_COUNT + (i.VACATION == '1' ? 1 : 0),
+            );
+            setTotalNOWORK_COUNT(
+              (totalNOWORK_COUNT) =>
+                totalNOWORK_COUNT + (i.nowork == '1' ? 1 : 0),
             );
           }
         });
@@ -293,6 +302,10 @@ export default () => {
               emp['TOTAL_EARLY'] + (i?.alear === '1' ? 1 : 0);
             emp['WORKING'][index][5] = i?.alear === '1' && true;
 
+            emp['TOTAL_NOWORK'] =
+              emp['TOTAL_NOWORK'] + (i?.nowork === '1' ? 1 : 0);
+            emp['WORKING'][index][6] = i?.nowork === '1' && true;
+
             emp['REST_TIME'] = i?.REST_TIME;
           }
         });
@@ -303,6 +316,7 @@ export default () => {
       setTotalVACATION_EMP(
         empListTemp.filter((i) => i.TOTAL_VACATION > 0).length,
       );
+      setTotalNOWORK_EMP(empListTemp.filter((i) => i.TOTAL_NOWORK > 0).length);
 
       const orderByWORKING = [...empListTemp];
       setEMP_LIST(
@@ -328,6 +342,11 @@ export default () => {
           (a, b) => Number(b.REST_TIME) - Number(a.REST_TIME),
         ),
       );
+
+      const orderByNOWORK = [...empListTemp];
+      setNOWORK_EMP_LIST(
+        orderByNOWORK.sort((a, b) => b.TOTAL_NOWORK - a.TOTAL_NOWORK),
+      );
     } catch (e) {
       console.log(e);
     } finally {
@@ -352,6 +371,9 @@ export default () => {
       VACATION_EMP_LIST={VACATION_EMP_LIST}
       totalWORKING_COUNT={totalWORKING_COUNT}
       totalWORKING_EMP={totalWORKING_EMP}
+      totalNOWORK_COUNT={totalNOWORK_COUNT}
+      totalNOWORK_EMP={totalNOWORK_EMP}
+      NOWORK_EMP_LIST={NOWORK_EMP_LIST}
       weekStartDate={weekStartDate}
       weekEndDate={weekEndDate}
       loading={loading}
@@ -372,6 +394,8 @@ export default () => {
       setModalREST_TIME={setModalREST_TIME}
       modalVACATION={modalVACATION}
       setModalVACATION={setModalVACATION}
+      modalNOWORK={modalNOWORK}
+      setModalNOWORK={setModalNOWORK}
     />
   );
 };

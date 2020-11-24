@@ -92,28 +92,8 @@ const EmpCard = styled.View`
   width: 100%;
 `;
 
-const ModalEmpCard = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  color: white;
-  border-radius: 20px;
-  border-width: 0.5px;
-  border-color: #7f7f7f;
-  margin-bottom: 10px;
-  background-color: rgba(255, 255, 255, 0.2);
-`;
-
 const Bold = styled.Text`
   font-weight: bold;
-`;
-
-const WhiteText = styled(Text)`
-  color: white;
-`;
-const WhiteBold = styled(Bold)`
-  color: white;
 `;
 
 const Column = styled.View`
@@ -166,6 +146,22 @@ const EmpCardRow = styled.View`
   margin-bottom: 20px;
 `;
 
+const SmallText = styled.Text`
+  font-size: 9px;
+  color: #7f7f7f;
+`;
+
+const SmallTextRound = styled.View`
+  width: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border-width: 0.5px;
+  border-color: #7f7f7f;
+  padding: 5px;
+  margin-right: 5px;
+`;
+
 export default ({
   EMP_LIST,
   totalEARLY,
@@ -176,6 +172,8 @@ export default ({
   REST_TIME_EMP_LIST,
   totalVACATION,
   VACATION_EMP_LIST,
+  totalNOWORK,
+  NOWORK_EMP_LIST,
   totalWORKING,
   totlaWORKING_EMP,
   toDay,
@@ -192,6 +190,8 @@ export default ({
   setModalREST_TIME,
   modalVACATION,
   setModalVACATION,
+  modalNOWORK,
+  setModalNOWORK,
 }) => {
   if (loading || visible) {
     return null;
@@ -270,6 +270,10 @@ export default ({
                     <DonutColumnText>
                       {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
                       조퇴&nbsp; ({totalEARLY}명)
+                    </DonutColumnText>
+                    <DonutColumnText>
+                      {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
+                      결근&nbsp; ({totalNOWORK}명)
                     </DonutColumnText>
                     <DonutColumnText>
                       {totalREST_TIME / totlaWORKING_EMP}분 평균 휴게시간
@@ -525,6 +529,75 @@ export default ({
                 </EmpConatainer>
               </Card>
               <Card
+                onPress={() => setModalNOWORK(true)}
+                rippleColor={'#666'}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
+                <TitleWord color={'#e85356'}>결근률</TitleWord>
+                <DonutCard
+                  percentage={Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}
+                  color={'#e85356'}
+                  max={100}
+                />
+                {totalNOWORK / totlaWORKING_EMP == 0 ? (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                ) : (
+                  <DodnutTextContainer>
+                    <PercentageText color={'#e85356'}>
+                      {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
+                    </PercentageText>
+                    <PercentageSubText color={'#e85356'}>
+                      {totalNOWORK}명
+                    </PercentageSubText>
+                  </DodnutTextContainer>
+                )}
+                <TitleWord color={'#e85356'}>금일 결근 직원</TitleWord>
+                <EmpConatainer>
+                  {NOWORK_EMP_LIST.filter((i) => i.NOWORK && i.NOWORK !== '0')
+                    .length === 0 ? (
+                    <Text style={{marginTop: 20}}>
+                      금일 결근 직원이 없습니다.{' '}
+                    </Text>
+                  ) : (
+                    NOWORK_EMP_LIST.slice(0, 3).map(
+                      (i, index) =>
+                        i.NOWORK &&
+                        i.NOWORK !== '0' && (
+                          <EmpCard key={index}>
+                            <FastImage
+                              style={{
+                                margin: 10,
+                                marginLeft: 20,
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                              }}
+                              source={{
+                                uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                                headers: {Authorization: 'someAuthToken'},
+                                priority: FastImage.priority.low,
+                              }}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                            <Column>
+                              <Bold>
+                                {i.EMP_NAME} [
+                                {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                              </Bold>
+                            </Column>
+                          </EmpCard>
+                        ),
+                    )
+                  )}
+                </EmpConatainer>
+              </Card>
+              <Card
                 onPress={() => setModalREST_TIME(true)}
                 rippleColor={'#666'}
                 rippleDuration={600}
@@ -667,39 +740,44 @@ export default ({
             onBackdropPress={() => setModalEARLY(false)}
             isVisible={modalEARLY}
             style={{
-              marginLeft: 0,
+              margin: 0,
               justifyContent: 'center',
               alignItems: 'center',
               width: wp('100%'),
               height: '100%',
             }}>
-            {EARLY_EMP_LIST.map((i, index) => (
-              <ModalEmpCard key={index}>
-                <FastImage
-                  style={{
-                    margin: 10,
-                    marginLeft: 0,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                  }}
-                  source={{
-                    uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                    headers: {Authorization: 'someAuthToken'},
-                    priority: FastImage.priority.low,
-                  }}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-                <Column>
-                  <WhiteBold>
-                    {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                  </WhiteBold>
-                  <WhiteText style={{marginTop: 5}}>
-                    {i.TOTAL_EARLY}회
-                  </WhiteText>
-                </Column>
-              </ModalEmpCard>
-            ))}
+            <Section style={{width: 200}} onPress={() => setModalEARLY(false)}>
+              {EARLY_EMP_LIST.map((i, index) => (
+                <EmpCard key={index}>
+                  <FastImage
+                    style={{
+                      margin: 10,
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                    }}
+                    source={{
+                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      headers: {Authorization: 'someAuthToken'},
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                  <Column>
+                    <Bold>
+                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                    </Bold>
+                    {i.EARLY == 1 ? (
+                      <SmallTextRound style={{marginTop: 5}}>
+                        <SmallText>조퇴</SmallText>
+                      </SmallTextRound>
+                    ) : (
+                      <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
+                    )}
+                  </Column>
+                </EmpCard>
+              ))}
+            </Section>
           </Modal>
           <Modal
             animationIn={'fadeIn'}
@@ -708,37 +786,90 @@ export default ({
             onBackdropPress={() => setModalLATE(false)}
             isVisible={modalLATE}
             style={{
-              marginLeft: 0,
+              margin: 0,
               justifyContent: 'center',
               alignItems: 'center',
               width: wp('100%'),
               height: '100%',
             }}>
-            {LATE_EMP_LIST.map((i, index) => (
-              <ModalEmpCard key={index}>
-                <FastImage
-                  style={{
-                    margin: 10,
-                    marginLeft: 0,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                  }}
-                  source={{
-                    uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                    headers: {Authorization: 'someAuthToken'},
-                    priority: FastImage.priority.low,
-                  }}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-                <Column>
-                  <WhiteBold>
-                    {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                  </WhiteBold>
-                  <WhiteText style={{marginTop: 5}}>{i.TOTAL_LATE}회</WhiteText>
-                </Column>
-              </ModalEmpCard>
-            ))}
+            <Section style={{width: 200}} onPress={() => setModalLATE(false)}>
+              {LATE_EMP_LIST.map((i, index) => (
+                <EmpCard key={index}>
+                  <FastImage
+                    style={{
+                      margin: 10,
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                    }}
+                    source={{
+                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      headers: {Authorization: 'someAuthToken'},
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                  <Column>
+                    <Bold>
+                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                    </Bold>
+                    {i.LATE == 1 ? (
+                      <SmallTextRound style={{marginTop: 5}}>
+                        <SmallText>지각</SmallText>
+                      </SmallTextRound>
+                    ) : (
+                      <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
+                    )}
+                  </Column>
+                </EmpCard>
+              ))}
+            </Section>
+          </Modal>
+          <Modal
+            animationIn={'fadeIn'}
+            animationOut={'fadeOut'}
+            onRequestClose={() => setModalNOWORK(false)}
+            onBackdropPress={() => setModalNOWORK(false)}
+            isVisible={modalNOWORK}
+            style={{
+              margin: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: wp('100%'),
+              height: '100%',
+            }}>
+            <Section style={{width: 200}} onPress={() => setModalNOWORK(false)}>
+              {NOWORK_EMP_LIST.map((i, index) => (
+                <EmpCard key={index}>
+                  <FastImage
+                    style={{
+                      margin: 10,
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                    }}
+                    source={{
+                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      headers: {Authorization: 'someAuthToken'},
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                  <Column>
+                    <Bold>
+                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                    </Bold>
+                    {i.NOWORK == 1 ? (
+                      <SmallTextRound style={{marginTop: 5}}>
+                        <SmallText>결근</SmallText>
+                      </SmallTextRound>
+                    ) : (
+                      <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
+                    )}
+                  </Column>
+                </EmpCard>
+              ))}
+            </Section>
           </Modal>
           <Modal
             animationIn={'fadeIn'}
@@ -747,37 +878,46 @@ export default ({
             onBackdropPress={() => setModalREST_TIME(false)}
             isVisible={modalREST_TIME}
             style={{
-              marginLeft: 0,
+              margin: 0,
               justifyContent: 'center',
               alignItems: 'center',
               width: wp('100%'),
               height: '100%',
             }}>
-            {REST_TIME_EMP_LIST.map((i, index) => (
-              <ModalEmpCard key={index}>
-                <FastImage
-                  style={{
-                    margin: 10,
-                    marginLeft: 0,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                  }}
-                  source={{
-                    uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                    headers: {Authorization: 'someAuthToken'},
-                    priority: FastImage.priority.low,
-                  }}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-                <Column>
-                  <WhiteBold>
-                    {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                  </WhiteBold>
-                  <WhiteText style={{marginTop: 5}}>{i.REST_TIME}분</WhiteText>
-                </Column>
-              </ModalEmpCard>
-            ))}
+            <Section
+              style={{width: 200}}
+              onPress={() => setModalREST_TIME(false)}>
+              {REST_TIME_EMP_LIST.map((i, index) => (
+                <EmpCard key={index}>
+                  <FastImage
+                    style={{
+                      margin: 10,
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                    }}
+                    source={{
+                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      headers: {Authorization: 'someAuthToken'},
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                  <Column>
+                    <Bold>
+                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                    </Bold>
+                    {i.REST_TIME != '0' ? (
+                      <SmallTextRound style={{marginTop: 5, width: 80}}>
+                        <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
+                      </SmallTextRound>
+                    ) : (
+                      <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
+                    )}
+                  </Column>
+                </EmpCard>
+              ))}
+            </Section>
           </Modal>
           <Modal
             animationIn={'fadeIn'}
@@ -786,39 +926,46 @@ export default ({
             onBackdropPress={() => setModalVACATION(false)}
             isVisible={modalVACATION}
             style={{
-              marginLeft: 0,
+              margin: 0,
               justifyContent: 'center',
               alignItems: 'center',
               width: wp('100%'),
               height: '100%',
             }}>
-            {VACATION_EMP_LIST.map((i, index) => (
-              <ModalEmpCard key={index}>
-                <FastImage
-                  style={{
-                    margin: 10,
-                    marginLeft: 0,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                  }}
-                  source={{
-                    uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                    headers: {Authorization: 'someAuthToken'},
-                    priority: FastImage.priority.low,
-                  }}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-                <Column>
-                  <WhiteBold>
-                    {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                  </WhiteBold>
-                  <WhiteText style={{marginTop: 5}}>
-                    {i.TOTAL_VACATION}일
-                  </WhiteText>
-                </Column>
-              </ModalEmpCard>
-            ))}
+            <Section
+              style={{width: 200}}
+              onPress={() => setModalVACATION(false)}>
+              {VACATION_EMP_LIST.map((i, index) => (
+                <EmpCard key={index}>
+                  <FastImage
+                    style={{
+                      margin: 10,
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                    }}
+                    source={{
+                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      headers: {Authorization: 'someAuthToken'},
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                  <Column>
+                    <Bold>
+                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                    </Bold>
+                    {i.VACATION == 1 ? (
+                      <SmallTextRound style={{marginTop: 5}}>
+                        <SmallText>휴가</SmallText>
+                      </SmallTextRound>
+                    ) : (
+                      <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
+                    )}
+                  </Column>
+                </EmpCard>
+              ))}
+            </Section>
           </Modal>
         </BackGround>
       );

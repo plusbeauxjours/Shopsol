@@ -22,12 +22,15 @@ export default () => {
   const [REST_TIME_EMP_LIST, setREST_TIME_EMP_LIST] = useState<any>([]);
   const [totalVACATION, setTotalVACATION] = useState<number>(0);
   const [VACATION_EMP_LIST, setVACATION_EMP_LIST] = useState<any>([]);
+  const [totalNOWORK, setTotalNOWORK] = useState<number>(0);
+  const [NOWORK_EMP_LIST, setNOWORK_EMP_LIST] = useState<any>([]);
   const [totalWORKING, setTotalWORKING] = useState<number>(0);
   const [totlaWORKING_EMP, setTotalWORKING_EMP] = useState<number>(0);
   const [modalEARLY, setModalEARLY] = useState<boolean>(false);
   const [modalLATE, setModalLATE] = useState<boolean>(false);
   const [modalREST_TIME, setModalREST_TIME] = useState<boolean>(false);
   const [modalVACATION, setModalVACATION] = useState<boolean>(false);
+  const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
 
   const toDay = moment().format('YYYY-MM-DD');
 
@@ -57,6 +60,7 @@ export default () => {
           emp['LATE'] = i?.jigark ?? '0';
           emp['REST_TIME'] = i?.REST_TIME;
           emp['VACATION'] = i?.VACATION ?? '0';
+          emp['NOWORK'] = i.nowork ?? '0';
           emp['IMAGE'] = i?.IMAGE ?? '';
 
           setTotalEARLY((totalEARLY) => totalEARLY + (i.alear === '1' ? 1 : 0));
@@ -66,6 +70,9 @@ export default () => {
           );
           setTotalVACATION(
             (totalVACATION) => totalVACATION + (i.VACATION == '1' ? 1 : 0),
+          );
+          setTotalNOWORK(
+            (totalNOWORK) => totalNOWORK + (i.nowork == '1' ? 1 : 0),
           );
 
           i.CHANGE_START && i.CHANGE_END
@@ -184,6 +191,9 @@ export default () => {
       setVACATION_EMP_LIST(
         orderByVACATION.sort((a, b) => b.VACATION - a.VACATION),
       );
+
+      const orderByNOWORK = [...empListTemp];
+      setNOWORK_EMP_LIST(orderByNOWORK.sort((a, b) => b.NOWORK - a.NOWORK));
     } catch (e) {
       console.log(e);
     } finally {
@@ -206,6 +216,8 @@ export default () => {
       REST_TIME_EMP_LIST={REST_TIME_EMP_LIST}
       totalVACATION={totalVACATION}
       VACATION_EMP_LIST={VACATION_EMP_LIST}
+      totalNOWORK={totalNOWORK}
+      NOWORK_EMP_LIST={NOWORK_EMP_LIST}
       totalWORKING={totalWORKING}
       totlaWORKING_EMP={totlaWORKING_EMP}
       toDay={toDay}
@@ -222,6 +234,8 @@ export default () => {
       setModalREST_TIME={setModalREST_TIME}
       modalVACATION={modalVACATION}
       setModalVACATION={setModalVACATION}
+      modalNOWORK={modalNOWORK}
+      setModalNOWORK={setModalNOWORK}
     />
   );
 };
