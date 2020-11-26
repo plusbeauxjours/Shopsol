@@ -46,11 +46,6 @@ export default () => {
     return scrollRef.current?.getNode()?.scrollToEnd({animated: true});
   };
 
-  const WORKING = Array.from(
-    Array(Number(moment().endOf('month').date())),
-    () => [0, '00:00', '00:00', false, false, false, false],
-  );
-
   const init = async () => {
     let currentMoment = moment().startOf('month');
     let endMoment = moment().endOf('month');
@@ -70,7 +65,12 @@ export default () => {
 
     try {
       let empListTemp = [];
+
       await EMPLOYEE_LIST?.workinglist?.map((i, index) => {
+        const WORKING = Array.from(
+          Array(Number(moment().endOf('month').date())),
+          () => [0, '00:00', '00:00', false, false, false, false],
+        );
         empListTemp.push({
           EMP_SEQ: i.EMP_SEQ,
           EMP_NAME: i.EMP_NAME,

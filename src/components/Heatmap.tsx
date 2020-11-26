@@ -151,6 +151,7 @@ export default ({data}) => {
           </Touchable>
         ))}
       </Container>
+      {data.EMP_SEQ == '6059' && console.log(data.WORKING)}
       <InformationBox>
         {data.WORKING[selectedIndex][0] != 0 ? (
           <Row>

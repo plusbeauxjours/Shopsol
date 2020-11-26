@@ -131,15 +131,6 @@ export default () => {
   };
 
   useEffect(() => {
-    console.log(
-      '--------------WELCOME',
-      STORE_NAME,
-      'CALENDAR_DATA_STORE_SEQ',
-      CALENDAR_DATA_STORE_SEQ,
-      'STORE_SEQ',
-      STORE_SEQ,
-      '--------------',
-    );
     fetcEmphData();
     fetchSchedulesData();
     firebase.analytics().setCurrentScreen('사업장 현황');
@@ -159,7 +150,7 @@ export default () => {
           },
           style: {backgroundColor: '#fff'},
         }}>
-        {/* <Tab.Screen name="일별현황" component={DailyDashBoardScreen} /> */}
+        <Tab.Screen name="일별현황" component={DailyDashBoardScreen} />
         <Tab.Screen name="주별현황" component={WeeklyDashBoardScreen} />
         <Tab.Screen name="월별현황" component={MonthlyDashBoardScreen} />
       </Tab.Navigator>
