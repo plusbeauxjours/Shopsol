@@ -12,12 +12,14 @@ import {
 } from 'react-native-responsive-screen';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {SwipeRow, SwipeListView} from 'react-native-swipe-list-view';
-import {KeyboardAvoidingView, ActivityIndicator} from 'react-native';
+import {KeyboardAvoidingView} from 'react-native';
+import LottieView from 'lottie-react-native';
+import Ripple from 'react-native-material-ripple';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
-import LottieView from 'lottie-react-native';
-import Ripple from 'react-native-material-ripple';
+import Loader from '~/components/Loader';
+
 import {
   ForwardIcon,
   DeleteIcon,
@@ -335,7 +337,7 @@ export default ({
               </MemoContainer>
               {loading ? (
                 <CommentBox>
-                  <ActivityIndicator color={'grey'} size={'small'} />
+                  <Loader />
                 </CommentBox>
               ) : (
                 <SwipeListView
@@ -531,9 +533,7 @@ export default ({
           useNativeDriver
           enablePreload
           renderFooter={renderFooter}
-          loadingRender={() => (
-            <ActivityIndicator color={'grey'} size={'small'} />
-          )}
+          loadingRender={() => <Loader />}
           renderIndicator={() => null}
           renderImage={(props) => (
             <FastImage

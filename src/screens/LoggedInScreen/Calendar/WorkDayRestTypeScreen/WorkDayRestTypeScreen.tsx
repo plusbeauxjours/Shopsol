@@ -128,9 +128,9 @@ export default ({route: {params}}) => {
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
   const [isHelpModalVisible, setisHelpModalVisible] = useState<boolean>(false);
-  const [totalVacation, setTotalVacation] = useState<string>('');
-  const [useVacation, setUseVacation] = useState<string>('');
-  const [remainderVacation, setRemainderVacation] = useState<string>('');
+  const [totalVacation, setTotalVacation] = useState<string>('0');
+  const [useVacation, setUseVacation] = useState<string>('0');
+  const [remainderVacation, setRemainderVacation] = useState<string>('0');
 
   const alertModal = (text) => {
     const params = {
@@ -175,28 +175,19 @@ export default ({route: {params}}) => {
   const initialize = async () => {
     const YEAR = moment().format('YYYY');
     const {data} = await api.getEmpAnnual(EMP_ID, YEAR);
-
     if (Array.isArray(data.message) && data.message.length > 0) {
       const annual = data.message[0];
-
-      let totalVacationState = totalVacation;
-      let useVacationState = useVacation;
-      let remainderVacationState = remainderVacation;
-
-      totalVacationState = annual.ANNUAL || '';
-      useVacationState = annual.USE_ANNUAL || '';
-
-      if (!totalVacationState && !useVacationState) {
-        remainderVacationState = '';
-      } else {
-        remainderVacationState = (
-          Number(totalVacationState || 0) - Number(useVacationState || 0)
-        ).toString();
+      console.log(annual?.ANNUAL);
+      if (annual?.ANNUAL && annual?.USE_ANNUAL) {
+        setRemainderVacation(
+          (
+            Number(annual?.ANNUAL || 0) - Number(annual?.USE_ANNUAL || 0)
+          ).toString(),
+        );
       }
 
-      setTotalVacation(totalVacationState);
-      setUseVacation(useVacationState);
-      setRemainderVacation(remainderVacationState);
+      annual?.ANNUAL && setTotalVacation(annual.ANNUAL);
+      annual?.USE_ANNUAL && setUseVacation(annual.USE_ANNUAL);
     } else {
       return;
     }
@@ -206,10 +197,10 @@ export default ({route: {params}}) => {
     initialize();
   }, []);
 
-  const Vacation = ({key, title}) => (
+  const Vacation = ({vacation, title}) => (
     <TextWrapper>
       <Text>{title}</Text>
-      <MidText>{key || '0'}</MidText>
+      <MidText>{vacation}</MidText>
       <Text>일</Text>
     </TextWrapper>
   );
@@ -244,10 +235,10 @@ export default ({route: {params}}) => {
           </Box>
         </BoxContainer>
         <Section>
-          <Vacation key={'totalVacation'} title={'총 연차'} />
-          <Vacation key={'useVacation'} title={'사용한 연차'} />
+          <Vacation vacation={totalVacation} title={'총 연차'} />
+          <Vacation vacation={useVacation} title={'사용한 연차'} />
           <ContentsBoxLine />
-          <Vacation key={'remainderVacation'} title={'남은 연차'} />
+          <Vacation vacation={remainderVacation} title={'남은 연차'} />
         </Section>
         <GreyText>
           * 직원정보의 연차설정에 입력된 값으로 셋팅이 됩니다.

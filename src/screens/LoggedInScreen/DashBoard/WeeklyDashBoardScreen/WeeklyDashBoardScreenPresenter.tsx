@@ -13,6 +13,7 @@ import moment from 'moment';
 import DonutCard from '~/components/DonutCard';
 import Graph from '~/components/Graph';
 import Modal from 'react-native-modal';
+import LottieView from 'lottie-react-native';
 
 interface IColor {
   color: string;
@@ -215,7 +216,20 @@ export default ({
   setModalNOWORK,
 }) => {
   if (loading || visible) {
-    return null;
+    return (
+      <Container>
+        <LottieView
+          style={{
+            marginTop: 20,
+            width: 160,
+            height: 160,
+          }}
+          source={require('../../../../assets/animations/dashBoardLoader.json')}
+          loop
+          autoPlay
+        />
+      </Container>
+    );
   } else {
     if (totalWORKING_DAY == 0) {
       return (
@@ -261,15 +275,19 @@ export default ({
                       top: 80,
                       height: 40,
                     }}>
-                    {moment
-                      .duration(totalWORKING_COUNT / totalWORKING_EMP)
-                      .hours() != 0 && (
+                    {Math.trunc(
+                      moment
+                        .duration(totalWORKING_COUNT / totalWORKING_EMP)
+                        .asHours(),
+                    ) != 0 && (
                       <PercentageSubText
                         color={'#e85356'}
                         style={{fontSize: 18}}>
-                        {moment
-                          .duration(totalWORKING_COUNT / totalWORKING_EMP)
-                          .hours()}
+                        {Math.trunc(
+                          moment
+                            .duration(totalWORKING_COUNT / totalWORKING_EMP)
+                            .asHours(),
+                        )}
                         시간
                       </PercentageSubText>
                     )}
@@ -289,9 +307,9 @@ export default ({
                   <DonutColumn>
                     <DonutColumnTitle>
                       <DonutColumnTitle style={{fontSize: 12}}>
-                        {moment(weekStartDate).format('MM월 DD일')}
+                        {moment(weekStartDate).format('M월 D일')}
                         &nbsp;~&nbsp;
-                        {moment(weekEndDate).format('MM월 DD일')}
+                        {moment(weekEndDate).format('M월 D일')}
                       </DonutColumnTitle>
                     </DonutColumnTitle>
                     <DonutColumnTitle>{STORE_NAME}점</DonutColumnTitle>
@@ -392,10 +410,12 @@ export default ({
                             {i.TOTAL_WORKING != 0 && (
                               <Bold>
                                 주&nbsp;
-                                {moment.duration(i.TOTAL_WORKING).hours() > 0 &&
-                                  `${moment
-                                    .duration(i.TOTAL_WORKING)
-                                    .hours()}시간`}
+                                {Math.trunc(
+                                  moment.duration(i.TOTAL_WORKING).asHours(),
+                                ) > 0 &&
+                                  `${Math.trunc(
+                                    moment.duration(i.TOTAL_WORKING).asHours(),
+                                  )}시간`}
                                 &nbsp;
                                 {moment.duration(i.TOTAL_WORKING).minutes() >
                                   0 &&
@@ -460,24 +480,6 @@ export default ({
               snapToInterval={220}
               decelerationRate="fast"
               showsHorizontalScrollIndicator={false}>
-              {/* <Card
-                onPress={() => {}}
-                rippleColor={'#666'}
-                rippleDuration={600}
-                rippleSize={1700}
-                rippleContainerBorderRadius={20}
-                rippleOpacity={0.1}>
-                <Text>출근미체크율 = API 대기중</Text>
-              </Card>
-              <Card
-                onPress={() => {}}
-                rippleColor={'#666'}
-                rippleDuration={600}
-                rippleSize={1700}
-                rippleContainerBorderRadius={20}
-                rippleOpacity={0.1}>
-                <Text>퇴근미체크율 = API 대기중</Text>
-              </Card> */}
               <Card
                 onPress={() => setModalLATE(true)}
                 rippleColor={'#666'}
@@ -485,7 +487,9 @@ export default ({
                 rippleSize={1700}
                 rippleContainerBorderRadius={20}
                 rippleOpacity={0.1}>
-                <TitleWord color={'#e85356'}>지각률</TitleWord>
+                <TitleWord color={'#e85356'}>
+                  금주 {moment().isoWeekday()}일간 지각률
+                </TitleWord>
                 <DonutCard
                   percentage={Math.ceil(
                     (totalLATE_COUNT / totalSUB_WORKING_EMP) * 100,
@@ -564,7 +568,9 @@ export default ({
                 rippleSize={1700}
                 rippleContainerBorderRadius={20}
                 rippleOpacity={0.1}>
-                <TitleWord color={'#e85356'}>조퇴률</TitleWord>
+                <TitleWord color={'#e85356'}>
+                  금주 {moment().isoWeekday()}일간 조퇴률
+                </TitleWord>
                 <DonutCard
                   percentage={Math.ceil(
                     (totalEARLY_COUNT / totalSUB_WORKING_EMP) * 100,
@@ -643,7 +649,9 @@ export default ({
                 rippleSize={1700}
                 rippleContainerBorderRadius={20}
                 rippleOpacity={0.1}>
-                <TitleWord color={'#e85356'}>결근률</TitleWord>
+                <TitleWord color={'#e85356'}>
+                  금주 {moment().isoWeekday()}일간 결근률
+                </TitleWord>
                 <DonutCard
                   percentage={Math.ceil(
                     (totalNOWORK_COUNT / totalSUB_WORKING_EMP) * 100,
@@ -785,7 +793,9 @@ export default ({
                 rippleSize={1700}
                 rippleContainerBorderRadius={20}
                 rippleOpacity={0.1}>
-                <TitleWord color={'#e85356'}>휴가 직원</TitleWord>
+                <TitleWord color={'#e85356'}>
+                  금주 {moment().isoWeekday()}일간 휴가 직원
+                </TitleWord>
                 <DonutCard
                   percentage={totalVACATION_COUNT}
                   color={'#e85356'}

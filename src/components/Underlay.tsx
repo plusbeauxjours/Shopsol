@@ -39,10 +39,15 @@ export default ({minY, maxY}) => {
                 top: t === 0 ? 15 : t === 1 ? -15 : 0,
               }}>
               <TextBox>
-                {moment.duration(Math.round(lerp(minY, maxY, t))).hours() >
-                  0 && (
+                {Math.trunc(
+                  moment.duration(Math.round(lerp(minY, maxY, t))).asHours(),
+                ) > 0 && (
                   <Text>
-                    {moment.duration(Math.round(lerp(minY, maxY, t))).hours()}
+                    {Math.trunc(
+                      moment
+                        .duration(Math.round(lerp(minY, maxY, t)))
+                        .asHours(),
+                    )}
                     시간
                   </Text>
                 )}

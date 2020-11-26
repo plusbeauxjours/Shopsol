@@ -7,6 +7,7 @@ import {
 } from 'react-native-responsive-screen';
 import {PieChart} from 'react-native-chart-kit';
 import Animated from 'react-native-reanimated';
+import LottieView from 'lottie-react-native';
 import moment from 'moment';
 
 import DonutCard from '~/components/DonutCard';
@@ -194,7 +195,20 @@ export default ({
   setModalNOWORK,
 }) => {
   if (loading || visible) {
-    return null;
+    return (
+      <Container>
+        <LottieView
+          style={{
+            marginTop: 20,
+            width: 160,
+            height: 160,
+          }}
+          source={require('../../../../assets/animations/dashBoardLoader.json')}
+          loop
+          autoPlay
+        />
+      </Container>
+    );
   } else {
     if (totlaWORKING_EMP == 0 || EMP_LIST.length == 0) {
       return (
@@ -233,12 +247,17 @@ export default ({
                       top: 80,
                       height: 40,
                     }}>
-                    {moment.duration(totalWORKING / totlaWORKING_EMP).hours() !=
-                      0 && (
+                    {Math.trunc(
+                      moment
+                        .duration(totalWORKING / totlaWORKING_EMP)
+                        .asHours(),
+                    ) != 0 && (
                       <PercentageSubText color={'#e85356'}>
-                        {moment
-                          .duration(totalWORKING / totlaWORKING_EMP)
-                          .hours()}
+                        {Math.trunc(
+                          moment
+                            .duration(totalWORKING / totlaWORKING_EMP)
+                            .asHours(),
+                        )}
                         시간
                       </PercentageSubText>
                     )}
@@ -335,8 +354,11 @@ export default ({
                         </Bold>
                         <Bold>
                           일&nbsp;
-                          {moment.duration(i.WORKING).hours() > 0 &&
-                            `${moment.duration(i.WORKING).hours()}시간`}
+                          {Math.trunc(moment.duration(i.WORKING).asHours()) >
+                            0 &&
+                            `${Math.trunc(
+                              moment.duration(i.WORKING).asHours(),
+                            )}시간`}
                           &nbsp;
                           {moment.duration(i.WORKING).minutes() > 0 &&
                             `${moment.duration(i.WORKING).minutes()}분`}
@@ -372,24 +394,6 @@ export default ({
               snapToInterval={220}
               decelerationRate="fast"
               showsHorizontalScrollIndicator={false}>
-              {/* <Card
-            onPress={() => {}}
-            rippleColor={'#666'}
-            rippleDuration={600}
-            rippleSize={1700}
-            rippleContainerBorderRadius={20}
-            rippleOpacity={0.1}>
-            <Text>출근미체크율 = API 대기중</Text>
-          </Card>
-          <Card
-            onPress={() => {}}
-            rippleColor={'#666'}
-            rippleDuration={600}
-            rippleSize={1700}
-            rippleContainerBorderRadius={20}
-            rippleOpacity={0.1}>
-            <Text>퇴근미체크율 = API 대기중</Text>
-          </Card> */}
               <Card
                 onPress={() => setModalLATE(true)}
                 rippleColor={'#666'}

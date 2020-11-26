@@ -75,15 +75,15 @@ export default () => {
           legendFontSize: 12,
           color: colors[index],
           TOTAL_WORKING: 0,
-          WORKING: {
-            '0': [0, '00:00', '00:00', false, false, false, false],
-            '1': [0, '00:00', '00:00', false, false, false, false],
-            '2': [0, '00:00', '00:00', false, false, false, false],
-            '3': [0, '00:00', '00:00', false, false, false, false],
-            '4': [0, '00:00', '00:00', false, false, false, false],
-            '5': [0, '00:00', '00:00', false, false, false, false],
-            '6': [0, '00:00', '00:00', false, false, false, false],
-          },
+          WORKING: [
+            [0, '00:00', '00:00', false, false, false, false],
+            [0, '00:00', '00:00', false, false, false, false],
+            [0, '00:00', '00:00', false, false, false, false],
+            [0, '00:00', '00:00', false, false, false, false],
+            [0, '00:00', '00:00', false, false, false, false],
+            [0, '00:00', '00:00', false, false, false, false],
+            [0, '00:00', '00:00', false, false, false, false],
+          ],
           TOTAL_EARLY: 0,
           TOTAL_LATE: 0,
           TOTAL_VACATION: 0,
@@ -355,7 +355,7 @@ export default () => {
   };
 
   useEffect(() => {
-    init();
+    loading && init();
   }, []);
 
   return (

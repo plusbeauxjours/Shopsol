@@ -10,40 +10,10 @@ interface IColumn {
   isSelected?: boolean;
   height?: number;
 }
-const data = [
-  {
-    date: '2020-01-01',
-    value: 32400000,
-  },
-  {
-    date: '2020-01-02',
-    value: 22400000,
-  },
-  {
-    date: '2020-01-03',
-    value: 12400000,
-  },
-  {
-    date: '2020-01-04',
-    value: 132400000,
-  },
-  {
-    date: '2020-01-05',
-    value: 22400000,
-  },
-  {
-    date: '2020-01-06',
-    value: 82400000,
-  },
-  {
-    date: '2020-01-07',
-    value: 132400000,
-  },
-];
 
 const width = wp('100%') - 100;
 const height = 200;
-const step = width / data.length;
+const step = width / 7;
 
 const View = styled.View<IColumn>`
   width: ${step}px;
@@ -122,10 +92,12 @@ const SmallTextRound = styled.View`
   padding: 5px;
   margin-right: 5px;
 `;
+
 const SmallText = styled.Text`
   font-size: 9px;
   color: #7f7f7f;
 `;
+
 export default ({data}) => {
   const weekDays = ['월', '화', '수', '목', '금', '토', '일'];
   const values = Object.values(data.WORKING)?.map((p) => p[0]);
@@ -187,10 +159,12 @@ export default ({data}) => {
             <SmallTextRound>
               <SmallText>
                 근무시간:&nbsp;
-                {moment.duration(data.WORKING[selectedIndex][0]).hours() > 0 &&
-                  `${moment
-                    .duration(data.WORKING[selectedIndex][0])
-                    .hours()}시간`}
+                {Math.trunc(
+                  moment.duration(data.WORKING[selectedIndex][0]).asHours(),
+                ) > 0 &&
+                  `${Math.trunc(
+                    moment.duration(data.WORKING[selectedIndex][0]).asHours(),
+                  )}시간`}
                 &nbsp;
                 {moment.duration(data.WORKING[selectedIndex][0]).minutes() >
                   0 &&

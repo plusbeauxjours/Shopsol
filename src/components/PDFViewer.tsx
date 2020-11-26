@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ActivityIndicator, StatusBar} from 'react-native';
+import {StatusBar} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -10,6 +10,7 @@ import {WebView} from 'react-native-webview';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import Orientation from 'react-native-orientation-locker';
 
+import Loader from '~/components/Loader';
 import {
   PortraitIcon,
   LandscapeIcon,
@@ -103,9 +104,7 @@ export default ({url, setModalVisible}) => {
             <WebView source={{uri}} />;
           }}
           scale={isFullScreen ? 2.2 : 1}
-          activityIndicator={
-            <ActivityIndicator color={'grey'} size={'small'} />
-          }
+          activityIndicator={<Loader />}
           style={
             isFullScreen
               ? {width: hp('100%'), height: wp('100%')}

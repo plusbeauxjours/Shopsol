@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components/native';
-import {StatusBar, ActivityIndicator} from 'react-native';
+import {StatusBar} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -194,7 +194,7 @@ export default ({url, setModalVisible}) => {
                   }
             }>
             {loading ? (
-              <ActivityIndicator color={'grey'} size={'small'} />
+              <Loader />
             ) : (
               <>
                 <PlayerControls

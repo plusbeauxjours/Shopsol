@@ -9,10 +9,10 @@ import moment from 'moment';
 import Modal from 'react-native-modal';
 import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {ActivityIndicator} from 'react-native';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import {CheckBoxIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import Loader from '~/components/Loader';
 
 interface ISelected {
   isSelected: boolean;
@@ -432,9 +432,7 @@ export default ({
             useNativeDriver
             enablePreload
             renderFooter={renderFooter}
-            loadingRender={() => (
-              <ActivityIndicator color={'grey'} size={'small'} />
-            )}
+            loadingRender={() => <Loader />}
             renderIndicator={() => null}
             renderImage={(props) => (
               <FastImage

@@ -8,7 +8,6 @@ import {
 } from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
-import {ActivityIndicator} from 'react-native';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import moment from 'moment';
 
@@ -18,6 +17,7 @@ import {
   ReloadCircleIcon,
   CloseCircleOutlineIcon,
 } from '~/constants/Icons';
+import Loader from '~/components/Loader';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -374,9 +374,7 @@ export default ({
             useNativeDriver
             enablePreload
             renderFooter={renderFooter}
-            loadingRender={() => (
-              <ActivityIndicator color={'grey'} size={'small'} />
-            )}
+            loadingRender={() => <Loader />}
             renderIndicator={() => null}
             renderImage={(props) => (
               <FastImage
@@ -394,6 +392,6 @@ export default ({
       </BackGround>
     );
   } else {
-    return <ActivityIndicator color={'grey'} size={'large'} />;
+    return <Loader size={'large'} />;
   }
 };

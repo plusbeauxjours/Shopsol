@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {ActivityIndicator, StatusBar, LogBox} from 'react-native';
+import {StatusBar, LogBox} from 'react-native';
 import {useSelector} from 'react-redux';
 import firebase from 'react-native-firebase';
 // import * as Sentry from '@sentry/react-native';
@@ -10,6 +10,7 @@ import CloseBtn from './Header/CloseBtn';
 import LoggedInNavigation from '../navigations/LoggedInNavigation';
 import LoggedOutNavigation from '../navigations/LoggedOutNavigation';
 import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/index';
+import Loader from './Loader';
 
 LogBox.ignoreAllLogs(true);
 
@@ -101,23 +102,7 @@ export default () => {
           }}
         />
       </RootStack.Navigator>
-      {visible && (
-        <ActivityIndicator
-          color="#A0D9E2"
-          size="large"
-          style={{
-            flex: 1,
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            position: 'absolute',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(52, 52, 52, 0.8)',
-          }}
-        />
-      )}
+      {visible && <Loader size={'large'} />}
     </NavigationContainer>
   );
 };

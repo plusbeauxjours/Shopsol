@@ -5,14 +5,14 @@ import {
 } from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import PaymentInfoScreenCard from './PaymentInfoScreenCard';
-import {ActivityIndicator} from 'react-native';
-import moment from 'moment';
+
 import {
   ForwardIcon,
   BackIcon,
   ReloadCircleIcon,
   HelpCircleIcon,
 } from '~/constants/Icons';
+import Loader from '~/components/Loader';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -155,7 +155,7 @@ export default ({
             <Line />
             <PayBox>
               {loading ? (
-                <ActivityIndicator color={'grey'} size={'small'} />
+                <Loader />
               ) : (
                 <>
                   <Pay>
