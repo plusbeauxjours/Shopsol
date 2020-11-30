@@ -25,7 +25,6 @@ export default () => {
   );
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {
-    STORE_NAME,
     STORE_SEQ,
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},

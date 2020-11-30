@@ -145,6 +145,7 @@ export default ({
   isEndTimeModalVisible,
   setIsEndTimeModalVisible,
   setStartTime,
+  setEndTime,
   TYPE,
 }) => {
   const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);

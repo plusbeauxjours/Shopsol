@@ -211,7 +211,6 @@ export default ({route: {params}}) => {
   };
 
   const openRow = (rowRef) => {
-    console.log(rowRef);
     if (!rowRef.isOpen) {
       rowRef.manuallySwipeRow(-100);
     }

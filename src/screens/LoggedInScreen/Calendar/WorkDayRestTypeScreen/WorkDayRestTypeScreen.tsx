@@ -177,7 +177,6 @@ export default ({route: {params}}) => {
     const {data} = await api.getEmpAnnual(EMP_ID, YEAR);
     if (Array.isArray(data.message) && data.message.length > 0) {
       const annual = data.message[0];
-      console.log(annual?.ANNUAL);
       if (annual?.ANNUAL && annual?.USE_ANNUAL) {
         setRemainderVacation(
           (

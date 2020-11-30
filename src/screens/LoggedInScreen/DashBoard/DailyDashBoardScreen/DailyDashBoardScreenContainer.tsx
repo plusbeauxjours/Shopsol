@@ -15,7 +15,7 @@ export default () => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
-  const [PIE_EMP_LIST, setPIE_EMP_LIST] = useState<any>([]);
+  const [TIME_EMP_LIST, setTIME_EMP_LIST] = useState<any>([]);
   const [totalEARLY, setTotalEARLY] = useState<number>(0);
   const [EARLY_EMP_LIST, setEARLY_EMP_LIST] = useState<any>([]);
   const [totalLATE, setTotalLATE] = useState<number>(0);
@@ -34,8 +34,6 @@ export default () => {
   const [modalVACATION, setModalVACATION] = useState<boolean>(false);
   const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [scrollEnabled, setScrollEnabled] = useState<boolean>(true);
-  // const [scrollOffset, setScrollOffset] = useState<any>(null);
 
   const toDay = moment().format('YYYY-MM-DD');
 
@@ -193,9 +191,23 @@ export default () => {
               setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1));
         }
       });
+
       const orderByWORKING = [...empListTemp];
-      setEMP_LIST(orderByWORKING.sort((a, b) => b.WORKING - a.WORKING));
-      setPIE_EMP_LIST(orderByWORKING.sort((a, b) => b.WORKING - a.WORKING));
+      setEMP_LIST(
+        orderByWORKING.sort(
+          (a, b) => b.WORKING.toString() - a.WORKING.toString(),
+        ),
+      );
+
+      const orderBySTART_TIME = [...empListTemp];
+      setTIME_EMP_LIST(
+        orderBySTART_TIME.sort(
+          (a, b) =>
+            (b.START_TIME != null) - (a.START_TIME != null) ||
+            moment().diff(moment.duration(b.START_TIME).as('milliseconds')) -
+              moment().diff(moment.duration(a.START_TIME).as('milliseconds')),
+        ),
+      );
 
       const orderByEARLY = [...empListTemp];
       setEARLY_EMP_LIST(orderByEARLY.sort((a, b) => b.EARLY - a.EARLY));
@@ -205,9 +217,7 @@ export default () => {
 
       const orderByREST_TIME = [...empListTemp];
       setREST_TIME_EMP_LIST(
-        orderByREST_TIME.sort(
-          (a, b) => Number(b.REST_TIME) - Number(a.REST_TIME),
-        ),
+        orderByREST_TIME.sort((a, b) => b.REST_TIME - a.REST_TIME),
       );
 
       const orderByVACATION = [...empListTemp];
@@ -231,7 +241,7 @@ export default () => {
   return (
     <DailyDashBoardScreenPresenter
       EMP_LIST={EMP_LIST}
-      PIE_EMP_LIST={PIE_EMP_LIST}
+      TIME_EMP_LIST={TIME_EMP_LIST}
       totalEARLY={totalEARLY}
       EARLY_EMP_LIST={EARLY_EMP_LIST}
       totalLATE={totalLATE}

@@ -34,7 +34,6 @@ const BackGround = styled.SafeAreaView`
   background-color: #f6f6f6;
 `;
 
-const ScrollView = styled.ScrollView``;
 const Text = styled.Text`
   color: #7f7f7f;
 `;
@@ -201,7 +200,7 @@ const EmpCardDataRow = styled.View`
 
 export default ({
   EMP_LIST,
-  PIE_EMP_LIST,
+  TIME_EMP_LIST,
   totalEARLY,
   EARLY_EMP_LIST,
   totalLATE,
@@ -236,6 +235,7 @@ export default ({
   onScroll,
   gotoSelectedIndex,
 }) => {
+  console.log(TIME_EMP_LIST);
   if (loading || visible) {
     return (
       <Container>
@@ -346,7 +346,7 @@ export default ({
                   </DonutColumn>
                 </Row>
                 <PieChart
-                  data={PIE_EMP_LIST}
+                  data={EMP_LIST}
                   width={wp('100%') - 60}
                   height={200}
                   chartConfig={{
@@ -374,7 +374,7 @@ export default ({
               decelerationRate="fast"
               onScroll={onScroll}
               showsHorizontalScrollIndicator={false}>
-              {EMP_LIST.sort(
+              {TIME_EMP_LIST.sort(
                 (a, b) =>
                   moment(a.START_TIME, 'kk:mm').valueOf() -
                   moment(b.START_TIME, 'kk:mm').valueOf(),
@@ -386,7 +386,7 @@ export default ({
                       setSelectedIndex(index);
                     }}
                     isSelected={index == selectedIndex}
-                    isLast={index == EMP_LIST.length - 1}
+                    isLast={index == TIME_EMP_LIST.length - 1}
                     rippleColor={'#666'}
                     rippleDuration={600}
                     rippleSize={1700}
@@ -427,7 +427,7 @@ export default ({
                             <IconContainer>
                               <PlayCircleOutlineIcon />
                               <Text style={{marginLeft: 5}}>
-                                시작시간&nbsp;
+                                시작시간:&nbsp;
                                 {Math.trunc(
                                   moment.duration(i.START_TIME).asHours(),
                                 )}
@@ -441,7 +441,7 @@ export default ({
                             <IconContainer>
                               <StopCircleOutlineIcon />
                               <Text style={{marginLeft: 5}}>
-                                종료시간&nbsp;
+                                종료시간:&nbsp;
                                 {Math.trunc(
                                   moment.duration(i.END_TIME).asHours(),
                                 )}
@@ -498,7 +498,7 @@ export default ({
             </Animated.ScrollView>
             <Container>
               <Schedule
-                EMP_LIST={EMP_LIST}
+                TIME_EMP_LIST={TIME_EMP_LIST}
                 selectedIndex={selectedIndex}
                 setSelectedIndex={setSelectedIndex}
                 gotoSelectedIndex={gotoSelectedIndex}

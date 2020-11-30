@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
@@ -17,12 +17,12 @@ interface ITouchable {
 const maxWidth = wp('100%') - 90;
 
 const View = styled.View<ITouchable>`
-  padding: 5px;
+  padding: 3px;
   flex-direction: row;
   align-items: center;
-  height: 50px;
+  height: 46px;
   border-radius: 25px;
-  min-width: 50px;
+  min-width: 46px;
   width: ${(props) => (props.width * maxWidth) / 86400000}px;
   background-color: ${(props) => props.backgroundColor};
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
@@ -62,25 +62,50 @@ const GraphSection = styled.View`
 
 const Table = styled.View`
   background-color: white;
+  overflow: hidden;
+`;
+
+const TextBox = styled.View`
+  flex-direction: row;
+  left: -15px;
+  align-items: center;
+  width: ${wp('100%') - 60}px;
+  justify-content: space-between;
+`;
+
+const Text = styled.Text`
+  width: 30px;
+  font-size: 10px;
+  color: #7f7f7f;
+  text-align: center;
+  margin-bottom: 5px;
 `;
 
 export default ({
-  EMP_LIST,
+  TIME_EMP_LIST,
   selectedIndex,
   setSelectedIndex,
   gotoSelectedIndex,
 }) => {
+  const [timeKey, setTimeKey] = useState<number>(TIME_EMP_LIST);
+
   return (
     <GraphSection>
+      <TextBox>
+        {[0, 6, 12, 18, 24].map((i, index) => {
+          return <Text>{i}시</Text>;
+        })}
+      </TextBox>
       <Table>
         <ScheduleUnderlay />
-        {EMP_LIST.map(
+        {/* <TimeKey /> */}
+        {TIME_EMP_LIST.map(
           (i, index) =>
             i.WORKING > 0 && (
               <Touchable
                 key={index}
                 isFirst={index == 0}
-                isLast={index == EMP_LIST.length - 1}
+                isLast={index == TIME_EMP_LIST.length - 1}
                 startTime={moment.duration(i.START_TIME).as('milliseconds')}
                 // width={i?.WORKING || 0}
                 width={i?.WORKING || 0}

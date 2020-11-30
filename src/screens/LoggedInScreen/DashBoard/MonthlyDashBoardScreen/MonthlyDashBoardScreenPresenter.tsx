@@ -27,7 +27,9 @@ const BackGround = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView``;
 const View = styled.View``;
-const Text = styled.Text``;
+const Text = styled.Text`
+  color: #7f7f7f;
+`;
 
 const SmallText = styled.Text`
   font-size: 9px;

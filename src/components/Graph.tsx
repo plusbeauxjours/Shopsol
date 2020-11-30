@@ -148,7 +148,7 @@ export default ({data}) => {
           <IconContainer>
             <PlayCircleOutlineIcon />
             <Text style={{marginLeft: 5}}>
-              시작시간&nbsp;
+              시작시간:&nbsp;
               {Math.trunc(
                 moment.duration(data.WORKING[selectedIndex][1]).asHours(),
               )}
@@ -162,7 +162,7 @@ export default ({data}) => {
           <IconContainer>
             <StopCircleOutlineIcon />
             <Text style={{marginLeft: 5}}>
-              종료시간&nbsp;
+              종료시간:&nbsp;
               {Math.trunc(
                 moment.duration(data.WORKING[selectedIndex][2]).asHours(),
               )}

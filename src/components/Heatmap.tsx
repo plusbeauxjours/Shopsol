@@ -128,7 +128,7 @@ export default ({data}) => {
       <Container>
         <SpaceRow>
           {['일', '월', '화', '수', '목', '금', '토'].map((i, index) => (
-            <Text>{i}</Text>
+            <Text key={index}>{i}</Text>
           ))}
         </SpaceRow>
         {monthDates.map((_, index) => (
@@ -149,14 +149,13 @@ export default ({data}) => {
           </Touchable>
         ))}
       </Container>
-      {data.EMP_SEQ == '6059' && console.log(data.WORKING)}
       <InformationBox>
         {data.WORKING[selectedIndex][0] != 0 ? (
           <Row style={{justifyContent: 'space-around'}}>
             <IconContainer>
               <PlayCircleOutlineIcon />
               <Text style={{marginLeft: 5}}>
-                시작시간&nbsp;
+                시작시간:&nbsp;
                 {Math.trunc(
                   moment.duration(data.WORKING[selectedIndex][1]).asHours(),
                 )}
@@ -171,7 +170,7 @@ export default ({data}) => {
             <IconContainer>
               <StopCircleOutlineIcon />
               <Text style={{marginLeft: 5}}>
-                종료시간&nbsp;
+                종료시간:&nbsp;
                 {Math.trunc(
                   moment.duration(data.WORKING[selectedIndex][2]).asHours(),
                 )}
