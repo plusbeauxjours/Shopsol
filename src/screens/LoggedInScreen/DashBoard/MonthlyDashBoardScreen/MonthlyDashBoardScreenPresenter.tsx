@@ -57,13 +57,13 @@ const SectionCard = styled.View`
 `;
 
 const SmallTextRound = styled.View`
-  width: 55px;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
   border-width: 0.5px;
   border-color: #7f7f7f;
-  padding: 5px;
+  padding: 0 10px;
+  height: 30px;
   margin-right: 5px;
 `;
 
@@ -89,7 +89,7 @@ const TitleWord = styled.Text<IColor>`
 
 const DodnutTextContainer = styled.View`
   width: 70px;
-  top: 110px;
+  top: 115px;
   text-align: center;
   position: absolute;
   justify-content: center;
@@ -98,7 +98,7 @@ const DodnutTextContainer = styled.View`
 
 const PercentageText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
-  font-size: 28px;
+  font-size: 25px;
   font-weight: bold;
 `;
 
@@ -446,7 +446,7 @@ export default ({
                               </SmallTextRound>
                             )}
                             {i.REST_TIME != 0 && (
-                              <SmallTextRound style={{width: 70}}>
+                              <SmallTextRound>
                                 <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
                               </SmallTextRound>
                             )}
@@ -902,9 +902,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.TOTAL_EARLY > 0 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>조퇴: {i.TOTAL_EARLY}일</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound style={{marginTop: 5}}>
+                          <SmallText>조퇴: {i.TOTAL_EARLY}일</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -948,9 +950,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.TOTAL_LATE > 0 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>지각: {i.TOTAL_LATE}일</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound style={{marginTop: 5}}>
+                          <SmallText>지각: {i.TOTAL_LATE}일</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -994,9 +998,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.TOTAL_NOWORK > 0 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>결근: {i.TOTAL_NOWORK}일</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound style={{marginTop: 5}}>
+                          <SmallText>결근: {i.TOTAL_NOWORK}일</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -1042,9 +1048,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.REST_TIME != '0' ? (
-                      <SmallTextRound style={{marginTop: 5, width: 80}}>
-                        <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound style={{marginTop: 5, width: 80}}>
+                          <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -1090,9 +1098,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.TOTAL_VACATION > 0 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>휴가: {i.TOTAL_VACATION}일</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound style={{marginTop: 5}}>
+                          <SmallText>휴가: {i.TOTAL_VACATION}일</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}

@@ -12,10 +12,11 @@ interface IActive {
   isSelected: boolean;
 }
 
-const ToucahbleSize = wp('100%') * 0.1;
+const ToucahbleSize = wp('100%') * 0.095;
+const ToucahbleMargin = (wp('100%') - ToucahbleSize * 7 - 60) / 8;
 
 const HeatmapText = styled.Text<IActive>`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   color: ${(props) =>
     props.isSelected
@@ -31,11 +32,7 @@ const Text = styled.Text`
 
 const Touchable = styled(RNBounceable)<IActive>`
   margin-top: 8px;
-  margin-left: ${(props) =>
-    props.index == 0
-      ? moment().startOf('month').weekday() * (ToucahbleSize + 5)
-      : 0}px;
-  margin-right: 5px;
+  margin-right: ${ToucahbleMargin}px;
   background-color: ${(props) =>
     props.isSelected
       ? 'rgba(232,83,86, 1)'
@@ -54,7 +51,7 @@ const Touchable = styled(RNBounceable)<IActive>`
       : props.activeDays?.indexOf(props.index) > -1
       ? 'transparent'
       : '#aaa'};
-  border-radius: 12px;
+  border-radius: 14px;
   width: ${ToucahbleSize}px;
   height: ${ToucahbleSize}px;
   align-items: center;
@@ -62,13 +59,23 @@ const Touchable = styled(RNBounceable)<IActive>`
 `;
 
 const Container = styled.View`
-  padding-left: 7px;
+  width: ${ToucahbleSize * 7 + ToucahbleMargin * 8}px;
+  padding-left: ${ToucahbleMargin}px;
   flex-wrap: wrap;
   align-self: center;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 10px;
+`;
+
+const SpaceRow = styled.View`
+  width: ${ToucahbleSize * 7 + ToucahbleMargin * 8}px;
+  position: absolute;
+  top: -15px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 ${ToucahbleSize / 2 + ToucahbleMargin / 2}px;
 `;
 
 const InformationBox = styled.View`
@@ -84,9 +91,8 @@ const Row = styled.View`
 
 const IconContainer = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  width: 140px;
   margin-bottom: 10px;
 `;
 
@@ -101,15 +107,6 @@ const SmallTextRound = styled.View`
 const SmallText = styled.Text`
   font-size: 9px;
   color: #7f7f7f;
-`;
-
-const SpaceRow = styled.View`
-  width: 100%;
-  position: absolute;
-  top: -10px;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 25px;
 `;
 
 export default ({data}) => {
@@ -128,11 +125,12 @@ export default ({data}) => {
   }
   return (
     <>
-      <SpaceRow>
-        <SmallText>일</SmallText>
-        <SmallText>토</SmallText>
-      </SpaceRow>
       <Container>
+        <SpaceRow>
+          {['일', '월', '화', '수', '목', '금', '토'].map((i, index) => (
+            <Text>{i}</Text>
+          ))}
+        </SpaceRow>
         {monthDates.map((_, index) => (
           <Touchable
             key={index}
@@ -154,23 +152,35 @@ export default ({data}) => {
       {data.EMP_SEQ == '6059' && console.log(data.WORKING)}
       <InformationBox>
         {data.WORKING[selectedIndex][0] != 0 ? (
-          <Row>
+          <Row style={{justifyContent: 'space-around'}}>
             <IconContainer>
               <PlayCircleOutlineIcon />
-              <Text>
+              <Text style={{marginLeft: 5}}>
                 시작시간&nbsp;
-                {moment(data.WORKING[selectedIndex][1], 'kk:mm').format(
-                  'k시 m분',
+                {Math.trunc(
+                  moment.duration(data.WORKING[selectedIndex][1]).asHours(),
                 )}
+                시
+                {moment.duration(data.WORKING[selectedIndex][1]).minutes() >
+                  0 &&
+                  ` ${moment
+                    .duration(data.WORKING[selectedIndex][1])
+                    .minutes()}분`}
               </Text>
             </IconContainer>
             <IconContainer>
               <StopCircleOutlineIcon />
-              <Text>
+              <Text style={{marginLeft: 5}}>
                 종료시간&nbsp;
-                {moment(data.WORKING[selectedIndex][2], 'kk:mm').format(
-                  'k시 m분',
+                {Math.trunc(
+                  moment.duration(data.WORKING[selectedIndex][2]).asHours(),
                 )}
+                시
+                {moment.duration(data.WORKING[selectedIndex][2]).minutes() >
+                  0 &&
+                  ` ${moment
+                    .duration(data.WORKING[selectedIndex][2])
+                    .minutes()}분`}
               </Text>
             </IconContainer>
           </Row>

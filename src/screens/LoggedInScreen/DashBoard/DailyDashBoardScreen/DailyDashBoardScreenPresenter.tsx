@@ -6,20 +6,27 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {PieChart} from 'react-native-chart-kit';
-import Animated from 'react-native-reanimated';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-
-import DonutCard from '~/components/DonutCard';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
+import Animated from 'react-native-reanimated';
+
+import DonutCard from '~/components/DonutCard';
+import {PlayCircleOutlineIcon, StopCircleOutlineIcon} from '~/constants/Icons';
+import Schedule from '~/components/Schedule';
 
 interface IColor {
   color: string;
 }
 interface ICard {
-  color: string;
+  color?: string;
   isLast?: boolean;
+}
+
+interface IEmpCard {
+  isLast?: boolean;
+  isSelected?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -28,8 +35,9 @@ const BackGround = styled.SafeAreaView`
 `;
 
 const ScrollView = styled.ScrollView``;
-const View = styled.View``;
-const Text = styled.Text``;
+const Text = styled.Text`
+  color: #7f7f7f;
+`;
 
 const Container = styled.View`
   width: 100%;
@@ -42,7 +50,6 @@ const Section = styled(Ripple)`
   border-radius: 20px;
   padding: 10px;
   background-color: white;
-  margin-bottom: 20px;
 `;
 
 const Card = styled(Ripple)<ICard>`
@@ -67,7 +74,7 @@ const TitleWord = styled.Text<IColor>`
 
 const DodnutTextContainer = styled.View`
   width: 70px;
-  top: 110px;
+  top: 115px;
   text-align: center;
   position: absolute;
   justify-content: center;
@@ -76,7 +83,7 @@ const DodnutTextContainer = styled.View`
 
 const PercentageText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
-  font-size: 28px;
+  font-size: 25px;
   font-weight: bold;
 `;
 
@@ -140,7 +147,7 @@ const EmpCardRow = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: ${wp('100%') - 100}px;
+  width: 100px;
   border-bottom-width: 0.7px;
   border-bottom-color: #7f7f7f;
   padding-bottom: 5px;
@@ -153,18 +160,48 @@ const SmallText = styled.Text`
 `;
 
 const SmallTextRound = styled.View`
-  width: 30px;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
   border-width: 0.5px;
   border-color: #7f7f7f;
-  padding: 5px;
+  padding: 0 10px;
+  height: 30px;
   margin-right: 5px;
+  margin-top: 5px;
+`;
+
+const EmpCardContainer = styled(Ripple)<IEmpCard>`
+  justify-content: flex-start;
+  align-items: center;
+  width: 200px;
+  min-height: 220px;
+  height: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: white;
+  margin-left: 20px;
+  margin-right: ${(props) => (props.isLast ? wp('100%') - 220 : 0)};
+  opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
+`;
+
+const IconContainer = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 5px;
+`;
+
+const EmpCardDataRow = styled.View`
+  width: 200px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 export default ({
   EMP_LIST,
+  PIE_EMP_LIST,
   totalEARLY,
   EARLY_EMP_LIST,
   totalLATE,
@@ -181,7 +218,8 @@ export default ({
   loading,
   visible,
   STORE_NAME,
-  scrollRef,
+  screenScrollRef,
+  cardScrollRef,
   onPressSection,
   modalEARLY,
   setModalEARLY,
@@ -193,6 +231,10 @@ export default ({
   setModalVACATION,
   modalNOWORK,
   setModalNOWORK,
+  selectedIndex,
+  setSelectedIndex,
+  onScroll,
+  gotoSelectedIndex,
 }) => {
   if (loading || visible) {
     return (
@@ -222,7 +264,7 @@ export default ({
       return (
         <BackGround>
           <Animated.ScrollView
-            ref={scrollRef}
+            ref={screenScrollRef}
             style={{paddingBottom: hp('100%') - 420}}
             keyboardDismissMode="on-drag"
             showsVerticalScrollIndicator={false}
@@ -304,7 +346,7 @@ export default ({
                   </DonutColumn>
                 </Row>
                 <PieChart
-                  data={EMP_LIST}
+                  data={PIE_EMP_LIST}
                   width={wp('100%') - 60}
                   height={200}
                   chartConfig={{
@@ -323,73 +365,146 @@ export default ({
                   absolute={false}
                 />
               </Section>
+            </Container>
+            <Animated.ScrollView
+              ref={cardScrollRef}
+              horizontal
+              scrollEventThrottle={16}
+              snapToInterval={220}
+              decelerationRate="fast"
+              onScroll={onScroll}
+              showsHorizontalScrollIndicator={false}>
               {EMP_LIST.sort(
                 (a, b) =>
                   moment(a.START_TIME, 'kk:mm').valueOf() -
                   moment(b.START_TIME, 'kk:mm').valueOf(),
               ).map((i, index) => {
                 return (
-                  <EmpCard
-                    key={index}
-                    style={{marginBottom: 20, alignItems: 'flex-start'}}>
-                    <FastImage
+                  <EmpCardContainer
+                    onPress={() => {
+                      gotoSelectedIndex(index);
+                      setSelectedIndex(index);
+                    }}
+                    isSelected={index == selectedIndex}
+                    isLast={index == EMP_LIST.length - 1}
+                    rippleColor={'#666'}
+                    rippleDuration={600}
+                    rippleSize={1700}
+                    rippleContainerBorderRadius={20}
+                    rippleOpacity={0.1}>
+                    <EmpCard
+                      key={index}
                       style={{
-                        marginRight: 10,
-                        width: 40,
-                        height: 40,
-                        borderRadius: 20,
-                      }}
-                      source={{
-                        uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                        headers: {Authorization: 'someAuthToken'},
-                        priority: FastImage.priority.low,
-                      }}
-                      resizeMode={FastImage.resizeMode.cover}
-                    />
-                    <Column>
-                      <EmpCardRow>
+                        width: 160,
+                        marginBottom: 20,
+                        alignItems: 'flex-start',
+                      }}>
+                      <FastImage
+                        style={{
+                          marginRight: 10,
+                          width: 40,
+                          height: 40,
+                          borderRadius: 20,
+                        }}
+                        source={{
+                          uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                          headers: {Authorization: 'someAuthToken'},
+                          priority: FastImage.priority.low,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                      <EmpCardRow style={{marginBottom: 0}}>
                         <Bold>
                           {i.EMP_NAME} [
                           {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                         </Bold>
-                        <Bold>
-                          일&nbsp;
-                          {Math.trunc(moment.duration(i.WORKING).asHours()) >
-                            0 &&
-                            `${Math.trunc(
-                              moment.duration(i.WORKING).asHours(),
-                            )}시간`}
-                          &nbsp;
-                          {moment.duration(i.WORKING).minutes() > 0 &&
-                            `${moment.duration(i.WORKING).minutes()}분`}
-                        </Bold>
                       </EmpCardRow>
-                      <Text style={{marginTop: 5}}>
-                        시작시간&nbsp;
-                        {moment(i.START_TIME, 'kk:mm').format('h시 m분')}
-                      </Text>
-                      <Text style={{marginTop: 5}}>
-                        종료시간&nbsp;
-                        {moment(i.END_TIME, 'kk:mm').format('h시 m분')}
-                      </Text>
-                      <Text style={{marginTop: 5}}>
-                        근무시간&nbsp;{i.WORKING}
-                      </Text>
-                      {i.VACATION != 0 && (
-                        <Text style={{marginTop: 5}}>휴가</Text>
-                      )}
-                      {i.REST_TIME !== '0' && (
-                        <Text style={{marginTop: 5}}>
-                          휴게시간 {i.REST_TIME}분
+                    </EmpCard>
+                    {i.WORKING > 0 ? (
+                      <Column>
+                        <EmpCardDataRow style={{justifyContent: 'center'}}>
+                          <Column style={{justifyContent: 'center'}}>
+                            <IconContainer>
+                              <PlayCircleOutlineIcon />
+                              <Text style={{marginLeft: 5}}>
+                                시작시간&nbsp;
+                                {Math.trunc(
+                                  moment.duration(i.START_TIME).asHours(),
+                                )}
+                                시
+                                {moment.duration(i.START_TIME).minutes() > 0 &&
+                                  ` ${moment
+                                    .duration(i.START_TIME)
+                                    .minutes()}분`}
+                              </Text>
+                            </IconContainer>
+                            <IconContainer>
+                              <StopCircleOutlineIcon />
+                              <Text style={{marginLeft: 5}}>
+                                종료시간&nbsp;
+                                {Math.trunc(
+                                  moment.duration(i.END_TIME).asHours(),
+                                )}
+                                시
+                                {moment.duration(i.WORKING).minutes() > 0 &&
+                                  ` ${moment.duration(i.WORKING).minutes()}분`}
+                              </Text>
+                            </IconContainer>
+                          </Column>
+                        </EmpCardDataRow>
+                        <EmpCardDataRow style={{paddingLeft: 5}}>
+                          {i.WORKING > 0 && (
+                            <SmallTextRound>
+                              <SmallText>
+                                근무시간:
+                                {Math.trunc(
+                                  moment.duration(i.WORKING).asHours(),
+                                ) > 0 &&
+                                  ` ${Math.trunc(
+                                    moment.duration(i.WORKING).asHours(),
+                                  )}시간`}
+                                {moment.duration(i.WORKING).minutes() > 0 &&
+                                  ` ${moment.duration(i.WORKING).minutes()}분`}
+                              </SmallText>
+                            </SmallTextRound>
+                          )}
+                          <SmallTextRound>
+                            <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
+                          </SmallTextRound>
+                          <SmallTextRound>
+                            <SmallText>지각</SmallText>
+                          </SmallTextRound>
+                          <SmallTextRound>
+                            <SmallText>조퇴</SmallText>
+                          </SmallTextRound>
+                          <SmallTextRound>
+                            <SmallText>결근</SmallText>
+                          </SmallTextRound>
+                          <SmallTextRound>
+                            <SmallText>휴가</SmallText>
+                          </SmallTextRound>
+                        </EmpCardDataRow>
+                      </Column>
+                    ) : (
+                      <Column>
+                        <Text style={{textAlign: 'center'}}>
+                          금일 근무가 없습니다.
                         </Text>
-                      )}
-                    </Column>
-                  </EmpCard>
+                      </Column>
+                    )}
+                  </EmpCardContainer>
                 );
               })}
+            </Animated.ScrollView>
+            <Container>
+              <Schedule
+                EMP_LIST={EMP_LIST}
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+                gotoSelectedIndex={gotoSelectedIndex}
+              />
             </Container>
-
-            <ScrollView
+            <Animated.ScrollView
               horizontal
               snapToInterval={220}
               decelerationRate="fast"
@@ -735,7 +850,7 @@ export default ({
                   )}
                 </EmpConatainer>
               </Card>
-            </ScrollView>
+            </Animated.ScrollView>
           </Animated.ScrollView>
           <Modal
             animationIn={'fadeIn'}
@@ -772,9 +887,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.EARLY == 1 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>조퇴</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound>
+                          <SmallText>조퇴</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -818,9 +935,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.LATE == 1 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>지각</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound>
+                          <SmallText>지각</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -864,9 +983,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.NOWORK == 1 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>결근</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound>
+                          <SmallText>결근</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -912,9 +1033,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.REST_TIME != '0' ? (
-                      <SmallTextRound style={{marginTop: 5, width: 80}}>
-                        <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound>
+                          <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}
@@ -960,9 +1083,11 @@ export default ({
                       {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                     </Bold>
                     {i.VACATION == 1 ? (
-                      <SmallTextRound style={{marginTop: 5}}>
-                        <SmallText>휴가</SmallText>
-                      </SmallTextRound>
+                      <Row>
+                        <SmallTextRound>
+                          <SmallText>휴가</SmallText>
+                        </SmallTextRound>
+                      </Row>
                     ) : (
                       <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
                     )}

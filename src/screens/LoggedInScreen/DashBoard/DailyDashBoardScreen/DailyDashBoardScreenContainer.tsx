@@ -6,7 +6,8 @@ import DailyDashBoardScreenPresenter from './DailyDashBoardScreenPresenter';
 import colors from '~/constants/colors';
 
 export default () => {
-  const scrollRef = createRef(0);
+  const screenScrollRef = createRef(0);
+  const cardScrollRef = createRef(0);
   const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
   const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
   const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
@@ -14,6 +15,7 @@ export default () => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
+  const [PIE_EMP_LIST, setPIE_EMP_LIST] = useState<any>([]);
   const [totalEARLY, setTotalEARLY] = useState<number>(0);
   const [EARLY_EMP_LIST, setEARLY_EMP_LIST] = useState<any>([]);
   const [totalLATE, setTotalLATE] = useState<number>(0);
@@ -31,11 +33,30 @@ export default () => {
   const [modalREST_TIME, setModalREST_TIME] = useState<boolean>(false);
   const [modalVACATION, setModalVACATION] = useState<boolean>(false);
   const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [scrollEnabled, setScrollEnabled] = useState<boolean>(true);
+  // const [scrollOffset, setScrollOffset] = useState<any>(null);
 
   const toDay = moment().format('YYYY-MM-DD');
 
   const onPressSection = () => {
-    return scrollRef.current?.getNode()?.scrollToEnd({animated: true});
+    return screenScrollRef.current?.getNode()?.scrollToEnd({animated: true});
+  };
+
+  const gotoSelectedIndex = (index) => {
+    return cardScrollRef.current
+      ?.getNode()
+      ?.scrollTo({x: index * 220, animated: false});
+  };
+
+  const onScroll = (e) => {
+    const {
+      nativeEvent: {
+        contentOffset: {x},
+      },
+    } = e;
+    const position = Math.abs(Math.round(x / 220));
+    setSelectedIndex(position);
   };
 
   const init = async () => {
@@ -43,6 +64,7 @@ export default () => {
       let empListTemp = [];
       await EMPLOYEE_LIST?.workinglist?.map((i, index) => {
         empListTemp.push({
+          key: `item-${index}`,
           EMP_SEQ: i.EMP_SEQ,
           EMP_NAME: i.EMP_NAME,
           IS_MANAGER: i.IS_MANAGER,
@@ -173,6 +195,7 @@ export default () => {
       });
       const orderByWORKING = [...empListTemp];
       setEMP_LIST(orderByWORKING.sort((a, b) => b.WORKING - a.WORKING));
+      setPIE_EMP_LIST(orderByWORKING.sort((a, b) => b.WORKING - a.WORKING));
 
       const orderByEARLY = [...empListTemp];
       setEARLY_EMP_LIST(orderByEARLY.sort((a, b) => b.EARLY - a.EARLY));
@@ -202,12 +225,13 @@ export default () => {
   };
 
   useEffect(() => {
-    init();
+    loading && init();
   }, []);
 
   return (
     <DailyDashBoardScreenPresenter
       EMP_LIST={EMP_LIST}
+      PIE_EMP_LIST={PIE_EMP_LIST}
       totalEARLY={totalEARLY}
       EARLY_EMP_LIST={EARLY_EMP_LIST}
       totalLATE={totalLATE}
@@ -224,7 +248,8 @@ export default () => {
       loading={loading}
       visible={visible}
       STORE_NAME={STORE_NAME}
-      scrollRef={scrollRef}
+      screenScrollRef={screenScrollRef}
+      cardScrollRef={cardScrollRef}
       onPressSection={onPressSection}
       modalEARLY={modalEARLY}
       setModalEARLY={setModalEARLY}
@@ -236,6 +261,10 @@ export default () => {
       setModalVACATION={setModalVACATION}
       modalNOWORK={modalNOWORK}
       setModalNOWORK={setModalNOWORK}
+      selectedIndex={selectedIndex}
+      setSelectedIndex={setSelectedIndex}
+      onScroll={onScroll}
+      gotoSelectedIndex={gotoSelectedIndex}
     />
   );
 };
