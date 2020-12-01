@@ -34,6 +34,7 @@ export default () => {
   const [modalVACATION, setModalVACATION] = useState<boolean>(false);
   const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [indexTime, setIndexTime] = useState<number>(20000);
 
   const toDay = moment().format('YYYY-MM-DD');
 
@@ -275,6 +276,8 @@ export default () => {
       setSelectedIndex={setSelectedIndex}
       onScroll={onScroll}
       gotoSelectedIndex={gotoSelectedIndex}
+      indexTime={indexTime}
+      setIndexTime={setIndexTime}
     />
   );
 };

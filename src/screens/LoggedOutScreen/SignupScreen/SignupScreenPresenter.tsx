@@ -228,7 +228,7 @@ export default ({
               <Touchable onPress={() => setIsBirthDateVisible(true)}>
                 <TextinputCase>
                   {birthDate !== '' ? (
-                    <TextId>moment(birthDate).format('YYYY.MM.DD')</TextId>
+                    <TextId>{moment(birthDate).format('YYYY.MM.DD')}</TextId>
                   ) : (
                     <GreyText
                       style={{fontSize: 14, margin: 10, color: '#e5e5e5'}}>

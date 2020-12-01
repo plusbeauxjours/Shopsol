@@ -66,7 +66,7 @@ export default () => {
     try {
       let empListTemp = [];
       await EMPLOYEE_LIST?.workinglist?.map((i, index) => {
-        empListTemp.push({
+        empListTemp?.push({
           EMP_SEQ: i.EMP_SEQ,
           EMP_NAME: i.EMP_NAME,
           IS_MANAGER: i.IS_MANAGER,
@@ -94,7 +94,7 @@ export default () => {
       });
       await weekSubDates.map((date) => {
         CALENDAR_DATA[date]?.map((i) => {
-          let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
+          let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
           if (emp) {
             emp['IMAGE'] = i?.IMAGE ?? '';
             ((i.CHANGE_START && i.CHANGE_END) ||
@@ -124,10 +124,11 @@ export default () => {
         });
       });
       await weekDates.map((date, index) => {
-        CALENDAR_DATA[date].length !== 0 &&
+        CALENDAR_DATA[date] &&
+          CALENDAR_DATA[date]?.length !== 0 &&
           setTotalWORKING_DAY((totalWORKING_DAY) => totalWORKING_DAY + 1);
         CALENDAR_DATA[date]?.map((i) => {
-          let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
+          let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
           setTotalREST_TIME_COUNT(
             (totalREST_TIME_COUNT) =>
               totalREST_TIME_COUNT + Number(i.REST_TIME),
@@ -311,41 +312,43 @@ export default () => {
         });
       });
 
-      setTotalEARLY_EMP(empListTemp.filter((i) => i.TOTAL_EARLY > 0).length);
-      setTotalLATE_EMP(empListTemp.filter((i) => i.TOTAL_LATE > 0).length);
+      setTotalEARLY_EMP(empListTemp?.filter((i) => i.TOTAL_EARLY > 0).length);
+      setTotalLATE_EMP(empListTemp?.filter((i) => i.TOTAL_LATE > 0).length);
       setTotalVACATION_EMP(
-        empListTemp.filter((i) => i.TOTAL_VACATION > 0).length,
+        empListTemp?.filter((i) => i.TOTAL_VACATION > 0).length,
       );
-      setTotalNOWORK_EMP(empListTemp.filter((i) => i.TOTAL_NOWORK > 0).length);
+      setTotalNOWORK_EMP(empListTemp?.filter((i) => i.TOTAL_NOWORK > 0).length);
 
       const orderByWORKING = [...empListTemp];
       setEMP_LIST(
-        orderByWORKING.sort((a, b) => b.TOTAL_WORKING - a.TOTAL_WORKING),
+        orderByWORKING?.sort((a, b) => b.TOTAL_WORKING - a.TOTAL_WORKING),
       );
 
       const orderByEARLY = [...empListTemp];
       setEARLY_EMP_LIST(
-        orderByEARLY.sort((a, b) => b.TOTAL_EARLY - a.TOTAL_EARLY),
+        orderByEARLY?.sort((a, b) => b.TOTAL_EARLY - a.TOTAL_EARLY),
       );
 
       const orderByLATE = [...empListTemp];
-      setLATE_EMP_LIST(orderByLATE.sort((a, b) => b.TOTAL_LATE - a.TOTAL_LATE));
+      setLATE_EMP_LIST(
+        orderByLATE?.sort((a, b) => b.TOTAL_LATE - a.TOTAL_LATE),
+      );
 
       const orderByVACATION = [...empListTemp];
       setVACATION_EMP_LIST(
-        orderByVACATION.sort((a, b) => b.TOTAL_VACATION - a.TOTAL_VACATION),
+        orderByVACATION?.sort((a, b) => b.TOTAL_VACATION - a.TOTAL_VACATION),
       );
 
       const orderByREST_TIME = [...empListTemp];
       setREST_TIME_EMP_LIST(
-        orderByREST_TIME.sort(
+        orderByREST_TIME?.sort(
           (a, b) => Number(b.REST_TIME) - Number(a.REST_TIME),
         ),
       );
 
       const orderByNOWORK = [...empListTemp];
       setNOWORK_EMP_LIST(
-        orderByNOWORK.sort((a, b) => b.TOTAL_NOWORK - a.TOTAL_NOWORK),
+        orderByNOWORK?.sort((a, b) => b.TOTAL_NOWORK - a.TOTAL_NOWORK),
       );
     } catch (e) {
       console.log(e);

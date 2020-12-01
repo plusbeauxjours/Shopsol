@@ -1239,11 +1239,6 @@
     babel "^6.23.0"
     babel-runtime "^6.26.0"
 
-"@react-native-community/slider@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-3.0.3.tgz#830167fd757ba70ac638747ba3169b2dbae60330"
-  integrity sha512-8IeHfDwJ9/CTUwFs6x90VlobV3BfuPgNLjTgC6dRZovfCWigaZwVNIFFJnHBakK3pW2xErAPwhdvNR4JeNoYbw==
-
 "@react-navigation/core@^5.12.3":
   version "5.12.5"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.12.5.tgz#434a34893368de1c9daca9508fdd7be94d1ec642"
@@ -2527,6 +2522,11 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
+
+core-js@2:
+  version "2.6.12"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
+  integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^2.2.2, core-js@^2.4.0, core-js@^2.4.1:
   version "2.6.11"
@@ -6295,6 +6295,14 @@ react-native-contacts@5.2.7:
   resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.2.7.tgz#136e12d5311f17c4c839dd20dcf9012245999065"
   integrity sha512-fHcAlPbeEJuhCpH1ZBdHJ6r9sCzEGlas/k8wRCHGm6cmkMsY3jCrsEAZXT5o42dTCyldLDYM4Z7S1zlfO6K1ww==
 
+react-native-dash@0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/react-native-dash/-/react-native-dash-0.0.11.tgz#cf1b0108e4660217cf0300b872231a5cadb9c4a8"
+  integrity sha512-edgspmVtGVYxOhGs8STCj7+VyQYUR1RkiGHkWDGwiQkEEIFrxWLa3D9ZIrLsm3LKU4XGQ2iEqCv9fJQSeTyAJA==
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-measureme "0.0.2"
+
 react-native-datepicker@1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
@@ -6403,6 +6411,11 @@ react-native-material-ripple@0.9.1:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-measureme@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-measureme/-/react-native-measureme-0.0.2.tgz#7f54eeb0813d461ef6c49d921e42e253d649c47a"
+  integrity sha512-m7Td7w1pVdIf7a3ejN7K/67AU+TtkZqTt9/ieKamirLRI3fjLToupmOKDtIOU3Y56oKojzTKz1lBbYSPN28HWA==
+
 react-native-modal-datetime-picker@9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-9.1.0.tgz#a1286efa6d9c456e931805fd0687cf9e916af6ed"
@@ -6471,6 +6484,13 @@ react-native-really-awesome-button@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-native-really-awesome-button/-/react-native-really-awesome-button-1.6.0.tgz#71700f960aa6d419058beff177c7b6cf18694ef7"
   integrity sha512-Lar69MRWnCqO0CgOIk/s63P3bS0xKqeMi/m8TDul14tRkYuOW55ZaF4pBeL13GodI+3Cw0dbihwighsQ+obXSA==
+
+react-native-reanimated-slider@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-slider/-/react-native-reanimated-slider-1.0.6.tgz#a9c46b459e4c651fc56a4754beeb921e8c0536ed"
+  integrity sha512-hE9BRrF7rSxsYBro+U8+pXt8OtfU2BBawghr6zpPHfDN+JthMqB/oJS+qPkHEUDthH6ERYQwybWBRc3G2nOLrw==
+  dependencies:
+    core-js "2"
 
 react-native-reanimated@1.10.2:
   version "1.10.2"

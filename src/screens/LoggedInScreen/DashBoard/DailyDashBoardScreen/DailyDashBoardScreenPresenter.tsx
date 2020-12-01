@@ -234,8 +234,9 @@ export default ({
   setSelectedIndex,
   onScroll,
   gotoSelectedIndex,
+  indexTime,
+  setIndexTime,
 }) => {
-  console.log(TIME_EMP_LIST);
   if (loading || visible) {
     return (
       <Container>
@@ -316,7 +317,7 @@ export default ({
                   </DodnutTextContainer>
                   <DonutColumn>
                     <DonutColumnTitle style={{fontSize: 12}}>
-                      {moment(toDay).format('MM월 DD일')}
+                      {moment(toDay).format('M월 D일')}
                     </DonutColumnTitle>
                     <DonutColumnTitle>{STORE_NAME}점</DonutColumnTitle>
                     <WhiteSpace />
@@ -502,6 +503,8 @@ export default ({
                 selectedIndex={selectedIndex}
                 setSelectedIndex={setSelectedIndex}
                 gotoSelectedIndex={gotoSelectedIndex}
+                indexTime={indexTime}
+                setIndexTime={setIndexTime}
               />
             </Container>
             <Animated.ScrollView
