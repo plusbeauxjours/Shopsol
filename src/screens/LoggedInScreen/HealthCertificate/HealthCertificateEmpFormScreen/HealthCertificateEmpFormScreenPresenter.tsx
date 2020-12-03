@@ -277,7 +277,6 @@ export default ({
                 setDateModalVisible(false);
               }}
               onCancel={() => setDateModalVisible(false)}
-              display="default"
               minimumDate={moment(RESULT_DATE).toDate()}
             />
             <SubmitBtn

@@ -256,7 +256,6 @@ export default ({
               onCancel={() => {
                 setIsBirthDateVisible(false);
               }}
-              display="default"
             />
             <Case>
               <NameText>가입유형</NameText>

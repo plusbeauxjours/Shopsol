@@ -230,7 +230,6 @@ export default ({
                 onCancel={() => {
                   setIsStartDayModalVisible(false);
                 }}
-                display="default"
               />
               <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
                 <Text>{startDate ?? ''}</Text>
@@ -266,7 +265,6 @@ export default ({
                 onCancel={() => {
                   setIsEndDayModalVisible(false);
                 }}
-                display="default"
               />
               <DateTouchable
                 disabled={checkNoEndDate}
@@ -379,6 +377,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -387,7 +386,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsStartTimeModalVisible(false)}
-        display="default"
       />
       <DatePickerModal
         isDarkModeEnabled={false}
@@ -395,6 +393,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isEndTimeModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -403,7 +402,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsEndTimeModalVisible(false)}
-        display="default"
       />
     </BackGround>
   );

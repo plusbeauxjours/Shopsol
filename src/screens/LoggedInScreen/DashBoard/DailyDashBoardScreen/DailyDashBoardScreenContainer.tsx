@@ -36,7 +36,7 @@ export default () => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [indexTime, setIndexTime] = useState<number>(20000);
 
-  const toDay = moment().format('YYYY-MM-DD');
+  const toDay = moment('2020-12-01').format('YYYY-MM-DD');
 
   const onPressSection = () => {
     return screenScrollRef.current?.getNode()?.scrollToEnd({animated: true});

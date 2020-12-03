@@ -354,7 +354,6 @@ export default ({
                 setDateModalVisible(false);
               }}
               onCancel={() => setDateModalVisible(false)}
-              display="default"
               minimumDate={moment(EDUCATION_DATEprops).add(1, 'days').toDate()}
             />
             <SubmitBtn

@@ -338,7 +338,8 @@ export default ({
                       결근&nbsp; ({totalNOWORK}명)
                     </DonutColumnText>
                     <DonutColumnText>
-                      {totalREST_TIME / totlaWORKING_EMP}분 평균 휴게시간
+                      {Math.ceil(totalREST_TIME / totlaWORKING_EMP)}분 평균
+                      휴게시간
                     </DonutColumnText>
                     <DonutColumnText>
                       {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
@@ -362,7 +363,7 @@ export default ({
                   }}
                   accessor="WORKING"
                   backgroundColor="transparent"
-                  paddingLeft="10"
+                  paddingLeft="20"
                   absolute={false}
                 />
               </Section>
@@ -868,7 +869,14 @@ export default ({
               width: wp('100%'),
               height: '100%',
             }}>
-            <Section style={{width: 200}} onPress={() => setModalEARLY(false)}>
+            <Section
+              style={{width: 200}}
+              onPress={() => setModalEARLY(false)}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1700}
+              rippleContainerBorderRadius={20}
+              rippleOpacity={0.1}>
               {EARLY_EMP_LIST.map((i, index) => (
                 <EmpCard key={index}>
                   <FastImage
@@ -916,7 +924,14 @@ export default ({
               width: wp('100%'),
               height: '100%',
             }}>
-            <Section style={{width: 200}} onPress={() => setModalLATE(false)}>
+            <Section
+              style={{width: 200}}
+              onPress={() => setModalLATE(false)}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1700}
+              rippleContainerBorderRadius={20}
+              rippleOpacity={0.1}>
               {LATE_EMP_LIST.map((i, index) => (
                 <EmpCard key={index}>
                   <FastImage
@@ -964,7 +979,14 @@ export default ({
               width: wp('100%'),
               height: '100%',
             }}>
-            <Section style={{width: 200}} onPress={() => setModalNOWORK(false)}>
+            <Section
+              style={{width: 200}}
+              onPress={() => setModalNOWORK(false)}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1700}
+              rippleContainerBorderRadius={20}
+              rippleOpacity={0.1}>
               {NOWORK_EMP_LIST.map((i, index) => (
                 <EmpCard key={index}>
                   <FastImage
@@ -1014,7 +1036,12 @@ export default ({
             }}>
             <Section
               style={{width: 200}}
-              onPress={() => setModalREST_TIME(false)}>
+              onPress={() => setModalREST_TIME(false)}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1700}
+              rippleContainerBorderRadius={20}
+              rippleOpacity={0.1}>
               {REST_TIME_EMP_LIST.map((i, index) => (
                 <EmpCard key={index}>
                   <FastImage
@@ -1064,7 +1091,12 @@ export default ({
             }}>
             <Section
               style={{width: 200}}
-              onPress={() => setModalVACATION(false)}>
+              onPress={() => setModalVACATION(false)}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1700}
+              rippleContainerBorderRadius={20}
+              rippleOpacity={0.1}>
               {VACATION_EMP_LIST.map((i, index) => (
                 <EmpCard key={index}>
                   <FastImage

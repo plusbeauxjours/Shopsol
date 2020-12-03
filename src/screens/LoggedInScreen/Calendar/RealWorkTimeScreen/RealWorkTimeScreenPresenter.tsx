@@ -223,7 +223,7 @@ export default ({
   const FixScheduleStepTwo = () => (
     <Section>
       <RowTitle>
-        <TitleText>변경할 근무시간</TitleText>
+        <TitleText>변경할 출퇴근시간</TitleText>
       </RowTitle>
       <TimePickBox>
         <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
@@ -292,8 +292,8 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
+        minuteInterval={10}
         mode="time"
-        minuteInterval={5}
         locale="ko_KRus_EN"
         onConfirm={(time) => {
           setStartTime(moment(time).format('HH:mm'));
@@ -301,7 +301,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsStartTimeModalVisible(false)}
-        display="default"
       />
       <DatePickerModal
         isDarkModeEnabled={false}
@@ -309,6 +308,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isEndTimeModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -317,7 +317,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsEndTimeModalVisible(false)}
-        display="default"
       />
     </BackGround>
   );

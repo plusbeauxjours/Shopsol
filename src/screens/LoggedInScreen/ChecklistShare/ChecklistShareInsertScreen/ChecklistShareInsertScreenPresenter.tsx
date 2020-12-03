@@ -421,7 +421,6 @@ export default ({
           setIsDateModalVisible(false);
         }}
         onCancel={() => setIsDateModalVisible(false)}
-        display="default"
       />
     </>
   );

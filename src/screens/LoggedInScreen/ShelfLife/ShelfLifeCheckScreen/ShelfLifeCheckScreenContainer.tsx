@@ -7,6 +7,7 @@ import Animated from 'react-native-reanimated';
 import ShelfLifeCheckScreenPresenter from './ShelfLifeCheckScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {resultdata} from '~/assets/dummy';
+import api from '~/constants/LoggedInApi';
 import {
   getSHELFLIFE_DATA,
   checkSHELFLIFE,
@@ -106,10 +107,10 @@ export default () => {
     try {
       alertModal('상품의 처리완료를 취소하였습니다.');
       dispatch(cancelSHELFLIFE({name, shelfLife_SEQ}));
-      // const {data} = await api.cancelShelfLifeData({shelfLife_SEQ});
-      // if (data.resultmsg !== '1') {
-      //   alertModal('연결에 실패하였습니다.');
-      // }
+      const {data} = await api.cancelShelfLifeData({shelfLife_SEQ});
+      if (data.resultmsg !== '1') {
+        alertModal('연결에 실패하였습니다.');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -126,28 +127,29 @@ export default () => {
           checkTime: moment().format('YYYY-MM-DD HH:mm:ss'),
         }),
       );
-      // const {data} = await api.checkShelfLifeData({
-      //   STORE,
-      //   EMP_SEQ,
-      //   shelfLife_SEQ,
-      // });
-      // if (data.resultmsg !== '1') {
-      //   alertModal('연결에 실패하였습니다.');
-      // }
+      const {data} = await api.checkShelfLifeData({
+        STORE,
+        EMP_SEQ,
+        shelfLife_SEQ,
+      });
+      if (data.resultmsg !== '1') {
+        alertModal('연결에 실패하였습니다.');
+      }
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    // dispatch(setSHELFLIFE_DATA([]));
+    dispatch(setSHELFLIFE_DATA([]));
 
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      // const data = await dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
+      const data = await dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
+      console.log(data);
       const day = moment();
       const dayDuration = moment().add(2, 'days');
       const weekDuration = moment().add(7, 'days').add(1, 'days');
@@ -155,17 +157,17 @@ export default () => {
       const monthDuration = moment().add(1, 'months').add(1, 'days');
       while (monthDuration.diff(day, 'days') > 0) {
         if (dayDuration.diff(day, 'days') > 0) {
-          resultdata[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[0].items.push(...resultdata[day.format('YYYY-MM-DD')]);
+          data[day.format('YYYY-MM-DD')]?.length > 0 &&
+            defaultData[0].items.push(...data[day.format('YYYY-MM-DD')]);
         } else if (weekDuration.diff(day, 'days') > 0) {
-          resultdata[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[1].items.push(...resultdata[day.format('YYYY-MM-DD')]);
+          data[day.format('YYYY-MM-DD')]?.length > 0 &&
+            defaultData[1].items.push(...data[day.format('YYYY-MM-DD')]);
         } else if (weeksDuration.diff(day, 'days') > 0) {
-          resultdata[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[2].items.push(...resultdata[day.format('YYYY-MM-DD')]);
+          data[day.format('YYYY-MM-DD')]?.length > 0 &&
+            defaultData[2].items.push(...data[day.format('YYYY-MM-DD')]);
         } else {
-          resultdata[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[3].items.push(...resultdata[day.format('YYYY-MM-DD')]);
+          data[day.format('YYYY-MM-DD')]?.length > 0 &&
+            defaultData[3].items.push(...data[day.format('YYYY-MM-DD')]);
         }
         day.add(1, 'days');
       }

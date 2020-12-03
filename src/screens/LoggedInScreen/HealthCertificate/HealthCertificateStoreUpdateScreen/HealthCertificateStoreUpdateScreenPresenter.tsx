@@ -202,33 +202,33 @@ export default ({
               </TextContainer>
               {cameraPictureLast ? (
                 <CameraBoxContainer>
-                <CameraBox onPress={() => setCameraPictureLast(null)}>
-                  <FastImage
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 10,
-                      marginHorizontal: 5,
-                    }}
-                    source={{
-                      uri: cameraPictureLast,
-                      headers: {Authorization: 'someAuthToken'},
-                      priority: FastImage.priority.low,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                </CameraBox>
-                      <Bold>
+                  <CameraBox onPress={() => setCameraPictureLast(null)}>
+                    <FastImage
+                      style={{
+                        width: 100,
+                        height: 100,
+                        borderRadius: 10,
+                        marginHorizontal: 5,
+                      }}
+                      source={{
+                        uri: cameraPictureLast,
+                        headers: {Authorization: 'someAuthToken'},
+                        priority: FastImage.priority.low,
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </CameraBox>
+                  <Bold>
                     * 인식이 불안정할 경우 직접입력하여 진행해 주세요.
                   </Bold>
                 </CameraBoxContainer>
               ) : (
                 <CameraBoxContainer>
-                <CameraBox onPress={() => setIsCameraModalVisible(true)}>
-                  <Bold style={{color: '#e85356'}}>촬영하기</Bold>
-                  <CameraIcon size={40} />
-                </CameraBox>
-                      <Bold>
+                  <CameraBox onPress={() => setIsCameraModalVisible(true)}>
+                    <Bold style={{color: '#e85356'}}>촬영하기</Bold>
+                    <CameraIcon size={40} />
+                  </CameraBox>
+                  <Bold>
                     * 인식이 불안정할 경우 직접입력하여 진행해 주세요.
                   </Bold>
                 </CameraBoxContainer>
@@ -358,7 +358,6 @@ export default ({
                 setDateModalVisible(false);
               }}
               onCancel={() => setDateModalVisible(false)}
-              display="default"
             />
             <SubmitBtn
               text={'수정완료'}

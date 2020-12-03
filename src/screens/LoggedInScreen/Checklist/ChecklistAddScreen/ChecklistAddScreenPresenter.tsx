@@ -462,6 +462,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isCustomModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -470,7 +471,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsCustomModalVisible(false)}
-        display="default"
       />
     </BackGround>
   );

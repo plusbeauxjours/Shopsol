@@ -12,6 +12,10 @@ interface IActive {
   isSelected: boolean;
 }
 
+interface IRow {
+  paddingLeft: number;
+}
+
 const ToucahbleSize = wp('100%') * 0.095;
 const ToucahbleMargin = (wp('100%') - ToucahbleSize * 7 - 60) / 8;
 
@@ -23,7 +27,7 @@ const HeatmapText = styled.Text<IActive>`
       ? 'white'
       : props.activeDays?.indexOf(props.index) > -1
       ? 'white'
-      : '#e85356'};
+      : '#cccccc'};
 `;
 
 const Text = styled.Text`
@@ -109,6 +113,10 @@ const SmallText = styled.Text`
   color: #7f7f7f;
 `;
 
+const WhiteSpace = styled.View<IRow>`
+  width: ${(props) => props.paddingLeft * (ToucahbleSize + ToucahbleMargin)}px;
+`;
+
 export default ({data}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(
     moment().date() - 1,
@@ -131,6 +139,7 @@ export default ({data}) => {
             <Text key={index}>{i}</Text>
           ))}
         </SpaceRow>
+        <WhiteSpace paddingLeft={moment().startOf('month').isoWeekday()} />
         {monthDates.map((_, index) => (
           <Touchable
             key={index}
@@ -138,14 +147,12 @@ export default ({data}) => {
             index={index}
             isSelected={index == selectedIndex}
             onPress={() => setSelectedIndex(index)}>
-            {index == selectedIndex && (
-              <HeatmapText
-                activeDays={activeDays}
-                index={index + 1}
-                isSelected={index == selectedIndex}>
-                {index + 1}
-              </HeatmapText>
-            )}
+            <HeatmapText
+              activeDays={activeDays}
+              index={index}
+              isSelected={index == selectedIndex}>
+              {index + 1}
+            </HeatmapText>
           </Touchable>
         ))}
       </Container>

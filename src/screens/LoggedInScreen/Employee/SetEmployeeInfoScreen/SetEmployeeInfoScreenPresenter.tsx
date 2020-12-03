@@ -491,7 +491,6 @@ export default ({
                     onCancel={() => {
                       setIsStartDayModalVisible(false);
                     }}
-                    display="default"
                   />
                   <DateTouchable
                     onPress={() => setIsStartDayModalVisible(true)}>
@@ -531,7 +530,6 @@ export default ({
                     onCancel={() => {
                       setEndDayCheck(false), setIsEndDayModalVisible(false);
                     }}
-                    display="default"
                   />
                   <DateTouchable
                     onPress={() => setIsEndDayModalVisible(true)}
@@ -841,7 +839,6 @@ export default ({
                                 onCancel={() => {
                                   setIsProbationPeriodModalVisible(false);
                                 }}
-                                display="default"
                               />
                             </Row>
                             <Row>

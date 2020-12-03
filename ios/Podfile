@@ -21,6 +21,8 @@ target 'ShopsolWesop' do
   pod 'GoogleMaps' 
   pod 'Google-Maps-iOS-Utils'
 
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
   target 'ShopsolWesopTests' do
     inherit! :complete
     # Pods for testing

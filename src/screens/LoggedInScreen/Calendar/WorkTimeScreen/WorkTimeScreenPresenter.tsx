@@ -231,14 +231,14 @@ export default ({
       </RowTitle>
       <TimePickBox>
         <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
-          <SideText>출근시간</SideText>
+          <SideText>근무 시작시간</SideText>
           <TimePickBoxTimeText isSelected={!!startTime}>
             {startTime || '00:00'}
           </TimePickBoxTimeText>
         </RowSpaceTouchable>
         <WhiteSpace />
         <RowSpaceTouchable onPress={() => setIsEndTimeModalVisible(true)}>
-          <SideText>퇴근시간</SideText>
+          <SideText>근무 종료시간</SideText>
           <TimePickBoxTimeText isSelected={!!endTime}>
             {endTime || '00:00'}
           </TimePickBoxTimeText>
@@ -317,6 +317,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -325,7 +326,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsStartTimeModalVisible(false)}
-        display="default"
       />
       <DatePickerModal
         isDarkModeEnabled={false}
@@ -333,6 +333,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isEndTimeModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -341,7 +342,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsEndTimeModalVisible(false)}
-        display="default"
       />
     </BackGround>
   );

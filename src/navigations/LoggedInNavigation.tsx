@@ -87,7 +87,7 @@ export default () => {
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
         // initialRouteName={'SelectStoreScreen'}
-        initialRouteName={'DashBoardScreen'}
+        initialRouteName={'SelectStoreScreen'}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#e85356',
@@ -102,14 +102,6 @@ export default () => {
           headerLeftContainerStyle: {marginLeft: 10},
         }}>
         <LoggedInNavigation.Screen
-          name="DashBoardScreen"
-          component={DashBoardScreen}
-          options={{
-            headerTitle: '사업장 현황',
-            title: '사업장 현황',
-          }}
-        />
-        <LoggedInNavigation.Screen
           name="SelectStoreScreen"
           component={SelectStoreScreen}
           options={{
@@ -117,6 +109,14 @@ export default () => {
             headerTitle: '사업장 선택',
             title: '사업장 목록',
             headerRight: () => <LogOutBtn />,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="DashBoardScreen"
+          component={DashBoardScreen}
+          options={{
+            headerTitle: '사업장 현황',
+            title: '사업장 현황',
           }}
         />
         <LoggedInNavigation.Screen

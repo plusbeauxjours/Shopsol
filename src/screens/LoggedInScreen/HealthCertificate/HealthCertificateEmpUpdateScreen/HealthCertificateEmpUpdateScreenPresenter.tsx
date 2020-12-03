@@ -283,7 +283,6 @@ export default ({
                 setDateModalVisible(false);
               }}
               onCancel={() => setDateModalVisible(false)}
-              display="default"
             />
             <SubmitBtn
               text={'수정완료'}

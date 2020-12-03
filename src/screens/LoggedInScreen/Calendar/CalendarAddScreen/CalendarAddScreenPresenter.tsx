@@ -287,7 +287,7 @@ export default ({
       {timeCheck.length === 0 && (
         <TimePickBox>
           <EmptyBoxText>
-            출근, 퇴근시간 입력 후 추가하기를 눌러주세요
+            출근, 퇴근시간 입력 후 추가하기를 눌러주세2요
           </EmptyBoxText>
         </TimePickBox>
       )}
@@ -486,6 +486,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -501,6 +502,7 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isEndTimeModalVisible}
+        minuteInterval={10}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -509,7 +511,6 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsEndTimeModalVisible(false)}
-        display="default"
       />
     </BackGround>
   );
