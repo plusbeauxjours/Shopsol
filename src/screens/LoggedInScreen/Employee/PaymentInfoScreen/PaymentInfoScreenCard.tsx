@@ -56,7 +56,7 @@ export default ({
       EMP_SEQ: data.EMP_SEQ,
       STORE,
       STOREPAY_SHOW,
-      NAME: name,
+      MEMBER_NAME: name,
       IS_MANAGER: isManager,
     });
   };

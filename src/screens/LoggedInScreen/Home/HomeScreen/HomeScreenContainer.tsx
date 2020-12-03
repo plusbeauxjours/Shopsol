@@ -36,7 +36,7 @@ export default ({route: {params}}) => {
   const {NOTICE_COUNT} = useSelector(
     (state: any) => state.checklistshareReducer,
   );
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
@@ -45,13 +45,12 @@ export default ({route: {params}}) => {
   const [checklistCount, setChecklistCount] = useState<number>(0);
   const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
   const [qrCameraModalOpen, setQrCameraModalOpen] = useState<boolean>(false);
-  const [qrWorkingModalOpen, setQrWorkingModalOpen] = useState<boolean>(false);
-  const [mapWorkingModalOpen, setMapWorkingModalOpen] = useState<boolean>(
-    false,
-  );
+  const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
+
   const [sucessModalOpen, setSucessModalOpen] = useState<boolean>(false);
   const [failModalOpen, setFailModalOpen] = useState<boolean>(false);
   const [actionTYPE, setActionTYPE] = useState<string>('출근');
+  const [workingTYPE, setWorkingTYPE] = useState<string>('QR');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const alertModal = (title, text, okCallback = () => {}) => {
@@ -104,9 +103,8 @@ export default ({route: {params}}) => {
   // QR 출근하기
   const goWorkFn = async (TYPE) => {
     setActionTYPE('출근');
-    setQrWorkingModalOpen(false);
     try {
-      dispatch(setSplashVisible(true));
+      setLoading(true);
       const {data} = await api.attendanceWork({
         STORE_ID: STORE_SEQ,
         LAT: lat,
@@ -116,40 +114,47 @@ export default ({route: {params}}) => {
         MEMBER_SEQ,
         TYPE,
       });
+
       if (data.message === 'CONTRACT_END') {
+        setLoading(false);
         setErrorMessage('정확한 사업장 QR코드가 아닙니다');
         setFailModalOpen(true);
       } else if (data.message === 'WORK_ON_SUCCESS') {
+        setLoading(false);
         setSucessModalOpen(true);
       } else if (data.message === 'SCHEDULE_EMPTY') {
+        setLoading(false);
         setErrorMessage('오늘은 근무일이 아닙니다');
         setFailModalOpen(true);
       } else if (data.message === 'SCHEDULE_EXIST') {
+        setLoading(false);
         setErrorMessage('이미 출근처리를 완료했습니다');
         setFailModalOpen(true);
       } else if (data.message === 'ALREADY_SUCCESS') {
+        setLoading(false);
         setErrorMessage('이미 출근처리를 완료했습니다');
         setFailModalOpen(true);
       } else if (data.message === 'FAIL') {
+        setLoading(false);
         setErrorMessage(data.result);
         setFailModalOpen(true);
       } else {
+        setLoading(false);
         setErrorMessage(data.result);
         setFailModalOpen(true);
       }
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      setLoading(false);
     }
   };
 
   // QR 퇴근하기
   const leaveWorkFn = async (TYPE) => {
     setActionTYPE('퇴근');
-    setQrWorkingModalOpen(false);
     try {
-      dispatch(setSplashVisible(true));
+      setLoading(true);
       const {data} = await api.attendanceOffWork({
         STORE_ID: STORE_SEQ,
         LAT: lat,
@@ -180,7 +185,7 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      setLoading(false);
     }
   };
 
@@ -192,13 +197,13 @@ export default ({route: {params}}) => {
     if (STORE_SEQ != bounds.data) {
       alertModal('', '정확한 사업장 QR코드가 아닙니다');
     } else {
-      setQrWorkingModalOpen(true);
+      setWorkingModalOpen(true);
       setQrCameraModalOpen(false);
     }
   };
 
   const fetchData = async () => {
-    setQrWorkingModalOpen(false);
+    setWorkingModalOpen(false);
     try {
       if (!STORE_DATA) {
         dispatch(setSplashVisible(true));
@@ -354,7 +359,8 @@ export default ({route: {params}}) => {
       WORKING_COUNT={WORKING_COUNT}
       setShowPictureModal={setShowPictureModal}
       showPictureModal={showPictureModal}
-      qrWorkingModalOpen={qrWorkingModalOpen}
+      workingModalOpen={workingModalOpen}
+      setWorkingModalOpen={setWorkingModalOpen}
       goWorkFn={goWorkFn}
       leaveWorkFn={leaveWorkFn}
       handleBarCodeScanned={handleBarCodeScanned}
@@ -370,15 +376,16 @@ export default ({route: {params}}) => {
       long={long}
       getDistance={getDistance}
       GPS={GPS}
-      mapWorkingModalOpen={mapWorkingModalOpen}
-      setMapWorkingModalOpen={setMapWorkingModalOpen}
       sucessModalOpen={sucessModalOpen}
       setSucessModalOpen={setSucessModalOpen}
       failModalOpen={failModalOpen}
       setFailModalOpen={setFailModalOpen}
       actionTYPE={actionTYPE}
+      workingTYPE={workingTYPE}
+      setWorkingTYPE={setWorkingTYPE}
       errorMessage={errorMessage}
       GENDER={GENDER}
+      loading={loading}
     />
   );
 };

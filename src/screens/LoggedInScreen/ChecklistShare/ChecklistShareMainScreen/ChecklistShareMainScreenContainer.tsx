@@ -14,7 +14,8 @@ import ChecklistShareMainScreenPresenter from './ChecklistShareMainScreenPresent
 import api from '~/constants/LoggedInApi';
 import {setSplashVisible} from '~/redux/splashSlice';
 
-export default ({route: {params}}) => {
+export default () => {
+  console.log('params', params);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
@@ -214,7 +215,6 @@ export default ({route: {params}}) => {
     <ChecklistShareMainScreenPresenter
       refreshing={refreshing}
       onRefresh={onRefresh}
-      notice={params?.notice}
       STORE={STORE}
       onDayPress={onDayPress}
       onMonthChange={onMonthChange}

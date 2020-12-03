@@ -22,15 +22,13 @@ const View = styled.View`
   background-color: white;
   border-radius: 20px;
   width: 300px;
-  height: 300px;
+  min-height: 300px;
   justify-content: center;
   align-items: center;
   margin-bottom: 100px;
 `;
 
 const Touchable = styled(Ripple)`
-  position: absolute;
-  bottom: 10px;
   width: 80%;
   height: 60px;
   align-items: center;
@@ -42,13 +40,9 @@ const Touchable = styled(Ripple)`
 `;
 
 const TextBox = styled.View`
-  position: absolute;
-  top: 80px;
+  padding: 0 10px;
+  margin-top: 70px;
   align-items: center;
-`;
-
-const WhiteSpace = styled.View`
-  height: 15px;
 `;
 
 export default ({
@@ -73,21 +67,24 @@ export default ({
         resizeMode={FastImage.resizeMode.contain}
       />
       <LottieView
-        style={{width: wp('100%'), zIndex: 1, position: 'absolute'}}
+        style={{
+          width: wp('100%'),
+          zIndex: 1,
+          position: 'absolute',
+        }}
         source={require('../assets/animations/goWorkingSuccess.json')}
-        loop={false}
+        loop={true}
         autoPlay
       />
       <View>
         <TextBox>
-          <BigText>
+          <BigText style={{textAlign: 'center'}}>
             {MEMBER_NAME}님, {STORE_NAME}점에
           </BigText>
-          <BigText style={{textAlign: 'center', marginBottom: 5}}>
+          <BigText style={{textAlign: 'center'}}>
             무사히 {actionTYPE}하였습니다.
           </BigText>
           <Text>현재시간 {moment().format('hh:mm')} 입니다.</Text>
-          <WhiteSpace />
         </TextBox>
         <Touchable
           onPress={() => setSucessModalOpen(false)}

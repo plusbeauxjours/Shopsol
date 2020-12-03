@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,12 +13,7 @@ import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
 import MapView, {PROVIDER_GOOGLE, Marker, Circle} from 'react-native-maps';
 
-import {
-  ForwardIcon,
-  HelpIcon,
-  SettingIcon,
-  QrCodeIcon,
-} from '~/constants/Icons';
+import {ForwardIcon, HelpIcon, SettingIcon} from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 import utils from '~/constants/utils';
@@ -30,6 +26,10 @@ interface IHasHeight {
 interface ITheme {
   distance?: string | number;
   current?: string | number;
+}
+
+interface IBox {
+  hasGPS?: boolean;
 }
 
 const BackGround = styled.View`
@@ -48,6 +48,7 @@ const Container = styled.View`
 `;
 
 const IconContainer = styled.TouchableOpacity`
+  margin-top: 20px;
   margin-right: 10px;
   width: 40px;
   height: 40px;
@@ -90,8 +91,7 @@ const NewCntText = styled.Text`
 `;
 
 const MenuBox = styled.View`
-  padding: 0 10px;
-  padding-bottom: 15px;
+  padding: 10px;
   background-color: white;
   flex: 1;
   align-items: center;
@@ -108,13 +108,6 @@ const Qr = styled.TouchableOpacity`
   background-color: #fff;
   justify-content: center;
   align-items: center;
-`;
-
-const QrText = styled.Text`
-  margin-right: 15px;
-  font-weight: bold;
-  font-size: 22px;
-  color: #e85356;
 `;
 
 const Row = styled.View`
@@ -202,12 +195,6 @@ const ShowPictureModalImage = styled.View`
   height: ${wp('90%')}px;
 `;
 
-const WorkingModalContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  background-color: white;
-`;
-
 const GoWork = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   height: 60px;
@@ -223,26 +210,6 @@ const WorkText = styled.Text`
   font-size: 15px;
   margin-top: 15px;
   margin-bottom: 15px;
-`;
-
-const WorkStartButton = styled.TouchableOpacity`
-  height: ${hp('20%')}px;
-  width: ${wp('50%')}px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const WorkEndButton = styled(WorkStartButton)`
-  border-left-width: 1px;
-`;
-
-const WorkStartBtnText = styled.Text`
-  font-size: 24px;
-  color: #e85356;
-`;
-
-const WorkEndBtnText = styled(WorkStartBtnText)`
-  color: #e85356;
 `;
 
 const WhiteSpace = styled.View`
@@ -271,9 +238,9 @@ const BlackLinearGradient = styled(LinearGradient)<IHasHeight>`
   height: ${hp('10%')}px};
 `;
 
-const Box = styled.TouchableOpacity`
-  width: 160px;
-  height: 70px;
+const Box = styled.TouchableOpacity<IBox>`
+  width: ${(props) => (props.hasGPS ? (wp('100%') - 60) / 2 : wp('100%') - 40)};
+  height: 60px;
   border-width: 1px;
   border-color: #fff;
   border-radius: 20px;
@@ -355,7 +322,8 @@ export default ({
   WORKING_COUNT,
   qrCameraModalOpen,
   setQrCameraModalOpen,
-  qrWorkingModalOpen,
+  workingModalOpen,
+  setWorkingModalOpen,
   setShowPictureModal,
   showPictureModal,
   goWorkFn,
@@ -371,15 +339,16 @@ export default ({
   long,
   getDistance,
   GPS,
-  mapWorkingModalOpen,
-  setMapWorkingModalOpen,
   sucessModalOpen,
   setSucessModalOpen,
   failModalOpen,
   setFailModalOpen,
   actionTYPE,
+  workingTYPE,
+  setWorkingTYPE,
   errorMessage,
   GENDER,
+  loading,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({selection, paging, source, count = 0}) => (
@@ -566,16 +535,32 @@ export default ({
           {STORE == 0 && (
             <>
               {GPS == '0' ? (
-                <Qr onPress={() => setQrCameraModalOpen(true)}>
-                  <QrText>출퇴근하기</QrText>
-                  <QrCodeIcon />
-                </Qr>
-              ) : (
                 <BoxContainer>
-                  <Box onPress={() => setQrCameraModalOpen(true)}>
+                  <Box
+                    onPress={() => {
+                      setQrCameraModalOpen(true);
+                      setWorkingTYPE('QR');
+                    }}
+                    hasGPS={GPS !== '0'}>
                     <BoxText>QR출퇴근하기</BoxText>
                   </Box>
-                  <Box onPress={() => setIsGpsVisible(!isGpsVisible)}>
+                </BoxContainer>
+              ) : (
+                <BoxContainer>
+                  <Box
+                    onPress={() => {
+                      setQrCameraModalOpen(true);
+                      setWorkingTYPE('QR');
+                    }}
+                    hasGPS={GPS !== '0'}>
+                    <BoxText>QR출퇴근하기</BoxText>
+                  </Box>
+                  <Box
+                    onPress={() => {
+                      setIsGpsVisible(!isGpsVisible);
+                      setWorkingTYPE('GPS');
+                    }}
+                    hasGPS={GPS !== '0'}>
                     <BoxText>
                       {isGpsVisible ? 'GPS닫기' : 'GPS출퇴근하기'}
                     </BoxText>
@@ -621,9 +606,8 @@ export default ({
                 <Marker
                   onPress={() =>
                     STORE_DATA.resultdata.JULI >
-                    Math.round(getDistance() * 10) / 10
-                      ? setMapWorkingModalOpen(true)
-                      : {}
+                      Math.round(getDistance() * 10) / 10 &&
+                    setWorkingModalOpen(true)
                   }
                   coordinate={{
                     latitude: lat,
@@ -899,36 +883,6 @@ export default ({
         </MenuBox>
       </ScrollView>
       <Modal
-        isVisible={qrWorkingModalOpen}
-        animationOutTiming={1}
-        onRequestClose={() => setQrCameraModalOpen(false)}
-        onBackdropPress={() => setQrCameraModalOpen(false)}
-        style={{margin: 0, justifyContent: 'flex-end'}}>
-        <WorkingModalContainer>
-          <WorkStartButton onPress={() => goWorkFn('QR')}>
-            <WorkStartBtnText>출근</WorkStartBtnText>
-          </WorkStartButton>
-          <WorkEndButton onPress={() => leaveWorkFn('QR')}>
-            <WorkEndBtnText>퇴근</WorkEndBtnText>
-          </WorkEndButton>
-        </WorkingModalContainer>
-      </Modal>
-      <Modal
-        isVisible={mapWorkingModalOpen}
-        animationOutTiming={1}
-        onRequestClose={() => setMapWorkingModalOpen(false)}
-        onBackdropPress={() => setMapWorkingModalOpen(false)}
-        style={{margin: 0, justifyContent: 'flex-end'}}>
-        <WorkingModalContainer>
-          <WorkStartButton onPress={() => goWorkFn('GPS')}>
-            <WorkStartBtnText>출근</WorkStartBtnText>
-          </WorkStartButton>
-          <WorkEndButton onPress={() => leaveWorkFn('GPS')}>
-            <WorkEndBtnText>퇴근</WorkEndBtnText>
-          </WorkEndButton>
-        </WorkingModalContainer>
-      </Modal>
-      <Modal
         isVisible={qrCameraModalOpen}
         onBackdropPress={() => setQrCameraModalOpen(false)}
         onRequestClose={() => setQrCameraModalOpen(false)}
@@ -957,6 +911,66 @@ export default ({
           }
         />
       </Modal>
+
+      <Modal
+        isVisible={workingModalOpen}
+        animationOutTiming={1}
+        onBackdropPress={() => setWorkingModalOpen(false)}
+        onRequestClose={() => setWorkingModalOpen(false)}
+        style={{
+          marginLeft: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: wp('100%'),
+          height: '100%',
+        }}>
+        {loading ? (
+          <LottieView
+            style={{width: 200, height: 200}}
+            source={require('../../../../assets/animations/loader.json')}
+            loop
+            autoPlay
+          />
+        ) : sucessModalOpen ? (
+          <GoWorkingSuccessAnimation
+            GENDER={GENDER}
+            STORE_NAME={STORE_NAME}
+            MEMBER_NAME={MEMBER_NAME}
+            setSucessModalOpen={setSucessModalOpen}
+            actionTYPE={actionTYPE}
+          />
+        ) : failModalOpen ? (
+          <GoWorkingFailAnimation
+            STORE_NAME={STORE_NAME}
+            MEMBER_NAME={MEMBER_NAME}
+            setFailModalOpen={setFailModalOpen}
+            actionTYPE={actionTYPE}
+            errorMessage={errorMessage}
+          />
+        ) : (
+          <BoxContainer>
+            <Box
+              style={{
+                width: (wp('100%') - 60) / 2,
+                height: (wp('100%') - 60) / 2,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              }}
+              onPress={() => goWorkFn(workingTYPE)}>
+              <BoxText style={{fontSize: 30}}>출근</BoxText>
+            </Box>
+            <Box
+              style={{
+                width: (wp('100%') - 60) / 2,
+                height: (wp('100%') - 60) / 2,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              }}
+              onPress={() => leaveWorkFn(workingTYPE)}>
+              <BoxText style={{fontSize: 30}}>퇴근</BoxText>
+            </Box>
+          </BoxContainer>
+        )}
+      </Modal>
+
       <Modal
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
@@ -977,44 +991,6 @@ export default ({
             />
           </ShowPictureModalImage>
         </ShowPictureModalTouchable>
-      </Modal>
-      <Modal
-        animationIn={'fadeIn'}
-        animationOut={'fadeOut'}
-        isVisible={sucessModalOpen}
-        style={{
-          position: 'relative',
-          marginVertical: hp('5%'),
-          alignItems: 'center',
-        }}
-        onBackdropPress={() => setSucessModalOpen(false)}
-        onRequestClose={() => setSucessModalOpen(false)}>
-        <GoWorkingSuccessAnimation
-          GENDER={GENDER}
-          STORE_NAME={STORE_NAME}
-          MEMBER_NAME={MEMBER_NAME}
-          setSucessModalOpen={setSucessModalOpen}
-          actionTYPE={actionTYPE}
-        />
-      </Modal>
-      <Modal
-        animationIn={'fadeIn'}
-        animationOut={'fadeOut'}
-        isVisible={failModalOpen}
-        style={{
-          position: 'relative',
-          marginVertical: hp('5%'),
-          alignItems: 'center',
-        }}
-        onBackdropPress={() => setFailModalOpen(false)}
-        onRequestClose={() => setFailModalOpen(false)}>
-        <GoWorkingFailAnimation
-          STORE_NAME={STORE_NAME}
-          MEMBER_NAME={MEMBER_NAME}
-          setFailModalOpen={setFailModalOpen}
-          actionTYPE={actionTYPE}
-          errorMessage={errorMessage}
-        />
       </Modal>
     </BackGround>
   );

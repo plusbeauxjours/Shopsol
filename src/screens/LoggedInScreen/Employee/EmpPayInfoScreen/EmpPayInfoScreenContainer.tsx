@@ -10,17 +10,25 @@ import EmpPayInfoScreenPresenter from './EmpPayInfoScreenPresenter';
 export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {STORE_SEQ, EMP_SEQ, STORE, STOREPAY_SHOW, NAME, IS_MANAGER} = params;
+  const {
+    EMP_SEQ = null,
+    STOREPAY_SHOW = null,
+    MEMBER_NAME = null,
+    IS_MANAGER = null,
+  } = (params: any = {});
+  const {
+    STORE_SEQ,
+    EMP_SEQ: EMP_SEQ_state,
+    IS_MANAGER: IS_MANAGER_state,
+    STORE_DATA: {
+      resultdata: {STOREPAY_SHOW: STOREPAY_SHOW_state = null} = {},
+    } = {},
+  } = useSelector((state: any) => state.storeReducer);
+  const {MEMBER_NAME: MEMBER_NAME_state} = useSelector(
+    (state: any) => state.userReducer,
+  );
+  const {STORE} = useSelector((state: any) => state.userReducer);
 
-  const {MEMBER_NAME} = useSelector((state: any) => state.userReducer);
-
-  // const {STORE} = useSelector((state: any) => state.userReducer);
-  // const {
-  //   STORE_SEQ,
-  //   EMP_SEQ,
-  //   IS_MANAGER,
-  //   STORE_DATA: {resultdata: {STOREPAY_SHOW = null} = {}} = {},
-  // } = useSelector((state: any) => state.storeReducer);
   const [year, setYear] = useState<number>();
   const [month, setMonth] = useState<number>();
   const [boxButton, setBoxButton] = useState<boolean>(true);
@@ -97,7 +105,7 @@ export default ({route: {params}}) => {
       dispatch(setSplashVisible(true));
       const {data} = await api.monthLists(
         STORE_SEQ,
-        EMP_SEQ,
+        EMP_SEQ || EMP_SEQ_state,
         YEAR.toString(),
         MONTH.toString(),
       );
@@ -127,7 +135,7 @@ export default ({route: {params}}) => {
       dispatch(setSplashVisible(true));
       const {data} = await api.monthLists(
         STORE_SEQ,
-        EMP_SEQ,
+        EMP_SEQ || EMP_SEQ_state,
         YEAR.toString(),
         MONTH.toString(),
       );
@@ -146,7 +154,12 @@ export default ({route: {params}}) => {
   const fetchData = async (year, month) => {
     try {
       dispatch(setSplashVisible(true));
-      const {data} = await api.monthLists(STORE_SEQ, EMP_SEQ, year, month);
+      const {data} = await api.monthLists(
+        STORE_SEQ,
+        EMP_SEQ || EMP_SEQ_state,
+        year,
+        month,
+      );
       setMaindata(data.message);
       setYear(year);
       setMonth(month);
@@ -170,15 +183,15 @@ export default ({route: {params}}) => {
   }, []);
   return (
     <EmpPayInfoScreenPresenter
-      MEMBER_NAME={NAME || MEMBER_NAME}
+      MEMBER_NAME={MEMBER_NAME || MEMBER_NAME_state}
       maindata={maindata}
       PAY_TYPE={maindata.PAY_TYPE}
       backpay={backpay}
       replaceAll={replaceAll}
       nextpay={nextpay}
       STORE={STORE}
-      STOREPAY_SHOW={STOREPAY_SHOW}
-      IS_MANAGER={IS_MANAGER}
+      STOREPAY_SHOW={STOREPAY_SHOW || STOREPAY_SHOW_state}
+      IS_MANAGER={IS_MANAGER || IS_MANAGER_state}
       boxButton={boxButton}
       setBoxButton={setBoxButton}
       boxButton2={boxButton2}

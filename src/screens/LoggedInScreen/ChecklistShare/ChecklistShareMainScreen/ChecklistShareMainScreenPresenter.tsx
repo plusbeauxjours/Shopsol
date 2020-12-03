@@ -234,7 +234,6 @@ const EmptyText = styled.Text`
 export default ({
   refreshing,
   onRefresh,
-  notice,
   STORE,
   onDayPress,
   onMonthChange,

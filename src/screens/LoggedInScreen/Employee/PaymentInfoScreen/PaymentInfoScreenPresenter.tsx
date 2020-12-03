@@ -154,41 +154,33 @@ export default ({
             </DateBox>
             <Line />
             <PayBox>
-              {loading ? (
-                <Loader />
-              ) : (
-                <>
-                  <Pay>
-                    <Row>
-                      <Touchable
-                        onPress={() => {
-                          explainModal(
-                            '[ 예상급여 미포함 내역 ]',
-                            '-자율출퇴근 급여\n-근무시간 수정(근무시간 연장시)\n-추가일정 급여\n\n*근무일정 삭제시 과거 예상급여는 차감됩니다',
-                          );
-                        }}>
-                        <BoxTitleText3>예상급여</BoxTitleText3>
-                        <HelpCircleIcon size={20} />
-                      </Touchable>
-                    </Row>
-                    <BoxTitleText3>
-                      {TOTAL_PAYMENT_WORKING_EMP.stackedpay}
-                    </BoxTitleText3>
-                  </Pay>
-                  <Pay>
-                    <BoxTitleText3>누적급여</BoxTitleText3>
-                    <BoxTitleText3>
-                      {TOTAL_PAYMENT_WORKING_EMP.total}
-                    </BoxTitleText3>
-                  </Pay>
-                  <Pay>
-                    <BoxTitleText3>주휴수당</BoxTitleText3>
-                    <BoxTitleText3>
-                      {TOTAL_PAYMENT_WORKING_EMP.weekpay}
-                    </BoxTitleText3>
-                  </Pay>
-                </>
-              )}
+              <Pay>
+                <Row>
+                  <Touchable
+                    onPress={() => {
+                      explainModal(
+                        '[ 예상급여 미포함 내역 ]',
+                        '-자율출퇴근 급여\n-근무시간 수정(근무시간 연장시)\n-추가일정 급여\n\n*근무일정 삭제시 과거 예상급여는 차감됩니다',
+                      );
+                    }}>
+                    <BoxTitleText3>예상급여</BoxTitleText3>
+                    <HelpCircleIcon size={20} />
+                  </Touchable>
+                </Row>
+                <BoxTitleText3>
+                  {TOTAL_PAYMENT_WORKING_EMP.stackedpay}
+                </BoxTitleText3>
+              </Pay>
+              <Pay>
+                <BoxTitleText3>누적급여</BoxTitleText3>
+                <BoxTitleText3>{TOTAL_PAYMENT_WORKING_EMP.total}</BoxTitleText3>
+              </Pay>
+              <Pay>
+                <BoxTitleText3>주휴수당</BoxTitleText3>
+                <BoxTitleText3>
+                  {TOTAL_PAYMENT_WORKING_EMP.weekpay}
+                </BoxTitleText3>
+              </Pay>
             </PayBox>
           </Section>
           <EmployeeListBox>
