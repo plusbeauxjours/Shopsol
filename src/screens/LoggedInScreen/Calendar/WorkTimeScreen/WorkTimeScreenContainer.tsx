@@ -66,7 +66,9 @@ export default ({route: {params}}) => {
   };
 
   const registerFn = async () => {
-    if (!SCH_ID) {
+    if (startTime == endTime) {
+      return alertModal('출퇴근 시간을 다르게 입력해주세요.');
+    } else if (!SCH_ID) {
       try {
         dispatch(
           updateWORKTIME({

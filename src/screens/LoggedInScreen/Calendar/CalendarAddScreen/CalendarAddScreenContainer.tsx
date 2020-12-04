@@ -149,40 +149,42 @@ export default () => {
     setTimeSelected(0);
     if (!startTime || !endTime) {
       return alertModal('출퇴근 시간을 먼저 입력해주세요.');
-    }
-    if (timeCheck.length >= 7) {
+    } else if (startTime == endTime) {
+      return alertModal('출퇴근 시간을 다르게 입력해주세요.');
+    } else if (timeCheck.length >= 7) {
       return alertModal('일정은 7개가 최대입니다.');
-    }
-    let value = JSON.parse(JSON.stringify(timeCheck));
-    let color = [
-      '#0D4F8A',
-      '#ED8F52',
-      '#FEBF40',
-      '#5CAD6F',
-      '#984B19',
-      '#CB8DB1',
-      '#FEBF40',
-    ];
-    let temp, tempIndex;
-    if (timeCheck.length === 0) {
-      temp = {
-        start: startTime,
-        end: endTime,
-        color: color[timeCheck.length],
-      };
     } else {
-      for (var i = 0; i < timeCheck.length; i++) {
-        tempIndex = color.indexOf(timeCheck[i].color);
-        color.splice(tempIndex, 1);
+      let value = JSON.parse(JSON.stringify(timeCheck));
+      let color = [
+        '#0D4F8A',
+        '#ED8F52',
+        '#FEBF40',
+        '#5CAD6F',
+        '#984B19',
+        '#CB8DB1',
+        '#FEBF40',
+      ];
+      let temp, tempIndex;
+      if (timeCheck.length === 0) {
+        temp = {
+          start: startTime,
+          end: endTime,
+          color: color[timeCheck.length],
+        };
+      } else {
+        for (var i = 0; i < timeCheck.length; i++) {
+          tempIndex = color.indexOf(timeCheck[i].color);
+          color.splice(tempIndex, 1);
+        }
+        temp = {
+          start: startTime,
+          end: endTime,
+          color: color[0],
+        };
       }
-      temp = {
-        start: startTime,
-        end: endTime,
-        color: color[0],
-      };
+      value.push(temp);
+      setTimeCheck(value);
     }
-    value.push(temp);
-    setTimeCheck(value);
   };
 
   // 출퇴근 목록에서 삭제 붉은 아이콘

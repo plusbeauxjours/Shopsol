@@ -36,7 +36,8 @@ const View = styled.View<ITouchable>`
   height: 46px;
   border-radius: 25px;
   min-width: 46px;
-  width: ${(props) => (props.width * maxWidth) / 86400000}px;
+  width: ${(props) => (props.width * maxWidth) / 108000000}px;
+
   background-color: ${(props) => props.backgroundColor};
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
   background-color: #e85356;
@@ -44,12 +45,12 @@ const View = styled.View<ITouchable>`
 
 const Touchable = styled.TouchableOpacity<ITouchable>`
   border-radius: 25px;
-  height: 50px;
-  min-width: 50px;
-  width: ${(props) => (props.width * maxWidth) / 86400000}px;
+  height: 46px;
+  min-width: 46px;
+  width: ${(props) => (props.width * maxWidth) / 108000000}px;
   margin-top: ${(props) => (props.isFirst ? 10 : 0)}px;
   margin-bottom: 10px;
-  left: ${(props) => (props.startTime * maxWidth) / 86400000}px;
+  left: ${(props) => ((props.startTime + 10800000) * maxWidth) / 108000000}px;
 `;
 
 const Bold = styled.Text`
@@ -123,6 +124,7 @@ export default ({
   setIndexTime,
   scrollRef,
 }) => {
+  console.log(TIME_EMP_LIST);
   const ballonRef = useRef(null);
   const renderThumbImage = () => (
     <IconConatainer>
@@ -133,7 +135,7 @@ export default ({
       />
       <RedLine
         indexTime={indexTime}
-        height={TIME_EMP_LIST.filter((i) => i.WORKING > 0).length * 60 + 40}
+        height={TIME_EMP_LIST.filter((i) => i.WORKING > 0).length * 56 + 40}
       />
     </IconConatainer>
   );
@@ -211,7 +213,7 @@ export default ({
                     width={i?.WORKING || 0}>
                     <FastImage
                       style={{
-                        marginRight: 10,
+                        marginRight: 5,
                         width: 40,
                         height: 40,
                         borderRadius: 20,
@@ -223,7 +225,7 @@ export default ({
                       }}
                       resizeMode={FastImage.resizeMode.cover}
                     />
-                    {(i?.WORKING * maxWidth) / 86400000 > 100 && (
+                    {(i?.WORKING * maxWidth) / 108000000 > 80 && (
                       <EmpCardRow style={{marginBottom: 0}}>
                         <Bold>{i.EMP_NAME}</Bold>
                       </EmpCardRow>

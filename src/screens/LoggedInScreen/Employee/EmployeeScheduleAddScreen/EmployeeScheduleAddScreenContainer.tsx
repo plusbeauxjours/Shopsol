@@ -102,6 +102,8 @@ export default ({route: {params}}) => {
     }
     if (!startTime || !endTime) {
       alertModal('출퇴근 시간을 입력해주세요');
+    } else if (startTime == endTime) {
+      return alertModal('출퇴근 시간을 다르게 입력해주세요.');
     } else if (!validDay) {
       alertModal('출퇴근 요일을 선택해주세요');
     } else {
@@ -168,50 +170,51 @@ export default ({route: {params}}) => {
   const submitFn = async () => {
     if (!startDate || (!checkNoEndDate && !endDate)) {
       return alertModal('일정 기간을 입력해주세요');
-    }
-    try {
-      dispatch(setSplashVisible(true));
-      const params = {
-        EMP_SEQ,
-        START: startDate,
-        END: endDate,
-        empSchedules: [],
-      };
-      for (const time of timeList) {
-        for (const day of time.dayList) {
-          if (day.isChecked) {
-            params.empSchedules.push({
-              EMP_SCH_SEQ: -1,
-              JE_SEQ: -1,
-              EMP_SEQ,
-              DAY: day.day,
-              ATTENDANCE_TIME: time.startTime,
-              WORK_OFF_TIME: time.endTime,
-              USE_FLAG: 1,
-              START: startDate,
-              END: endDate,
-            });
+    } else {
+      try {
+        dispatch(setSplashVisible(true));
+        const params = {
+          EMP_SEQ,
+          START: startDate,
+          END: endDate,
+          empSchedules: [],
+        };
+        for (const time of timeList) {
+          for (const day of time.dayList) {
+            if (day.isChecked) {
+              params.empSchedules.push({
+                EMP_SCH_SEQ: -1,
+                JE_SEQ: -1,
+                EMP_SEQ,
+                DAY: day.day,
+                ATTENDANCE_TIME: time.startTime,
+                WORK_OFF_TIME: time.endTime,
+                USE_FLAG: 1,
+                START: startDate,
+                END: endDate,
+              });
+            }
           }
         }
-      }
-      if (isUpdateMode) {
-        const {data} = await api.updateEmpSchedule({DEL: deleteList});
-        if (data.message !== 'SUCCESS') {
+        if (isUpdateMode) {
+          const {data} = await api.updateEmpSchedule({DEL: deleteList});
+          if (data.message !== 'SUCCESS') {
+            alertModal(data.result);
+          }
+        }
+        const {data} = await api.insertEmpSchedule(params);
+        if (data.message === 'SUCCESS') {
+          alertModal('일정이 ' + TYPE + '되었습니다.');
+        } else {
           alertModal(data.result);
         }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        fetchData();
+        navigation.goBack();
+        dispatch(setSplashVisible(false));
       }
-      const {data} = await api.insertEmpSchedule(params);
-      if (data.message === 'SUCCESS') {
-        alertModal('일정이 ' + TYPE + '되었습니다.');
-      } else {
-        alertModal(data.result);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      fetchData();
-      navigation.goBack();
-      dispatch(setSplashVisible(false));
     }
   };
 

@@ -85,6 +85,7 @@ export default () => {
 
     dispatch(getSTORELIST_DATA());
     dispatch(setSplashVisible(false));
+    dispatch(setAlertVisible(false));
   }, []);
 
   return (
