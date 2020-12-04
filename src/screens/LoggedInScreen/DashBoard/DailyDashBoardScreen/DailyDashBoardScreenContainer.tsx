@@ -8,6 +8,7 @@ import colors from '~/constants/colors';
 export default () => {
   const screenScrollRef = createRef(0);
   const cardScrollRef = createRef(0);
+  const scrollRef = createRef(0);
   const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
   const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
   const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
@@ -48,6 +49,10 @@ export default () => {
       ?.scrollTo({x: index * 220, animated: false});
   };
 
+  const gotoSelectedCard = (index) => {
+    return scrollRef.current?.getNode()?.scrollTo({y: index * 60});
+  };
+
   const onScroll = (e) => {
     const {
       nativeEvent: {
@@ -55,7 +60,8 @@ export default () => {
       },
     } = e;
     const position = Math.abs(Math.round(x / 220));
-    setSelectedIndex(position);
+    // setSelectedIndex(position);
+    scrollRef.current?.getNode()?.scrollTo({y: position * 60});
   };
 
   const init = async () => {
@@ -278,6 +284,8 @@ export default () => {
       gotoSelectedIndex={gotoSelectedIndex}
       indexTime={indexTime}
       setIndexTime={setIndexTime}
+      scrollRef={scrollRef}
+      gotoSelectedCard={gotoSelectedCard}
     />
   );
 };

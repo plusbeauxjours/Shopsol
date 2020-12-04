@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import Slider, {Ballon} from 'react-native-reanimated-slider';
+import Animated from 'react-native-reanimated';
 
 import ScheduleUnderlay from './ScheduleUnderlay';
 import {Value} from 'react-native-reanimated';
@@ -84,14 +85,6 @@ const TextBox = styled.View`
   margin-top: 10px;
 `;
 
-const KeyTimeTextContainer = styled.View`
-  position: absolute;
-  width: 70px;
-`;
-const KeyTimeText = styled.Text`
-  font-size: 14px;
-`;
-
 const Text = styled.Text`
   width: 30px;
   font-size: 10px;
@@ -104,6 +97,7 @@ const RedLine = styled.View<IRedLine>`
   z-index: 10;
   width: 1;
   height: ${(props) => props.height}px;
+  max-height: 430px;
   background-color: #e85356;
 `;
 
@@ -124,6 +118,7 @@ export default ({
   gotoSelectedIndex,
   indexTime,
   setIndexTime,
+  scrollRef,
 }) => {
   const ballonRef = useRef(null);
   const renderThumbImage = () => (
@@ -135,7 +130,19 @@ export default ({
       />
       <RedLine
         indexTime={indexTime}
-        height={TIME_EMP_LIST.filter((i) => i.WORKING > 0).length * 60 + 40}
+        height={
+          [
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+          ].filter((i) => i.WORKING > 0).length *
+            60 +
+          40
+        }
       />
     </IconConatainer>
   );
@@ -180,61 +187,67 @@ export default ({
       </TextBox>
       <Table>
         <ScheduleUnderlay />
-        {[
-          ...TIME_EMP_LIST,
-          ...TIME_EMP_LIST,
-          ...TIME_EMP_LIST,
-          ...TIME_EMP_LIST,
-          ...TIME_EMP_LIST,
-          ...TIME_EMP_LIST,
-          ...TIME_EMP_LIST,
-        ].map(
-          (i, index) =>
-            i.WORKING > 0 && (
-              <Touchable
-                key={index}
-                isFirst={index == 0}
-                isLast={index == TIME_EMP_LIST.length - 1}
-                startTime={moment.duration(i.START_TIME).as('milliseconds')}
-                width={i?.WORKING || 0}
-                delayLongPress={1}
-                onPress={() => {
-                  setSelectedIndex(index);
-                  gotoSelectedIndex(index);
-                }}
-                activeOpacity={1}>
-                {console.log(
-                  i?.EMP_NAME,
-                  moment.duration(i.START_TIME).as('milliseconds'),
-                )}
-                <View
-                  isSelected={selectedIndex == index}
-                  backgroundColor={i?.color}
+        <Animated.ScrollView
+          ref={scrollRef}
+          scrollEventThrottle={16}
+          decelerationRate="fast"
+          style={{height: 400}}>
+          {[
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+            ...TIME_EMP_LIST,
+          ].map(
+            (i, index) =>
+              i.WORKING > 0 && (
+                <Touchable
+                  key={index}
+                  isFirst={index == 0}
+                  isLast={index == TIME_EMP_LIST.length - 1}
                   startTime={moment.duration(i.START_TIME).as('milliseconds')}
-                  width={i?.WORKING || 0}>
-                  <FastImage
-                    style={{
-                      marginRight: 10,
-                      width: 40,
-                      height: 40,
-                      borderRadius: 20,
-                    }}
-                    source={{
-                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                      headers: {Authorization: 'someAuthToken'},
-                      priority: FastImage.priority.low,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                  {(i?.WORKING * maxWidth) / 86400000 > 100 && (
-                    <EmpCardRow style={{marginBottom: 0}}>
-                      <Bold>{i.EMP_NAME}</Bold>
-                    </EmpCardRow>
+                  width={i?.WORKING || 0}
+                  delayLongPress={1}
+                  onPress={() => {
+                    setSelectedIndex(index);
+                    gotoSelectedIndex(index);
+                  }}
+                  activeOpacity={1}>
+                  {console.log(
+                    i?.EMP_NAME,
+                    moment.duration(i.START_TIME).as('milliseconds'),
                   )}
-                </View>
-              </Touchable>
-            ),
-        )}
+                  <View
+                    isSelected={selectedIndex == index}
+                    backgroundColor={i?.color}
+                    startTime={moment.duration(i.START_TIME).as('milliseconds')}
+                    width={i?.WORKING || 0}>
+                    <FastImage
+                      style={{
+                        marginRight: 10,
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                      }}
+                      source={{
+                        uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                        headers: {Authorization: 'someAuthToken'},
+                        priority: FastImage.priority.low,
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                    {(i?.WORKING * maxWidth) / 86400000 > 100 && (
+                      <EmpCardRow style={{marginBottom: 0}}>
+                        <Bold>{i.EMP_NAME}</Bold>
+                      </EmpCardRow>
+                    )}
+                  </View>
+                </Touchable>
+              ),
+          )}
+        </Animated.ScrollView>
       </Table>
     </GraphSection>
   );
