@@ -886,7 +886,7 @@ export default ({
               height: '100%',
             }}>
             <Section
-              style={{width: 200}}
+              style={{width: 250}}
               onPress={() => setModalEARLY(false)}
               rippleColor={'#666'}
               rippleDuration={600}
@@ -941,7 +941,7 @@ export default ({
               height: '100%',
             }}>
             <Section
-              style={{width: 200}}
+              style={{width: 250}}
               onPress={() => setModalLATE(false)}
               rippleColor={'#666'}
               rippleDuration={600}
@@ -996,7 +996,7 @@ export default ({
               height: '100%',
             }}>
             <Section
-              style={{width: 200}}
+              style={{width: 250}}
               onPress={() => setModalNOWORK(false)}
               rippleColor={'#666'}
               rippleDuration={600}
@@ -1051,7 +1051,7 @@ export default ({
               height: '100%',
             }}>
             <Section
-              style={{width: 200}}
+              style={{width: 250}}
               onPress={() => setModalREST_TIME(false)}
               rippleColor={'#666'}
               rippleDuration={600}
@@ -1106,7 +1106,7 @@ export default ({
               height: '100%',
             }}>
             <Section
-              style={{width: 200}}
+              style={{width: 250}}
               onPress={() => setModalVACATION(false)}
               rippleColor={'#666'}
               rippleDuration={600}

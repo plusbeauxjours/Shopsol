@@ -50,6 +50,7 @@ const Touchable = styled.TouchableOpacity<ITouchable>`
 const Bold = styled.Text`
   font-size: 12px;
   font-weight: bold;
+  color: white;
 `;
 
 const EmpCardRow = styled.View`
@@ -173,16 +174,21 @@ export default ({
         setBallonText={(text) => ballonRef.current.setText(text)}
       />
       <TextBox>
-        <KeyTimeTextContainer>
-          <KeyTimeText></KeyTimeText>
-        </KeyTimeTextContainer>
         {[0, 6, 12, 18, 24].map((i, index) => {
           return <Text>{i}시</Text>;
         })}
       </TextBox>
       <Table>
         <ScheduleUnderlay />
-        {TIME_EMP_LIST.map(
+        {[
+          ...TIME_EMP_LIST,
+          ...TIME_EMP_LIST,
+          ...TIME_EMP_LIST,
+          ...TIME_EMP_LIST,
+          ...TIME_EMP_LIST,
+          ...TIME_EMP_LIST,
+          ...TIME_EMP_LIST,
+        ].map(
           (i, index) =>
             i.WORKING > 0 && (
               <Touchable

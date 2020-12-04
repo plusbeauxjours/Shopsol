@@ -482,11 +482,12 @@ export default ({
       </RBSheet>
       <DatePickerModal
         isDarkModeEnabled={false}
-        headerTextIOS={'시간을 선택하세요.'}
+        headerTextIOS={'출근시간을 선택하세요.'}
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
         minuteInterval={10}
+        date={new Date().setHours(9, [0])}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -498,11 +499,12 @@ export default ({
       />
       <DatePickerModal
         isDarkModeEnabled={false}
-        headerTextIOS={'시간을 선택하세요.'}
+        headerTextIOS={'퇴근시간을 선택하세요.'}
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isEndTimeModalVisible}
         minuteInterval={10}
+        date={new Date().setHours(18, [0])}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {

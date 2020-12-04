@@ -378,6 +378,7 @@ export default ({
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
         minuteInterval={10}
+        date={new Date().setHours(9, [0])}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
@@ -394,6 +395,7 @@ export default ({
         confirmTextIOS={'선택'}
         isVisible={isEndTimeModalVisible}
         minuteInterval={10}
+        date={new Date().setHours(18, [0])}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {

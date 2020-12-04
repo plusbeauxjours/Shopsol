@@ -463,6 +463,7 @@ export default ({
         confirmTextIOS={'선택'}
         isVisible={isCustomModalVisible}
         minuteInterval={10}
+        date={new Date().setHours(9, [0])}
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
