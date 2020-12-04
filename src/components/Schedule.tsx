@@ -215,10 +215,6 @@ export default ({
                     gotoSelectedIndex(index);
                   }}
                   activeOpacity={1}>
-                  {console.log(
-                    i?.EMP_NAME,
-                    moment.duration(i.START_TIME).as('milliseconds'),
-                  )}
                   <View
                     isSelected={selectedIndex == index}
                     backgroundColor={i?.color}

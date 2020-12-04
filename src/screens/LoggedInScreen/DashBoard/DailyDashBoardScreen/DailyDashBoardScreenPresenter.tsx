@@ -13,7 +13,11 @@ import Modal from 'react-native-modal';
 import Animated from 'react-native-reanimated';
 
 import DonutCard from '~/components/DonutCard';
-import {PlayCircleOutlineIcon, StopCircleOutlineIcon} from '~/constants/Icons';
+import {
+  UpIcon,
+  PlayCircleOutlineIcon,
+  StopCircleOutlineIcon,
+} from '~/constants/Icons';
 import Schedule from '~/components/Schedule';
 
 interface IColor {
@@ -197,6 +201,27 @@ const EmpCardDataRow = styled.View`
   flex-wrap: wrap;
   justify-content: center;
 `;
+const GotoTopButtonContainer = styled.View`
+  position: absolute;
+  z-index: 2;
+  right: ${wp('5%')}px;
+  bottom: ${hp('5%')}px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const GotoTopButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: #e85356;
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
 
 export default ({
   EMP_LIST,
@@ -238,6 +263,7 @@ export default ({
   setIndexTime,
   scrollRef,
   gotoSelectedCard,
+  gotoTop,
 }) => {
   if (loading || visible) {
     return (
@@ -266,6 +292,11 @@ export default ({
     } else {
       return (
         <BackGround>
+          <GotoTopButtonContainer>
+            <GotoTopButton onPress={() => gotoTop()}>
+              <UpIcon />
+            </GotoTopButton>
+          </GotoTopButtonContainer>
           <Animated.ScrollView
             ref={screenScrollRef}
             style={{paddingBottom: hp('100%') - 420}}

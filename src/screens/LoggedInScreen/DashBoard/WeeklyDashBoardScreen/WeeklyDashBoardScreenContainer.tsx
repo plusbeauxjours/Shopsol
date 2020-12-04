@@ -46,6 +46,10 @@ export default () => {
     return scrollRef.current?.getNode()?.scrollToEnd({animated: true});
   };
 
+  const gotoTop = () => {
+    return scrollRef.current?.getNode()?.scrollTo({y: 0, animated: true});
+  };
+
   const init = async () => {
     let currentMoment = moment().startOf('isoWeek');
     let endMoment = moment().endOf('isoWeek');
@@ -399,6 +403,7 @@ export default () => {
       setModalVACATION={setModalVACATION}
       modalNOWORK={modalNOWORK}
       setModalNOWORK={setModalNOWORK}
+      gotoTop={gotoTop}
     />
   );
 };

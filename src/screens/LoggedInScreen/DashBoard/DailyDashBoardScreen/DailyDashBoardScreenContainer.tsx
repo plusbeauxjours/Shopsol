@@ -53,6 +53,10 @@ export default () => {
     return scrollRef.current?.getNode()?.scrollTo({y: index * 60});
   };
 
+  const gotoTop = () => {
+    return screenScrollRef.current?.getNode()?.scrollTo({y: 0, animated: true});
+  };
+
   const onScroll = (e) => {
     const {
       nativeEvent: {
@@ -286,6 +290,7 @@ export default () => {
       setIndexTime={setIndexTime}
       scrollRef={scrollRef}
       gotoSelectedCard={gotoSelectedCard}
+      gotoTop={gotoTop}
     />
   );
 };

@@ -14,6 +14,7 @@ import DonutCard from '~/components/DonutCard';
 import Graph from '~/components/Graph';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
+import {UpIcon} from '../../../../constants/Icons';
 
 interface IColor {
   color: string;
@@ -180,6 +181,28 @@ const GraphContainer = styled.View`
   margin-top: 10px;
 `;
 
+const GotoTopButtonContainer = styled.View`
+  position: absolute;
+  z-index: 2;
+  right: ${wp('5%')}px;
+  bottom: ${hp('5%')}px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const GotoTopButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: #e85356;
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
 export default ({
   EMP_LIST,
   totalEARLY_COUNT,
@@ -217,6 +240,7 @@ export default ({
   setModalVACATION,
   modalNOWORK,
   setModalNOWORK,
+  gotoTop,
 }) => {
   if (loading || visible) {
     return (
@@ -253,6 +277,11 @@ export default ({
     } else {
       return (
         <BackGround>
+          <GotoTopButtonContainer>
+            <GotoTopButton onPress={() => gotoTop()}>
+              <UpIcon />
+            </GotoTopButton>
+          </GotoTopButtonContainer>
           <Animated.ScrollView
             ref={scrollRef}
             keyboardDismissMode="on-drag"
