@@ -1787,20 +1787,6 @@ anymatch@^3.0.3:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-appcenter-analytics@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-4.0.0.tgz#39fca79120f2ca62b7d7afc1b1c056515b385341"
-  integrity sha512-IKLl66VUSXMMTHXJMKfL0+DV7th/AGV0dAVvS/2b0BKGsvVpy45gVPuf95ndEuWsLC7HMQJCf9K60V+vdRNvkw==
-  dependencies:
-    appcenter "4.0.0"
-
-appcenter-crashes@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-4.0.0.tgz#25f1f2807efa06a843432b42a14054cb24dace87"
-  integrity sha512-UH/O5KKH9xiSsr73uUBsXwEyJKxSEgY+6A00YAh4hE7V2cZlaeBJuqIJJ9XyPWAIYFbSb6xm79vvTbKDFDK8Wg==
-  dependencies:
-    appcenter "4.0.0"
-
 appcenter-file-upload-client@0.0.24:
   version "0.0.24"
   resolved "https://registry.yarnpkg.com/appcenter-file-upload-client/-/appcenter-file-upload-client-0.0.24.tgz#ba1fb3c0f0073d56168a1853f5e9e9cf38a5114c"

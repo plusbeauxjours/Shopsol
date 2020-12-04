@@ -382,8 +382,8 @@ export default ({
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
-          setStartTime(moment(time).format('HH:mm'));
           setIsStartTimeModalVisible(false);
+          setStartTime(moment(time).format('HH:mm'));
         }}
         is24Hour={true}
         onCancel={() => setIsStartTimeModalVisible(false)}
@@ -399,8 +399,8 @@ export default ({
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
-          setEndTime(moment(time).format('HH:mm'));
           setIsEndTimeModalVisible(false);
+          setEndTime(moment(time).format('HH:mm'));
         }}
         is24Hour={true}
         onCancel={() => setIsEndTimeModalVisible(false)}

@@ -151,7 +151,7 @@ export default ({
   return (
     <GraphSection>
       <Slider
-        style={{flex: 1, marginHorizontal: (wp('100') - 90) * (1 / 10)}}
+        style={{flex: 1, marginHorizontal: (wp('100') - 90) * 0.1}}
         maximumTrackTintColor="#f6f6f6"
         minimumTrackTintColor="#f6f6f6"
         thumbTintColor="#fff"

@@ -467,8 +467,8 @@ export default ({
         mode="time"
         locale="ko_KRus_EN"
         onConfirm={(time) => {
-          setCustomChecktime(moment(time).format('HH:mm'));
           setIsCustomModalVisible(false);
+          setCustomChecktime(moment(time).format('HH:mm'));
         }}
         is24Hour={true}
         onCancel={() => setIsCustomModalVisible(false)}

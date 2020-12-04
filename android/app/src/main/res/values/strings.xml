@@ -2,6 +2,5 @@
     <string name="app_name">ShopsolWesop</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="app_name">ShopsolWesop</string>
     <string moduleConfig="true" name="CodePushDeploymentKey">eZ8i91DZRm_MErcWrvWsrMXzcpp3v-AiazqHI</string>
 </resources>
