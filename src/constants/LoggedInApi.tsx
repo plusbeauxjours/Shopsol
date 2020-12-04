@@ -153,8 +153,8 @@ export default {
     ),
   delNoticeComment: (COM_SEQ: string) =>
     oldApi('get', `/Employee/delNoticeComment?COM_SEQ=${COM_SEQ}`),
-  setNoticeImg: (data: any) => callApi('post', '/auth/setNoticeImg/', data),
-  setNotice: (data: any) => callApi('post', '/auth/setNotice/', data),
+  setNoticeImg: (data: any) => callApi('post', '/auth/setNoticeImg2/', data),
+  setNotice: (data: any) => callApi('post', '/auth/setNotice2/', data),
   updateNotice: (data: any) => callApi('post', '/auth/updateNotice/', data),
   updateNoticeImg: (data: any) =>
     callApi('post', '/auth/updateNoticeImg/', data),

@@ -17,7 +17,7 @@ interface IsFavorite {
 const Section = styled.View`
   width: ${wp('100%') - 40}px;
   border-radius: 20px;
-  padding: 20px;
+  padding: 10px;
   flex-direction: row;
   background-color: white;
   min-height: 100px;
@@ -38,6 +38,7 @@ const ContentText = styled.Text`
 
 const Touchable = styled(Ripple)`
   margin-bottom: 20px;
+  z-index: 1;
 `;
 
 const NewBadge = styled.View`
@@ -52,14 +53,16 @@ const NotiTitleText = styled.Text`
 `;
 
 const PinTouchable = styled.TouchableOpacity<IsFavorite>`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
+  top: 35px;
+  margin-right: 120px;
+  align-self: flex-end;
   align-items: center;
   justify-content: center;
   border-radius: 30px;
   background-color: ${(props) => (props.isFavorite ? '#000' : '#ddd')};
-  z-index: 2;
-  margin-right: 10px;
+  z-index: 10;
 `;
 
 const InfoText = styled.Text`
@@ -130,71 +133,69 @@ export default ({
     imgarr.push(allimg[0]);
   }
   return (
-    <Touchable
-      key={key}
-      onPress={() =>
-        setTimeout(() => {
-          gotoChecklistShareItem(type, data.NOTICE_SEQ, data.favorite);
-        }, 100)
-      }
-      rippleColor={'#666'}
-      rippleDuration={600}
-      rippleSize={1700}
-      rippleContainerBorderRadius={20}
-      rippleOpacity={0.1}>
-      <Section>
-        {ME !== data.MEMBER_SEQ && data.NoticeCheck_SEQ == null && (
-          <NewBadge>
-            <NewBoxIcon />
-          </NewBadge>
-        )}
-        <ContentBox>
-          <RowSpace>
-            <NotiTitleText numberOfLines={1}>{data.TITLE}</NotiTitleText>
-            <PinTouchable
-              isFavorite={data.favorite === '1'}
-              onPress={() => confirmModal(data.NOTICE_SEQ)}>
-              <PinIcon
-                size={14}
-                color={data.favorite == '1' ? 'yellow' : '#aaa'}
+    <React.Fragment key={key}>
+      <PinTouchable
+        isFavorite={data.favorite === '1'}
+        onPress={() => confirmModal(data.NOTICE_SEQ)}>
+        <PinIcon size={14} color={data.favorite == '1' ? 'yellow' : '#aaa'} />
+      </PinTouchable>
+      <Touchable
+        onPress={() =>
+          setTimeout(() => {
+            gotoChecklistShareItem(type, data.NOTICE_SEQ, data.favorite);
+          }, 100)
+        }
+        rippleColor={'#666'}
+        rippleDuration={600}
+        rippleSize={1700}
+        rippleContainerBorderRadius={20}
+        rippleOpacity={0.1}>
+        <Section>
+          {ME !== data.MEMBER_SEQ && data.NoticeCheck_SEQ == null && (
+            <NewBadge>
+              <NewBoxIcon />
+            </NewBadge>
+          )}
+          <ContentBox>
+            <RowSpace>
+              <NotiTitleText numberOfLines={1}>{data.TITLE}</NotiTitleText>
+            </RowSpace>
+            <Row>
+              <ContentText numberOfLines={2}>{data.CONTENTS}</ContentText>
+            </Row>
+            {data.favorite == '1' && (
+              <AddressBox>
+                <InfoText>
+                  {moment(data.CREATE_TIME).format('YYYY.MM.DD HH:mm:ss')}
+                </InfoText>
+              </AddressBox>
+            )}
+          </ContentBox>
+          <ImageSection>
+            {imgarr?.length > 0 ? (
+              <FastImage
+                style={{width: 100, height: 100, borderRadius: 10}}
+                source={{
+                  uri: `http://133.186.210.223/uploads/${imgarr[0]}`,
+                  headers: {Authorization: 'someAuthToken'},
+                  priority: FastImage.priority.low,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
               />
-            </PinTouchable>
-          </RowSpace>
-          <Row>
-            <ContentText numberOfLines={2}>{data.CONTENTS}</ContentText>
-          </Row>
-          {data.favorite == '1' && (
-            <AddressBox>
-              <InfoText>
-                {moment(data.CREATE_TIME).format('YYYY.MM.DD HH:mm:ss')}
-              </InfoText>
-            </AddressBox>
-          )}
-        </ContentBox>
-        <ImageSection>
-          {imgarr?.length > 0 ? (
-            <FastImage
-              style={{width: 100, height: 100, borderRadius: 10}}
-              source={{
-                uri: `http://133.186.210.223/uploads/${imgarr[0]}`,
-                headers: {Authorization: 'someAuthToken'},
-                priority: FastImage.priority.low,
-              }}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          ) : (
-            <BorderBox>
-              <GreyText>사진 미등록</GreyText>
-            </BorderBox>
-          )}
-          {allimg?.length > 1 && (
-            <AnotherBox>
-              <WhiteText>+</WhiteText>
-              <WhiteText>{allimg.length - 1}</WhiteText>
-            </AnotherBox>
-          )}
-        </ImageSection>
-      </Section>
-    </Touchable>
+            ) : (
+              <BorderBox>
+                <GreyText>사진 미등록</GreyText>
+              </BorderBox>
+            )}
+            {allimg?.length > 1 && (
+              <AnotherBox>
+                <WhiteText>+</WhiteText>
+                <WhiteText>{allimg.length - 1}</WhiteText>
+              </AnotherBox>
+            )}
+          </ImageSection>
+        </Section>
+      </Touchable>
+    </React.Fragment>
   );
 };
