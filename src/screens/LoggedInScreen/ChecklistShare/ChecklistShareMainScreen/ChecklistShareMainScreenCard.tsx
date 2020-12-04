@@ -14,6 +14,13 @@ interface IsFavorite {
   isFavorite: boolean;
 }
 
+const View = styled.View`
+  flex-direction: row;
+  align-items: flex-start;
+  width: ${wp('100%')}px
+  padding: 0 20px;
+`;
+
 const Section = styled.View`
   width: ${wp('100%') - 40}px;
   border-radius: 20px;
@@ -37,8 +44,8 @@ const ContentText = styled.Text`
 `;
 
 const Touchable = styled(Ripple)`
-  margin-bottom: 20px;
   z-index: 1;
+  margin-bottom: 20px;
 `;
 
 const NewBadge = styled.View`
@@ -46,6 +53,7 @@ const NewBadge = styled.View`
   left: 5px;
   top: 10px;
 `;
+
 const NotiTitleText = styled.Text`
   font-size: 16px;
   font-weight: 500;
@@ -53,10 +61,10 @@ const NotiTitleText = styled.Text`
 `;
 
 const PinTouchable = styled.TouchableOpacity<IsFavorite>`
-  width: 25px;
-  height: 25px;
-  top: 35px;
-  margin-right: 120px;
+  width: 30px;
+  height: 30px;
+  bottom: 110px;
+  right: 30px;
   align-self: flex-end;
   align-items: center;
   justify-content: center;
@@ -66,6 +74,7 @@ const PinTouchable = styled.TouchableOpacity<IsFavorite>`
 `;
 
 const InfoText = styled.Text`
+  font-size: 10px;
   color: #c0c0c0;
 `;
 
@@ -98,9 +107,11 @@ const AnotherBox = styled.View`
 `;
 
 const AddressBox = styled.View`
+  position: absolute;
   flex-direction: row;
   align-items: center;
-  margin-bottom: ${hp('0.5%')}px;
+  bottom: 10px;
+  margin-left: 5px;
 `;
 
 const ContentBox = styled.View`
@@ -133,12 +144,7 @@ export default ({
     imgarr.push(allimg[0]);
   }
   return (
-    <React.Fragment key={key}>
-      <PinTouchable
-        isFavorite={data.favorite === '1'}
-        onPress={() => confirmModal(data.NOTICE_SEQ)}>
-        <PinIcon size={14} color={data.favorite == '1' ? 'yellow' : '#aaa'} />
-      </PinTouchable>
+    <View key={key}>
       <Touchable
         onPress={() =>
           setTimeout(() => {
@@ -163,13 +169,11 @@ export default ({
             <Row>
               <ContentText numberOfLines={2}>{data.CONTENTS}</ContentText>
             </Row>
-            {data.favorite == '1' && (
-              <AddressBox>
-                <InfoText>
-                  {moment(data.CREATE_TIME).format('YYYY.MM.DD HH:mm:ss')}
-                </InfoText>
-              </AddressBox>
-            )}
+            <AddressBox>
+              <InfoText>
+                {moment(data.CREATE_TIME).format('YYYY.MM.DD HH:mm:ss')}
+              </InfoText>
+            </AddressBox>
           </ContentBox>
           <ImageSection>
             {imgarr?.length > 0 ? (
@@ -196,6 +200,11 @@ export default ({
           </ImageSection>
         </Section>
       </Touchable>
-    </React.Fragment>
+      <PinTouchable
+        isFavorite={data.favorite === '1'}
+        onPress={() => confirmModal(data.NOTICE_SEQ)}>
+        <PinIcon size={18} color={data.favorite == '1' ? 'yellow' : '#aaa'} />
+      </PinTouchable>
+    </View>
   );
 };

@@ -50,7 +50,7 @@ export default () => {
   };
 
   const gotoSelectedCard = (index) => {
-    return scrollRef.current?.getNode()?.scrollTo({y: index * 60});
+    return scrollRef.current?.getNode()?.scrollTo({y: index * 60 + 190});
   };
 
   const gotoTop = () => {

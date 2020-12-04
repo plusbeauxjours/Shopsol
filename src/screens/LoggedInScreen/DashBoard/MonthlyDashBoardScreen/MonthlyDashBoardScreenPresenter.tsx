@@ -396,7 +396,7 @@ export default ({
                     </DonutColumnText>
                   </DonutColumn>
                 </Row>
-                <PieChart
+                {/* <PieChart
                   data={EMP_LIST}
                   width={wp('100%') - 60}
                   height={200}
@@ -414,7 +414,7 @@ export default ({
                   backgroundColor="transparent"
                   paddingLeft="20"
                   absolute={false}
-                />
+                /> */}
               </Section>
               {EMP_LIST.sort(
                 (a, b) =>

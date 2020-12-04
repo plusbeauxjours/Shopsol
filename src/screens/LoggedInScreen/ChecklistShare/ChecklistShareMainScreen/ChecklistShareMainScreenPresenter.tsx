@@ -108,9 +108,6 @@ const DateText = styled.Text`
   font-weight: bold;
   font-size: 15px;
 `;
-const GreyText = styled.Text`
-  color: #999;
-`;
 
 const AddChecklistBox = styled.View`
   width: 100%;
@@ -127,10 +124,6 @@ const AddCheckilistButton = styled.TouchableOpacity`
   justify-content: space-around;
   align-items: center;
   margin-top: 20px;
-`;
-
-const WhiteSpace = styled.View`
-  height: 30px;
 `;
 
 const AddChecklistButtonText = styled.Text`
@@ -338,6 +331,7 @@ export default ({
             location={'firstRoute'}
             text={'점장 및 매니저가 직원들에게 전달하는 내용입니다.'}
           />
+          {console.log(CHECKLIST_SHARE_DATA1)}
           {CHECKLIST_SHARE_DATA1?.basic?.length == 0 &&
           CHECKLIST_SHARE_DATA1?.favorite?.length == 0 ? (
             <EmptyList TITLE={'지시사항'} />

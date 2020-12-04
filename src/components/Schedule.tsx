@@ -23,6 +23,10 @@ interface IRedLine {
   height: number;
 }
 
+interface IText {
+  index?: number;
+}
+
 const maxWidth = wp('100%') - 90;
 
 const View = styled.View<ITouchable>`
@@ -65,7 +69,6 @@ const EmpCardRow = styled.View`
 const GraphSection = styled.View`
   width: 100%;
   border-radius: 20px;
-  padding: 10px;
   background-color: white;
   padding: 25px;
 `;
@@ -73,7 +76,6 @@ const GraphSection = styled.View`
 const Table = styled.View`
   z-index: 1;
   background-color: transparent;
-  overflow: hidden;
 `;
 
 const TextBox = styled.View`
@@ -85,10 +87,11 @@ const TextBox = styled.View`
   margin-top: 10px;
 `;
 
-const Text = styled.Text`
+const Text = styled.Text<IText>`
   width: 30px;
   font-size: 10px;
-  color: #7f7f7f;
+  color: ${(props) =>
+    props.index == 0 || props.index == 10 ? '#ccc' : '#7f7f7f'};
   text-align: center;
   margin-bottom: 5px;
 `;
@@ -130,19 +133,7 @@ export default ({
       />
       <RedLine
         indexTime={indexTime}
-        height={
-          [
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-          ].filter((i) => i.WORKING > 0).length *
-            60 +
-          40
-        }
+        height={TIME_EMP_LIST.filter((i) => i.WORKING > 0).length * 60 + 40}
       />
     </IconConatainer>
   );
@@ -160,7 +151,7 @@ export default ({
   return (
     <GraphSection>
       <Slider
-        style={{flex: 1}}
+        style={{flex: 1, marginHorizontal: (wp('100') - 90) * (1 / 10)}}
         maximumTrackTintColor="#f6f6f6"
         minimumTrackTintColor="#f6f6f6"
         thumbTintColor="#fff"
@@ -181,9 +172,15 @@ export default ({
         setBallonText={(text) => ballonRef.current.setText(text)}
       />
       <TextBox>
-        {[0, 6, 12, 18, 24].map((i, index) => {
-          return <Text>{i}시</Text>;
-        })}
+        {['21', '0', null, '6', null, '12', null, '18', null, '24', '3'].map(
+          (i, index) => {
+            return (
+              <Text key={index} index={index}>
+                {i && `${i}시`}
+              </Text>
+            );
+          },
+        )}
       </TextBox>
       <Table>
         <ScheduleUnderlay />
@@ -191,16 +188,8 @@ export default ({
           ref={scrollRef}
           scrollEventThrottle={16}
           decelerationRate="fast"
-          style={{height: 400}}>
-          {[
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-            ...TIME_EMP_LIST,
-          ].map(
+          style={{maxHeight: 440}}>
+          {TIME_EMP_LIST.map(
             (i, index) =>
               i.WORKING > 0 && (
                 <Touchable
