@@ -15,7 +15,6 @@ import api from '~/constants/LoggedInApi';
 import {setSplashVisible} from '~/redux/splashSlice';
 
 export default () => {
-  console.log('params', params);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
@@ -207,7 +206,6 @@ export default () => {
   useEffect(() => {
     Init(index);
     dispatch(setSplashVisible(false));
-    console.log('===================', '업무일지', '===================');
     firebase.analytics().setCurrentScreen('업무일지');
   }, []);
 

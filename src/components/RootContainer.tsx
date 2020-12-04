@@ -4,6 +4,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {StatusBar, LogBox} from 'react-native';
 import {useSelector} from 'react-redux';
 import firebase from 'react-native-firebase';
+import styled from 'styled-components/native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 // import * as Sentry from '@sentry/react-native';
 
 import CloseBtn from './Header/CloseBtn';
@@ -13,6 +19,20 @@ import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/inde
 import Loader from './Loader';
 
 LogBox.ignoreAllLogs(true);
+
+const Container = styled.View`
+  width: ${wp('100%')}px;
+  height: ${hp('100%')}px;
+  background-color: 'rgba(52, 52, 52, 0.8)';
+  flex: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+`;
 
 export default () => {
   const routeNameRef = useRef(null);
@@ -102,7 +122,11 @@ export default () => {
           }}
         />
       </RootStack.Navigator>
-      {visible && <Loader size={'large'} />}
+      {visible && (
+        <Container>
+          <Loader size={'large'} />
+        </Container>
+      )}
     </NavigationContainer>
   );
 };

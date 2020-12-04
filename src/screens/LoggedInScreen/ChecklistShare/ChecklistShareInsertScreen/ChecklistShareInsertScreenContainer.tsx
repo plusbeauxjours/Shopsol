@@ -201,3 +201,5 @@ export default ({route: {params}}) => {
     />
   );
 };
+
+// http://133.186.210.223:80/api/v2/Employee/getNotice2?STORE_SEQ=4878&STORE=1&DATE=2020-12-04&MEMBER_SEQ=11823
