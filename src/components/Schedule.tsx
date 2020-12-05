@@ -14,6 +14,7 @@ interface ITouchable {
   isSelected?: boolean;
   backgroundColor?: string;
   startTime?: number;
+  endTime?: number;
   width: number;
   isFirst?: boolean;
   isLast?: boolean;
@@ -38,7 +39,6 @@ const View = styled.View<ITouchable>`
   border-radius: 25px;
   min-width: 46px;
   width: ${(props) => (props.width * maxWidth) / 108000000}px;
-
   background-color: ${(props) => props.backgroundColor};
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
   background-color: #e85356;
@@ -52,6 +52,44 @@ const Touchable = styled(RNBounceable)<ITouchable>`
   margin-top: ${(props) => (props.isFirst ? 10 : 0)}px;
   margin-bottom: 10px;
   left: ${(props) => ((props.startTime + 10800000) * maxWidth) / 108000000}px;
+`;
+
+const TouchableRow = styled(RNBounceable)<ITouchable>`
+  margin-top: ${(props) => (props.isFirst ? 10 : 0)}px;
+  margin-bottom: 10px;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const FrontView = styled.View<ITouchable>`
+  padding: 3px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  height: 46px;
+  min-width: 46px;
+  width: ${(props) => ((props.width + 10800000) * maxWidth) / 108000000 + 20}px;
+  left: -20px;
+  opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
+  background-color: #e85356;
+`;
+
+const BackView = styled.View<ITouchable>`
+  padding: 3px;
+  flex-direction: row;
+  align-items: center;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  height: 46px;
+  min-width: 46px;
+  width: ${(props) => (props.width * maxWidth) / 108000000}px;
+  left: ${(props) =>
+    ((props.startTime + 10800000) * maxWidth) / 108000000 -
+    ((props.endTime + 10800000) * maxWidth) / 108000000}px;
+  opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
+  background-color: #e85356;
 `;
 
 const Bold = styled.Text`
@@ -192,50 +230,116 @@ export default ({
           scrollEventThrottle={16}
           decelerationRate="fast"
           style={{maxHeight: 440}}>
-          {TIME_EMP_LIST.map(
-            (i, index) =>
-              i.WORKING > 0 && (
-                <Touchable
-                  bounceEffect={0.95}
-                  key={index}
-                  isFirst={index == 0}
-                  isLast={index == TIME_EMP_LIST.length - 1}
-                  startTime={moment.duration(i.START_TIME).as('milliseconds')}
-                  width={i?.WORKING || 0}
-                  delayLongPress={1}
-                  onPress={() => {
-                    setSelectedIndex(index);
-                    gotoSelectedIndex(index);
-                  }}
-                  activeOpacity={1}>
-                  <View
-                    isSelected={selectedIndex == index}
-                    backgroundColor={i?.color}
+          {TIME_EMP_LIST.map((i, index) => {
+            if (i.WORKING > 0) {
+              if (moment.duration(i.START_TIME) > moment.duration(i.END_TIME)) {
+                return (
+                  <TouchableRow
+                    bounceEffect={0.95}
+                    key={index}
+                    isFirst={index == 0}
+                    isLast={index == TIME_EMP_LIST.length - 1}
                     startTime={moment.duration(i.START_TIME).as('milliseconds')}
-                    width={i?.WORKING || 0}>
-                    <FastImage
-                      style={{
-                        marginRight: 5,
-                        width: 40,
-                        height: 40,
-                        borderRadius: 20,
-                      }}
-                      source={{
-                        uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                        headers: {Authorization: 'someAuthToken'},
-                        priority: FastImage.priority.low,
-                      }}
-                      resizeMode={FastImage.resizeMode.cover}
-                    />
-                    {(i?.WORKING * maxWidth) / 108000000 > 80 && (
-                      <EmpCardRow style={{marginBottom: 0}}>
-                        <Bold>{i.EMP_NAME}</Bold>
-                      </EmpCardRow>
-                    )}
-                  </View>
-                </Touchable>
-              ),
-          )}
+                    width={i?.WORKING || 0}
+                    delayLongPress={1}
+                    onPress={() => {
+                      setSelectedIndex(index);
+                      gotoSelectedIndex(index);
+                    }}>
+                    <FrontView
+                      isSelected={selectedIndex == index}
+                      backgroundColor={i?.color}
+                      width={moment.duration(i.END_TIME).as('milliseconds')}>
+                      <FastImage
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 20,
+                        }}
+                        source={{
+                          uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                          headers: {Authorization: 'someAuthToken'},
+                          priority: FastImage.priority.low,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </FrontView>
+                    <BackView
+                      isSelected={selectedIndex == index}
+                      backgroundColor={i?.color}
+                      startTime={moment
+                        .duration(i.START_TIME)
+                        .as('milliseconds')}
+                      endTime={moment.duration(i.END_TIME).as('milliseconds')}
+                      width={i?.WORKING || 0}>
+                      <FastImage
+                        style={{
+                          marginRight: 5,
+                          width: 40,
+                          height: 40,
+                          borderRadius: 20,
+                        }}
+                        source={{
+                          uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                          headers: {Authorization: 'someAuthToken'},
+                          priority: FastImage.priority.low,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                      {(i?.WORKING * maxWidth) / 108000000 > 80 && (
+                        <EmpCardRow style={{marginBottom: 0}}>
+                          <Bold>{i.EMP_NAME}</Bold>
+                        </EmpCardRow>
+                      )}
+                    </BackView>
+                  </TouchableRow>
+                );
+              } else {
+                return (
+                  <Touchable
+                    bounceEffect={0.95}
+                    key={index}
+                    isFirst={index == 0}
+                    isLast={index == TIME_EMP_LIST.length - 1}
+                    startTime={moment.duration(i.START_TIME).as('milliseconds')}
+                    width={i?.WORKING || 0}
+                    delayLongPress={1}
+                    onPress={() => {
+                      setSelectedIndex(index);
+                      gotoSelectedIndex(index);
+                    }}>
+                    <View
+                      isSelected={selectedIndex == index}
+                      backgroundColor={i?.color}
+                      startTime={moment
+                        .duration(i.START_TIME)
+                        .as('milliseconds')}
+                      width={i?.WORKING || 0}>
+                      <FastImage
+                        style={{
+                          marginRight: 5,
+                          width: 40,
+                          height: 40,
+                          borderRadius: 20,
+                        }}
+                        source={{
+                          uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                          headers: {Authorization: 'someAuthToken'},
+                          priority: FastImage.priority.low,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                      {(i?.WORKING * maxWidth) / 108000000 > 80 && (
+                        <EmpCardRow style={{marginBottom: 0}}>
+                          <Bold>{i.EMP_NAME}</Bold>
+                        </EmpCardRow>
+                      )}
+                    </View>
+                  </Touchable>
+                );
+              }
+            }
+          })}
         </Animated.ScrollView>
       </Table>
     </GraphSection>
