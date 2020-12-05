@@ -6661,6 +6661,11 @@ react-native-dash@0.0.11:
     prop-types "^15.5.10"
     react-native-measureme "0.0.2"
 
+react-native-date-picker@3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-3.2.5.tgz#351836282fc909e5c4de3d490846fcae16794c20"
+  integrity sha512-OKIqx3ZSUsp7XWcfuiWouIfIyW+CK48kG8HC2ZzLm8bSrsruSo/+McIybZ7NYuIAgDB9z5omK18EA1oOZgITxA==
+
 react-native-device-info@6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-6.0.3.tgz#22aabd6e8b24bc62d85dd1761375a181652a06e9"

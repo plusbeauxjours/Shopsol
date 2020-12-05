@@ -1,6 +1,7 @@
 import React, {createRef, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+import * as Hangul from 'hangul-js';
 
 import DailyDashBoardScreenPresenter from './DailyDashBoardScreenPresenter';
 import colors from '~/constants/colors';
@@ -36,6 +37,8 @@ export default () => {
   const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [indexTime, setIndexTime] = useState<number>(20000);
+  const [search, setSearch] = useState<string>('');
+  const [result, setResult] = useState<any>([]);
 
   const toDay = moment().format('YYYY-MM-DD');
 
@@ -82,17 +85,18 @@ export default () => {
           legendFontSize: 12,
           color: colors[index],
           WORKING: 0,
+          IMAGE: i.images[0].IMAGE || '',
         });
       });
       CALENDAR_DATA[toDay]?.map((i) => {
         let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
         if (emp) {
+          emp['IMAGE'] = i?.IMAGE;
           emp['EARLY'] = i?.alear ?? '0';
           emp['LATE'] = i?.jigark ?? '0';
           emp['REST_TIME'] = i?.REST_TIME;
           emp['VACATION'] = i?.VACATION ?? '0';
           emp['NOWORK'] = i.nowork ?? '0';
-          emp['IMAGE'] = i?.IMAGE ?? '';
 
           setTotalEARLY((totalEARLY) => totalEARLY + (i.alear === '1' ? 1 : 0));
           setTotalLATE((totalLATE) => totalLATE + (i.jigark === '1' ? 1 : 0));
@@ -245,6 +249,26 @@ export default () => {
     }
   };
 
+  const searchName = (text) => {
+    setSearch(text);
+    TIME_EMP_LIST.forEach(function (item) {
+      let dis = Hangul.disassemble(item.EMP_NAME, true);
+      let cho = dis.reduce(function (prev, elem: any) {
+        elem = elem[0] ? elem[0] : elem;
+        return prev + elem;
+      }, '');
+      item.disassembled = cho;
+    });
+    let searchText = Hangul.disassemble(text).join(''); // 렭 -> ㄹㅕㄹr
+    const result = TIME_EMP_LIST.filter(function (item) {
+      return (
+        item.EMP_NAME.includes(text) || item.disassembled.includes(searchText)
+      );
+    });
+    console.log('result', result);
+    setResult(result);
+  };
+
   useEffect(() => {
     loading && init();
   }, []);
@@ -291,6 +315,9 @@ export default () => {
       scrollRef={scrollRef}
       gotoSelectedCard={gotoSelectedCard}
       gotoTop={gotoTop}
+      search={search}
+      result={result}
+      searchName={searchName}
     />
   );
 };

@@ -2,6 +2,7 @@ import React, {createRef, useEffect, useState} from 'react';
 
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+import * as Hangul from 'hangul-js';
 
 import MonthlyDashBoardScreenPresenter from './MonthlyDashBoardScreenPresenter';
 import colors from '~/constants/colors';
@@ -38,6 +39,8 @@ export default () => {
   const [modalREST_TIME, setModalREST_TIME] = useState<boolean>(false);
   const [modalVACATION, setModalVACATION] = useState<boolean>(false);
   const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>('');
+  const [result, setResult] = useState<any>([]);
 
   const monthStartDate = moment().startOf('month');
   const monthEndDate = moment().endOf('month');
@@ -91,14 +94,14 @@ export default () => {
           TOTAL_VACATION: 0,
           TOTAL_NOWORK: 0,
           REST_TIME: '0',
-          IMAGE: '',
+          IMAGE: i.images[0].IMAGE || '',
         });
       });
       await monthSubDates.map((date) => {
         CALENDAR_DATA[date]?.map((i) => {
           let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
           if (emp) {
-            emp['IMAGE'] = i?.IMAGE ?? '';
+            emp['IMAGE'] = i?.IMAGE;
             ((i.CHANGE_START && i.CHANGE_END) ||
               (i.ATTENDANCE_TIME && i.WORK_OFF_TIME) ||
               (i.START && i.END)) &&
@@ -363,6 +366,26 @@ export default () => {
     }
   };
 
+  const searchName = (text) => {
+    setSearch(text);
+    EMP_LIST.forEach(function (item) {
+      let dis = Hangul.disassemble(item.EMP_NAME, true);
+      let cho = dis.reduce(function (prev, elem: any) {
+        elem = elem[0] ? elem[0] : elem;
+        return prev + elem;
+      }, '');
+      item.disassembled = cho;
+    });
+    let searchText = Hangul.disassemble(text).join(''); // 렭 -> ㄹㅕㄹr
+    const result = EMP_LIST.filter(function (item) {
+      return (
+        item.EMP_NAME.includes(text) || item.disassembled.includes(searchText)
+      );
+    });
+    console.log('result', result);
+    setResult(result);
+  };
+
   useEffect(() => {
     loading && init();
   }, []);
@@ -406,6 +429,9 @@ export default () => {
       modalNOWORK={modalNOWORK}
       setModalNOWORK={setModalNOWORK}
       gotoTop={gotoTop}
+      search={search}
+      result={result}
+      searchName={searchName}
     />
   );
 };

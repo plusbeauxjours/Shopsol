@@ -209,6 +209,18 @@ const ModalSection = styled.View`
   background-color: white;
 `;
 
+const SearchInput = styled.TextInput`
+  border-width: 2px;
+  border-color: #f4aaab;
+  width: ${wp('100%') - 40}px;
+  background-color: white;
+  border-radius: 30px;
+  padding-left: 20px;
+  padding-top: 2px;
+  height: 40px;
+  margin-bottom: 20px;
+`;
+
 export default ({
   EMP_LIST,
   totalEARLY_COUNT,
@@ -247,7 +259,92 @@ export default ({
   modalNOWORK,
   setModalNOWORK,
   gotoTop,
+  search,
+  result,
+  searchName,
 }) => {
+  const EmpCardComponent = ({i, index}) => (
+    <SectionCard>
+      <Column>
+        <EmpCardRow>
+          <FastImage
+            style={{
+              marginRight: 10,
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+            }}
+            source={{
+              uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+              headers: {Authorization: 'someAuthToken'},
+              priority: FastImage.priority.low,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <Column
+            style={{
+              width: wp('100%') - 130,
+            }}>
+            <Row>
+              <Bold>
+                {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+              </Bold>
+              {i.TOTAL_WORKING != 0 && (
+                <Bold>
+                  월&nbsp;
+                  {Math.trunc(moment.duration(i.TOTAL_WORKING).asHours()) > 0 &&
+                    `${Math.trunc(
+                      moment.duration(i.TOTAL_WORKING).asHours(),
+                    )}시간`}
+                  &nbsp;
+                  {moment.duration(i.TOTAL_WORKING).minutes() > 0 &&
+                    `${moment.duration(i.TOTAL_WORKING).minutes()}분`}
+                </Bold>
+              )}
+            </Row>
+            <Row
+              style={{
+                marginTop: 5,
+                justifyContent: 'flex-start',
+              }}>
+              {i.TOTAL_LATE !== 0 && (
+                <SmallTextRound>
+                  <SmallText>지각: {i.TOTAL_LATE}일</SmallText>
+                </SmallTextRound>
+              )}
+              {i.TOTAL_EARLY !== 0 && (
+                <SmallTextRound>
+                  <SmallText>조퇴: {i.TOTAL_EARLY}일</SmallText>
+                </SmallTextRound>
+              )}
+              {i.TOTAL_NOWORK !== 0 && (
+                <SmallTextRound>
+                  <SmallText>결근: {i.TOTAL_NOWORK}일</SmallText>
+                </SmallTextRound>
+              )}
+              {i.REST_TIME != 0 && (
+                <SmallTextRound>
+                  <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
+                </SmallTextRound>
+              )}
+              {i.TOTAL_VACATION !== 0 && (
+                <SmallTextRound>
+                  <SmallText>휴가: {i.TOTAL_VACATION}일</SmallText>
+                </SmallTextRound>
+              )}
+            </Row>
+          </Column>
+        </EmpCardRow>
+        {i.TOTAL_WORKING != 0 ? (
+          <HeatmapContainer>
+            <Heatmap data={i} />
+          </HeatmapContainer>
+        ) : (
+          <Text style={{textAlign: 'center'}}>금월 근무가 없습니다.</Text>
+        )}
+      </Column>
+    </SectionCard>
+  );
   if (loading || visible) {
     return (
       <Container>
@@ -416,105 +513,27 @@ export default ({
                   absolute={false}
                 /> */}
               </Section>
-              {EMP_LIST.sort(
-                (a, b) =>
-                  moment(a.START_TIME, 'kk:mm').valueOf() -
-                  moment(b.START_TIME, 'kk:mm').valueOf(),
-              ).map((i, index) => {
-                return (
-                  <SectionCard>
-                    <Column>
-                      <EmpCardRow>
-                        <FastImage
-                          style={{
-                            marginRight: 10,
-                            width: 40,
-                            height: 40,
-                            borderRadius: 20,
-                          }}
-                          source={{
-                            uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                            headers: {Authorization: 'someAuthToken'},
-                            priority: FastImage.priority.low,
-                          }}
-                          resizeMode={FastImage.resizeMode.cover}
-                        />
-                        <Column
-                          style={{
-                            width: wp('100%') - 130,
-                          }}>
-                          <Row>
-                            <Bold>
-                              {i.EMP_NAME} [
-                              {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                            </Bold>
-                            {i.TOTAL_WORKING != 0 && (
-                              <Bold>
-                                월&nbsp;
-                                {Math.trunc(
-                                  moment.duration(i.TOTAL_WORKING).asHours(),
-                                ) > 0 &&
-                                  `${Math.trunc(
-                                    moment.duration(i.TOTAL_WORKING).asHours(),
-                                  )}시간`}
-                                &nbsp;
-                                {moment.duration(i.TOTAL_WORKING).minutes() >
-                                  0 &&
-                                  `${moment
-                                    .duration(i.TOTAL_WORKING)
-                                    .minutes()}분`}
-                              </Bold>
-                            )}
-                          </Row>
-
-                          <Row
-                            style={{
-                              marginTop: 5,
-                              justifyContent: 'flex-start',
-                            }}>
-                            {i.TOTAL_LATE !== 0 && (
-                              <SmallTextRound>
-                                <SmallText>지각: {i.TOTAL_LATE}일</SmallText>
-                              </SmallTextRound>
-                            )}
-                            {i.TOTAL_EARLY !== 0 && (
-                              <SmallTextRound>
-                                <SmallText>조퇴: {i.TOTAL_EARLY}일</SmallText>
-                              </SmallTextRound>
-                            )}
-                            {i.TOTAL_NOWORK !== 0 && (
-                              <SmallTextRound>
-                                <SmallText>결근: {i.TOTAL_NOWORK}일</SmallText>
-                              </SmallTextRound>
-                            )}
-                            {i.REST_TIME != 0 && (
-                              <SmallTextRound>
-                                <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
-                              </SmallTextRound>
-                            )}
-                            {i.TOTAL_VACATION !== 0 && (
-                              <SmallTextRound>
-                                <SmallText>
-                                  휴가: {i.TOTAL_VACATION}일
-                                </SmallText>
-                              </SmallTextRound>
-                            )}
-                          </Row>
-                        </Column>
-                      </EmpCardRow>
-                      {i.TOTAL_WORKING != 0 ? (
-                        <HeatmapContainer>
-                          <Heatmap data={i} />
-                        </HeatmapContainer>
-                      ) : (
-                        <Text style={{textAlign: 'center'}}>
-                          금월 근무가 없습니다.
-                        </Text>
-                      )}
-                    </Column>
-                  </SectionCard>
-                );
-              })}
+              <SearchInput
+                placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
+                placeholderTextColor={'#999'}
+                onChangeText={(text) => searchName(text)}
+                value={search}
+              />
+              {search?.length !== 0 ? (
+                result.length > 0 ? (
+                  result?.map((i, index) => (
+                    <EmpCardComponent i={i} index={index} key={index} />
+                  ))
+                ) : (
+                  <Text style={{margin: 30, marginBottom: 70}}>
+                    검색된 직원이 없습니다.
+                  </Text>
+                )
+              ) : (
+                EMP_LIST?.map((i, index) => (
+                  <EmpCardComponent i={i} index={index} key={index} />
+                ))
+              )}
             </Container>
             <ScrollView
               horizontal

@@ -87,6 +87,7 @@ export default () => {
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
         initialRouteName={'SelectStoreScreen'}
+        // initialRouteName={'DashBoardScreen'}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#e85356',

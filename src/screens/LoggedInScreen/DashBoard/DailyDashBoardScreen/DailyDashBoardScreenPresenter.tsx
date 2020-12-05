@@ -232,6 +232,18 @@ const ModalSection = styled.View`
   background-color: white;
 `;
 
+const SearchInput = styled.TextInput`
+  border-width: 2px;
+  border-color: #f4aaab;
+  width: ${wp('100%') - 40}px;
+  background-color: white;
+  border-radius: 30px;
+  padding-left: 20px;
+  padding-top: 2px;
+  height: 40px;
+  margin-bottom: 20px;
+`;
+
 export default ({
   EMP_LIST,
   TIME_EMP_LIST,
@@ -273,7 +285,114 @@ export default ({
   scrollRef,
   gotoSelectedCard,
   gotoTop,
+  search,
+  result,
+  searchName,
 }) => {
+  const EmpCardComponent = ({i, index}) => (
+    <EmpCardContainer
+      onPress={() => {
+        gotoSelectedCard(index);
+        gotoSelectedIndex(index);
+        setSelectedIndex(index);
+      }}
+      isSelected={index == selectedIndex}
+      isLast={
+        index ==
+        (search.length !== 0 ? result.length - 1 : TIME_EMP_LIST.length - 1)
+      }
+      rippleColor={'#666'}
+      rippleDuration={600}
+      rippleSize={1700}
+      rippleContainerBorderRadius={20}
+      rippleOpacity={0.1}>
+      <EmpCard
+        key={index}
+        style={{
+          width: 160,
+          marginBottom: 20,
+          alignItems: 'flex-start',
+        }}>
+        <FastImage
+          style={{
+            marginRight: 10,
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+          }}
+          source={{
+            uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+            headers: {Authorization: 'someAuthToken'},
+            priority: FastImage.priority.low,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <EmpCardRow style={{marginBottom: 0}}>
+          <Bold>
+            {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+          </Bold>
+        </EmpCardRow>
+      </EmpCard>
+      {i.WORKING > 0 ? (
+        <Column>
+          <EmpCardDataRow style={{justifyContent: 'center'}}>
+            <Column style={{justifyContent: 'center'}}>
+              <IconContainer>
+                <PlayCircleOutlineIcon />
+                <Text style={{marginLeft: 5}}>
+                  시작시간:&nbsp;
+                  {Math.trunc(moment.duration(i.START_TIME).asHours())}시
+                  {moment.duration(i.START_TIME).minutes() > 0 &&
+                    ` ${moment.duration(i.START_TIME).minutes()}분`}
+                </Text>
+              </IconContainer>
+              <IconContainer>
+                <StopCircleOutlineIcon />
+                <Text style={{marginLeft: 5}}>
+                  종료시간:&nbsp;
+                  {Math.trunc(moment.duration(i.END_TIME).asHours())}시
+                  {moment.duration(i.WORKING).minutes() > 0 &&
+                    ` ${moment.duration(i.WORKING).minutes()}분`}
+                </Text>
+              </IconContainer>
+            </Column>
+          </EmpCardDataRow>
+          <EmpCardDataRow style={{paddingLeft: 5}}>
+            {i.WORKING > 0 && (
+              <SmallTextRound>
+                <SmallText>
+                  근무시간:
+                  {Math.trunc(moment.duration(i.WORKING).asHours()) > 0 &&
+                    ` ${Math.trunc(moment.duration(i.WORKING).asHours())}시간`}
+                  {moment.duration(i.WORKING).minutes() > 0 &&
+                    ` ${moment.duration(i.WORKING).minutes()}분`}
+                </SmallText>
+              </SmallTextRound>
+            )}
+            <SmallTextRound>
+              <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
+            </SmallTextRound>
+            <SmallTextRound>
+              <SmallText>지각</SmallText>
+            </SmallTextRound>
+            <SmallTextRound>
+              <SmallText>조퇴</SmallText>
+            </SmallTextRound>
+            <SmallTextRound>
+              <SmallText>결근</SmallText>
+            </SmallTextRound>
+            <SmallTextRound>
+              <SmallText>휴가</SmallText>
+            </SmallTextRound>
+          </EmpCardDataRow>
+        </Column>
+      ) : (
+        <Column>
+          <Text style={{textAlign: 'center'}}>금일 근무가 없습니다.</Text>
+        </Column>
+      )}
+    </EmpCardContainer>
+  );
   if (loading || visible) {
     return (
       <Container>
@@ -410,6 +529,12 @@ export default ({
                 /> */}
               </Section>
             </Container>
+            <SearchInput
+              placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
+              placeholderTextColor={'#999'}
+              onChangeText={(text) => searchName(text)}
+              value={search}
+            />
             <Animated.ScrollView
               ref={cardScrollRef}
               horizontal
@@ -418,140 +543,48 @@ export default ({
               decelerationRate="fast"
               onScroll={onScroll}
               showsHorizontalScrollIndicator={false}>
-              {TIME_EMP_LIST.sort(
-                (a, b) =>
-                  moment(a.START_TIME, 'kk:mm').valueOf() -
-                  moment(b.START_TIME, 'kk:mm').valueOf(),
-              ).map((i, index) => {
-                return (
-                  <EmpCardContainer
-                    onPress={() => {
-                      gotoSelectedCard(index);
-                      gotoSelectedIndex(index);
-                      setSelectedIndex(index);
-                    }}
-                    isSelected={index == selectedIndex}
-                    isLast={index == TIME_EMP_LIST.length - 1}
-                    rippleColor={'#666'}
-                    rippleDuration={600}
-                    rippleSize={1700}
-                    rippleContainerBorderRadius={20}
-                    rippleOpacity={0.1}>
-                    <EmpCard
-                      key={index}
-                      style={{
-                        width: 160,
-                        marginBottom: 20,
-                        alignItems: 'flex-start',
-                      }}>
-                      <FastImage
-                        style={{
-                          marginRight: 10,
-                          width: 40,
-                          height: 40,
-                          borderRadius: 20,
-                        }}
-                        source={{
-                          uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
-                          headers: {Authorization: 'someAuthToken'},
-                          priority: FastImage.priority.low,
-                        }}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                      <EmpCardRow style={{marginBottom: 0}}>
-                        <Bold>
-                          {i.EMP_NAME} [
-                          {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
-                        </Bold>
-                      </EmpCardRow>
-                    </EmpCard>
-                    {i.WORKING > 0 ? (
-                      <Column>
-                        <EmpCardDataRow style={{justifyContent: 'center'}}>
-                          <Column style={{justifyContent: 'center'}}>
-                            <IconContainer>
-                              <PlayCircleOutlineIcon />
-                              <Text style={{marginLeft: 5}}>
-                                시작시간:&nbsp;
-                                {Math.trunc(
-                                  moment.duration(i.START_TIME).asHours(),
-                                )}
-                                시
-                                {moment.duration(i.START_TIME).minutes() > 0 &&
-                                  ` ${moment
-                                    .duration(i.START_TIME)
-                                    .minutes()}분`}
-                              </Text>
-                            </IconContainer>
-                            <IconContainer>
-                              <StopCircleOutlineIcon />
-                              <Text style={{marginLeft: 5}}>
-                                종료시간:&nbsp;
-                                {Math.trunc(
-                                  moment.duration(i.END_TIME).asHours(),
-                                )}
-                                시
-                                {moment.duration(i.WORKING).minutes() > 0 &&
-                                  ` ${moment.duration(i.WORKING).minutes()}분`}
-                              </Text>
-                            </IconContainer>
-                          </Column>
-                        </EmpCardDataRow>
-                        <EmpCardDataRow style={{paddingLeft: 5}}>
-                          {i.WORKING > 0 && (
-                            <SmallTextRound>
-                              <SmallText>
-                                근무시간:
-                                {Math.trunc(
-                                  moment.duration(i.WORKING).asHours(),
-                                ) > 0 &&
-                                  ` ${Math.trunc(
-                                    moment.duration(i.WORKING).asHours(),
-                                  )}시간`}
-                                {moment.duration(i.WORKING).minutes() > 0 &&
-                                  ` ${moment.duration(i.WORKING).minutes()}분`}
-                              </SmallText>
-                            </SmallTextRound>
-                          )}
-                          <SmallTextRound>
-                            <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
-                          </SmallTextRound>
-                          <SmallTextRound>
-                            <SmallText>지각</SmallText>
-                          </SmallTextRound>
-                          <SmallTextRound>
-                            <SmallText>조퇴</SmallText>
-                          </SmallTextRound>
-                          <SmallTextRound>
-                            <SmallText>결근</SmallText>
-                          </SmallTextRound>
-                          <SmallTextRound>
-                            <SmallText>휴가</SmallText>
-                          </SmallTextRound>
-                        </EmpCardDataRow>
-                      </Column>
-                    ) : (
-                      <Column>
-                        <Text style={{textAlign: 'center'}}>
-                          금일 근무가 없습니다.
-                        </Text>
-                      </Column>
-                    )}
-                  </EmpCardContainer>
-                );
-              })}
+              {search?.length !== 0
+                ? result?.map((i, index) => (
+                    <EmpCardComponent i={i} index={index} key={index} />
+                  ))
+                : TIME_EMP_LIST?.map((i, index) => (
+                    <EmpCardComponent i={i} index={index} key={index} />
+                  ))}
             </Animated.ScrollView>
-            <Container>
-              <Schedule
-                TIME_EMP_LIST={TIME_EMP_LIST}
-                selectedIndex={selectedIndex}
-                setSelectedIndex={setSelectedIndex}
-                gotoSelectedIndex={gotoSelectedIndex}
-                indexTime={indexTime}
-                setIndexTime={setIndexTime}
-                scrollRef={scrollRef}
-              />
-            </Container>
+            {search.length !== 0 ? (
+              result.length > 0 ? (
+                <Container>
+                  <Schedule
+                    TIME_EMP_LIST={search.length !== 0 ? result : TIME_EMP_LIST}
+                    selectedIndex={selectedIndex}
+                    setSelectedIndex={setSelectedIndex}
+                    gotoSelectedIndex={gotoSelectedIndex}
+                    indexTime={indexTime}
+                    setIndexTime={setIndexTime}
+                    scrollRef={scrollRef}
+                  />
+                </Container>
+              ) : (
+                <Text style={{margin: 30, marginBottom: 70}}>
+                  검색된 직원이 없습니다.
+                </Text>
+              )
+            ) : (
+              TIME_EMP_LIST.length > 0 && (
+                <Container>
+                  <Schedule
+                    TIME_EMP_LIST={search.length !== 0 ? result : TIME_EMP_LIST}
+                    selectedIndex={selectedIndex}
+                    setSelectedIndex={setSelectedIndex}
+                    gotoSelectedIndex={gotoSelectedIndex}
+                    indexTime={indexTime}
+                    setIndexTime={setIndexTime}
+                    scrollRef={scrollRef}
+                  />
+                </Container>
+              )
+            )}
+
             <Animated.ScrollView
               horizontal
               snapToInterval={220}
@@ -591,7 +624,7 @@ export default ({
                   {LATE_EMP_LIST.filter((i) => i.LATE && i.LATE !== '0')
                     .length === 0 ? (
                     <Text style={{marginTop: 20}}>
-                      금일 지각 직원이 없습니다.{' '}
+                      금일 지각 직원이 없습니다.
                     </Text>
                   ) : (
                     LATE_EMP_LIST.slice(0, 3).map(
@@ -660,7 +693,7 @@ export default ({
                   {EARLY_EMP_LIST.filter((i) => i.EARLY && i.EARLY !== '0')
                     .length === 0 ? (
                     <Text style={{marginTop: 20}}>
-                      금일 조퇴 직원이 없습니다.{' '}
+                      금일 조퇴 직원이 없습니다.
                     </Text>
                   ) : (
                     EARLY_EMP_LIST.slice(0, 3).map(
@@ -729,7 +762,7 @@ export default ({
                   {NOWORK_EMP_LIST.filter((i) => i.NOWORK && i.NOWORK !== '0')
                     .length === 0 ? (
                     <Text style={{marginTop: 20}}>
-                      금일 결근 직원이 없습니다.{' '}
+                      금일 결근 직원이 없습니다.
                     </Text>
                   ) : (
                     NOWORK_EMP_LIST.slice(0, 3).map(

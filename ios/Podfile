@@ -15,7 +15,8 @@ target 'ShopsolWesop' do
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
   pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
-
+  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
+  
   pod 'react-native-maps', path: '../node_modules/react-native-maps'
   pod 'react-native-google-maps', path: '../node_modules/react-native-maps' 
   pod 'GoogleMaps' 

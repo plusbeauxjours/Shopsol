@@ -7,6 +7,7 @@ import {
 } from 'react-native-responsive-screen';
 import {Calendar} from 'react-native-calendars';
 import DatePickerModal from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-date-picker';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {AddCircleIcon, RemoveCircleIcon, EllipseIcon} from '~/constants/Icons';
@@ -480,6 +481,12 @@ export default ({
           </ModalPopupArea>
         )}
       </RBSheet>
+      {/* <DatePicker
+        mode={'time'}
+        date={new Date(startTime)}
+        androidVariant="iosClone"
+        onDateChange={(time) => console.log(time)}
+      /> */}
       <DatePickerModal
         isDarkModeEnabled={false}
         headerTextIOS={'출근시간을 선택하세요.'}
