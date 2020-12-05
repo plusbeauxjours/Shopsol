@@ -161,37 +161,27 @@ export default ({data}) => {
           <Row style={{justifyContent: 'space-around'}}>
             <IconContainer>
               <PlayCircleOutlineIcon />
-              <Text style={{marginLeft: 5}}>
-                시작시간:&nbsp;
-                {Math.trunc(
-                  moment.duration(data.WORKING[selectedIndex][1]).asHours(),
-                )}
-                시
-                {moment.duration(data.WORKING[selectedIndex][1]).minutes() >
-                  0 &&
-                  ` ${moment
-                    .duration(data.WORKING[selectedIndex][1])
-                    .minutes()}분`}
+              <Text style={{marginLeft: 5, width: 60}}>시작시간:&nbsp;</Text>
+              <Text style={{marginLeft: 5, width: 60}}>
+                {data.WORKING[selectedIndex][1].slice(0, 5)}
               </Text>
             </IconContainer>
             <IconContainer>
               <StopCircleOutlineIcon />
-              <Text style={{marginLeft: 5}}>
-                종료시간:&nbsp;
-                {Math.trunc(
-                  moment.duration(data.WORKING[selectedIndex][2]).asHours(),
+              <Text style={{marginLeft: 5, width: 60}}>종료시간:&nbsp;</Text>
+              <Text style={{marginLeft: 5, width: 60}}>
+                {moment.duration(data.WORKING[selectedIndex][1]) >
+                  moment.duration(data.WORKING[selectedIndex][2]) && (
+                  <SmallText>익일&nbsp;</SmallText>
                 )}
-                시
-                {moment.duration(data.WORKING[selectedIndex][2]).minutes() >
-                  0 &&
-                  ` ${moment
-                    .duration(data.WORKING[selectedIndex][2])
-                    .minutes()}분`}
+                {data.WORKING[selectedIndex][2].slice(0, 5)}
               </Text>
             </IconContainer>
           </Row>
         ) : (
-          <Text style={{textAlign: 'center'}}>해당일에 근무가 없습니다.</Text>
+          <Row style={{justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center'}}>해당일에 근무가 없습니다.</Text>
+          </Row>
         )}
         <Row style={{justifyContent: 'flex-start'}}>
           {data.WORKING[selectedIndex][0] != 0 && (

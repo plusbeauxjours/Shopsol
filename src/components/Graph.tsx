@@ -144,36 +144,32 @@ export default ({data}) => {
         })}
       </Box>
       <InformationBox>
-        <Row style={{justifyContent: 'space-around'}}>
-          <IconContainer>
-            <PlayCircleOutlineIcon />
-            <Text style={{marginLeft: 5}}>
-              시작시간:&nbsp;
-              {Math.trunc(
-                moment.duration(data.WORKING[selectedIndex][1]).asHours(),
-              )}
-              시
-              {moment.duration(data.WORKING[selectedIndex][1]).minutes() > 0 &&
-                ` ${moment
-                  .duration(data.WORKING[selectedIndex][1])
-                  .minutes()}분`}
-            </Text>
-          </IconContainer>
-          <IconContainer>
-            <StopCircleOutlineIcon />
-            <Text style={{marginLeft: 5}}>
-              종료시간:&nbsp;
-              {Math.trunc(
-                moment.duration(data.WORKING[selectedIndex][2]).asHours(),
-              )}
-              시
-              {moment.duration(data.WORKING[selectedIndex][2]).minutes() > 0 &&
-                ` ${moment
-                  .duration(data.WORKING[selectedIndex][2])
-                  .minutes()}분`}
-            </Text>
-          </IconContainer>
-        </Row>
+        {data.WORKING[selectedIndex][0] != 0 ? (
+          <Row style={{justifyContent: 'space-around'}}>
+            <IconContainer>
+              <PlayCircleOutlineIcon />
+              <Text style={{marginLeft: 5, width: 60}}>시작시간:&nbsp;</Text>
+              <Text style={{marginLeft: 5, width: 60}}>
+                {data.WORKING[selectedIndex][1].slice(0, 5)}
+              </Text>
+            </IconContainer>
+            <IconContainer>
+              <StopCircleOutlineIcon />
+              <Text style={{marginLeft: 5, width: 60}}>종료시간:&nbsp;</Text>
+              <Text style={{marginLeft: 5, width: 60}}>
+                {moment.duration(data.WORKING[selectedIndex][1]) >
+                  moment.duration(data.WORKING[selectedIndex][2]) && (
+                  <SmallText>익일&nbsp;</SmallText>
+                )}
+                {data.WORKING[selectedIndex][2].slice(0, 5)}
+              </Text>
+            </IconContainer>
+          </Row>
+        ) : (
+          <Row style={{justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center'}}>해당일에 근무가 없습니다.</Text>
+          </Row>
+        )}
         <Row style={{justifyContent: 'flex-start'}}>
           {data.WORKING[selectedIndex][0] != 0 && (
             <SmallTextRound>
@@ -194,31 +190,35 @@ export default ({data}) => {
               </SmallText>
             </SmallTextRound>
           )}
-          {data.REST_TIME !== '0' && (
+          {data.WORKING[selectedIndex][0] != 0 && data.REST_TIME !== '0' && (
             <SmallTextRound>
               <SmallText>휴게시간: {data.REST_TIME}분</SmallText>
             </SmallTextRound>
           )}
-          {data.WORKING[selectedIndex][4] && (
-            <SmallTextRound>
-              <SmallText>지각</SmallText>
-            </SmallTextRound>
-          )}
-          {data.WORKING[selectedIndex][5] && (
-            <SmallTextRound>
-              <SmallText>조퇴</SmallText>
-            </SmallTextRound>
-          )}
-          {data.WORKING[selectedIndex][6] && (
-            <SmallTextRound>
-              <SmallText>결근</SmallText>
-            </SmallTextRound>
-          )}
-          {data.WORKING[selectedIndex][3] && (
-            <SmallTextRound>
-              <SmallText>휴가</SmallText>
-            </SmallTextRound>
-          )}
+          {data.WORKING[selectedIndex][0] != 0 &&
+            data.WORKING[selectedIndex][4] && (
+              <SmallTextRound>
+                <SmallText>지각</SmallText>
+              </SmallTextRound>
+            )}
+          {data.WORKING[selectedIndex][0] != 0 &&
+            data.WORKING[selectedIndex][5] && (
+              <SmallTextRound>
+                <SmallText>조퇴</SmallText>
+              </SmallTextRound>
+            )}
+          {data.WORKING[selectedIndex][0] != 0 &&
+            data.WORKING[selectedIndex][6] && (
+              <SmallTextRound>
+                <SmallText>결근</SmallText>
+              </SmallTextRound>
+            )}
+          {data.WORKING[selectedIndex][0] != 0 &&
+            data.WORKING[selectedIndex][3] && (
+              <SmallTextRound>
+                <SmallText>휴가</SmallText>
+              </SmallTextRound>
+            )}
         </Row>
       </InformationBox>
     </>

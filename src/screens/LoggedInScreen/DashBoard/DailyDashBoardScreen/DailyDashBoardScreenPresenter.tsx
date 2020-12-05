@@ -339,20 +339,44 @@ export default ({
             <Column style={{justifyContent: 'center'}}>
               <IconContainer>
                 <PlayCircleOutlineIcon />
-                <Text style={{marginLeft: 5}}>
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    textAlign: 'right',
+                    width: 60,
+                  }}>
                   시작시간:&nbsp;
-                  {Math.trunc(moment.duration(i.START_TIME).asHours())}시
-                  {moment.duration(i.START_TIME).minutes() > 0 &&
-                    ` ${moment.duration(i.START_TIME).minutes()}분`}
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    textAlign: 'right',
+                    width: 60,
+                  }}>
+                  {i.START_TIME.slice(0, 5)}
                 </Text>
               </IconContainer>
               <IconContainer>
                 <StopCircleOutlineIcon />
-                <Text style={{marginLeft: 5}}>
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    textAlign: 'right',
+                    width: 60,
+                  }}>
                   종료시간:&nbsp;
-                  {Math.trunc(moment.duration(i.END_TIME).asHours())}시
-                  {moment.duration(i.WORKING).minutes() > 0 &&
-                    ` ${moment.duration(i.WORKING).minutes()}분`}
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    textAlign: 'right',
+                    width: 60,
+                  }}>
+                  {moment.duration(i.START_TIME) >
+                    moment.duration(i.END_TIME) && (
+                    <SmallText>익일&nbsp;</SmallText>
+                  )}
+                  {i.END_TIME.slice(0, 5)}
                 </Text>
               </IconContainer>
             </Column>
