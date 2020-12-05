@@ -798,7 +798,7 @@ export default ({
 
                 <DodnutTextContainer>
                   <PercentageText color={'#e85356'} style={{marginTop: 10}}>
-                    {totalREST_TIME_COUNT / totalWORKING_EMP}분
+                    {Math.ceil(totalREST_TIME_COUNT / totalWORKING_EMP)}분
                   </PercentageText>
                 </DodnutTextContainer>
                 <TitleWord color={'#e85356'}>휴게시간 상위직원</TitleWord>

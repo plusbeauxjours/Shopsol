@@ -1,5 +1,6 @@
 import React, {useRef, useMemo} from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import RNBounceable from '@freakycoder/react-native-bounceable';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
@@ -43,7 +44,7 @@ const View = styled.View<ITouchable>`
   background-color: #e85356;
 `;
 
-const Touchable = styled.TouchableOpacity<ITouchable>`
+const Touchable = styled(RNBounceable)<ITouchable>`
   border-radius: 25px;
   height: 46px;
   min-width: 46px;
@@ -195,6 +196,7 @@ export default ({
             (i, index) =>
               i.WORKING > 0 && (
                 <Touchable
+                  bounceEffect={0.95}
                   key={index}
                   isFirst={index == 0}
                   isLast={index == TIME_EMP_LIST.length - 1}

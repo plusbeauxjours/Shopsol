@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import RNBounceable from '@freakycoder/react-native-bounceable';
 import styled from 'styled-components/native';
-import Underlay from './Underlay';
 import moment from 'moment';
+
+import Underlay from './Underlay';
 import {PlayCircleOutlineIcon, StopCircleOutlineIcon} from '~/constants/Icons';
 
 interface IColumn {
@@ -53,19 +55,19 @@ const Top = styled.View<IColumn>`
   left: ${step / 4}px;
   right: ${step / 4}px;
   width: 30px;
-  background-color: #e85356;
+  background-color: ${(props) =>
+    props.isSelected ? '#e85356' : 'rgba(232, 83, 86, 0.2)'};
   border-radius: 14px;
   justify-content: center;
   align-items: center;
-  opacity: ${(props) => (props.isSelected ? 1 : 0.13)};
 `;
 
-const ColumnContainer = styled.TouchableOpacity<IColumn>`
+const ColumnContainer = styled(RNBounceable)<IColumn>`
   position: absolute;
   left: ${(props) => props.index * step}px;
-  bottom: 0;
+  bottom: -20;
   width: ${step}px;
-  height: ${(props) => props.height}px;
+  height: ${(props) => props.height + 20}px;
   overflow: hidden;
 `;
 
@@ -102,7 +104,12 @@ const SmallText = styled.Text`
 const TopText = styled.Text<IColumn>`
   font-size: 14px;
   font-weight: bold;
-  color: ${(props) => (props.isSelected ? 'white' : 'transparent')};
+  color: white;
+`;
+
+const GraphBox = styled.View`
+  height: 200px;
+  overflow: hidden;
 `;
 
 export default ({data}) => {
@@ -117,24 +124,26 @@ export default ({data}) => {
     <>
       <Box>
         <Underlay minY={minY} maxY={maxY} />
-        {values?.map((item, index) => {
-          return (
-            <ColumnContainer
-              key={index}
-              index={index}
-              isSelected={selectedIndex == index.toString()}
-              onPress={() => setSelectedIndex(index.toString())}
-              height={lerp(0, height, item / maxY)}
-              activeOpacity={1}>
-              <Column />
-              <Top isSelected={selectedIndex == index.toString()}>
-                <TopText isSelected={selectedIndex == index.toString()}>
-                  {moment().startOf('isoWeek').add(index, 'days').format('D')}
-                </TopText>
-              </Top>
-            </ColumnContainer>
-          );
-        })}
+        <GraphBox>
+          {values?.map((item, index) => {
+            return (
+              <ColumnContainer
+                key={index}
+                index={index}
+                isSelected={selectedIndex == index.toString()}
+                onPress={() => setSelectedIndex(index.toString())}
+                height={lerp(0, height, item / maxY)}
+                bounceEffect={0.95}>
+                <Column />
+                <Top isSelected={selectedIndex == index.toString()}>
+                  <TopText isSelected={selectedIndex == index.toString()}>
+                    {moment().startOf('isoWeek').add(index, 'days').format('D')}
+                  </TopText>
+                </Top>
+              </ColumnContainer>
+            );
+          })}
+        </GraphBox>
         {['월', '화', '수', '목', '금', '토', '일'].map((day, index) => {
           return (
             <View key={index} index={index}>
