@@ -122,7 +122,10 @@ export default ({data}) => {
     moment().date() - 1,
   );
   const activeDays = [];
-  data?.WORKING?.map((i, index) => i[0] != 0 && activeDays.push(index));
+  data?.WORKING?.map((i, index) => i[0] > 0 && activeDays.push(index));
+
+  const vacationDays = [];
+  data?.WORKING?.map((i, index) => i[0] === -1 && vacationDays.push(index));
 
   let monthStartDate = moment().startOf('month');
   let monthEndDate = moment().endOf('month');
@@ -140,24 +143,45 @@ export default ({data}) => {
           ))}
         </SpaceRow>
         <WhiteSpace paddingLeft={moment().startOf('month').isoWeekday()} />
-        {monthDates.map((_, index) => (
-          <Touchable
-            key={index}
-            activeDays={activeDays}
-            index={index}
-            isSelected={index == selectedIndex}
-            onPress={() => setSelectedIndex(index)}>
-            <HeatmapText
-              activeDays={activeDays}
-              index={index}
-              isSelected={index == selectedIndex}>
-              {index + 1}
-            </HeatmapText>
-          </Touchable>
-        ))}
+        {monthDates.map((_, index) => {
+          if (vacationDays?.indexOf(index) > -1 && selectedIndex !== index) {
+            return (
+              <Touchable
+                key={index}
+                activeDays={activeDays}
+                index={index}
+                isSelected={index == selectedIndex}
+                onPress={() => setSelectedIndex(index)}>
+                <HeatmapText
+                  style={{fontSize: 12}}
+                  activeDays={activeDays}
+                  index={index}
+                  isSelected={index == selectedIndex}>
+                  휴가
+                </HeatmapText>
+              </Touchable>
+            );
+          } else {
+            return (
+              <Touchable
+                key={index}
+                activeDays={activeDays}
+                index={index}
+                isSelected={index == selectedIndex}
+                onPress={() => setSelectedIndex(index)}>
+                <HeatmapText
+                  activeDays={activeDays}
+                  index={index}
+                  isSelected={index == selectedIndex}>
+                  {index + 1}
+                </HeatmapText>
+              </Touchable>
+            );
+          }
+        })}
       </Container>
       <InformationBox>
-        {data.WORKING[selectedIndex][0] != 0 ? (
+        {data.WORKING[selectedIndex][0] > 0 ? (
           <Row style={{justifyContent: 'space-around'}}>
             <IconContainer>
               <PlayCircleOutlineIcon />
@@ -178,13 +202,23 @@ export default ({data}) => {
               </Text>
             </IconContainer>
           </Row>
+        ) : data.WORKING[selectedIndex][0] === -1 &&
+          data.WORKING[selectedIndex][7] ? (
+          <Row style={{justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center'}}>유급휴가일 입니다.</Text>
+          </Row>
+        ) : data.WORKING[selectedIndex][0] === -1 &&
+          !data.WORKING[selectedIndex][7] ? (
+          <Row style={{justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center'}}>무급휴가일 입니다.</Text>
+          </Row>
         ) : (
           <Row style={{justifyContent: 'center'}}>
             <Text style={{textAlign: 'center'}}>해당일에 근무가 없습니다.</Text>
           </Row>
         )}
         <Row style={{justifyContent: 'flex-start'}}>
-          {data.WORKING[selectedIndex][0] != 0 && (
+          {data.WORKING[selectedIndex][0] > 0 && (
             <SmallTextRound>
               <SmallText>
                 근무시간:&nbsp;
@@ -203,30 +237,30 @@ export default ({data}) => {
               </SmallText>
             </SmallTextRound>
           )}
-          {data.WORKING[selectedIndex][0] != 0 && data.REST_TIME !== '0' && (
+          {data.WORKING[selectedIndex][0] > 0 && data.REST_TIME !== '0' && (
             <SmallTextRound>
               <SmallText>휴게시간: {data.REST_TIME}분</SmallText>
             </SmallTextRound>
           )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][4] && (
               <SmallTextRound>
                 <SmallText>지각</SmallText>
               </SmallTextRound>
             )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][5] && (
               <SmallTextRound>
                 <SmallText>조퇴</SmallText>
               </SmallTextRound>
             )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][6] && (
               <SmallTextRound>
                 <SmallText>결근</SmallText>
               </SmallTextRound>
             )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][3] && (
               <SmallTextRound>
                 <SmallText>휴가</SmallText>

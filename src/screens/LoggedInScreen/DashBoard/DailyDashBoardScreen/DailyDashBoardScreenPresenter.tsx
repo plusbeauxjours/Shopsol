@@ -169,8 +169,7 @@ const SmallTextRound = styled.View`
   border-radius: 15px;
   border-width: 0.5px;
   border-color: #7f7f7f;
-  padding: 0 10px;
-  height: 30px;
+  padding: 5px;
   margin-right: 5px;
   margin-top: 5px;
 `;
@@ -333,7 +332,15 @@ export default ({
           </Bold>
         </EmpCardRow>
       </EmpCard>
-      {i.WORKING > 0 ? (
+      {i.VACATION && i.VACATION_PAID ? (
+        <Row style={{justifyContent: 'center'}}>
+          <Text style={{textAlign: 'center'}}>유급휴가일 입니다.</Text>
+        </Row>
+      ) : i.VACATION && !i.VACATION_PAID ? (
+        <Row style={{justifyContent: 'center'}}>
+          <Text style={{textAlign: 'center'}}>무급휴가일 입니다.</Text>
+        </Row>
+      ) : i.WORKING > 0 ? (
         <Column>
           <EmpCardDataRow style={{justifyContent: 'center'}}>
             <Column style={{justifyContent: 'center'}}>
@@ -382,7 +389,7 @@ export default ({
             </Column>
           </EmpCardDataRow>
           <EmpCardDataRow style={{paddingLeft: 5}}>
-            {i.WORKING > 0 && (
+            {i.WORKING > 0 ? (
               <SmallTextRound>
                 <SmallText>
                   근무시간:
@@ -392,22 +399,38 @@ export default ({
                     ` ${moment.duration(i.WORKING).minutes()}분`}
                 </SmallText>
               </SmallTextRound>
+            ) : (
+              <Row style={{justifyContent: 'center'}}>
+                <Text style={{textAlign: 'center'}}>
+                  해당일에 근무가 없습니다.
+                </Text>
+              </Row>
             )}
-            <SmallTextRound>
-              <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
-            </SmallTextRound>
-            <SmallTextRound>
-              <SmallText>지각</SmallText>
-            </SmallTextRound>
-            <SmallTextRound>
-              <SmallText>조퇴</SmallText>
-            </SmallTextRound>
-            <SmallTextRound>
-              <SmallText>결근</SmallText>
-            </SmallTextRound>
-            <SmallTextRound>
-              <SmallText>휴가</SmallText>
-            </SmallTextRound>
+            {i.REST_TIME > 0 && (
+              <SmallTextRound>
+                <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
+              </SmallTextRound>
+            )}
+            {i.LATE !== '0' && (
+              <SmallTextRound>
+                <SmallText>지각: {i.LATE}일</SmallText>
+              </SmallTextRound>
+            )}
+            {i.EARLY !== '0' && (
+              <SmallTextRound>
+                <SmallText>조퇴: {i.EARLY}일</SmallText>
+              </SmallTextRound>
+            )}
+            {i.NOWORK !== '0' && (
+              <SmallTextRound>
+                <SmallText>결근: {i.NOWORK}일</SmallText>
+              </SmallTextRound>
+            )}
+            {i.VACATION && (
+              <SmallTextRound>
+                <SmallText>휴가: {i.VACATION}일</SmallText>
+              </SmallTextRound>
+            )}
           </EmpCardDataRow>
         </Column>
       ) : (
@@ -916,17 +939,14 @@ export default ({
 
                 <TitleWord color={'#e85356'}>금일 휴가 직원</TitleWord>
                 <EmpConatainer>
-                  {VACATION_EMP_LIST.filter(
-                    (i) => i.VACATION && i.VACATION !== '0',
-                  ).length === 0 ? (
+                  {VACATION_EMP_LIST.filter((i) => i.VACATION).length === 0 ? (
                     <Text style={{marginTop: 20}}>
                       금일 휴가중인 직원이 없습니다.
                     </Text>
                   ) : (
                     VACATION_EMP_LIST.slice(0, 3).map(
                       (i, index) =>
-                        i.VACATION &&
-                        i.VACATION !== '0' && (
+                        i.VACATION && (
                           <EmpCard key={index}>
                             <FastImage
                               style={{
@@ -1212,7 +1232,7 @@ export default ({
                         {i.EMP_NAME} [
                         {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
                       </Bold>
-                      {i.VACATION == 1 ? (
+                      {i.VACATION ? (
                         <Row>
                           <SmallTextRound>
                             <SmallText>휴가</SmallText>

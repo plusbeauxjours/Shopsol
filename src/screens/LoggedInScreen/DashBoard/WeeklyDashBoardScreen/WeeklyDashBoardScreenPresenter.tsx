@@ -68,9 +68,9 @@ const SmallTextRound = styled.View`
   border-radius: 15px;
   border-width: 0.5px;
   border-color: #7f7f7f;
-  padding: 0 10px;
-  height: 30px;
+  padding: 5px;
   margin-right: 5px;
+  margin-top: 5px;
 `;
 
 const Card = styled(Ripple)<ICard>`
@@ -290,18 +290,35 @@ export default ({
               <Bold>
                 {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
               </Bold>
-              {i.TOTAL_WORKING != 0 && (
-                <Bold>
-                  주&nbsp;
-                  {Math.trunc(moment.duration(i.TOTAL_WORKING).asHours()) > 0 &&
-                    `${Math.trunc(
-                      moment.duration(i.TOTAL_WORKING).asHours(),
-                    )}시간`}
-                  &nbsp;
-                  {moment.duration(i.TOTAL_WORKING).minutes() > 0 &&
-                    `${moment.duration(i.TOTAL_WORKING).minutes()}분`}
-                </Bold>
-              )}
+              <Row style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+                {i.TOTAL_WORKING != 0 && (
+                  <Bold>
+                    주&nbsp;
+                    {Math.trunc(moment.duration(i.TOTAL_WORKING).asHours()) >
+                      0 &&
+                      `${Math.trunc(
+                        moment.duration(i.TOTAL_WORKING).asHours(),
+                      )}시간`}
+                    &nbsp;
+                    {moment.duration(i.TOTAL_WORKING).minutes() > 0 &&
+                      `${moment.duration(i.TOTAL_WORKING).minutes()}분`}
+                  </Bold>
+                )}
+                {i.TOTAL_VACATION_TIME > 0 && (
+                  <Bold style={{color: '#7F7F7F', fontSize: 10}}>
+                    &nbsp;(
+                    {Math.trunc(
+                      moment.duration(i.TOTAL_VACATION_TIME).asHours(),
+                    ) > 0 &&
+                      `${Math.trunc(
+                        moment.duration(i.TOTAL_VACATION_TIME).asHours(),
+                      )}시간`}
+                    {moment.duration(i.TOTAL_VACATION_TIME).minutes() > 0 &&
+                      ` ${moment.duration(i.TOTAL_VACATION_TIME).minutes()}분`}
+                    )
+                  </Bold>
+                )}
+              </Row>
             </Row>
             <Row
               style={{

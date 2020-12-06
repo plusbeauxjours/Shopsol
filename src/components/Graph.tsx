@@ -21,7 +21,7 @@ const View = styled.View<IColumn>`
   width: ${step}px;
   bottom: -20px;
   position: absolute;
-  left: ${(props) => props.index * step + 5}px;
+  left: ${(props) => props.index * step}px;
   align-items: center;
 `;
 
@@ -39,8 +39,7 @@ const Column = styled.View`
   position: absolute;
   top: 0;
   bottom: 0;
-  left: ${step / 4}px;
-  right: ${step / 4}px;
+  align-self: center;
   opacity: 0.06;
   width: 30px;
   background-color: #e85356;
@@ -52,8 +51,7 @@ const Top = styled.View<IColumn>`
   position: absolute;
   top: 0;
   height: 40px;
-  left: ${step / 4}px;
-  right: ${step / 4}px;
+  align-self: center;
   width: 30px;
   background-color: ${(props) =>
     props.isSelected ? '#e85356' : 'rgba(232, 83, 86, 0.2)'};
@@ -112,6 +110,39 @@ const GraphBox = styled.View`
   overflow: hidden;
 `;
 
+const VacationContainer = styled(RNBounceable)<IColumn>`
+  flex: 1;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  left: ${(props) => props.index * step}px;
+  width: ${step}px;
+  height: 200px;
+`;
+
+const VacationTop = styled.View<IColumn>`
+  position: absolute;
+  height: 195px;
+  align-self: center;
+  width: 30px;
+  background-color: ${(props) =>
+    props.isSelected ? '#e85356' : 'rgba(232, 83, 86, 0.2)'};
+  border-radius: 14px;
+  justify-content: center;
+  align-items: center;
+  border-width: 0.5px;
+  background-color: white;
+  border-color: ${(props) =>
+    props.isSelected ? 'rgba(127, 127, 127, 0.6)' : 'rgba(127, 127, 127, 0.3)'};
+`;
+
+const VacationTopText = styled(TopText)<IColumn>`
+  font-size: 12px;
+  font-weight: 200;
+  color: ${(props) =>
+    props.isSelected ? '#7F7F7F' : 'rgba(127, 127, 127, 0.6)'};
+`;
+
 export default ({data}) => {
   const values = Object.values(data.WORKING)?.map((p) => p[0]);
   const minY = Math.min(...values);
@@ -126,6 +157,23 @@ export default ({data}) => {
         <Underlay minY={minY} maxY={maxY} />
         <GraphBox>
           {values?.map((item, index) => {
+            if (item === -1) {
+              return (
+                <VacationContainer
+                  key={index}
+                  index={index}
+                  onPress={() => setSelectedIndex(index.toString())}
+                  bounceEffect={0.95}>
+                  <VacationTop isSelected={selectedIndex == index.toString()}>
+                    <VacationTopText
+                      isSelected={selectedIndex == index.toString()}>
+                      휴가
+                    </VacationTopText>
+                  </VacationTop>
+                </VacationContainer>
+              );
+            } else {
+            }
             return (
               <ColumnContainer
                 key={index}
@@ -147,13 +195,13 @@ export default ({data}) => {
         {['월', '화', '수', '목', '금', '토', '일'].map((day, index) => {
           return (
             <View key={index} index={index}>
-              <Text>{day}</Text>
+              <Text style={{textAlign: 'center'}}>{day}</Text>
             </View>
           );
         })}
       </Box>
       <InformationBox>
-        {data.WORKING[selectedIndex][0] != 0 ? (
+        {data.WORKING[selectedIndex][0] > 0 ? (
           <Row style={{justifyContent: 'space-around'}}>
             <IconContainer>
               <PlayCircleOutlineIcon />
@@ -174,13 +222,23 @@ export default ({data}) => {
               </Text>
             </IconContainer>
           </Row>
+        ) : data.WORKING[selectedIndex][0] === -1 &&
+          data.WORKING[selectedIndex][7] ? (
+          <Row style={{justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center'}}>유급휴가일 입니다.</Text>
+          </Row>
+        ) : data.WORKING[selectedIndex][0] === -1 &&
+          !data.WORKING[selectedIndex][7] ? (
+          <Row style={{justifyContent: 'center'}}>
+            <Text style={{textAlign: 'center'}}>무급휴가일 입니다.</Text>
+          </Row>
         ) : (
           <Row style={{justifyContent: 'center'}}>
             <Text style={{textAlign: 'center'}}>해당일에 근무가 없습니다.</Text>
           </Row>
         )}
         <Row style={{justifyContent: 'flex-start'}}>
-          {data.WORKING[selectedIndex][0] != 0 && (
+          {data.WORKING[selectedIndex][0] > 0 && (
             <SmallTextRound>
               <SmallText>
                 근무시간:&nbsp;
@@ -199,30 +257,30 @@ export default ({data}) => {
               </SmallText>
             </SmallTextRound>
           )}
-          {data.WORKING[selectedIndex][0] != 0 && data.REST_TIME !== '0' && (
+          {data.WORKING[selectedIndex][0] > 0 && data.REST_TIME !== '0' && (
             <SmallTextRound>
               <SmallText>휴게시간: {data.REST_TIME}분</SmallText>
             </SmallTextRound>
           )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][4] && (
               <SmallTextRound>
                 <SmallText>지각</SmallText>
               </SmallTextRound>
             )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][5] && (
               <SmallTextRound>
                 <SmallText>조퇴</SmallText>
               </SmallTextRound>
             )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][6] && (
               <SmallTextRound>
                 <SmallText>결근</SmallText>
               </SmallTextRound>
             )}
-          {data.WORKING[selectedIndex][0] != 0 &&
+          {data.WORKING[selectedIndex][0] > 0 &&
             data.WORKING[selectedIndex][3] && (
               <SmallTextRound>
                 <SmallText>휴가</SmallText>
