@@ -95,7 +95,8 @@ export default () => {
           emp['EARLY'] = i?.alear ?? '0';
           emp['LATE'] = i?.jigark ?? '0';
           emp['REST_TIME'] = i?.REST_TIME;
-          emp['VACATION'] = i?.VACATION ?? '0';
+          emp['VACATION'] = i?.VACATION === '1' ? true : false;
+          emp['VACATION_PAID'] = i?.VACATION_PAID === '1' ? true : false;
           emp['NOWORK'] = i.nowork ?? '0';
 
           setTotalEARLY((totalEARLY) => totalEARLY + (i.alear === '1' ? 1 : 0));
@@ -104,7 +105,7 @@ export default () => {
             (totalREST_TIME) => totalREST_TIME + Number(i.REST_TIME),
           );
           setTotalVACATION(
-            (totalVACATION) => totalVACATION + (i.VACATION == '1' ? 1 : 0),
+            (totalVACATION) => totalVACATION + (i.VACATION ? 1 : 0),
           );
           setTotalNOWORK(
             (totalNOWORK) => totalNOWORK + (i.nowork == '1' ? 1 : 0),
@@ -219,6 +220,8 @@ export default () => {
         orderBySTART_TIME.sort(
           (a, b) =>
             (b.START_TIME != null) - (a.START_TIME != null) ||
+            !b.VACATION - !a.VACATION ||
+            b.VACATION_PAID - a.VACATION_PAID ||
             moment().diff(moment.duration(b.START_TIME).as('milliseconds')) -
               moment().diff(moment.duration(a.START_TIME).as('milliseconds')),
         ),

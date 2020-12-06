@@ -15,7 +15,8 @@ export default ({route: {params}}) => {
     STOREPAY_SHOW = null,
     MEMBER_NAME = null,
     IS_MANAGER = null,
-  } = (params: any = {});
+  } = params;
+
   const {
     STORE_SEQ,
     EMP_SEQ: EMP_SEQ_state,
@@ -181,6 +182,7 @@ export default ({route: {params}}) => {
     }
     fetchData(YEAR, MONTH);
   }, []);
+
   return (
     <EmpPayInfoScreenPresenter
       MEMBER_NAME={MEMBER_NAME || MEMBER_NAME_state}

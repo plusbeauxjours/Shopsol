@@ -72,7 +72,13 @@ export default () => {
 
     try {
       let empListTemp = [];
+
       await EMPLOYEE_LIST?.workinglist?.map((i, index) => {
+        const WORKING = Array.from(
+          Array(7),
+          () => [0, '00:00', '00:00', false, false, false, false, false, 0],
+          //[0:근무시간, 1: 시작시간, 2: 종료시간, 3: 휴가, 4: 지각, 5: 조퇴, 6: 결근, 7: 유급휴가, 8: 유급휴가 근무시간]
+        );
         empListTemp?.push({
           EMP_SEQ: i.EMP_SEQ,
           EMP_NAME: i.EMP_NAME,
@@ -82,15 +88,8 @@ export default () => {
           legendFontSize: 12,
           color: colors[index],
           TOTAL_WORKING: 0,
-          WORKING: [
-            [0, '00:00', '00:00', false, false, false, false],
-            [0, '00:00', '00:00', false, false, false, false],
-            [0, '00:00', '00:00', false, false, false, false],
-            [0, '00:00', '00:00', false, false, false, false],
-            [0, '00:00', '00:00', false, false, false, false],
-            [0, '00:00', '00:00', false, false, false, false],
-            [0, '00:00', '00:00', false, false, false, false],
-          ],
+          TOTAL_VACATION_TIME: 0,
+          WORKING,
           TOTAL_EARLY: 0,
           TOTAL_LATE: 0,
           TOTAL_VACATION: 0,
@@ -144,32 +143,66 @@ export default () => {
             i.CHANGE_START && i.CHANGE_END
               ? moment.duration(i.CHANGE_START).as('milliseconds') >
                 moment.duration(i.CHANGE_END).as('milliseconds')
-                ? ((emp['WORKING'][index][1] = i.CHANGE_START),
-                  (emp['WORKING'][index][2] = i.CHANGE_END),
-                  (emp['TOTAL_WORKING'] =
-                    emp['TOTAL_WORKING'] +
-                    Number(
+                ? i?.VACATION === '1' && i?.VACATION_PAID === '1'
+                  ? ((emp['WORKING'][index][0] = -1),
+                    (emp['WORKING'][index][7] = true),
+                    (emp['WORKING'][index][8] = Number(
                       moment(i.CHANGE_END, 'kk:mm')
                         .add(1, 'days')
                         .diff(moment(i.CHANGE_START, 'kk:mm')),
                     )),
-                  (emp['WORKING'][index][0] = Number(
-                    moment(i.CHANGE_END, 'kk:mm')
-                      .add(1, 'days')
-                      .diff(moment(i.CHANGE_START, 'kk:mm')),
-                  )),
-                  setTotalWORKING_COUNT(
-                    (totalWORKING_COUNT) =>
-                      totalWORKING_COUNT +
+                    (emp['TOTAL_VACATION_TIME'] =
+                      emp['TOTAL_VACATION_TIME'] +
                       Number(
                         moment(i.CHANGE_END, 'kk:mm')
                           .add(1, 'days')
                           .diff(moment(i.CHANGE_START, 'kk:mm')),
+                      )))
+                  : i?.VACATION === '1' && i?.VACATION_PAID === '0'
+                  ? (emp['WORKING'][index][0] = -1)
+                  : ((emp['WORKING'][index][1] = i.CHANGE_START),
+                    (emp['WORKING'][index][2] = i.CHANGE_END),
+                    (emp['TOTAL_WORKING'] =
+                      emp['TOTAL_WORKING'] +
+                      Number(
+                        moment(i.CHANGE_END, 'kk:mm')
+                          .add(1, 'days')
+                          .diff(moment(i.CHANGE_START, 'kk:mm')),
+                      )),
+                    (emp['WORKING'][index][0] = Number(
+                      moment(i.CHANGE_END, 'kk:mm')
+                        .add(1, 'days')
+                        .diff(moment(i.CHANGE_START, 'kk:mm')),
+                    )),
+                    setTotalWORKING_COUNT(
+                      (totalWORKING_COUNT) =>
+                        totalWORKING_COUNT +
+                        Number(
+                          moment(i.CHANGE_END, 'kk:mm')
+                            .add(1, 'days')
+                            .diff(moment(i.CHANGE_START, 'kk:mm')),
+                        ),
+                    ),
+                    setTotalWORKING_EMP(
+                      (totalWORKING_EMP) => totalWORKING_EMP + 1,
+                    ))
+                : i?.VACATION === '1' && i?.VACATION_PAID === '1'
+                ? ((emp['WORKING'][index][0] = -1),
+                  (emp['WORKING'][index][7] = true),
+                  (emp['WORKING'][index][8] = Number(
+                    moment(i.CHANGE_END, 'kk:mm').diff(
+                      moment(i.CHANGE_START, 'kk:mm'),
+                    ),
+                  )),
+                  (emp['TOTAL_VACATION_TIME'] =
+                    emp['TOTAL_VACATION_TIME'] +
+                    Number(
+                      moment(i.CHANGE_END, 'kk:mm').diff(
+                        moment(i.CHANGE_START, 'kk:mm'),
                       ),
-                  ),
-                  setTotalWORKING_EMP(
-                    (totalWORKING_EMP) => totalWORKING_EMP + 1,
-                  ))
+                    )))
+                : i?.VACATION === '1' && i?.VACATION_PAID === '0'
+                ? (emp['WORKING'][index][0] = -1)
                 : ((emp['WORKING'][index][1] = i.CHANGE_START),
                   (emp['WORKING'][index][2] = i.CHANGE_END),
                   (emp['TOTAL_WORKING'] =
@@ -199,32 +232,66 @@ export default () => {
               : i.ATTENDANCE_TIME && i.WORK_OFF_TIME
               ? moment.duration(i.ATTENDANCE_TIME).as('milliseconds') >
                 moment.duration(i.WORK_OFF_TIME).as('milliseconds')
-                ? ((emp['WORKING'][index][1] = i.ATTENDANCE_TIME),
-                  (emp['WORKING'][index][2] = i.WORK_OFF_TIME),
-                  (emp['TOTAL_WORKING'] =
-                    emp['TOTAL_WORKING'] +
-                    Number(
+                ? i?.VACATION === '1' && i?.VACATION_PAID === '1'
+                  ? ((emp['WORKING'][index][0] = -1),
+                    (emp['WORKING'][index][7] = true),
+                    (emp['WORKING'][index][8] = Number(
                       moment(i.WORK_OFF_TIME, 'kk:mm')
                         .add(1, 'days')
                         .diff(moment(i.ATTENDANCE_TIME, 'kk:mm')),
                     )),
-                  (emp['WORKING'][index][0] = Number(
-                    moment(i.WORK_OFF_TIME, 'kk:mm')
-                      .add(1, 'days')
-                      .diff(moment(i.ATTENDANCE_TIME, 'kk:mm')),
-                  )),
-                  setTotalWORKING_COUNT(
-                    (totalWORKING_COUNT) =>
-                      totalWORKING_COUNT +
+                    (emp['TOTAL_VACATION_TIME'] =
+                      emp['TOTAL_VACATION_TIME'] +
                       Number(
                         moment(i.WORK_OFF_TIME, 'kk:mm')
                           .add(1, 'days')
                           .diff(moment(i.ATTENDANCE_TIME, 'kk:mm')),
+                      )))
+                  : i?.VACATION === '1' && i?.VACATION_PAID === '0'
+                  ? (emp['WORKING'][index][0] = -1)
+                  : ((emp['WORKING'][index][1] = i.ATTENDANCE_TIME),
+                    (emp['WORKING'][index][2] = i.WORK_OFF_TIME),
+                    (emp['TOTAL_WORKING'] =
+                      emp['TOTAL_WORKING'] +
+                      Number(
+                        moment(i.WORK_OFF_TIME, 'kk:mm')
+                          .add(1, 'days')
+                          .diff(moment(i.ATTENDANCE_TIME, 'kk:mm')),
+                      )),
+                    (emp['WORKING'][index][0] = Number(
+                      moment(i.WORK_OFF_TIME, 'kk:mm')
+                        .add(1, 'days')
+                        .diff(moment(i.ATTENDANCE_TIME, 'kk:mm')),
+                    )),
+                    setTotalWORKING_COUNT(
+                      (totalWORKING_COUNT) =>
+                        totalWORKING_COUNT +
+                        Number(
+                          moment(i.WORK_OFF_TIME, 'kk:mm')
+                            .add(1, 'days')
+                            .diff(moment(i.ATTENDANCE_TIME, 'kk:mm')),
+                        ),
+                    ),
+                    setTotalWORKING_EMP(
+                      (totalWORKING_EMP) => totalWORKING_EMP + 1,
+                    ))
+                : i?.VACATION === '1' && i?.VACATION_PAID === '1'
+                ? ((emp['WORKING'][index][0] = -1),
+                  (emp['WORKING'][index][7] = true),
+                  (emp['WORKING'][index][8] = Number(
+                    moment(i.WORK_OFF_TIME, 'kk:mm').diff(
+                      moment(i.ATTENDANCE_TIME, 'kk:mm'),
+                    ),
+                  )),
+                  (emp['TOTAL_VACATION_TIME'] =
+                    emp['TOTAL_VACATION_TIME'] +
+                    Number(
+                      moment(i.WORK_OFF_TIME, 'kk:mm').diff(
+                        moment(i.ATTENDANCE_TIME, 'kk:mm'),
                       ),
-                  ),
-                  setTotalWORKING_EMP(
-                    (totalWORKING_EMP) => totalWORKING_EMP + 1,
-                  ))
+                    )))
+                : i?.VACATION === '1' && i?.VACATION_PAID === '0'
+                ? (emp['WORKING'][index][0] = -1)
                 : ((emp['WORKING'][index][1] = i.ATTENDANCE_TIME),
                   (emp['WORKING'][index][2] = i.WORK_OFF_TIME),
                   (emp['TOTAL_WORKING'] =
@@ -253,31 +320,65 @@ export default () => {
                   ))
               : moment.duration(i.START).as('milliseconds') >
                 moment.duration(i.END).as('milliseconds')
-              ? ((emp['WORKING'][index][1] = i.START),
-                (emp['WORKING'][index][2] = i.END),
-                (emp['TOTAL_WORKING'] =
-                  emp['TOTAL_WORKING'] +
-                  Number(
+              ? i?.VACATION === '1' && i?.VACATION_PAID === '1'
+                ? ((emp['WORKING'][index][0] = -1),
+                  (emp['WORKING'][index][7] = true),
+                  (emp['WORKING'][index][8] = Number(
                     moment(i.END, 'kk:mm')
                       .add(1, 'days')
                       .diff(moment(i.START, 'kk:mm')),
                   )),
-                (emp['WORKING'][index][0] = Number(
-                  moment(i.END, 'kk:mm')
-                    .add(1, 'days')
-                    .diff(moment(i.START, 'kk:mm')),
-                )),
-                setTotalWORKING_COUNT(
-                  (totalWORKING_COUNT) =>
-                    totalWORKING_COUNT +
+                  (emp['TOTAL_VACATION_TIME'] =
+                    emp['TOTAL_VACATION_TIME'] +
                     Number(
                       moment(i.END, 'kk:mm')
                         .add(1, 'days')
                         .diff(moment(i.START, 'kk:mm')),
-                    ),
-                ),
-                setTotalWORKING_EMP((totalWORKING_EMP) => totalWORKING_EMP + 1),
-                setTotalWORKING_DAY((totalWORKING_DAY) => totalWORKING_DAY + 1))
+                    )))
+                : i?.VACATION === '1' && i?.VACATION_PAID === '0'
+                ? (emp['WORKING'][index][0] = -1)
+                : ((emp['WORKING'][index][1] = i.START),
+                  (emp['WORKING'][index][2] = i.END),
+                  (emp['TOTAL_WORKING'] =
+                    emp['TOTAL_WORKING'] +
+                    Number(
+                      moment(i.END, 'kk:mm')
+                        .add(1, 'days')
+                        .diff(moment(i.START, 'kk:mm')),
+                    )),
+                  (emp['WORKING'][index][0] = Number(
+                    moment(i.END, 'kk:mm')
+                      .add(1, 'days')
+                      .diff(moment(i.START, 'kk:mm')),
+                  )),
+                  setTotalWORKING_COUNT(
+                    (totalWORKING_COUNT) =>
+                      totalWORKING_COUNT +
+                      Number(
+                        moment(i.END, 'kk:mm')
+                          .add(1, 'days')
+                          .diff(moment(i.START, 'kk:mm')),
+                      ),
+                  ),
+                  setTotalWORKING_EMP(
+                    (totalWORKING_EMP) => totalWORKING_EMP + 1,
+                  ),
+                  setTotalWORKING_DAY(
+                    (totalWORKING_DAY) => totalWORKING_DAY + 1,
+                  ))
+              : i?.VACATION === '1' && i?.VACATION_PAID === '1'
+              ? ((emp['WORKING'][index][0] = -1),
+                (emp['WORKING'][index][7] = true),
+                (emp['WORKING'][index][8] = Number(
+                  moment(i.END, 'kk:mm').diff(moment(i.START, 'kk:mm')),
+                )),
+                (emp['TOTAL_VACATION_TIME'] =
+                  emp['TOTAL_VACATION_TIME'] +
+                  Number(
+                    moment(i.END, 'kk:mm').diff(moment(i.START, 'kk:mm')),
+                  )))
+              : i?.VACATION === '1' && i?.VACATION_PAID === '0'
+              ? (emp['WORKING'][index][0] = -1)
               : ((emp['WORKING'][index][1] = i.START),
                 (emp['WORKING'][index][2] = i.END),
                 (emp['TOTAL_WORKING'] =

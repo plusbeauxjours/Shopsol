@@ -82,12 +82,15 @@ const BackView = styled.View<ITouchable>`
   align-items: center;
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
+  border-top-right-radius: ${(props) => (props.endTime == 0 ? 25 : 0)}px;
+  border-bottom-right-radius: ${(props) => (props.endTime == 0 ? 25 : 0)}px;
   height: 46px;
   min-width: 46px;
   width: ${(props) => (props.width * maxWidth) / 108000000}px;
   left: ${(props) =>
     ((props.startTime + 10800000) * maxWidth) / 108000000 -
-    ((props.endTime + 10800000) * maxWidth) / 108000000}px;
+    ((props.endTime + 10800000) * maxWidth) / 108000000 -
+    20}px;
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
   background-color: #e85356;
 `;
@@ -163,7 +166,6 @@ export default ({
   setIndexTime,
   scrollRef,
 }) => {
-  console.log(TIME_EMP_LIST);
   const ballonRef = useRef(null);
   const renderThumbImage = () => (
     <IconConatainer>
@@ -174,7 +176,11 @@ export default ({
       />
       <RedLine
         indexTime={indexTime}
-        height={TIME_EMP_LIST.filter((i) => i.WORKING > 0).length * 56 + 40}
+        height={
+          TIME_EMP_LIST.filter((i) => i.WORKING > 0 && !i.VACATION).length *
+            56 +
+          40
+        }
       />
     </IconConatainer>
   );
@@ -231,7 +237,7 @@ export default ({
           decelerationRate="fast"
           style={{maxHeight: 440}}>
           {TIME_EMP_LIST.map((i, index) => {
-            if (i.WORKING > 0) {
+            if (i.WORKING > 0 && !i.VACATION) {
               if (moment.duration(i.START_TIME) > moment.duration(i.END_TIME)) {
                 return (
                   <TouchableRow
@@ -250,6 +256,20 @@ export default ({
                       isSelected={selectedIndex == index}
                       backgroundColor={i?.color}
                       width={moment.duration(i.END_TIME).as('milliseconds')}>
+                      {moment.duration(i.START_TIME).as('milliseconds') >
+                        75600000 &&
+                        moment.duration(i.END_TIME).as('milliseconds') >
+                          10800000 &&
+                        (i?.WORKING * maxWidth) / 108000000 > 80 && (
+                          <EmpCardRow
+                            style={{
+                              marginBottom: 0,
+                              justifyContent: 'flex-end',
+                              marginRight: 5,
+                            }}>
+                            <Bold>{i.EMP_NAME}</Bold>
+                          </EmpCardRow>
+                        )}
                       <FastImage
                         style={{
                           width: 40,
