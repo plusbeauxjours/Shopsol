@@ -130,6 +130,10 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    dexOptions {
+       javaMaxHeapSize "4g"
+    }
+
     packagingOptions {
         pickFirst 'lib/x86/libc++_shared.so'
         pickFirst 'lib/x86_64/libc++_shared.so'
