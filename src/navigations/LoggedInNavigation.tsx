@@ -86,8 +86,7 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        // initialRouteName={'SelectStoreScreen'}
-        initialRouteName={'ChecklistShareInsertScreen'}
+        initialRouteName={'SelectStoreScreen'}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#e85356',

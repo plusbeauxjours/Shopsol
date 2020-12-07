@@ -126,6 +126,7 @@ export default () => {
       explainModal={explainModal}
       EMPLOYEE_LIST={EMPLOYEE_LIST}
       loading={loading}
+      date={date}
     />
   );
 };
