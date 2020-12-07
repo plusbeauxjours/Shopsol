@@ -337,6 +337,8 @@ export default ({
           cancelTextIOS={'취소'}
           confirmTextIOS={'선택'}
           isVisible={isDateModalVisible}
+          isDarkModeEnabled={false}
+          textColor="black"
           mode="date"
           minimumDate={moment().toDate()}
           locale="ko_KRus_EN"

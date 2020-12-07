@@ -84,15 +84,15 @@ export default ({route: {params}}) => {
           shelfLifeMemo,
         }),
       );
-      // const {data} = await api.updateShelfLifeData({
-      //   shelfLife_SEQ,
-      //   shelfLifeNAME: shelfLifeName,
-      //   shelfLifeDATE: shelfLifeDate,
-      //   shelfLifeMEMO: shelfLifeMemo,
-      // });
-      // if (data.result == '0') {
-      //   alertModal('', '연결에 실패하였습니다.');
-      // }
+      const {data} = await api.updateShelfLifeData({
+        shelfLife_SEQ,
+        shelfLifeNAME: shelfLifeName,
+        shelfLifeDATE: shelfLifeDate,
+        shelfLifeMEMO: shelfLifeMemo,
+      });
+      if (data.result == '0') {
+        alertModal('', '연결에 실패하였습니다.');
+      }
     } catch (e) {
       console.log(e);
     }

@@ -481,6 +481,8 @@ export default ({
                     cancelTextIOS={'취소'}
                     confirmTextIOS={'확인'}
                     isVisible={isStartDayModalVisible}
+                    isDarkModeEnabled={false}
+                    textColor="black"
                     mode="date"
                     locale="ko_KRus_EN"
                     onConfirm={(date) => {
@@ -519,6 +521,8 @@ export default ({
                     cancelTextIOS={'취소'}
                     confirmTextIOS={'확인'}
                     isVisible={isEndDayModalVisible}
+                    isDarkModeEnabled={false}
+                    textColor="black"
                     mode="date"
                     minimumDate={moment(startDay).add(1, 'days').toDate()}
                     locale="ko_KRus_EN"
@@ -825,6 +829,8 @@ export default ({
                                 cancelTextIOS={'취소'}
                                 confirmTextIOS={'확인'}
                                 isVisible={isProbationPeriodModalVisible}
+                                isDarkModeEnabled={false}
+                                textColor="black"
                                 mode="date"
                                 minimumDate={moment(startDay)
                                   .add(1, 'days')

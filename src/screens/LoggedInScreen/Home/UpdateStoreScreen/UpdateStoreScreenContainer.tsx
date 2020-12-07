@@ -52,7 +52,7 @@ export default ({route: {params}}) => {
   const [storeCategoryType, setStoreCategoryType] = useState<number>(
     STORE_DATA?.resultdata?.CATEGORY || '분류 선택',
   ); // 사업장 분류 유형, 0: 요식업, 1: 도,소매업, 2: 서비스업, 3: 일반회사, 4: 기타
-
+  console.log(STORE_DATA?.resultdata?.JULI);
   const [distance, setDistance] = useState<string>(
     STORE_DATA?.resultdata?.JULI || '0',
   );

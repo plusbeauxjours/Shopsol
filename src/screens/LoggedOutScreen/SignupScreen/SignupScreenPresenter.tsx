@@ -246,6 +246,8 @@ export default ({
               cancelTextIOS={'취소'}
               confirmTextIOS={'확인'}
               isVisible={isBirthDateVisible}
+              isDarkModeEnabled={false}
+              textColor="black"
               mode="date"
               maximumDate={moment().toDate()}
               locale="ko_KRus_EN"

@@ -85,7 +85,7 @@ const Footer = styled.View`
 
 const SmallText = styled.Text<IColor>`
   color: ${(props) => props.color};
-  font-size: 12px;
+  font-size: 14px;
 `;
 
 const SmallBold = styled(SmallText)<IColor>`

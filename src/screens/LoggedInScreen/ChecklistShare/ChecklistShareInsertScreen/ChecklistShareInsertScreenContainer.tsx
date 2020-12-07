@@ -25,7 +25,7 @@ export default ({route: {params}}) => {
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
   const [cameraPictureList, setCameraPictureList] = useState<any>([]);
-  const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
+  const [cameraPictureLast, setCameraPictureLast] = useState<string>(null);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
   );
@@ -51,32 +51,6 @@ export default ({route: {params}}) => {
         (cameraPictureItem) => cameraPictureItem.uri !== item.uri,
       ),
     );
-  };
-
-  const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: true,
-      includeBase64: true,
-      compressImageQuality: 0.8,
-      compressImageMaxWidth: 720,
-      compressImageMaxHeight: 720,
-      cropperChooseText: '선택',
-      cropperCancelText: '취소',
-    }).then((images: any) => {
-      images.map((i) => {
-        setCameraPictureList((cameraPictureList) => [
-          ...cameraPictureList,
-          {uri: i.path},
-        ]);
-      });
-    });
-  };
-
-  const takePictureFn = async (cameraRef) => {
-    const options = {quality: 0.8, base64: true, width: 720, height: 720};
-    const data = await cameraRef.current.takePictureAsync(options);
-    setCameraPictureLast(data.uri);
   };
 
   const registerFn = async () => {
@@ -159,6 +133,32 @@ export default ({route: {params}}) => {
         dispatch(setSplashVisible(false));
       }
     }
+  };
+
+  const takePictureFn = async (cameraRef) => {
+    const options = {quality: 0.8, base64: true, width: 720, height: 720};
+    const data = await cameraRef.current.takePictureAsync(options);
+    setCameraPictureLast(data.uri);
+  };
+
+  const launchImageLibraryFn = () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      multiple: true,
+      includeBase64: true,
+      compressImageQuality: 0.8,
+      compressImageMaxWidth: 720,
+      compressImageMaxHeight: 720,
+      cropperChooseText: '선택',
+      cropperCancelText: '취소',
+    }).then((images: any) => {
+      images.map((i) => {
+        setCameraPictureList((cameraPictureList) => [
+          ...cameraPictureList,
+          {uri: i.path},
+        ]);
+      });
+    });
   };
 
   const selectPicture = () => {

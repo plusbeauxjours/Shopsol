@@ -453,31 +453,27 @@ export default ({
               <CommuteType selection={1} text={'QR코드 출퇴근'} />
             </TypeCheckCase>
             <WhiteSpace />
-            {commuteTypeCheck[0] == true && (
-              <>
-                <RowTouchable
-                  onPress={() =>
-                    explainModal(
-                      '출퇴근 허용거리',
-                      '설정하신 거리 이내에서 출퇴근이 가능합니다.',
-                    )
-                  }>
-                  <NameText>출퇴근 허용거리</NameText>
-                  <HelpCircleIcon />
-                </RowTouchable>
-                <Touchable onPress={() => setModalVisible4(true)}>
-                  <InputText isBefore={distanceCheck === false}>
-                    {distance === '-1'
-                      ? '거리 제한 없음'
-                      : Number(distance) < 1000
-                      ? distance + 'm'
-                      : Number(distance) / 1000 + 'km'}
-                  </InputText>
-                  <InputLine isBefore={distanceCheck === false} />
-                </Touchable>
-                <WhiteSpace />
-              </>
-            )}
+            <RowTouchable
+              onPress={() =>
+                explainModal(
+                  '출퇴근 허용거리',
+                  '설정하신 거리 이내에서 출퇴근이 가능합니다.',
+                )
+              }>
+              <NameText>출퇴근 허용거리</NameText>
+              <HelpCircleIcon />
+            </RowTouchable>
+            <Touchable onPress={() => setModalVisible4(true)}>
+              <InputText isBefore={distanceCheck === false}>
+                {distance == '-1'
+                  ? '거리 제한 없음'
+                  : Number(distance) < 1000
+                  ? distance + 'm'
+                  : Number(distance) / 1000 + 'km'}
+              </InputText>
+              <InputLine isBefore={distanceCheck === false} />
+            </Touchable>
+            <WhiteSpace />
             <RowTouchable
               onPress={() => {
                 explainModal(

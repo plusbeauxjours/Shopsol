@@ -50,8 +50,8 @@ const Touchable = styled(Ripple)`
 
 const NewBadge = styled.View`
   position: absolute;
-  left: 5px;
-  top: 10px;
+  left: 0;
+  top: -10px;
 `;
 
 const NotiTitleText = styled.Text`

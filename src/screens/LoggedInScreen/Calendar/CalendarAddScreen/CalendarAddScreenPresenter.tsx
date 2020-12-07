@@ -493,6 +493,8 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isStartTimeModalVisible}
+        isDarkModeEnabled={false}
+        textColor="black"
         minuteInterval={10}
         date={new Date().setHours(9, [0])}
         mode="time"
@@ -510,6 +512,8 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isEndTimeModalVisible}
+        isDarkModeEnabled={false}
+        textColor="black"
         minuteInterval={10}
         date={new Date().setHours(18, [0])}
         mode="time"

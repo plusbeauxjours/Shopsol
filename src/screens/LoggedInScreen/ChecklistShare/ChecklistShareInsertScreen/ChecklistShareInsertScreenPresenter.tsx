@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React, {useRef} from 'react';
 import {RNCamera} from 'react-native-camera';
 import FastImage from 'react-native-fast-image';
@@ -9,11 +8,13 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
+import Animated from 'react-native-reanimated';
+import {isIphoneX} from 'react-native-iphone-x-helper';
+import moment from 'moment';
+
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {CloseCircleIcon} from '~/constants/Icons';
 import {CameraIcon, PictureIcon} from '~/constants/Icons';
-import Animated from 'react-native-reanimated';
-import {isIphoneX} from 'react-native-iphone-x-helper';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -40,7 +41,7 @@ const Section = styled.View`
 
 const Row = styled.View`
   flex-direction: row;
-  align-items: baseline;
+  align-items: flex-start;
 `;
 
 const EndRow = styled(Row)`
@@ -234,7 +235,7 @@ export default ({
                     }}
                   />
                   <Touchable onPress={() => setIsDateModalVisible(true)}>
-                    {date.length === 0 ? (
+                    {date?.length === 0 ? (
                       <GreyText
                         style={{
                           color: '#CCC',
@@ -244,9 +245,7 @@ export default ({
                         등록일
                       </GreyText>
                     ) : (
-                      <DateText>
-                        {moment(date).format('YYYY년 MM월 DD일')}
-                      </DateText>
+                      <DateText>{moment(date).format('YYYY.MM.DD')}</DateText>
                     )}
                   </Touchable>
                 </Name>
@@ -344,39 +343,37 @@ export default ({
             onBackdropPress={() => setIsCameraModalVisible(false)}
             onRequestClose={() => setIsCameraModalVisible(false)}>
             {cameraPictureLast ? (
-              <>
-                <CameraLastPictureContainer>
-                  <FastImage
-                    style={{
-                      width: wp('100%') - 40,
-                      flex: 1,
-                      marginBottom: 80,
-                      borderRadius: 10,
-                      marginTop: isIphoneX() ? 20 : 40,
-                    }}
-                    source={{
-                      uri: cameraPictureLast,
-                      headers: {Authorization: 'someAuthToken'},
-                      priority: FastImage.priority.low,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                  <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
-                    <HalfBotton onPress={() => setCameraPictureLast(null)}>
-                      <HalfBottonText style={{color: '#e85356'}}>
-                        재촬영
-                      </HalfBottonText>
-                    </HalfBotton>
-                    <HalfBotton
-                      style={{backgroundColor: '#e85356'}}
-                      onPress={() => selectPicture()}>
-                      <HalfBottonText style={{color: '#fff'}}>
-                        선택
-                      </HalfBottonText>
-                    </HalfBotton>
-                  </Row>
-                </CameraLastPictureContainer>
-              </>
+              <CameraLastPictureContainer>
+                <FastImage
+                  style={{
+                    width: wp('100%') - 40,
+                    flex: 1,
+                    marginBottom: 80,
+                    borderRadius: 10,
+                    marginTop: isIphoneX() ? 20 : 40,
+                  }}
+                  source={{
+                    uri: cameraPictureLast,
+                    headers: {Authorization: 'someAuthToken'},
+                    priority: FastImage.priority.low,
+                  }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+                <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
+                  <HalfBotton onPress={() => setCameraPictureLast(null)}>
+                    <HalfBottonText style={{color: '#e85356'}}>
+                      재촬영
+                    </HalfBottonText>
+                  </HalfBotton>
+                  <HalfBotton
+                    style={{backgroundColor: '#e85356'}}
+                    onPress={() => selectPicture()}>
+                    <HalfBottonText style={{color: '#fff'}}>
+                      선택
+                    </HalfBottonText>
+                  </HalfBotton>
+                </Row>
+              </CameraLastPictureContainer>
             ) : (
               <RNCamera
                 ref={cameraRef}
@@ -391,8 +388,8 @@ export default ({
                   title: '카메라 권한 설정',
                   message:
                     '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "퇴근해씨유" 앱의 권한 허용을 해야 합니다.',
-                  buttonPositive: 'Ok',
-                  buttonNegative: 'Cancel',
+                  buttonPositive: '확인',
+                  buttonNegative: '취소',
                 }}>
                 <CameraPictureButton onPress={() => takePictureFn(cameraRef)}>
                   <CameraIcon size={40} />
@@ -414,6 +411,8 @@ export default ({
         cancelTextIOS={'취소'}
         confirmTextIOS={'선택'}
         isVisible={isDateModalVisible}
+        isDarkModeEnabled={false}
+        textColor="black"
         mode="date"
         locale="ko_KRus_EN"
         onConfirm={(date) => {
