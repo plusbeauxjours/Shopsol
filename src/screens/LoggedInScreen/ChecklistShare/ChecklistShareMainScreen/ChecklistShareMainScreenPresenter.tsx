@@ -181,8 +181,8 @@ const NewPoint = styled.View`
 const AddButtonContainer = styled.View`
   position: absolute;
   z-index: 2;
-  right: ${wp('5%')}px;
-  bottom: ${hp('5%')}px;
+  right: 30px;
+  bottom: 30px;
 `;
 
 const AddButton = styled.TouchableOpacity`
@@ -331,7 +331,6 @@ export default ({
             location={'firstRoute'}
             text={'점장 및 매니저가 직원들에게 전달하는 내용입니다.'}
           />
-          {console.log(CHECKLIST_SHARE_DATA1)}
           {CHECKLIST_SHARE_DATA1?.basic?.length == 0 &&
           CHECKLIST_SHARE_DATA1?.favorite?.length == 0 ? (
             <EmptyList TITLE={'지시사항'} />

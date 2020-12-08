@@ -8,6 +8,7 @@ import ShelfLifeCheckScreenPresenter from './ShelfLifeCheckScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {resultdata} from '~/assets/dummy';
 import api from '~/constants/LoggedInApi';
+import {useNavigation} from '@react-navigation/native';
 import {
   getSHELFLIFE_DATA,
   checkSHELFLIFE,
@@ -21,6 +22,7 @@ export default () => {
   const DAY = moment().format('DD');
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const scrollRef = createRef(0);
   const {interpolate, Extrapolate} = Animated;
@@ -28,7 +30,6 @@ export default () => {
 
   const opacity = (anchor = 20) => {
     return interpolate(y, {
-      // inputRange: [Number(anchor) + 100, Number(anchor) + 200],
       inputRange: [Number(anchor) + 350, Number(anchor) + 450],
       outputRange: [1, 0],
       extrapolate: Extrapolate.CLAMP,
@@ -37,9 +38,9 @@ export default () => {
 
   const defaultData = [
     {name: '1일전', color: '#ea1901', items: []},
-    {name: '1주전', color: '#aace36', items: []},
-    {name: '2주전', color: '#aace36', items: []},
-    {name: '1달전', color: '#aace36', items: []},
+    {name: '1주전', color: '#ccc', items: []},
+    {name: '2주전', color: '#ccc', items: []},
+    {name: '1달전', color: '#ccc', items: []},
   ];
 
   const defaultTabs = defaultData.map(({name, color}) => ({
@@ -142,14 +143,13 @@ export default () => {
 
   useEffect(() => {
     dispatch(setSHELFLIFE_DATA([]));
-
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
+      console.log('fetching');
       const data = await dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
-      console.log(data);
       const day = moment();
       const dayDuration = moment().add(2, 'days');
       const weekDuration = moment().add(7, 'days').add(1, 'days');
@@ -212,7 +212,7 @@ export default () => {
           titleNumber: '1',
           titleWord: '주전',
           backgroundColor: 'white',
-          textColor: '#aace36',
+          textColor: '#ccc',
           radius: 50,
           totalQTY: weekCount ?? 0,
           doneQTY: weekDone,
@@ -224,7 +224,7 @@ export default () => {
           titleNumber: '2',
           titleWord: '주전',
           backgroundColor: 'white',
-          textColor: '#aace36',
+          textColor: '#ccc',
           radius: 40,
           totalQTY: weeksCount ?? 0,
           doneQTY: weeksDone,
@@ -236,7 +236,7 @@ export default () => {
           titleNumber: '1',
           titleWord: '달전',
           backgroundColor: 'white',
-          textColor: '#aace36',
+          textColor: '#ccc',
           radius: 30,
           totalQTY: monthCount ?? 0,
           doneQTY: monthDone ?? 0,
@@ -248,6 +248,10 @@ export default () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const gotoAdd = () => {
+    navigation.navigate('AddShelfLifeScreen', {fetchData});
   };
 
   const gotoCategory = (index) => {
@@ -273,6 +277,11 @@ export default () => {
 
   const onScroll = onScrollEvent({y});
 
+  useEffect(() => {
+    dispatch(setSHELFLIFE_DATA([]));
+    fetchData();
+  }, []);
+
   return (
     <ShelfLifeCheckScreenPresenter
       onRefresh={onRefresh}
@@ -289,6 +298,7 @@ export default () => {
       gotoCategory={gotoCategory}
       onMeasurement={onMeasurement}
       ready={ready}
+      gotoAdd={gotoAdd}
     />
   );
 };

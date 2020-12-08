@@ -109,7 +109,7 @@ export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
             {NAME.length > 10 ? `${NAME.substring(0, 10)}...` : NAME}
           </NameText>
           <DateText>
-            {DATE.slice(0, 4)}년 {DATE.slice(5, 7)}월 {DATE.slice(8, 10)}일
+            {DATE.slice(0, 4)}.{DATE.slice(5, 7)}.{DATE.slice(8, 10)}
           </DateText>
         </Name>
         {MEMO.length !== 0 && (

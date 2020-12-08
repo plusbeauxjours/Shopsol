@@ -167,9 +167,8 @@ export default ({name, item, confirmModal, cancelModal}) => {
           <Name>
             <NameText>{item.shelfLifeName}</NameText>
             <DateText>
-              {item.shelfLifeDate.slice(0, 4)}년{' '}
-              {item.shelfLifeDate.slice(5, 7)}월
-              {item.shelfLifeDate.slice(8, 10)}일
+              {item.shelfLifeDate.slice(0, 4)}.{item.shelfLifeDate.slice(5, 7)}.
+              {item.shelfLifeDate.slice(8, 10)}
             </DateText>
           </Name>
           {item.shelfLifeMemo.length !== 0 && <Line />}
@@ -210,9 +209,8 @@ export default ({name, item, confirmModal, cancelModal}) => {
           <Name>
             <NameText isChecked={true}>{item.shelfLifeName}</NameText>
             <DateText isChecked={true}>
-              {item.shelfLifeDate.slice(0, 4)}년&nbsp;
-              {item.shelfLifeDate.slice(5, 7)}월&nbsp;
-              {item.shelfLifeDate.slice(8, 10)}일
+              {item.shelfLifeDate.slice(0, 4)}.{item.shelfLifeDate.slice(5, 7)}.
+              {item.shelfLifeDate.slice(8, 10)}
             </DateText>
           </Name>
           <Line />

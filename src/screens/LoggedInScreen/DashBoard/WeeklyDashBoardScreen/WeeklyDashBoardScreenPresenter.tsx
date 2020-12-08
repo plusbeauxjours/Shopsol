@@ -184,8 +184,8 @@ const GraphContainer = styled.View`
 const GotoTopButtonContainer = styled.View`
   position: absolute;
   z-index: 2;
-  right: ${wp('5%')}px;
-  bottom: ${hp('5%')}px;
+  right: 30px;
+  bottom: 30px;
   width: 60px;
   height: 60px;
   border-radius: 30px;

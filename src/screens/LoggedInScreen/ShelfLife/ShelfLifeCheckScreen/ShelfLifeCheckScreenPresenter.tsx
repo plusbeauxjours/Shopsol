@@ -8,6 +8,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import DonutCard from '~/components/DonutCard';
 import ShelfLifeCheckScreenCard from './ShelfLifeCheckScreenCard';
 import ShelfLifeCheckScreenHeader from './ShelfLifeCheckScreenHeader';
+import {AddIcon} from '../../../../constants/Icons';
 
 interface IColor {
   color: string;
@@ -35,7 +36,7 @@ const Row = styled.View`
 `;
 
 const SpaceRow = styled(Row)`
-  width: 80px;
+  min-width: 90px;
   justify-content: space-between;
 `;
 
@@ -121,6 +122,24 @@ const VerticalLine = styled.View`
   top: 140px;
 `;
 
+const AddButtonContainer = styled.View`
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 30px;
+`;
+
+const AddButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: #e85356;
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
 export default ({
   onRefresh,
   confirmModal,
@@ -136,6 +155,7 @@ export default ({
   gotoCategory,
   onMeasurement,
   ready,
+  gotoAdd,
 }) => {
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
     return (
@@ -249,6 +269,11 @@ export default ({
             ready={ready}
           />
         )}
+        <AddButtonContainer>
+          <AddButton onPress={() => gotoAdd()}>
+            <AddIcon />
+          </AddButton>
+        </AddButtonContainer>
       </BackGround>
     );
   } else {

@@ -240,7 +240,6 @@ export default () => {
           options={{
             headerTitle: '유통기한 체크',
             title: '유통기한 목록',
-            headerRight: () => <ShelfLifeCheckHeader />,
           }}
         />
         <LoggedInNavigation.Screen

@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import moment from 'moment';
 
 import AddShelfLifeScreenPresenter from './AddShelfLifeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {getSHELFLIFE_DATA} from '~/redux/shelflifeSlice';
 import api from '~/constants/LoggedInApi';
 import ImagePicker from 'react-native-image-crop-picker';
+import {setSplashVisible} from '~/redux/splashSlice';
 
-export default () => {
+export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
@@ -92,21 +91,19 @@ export default () => {
       );
     }
     try {
-      alertModal('', '등록이 완료되었습니다.');
-      navigation.goBack();
-      dispatch(
-        getSHELFLIFE_DATA(
-          moment(shelfLifeDate).format('YYYY'),
-          moment(shelfLifeDate).format('MM'),
-          moment(shelfLifeDate).format('DD'),
-        ),
-      );
       const {data} = await api.setShelfLifeData({STORE_SEQ, LIST: list});
+      await params?.fetchData();
+      dispatch(setSplashVisible(true));
+      navigation.goBack();
       if (data.result == '0') {
         alertModal('', '연결에 실패하였습니다.');
+      } else {
+        alertModal('', '등록이 완료되었습니다.');
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      dispatch(setSplashVisible(false));
     }
   };
 

@@ -39,7 +39,7 @@ const Section = styled.View`
 
 const Row = styled.View`
   flex-direction: row;
-  align-items: baseline;
+  align-items: flex-start;
 `;
 
 const EndRow = styled(Row)`
@@ -272,7 +272,6 @@ export default ({
                 <EndRow>
                   <Column>
                     <Touchable onPress={() => setIsCameraModalVisible(true)}>
-                      {/* <Touchable onPress={() => console.log('photo')}> */}
                       <BorderBox>
                         <CameraIcon size={25} color={'#ccc'} />
                         <GreyText style={{fontSize: 10}}>사진촬영</GreyText>

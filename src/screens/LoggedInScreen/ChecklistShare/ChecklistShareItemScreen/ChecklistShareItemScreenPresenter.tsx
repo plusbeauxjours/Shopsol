@@ -533,7 +533,7 @@ export default ({
           useNativeDriver
           enablePreload
           renderFooter={renderFooter}
-          loadingRender={() => <Loader />}
+          loadingRender={() => <Loader size="large" />}
           renderIndicator={() => null}
           renderImage={(props) => (
             <FastImage

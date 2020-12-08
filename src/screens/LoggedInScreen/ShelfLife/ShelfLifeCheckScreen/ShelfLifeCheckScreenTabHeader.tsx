@@ -112,7 +112,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
             <Tab
               key={index}
               index={index}
-              color={index === 0 ? '#ea1901' : '#aace36'}
+              color={index === 0 ? '#ea1901' : '#7f7f7f'}
               gotoCategory={gotoCategory}
               {...tab}
             />

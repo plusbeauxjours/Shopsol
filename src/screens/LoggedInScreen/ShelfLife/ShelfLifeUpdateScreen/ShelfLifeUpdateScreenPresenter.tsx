@@ -227,13 +227,21 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                  {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
+                  <Touchable
+                    onPress={() =>
+                      alertModal('', '사진등록 서비스 준비중입니다.')
+                    }>
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: 10}}>사진촬영</GreyText>
                     </BorderBox>
                   </Touchable>
-                  <Touchable onPress={() => launchImageLibraryFn()}>
+                  {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
+                  <Touchable
+                    onPress={() =>
+                      alertModal('', '사진등록 서비스 준비중입니다.')
+                    }>
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: 10}}>보관함</GreyText>
@@ -281,7 +289,7 @@ export default ({
                       </GreyText>
                     ) : (
                       <DateText>
-                        {moment(shelfLifeDate).format('YYYY년 MM월 DD일')}
+                        {moment(shelfLifeDate).format('YYYY.MM.DD')}
                       </DateText>
                     )}
                   </Touchable>

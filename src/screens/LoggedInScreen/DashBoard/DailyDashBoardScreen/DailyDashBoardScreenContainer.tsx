@@ -268,7 +268,6 @@ export default () => {
         item.EMP_NAME.includes(text) || item.disassembled.includes(searchText)
       );
     });
-    console.log('result', result);
     setResult(result);
   };
 
