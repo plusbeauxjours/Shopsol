@@ -233,7 +233,12 @@ export default ({
         />
         <CntArea>
           <NameText style={{marginBottom: 10}}>{NAME}</NameText>
-          {!CHANGE_START && !CHANGE_END ? (
+          {((ATTENDANCE_TIME || START)?.substring(0, 5) ==
+            CHANGE_START?.substring(0, 5) ||
+            (WORK_OFF_TIME || END)?.substring(0, 5) ==
+              CHANGE_END?.substring(0, 5)) &&
+          !CHANGE_START &&
+          !CHANGE_END ? (
             <WorkTime>
               <WorkTitleText>근무시간 </WorkTitleText>
               <WorkTimeText>
@@ -257,7 +262,9 @@ export default ({
               </WorkTimeText>
             </WorkTime>
           )}
-          {!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END ? (
+          {(START_TIME?.substring(0, 5) == UPDATED_START?.substring(0, 5) &&
+            END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
+          (!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END) ? (
             <WorkTime>
               <WorkTitleText>출퇴근시간 </WorkTitleText>
               <WorkTimeText>

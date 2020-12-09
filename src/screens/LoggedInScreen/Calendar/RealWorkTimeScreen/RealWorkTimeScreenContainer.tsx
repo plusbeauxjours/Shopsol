@@ -34,35 +34,20 @@ export default ({route: {params}}) => {
   } = params;
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
-  console.log(
-    'ATTENDANCE_TIME',
-    ATTENDANCE_TIME,
-    'UPDATED_START',
-    UPDATED_START,
-    'START',
-    START,
-  );
-  console.log(
-    'WORK_OFF_TIME',
-    WORK_OFF_TIME,
-    'UPDATED_END',
-    UPDATED_END,
-    'END',
-    END,
-  );
+
   const [startTime, setStartTime] = useState<any>(
     UPDATED_START
       ? moment(UPDATED_START?.substring(0, 5), 'HH:mm')
       : ATTENDANCE_TIME
       ? moment(ATTENDANCE_TIME?.substring(0, 5), 'HH:mm')
-      : moment(),
+      : moment(START?.substring(0, 5), 'HH:mm'),
   );
   const [endTime, setEndTime] = useState<any>(
     UPDATED_END
       ? moment(UPDATED_END?.substring(0, 5), 'HH:mm')
       : WORK_OFF_TIME
       ? moment(WORK_OFF_TIME?.substring(0, 5), 'HH:mm')
-      : moment(),
+      : moment(END?.substring(0, 5), 'HH:mm'),
   );
   const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
   const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
@@ -72,9 +57,10 @@ export default ({route: {params}}) => {
   const [noEnd, setNoEnd] = useState<boolean>(
     !WORK_OFF_TIME && !UPDATED_END ? true : false,
   );
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );

@@ -148,7 +148,6 @@ export default () => {
 
   const fetchData = async () => {
     try {
-      console.log('fetching');
       const data = await dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
       const day = moment();
       const dayDuration = moment().add(2, 'days');

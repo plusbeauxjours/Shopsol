@@ -31,12 +31,15 @@ export default ({route: {params}}) => {
   const [isUpdateMode, setIsUpdateMode] = useState<boolean>(false); // INSERT 또는 UPDATE 상태값
   const [timeList, setTimeList] = useState<any>(params?.timeList || []); // 저장된 근무 시간 목록
   const [startDate, setStartDate] = useState<string>(
-    params?.startDate || moment().format('YYYY-MM-DD'),
+    params?.startDate || moment(),
   ); // 근무 시작일
   const [endDate, setEndDate] = useState<string>(params?.endDate || null); // 근무 종료일
 
-  const [startTime, setStartTime] = useState<any>(null); // 화면에서 선택된 출근시간
-  const [endTime, setEndTime] = useState<any>(null); // 화면에서 선택된 퇴근시간
+  const [startTime, setStartTime] = useState<any>(moment());
+  const [endTime, setEndTime] = useState<any>(moment());
+  const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
+  const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
+
   const [timeListIndex, setTimeListIndex] = useState<any>(0); // 저장된 근무 시간 목록 중 선택된 항목의 인덱스
   const [originalDayList, setOriginalDayList] = useState<any>([]); // dayList 원본 값
   const [dayList, setDayList] = useState<any>([]); // 일요일 ~ 토요일까지 화면에 보여질 요일 배열
@@ -51,9 +54,10 @@ export default ({route: {params}}) => {
   const [isEndDayModalVisible, setIsEndDayModalVisible] = useState<boolean>(
     false,
   );
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -87,7 +91,7 @@ export default ({route: {params}}) => {
     if (calendarModalType === 'start') {
       setStartDate(date.dateString);
     } else {
-      setEndDate(date.dateString);
+      params?.endDate && setEndDate(date.dateString);
     }
   };
 
@@ -100,16 +104,18 @@ export default ({route: {params}}) => {
         break;
       }
     }
-    if (!startTime || !endTime) {
+    if (!startTimeSet || !endTimeSet) {
       alertModal('출퇴근 시간을 입력해주세요');
-    } else if (startTime == endTime) {
+    } else if (
+      moment(startTime).format('HH:mm') == moment(endTime).format('HH:mm')
+    ) {
       return alertModal('출퇴근 시간을 다르게 입력해주세요.');
     } else if (!validDay) {
       alertModal('출퇴근 요일을 선택해주세요');
     } else {
       // 상단 폼 영역부터 초기화
-      setStartTime(null);
-      setEndTime(null);
+      setStartTimeSet(false);
+      setEndTimeSet(false);
       setDayList(JSON.parse(JSON.stringify(originalDayList)));
       setTimeListIndex(timeList.length);
       // 중간에 삭제되는 경우 다음 추가에 대한 컬러 인덱스 우선권 부여
@@ -118,8 +124,8 @@ export default ({route: {params}}) => {
       setTimeList([
         ...timeList,
         {
-          startTime,
-          endTime,
+          startTime: moment(startTime).format('HH:mm'),
+          endTime: moment(endTime).format('HH:mm'),
           dayList,
           color: constant.COLOR[colorIndex],
         },
@@ -308,6 +314,10 @@ export default ({route: {params}}) => {
       setIsEndTimeModalVisible={setIsEndTimeModalVisible}
       setStartTime={setStartTime}
       setEndTime={setEndTime}
+      startTimeSet={startTimeSet}
+      setStartTimeSet={setStartTimeSet}
+      endTimeSet={endTimeSet}
+      setEndTimeSet={setEndTimeSet}
     />
   );
 };

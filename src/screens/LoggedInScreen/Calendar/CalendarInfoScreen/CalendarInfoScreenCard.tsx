@@ -296,31 +296,46 @@ export default ({
           />
 
           <CntArea>
-            {CHANGE_START == null && CHANGE_END == null ? (
+            {((ATTENDANCE_TIME || START)?.substring(0, 5) ==
+              CHANGE_START?.substring(0, 5) ||
+              (WORK_OFF_TIME || END)?.substring(0, 5) ==
+                CHANGE_END?.substring(0, 5)) &&
+            !CHANGE_START &&
+            !CHANGE_END ? (
               <WorkTime>
                 <WorkTitleText>근무시간 </WorkTitleText>
-                <WorkTimeText>
-                  {(ATTENDANCE_TIME || START)?.substring(0, 5)}
-                  &nbsp;~&nbsp;{isNextDay1 && '익일 '}
-                  {(WORK_OFF_TIME || END)?.substring(0, 5)}
-                </WorkTimeText>
+                {TYPE == '4' ? (
+                  <WorkTimeText>자율출퇴근</WorkTimeText>
+                ) : (
+                  <WorkTimeText>
+                    {(ATTENDANCE_TIME || START)?.substring(0, 5)}
+                    &nbsp;~&nbsp;{isNextDay1 && '익일 '}
+                    {(WORK_OFF_TIME || END)?.substring(0, 5)}
+                  </WorkTimeText>
+                )}
               </WorkTime>
             ) : (
               <WorkTime>
                 <WorkTitleText>근무시간 </WorkTitleText>
-                <WorkTimeText>
-                  {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
-                  {isNextDay1 && '익일 '}
-                  {(WORK_OFF_TIME || END)?.substring(0, 5)}
-                  {CHANGE_START && CHANGE_END && ' > '}
-                  {CHANGE_START && CHANGE_START?.substring(0, 5)}
-                  {CHANGE_START && CHANGE_END && ' ~ '}
-                  {isNextDay2 && '익일 '}
-                  {CHANGE_END && CHANGE_END?.substring(0, 5)}
-                </WorkTimeText>
+                {TYPE == '4' ? (
+                  <WorkTimeText>자율출퇴근</WorkTimeText>
+                ) : (
+                  <WorkTimeText>
+                    {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
+                    {isNextDay1 && '익일 '}
+                    {(WORK_OFF_TIME || END)?.substring(0, 5)}
+                    {CHANGE_START && CHANGE_END && ' > '}
+                    {CHANGE_START && CHANGE_START?.substring(0, 5)}
+                    {CHANGE_START && CHANGE_END && ' ~ '}
+                    {isNextDay2 && '익일 '}
+                    {CHANGE_END && CHANGE_END?.substring(0, 5)}
+                  </WorkTimeText>
+                )}
               </WorkTime>
             )}
-            {!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END ? (
+            {(START_TIME?.substring(0, 5) == UPDATED_START?.substring(0, 5) &&
+              END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
+            (!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END) ? (
               <WorkTime>
                 <WorkTitleText>출퇴근시간 </WorkTitleText>
                 <WorkTimeText>

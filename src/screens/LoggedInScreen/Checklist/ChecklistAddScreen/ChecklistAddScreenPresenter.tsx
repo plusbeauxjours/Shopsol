@@ -3,6 +3,9 @@ import styled from 'styled-components/native';
 import {Keyboard} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import DatePicker from 'react-native-date-picker';
+import Modal from 'react-native-modal';
+import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 
 import {
@@ -14,7 +17,6 @@ import {
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import RoundBtn from '~/components/Btn/RoundBtn';
 import ChecklistAddScreenCard from './ChecklistAddScreenCard';
-import DatePickerModal from 'react-native-modal-datetime-picker';
 import utils from '~/constants/utils';
 
 interface IsSelected {
@@ -184,6 +186,48 @@ const GreyText = styled.Text<IsError>`
   flex-wrap: wrap;
 `;
 
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+`;
+
 export default ({
   TITLE,
   setTITLE,
@@ -211,6 +255,8 @@ export default ({
   toastFn,
   isToastVisible,
   alertModal,
+  customChecktimeSet,
+  setCustomChecktimeSet,
 }) => {
   const RBSheetRef = useRef(null);
 
@@ -296,7 +342,9 @@ export default ({
               {!isNoCheckedtime && (
                 <ChecktimeButton onPress={() => setIsCustomModalVisible(true)}>
                   <ChecktimeButtonText isSelected={customChecktime}>
-                    {customChecktime ? customChecktime : '선택'}
+                    {customChecktimeSet
+                      ? moment(customChecktime).format('HH:mm')
+                      : '선택'}
                   </ChecktimeButtonText>
                 </ChecktimeButton>
               )}
@@ -305,7 +353,7 @@ export default ({
             <Touchable
               onPress={() => {
                 setIsNoCheckedtime(!isNoCheckedtime);
-                setCustomChecktime('');
+                setCustomChecktime(moment());
               }}>
               <Row>
                 {isNoCheckedtime ? (
@@ -456,25 +504,49 @@ export default ({
           </ModalPopupArea>
         )}
       </RBSheet>
-      <DatePickerModal
-        isDarkModeEnabled={false}
-        headerTextIOS={'시간을 선택하세요.'}
-        cancelTextIOS={'취소'}
-        confirmTextIOS={'선택'}
+      <Modal
+        onRequestClose={() => setIsCustomModalVisible(false)}
+        onBackdropPress={() => setIsCustomModalVisible(false)}
         isVisible={isCustomModalVisible}
-        isDarkModeEnabled={false}
-        textColor="black"
-        minuteInterval={10}
-        date={new Date().setHours(9, [0])}
-        mode="time"
-        locale="ko_KRus_EN"
-        onConfirm={(time) => {
-          setIsCustomModalVisible(false);
-          setCustomChecktime(moment(time).format('HH:mm'));
-        }}
-        is24Hour={true}
-        onCancel={() => setIsCustomModalVisible(false)}
-      />
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(customChecktime).toDate()}
+            mode={'time'}
+            androidVariant="iosClone"
+            onDateChange={(time) => {
+              setCustomChecktimeSet(true);
+              setCustomChecktime(time);
+            }}
+            is24hourSource="locale"
+            minuteInterval={10}
+          />
+          {customChecktimeSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsCustomModalVisible(false);
+                setCustomChecktimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
     </BackGround>
   );
 };

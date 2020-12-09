@@ -109,7 +109,6 @@ const calendarSlice = createSlice({
           END_TIME,
         },
       } = action;
-      console.log(UPDATED_START, UPDATED_END, START_TIME, END_TIME);
       const item = state.CALENDAR_DATA[date].find((i) => i.EMP_ID === EMP_ID);
       item.UPDATED_START = UPDATED_START;
       item.UPDATED_END = UPDATED_END;

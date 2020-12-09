@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import DatePickerModal from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-date-picker';
+import Modal from 'react-native-modal';
+import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
+import DatePickerModal from 'react-native-modal-datetime-picker';
 
 import {
   EllipseIcon,
@@ -91,6 +94,7 @@ const DateTouchable = styled.TouchableOpacity`
   justify-content: flex-end;
   padding-bottom: 5px;
   height: 40px;
+  width: 100%;
 `;
 
 const SideBox = styled.View`
@@ -134,6 +138,48 @@ const TimeListRowTouchable = styled.TouchableOpacity<IsSelected>`
   border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+`;
+
 export default ({
   timeList,
   timeListIndex,
@@ -166,6 +212,10 @@ export default ({
   setIsEndTimeModalVisible,
   setStartTime,
   setEndTime,
+  startTimeSet,
+  setStartTimeSet,
+  endTimeSet,
+  setEndTimeSet,
 }) => {
   const RenderWorkDayList = () => (
     <WorkTypeCheckSection>
@@ -234,7 +284,7 @@ export default ({
                 }}
               />
               <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
-                <Text>{startDate ?? ''}</Text>
+                <Text>{moment(startDate).format('YYYY.MM.DD') ?? ''}</Text>
               </DateTouchable>
               <InputLine isBefore={startDate === ''} />
             </InputCase>
@@ -243,7 +293,6 @@ export default ({
                 <RowTouchable
                   onPress={() => {
                     explainModal(
-                      '',
                       '정해진 근무종료일이 없다면 [퇴사일 없음]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
                     );
                   }}>
@@ -299,15 +348,17 @@ export default ({
             <StepTitle>(STEP 1) 출퇴근 시간 입력</StepTitle>
             <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
               <SideText>출근시간</SideText>
-              <TimePickBoxTimeText isSelected={!!startTime}>
-                {startTime || '00:00'}
+              <TimePickBoxTimeText
+                isSelected={!!moment(startTime).format('HH:mm')}>
+                {startTimeSet ? moment(startTime).format('HH:mm') : '00:00'}
               </TimePickBoxTimeText>
             </RowSpaceTouchable>
             <WhiteSpace />
             <RowSpaceTouchable onPress={() => setIsEndTimeModalVisible(true)}>
               <SideText>퇴근시간</SideText>
-              <TimePickBoxTimeText isSelected={!!endTime}>
-                {endTime || '00:00'}
+              <TimePickBoxTimeText
+                isSelected={!!moment(endTime).format('HH:mm')}>
+                {endTimeSet ? moment(endTime).format('HH:mm') : '00:00'}
               </TimePickBoxTimeText>
             </RowSpaceTouchable>
           </Section>
@@ -375,44 +426,94 @@ export default ({
           />
         </Container>
       </ScrollView>
-      <DatePickerModal
-        isDarkModeEnabled={false}
-        headerTextIOS={'시간을 선택하세요.'}
-        cancelTextIOS={'취소'}
-        confirmTextIOS={'선택'}
+      <Modal
+        onRequestClose={() => setIsStartTimeModalVisible(false)}
+        onBackdropPress={() => setIsStartTimeModalVisible(false)}
         isVisible={isStartTimeModalVisible}
-        isDarkModeEnabled={false}
-        textColor="black"
-        minuteInterval={10}
-        date={new Date().setHours(9, [0])}
-        mode="time"
-        locale="ko_KRus_EN"
-        onConfirm={(time) => {
-          setIsStartTimeModalVisible(false);
-          setStartTime(moment(time).format('HH:mm'));
-        }}
-        is24Hour={true}
-        onCancel={() => setIsStartTimeModalVisible(false)}
-      />
-      <DatePickerModal
-        isDarkModeEnabled={false}
-        headerTextIOS={'시간을 선택하세요.'}
-        cancelTextIOS={'취소'}
-        confirmTextIOS={'선택'}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(startTime).toDate()}
+            mode={'time'}
+            androidVariant="iosClone"
+            onDateChange={(time) => {
+              setStartTimeSet(true);
+              setStartTime(time);
+            }}
+            minimumDate={moment(startDate).add(1, 'days').toDate()}
+            is24hourSource="locale"
+            minuteInterval={10}
+          />
+          {startTimeSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsStartTimeModalVisible(false);
+                setStartTimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      <Modal
+        onRequestClose={() => setIsEndTimeModalVisible(false)}
+        onBackdropPress={() => setIsEndTimeModalVisible(false)}
         isVisible={isEndTimeModalVisible}
-        isDarkModeEnabled={false}
-        textColor="black"
-        minuteInterval={10}
-        date={new Date().setHours(18, [0])}
-        mode="time"
-        locale="ko_KRus_EN"
-        onConfirm={(time) => {
-          setIsEndTimeModalVisible(false);
-          setEndTime(moment(time).format('HH:mm'));
-        }}
-        is24Hour={true}
-        onCancel={() => setIsEndTimeModalVisible(false)}
-      />
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(endTime).toDate()}
+            mode={'time'}
+            androidVariant="iosClone"
+            onDateChange={(time) => {
+              setEndTimeSet(true);
+              setEndTime(time);
+            }}
+            minimumDate={moment(startDate).add(1, 'days').toDate()}
+            is24hourSource="locale"
+            minuteInterval={10}
+          />
+          {endTimeSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsEndTimeModalVisible(false);
+                setEndTimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
     </BackGround>
   );
 };

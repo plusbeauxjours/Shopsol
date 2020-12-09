@@ -51,9 +51,9 @@ export default () => {
         MobileNo: mobileNo,
         PASSWORD: password,
         Device_Version: DEVICE_SYSTEM_VERSION || '',
-        Device_Platform: DEVICE_PLATFORM,
+        Device_Platform: DEVICE_PLATFORM || '',
         Device_Model: DEVICE_MODEL || '',
-        App_Version: utils.appVersion,
+        App_Version: utils.appVersion || '',
         USERID: PUSH_TOKEN,
         push: PUSH_TOKEN,
       });

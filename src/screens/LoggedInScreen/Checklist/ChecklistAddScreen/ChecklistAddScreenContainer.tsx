@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 import {setSplashVisible} from '~/redux/splashSlice';
 import {setAlertVisible, setAlertInfo} from '~/redux/alertSlice';
@@ -39,9 +40,10 @@ export default ({route: {params}}) => {
   const [isCheckedCamera, setIsCheckedCamera] = useState<boolean>(
     PHOTO_CHECK == '1' ? true : false,
   );
-  const [customChecktime, setCustomChecktime] = useState<string>(
-    CHECK_TIME || null,
+  const [customChecktime, setCustomChecktime] = useState<any>(
+    CHECK_TIME ? moment(CHECK_TIME) : moment(),
   );
+  const [customChecktimeSet, setCustomChecktimeSet] = useState<boolean>(false);
   const [isCustomModalVisible, setIsCustomModalVisible] = useState<boolean>(
     false,
   ); // 시간/분 입력 모달 활성화 여부
@@ -159,7 +161,9 @@ export default ({route: {params}}) => {
             LIST: newlist,
             STORE_SEQ,
             TITLE,
-            createdData: isNoCheckedtime ? '' : customChecktime,
+            createdData: isNoCheckedtime
+              ? ''
+              : moment(customChecktime).format('HH:mm'),
             PHOTO_CHECK: isCheckedCamera ? '1' : '0',
             EMP_SEQ: newChoiceEmp,
           });
@@ -176,7 +180,9 @@ export default ({route: {params}}) => {
             LIST: newlist,
             STORE_SEQ,
             TITLE,
-            createdData: isNoCheckedtime ? '' : customChecktime,
+            createdData: isNoCheckedtime
+              ? ''
+              : moment(customChecktime).format('HH:mm'),
             PHOTO_CHECK: isCheckedCamera ? '1' : '0',
           });
           if (data.message === 'SUCCESS') {
@@ -204,7 +210,9 @@ export default ({route: {params}}) => {
             LIST: newlist,
             CHECK_SEQ,
             TITLE,
-            createdData: isNoCheckedtime ? '' : customChecktime,
+            createdData: isNoCheckedtime
+              ? ''
+              : moment(customChecktime).format('HH:mm'),
             PHOTO_CHECK: isCheckedCamera ? '1' : '0',
             EMP_SEQ: newChoiceEmp,
           });
@@ -223,7 +231,9 @@ export default ({route: {params}}) => {
             LIST: newlist,
             CHECK_SEQ,
             TITLE,
-            createdData: isNoCheckedtime ? '' : customChecktime,
+            createdData: isNoCheckedtime
+              ? ''
+              : moment(customChecktime).format('HH:mm'),
             PHOTO_CHECK: isCheckedCamera ? '1' : '0',
           });
           if (data.message === 'SUCCESS') {
@@ -294,6 +304,8 @@ export default ({route: {params}}) => {
       toastFn={toastFn}
       isToastVisible={isToastVisible}
       alertModal={alertModal}
+      customChecktimeSet={customChecktimeSet}
+      setCustomChecktimeSet={setCustomChecktimeSet}
     />
   );
 };

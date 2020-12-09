@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import WorkTimeScreenPresenter from './WorkTimeScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
@@ -28,6 +29,7 @@ export default ({route: {params}}) => {
       UPDATED_START = null,
       UPDATED_END = null,
       TYPE = null,
+      AUTOWORKOFF = null,
     },
     date,
   } = params;
@@ -38,19 +40,26 @@ export default ({route: {params}}) => {
   const [incentiveCheck, setIncentiveCheck] = useState<
     [boolean, boolean, boolean]
   >([true, false, false]); // [기본급 적용(1배), 야간근무수당 적용(1.5배), 야간근무수당 적용(2배)]
-  const [startTime, setStartTime] = useState<string>(
-    ATTENDANCE_TIME?.substring(0, 5) ??
-      UPDATED_START?.substring(0, 5) ??
-      START?.substring(0, 5),
+  const [startTime, setStartTime] = useState<any>(
+    CHANGE_START
+      ? moment(CHANGE_START?.substring(0, 5), 'HH:mm')
+      : ATTENDANCE_TIME
+      ? moment(ATTENDANCE_TIME?.substring(0, 5), 'HH:mm')
+      : moment(START?.substring(0, 5), 'HH:mm'),
   );
-  const [endTime, setEndTime] = useState<string>(
-    WORK_OFF_TIME?.substring(0, 5) ??
-      UPDATED_END?.substring(0, 5) ??
-      END?.substring(0, 5),
+  const [endTime, setEndTime] = useState<any>(
+    CHANGE_END
+      ? moment(CHANGE_END?.substring(0, 5), 'HH:mm')
+      : WORK_OFF_TIME
+      ? moment(WORK_OFF_TIME?.substring(0, 5), 'HH:mm')
+      : moment(END?.substring(0, 5), 'HH:mm'),
   );
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
+  const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -76,8 +85,8 @@ export default ({route: {params}}) => {
             EMP_ID,
             START,
             END,
-            CHANGE_START: startTime,
-            CHANGE_END: endTime,
+            CHANGE_START: moment(startTime).format('HH:mm'),
+            CHANGE_END: moment(endTime).format('HH:mm'),
           }),
         );
         navigation.goBack();
@@ -86,8 +95,8 @@ export default ({route: {params}}) => {
           STORE_ID: STORE_SEQ,
           EMP_ID,
           EMP_NAME: NAME,
-          START: startTime,
-          END: endTime,
+          START: moment(startTime).format('HH:mm'),
+          END: moment(endTime).format('HH:mm'),
           DATE: date,
           TYPE: '1',
           SCHEDULETYPE: '0',
@@ -104,8 +113,8 @@ export default ({route: {params}}) => {
             EMP_ID,
             START,
             END,
-            CHANGE_START: startTime,
-            CHANGE_END: endTime,
+            CHANGE_START: moment(startTime).format('HH:mm'),
+            CHANGE_END: moment(endTime).format('HH:mm'),
           }),
         );
         navigation.goBack();
@@ -113,8 +122,8 @@ export default ({route: {params}}) => {
         await api.updateSchedule({
           SCH_ID,
           EMP_ID,
-          START: startTime,
-          END: endTime,
+          START: moment(startTime).format('HH:mm'),
+          END: moment(endTime).format('HH:mm'),
           TYPE: '1',
           STATUS: '0',
           STYPE: '',
@@ -153,6 +162,11 @@ export default ({route: {params}}) => {
       setStartTime={setStartTime}
       setEndTime={setEndTime}
       TYPE={TYPE}
+      AUTOWORKOFF={AUTOWORKOFF}
+      startTimeSet={startTimeSet}
+      setStartTimeSet={setStartTimeSet}
+      endTimeSet={endTimeSet}
+      setEndTimeSet={setEndTimeSet}
     />
   );
 };
