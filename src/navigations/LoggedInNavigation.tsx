@@ -77,7 +77,6 @@ import RootModal from '../components/RootModal';
 import BackBtn from '../components/Header/BackBtn';
 import HomeBtn from '../components/Header/HomeBtn';
 import CalendarInfoHeader from '../components/Header/CalendarInfoHeader';
-import ShelfLifeCheckHeader from '../components/Header/ShelfLifeCheckHeader';
 
 const LoggedInNavigation = createStackNavigator();
 export default () => {
@@ -86,7 +85,8 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SelectStoreScreen'}
+        // initialRouteName={'SelectStoreScreen'}
+        initialRouteName={'CalendarInfoScreen'}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#e85356',

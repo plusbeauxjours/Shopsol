@@ -6,14 +6,15 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Calendar} from 'react-native-calendars';
-import DatePickerModal from 'react-native-modal-datetime-picker';
 import DatePicker from 'react-native-date-picker';
+import Modal from 'react-native-modal';
+import Ripple from 'react-native-material-ripple';
+import moment from 'moment';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {AddCircleIcon, RemoveCircleIcon, EllipseIcon} from '~/constants/Icons';
 import CalendarAddScreenCard from './CalendarAddScreenCard';
 import RoundBtn from '~/components/Btn/RoundBtn';
-import moment from 'moment';
 import {
   DownIcon,
   UpIcon,
@@ -203,6 +204,48 @@ const ModalPopup = styled.View`
   background-color: ${utils.isAndroid ? '#888' : 'rgba(0,0,0,0.7)'};
 `;
 
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+`;
+
 export default ({
   alertModal,
   markedDates,
@@ -231,6 +274,10 @@ export default ({
   setEndTime,
   toastFn,
   isToastVisible,
+  startTimeSet,
+  setStartTimeSet,
+  endTimeSet,
+  setEndTimeSet,
 }) => {
   const RBSheetRef = useRef(null);
   const FixScheduleStepOne = () => (
@@ -267,15 +314,15 @@ export default ({
       <TimePickBox>
         <TimeRowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
           <SideText>출근시간</SideText>
-          <TimePickBoxTimeText isSelected={!!startTime}>
-            {startTime || '00:00'}
+          <TimePickBoxTimeText isSelected={!!moment(startTime).format('HH:mm')}>
+            {startTimeSet ? moment(startTime).format('HH:mm') : '00:00'}
           </TimePickBoxTimeText>
         </TimeRowSpaceTouchable>
         <WhiteSpace />
         <TimeRowSpaceTouchable onPress={() => setIsEndTimeModalVisible(true)}>
           <SideText>퇴근시간</SideText>
-          <TimePickBoxTimeText isSelected={!!endTime}>
-            {endTime || '00:00'}
+          <TimePickBoxTimeText isSelected={!!moment(endTime).format('HH:mm')}>
+            {endTimeSet ? moment(endTime).format('HH:mm') : '00:00'}
           </TimePickBoxTimeText>
         </TimeRowSpaceTouchable>
       </TimePickBox>
@@ -481,13 +528,93 @@ export default ({
           </ModalPopupArea>
         )}
       </RBSheet>
-      {/* <DatePicker
-        mode={'time'}
-        date={new Date(startTime)}
-        androidVariant="iosClone"
-        onDateChange={(time) => console.log(time)}
-      /> */}
-      <DatePickerModal
+      <Modal
+        onRequestClose={() => setIsStartTimeModalVisible(false)}
+        onBackdropPress={() => setIsStartTimeModalVisible(false)}
+        isVisible={isStartTimeModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(startTime).toDate()}
+            mode={'time'}
+            androidVariant="iosClone"
+            onDateChange={(time) => {
+              setStartTimeSet(true);
+              setStartTime(time);
+            }}
+            is24hourSource="locale"
+            minuteInterval={10}
+          />
+          {startTimeSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsStartTimeModalVisible(false);
+                setStartTimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      <Modal
+        onRequestClose={() => setIsEndTimeModalVisible(false)}
+        onBackdropPress={() => setIsEndTimeModalVisible(false)}
+        isVisible={isEndTimeModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(endTime).toDate()}
+            mode={'time'}
+            androidVariant="iosClone"
+            onDateChange={(time) => {
+              setEndTimeSet(true);
+              setEndTime(time);
+            }}
+            is24hourSource="locale"
+            minuteInterval={10}
+          />
+          {endTimeSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsEndTimeModalVisible(false);
+                setEndTimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      {/* <DatePickerModal
         isDarkModeEnabled={false}
         headerTextIOS={'출근시간을 선택하세요.'}
         cancelTextIOS={'취소'}
@@ -524,7 +651,7 @@ export default ({
         }}
         is24Hour={true}
         onCancel={() => setIsEndTimeModalVisible(false)}
-      />
+      /> */}
     </BackGround>
   );
 };

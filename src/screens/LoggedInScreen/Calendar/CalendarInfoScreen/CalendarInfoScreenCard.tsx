@@ -128,6 +128,7 @@ export default ({
   START_TIME,
   END_TIME,
   REST_TIME,
+  AUTOWORKOFF,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -319,13 +320,18 @@ export default ({
                 </WorkTimeText>
               </WorkTime>
             )}
-            {UPDATED_START == null && UPDATED_END == null ? (
+            {!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END ? (
               <WorkTime>
                 <WorkTitleText>출퇴근시간 </WorkTitleText>
                 <WorkTimeText>
                   {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
-                  {isNextDay3 && '익일 '}
-                  {(END_TIME || '미퇴근')?.substring(0, 5)}
+                  {START_TIME && AUTOWORKOFF == '1'
+                    ? '퇴근미체크'
+                    : isNextDay3
+                    ? `익일 ${END_TIME?.substring(0, 5)}`
+                    : END_TIME
+                    ? END_TIME?.substring(0, 5)
+                    : '미퇴근'}
                 </WorkTimeText>
               </WorkTime>
             ) : (
@@ -333,11 +339,23 @@ export default ({
                 <WorkTitleText>출퇴근시간 </WorkTitleText>
                 <WorkTimeText>
                   {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
-                  {isNextDay3 && '익일 '}
-                  {(END_TIME || '미퇴근')?.substring(0, 5)}&nbsp;&gt;&nbsp;
-                  {(UPDATED_START || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
-                  {isNextDay4 && '익일 '}
-                  {(UPDATED_END || '미퇴근')?.substring(0, 5)}
+                  {START_TIME && AUTOWORKOFF == '1'
+                    ? '퇴근미체크'
+                    : isNextDay3
+                    ? `익일 ${END_TIME?.substring(0, 5)}`
+                    : END_TIME
+                    ? END_TIME?.substring(0, 5)
+                    : '미퇴근'}
+                  &nbsp;&gt;&nbsp;
+                  {!UPDATED_START ? '미출근' : UPDATED_START.substring(0, 5)}
+                  &nbsp;~&nbsp;
+                  {UPDATED_START && AUTOWORKOFF == '1'
+                    ? '퇴근미체크'
+                    : isNextDay4
+                    ? `익일 ${UPDATED_END?.substring(0, 5)}`
+                    : UPDATED_END
+                    ? UPDATED_END?.substring(0, 5)
+                    : '미퇴근'}
                 </WorkTimeText>
               </WorkTime>
             )}

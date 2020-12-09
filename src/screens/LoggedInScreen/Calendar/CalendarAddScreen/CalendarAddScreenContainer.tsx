@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import CalendarAddScreenPresenter from './CalendarAddScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
@@ -17,8 +18,10 @@ export default () => {
 
   const [emplist, setEmplist] = useState<any>([]);
   const [choiceEmp, setChoiceEmp] = useState<any>([]);
-  const [startTime, setStartTime] = useState<string>(null);
-  const [endTime, setEndTime] = useState<string>(null);
+  const [startTime, setStartTime] = useState<any>(moment());
+  const [endTime, setEndTime] = useState<any>(moment());
+  const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
+  const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
   const [timeSelected, setTimeSelected] = useState<any>(null);
   const [timeCheck, setTimeCheck] = useState<any>([]);
   const [markedDates, setMarkedDates] = useState<any>({});
@@ -26,10 +29,9 @@ export default () => {
   const [incentiveCheck, setIncentiveCheck] = useState<
     [boolean, boolean, boolean]
   >([true, false, false]); // [기본급 적용(1배), 야간근무수당 적용(1.5배), 야간근무수당 적용(2배)]
-  const [
-    isStartTimeModalVisible,
-    setIsStartTimeModalVisible,
-  ] = useState<boolean>(false);
+  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
+    boolean
+  >(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -148,13 +150,17 @@ export default () => {
   // 출퇴근 목록에서 출퇴근 목록에 추가 버튼
   const checkAddTimeFn = () => {
     setTimeSelected(0);
-    if (!startTime || !endTime) {
+    if (!startTimeSet || !endTimeSet) {
       return alertModal('출퇴근 시간을 먼저 입력해주세요.');
-    } else if (startTime == endTime) {
+    } else if (
+      moment(startTime).format('HH:mm') == moment(endTime).format('HH:mm')
+    ) {
       return alertModal('출퇴근 시간을 다르게 입력해주세요.');
     } else if (timeCheck.length >= 7) {
       return alertModal('일정은 7개가 최대입니다.');
     } else {
+      setStartTimeSet(false);
+      setEndTimeSet(false);
       let value = JSON.parse(JSON.stringify(timeCheck));
       let color = [
         '#0D4F8A',
@@ -168,8 +174,8 @@ export default () => {
       let temp, tempIndex;
       if (timeCheck.length === 0) {
         temp = {
-          start: startTime,
-          end: endTime,
+          start: moment(startTime).format('HH:mm'),
+          end: moment(endTime).format('HH:mm'),
           color: color[timeCheck.length],
         };
       } else {
@@ -178,8 +184,8 @@ export default () => {
           color.splice(tempIndex, 1);
         }
         temp = {
-          start: startTime,
-          end: endTime,
+          start: moment(startTime).format('HH:mm'),
+          end: moment(endTime).format('HH:mm'),
           color: color[0],
         };
       }
@@ -257,6 +263,10 @@ export default () => {
       setEndTime={setEndTime}
       toastFn={toastFn}
       isToastVisible={isToastVisible}
+      startTimeSet={startTimeSet}
+      setStartTimeSet={setStartTimeSet}
+      endTimeSet={endTimeSet}
+      setEndTimeSet={setEndTimeSet}
     />
   );
 };

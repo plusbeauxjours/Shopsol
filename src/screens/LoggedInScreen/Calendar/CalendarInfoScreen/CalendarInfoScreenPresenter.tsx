@@ -93,6 +93,7 @@ export default ({
       START_TIME={data.START_TIME}
       END_TIME={data.END_TIME}
       REST_TIME={data.REST_TIME}
+      AUTOWORKOFF={data.AUTOWORKOFF}
     />
   );
 

@@ -5,7 +5,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
-import DatePickerModal from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-date-picker';
+import Modal from 'react-native-modal';
+import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
@@ -82,14 +84,16 @@ const NormalBox = styled.TouchableOpacity<IsSelected>`
   height: 50px;
   margin: 0 5px;
   border-radius: 10px;
-  border-width: 1px;
-  border-color: ${(props) => (props.isSelected ? '#ccc' : '#e85356')};
+  border-width: ${(props) => (props.isSelected ? 0 : 1)}px;
+  border-color: ${(props) => (props.isSelected ? 'transparent' : '#dedede')};
+  background-color: ${(props) =>
+    props.isSelected ? '#e85356' : 'transparent'};
   align-items: center;
   justify-content: center;
 `;
 
 const NormalText = styled.Text<IsSelected>`
-  color: ${(props) => (props.isSelected ? '#ccc' : '#e85356')};
+  color: ${(props) => (props.isSelected ? 'white' : '#dedede')};
   font-size: 14px;
 `;
 
@@ -138,6 +142,48 @@ const TimePickBoxTimeText = styled.Text<IsSelected>`
   color: ${(props) => (props.isSelected ? '#e85356' : '#cccccc')};
 `;
 
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+`;
+
 export default ({
   startTime,
   endTime,
@@ -161,7 +207,18 @@ export default ({
   setIsEndTimeModalVisible,
   setStartTime,
   setEndTime,
+  startTimeSet,
+  setStartTimeSet,
+  endTimeSet,
+  setEndTimeSet,
+  noStart,
+  noEnd,
+  AUTOWORKOFF,
 }) => {
+  const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);
+  const isNextDay2 = CHANGE_START > CHANGE_END;
+  const isNextDay3 = START_TIME > END_TIME;
+  const isNextDay4 = UPDATED_START > UPDATED_END;
   const FixScheduleStepOne = () => (
     <Section>
       <Row>
@@ -176,42 +233,66 @@ export default ({
         />
         <CntArea>
           <NameText style={{marginBottom: 10}}>{NAME}</NameText>
-          {CHANGE_START ? (
+          {!CHANGE_START && !CHANGE_END ? (
             <WorkTime>
               <WorkTitleText>근무시간 </WorkTitleText>
               <WorkTimeText>
-                {(ATTENDANCE_TIME || START)?.substring(0, 5)} ~&nbsp;
-                {(WORK_OFF_TIME || END)?.substring(0, 5)} >&nbsp;
-                {CHANGE_START == null ? '' : CHANGE_START?.substring(0, 5)}{' '}
-                ~&nbsp;
-                {CHANGE_END == null ? '' : CHANGE_END?.substring(0, 5)}
-              </WorkTimeText>
-            </WorkTime>
-          ) : (
-            <WorkTime>
-              <WorkTitleText>근무시간 </WorkTitleText>
-              <WorkTimeText>
-                {(ATTENDANCE_TIME || START)?.substring(0, 5)} ~&nbsp;
+                {(ATTENDANCE_TIME || START)?.substring(0, 5)}
+                &nbsp;~&nbsp;{isNextDay1 && '익일 '}
                 {(WORK_OFF_TIME || END)?.substring(0, 5)}
               </WorkTimeText>
             </WorkTime>
+          ) : (
+            <WorkTime>
+              <WorkTitleText>근무시간 </WorkTitleText>
+              <WorkTimeText>
+                {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
+                {isNextDay1 && '익일 '}
+                {(WORK_OFF_TIME || END)?.substring(0, 5)}
+                {CHANGE_START && CHANGE_END && ' > '}
+                {CHANGE_START && CHANGE_START?.substring(0, 5)}
+                {CHANGE_START && CHANGE_END && ' ~ '}
+                {isNextDay2 && '익일 '}
+                {CHANGE_END && CHANGE_END?.substring(0, 5)}
+              </WorkTimeText>
+            </WorkTime>
           )}
-          {UPDATED_START == null && UPDATED_END == null ? (
+          {!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END ? (
             <WorkTime>
               <WorkTitleText>출퇴근시간 </WorkTitleText>
               <WorkTimeText>
-                {(START_TIME || '미출근')?.substring(0, 5)} ~&nbsp;
-                {(END_TIME || '미퇴근')?.substring(0, 5)}
+                {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
+                {START_TIME && AUTOWORKOFF == '1'
+                  ? '퇴근미체크'
+                  : isNextDay3
+                  ? `익일 ${END_TIME?.substring(0, 5)}`
+                  : END_TIME
+                  ? END_TIME?.substring(0, 5)
+                  : '미퇴근'}
               </WorkTimeText>
             </WorkTime>
           ) : (
             <WorkTime>
               <WorkTitleText>출퇴근시간 </WorkTitleText>
               <WorkTimeText>
-                {(START_TIME || '미출근')?.substring(0, 5)} ~&nbsp;
-                {(END_TIME || '미퇴근')?.substring(0, 5)} >&nbsp;
-                {(UPDATED_START || '미출근')?.substring(0, 5)} ~&nbsp;
-                {(UPDATED_END || '미퇴근')?.substring(0, 5)}
+                {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
+                {START_TIME && AUTOWORKOFF == '1'
+                  ? '퇴근미체크'
+                  : isNextDay3
+                  ? `익일 ${END_TIME?.substring(0, 5)}`
+                  : END_TIME
+                  ? END_TIME?.substring(0, 5)
+                  : '미퇴근'}
+                &nbsp;&gt;&nbsp;
+                {!UPDATED_START ? '미출근' : UPDATED_START.substring(0, 5)}
+                &nbsp;~&nbsp;
+                {UPDATED_START && AUTOWORKOFF == '1'
+                  ? '퇴근미체크'
+                  : isNextDay4
+                  ? `익일 ${UPDATED_END?.substring(0, 5)}`
+                  : UPDATED_END
+                  ? UPDATED_END?.substring(0, 5)
+                  : '미퇴근'}
               </WorkTimeText>
             </WorkTime>
           )}
@@ -226,45 +307,49 @@ export default ({
         <TitleText>변경할 출퇴근시간</TitleText>
       </RowTitle>
       <TimePickBox>
-        <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
+        <RowSpaceTouchable
+          disabled={noStart}
+          onPress={() => setIsStartTimeModalVisible(true)}>
           <SideText>출근시간</SideText>
-          <TimePickBoxTimeText isSelected={!!startTime}>
-            {startTime || '00:00'}
+          <TimePickBoxTimeText isSelected={!noStart}>
+            {noStart ? '00:00' : moment(startTime).format('HH:mm')}
           </TimePickBoxTimeText>
         </RowSpaceTouchable>
         <WhiteSpace />
-        <RowSpaceTouchable onPress={() => setIsEndTimeModalVisible(true)}>
+        <RowSpaceTouchable
+          disabled={noEnd}
+          onPress={() => setIsEndTimeModalVisible(true)}>
           <SideText>퇴근시간</SideText>
-          <TimePickBoxTimeText isSelected={!!endTime}>
-            {endTime || '00:00'}
+          <TimePickBoxTimeText isSelected={!noEnd}>
+            {noEnd ? '00:00' : moment(endTime).format('HH:mm')}
           </TimePickBoxTimeText>
         </RowSpaceTouchable>
       </TimePickBox>
       <WhiteSpace />
       <NormalContainer>
         <NormalBox
-          disabled={startTime !== '미출근'}
+          disabled={!noStart}
           onPress={() => nomalTimeFn('start')}
-          isSelected={startTime !== '미출근'}>
-          <NormalText isSelected={startTime !== '미출근'}>정상출근</NormalText>
+          isSelected={!noStart}>
+          <NormalText isSelected={!noStart}>정상출근</NormalText>
         </NormalBox>
         <NormalBox
-          disabled={endTime !== '미퇴근'}
+          disabled={!noEnd}
           onPress={() => nomalTimeFn('end')}
-          isSelected={endTime !== '미퇴근'}>
-          <NormalText isSelected={endTime !== '미퇴근'}>정상퇴근</NormalText>
+          isSelected={!noEnd}>
+          <NormalText isSelected={!noEnd}>정상퇴근</NormalText>
         </NormalBox>
         <NormalBox
-          disabled={startTime === '미출근'}
+          disabled={noStart}
           onPress={() => nomalTimeFn('deleteStart')}
-          isSelected={startTime === '미출근'}>
-          <NormalText isSelected={startTime === '미출근'}>미출근</NormalText>
+          isSelected={noStart}>
+          <NormalText isSelected={noStart}>미출근</NormalText>
         </NormalBox>
         <NormalBox
-          disabled={endTime === '미퇴근'}
+          disabled={noEnd}
           onPress={() => nomalTimeFn('deleteEnd')}
-          isSelected={endTime === '미퇴근'}>
-          <NormalText isSelected={endTime === '미퇴근'}>미퇴근</NormalText>
+          isSelected={noEnd}>
+          <NormalText isSelected={noEnd}>미퇴근</NormalText>
         </NormalBox>
       </NormalContainer>
     </Section>
@@ -286,44 +371,92 @@ export default ({
           />
         </Container>
       </ScrollView>
-      <DatePickerModal
-        isDarkModeEnabled={false}
-        headerTextIOS={'시간을 선택하세요.'}
-        cancelTextIOS={'취소'}
-        confirmTextIOS={'선택'}
+      <Modal
+        onRequestClose={() => setIsStartTimeModalVisible(false)}
+        onBackdropPress={() => setIsStartTimeModalVisible(false)}
         isVisible={isStartTimeModalVisible}
-        isDarkModeEnabled={false}
-        textColor="black"
-        minuteInterval={10}
-        date={new Date().setHours(9, [0])}
-        mode="time"
-        locale="ko_KRus_EN"
-        onConfirm={(time) => {
-          setIsStartTimeModalVisible(false);
-          setStartTime(moment(time).format('HH:mm'));
-        }}
-        is24Hour={true}
-        onCancel={() => setIsStartTimeModalVisible(false)}
-      />
-      <DatePickerModal
-        isDarkModeEnabled={false}
-        headerTextIOS={'시간을 선택하세요.'}
-        cancelTextIOS={'취소'}
-        confirmTextIOS={'선택'}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(startTime).toDate()}
+            mode={'time'}
+            androidVariant="iosClone"
+            onDateChange={(time) => {
+              setStartTimeSet(true);
+              setStartTime(time);
+            }}
+            is24hourSource="locale"
+            minuteInterval={10}
+          />
+          {startTimeSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsStartTimeModalVisible(false);
+                setStartTimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      <Modal
+        onRequestClose={() => setIsEndTimeModalVisible(false)}
+        onBackdropPress={() => setIsEndTimeModalVisible(false)}
         isVisible={isEndTimeModalVisible}
-        isDarkModeEnabled={false}
-        textColor="black"
-        minuteInterval={10}
-        date={new Date().setHours(18, [0])}
-        mode="time"
-        locale="ko_KRus_EN"
-        onConfirm={(time) => {
-          setIsEndTimeModalVisible(false);
-          setEndTime(moment(time).format('HH:mm'));
-        }}
-        is24Hour={true}
-        onCancel={() => setIsEndTimeModalVisible(false)}
-      />
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(endTime).toDate()}
+            mode={'time'}
+            androidVariant="iosClone"
+            onDateChange={(time) => {
+              setEndTimeSet(true);
+              setEndTime(time);
+            }}
+            is24hourSource="locale"
+            minuteInterval={10}
+          />
+          {endTimeSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsEndTimeModalVisible(false);
+                setEndTimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
     </BackGround>
   );
 };
