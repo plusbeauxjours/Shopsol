@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>44557955526-256cq7mdcfjd531hn4jgpgtl67ot7hfj.apps.googleusercontent.com</string>
+	<string>44557955526-f4j5916p324ncdoirlln72vknhabq8u7.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.44557955526-256cq7mdcfjd531hn4jgpgtl67ot7hfj</string>
+	<string>com.googleusercontent.apps.44557955526-f4j5916p324ncdoirlln72vknhabq8u7</string>
 	<key>API_KEY</key>
 	<string>AIzaSyATCfu_c5BpH6XeaX3jpGxu_9UayhrZKF0</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.shopsolwesop</string>
+	<string>com.shopsolMasterWesop</string>
 	<key>PROJECT_ID</key>
 	<string>shopsol-f86dd</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:44557955526:ios:e4197f0c5509b3b9c382c7</string>
+	<string>1:44557955526:ios:1e9329c2fad7be70c382c7</string>
 	<key>DATABASE_URL</key>
 	<string>https://shopsol-f86dd.firebaseio.com</string>
 </dict>

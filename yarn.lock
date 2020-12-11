@@ -6724,6 +6724,11 @@ react-native-image-pan-zoom@^2.1.12:
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
   integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==
 
+react-native-image-picker@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-3.0.1.tgz#2b361904793ea108b61342ee25fab898de19bbdf"
+  integrity sha512-jVWiKT24jxr7K8dAixlsfHURZd+eDA4WWYeZhhKeJDGITCtFPphcTuFomTMtaWYE/gJgNTEL8TiLedcfeqJ9qw==
+
 react-native-image-viewing@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-native-image-viewing/-/react-native-image-viewing-0.2.0.tgz#3c0bc67cfb9aa7607cec632139d7ef4c45e07e4e"

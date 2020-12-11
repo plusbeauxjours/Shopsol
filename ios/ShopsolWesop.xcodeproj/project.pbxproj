@@ -754,7 +754,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolwesop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolMasterWesop;
 				PRODUCT_NAME = ShopsolWesop;
 				SWIFT_OBJC_BRIDGING_HEADER = "ShopsolWesop-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -779,7 +779,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolwesop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolMasterWesop;
 				PRODUCT_NAME = ShopsolWesop;
 				SWIFT_OBJC_BRIDGING_HEADER = "ShopsolWesop-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -807,7 +807,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolwesop-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolMasterWesop-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -835,7 +835,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolwesop-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolMasterWesop-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -862,7 +862,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolwesop-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolMasterWesop-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShopsolWesop-tvOS.app/ShopsolWesop-tvOS";
@@ -889,7 +889,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolwesop-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shopsolMasterWesop-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShopsolWesop-tvOS.app/ShopsolWesop-tvOS";

@@ -45,7 +45,7 @@ const Footer = styled.View`
 
 const FooterText = styled.Text`
   margin-top: 5px;
-  color: #777;
+  color: #7f7f7f;
   font-weight: bold;
   font-size: 15px;
 `;

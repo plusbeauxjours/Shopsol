@@ -165,15 +165,15 @@ android {
 
     defaultConfig {
         targetSdkVersion 29
-        applicationId "com.shopsolwesop"
+        applicationId "com.shopsolMasterWesop"
         minSdkVersion rootProject.ext.minSdkVersion
         missingDimensionStrategy 'react-native-camera', 'general'
         targetSdkVersion rootProject.ext.targetSdkVersion
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 6
-        versionName "1.0.6"
+        versionCode 7
+        versionName "1.0.7"
     }
     splits {
         abi {

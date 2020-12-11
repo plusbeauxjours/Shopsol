@@ -1,4 +1,4 @@
-package com.shopsolwesop;
+package com.shopsolMasterWesop;
 
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;

@@ -44,6 +44,7 @@
     "react-native-geolocation-service": "5.0.0",
     "react-native-gesture-handler": "1.7.0",
     "react-native-image-crop-picker": "0.33.0",
+    "react-native-image-picker": "3.0.1",
     "react-native-image-viewing": "0.2.0",
     "react-native-image-zoom-viewer": "3.0.1",
     "react-native-iphone-x-helper": "1.2.1",

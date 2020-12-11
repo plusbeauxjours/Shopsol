@@ -87,18 +87,18 @@ export default ({route: {params}}) => {
             type: fileType,
           });
         }
-        const {data} = await api.setNoticeImg(formData);
-        if (data.result === 'SUCCESS') {
-          alertModal(`${params.TITLE}이 등록되었습니다.`);
-          if (params.TITLE === '지시사항') {
-            dispatch(getCHECKLIST_SHARE_DATA1(date));
-          } else {
-            dispatch(getCHECKLIST_SHARE_DATA2(date));
-          }
-          navigation.goBack();
-        } else {
-          alertModal('연결에 실패하였습니다.');
-        }
+        // const {data} = await api.setNoticeImg(formData);
+        // if (data.result === 'SUCCESS') {
+        //   alertModal(`${params.TITLE}이 등록되었습니다.`);
+        //   if (params.TITLE === '지시사항') {
+        //     dispatch(getCHECKLIST_SHARE_DATA1(date));
+        //   } else {
+        //     dispatch(getCHECKLIST_SHARE_DATA2(date));
+        //   }
+        //   navigation.goBack();
+        // } else {
+        //   alertModal('연결에 실패하였습니다.');
+        // }
       } catch (e) {
         console.log(e);
       } finally {
@@ -136,8 +136,9 @@ export default ({route: {params}}) => {
   };
 
   const takePictureFn = async (cameraRef) => {
-    const options = {quality: 0.8, base64: true, width: 720, height: 720};
+    const options = {quality: 0.8, base64: true, width: 540, height: 720};
     const data = await cameraRef.current.takePictureAsync(options);
+    console.log('data', data);
     setCameraPictureLast(data.uri);
   };
 

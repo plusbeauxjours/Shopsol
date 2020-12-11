@@ -215,7 +215,7 @@ export default ({
               <InputLine isBefore={name == '' ? true : false} />
             </Case>
             <WhiteSpace />
-            {/* <Case>
+            <Case>
               <NameText>성별</NameText>
               <TypeCheckCase>
                 <View>{genderType(0, '남자')}</View>
@@ -239,7 +239,7 @@ export default ({
               </Touchable>
               <InputLine isBefore={birthDate == '' ? true : false} />
             </Case>
-            <WhiteSpace /> */}
+            <WhiteSpace />
             <DatePickerModal
               isDarkModeEnabled={false}
               headerTextIOS={'생일을 선택하세요.'}

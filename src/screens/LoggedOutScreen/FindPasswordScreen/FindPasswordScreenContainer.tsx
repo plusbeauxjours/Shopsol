@@ -122,7 +122,7 @@ export default () => {
   };
 
   const onVerifyCode = async () => {
-    if (verifyCode == '369369') {
+    if (verifyCode == '......') {
       clearInterval(timer);
       setIsVerified(true);
       setIsCountDownStarted(false);
