@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
+import ImageResizer from 'react-native-image-resizer';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
@@ -28,8 +29,9 @@ export default ({route: {params}}) => {
   );
   const [dateModalVisible, setDateModalVisible] = useState<boolean>(false);
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(
-    params?.EDUCATION_DATE || moment().format('YYYY-MM-DD'),
+    moment(params?.EDUCATION_DATE) || moment(),
   ); // 교육일시 / 검진일
+  const [EDUCATION_DATE_SET, setEDUCATION_DATE_SET] = useState<boolean>(false);
   const [NAME, setNAME] = useState<string>(params?.NAME || ''); // 교육이수자성명 / 성명
   const [RESULT_COUNT, setRESULT_COUNT] = useState<any>(params?.RESULT_COUNT); // 회차
 
@@ -59,12 +61,29 @@ export default ({route: {params}}) => {
   };
 
   const takePictureFn = async (cameraRef) => {
-    const options = {quality: 1.0, base64: true, width: 900, height: 900};
-    const data = await cameraRef.current.takePictureAsync(options);
-    setCameraPictureLast(data.uri);
+    const data = await cameraRef.current.takePictureAsync();
+    return ImageResizer.createResizedImage(
+      data.uri,
+      800,
+      1200,
+      'JPEG',
+      100,
+      0,
+      null,
+      true,
+    )
+      .then((response) => {
+        setCameraPictureLast(response.uri);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const submitFn = async () => {
+    if (!cameraPictureLast) {
+      return alertModal('', '보건증을 촬영해주세요.');
+    }
     if (NAME.length === 0 || !NAME) {
       return alertModal('', '성명을 입력해주세요.');
     }
@@ -72,7 +91,7 @@ export default ({route: {params}}) => {
       return alertModal('', '회차를 입력해주세요.');
     }
     const reg = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/;
-    if (reg.test(EDUCATION_DATE) === false) {
+    if (reg.test(moment(EDUCATION_DATE).format('YYYY-MM-DD')) === false) {
       return alertModal(
         '검진일 날짜형식',
         '검진일 날짜형식은 "2020-01-01"과 같은 형식이어야 합니다. 사진이 인식되지 않는다면 항목을 눌러 날짜를 직접 선택해주세요.',
@@ -84,7 +103,10 @@ export default ({route: {params}}) => {
       formData.append('EMP_NAME', NAME);
       formData.append('EMP_SEQ', EMP_SEQ);
       formData.append('STORE_SEQ', STORE_SEQ);
-      formData.append('RESULT_DATE', EDUCATION_DATE);
+      formData.append(
+        'RESULT_DATE',
+        moment(EDUCATION_DATE).format('YYYY-MM-DD'),
+      );
       formData.append('RESULT_COUNT', RESULT_COUNT);
       formData.append('STORE_HEALTH_SEQ', STORE_HEALTH_SEQ);
       formData.append('MEMBER_SEQ', MEMBER_SEQ);
@@ -176,7 +198,9 @@ export default ({route: {params}}) => {
       navigation.pop(2);
       alertModal(
         '',
-        `${EDUCATION_DATE.slice(0, 4)}년 위생교육증을 삭제하였습니다.`,
+        `${moment(EDUCATION_DATE).format(
+          'YYYY',
+        )}년 위생교육증을 삭제하였습니다.`,
       );
       const {data} = await api.deleteStoreHealth({
         STORE_HEALTH_SEQ,
@@ -207,6 +231,8 @@ export default ({route: {params}}) => {
       setRESULT_COUNT={setRESULT_COUNT}
       EDUCATION_DATE={EDUCATION_DATE}
       setEDUCATION_DATE={setEDUCATION_DATE}
+      EDUCATION_DATE_SET={EDUCATION_DATE_SET}
+      setEDUCATION_DATE_SET={setEDUCATION_DATE_SET}
     />
   );
 };

@@ -5,7 +5,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
-import DatePickerModal from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-date-picker';
+import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image';
 import {RNCamera} from 'react-native-camera';
 import moment from 'moment';
@@ -156,6 +157,48 @@ const CameraLastPictureContainer = styled.View`
   align-items: center;
 `;
 
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+`;
+
 export default ({
   submitFn,
   checkOrcFn,
@@ -173,6 +216,8 @@ export default ({
   setCameraPictureLast,
   takePictureFn,
   RESULT_DATE,
+  EDUCATION_DATE_SET,
+  setEDUCATION_DATE_SET,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -262,25 +307,8 @@ export default ({
                 </Touchable>
               </TextInputContainer>
               <SmallWhiteSpace />
-              <InputLine isBefore={EDUCATION_DATE == '' ? true : false} />
+              <InputLine isBefore={false} />
             </Section>
-            <DatePickerModal
-              isDarkModeEnabled={false}
-              headerTextIOS={'날짜를 선택하세요.'}
-              cancelTextIOS={'취소'}
-              confirmTextIOS={'선택'}
-              isVisible={dateModalVisible}
-              isDarkModeEnabled={false}
-              textColor="black"
-              mode="date"
-              locale="ko_KRus_EN"
-              onConfirm={(date) => {
-                setEDUCATION_DATE(moment(date).format('YYYY-MM-DD'));
-                setDateModalVisible(false);
-              }}
-              onCancel={() => setDateModalVisible(false)}
-              minimumDate={moment(RESULT_DATE).toDate()}
-            />
             <SubmitBtn
               text={'입력완료'}
               onPress={() => submitFn()}
@@ -357,6 +385,48 @@ export default ({
             </CameraPictureCloseButton>
           </RNCamera>
         )}
+      </Modal>
+      <Modal
+        onRequestClose={() => setDateModalVisible(false)}
+        onBackdropPress={() => setDateModalVisible(false)}
+        isVisible={dateModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(EDUCATION_DATE).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            onDateChange={(date) => {
+              setEDUCATION_DATE_SET(true);
+              setEDUCATION_DATE(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {EDUCATION_DATE_SET ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setDateModalVisible(false);
+                setEDUCATION_DATE_SET(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
       </Modal>
     </BackGround>
   );

@@ -1,8 +1,10 @@
 import React, {useState, useEffect, createRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import ImagePicker from 'react-native-image-crop-picker';
+import * as ImagePicker from 'react-native-image-picker';
 import firebase from 'react-native-firebase';
+import ImageResizer from 'react-native-image-resizer';
+import moment from 'moment';
 
 import ChecklistShareInsertScreenPresenter from './ChecklistShareInsertScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -23,7 +25,6 @@ export default ({route: {params}}) => {
     (state: any) => state.userReducer,
   );
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
-
   const [cameraPictureList, setCameraPictureList] = useState<any>([]);
   const [cameraPictureLast, setCameraPictureLast] = useState<string>(null);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
@@ -31,8 +32,9 @@ export default ({route: {params}}) => {
   );
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [date, setDate] = useState<string>(params?.date);
+  const [date, setDate] = useState<any>(moment(params?.date));
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
+  const [dateSet, setDateSet] = useState<boolean>(false);
 
   const alertModal = (text) => {
     const params = {
@@ -60,7 +62,7 @@ export default ({route: {params}}) => {
         const formData: any = new FormData();
         formData.append('TITLE', title);
         formData.append('CONTENTS', content);
-        formData.append('ADDDATE', date);
+        formData.append('ADDDATE', moment(date).format('YYYY-MM-DD'));
         formData.append('STORE_SEQ', STORE_SEQ);
         formData.append('STORE', STORE);
         formData.append('EMP_NAME', MEMBER_NAME);
@@ -87,18 +89,22 @@ export default ({route: {params}}) => {
             type: fileType,
           });
         }
-        // const {data} = await api.setNoticeImg(formData);
-        // if (data.result === 'SUCCESS') {
-        //   alertModal(`${params.TITLE}이 등록되었습니다.`);
-        //   if (params.TITLE === '지시사항') {
-        //     dispatch(getCHECKLIST_SHARE_DATA1(date));
-        //   } else {
-        //     dispatch(getCHECKLIST_SHARE_DATA2(date));
-        //   }
-        //   navigation.goBack();
-        // } else {
-        //   alertModal('연결에 실패하였습니다.');
-        // }
+        const {data} = await api.setNoticeImg(formData);
+        if (data.result === 'SUCCESS') {
+          alertModal(`${params.TITLE}이 등록되었습니다.`);
+          if (params.TITLE === '지시사항') {
+            dispatch(
+              getCHECKLIST_SHARE_DATA1(moment(date).format('YYYY-MM-DD')),
+            );
+          } else {
+            dispatch(
+              getCHECKLIST_SHARE_DATA2(moment(date).format('YYYY-MM-DD')),
+            );
+          }
+          navigation.goBack();
+        } else {
+          alertModal('연결에 실패하였습니다.');
+        }
       } catch (e) {
         console.log(e);
       } finally {
@@ -114,14 +120,18 @@ export default ({route: {params}}) => {
           STORE,
           EMP_NAME: MEMBER_NAME,
           MEMBER_SEQ,
-          ADDDATE: date,
+          ADDDATE: moment(date).format('YYYY-MM-DD'),
         });
         if (data.result === 'SUCCESS') {
           alertModal(`${params.TITLE}이 등록되었습니다.`);
           if (params.TITLE === '지시사항') {
-            dispatch(getCHECKLIST_SHARE_DATA1(date));
+            dispatch(
+              getCHECKLIST_SHARE_DATA1(moment(date).format('YYYY-MM-DD')),
+            );
           } else {
-            dispatch(getCHECKLIST_SHARE_DATA2(date));
+            dispatch(
+              getCHECKLIST_SHARE_DATA2(moment(date).format('YYYY-MM-DD')),
+            );
           }
           navigation.goBack();
         } else {
@@ -136,30 +146,40 @@ export default ({route: {params}}) => {
   };
 
   const takePictureFn = async (cameraRef) => {
-    const options = {quality: 0.8, base64: true, width: 540, height: 720};
-    const data = await cameraRef.current.takePictureAsync(options);
-    console.log('data', data);
-    setCameraPictureLast(data.uri);
+    const data = await cameraRef.current.takePictureAsync();
+    return ImageResizer.createResizedImage(
+      data.uri,
+      800,
+      1200,
+      'JPEG',
+      100,
+      0,
+      null,
+      true,
+    )
+      .then((response) => {
+        setCameraPictureLast(response.uri);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: true,
-      includeBase64: true,
-      compressImageQuality: 0.8,
-      compressImageMaxWidth: 720,
-      compressImageMaxHeight: 720,
-      cropperChooseText: '선택',
-      cropperCancelText: '취소',
-    }).then((images: any) => {
-      images.map((i) => {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxWidth: 800,
+        maxHeight: 1200,
+      },
+      (response) => {
         setCameraPictureList((cameraPictureList) => [
           ...cameraPictureList,
-          {uri: i.path},
+          {uri: response.uri},
         ]);
-      });
-    });
+      },
+    );
   };
 
   const selectPicture = () => {
@@ -199,6 +219,8 @@ export default ({route: {params}}) => {
       cameraPictureList={cameraPictureList}
       selectPicture={selectPicture}
       scrollRef={scrollRef}
+      dateSet={dateSet}
+      setDateSet={setDateSet}
     />
   );
 };

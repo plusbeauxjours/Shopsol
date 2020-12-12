@@ -184,7 +184,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   width: 30px;
   height: 30px;
   right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 10)};
+  top: ${(props) => (isIphoneX() ? 35 : 15)}px;
 `;
 
 export default ({

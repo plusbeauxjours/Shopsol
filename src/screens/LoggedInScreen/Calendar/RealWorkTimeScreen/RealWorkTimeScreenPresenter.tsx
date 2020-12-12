@@ -398,6 +398,7 @@ export default ({
               setStartTimeSet(true);
               setStartTime(time);
             }}
+            locale="fr"
             is24hourSource="locale"
             minuteInterval={10}
           />
@@ -441,6 +442,7 @@ export default ({
               setEndTimeSet(true);
               setEndTime(time);
             }}
+            locale="fr"
             is24hourSource="locale"
             minuteInterval={10}
           />

@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import api from '../constants/LoggedInApi';
 import moment from 'moment';
-import { resultdata } from '../assets/dummy';
 import { setSplashVisible } from '~/redux/splashSlice';
 
 const shelflifetSlice = createSlice({

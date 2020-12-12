@@ -18,15 +18,15 @@ export default () => {
   const alert = useSelector((state: any) => state.alertReducer);
   const SharedStorage = NativeModules.SharedStorage;
   useEffect(() => {
-    if (utils.isAndroid()) {
-      SharedStorage.set(
-        JSON.stringify({
-          WIDGET_TEXT: '로그아웃 되어있습니다. 탭하여 로그인하세요.',
-          WIDGET_STORE: null,
-          WIDGET_STATUS: '0',
-        }),
-      );
-    }
+    // if (utils.isAndroid()) {
+    //   SharedStorage.set(
+    //     JSON.stringify({
+    //       WIDGET_TEXT: '로그아웃 되어있습니다. 탭하여 로그인하세요.',
+    //       WIDGET_STORE: null,
+    //       WIDGET_STATUS: '0',
+    //     }),
+    //   );
+    // }
   }, []);
 
   return (

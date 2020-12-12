@@ -47,7 +47,7 @@ export default codePush(codePushOptions)(App);
 // ┌────────────┬───────────────────────────────────────┐
 // │ Name       │ Key                                   │
 // ├────────────┼───────────────────────────────────────┤
-// │ Staging    │ hIYDcLdpv4thrTbH-5OU0_hTcvrviP7Y-Ayr4 │
+// │ Staging    │ iy8-rDLfoik1pPaDhjd1iuUDlEApqhMcVmN55 │
 // ├────────────┼───────────────────────────────────────┤
-// │ Production │ iy8-rDLfoik1pPaDhjd1iuUDlEApqhMcVmN55 │
+// │ Production │ hIYDcLdpv4thrTbH-5OU0_hTcvrviP7Y-Ayr4 │
 // └────────────┴───────────────────────────────────────┘

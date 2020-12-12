@@ -117,7 +117,7 @@ const GreyText = styled.Text`
   color: #aaa;
 `;
 
-export default ({name, item, confirmModal, cancelModal}) => {
+export default ({name, item, confirmModal, cancelModal, fetchData}) => {
   const navigation = useNavigation();
   if (item.checkType === '0') {
     return (
@@ -156,6 +156,7 @@ export default ({name, item, confirmModal, cancelModal}) => {
                 shelfLifeName: item.shelfLifeName,
                 shelfLifeDate: item.shelfLifeDate,
                 shelfLifeMemo: item.shelfLifeMemo,
+                fetchData,
               });
             }, 100)
           }

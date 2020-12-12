@@ -524,6 +524,7 @@ export default ({
               setCustomChecktimeSet(true);
               setCustomChecktime(time);
             }}
+            locale="fr"
             is24hourSource="locale"
             minuteInterval={10}
           />

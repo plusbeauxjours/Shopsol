@@ -128,8 +128,8 @@ const CloseIconContainer = styled.View`
   position: absolute;
   justify-content: center;
   align-items: center;
-  top: -10;
-  right: -10;
+  top: -10px;
+  right: -10px;
 `;
 
 const WhiteItem = styled.View`

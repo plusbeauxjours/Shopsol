@@ -3,7 +3,8 @@ import styled from 'styled-components/native';
 import moment from 'moment';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import Modal from 'react-native-modal';
-import DatePickerModal from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-date-picker';
+import Ripple from 'react-native-material-ripple';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
 
@@ -324,6 +325,48 @@ const DateBox = styled.TouchableOpacity`
   background-color: #eee;
 `;
 
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+`;
+
 export default ({
   submitFn,
   payDay,
@@ -428,6 +471,12 @@ export default ({
   annual_START,
   setAnnual_START,
   IMAGE,
+  startDaySet,
+  setStartDaySet,
+  endDaySet,
+  setEndDaySet,
+  probationPeriodSet,
+  setProbationPeriodSet,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const py = Number(moment().format('YY'));
@@ -475,32 +524,12 @@ export default ({
                       <HelpCircleIcon />
                     </Touchable>
                   </Row>
-                  <DatePickerModal
-                    isDarkModeEnabled={false}
-                    headerTextIOS={'시작일을 선택하세요.'}
-                    cancelTextIOS={'취소'}
-                    confirmTextIOS={'확인'}
-                    isVisible={isStartDayModalVisible}
-                    isDarkModeEnabled={false}
-                    textColor="black"
-                    mode="date"
-                    locale="ko_KRus_EN"
-                    onConfirm={(date) => {
-                      setStartDay(moment(date).format('YYYY-MM-DD'));
-                      setEndDayCheck(false);
-                      setIsStartDayModalVisible(false);
-                    }}
-                    onCancel={() => {
-                      setIsStartDayModalVisible(false);
-                    }}
-                  />
+
                   <DateTouchable
                     onPress={() => setIsStartDayModalVisible(true)}>
-                    <Text>
-                      {startDay ? moment(startDay).format('YYYY.MM.DD') : ''}
-                    </Text>
+                    <Text>{moment(startDay).format('YYYY.MM.DD')}</Text>
                   </DateTouchable>
-                  <InputLine isBefore={startDay === ''} />
+                  <InputLine isBefore={false} />
                 </InputCase>
                 <InputCase>
                   <Row>
@@ -515,39 +544,20 @@ export default ({
                       <HelpCircleIcon />
                     </Touchable>
                   </Row>
-                  <DatePickerModal
-                    isDarkModeEnabled={false}
-                    headerTextIOS={'퇴사일을 선택하세요.'}
-                    cancelTextIOS={'취소'}
-                    confirmTextIOS={'확인'}
-                    isVisible={isEndDayModalVisible}
-                    isDarkModeEnabled={false}
-                    textColor="black"
-                    mode="date"
-                    minimumDate={moment(startDay).add(1, 'days').toDate()}
-                    locale="ko_KRus_EN"
-                    onConfirm={(date) => {
-                      setEndDay(moment(date).format('YYYY-MM-DD'));
-                      setEndDayCheck(false);
-                      setIsEndDayModalVisible(false);
-                    }}
-                    onCancel={() => {
-                      setEndDayCheck(false), setIsEndDayModalVisible(false);
-                    }}
-                  />
+
                   <DateTouchable
                     onPress={() => setIsEndDayModalVisible(true)}
                     disabled={endDayCheck}>
                     <Text>
-                      {endDay ? moment(endDay).format('YYYY.MM.DD') : ''}
+                      {!endDayCheck ? moment(endDay).format('YYYY.MM.DD') : ''}
                     </Text>
                   </DateTouchable>
-                  <InputLine isBefore={endDay === ''} />
+                  <InputLine isBefore={endDayCheck} />
                   <Touchable
                     style={{marginTop: 20}}
                     onPress={() => {
                       setEndDayCheck(!endDayCheck);
-                      setEndDay('');
+                      setEndDay(moment());
                     }}>
                     <SideBox>
                       {endDayCheck ? (
@@ -809,10 +819,8 @@ export default ({
                         <>
                           <GreyText>
                             * 수습기간은 [입사일]인&nbsp;
-                            {startDay.substr(0, 4)}년&nbsp;
-                            {startDay.substr(5, 2)}월&nbsp;
-                            {startDay.substr(8, 2)}일부터 [수습종료일]까지
-                            적용됩니다.
+                            {moment(startDay).format('YYYY년 M월 D일')}부터
+                            [수습종료일]까지 적용됩니다.
                           </GreyText>
                           <FlexEndBox>
                             <Row>
@@ -821,31 +829,12 @@ export default ({
                                 onPress={() =>
                                   setIsProbationPeriodModalVisible(true)
                                 }>
-                                <Text>{probationPeriod}</Text>
+                                <Text>
+                                  {moment(probationPeriod).format(
+                                    'YYYY년 M월 D일',
+                                  )}
+                                </Text>
                               </ProbationTouchable>
-                              <DatePickerModal
-                                isDarkModeEnabled={false}
-                                headerTextIOS={'종료일을 선택하세요.'}
-                                cancelTextIOS={'취소'}
-                                confirmTextIOS={'확인'}
-                                isVisible={isProbationPeriodModalVisible}
-                                isDarkModeEnabled={false}
-                                textColor="black"
-                                mode="date"
-                                minimumDate={moment(startDay)
-                                  .add(1, 'days')
-                                  .toDate()}
-                                locale="ko_KRus_EN"
-                                onConfirm={(date) => {
-                                  setIsProbationPeriodModalVisible(false);
-                                  setProbationPeriod(
-                                    moment(date).format('YYYY-MM-DD'),
-                                  );
-                                }}
-                                onCancel={() => {
-                                  setIsProbationPeriodModalVisible(false);
-                                }}
-                              />
                             </Row>
                             <Row>
                               <ProbationText>급여비율</ProbationText>
@@ -1337,7 +1326,7 @@ export default ({
                     <Text>총 연차</Text>
                     <Row>
                       <TextInput
-                        placeholder={'0'}
+                        placeholder={'연차를 입력해주세요'}
                         placeholderTextColor={'#E5E5E5'}
                         onChangeText={(text) => {
                           setRemainderVacation(
@@ -1351,7 +1340,7 @@ export default ({
                         keyboardType={'number-pad'}
                         maxLength={3}
                         style={{
-                          width: 100,
+                          width: 130,
                           textAlign: 'right',
                         }}
                       />
@@ -1363,13 +1352,21 @@ export default ({
                     <Text>사용 연차</Text>
                     <Row>
                       <TextInput
-                        placeholder={'0'}
+                        placeholder={'연차를 입력해주세요'}
                         placeholderTextColor={'#E5E5E5'}
                         onChangeText={(text) => {
-                          setRemainderVacation(
-                            Number(totalVacation) - Number(text),
-                          );
-                          setUseVacation(text.replace(/,/g, ''));
+                          if (Number(totalVacation) - Number(text) < 0) {
+                            alertModal('총연차보다 낮게 입력해주세요.');
+                            setUseVacation('0');
+                            setRemainderVacation(
+                              Number(totalVacation) - Number('0'),
+                            );
+                          } else {
+                            setRemainderVacation(
+                              Number(totalVacation) - Number(text),
+                            );
+                            setUseVacation(text.replace(/,/g, ''));
+                          }
                         }}
                         value={useVacation
                           .toString()
@@ -1377,7 +1374,7 @@ export default ({
                         keyboardType={'number-pad'}
                         maxLength={3}
                         style={{
-                          width: 100,
+                          width: 130,
                           textAlign: 'right',
                         }}
                       />
@@ -1521,6 +1518,136 @@ export default ({
           </Container>
         </TouchableWithoutFeedback>
       </ScrollView>
+      <Modal
+        onRequestClose={() => setIsStartDayModalVisible(false)}
+        onBackdropPress={() => setIsStartDayModalVisible(false)}
+        isVisible={isStartDayModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(startDay).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            onDateChange={(date) => {
+              setStartDaySet(true);
+              setStartDay(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {startDaySet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsStartDayModalVisible(false);
+                setEndDayCheck(false);
+                setStartDaySet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      <Modal
+        onRequestClose={() => setIsEndDayModalVisible(false)}
+        onBackdropPress={() => setIsEndDayModalVisible(false)}
+        isVisible={isEndDayModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(endDay).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            minimumDate={moment(startDay).add(1, 'days').toDate()}
+            onDateChange={(date) => {
+              setEndDaySet(true);
+              setEndDay(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {endDaySet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsEndDayModalVisible(false);
+                setEndDayCheck(false);
+                setEndDaySet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      <Modal
+        onRequestClose={() => setIsProbationPeriodModalVisible(false)}
+        onBackdropPress={() => setIsProbationPeriodModalVisible(false)}
+        isVisible={isProbationPeriodModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(probationPeriod).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            minimumDate={moment(startDay).add(1, 'days').toDate()}
+            onDateChange={(date) => {
+              setProbationPeriodSet(true);
+              setProbationPeriod(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {probationPeriodSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsProbationPeriodModalVisible(false);
+                setProbationPeriodSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
     </BackGround>
   );
 };

@@ -5,16 +5,17 @@ import {
 } from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {View} from 'react-native';
+import Modal from 'react-native-modal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import RBSheet from 'react-native-raw-bottom-sheet';
-
-import DatePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
+import DatePicker from 'react-native-date-picker';
+import Ripple from 'react-native-material-ripple';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
 import InputLine from '~/components/InputLine';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
+import moment from 'moment';
 
 interface IsError {
   isError?: boolean;
@@ -111,6 +112,48 @@ const Section = styled.View`
   background-color: white;
 `;
 
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+`;
+
 export default ({
   alertModal,
   mobileNo,
@@ -141,6 +184,8 @@ export default ({
   setBirthDate,
   isBirthDateVisible,
   setIsBirthDateVisible,
+  birthDateSet,
+  setBirthDateSet,
 }) => {
   const sheetRef = useRef(null);
   const positionType = (selection, text) => {
@@ -227,7 +272,7 @@ export default ({
               <NameText>생일</NameText>
               <Touchable onPress={() => setIsBirthDateVisible(true)}>
                 <TextinputCase>
-                  {birthDate !== '' ? (
+                  {!birthDateSet ? (
                     <TextId>{moment(birthDate).format('YYYY.MM.DD')}</TextId>
                   ) : (
                     <GreyText
@@ -237,28 +282,10 @@ export default ({
                   )}
                 </TextinputCase>
               </Touchable>
-              <InputLine isBefore={birthDate == '' ? true : false} />
+              <InputLine isBefore={!birthDateSet} />
             </Case>
             <WhiteSpace />
-            <DatePickerModal
-              isDarkModeEnabled={false}
-              headerTextIOS={'생일을 선택하세요.'}
-              cancelTextIOS={'취소'}
-              confirmTextIOS={'확인'}
-              isVisible={isBirthDateVisible}
-              isDarkModeEnabled={false}
-              textColor="black"
-              mode="date"
-              maximumDate={moment().toDate()}
-              locale="ko_KRus_EN"
-              onConfirm={(date) => {
-                setIsBirthDateVisible(false);
-                setBirthDate(moment(date).format('YYYY-MM-DD'));
-              }}
-              onCancel={() => {
-                setIsBirthDateVisible(false);
-              }}
-            />
+
             <Case>
               <NameText>가입유형</NameText>
               <TypeCheckCase>
@@ -271,8 +298,7 @@ export default ({
               <Case>
                 <NameText>가입경로</NameText>
                 <Touchable onPress={() => sheetRef.current.open()}>
-                  <TypeCheckCase
-                    style={{fontSize: 14, margin: 10, color: '#e5e5e5'}}>
+                  <TypeCheckCase style={{margin: 10}}>
                     {joinRoute === '가입경로' ? (
                       <Placeholder>가입경로</Placeholder>
                     ) : (
@@ -377,7 +403,7 @@ export default ({
             isRegisted={
               mobileNo &&
               name.length > 0 &&
-              birthDate.length > 0 &&
+              birthDateSet &&
               password === passwordCheck &&
               passwordCheck.length > 6 &&
               password.search(/[0-9]/g) >= 0 &&
@@ -421,6 +447,49 @@ export default ({
           </RBSheet>
         </Container>
       </KeyboardAwareScrollView>
+      <Modal
+        onRequestClose={() => setIsBirthDateVisible(false)}
+        onBackdropPress={() => setIsBirthDateVisible(false)}
+        isVisible={isBirthDateVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(birthDate).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            maximumDate={moment().toDate()}
+            onDateChange={(date) => {
+              setBirthDateSet(true);
+              setBirthDate(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {birthDateSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsBirthDateVisible(false);
+                setBirthDateSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
     </BackGround>
   );
 };

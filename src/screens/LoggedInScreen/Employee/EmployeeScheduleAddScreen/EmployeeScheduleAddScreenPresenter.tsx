@@ -4,7 +4,6 @@ import DatePicker from 'react-native-date-picker';
 import Modal from 'react-native-modal';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
-import DatePickerModal from 'react-native-modal-datetime-picker';
 
 import {
   EllipseIcon,
@@ -216,6 +215,10 @@ export default ({
   setStartTimeSet,
   endTimeSet,
   setEndTimeSet,
+  startDateSet,
+  setStartDateSet,
+  setEndDateSet,
+  endDateSet,
 }) => {
   const RenderWorkDayList = () => (
     <WorkTypeCheckSection>
@@ -250,6 +253,7 @@ export default ({
 
   return (
     <BackGround>
+      {console.log('endDate', endDate)}
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
@@ -266,23 +270,7 @@ export default ({
                   <HelpCircleIcon />
                 </RowTouchable>
               </Row>
-              <DatePickerModal
-                isDarkModeEnabled={false}
-                headerTextIOS={'시작일을 선택하세요.'}
-                cancelTextIOS={'취소'}
-                confirmTextIOS={'확인'}
-                isVisible={isStartDayModalVisible}
-                isDarkModeEnabled={false}
-                textColor="black"
-                mode="date"
-                locale="ko_KRus_EN"
-                onConfirm={(date) => {
-                  setStartDate(date), setIsStartDayModalVisible(false);
-                }}
-                onCancel={() => {
-                  setIsStartDayModalVisible(false);
-                }}
-              />
+
               <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
                 <Text>{moment(startDate).format('YYYY.MM.DD') ?? ''}</Text>
               </DateTouchable>
@@ -300,38 +288,20 @@ export default ({
                   <HelpCircleIcon />
                 </RowTouchable>
               </Row>
-              <DatePickerModal
-                isDarkModeEnabled={false}
-                headerTextIOS={'종료일을 선택하세요.'}
-                cancelTextIOS={'취소'}
-                confirmTextIOS={'확인'}
-                isVisible={isEndDayModalVisible}
-                isDarkModeEnabled={false}
-                textColor="black"
-                mode="date"
-                minimumDate={moment(startDate).add(1, 'days').toDate()}
-                locale="ko_KRus_EN"
-                onConfirm={(date) => {
-                  setEndDate(moment(date).format('YYYY-MM-DD'));
-                  setIsEndDayModalVisible(false);
-                }}
-                onCancel={() => {
-                  setIsEndDayModalVisible(false);
-                }}
-              />
+
               <DateTouchable
                 disabled={checkNoEndDate}
                 onPress={() => setIsEndDayModalVisible(true)}>
                 <Text>
-                  {endDate ? moment(endDate).format('YYYY.MM.DD') : ''}
+                  {!checkNoEndDate ? moment(endDate).format('YYYY.MM.DD') : ''}
                 </Text>
               </DateTouchable>
-              <InputLine isBefore={endDate === null} />
+              <InputLine isBefore={checkNoEndDate} />
               <RowTouchable
                 style={{marginTop: 20}}
                 onPress={() => {
                   setCheckNoEndDate(!checkNoEndDate);
-                  setEndDate(null);
+                  setEndDate(moment());
                 }}>
                 <SideBox>
                   {checkNoEndDate ? (
@@ -446,7 +416,7 @@ export default ({
               setStartTimeSet(true);
               setStartTime(time);
             }}
-            minimumDate={moment(startDate).add(1, 'days').toDate()}
+            locale="fr"
             is24hourSource="locale"
             minuteInterval={10}
           />
@@ -490,7 +460,7 @@ export default ({
               setEndTimeSet(true);
               setEndTime(time);
             }}
-            minimumDate={moment(startDate).add(1, 'days').toDate()}
+            locale="fr"
             is24hourSource="locale"
             minuteInterval={10}
           />
@@ -499,6 +469,90 @@ export default ({
               onPress={() => {
                 setIsEndTimeModalVisible(false);
                 setEndTimeSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      <Modal
+        onRequestClose={() => setIsStartDayModalVisible(false)}
+        onBackdropPress={() => setIsStartDayModalVisible(false)}
+        isVisible={isStartDayModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(startDate).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            onDateChange={(date) => {
+              setStartDateSet(true);
+              setStartDate(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {startDateSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsStartDayModalVisible(false);
+                setStartDateSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
+      <Modal
+        onRequestClose={() => setIsEndDayModalVisible(false)}
+        onBackdropPress={() => setIsEndDayModalVisible(false)}
+        isVisible={isEndDayModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(endDate).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            onDateChange={(date) => {
+              setEndDateSet(true);
+              setEndDate(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {endDateSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsEndDayModalVisible(false);
+                setEndDateSet(true);
               }}
               rippleColor={'#666'}
               rippleDuration={600}

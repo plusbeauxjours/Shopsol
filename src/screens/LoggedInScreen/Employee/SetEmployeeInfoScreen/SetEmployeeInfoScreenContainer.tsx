@@ -39,10 +39,10 @@ export default ({route: {params}}) => {
 
   ///// STEP 1 /////
   const [click1, setClick1] = useState<boolean>(false);
-  const [startDay, setStartDay] = useState<string>(
-    moment().format('YYYY-MM-DD'),
-  );
-  const [endDay, setEndDay] = useState<string>('');
+  const [startDay, setStartDay] = useState<any>(moment());
+  const [startDaySet, setStartDaySet] = useState<boolean>(false);
+  const [endDay, setEndDay] = useState<any>(moment());
+  const [endDaySet, setEndDaySet] = useState<boolean>(false);
   const [endDayCheck, setEndDayCheck] = useState<boolean>(true);
 
   ///// STEP 2 /////
@@ -79,7 +79,8 @@ export default ({route: {params}}) => {
 
   ///// 수습 /////
   const [probation, setProbation] = useState<boolean>(false);
-  const [probationPeriod, setProbationPeriod] = useState<string>('');
+  const [probationPeriod, setProbationPeriod] = useState<any>(moment());
+  const [probationPeriodSet, setProbationPeriodSet] = useState<boolean>(false);
   const [probationPercent, setProbationPercent] = useState<string>('');
   const [
     isProbationPercentModalVisible,
@@ -237,9 +238,9 @@ export default ({route: {params}}) => {
     //~~~~~~~~~~~~~~~~~~~~
     // STEP 1 에러 체크
     //~~~~~~~~~~~~~~~~~~~~
-    if (startDay === '') {
+    if (!startDaySet) {
       return alertModal('입사일을 입력해주세요.');
-    } else if (endDay === '' && endDayCheck === false) {
+    } else if (!endDaySet && endDayCheck === false) {
       return alertModal('퇴사일을 입력해주세요');
     }
     //~~~~~~~~~~~~~~~~~~~~
@@ -291,8 +292,8 @@ export default ({route: {params}}) => {
         STORE_SEQ,
         EMP_SEQ,
         // ↓ STEP 1
-        START: startDay,
-        END: endDayCheck === true ? null : endDay,
+        START: moment(startDay).format('YYYY-MM-DD'),
+        END: endDayCheck === true ? null : moment(endDay).format('YYYY-MM-DD'),
         // ↓ STEP 2
         PAY_TYPE: payChecked,
         MEALS: payCheck[2] === true ? pay2 : '0',
@@ -477,7 +478,9 @@ export default ({route: {params}}) => {
           );
           setRemainderVacation(
             typeof data.result.Annual !== undefined
-              ? Number(data.result.Annual) - Number(data.result.USE_Annual)
+              ? (
+                  Number(data.result.Annual) - Number(data.result.USE_Annual)
+                ).toString()
               : '',
           );
           setTotalVacation(
@@ -615,6 +618,12 @@ export default ({route: {params}}) => {
       annual_START={annual_START}
       setAnnual_START={setAnnual_START}
       IMAGE={images[0].IMAGE}
+      startDaySet={startDaySet}
+      setStartDaySet={setStartDaySet}
+      endDaySet={endDaySet}
+      setEndDaySet={setEndDaySet}
+      probationPeriodSet={probationPeriodSet}
+      setProbationPeriodSet={setProbationPeriodSet}
     />
   );
 };

@@ -127,6 +127,10 @@ const AddButtonContainer = styled.View`
   z-index: 2;
   right: 30px;
   bottom: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: white;
 `;
 
 const AddButton = styled.TouchableOpacity`
@@ -156,6 +160,7 @@ export default ({
   onMeasurement,
   ready,
   gotoAdd,
+  fetchData,
 }) => {
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
     return (
@@ -254,6 +259,7 @@ export default ({
                       item={item}
                       confirmModal={confirmModal}
                       cancelModal={cancelModal}
+                      fetchData={fetchData}
                     />
                   </View>
                 ))}

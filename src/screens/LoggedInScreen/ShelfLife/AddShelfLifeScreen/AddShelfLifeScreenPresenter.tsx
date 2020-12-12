@@ -4,10 +4,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import DatePickerModal from 'react-native-modal-datetime-picker';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import {RNCamera} from 'react-native-camera';
+import DatePicker from 'react-native-date-picker';
+import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
@@ -120,7 +121,7 @@ const WhiteItem = styled.View`
 
 const DateText = styled.Text`
   color: #333;
-  right: ${!utils.isAndroid() && !isIphoneX() && 25};
+  right: ${(props) => (!utils.isAndroid() && !isIphoneX() ? 25 : 0)}px;
 `;
 
 const BorderBox = styled.View`
@@ -197,7 +198,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   width: 30px;
   height: 30px;
   right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 10)};
+  top: ${(props) => (isIphoneX() ? 35 : 15)}px;
 `;
 
 const IconContainer = styled.View`
@@ -211,8 +212,50 @@ const IconContainer = styled.View`
   position: absolute;
   justify-content: center;
   align-items: center;
-  top: -10;
-  right: -10;
+  top: -10px;
+  right: -10px;
+`;
+
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #888;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerRoundView = styled.View`
+  position: absolute;
+  width: 250px;
+  height: 60px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: #ddd;
+  bottom: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const DatePickerText = styled.Text`
+  font-weight: 200;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
 `;
 
 export default ({
@@ -240,6 +283,8 @@ export default ({
   selectedIndex,
   setSelectedIndex,
   alertModal,
+  shelfLifeDateSet,
+  setShelfLifeDateSet,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -338,7 +383,7 @@ export default ({
                     }}
                   />
                   <Touchable onPress={() => setIsDateModalVisible(true)}>
-                    {shelfLifeDate.length === 0 ? (
+                    {!shelfLifeDateSet ? (
                       <GreyText
                         style={{
                           color: '#CCC',
@@ -424,23 +469,6 @@ export default ({
             onPress={() => submitFn()}
           />
         </Container>
-        <DatePickerModal
-          isDarkModeEnabled={false}
-          headerTextIOS={'날짜를 선택하세요.'}
-          cancelTextIOS={'취소'}
-          confirmTextIOS={'선택'}
-          isVisible={isDateModalVisible}
-          isDarkModeEnabled={false}
-          textColor="black"
-          mode="date"
-          minimumDate={moment().toDate()}
-          locale="ko_KRus_EN"
-          onConfirm={(date) => {
-            setShelfLifeDate(moment(date).format('YYYY-MM-DD'));
-            setIsDateModalVisible(false);
-          }}
-          onCancel={() => setIsDateModalVisible(false)}
-        />
         <Modal
           isVisible={isCameraModalVisible}
           style={{margin: 0}}
@@ -543,6 +571,49 @@ export default ({
           />
         </Modal>
       </ScrollView>
+      <Modal
+        onRequestClose={() => setIsDateModalVisible(false)}
+        onBackdropPress={() => setIsDateModalVisible(false)}
+        isVisible={isDateModalVisible}
+        style={{
+          margin: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <DatePickerContainer>
+          <DatePicker
+            style={{width: 200}}
+            date={moment(shelfLifeDate).toDate()}
+            mode={'date'}
+            androidVariant="iosClone"
+            minimumDate={moment().toDate()}
+            onDateChange={(date) => {
+              setShelfLifeDateSet(true);
+              setShelfLifeDate(moment(date).format('YYYY-MM-DD'));
+            }}
+          />
+          {shelfLifeDateSet ? (
+            <DatePickerRoundBtn
+              onPress={() => {
+                setIsDateModalVisible(false);
+                setShelfLifeDateSet(true);
+              }}
+              rippleColor={'#666'}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <DatePickerText>확인</DatePickerText>
+            </DatePickerRoundBtn>
+          ) : (
+            <DatePickerRoundView>
+              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
+            </DatePickerRoundView>
+          )}
+        </DatePickerContainer>
+      </Modal>
     </BackGround>
   );
 };

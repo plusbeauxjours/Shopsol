@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import ImageResizer from 'react-native-image-resizer';
 
 import HealthCertificateStoreFormScreenPresenter from './HealthCertificateStoreFormScreenPresenter';
 import utils from '~/constants/utils';
@@ -27,9 +28,8 @@ export default ({route: {params}}) => {
   const [storename, setStorename] = useState<string>(''); // 영업소 명칭
   const [businesstype, setBusinesstype] = useState<string>(''); // 영업의종류
   const [position, setPosition] = useState<string>(''); // 직책
-  const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(
-    moment().format('YYYY-MM-DD'),
-  ); // 교육일시 / 검진일
+  const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(moment()); // 교육일시 / 검진일
+  const [EDUCATION_DATE_SET, setEDUCATION_DATE_SET] = useState<boolean>(false);
   const [EDUCATION_TYPE, setEDUCATION_TYPE] = useState<'online' | 'offline'>(
     'online',
   ); // 교육구분
@@ -53,20 +53,34 @@ export default ({route: {params}}) => {
   };
 
   const takePictureFn = async (cameraRef) => {
-    const options = {quality: 1.0, base64: true, width: 900, height: 900};
-    const data = await cameraRef.current.takePictureAsync(options);
-    setCameraPictureLast(data.uri);
+    const data = await cameraRef.current.takePictureAsync();
+    return ImageResizer.createResizedImage(
+      data.uri,
+      800,
+      1200,
+      'JPEG',
+      100,
+      0,
+      null,
+      true,
+    )
+      .then((response) => {
+        setCameraPictureLast(response.uri);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const submitFn = async () => {
     const reg = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/;
-    if (reg.test(EDUCATION_DATE) === false) {
+    if (reg.test(moment(EDUCATION_DATE).format('YYYY-MM-DD')) === false) {
       return alertModal(
         '교육일시 날짜형식',
         '교육일시 날짜형식은 "2020-01-01"과 같은 형식이어야 합니다. 사진이 인식되지 않는다면 항목을 눌러 날짜를 직접 선택해주세요.',
       );
     }
-    if (cameraPictureLast == undefined) {
+    if (!cameraPictureLast) {
       return alertModal(
         '',
         '위생교육증을 촬영하여 사진을 등록해주세요.\n\n사진촬영 시 인식실패 문구가 나와도 사진은 정상적으로 등록이 됩니다.',
@@ -97,7 +111,10 @@ export default ({route: {params}}) => {
       formData.append('position', position);
       formData.append('owner', owner);
       formData.append('storename', storename);
-      formData.append('RESULT_DATE', EDUCATION_DATE);
+      formData.append(
+        'RESULT_DATE',
+        moment(EDUCATION_DATE).format('YYYY-MM-DD'),
+      );
       formData.append('EDUCATION_TYPE', EDUCATION_TYPE);
       formData.append('EMP_NAME', NAME);
       formData.append('STORE_SEQ', STORE_SEQ);
@@ -223,6 +240,8 @@ export default ({route: {params}}) => {
       takePictureFn={takePictureFn}
       checkOrcFn={checkOrcFn}
       EDUCATION_DATEprops={params?.EDUCATION_DATEprops}
+      EDUCATION_DATE_SET={EDUCATION_DATE_SET}
+      setEDUCATION_DATE_SET={setEDUCATION_DATE_SET}
     />
   );
 };

@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 import AddShelfLifeScreenPresenter from './AddShelfLifeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
-import ImagePicker from 'react-native-image-crop-picker';
+import * as ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
 import {setSplashVisible} from '~/redux/splashSlice';
 
 export default ({route: {params}}) => {
@@ -13,7 +15,8 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const [shelfLifeName, setShelfLifeName] = useState<string>('');
-  const [shelfLifeDate, setShelfLifeDate] = useState<string>('');
+  const [shelfLifeDate, setShelfLifeDate] = useState<any>(moment());
+  const [shelfLifeDateSet, setShelfLifeDateSet] = useState<boolean>(false);
   const [shelfLifeMemo, setShelfLifeMemo] = useState<string>('');
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
   const [list, setList] = useState<any>([]);
@@ -49,20 +52,23 @@ export default ({route: {params}}) => {
     if (shelfLifeName == '') {
       return alertModal('', '상품명을 입력해주세요.');
     }
-    if (shelfLifeDate == '') {
+    if (!shelfLifeDateSet) {
       return alertModal('', '기한을 입력해주세요.', () =>
         setIsDateModalVisible(true),
       );
     }
     for (let i = 0; i < list.length; i++) {
-      if (shelfLifeName == list[i].NAME && shelfLifeDate == list[i].DATE) {
+      if (
+        shelfLifeName == list[i].NAME &&
+        moment(shelfLifeDate).format('YYYY-MM-DD') == list[i].DATE
+      ) {
         return alertModal('', '같은 일자에 동일한 상품이 작성되어 있습니다.');
       }
     }
     let buffer = list;
     buffer.unshift({
       shelfLifeNAME: shelfLifeName,
-      shelfLifeDATE: shelfLifeDate,
+      shelfLifeDATE: moment(shelfLifeDate).format('YYYY-MM-DD'),
       shelfLifeMEMO: shelfLifeMemo,
       shelfLifeIMAGE: cameraPictureLast,
     });
@@ -108,24 +114,37 @@ export default ({route: {params}}) => {
   };
 
   const takePictureFn = async (cameraRef) => {
-    const options = {quality: 1.0, base64: true, width: 900, height: 900};
-    const data = await cameraRef.current.takePictureAsync(options);
-    setCameraPictureLast(data.uri);
+    const data = await cameraRef.current.takePictureAsync();
+    return ImageResizer.createResizedImage(
+      data.uri,
+      800,
+      1200,
+      'JPEG',
+      100,
+      0,
+      null,
+      true,
+    )
+      .then((response) => {
+        setCameraPictureLast(response.uri);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: false,
-      includeBase64: true,
-      compressImageQuality: 0.8,
-      compressImageMaxWidth: 720,
-      compressImageMaxHeight: 720,
-      cropperChooseText: '선택',
-      cropperCancelText: '취소',
-    }).then((images: any) => {
-      setCameraPictureLast(images.path);
-    });
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxWidth: 800,
+        maxHeight: 1200,
+      },
+      (response) => {
+        setCameraPictureLast(response.uri);
+      },
+    );
   };
 
   return (
@@ -154,6 +173,8 @@ export default ({route: {params}}) => {
       selectedIndex={selectedIndex}
       setSelectedIndex={setSelectedIndex}
       alertModal={alertModal}
+      shelfLifeDateSet={shelfLifeDateSet}
+      setShelfLifeDateSet={setShelfLifeDateSet}
     />
   );
 };

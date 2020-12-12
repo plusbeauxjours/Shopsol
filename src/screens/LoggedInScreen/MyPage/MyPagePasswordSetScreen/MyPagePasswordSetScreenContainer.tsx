@@ -161,7 +161,6 @@ export default () => {
       const registered = await SmsRetriever?.startSmsRetriever();
       if (registered) {
         SmsRetriever.addSmsListener((event) => {
-          console.log('event.message', event.message);
           SmsRetriever.removeSmsListener();
         });
       }

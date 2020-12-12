@@ -6,7 +6,7 @@ interface IIsBefore {
 }
 
 const Line = styled.View<IIsBefore>`
-  height: 1px;
+  height: 0.7px;
   background-color: ${(props) => (props.isBefore ? '#CCCCCC' : '#e85356')};
 `;
 

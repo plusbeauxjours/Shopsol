@@ -3,10 +3,10 @@ import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import SignupScreenPresenter from './SignupScreenPresenter';
 import {useDispatch} from 'react-redux';
+import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
-
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
 
@@ -26,7 +26,9 @@ export default ({route: {params}}) => {
   const [joinRoute, setJoinRoute] = useState<string>('가입경로');
   const [otherJoinRoute, setOtherJoinRoute] = useState<string>('');
   const [password, setPassword] = useState<any>('');
-  const [birthDate, setBirthDate] = useState<string>('');
+  const [birthDate, setBirthDate] = useState<any>(moment());
+  const [birthDateSet, setBirthDateSet] = useState<boolean>(false);
+
   const [isBirthDateVisible, setIsBirthDateVisible] = useState<boolean>(false);
   const [passwordCheck, setPasswordCheck] = useState<any>('');
   const [isPasswordSeen, setIsPasswordSeen] = useState<boolean>(false);
@@ -88,7 +90,7 @@ export default ({route: {params}}) => {
       dispatch(setSplashVisible(true));
       const {data} = await api.signUp({
         NAME: name,
-        BIRTHDATE: birthDate,
+        BIRTHDATE: moment(birthDate).format('YYYY-MM-DD'),
         GENDER: genderTypeCheck.indexOf(true).toString(),
         MobileNo: mobileNo,
         SMSNUMBER: verifyCode,
@@ -204,6 +206,8 @@ export default ({route: {params}}) => {
       setBirthDate={setBirthDate}
       isBirthDateVisible={isBirthDateVisible}
       setIsBirthDateVisible={setIsBirthDateVisible}
+      birthDateSet={birthDateSet}
+      setBirthDateSet={setBirthDateSet}
     />
   );
 };

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import ImagePicker from 'react-native-image-crop-picker';
+import * as ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
 
 import ChecklistSpecificationScreenPresenter from './ChecklistSpecificationScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -126,29 +127,40 @@ export default ({route: {params}}) => {
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: true,
-      includeBase64: true,
-      compressImageQuality: 0.8,
-      compressImageMaxWidth: 720,
-      compressImageMaxHeight: 720,
-      cropperChooseText: '선택',
-      cropperCancelText: '취소',
-    }).then((images: any) => {
-      images.map((i) => {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxWidth: 800,
+        maxHeight: 1200,
+      },
+      (response) => {
         setCameraPictureList((cameraPictureList) => [
           ...cameraPictureList,
-          {uri: i.path},
+          {uri: response.uri},
         ]);
-      });
-    });
+      },
+    );
   };
 
   const takePictureFn = async (cameraRef) => {
-    const options = {quality: 0.8, base64: true, width: 720, height: 720};
-    const data = await cameraRef.current.takePictureAsync(options);
-    setCameraPictureLast(data.uri);
+    const data = await cameraRef.current.takePictureAsync();
+    return ImageResizer.createResizedImage(
+      data.uri,
+      800,
+      1200,
+      'JPEG',
+      100,
+      0,
+      null,
+      true,
+    )
+      .then((response) => {
+        setCameraPictureLast(response.uri);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const gotoChecklistAdd = () => {

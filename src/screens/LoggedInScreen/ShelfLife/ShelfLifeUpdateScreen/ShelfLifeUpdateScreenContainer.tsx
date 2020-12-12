@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import * as ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
+import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
-
 import {
   updateSHELFLIFE_DATA,
   removeSHELFLIFE_DATA,
 } from '~/redux/shelflifeSlice';
 import ShelfLifeUpdateScreenPresenter from './ShelfLifeUpdateScreenPresenter';
-import ImagePicker from 'react-native-image-crop-picker';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -22,9 +23,10 @@ export default ({route: {params}}) => {
   const [shelfLifeMemo, setShelfLifeMemo] = useState<string>(
     params?.shelfLifeMemo || '',
   );
-  const [shelfLifeDate, setShelfLifeDate] = useState<string>(
-    params?.shelfLifeDate || '',
+  const [shelfLifeDate, setShelfLifeDate] = useState<any>(
+    moment(params?.shelfLifeDate),
   );
+  const [shelfLifeDateSet, setShelfLifeDateSet] = useState<boolean>(false);
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
@@ -80,16 +82,17 @@ export default ({route: {params}}) => {
           name: params?.name,
           shelfLife_SEQ,
           shelfLifeName,
-          shelfLifeDate,
+          shelfLifeDate: moment(shelfLifeDate).format('YYYY-MM-DD'),
           shelfLifeMemo,
         }),
       );
       const {data} = await api.updateShelfLifeData({
         shelfLife_SEQ,
         shelfLifeNAME: shelfLifeName,
-        shelfLifeDATE: shelfLifeDate,
+        shelfLifeDATE: moment(shelfLifeDate).format('YYYY-MM-DD'),
         shelfLifeMEMO: shelfLifeMemo,
       });
+      await params?.fetchData();
       if (data.result == '0') {
         alertModal('', '연결에 실패하였습니다.');
       }
@@ -99,24 +102,37 @@ export default ({route: {params}}) => {
   };
 
   const takePictureFn = async (cameraRef) => {
-    const options = {quality: 1.0, base64: true, width: 900, height: 900};
-    const data = await cameraRef.current.takePictureAsync(options);
-    setCameraPictureLast(data.uri);
+    const data = await cameraRef.current.takePictureAsync();
+    return ImageResizer.createResizedImage(
+      data.uri,
+      800,
+      1200,
+      'JPEG',
+      100,
+      0,
+      null,
+      true,
+    )
+      .then((response) => {
+        setCameraPictureLast(response.uri);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: false,
-      includeBase64: true,
-      compressImageQuality: 0.8,
-      compressImageMaxWidth: 720,
-      compressImageMaxHeight: 720,
-      cropperChooseText: '선택',
-      cropperCancelText: '취소',
-    }).then((images: any) => {
-      setCameraPictureLast(images.path);
-    });
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxWidth: 800,
+        maxHeight: 1200,
+      },
+      (response) => {
+        setCameraPictureLast(response.uri);
+      },
+    );
   };
 
   return (
@@ -138,6 +154,8 @@ export default ({route: {params}}) => {
       setIsDateModalVisible={setIsDateModalVisible}
       submit={submit}
       alertModal={alertModal}
+      shelfLifeDateSet={shelfLifeDateSet}
+      setShelfLifeDateSet={setShelfLifeDateSet}
     />
   );
 };

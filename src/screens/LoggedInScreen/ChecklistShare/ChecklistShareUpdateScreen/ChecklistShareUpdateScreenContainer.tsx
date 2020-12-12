@@ -1,7 +1,8 @@
 import React, {useState, useEffect, createRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import ImagePicker from 'react-native-image-crop-picker';
+import * as ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
 import firebase from 'react-native-firebase';
 
 import ChecklistShareUpdateScreenPresenter from './ChecklistShareUpdateScreenPresenter';
@@ -63,31 +64,41 @@ export default ({route: {params}}) => {
     );
   };
 
-  const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: true,
-      includeBase64: true,
-      compressImageQuality: 0.8,
-      compressImageMaxWidth: 720,
-      compressImageMaxHeight: 720,
-      cropperChooseText: '선택',
-      cropperCancelText: '취소',
-    }).then((images: any) => {
-      scrollRef.current?.getNode()?.scrollToEnd({animated: true});
-      images.map((i) => {
-        setCameraPictureList((cameraPictureList) => [
-          ...cameraPictureList,
-          {uri: i.path},
-        ]);
+  const takePictureFn = async (cameraRef) => {
+    const data = await cameraRef.current.takePictureAsync();
+    return ImageResizer.createResizedImage(
+      data.uri,
+      800,
+      1200,
+      'JPEG',
+      100,
+      0,
+      null,
+      true,
+    )
+      .then((response) => {
+        setCameraPictureLast(response.uri);
+      })
+      .catch((e) => {
+        console.log(e);
       });
-    });
   };
 
-  const takePictureFn = async (cameraRef) => {
-    const options = {quality: 0.8, base64: true, width: 720, height: 720};
-    const data = await cameraRef.current.takePictureAsync(options);
-    setCameraPictureLast(data.uri);
+  const launchImageLibraryFn = () => {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxWidth: 800,
+        maxHeight: 1200,
+      },
+      (response) => {
+        setCameraPictureList((cameraPictureList) => [
+          ...cameraPictureList,
+          {uri: response.uri},
+        ]);
+      },
+    );
   };
 
   const selectPicture = () => {
