@@ -261,7 +261,7 @@ export default ({
               <InputLine isBefore={name == '' ? true : false} />
             </Case>
             <WhiteSpace />
-            <Case>
+            {/* <Case>
               <NameText>성별</NameText>
               <TypeCheckCase>
                 <View>{genderType(0, '남자')}</View>
@@ -285,7 +285,7 @@ export default ({
               </Touchable>
               <InputLine isBefore={!birthDateSet} />
             </Case>
-            <WhiteSpace />
+            <WhiteSpace /> */}
 
             <Case>
               <NameText>가입유형</NameText>
