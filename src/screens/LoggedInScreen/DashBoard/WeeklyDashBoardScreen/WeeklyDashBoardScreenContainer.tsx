@@ -1,17 +1,27 @@
 import React, {createRef, useEffect, useState} from 'react';
 
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import * as Hangul from 'hangul-js';
 
 import WeeklyDashBoardScreenPresenter from './WeeklyDashBoardScreenPresenter';
 import colors from '~/constants/colors';
+import api from '~/constants/LoggedInApi';
+import {setCALENDAR_DATA} from '~/redux/calendarSlice';
 
 export default () => {
   const scrollRef = createRef(0);
+  const dispatch = useDispatch();
+
+  const {STORE} = useSelector((state: any) => state.userReducer);
   const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
   const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
-  const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
+  const {
+    STORE_NAME,
+    STORE_SEQ,
+    EMP_SEQ,
+    STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
+  } = useSelector((state: any) => state.storeReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -41,9 +51,10 @@ export default () => {
   const [modalNOWORK, setModalNOWORK] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
   const [result, setResult] = useState<any>([]);
+  const [toDay, setToDay] = useState<any>(moment());
 
-  const weekStartDate = moment().startOf('isoWeek');
-  const weekEndDate = moment().endOf('isoWeek');
+  const weekStartDate = moment(toDay).startOf('isoWeek');
+  const weekEndDate = moment(toDay).endOf('isoWeek');
 
   const onPressSection = () => {
     return scrollRef.current?.getNode()?.scrollToEnd({animated: true});
@@ -53,27 +64,100 @@ export default () => {
     return scrollRef.current?.getNode()?.scrollTo({y: 0, animated: true});
   };
 
-  const init = async () => {
-    let currentMoment = moment().startOf('isoWeek');
-    let endMoment = moment().endOf('isoWeek');
-    const weekDates = [];
+  const prevWeek = () => {
+    setToDay(moment(toDay).subtract(1, 'weeks').format('YYYY-MM-DD'));
+    fetchSchedulesData(moment(toDay).subtract(1, 'weeks').format('YYYY-MM-DD'));
+  };
+
+  const nextWeek = () => {
+    setToDay(moment(toDay).add(1, 'weeks').format('YYYY-MM-DD'));
+    fetchSchedulesData(moment(toDay).add(1, 'weeks').format('YYYY-MM-DD'));
+  };
+
+  const fetchSchedulesData = async (date) => {
+    try {
+      setLoading(true);
+
+      setTotalEARLY_COUNT(0);
+      setTotalEARLY_EMP(0);
+      setTotalLATE_COUNT(0);
+      setTotalLATE_EMP(0);
+      setTotalREST_TIME_COUNT(0);
+      setTotalVACATION_COUNT(0);
+      setTotalVACATION_EMP(0);
+      setTotalNOWORK_COUNT(0);
+      setTotalNOWORK_EMP(0);
+      setTotalWORKING_COUNT(0);
+      setTotalWORKING_EMP(0);
+      setTotalSUB_WORKING_EMP(0);
+      setTotalWORKING_DAY(0);
+
+      if (!CALENDAR_DATA[moment(date).format('YYYY-MM-DD')]) {
+        const {data: scheduleData} = await api.getAllSchedules(
+          STORE_SEQ,
+          moment(date).format('YYYY'),
+          moment(date).format('M'),
+        );
+        if (scheduleData.message === 'SUCCESS') {
+          try {
+            let buffer = {};
+            const iterator = Object.keys(scheduleData.result);
+            for (const key of iterator) {
+              buffer[key] = scheduleData.result[key]['EMP_LIST'];
+              if (buffer[key].length !== 0) {
+                for (let k = 0; k < buffer[key].length; k++) {
+                  buffer[key][k] = {...buffer[key][k], WORKDATE: key};
+                }
+              }
+            }
+            if (STORE == '0' && CALENDAR_EDIT !== 1) {
+              for (const key of iterator) {
+                buffer[key] = buffer[key]?.filter(
+                  (info) => info.EMP_ID == EMP_SEQ,
+                );
+              }
+            }
+            dispatch(
+              setCALENDAR_DATA({
+                CALENDAR_DATA: buffer,
+                date: moment(date).format('YYYY-MM-DD'),
+              }),
+            );
+            init(buffer, date);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      } else {
+        init(CALENDAR_DATA, date);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const init = (CALENDAR_DATA, date) => {
+    let currentMoment = moment(date).startOf('isoWeek');
+    let endMoment = moment(date).endOf('isoWeek');
+    const weekDates = new Array();
     while (currentMoment < endMoment) {
       weekDates.push(currentMoment.format('YYYY-MM-DD'));
       currentMoment.add(1, 'days');
     }
 
-    let startSubMoment = moment().startOf('isoWeek');
-    let currentSubMoment = moment();
-    const weekSubDates = [];
+    let startSubMoment = moment(date).startOf('isoWeek');
+    let currentSubMoment = moment(date).endOf('isoWeek');
+
+    const weekSubDates = new Array();
     while (startSubMoment < currentSubMoment) {
       weekSubDates.push(startSubMoment.format('YYYY-MM-DD'));
       startSubMoment.add(1, 'days');
     }
-
     try {
-      let empListTemp = [];
-
-      await EMPLOYEE_LIST?.workinglist?.map((i, index) => {
+      let empListTemp = new Array();
+      EMPLOYEE_LIST?.workinglist?.map((i, index) => {
         const WORKING = Array.from(
           Array(7),
           () => [0, '00:00', '00:00', false, false, false, false, false, 0],
@@ -98,7 +182,8 @@ export default () => {
           IMAGE: i.images[0].IMAGE || '',
         });
       });
-      await weekSubDates.map((date) => {
+
+      weekSubDates.map((date) => {
         CALENDAR_DATA[date]?.map((i) => {
           let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
           if (emp) {
@@ -114,6 +199,7 @@ export default () => {
               (totalEARLY_COUNT) =>
                 totalEARLY_COUNT + (i.alear === '1' ? 1 : 0),
             );
+
             setTotalLATE_COUNT(
               (totalLATE_COUNT) => totalLATE_COUNT + (i.jigark === '1' ? 1 : 0),
             );
@@ -122,6 +208,7 @@ export default () => {
               (totalVACATION_COUNT) =>
                 totalVACATION_COUNT + (i.VACATION == '1' ? 1 : 0),
             );
+
             setTotalNOWORK_COUNT(
               (totalNOWORK_COUNT) =>
                 totalNOWORK_COUNT + (i.nowork == '1' ? 1 : 0),
@@ -129,7 +216,8 @@ export default () => {
           }
         });
       });
-      await weekDates.map((date, index) => {
+
+      weekDates.map((date, index) => {
         CALENDAR_DATA[date] &&
           CALENDAR_DATA[date]?.length !== 0 &&
           setTotalWORKING_DAY((totalWORKING_DAY) => totalWORKING_DAY + 1);
@@ -458,10 +546,9 @@ export default () => {
       setNOWORK_EMP_LIST(
         orderByNOWORK?.sort((a, b) => b.TOTAL_NOWORK - a.TOTAL_NOWORK),
       );
+      setLoading(false);
     } catch (e) {
       console.log(e);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -485,7 +572,7 @@ export default () => {
   };
 
   useEffect(() => {
-    loading && init();
+    loading && init(CALENDAR_DATA, toDay);
   }, []);
 
   return (
@@ -530,6 +617,9 @@ export default () => {
       search={search}
       result={result}
       searchName={searchName}
+      toDay={toDay}
+      prevWeek={prevWeek}
+      nextWeek={nextWeek}
     />
   );
 };

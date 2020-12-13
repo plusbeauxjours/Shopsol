@@ -13,13 +13,11 @@ import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import DailyDashBoardScreen from './DailyDashBoardScreen';
 import WeeklyDashBoardScreen from './WeeklyDashBoardScreen';
 import MonthlyDashBoardScreen from './MonthlyDashBoardScreen';
-import {setSplashVisible} from '~/redux/splashSlice';
 
 export default () => {
   const dispatch = useDispatch();
   const Tab = createMaterialTopTabNavigator();
 
-  const {visible} = useSelector((state: any) => state.splashReducer);
   const {CALENDAR_DATA_STORE_SEQ, CALENDAR_DATA} = useSelector(
     (state: any) => state.calendarReducer,
   );
@@ -32,16 +30,8 @@ export default () => {
 
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fetcEmphData = async () => {
-    try {
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const fetchSchedulesData = async () => {
     try {
-      dispatch(setSplashVisible(true));
       dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       if (
         !CALENDAR_DATA_STORE_SEQ ||
@@ -125,17 +115,15 @@ export default () => {
       console.log(e);
     } finally {
       setLoading(false);
-      dispatch(setSplashVisible(false));
     }
   };
 
   useEffect(() => {
-    fetcEmphData();
     fetchSchedulesData();
     firebase.analytics().setCurrentScreen('사업장 현황');
   }, []);
 
-  if (visible || loading) {
+  if (loading) {
     return null;
   } else {
     return (

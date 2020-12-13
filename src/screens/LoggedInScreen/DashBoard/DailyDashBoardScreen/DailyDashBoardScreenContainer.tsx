@@ -1,7 +1,9 @@
 import React, {createRef, useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import * as Hangul from 'hangul-js';
+import api from '~/constants/LoggedInApi';
+import {setCALENDAR_DATA} from '~/redux/calendarSlice';
 
 import DailyDashBoardScreenPresenter from './DailyDashBoardScreenPresenter';
 import colors from '~/constants/colors';
@@ -10,10 +12,17 @@ export default () => {
   const screenScrollRef = createRef(0);
   const cardScrollRef = createRef(0);
   const scrollRef = createRef(0);
+  const dispatch = useDispatch();
+
+  const {STORE} = useSelector((state: any) => state.userReducer);
   const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
   const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
-  const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
-  const {visible} = useSelector((state: any) => state.splashReducer);
+  const {
+    STORE_NAME,
+    STORE_SEQ,
+    EMP_SEQ,
+    STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
+  } = useSelector((state: any) => state.storeReducer);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
@@ -39,8 +48,7 @@ export default () => {
   const [indexTime, setIndexTime] = useState<number>(20000);
   const [search, setSearch] = useState<string>('');
   const [result, setResult] = useState<any>([]);
-
-  const toDay = moment().format('YYYY-MM-DD');
+  const [toDay, setToDay] = useState<any>(moment().format('YYYY-MM-DD'));
 
   const onPressSection = () => {
     return screenScrollRef.current?.getNode()?.scrollToEnd({animated: true});
@@ -71,10 +79,78 @@ export default () => {
     scrollRef.current?.getNode()?.scrollTo({y: position * 60});
   };
 
-  const init = async () => {
+  const prevDay = () => {
+    setSelectedIndex(0);
+    setToDay(moment(toDay).subtract(1, 'days').format('YYYY-MM-DD'));
+    fetchSchedulesData(moment(toDay).subtract(1, 'days').format('YYYY-MM-DD'));
+  };
+
+  const nextDay = () => {
+    setSelectedIndex(0);
+    setToDay(moment(toDay).add(1, 'days').format('YYYY-MM-DD'));
+    fetchSchedulesData(moment(toDay).add(1, 'days').format('YYYY-MM-DD'));
+  };
+
+  const fetchSchedulesData = async (date) => {
+    try {
+      setLoading(true);
+      setTotalEARLY(0);
+      setTotalLATE(0);
+      setTotalREST_TIME(0);
+      setTotalVACATION(0);
+      setTotalNOWORK(0);
+      setTotalWORKING(0);
+      setTotalWORKING_EMP(0);
+      if (!CALENDAR_DATA[moment(date).format('YYYY-MM-DD')]) {
+        const {data: scheduleData} = await api.getAllSchedules(
+          STORE_SEQ,
+          moment(date).format('YYYY'),
+          moment(date).format('M'),
+        );
+        if (scheduleData.message === 'SUCCESS') {
+          try {
+            let buffer = {};
+            const iterator = Object.keys(scheduleData.result);
+            for (const key of iterator) {
+              buffer[key] = scheduleData.result[key]['EMP_LIST'];
+              if (buffer[key].length !== 0) {
+                for (let k = 0; k < buffer[key].length; k++) {
+                  buffer[key][k] = {...buffer[key][k], WORKDATE: key};
+                }
+              }
+            }
+            if (STORE == '0' && CALENDAR_EDIT !== 1) {
+              for (const key of iterator) {
+                buffer[key] = buffer[key]?.filter(
+                  (info) => info.EMP_ID == EMP_SEQ,
+                );
+              }
+            }
+            dispatch(
+              setCALENDAR_DATA({
+                CALENDAR_DATA: buffer,
+                date: moment(date).format('YYYY-MM-DD'),
+              }),
+            );
+            init(buffer, date);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      } else {
+        init(CALENDAR_DATA, date);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const init = (CALENDAR_DATA, date) => {
     try {
       let empListTemp = [];
-      await EMPLOYEE_LIST?.workinglist?.map((i, index) => {
+      EMPLOYEE_LIST?.workinglist?.map((i, index) => {
         empListTemp.push({
           key: `item-${index}`,
           EMP_SEQ: i.EMP_SEQ,
@@ -88,7 +164,8 @@ export default () => {
           IMAGE: i.images[0].IMAGE || '',
         });
       });
-      CALENDAR_DATA[toDay]?.map((i) => {
+
+      CALENDAR_DATA[date]?.map((i) => {
         let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
         if (emp) {
           emp['IMAGE'] = i?.IMAGE;
@@ -222,8 +299,12 @@ export default () => {
             (b.START_TIME != null) - (a.START_TIME != null) ||
             !b.VACATION - !a.VACATION ||
             b.VACATION_PAID - a.VACATION_PAID ||
-            moment().diff(moment.duration(b.START_TIME).as('milliseconds')) -
-              moment().diff(moment.duration(a.START_TIME).as('milliseconds')),
+            moment(date).diff(
+              moment.duration(b.START_TIME).as('milliseconds'),
+            ) -
+              moment(date).diff(
+                moment.duration(a.START_TIME).as('milliseconds'),
+              ),
         ),
       );
 
@@ -271,8 +352,29 @@ export default () => {
     setResult(result);
   };
 
+  const renderWeekDay = (weekDay) => {
+    switch (weekDay) {
+      case '0':
+        return '일요일';
+      case '1':
+        return '월요일';
+      case '2':
+        return '화요일';
+      case '3':
+        return '수요일';
+      case '4':
+        return '목요일';
+      case '5':
+        return '금요일';
+      case '6':
+        return '토요일';
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
-    loading && init();
+    loading && init(CALENDAR_DATA, toDay);
   }, []);
 
   return (
@@ -293,7 +395,6 @@ export default () => {
       totlaWORKING_EMP={totlaWORKING_EMP}
       toDay={toDay}
       loading={loading}
-      visible={visible}
       STORE_NAME={STORE_NAME}
       screenScrollRef={screenScrollRef}
       cardScrollRef={cardScrollRef}
@@ -320,6 +421,9 @@ export default () => {
       search={search}
       result={result}
       searchName={searchName}
+      prevDay={prevDay}
+      nextDay={nextDay}
+      renderWeekDay={renderWeekDay}
     />
   );
 };

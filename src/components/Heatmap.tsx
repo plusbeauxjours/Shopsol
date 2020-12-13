@@ -48,7 +48,7 @@ const Touchable = styled(RNBounceable)<IActive>`
       ? 0
       : props.activeDays?.indexOf(props.index) > -1
       ? 0
-      : 0.7};
+      : 0.7}px;
   border-color: ${(props) =>
     props.isSelected
       ? 'transparent'
@@ -117,9 +117,9 @@ const WhiteSpace = styled.View<IRow>`
   width: ${(props) => props.paddingLeft * (ToucahbleSize + ToucahbleMargin)}px;
 `;
 
-export default ({data}) => {
+export default ({data, toDay}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(
-    moment().date() - 1,
+    moment(toDay).date() - 1,
   );
   const activeDays = [];
   data?.WORKING?.map((i, index) => i[0] > 0 && activeDays.push(index));
@@ -127,8 +127,8 @@ export default ({data}) => {
   const vacationDays = [];
   data?.WORKING?.map((i, index) => i[0] === -1 && vacationDays.push(index));
 
-  let monthStartDate = moment().startOf('month');
-  let monthEndDate = moment().endOf('month');
+  let monthStartDate = moment(toDay).startOf('month');
+  let monthEndDate = moment(toDay).endOf('month');
   const monthDates = [];
   while (monthStartDate < monthEndDate) {
     monthDates.push(monthStartDate.format('YYYY-MM-DD'));
@@ -142,7 +142,7 @@ export default ({data}) => {
             <Text key={index}>{i}</Text>
           ))}
         </SpaceRow>
-        <WhiteSpace paddingLeft={moment().startOf('month').isoWeekday()} />
+        <WhiteSpace paddingLeft={moment(toDay).startOf('month').isoWeekday()} />
         {monthDates.map((_, index) => {
           if (vacationDays?.indexOf(index) > -1 && selectedIndex !== index) {
             return (
