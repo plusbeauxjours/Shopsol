@@ -455,7 +455,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(shelfLifeDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"

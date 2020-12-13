@@ -10,12 +10,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
+import moment from 'moment';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
 import InputLine from '~/components/InputLine';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
-import moment from 'moment';
+import utils from '~/constants/utils';
 
 interface IsError {
   isError?: boolean;
@@ -460,7 +461,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(birthDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"

@@ -1531,7 +1531,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(startDay).toDate()}
             mode={'date'}
             androidVariant="iosClone"
@@ -1574,7 +1575,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(endDay).toDate()}
             mode={'date'}
             androidVariant="iosClone"
@@ -1618,7 +1620,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(probationPeriod).toDate()}
             mode={'date'}
             androidVariant="iosClone"

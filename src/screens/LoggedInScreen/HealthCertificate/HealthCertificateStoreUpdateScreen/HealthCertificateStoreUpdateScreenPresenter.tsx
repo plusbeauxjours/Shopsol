@@ -1,7 +1,6 @@
 import React, {useRef} from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
-import DatePickerModal from 'react-native-modal-datetime-picker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,6 +16,7 @@ import moment from 'moment';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import {CameraIcon, CheckBoxIcon} from '~/constants/Icons';
+import utils from '~/constants/utils';
 
 const WhiteSpace = styled.View`
   height: 20px;
@@ -394,7 +394,15 @@ export default ({
             <SubmitBtn
               text={'수정완료'}
               onPress={() => submitFn()}
-              isRegisted={true}
+              isRegisted={
+                cameraPictureLast &&
+                NAME.length !== 0 &&
+                position.length !== 0 &&
+                owner.length !== 0 &&
+                storename.length !== 0 &&
+                businesstype.length !== 0 &&
+                EDUCATION_TYPE.length !== 0
+              }
             />
             <DeleteButton
               onPress={() => {
@@ -493,7 +501,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(EDUCATION_DATE).toDate()}
             mode={'date'}
             androidVariant="iosClone"

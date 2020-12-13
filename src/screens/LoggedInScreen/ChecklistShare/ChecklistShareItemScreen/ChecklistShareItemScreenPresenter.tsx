@@ -302,7 +302,7 @@ export default ({
                     {moment(CREATE_TIME).format('YYYY.MM.DD')}
                   </Bold>
                   <Bold style={{color: '#C8C8C8'}}>
-                    {moment(CREATE_TIME).format('HH:mm:ss')}
+                    {moment(CREATE_TIME).format('HH:mm')}
                   </Bold>
                 </Column>
               </Row>

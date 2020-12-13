@@ -16,6 +16,7 @@ import InputLine from '~/components/InputLine';
 import FastImage from 'react-native-fast-image';
 import {RNCamera} from 'react-native-camera';
 import {CameraIcon, CheckBoxIcon} from '~/constants/Icons';
+import utils from '~/constants/utils';
 
 const WhiteSpace = styled.View`
   height: 20px;
@@ -387,7 +388,15 @@ export default ({
             <SubmitBtn
               text={'입력완료'}
               onPress={() => submitFn()}
-              isRegisted={true}
+              isRegisted={
+                cameraPictureLast &&
+                NAME.length !== 0 &&
+                position.length !== 0 &&
+                owner.length !== 0 &&
+                storename.length !== 0 &&
+                businesstype.length !== 0 &&
+                EDUCATION_TYPE.length !== 0
+              }
             />
           </Container>
         </ScrollView>
@@ -472,7 +481,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(EDUCATION_DATE).toDate()}
             mode={'date'}
             androidVariant="iosClone"

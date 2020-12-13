@@ -33,7 +33,9 @@ export default ({route: {params}}) => {
   ); // 교육일시 / 검진일
   const [EDUCATION_DATE_SET, setEDUCATION_DATE_SET] = useState<boolean>(false);
   const [NAME, setNAME] = useState<string>(params?.NAME || ''); // 교육이수자성명 / 성명
-  const [RESULT_COUNT, setRESULT_COUNT] = useState<any>(params?.RESULT_COUNT); // 회차
+  const [RESULT_COUNT, setRESULT_COUNT] = useState<any>(
+    params?.RESULT_COUNT || null,
+  ); // 회차
 
   const alertModal = (title, text) => {
     const params = {

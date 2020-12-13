@@ -16,6 +16,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {CloseCircleIcon} from '~/constants/Icons';
 import {CameraIcon, PictureIcon} from '~/constants/Icons';
+import utils from '~/constants/utils';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -462,7 +463,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(date).toDate()}
             mode={'date'}
             androidVariant="iosClone"

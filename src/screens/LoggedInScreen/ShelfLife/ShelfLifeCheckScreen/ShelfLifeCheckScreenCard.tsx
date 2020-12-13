@@ -228,7 +228,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
             <Row>
               <Text isChecked={true}>처리시간: </Text>
               <Bold isChecked={true}>
-                {moment(item.checkTime).format('YYYY.MM.DD HH:mm:ss')}
+                {moment(item.checkTime).format('YYYY.MM.DD HH:mm')}
               </Bold>
             </Row>
           </TextContainer>

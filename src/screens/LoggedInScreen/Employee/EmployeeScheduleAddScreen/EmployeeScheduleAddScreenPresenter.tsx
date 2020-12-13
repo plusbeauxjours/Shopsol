@@ -16,6 +16,7 @@ import RoundBtn from '~/components/Btn/RoundBtn';
 import InputLine from '~/components/InputLine';
 import EmployeeScheduleAddScreenRenderDayPicker from './EmployeeScheduleAddScreenRenderDayPicker';
 import EmployeeScheduleAddScreenRenderWorkDay from './EmployeeScheduleAddScreenRenderWorkDay';
+import utils from '~/constants/utils';
 
 interface IsSelected {
   isSelected: boolean;
@@ -497,7 +498,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(startDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"
@@ -539,7 +541,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(endDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"

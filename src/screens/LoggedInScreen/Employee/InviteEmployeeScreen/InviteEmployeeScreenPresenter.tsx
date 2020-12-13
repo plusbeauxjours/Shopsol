@@ -263,7 +263,8 @@ export default ({
                   value={phone}
                   maxLength={11}
                   keyboardType={'number-pad'}
-                  style={{width: 200}}
+                  style={{width: utils.isAndroid() ? 200 : 230}}
+                  locale="ko"
                 />
               </PhoneContainer>
             </Box>

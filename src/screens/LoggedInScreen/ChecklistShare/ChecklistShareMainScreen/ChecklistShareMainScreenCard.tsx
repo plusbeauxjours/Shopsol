@@ -171,7 +171,7 @@ export default ({
             </Row>
             <AddressBox>
               <InfoText>
-                {moment(data.CREATE_TIME).format('YYYY.MM.DD HH:mm:ss')}
+                {moment(data.CREATE_TIME).format('YYYY.MM.DD HH:mm')}
               </InfoText>
             </AddressBox>
           </ContentBox>

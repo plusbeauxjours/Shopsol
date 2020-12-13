@@ -125,7 +125,7 @@ export default () => {
           name,
           shelfLife_SEQ,
           checkEmpName: STORE === '1' ? '점주' : MEMBER_NAME,
-          checkTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+          checkTime: moment().format('YYYY-MM-DD HH:mm'),
         }),
       );
       const {data} = await api.checkShelfLifeData({

@@ -16,6 +16,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import {CameraIcon} from '~/constants/Icons';
+import utils from '~/constants/utils';
 
 const WhiteSpace = styled.View`
   height: 20px;
@@ -302,7 +303,7 @@ export default ({
                   keyboardType={'number-pad'}
                 />
               </TextInputContainer>
-              <InputLine isBefore={RESULT_COUNT == '' ? true : false} />
+              <InputLine isBefore={!RESULT_COUNT} />
               <WhiteSpace />
               <TextInputContainer>
                 <GreyText>검진일</GreyText>
@@ -417,7 +418,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(EDUCATION_DATE).toDate()}
             mode={'date'}
             androidVariant="iosClone"

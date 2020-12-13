@@ -10,12 +10,13 @@ import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image';
 import {RNCamera} from 'react-native-camera';
 import moment from 'moment';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import {CameraIcon} from '~/constants/Icons';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import utils from '~/constants/utils';
 
 const WhiteSpace = styled.View`
   height: 20px;
@@ -296,7 +297,7 @@ export default ({
                   keyboardType={'number-pad'}
                 />
               </TextInputContainer>
-              <InputLine isBefore={RESULT_COUNT == '' ? true : false} />
+              <InputLine isBefore={!RESULT_COUNT} />
               <WhiteSpace />
               <TextInputContainer>
                 <Touchable onPress={() => setDateModalVisible(true)}>
@@ -399,7 +400,8 @@ export default ({
         }}>
         <DatePickerContainer>
           <DatePicker
-            style={{width: 200}}
+            style={{width: utils.isAndroid() ? 200 : 230}}
+            locale="ko"
             date={moment(EDUCATION_DATE).toDate()}
             mode={'date'}
             androidVariant="iosClone"
