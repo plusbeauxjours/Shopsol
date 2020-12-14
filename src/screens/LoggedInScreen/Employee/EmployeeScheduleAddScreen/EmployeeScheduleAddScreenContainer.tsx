@@ -26,7 +26,6 @@ const constant = {
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
-  console.log(params);
   const navigation = useNavigation();
   const {type: TYPE, EMP_SEQ, fetchData} = params;
   const [isUpdateMode, setIsUpdateMode] = useState<boolean>(false); // INSERT 또는 UPDATE 상태값
@@ -59,10 +58,9 @@ export default ({route: {params}}) => {
   const [isEndDayModalVisible, setIsEndDayModalVisible] = useState<boolean>(
     false,
   );
-  const [
-    isStartTimeModalVisible,
-    setIsStartTimeModalVisible,
-  ] = useState<boolean>(false);
+  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
+    boolean
+  >(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );

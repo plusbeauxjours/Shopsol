@@ -37,7 +37,7 @@ export default () => {
   };
 
   const defaultData = [
-    {name: '1일전', color: '#ea1901', items: []},
+    {name: '1일전', color: '#f4aaab', items: []},
     {name: '1주전', color: '#ccc', items: []},
     {name: '2주전', color: '#ccc', items: []},
     {name: '1달전', color: '#ccc', items: []},
@@ -56,6 +56,8 @@ export default () => {
   const [data, setData] = useState<any>([]);
   const [tabs, setTabs] = useState<any>(defaultTabs);
   const [ready, setReady] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>('');
+  const [result, setResult] = useState<any>([]);
 
   const confirmModal = (name, shelfLife_SEQ) => {
     const params = {
@@ -199,7 +201,7 @@ export default () => {
           titleNumber: '1',
           titleWord: '일전',
           backgroundColor: 'white',
-          textColor: '#ea1901',
+          textColor: '#f4aaab',
           radius: 60,
           totalQTY: dayCount ?? 0,
           doneQTY: dayDone,
@@ -257,7 +259,7 @@ export default () => {
     if (scrollRef.current) {
       setTimeout(() => {
         scrollRef.current?.getNode()?.scrollTo({
-          y: tabs[index].anchor + 470,
+          y: tabs[index].anchor + 350,
           animated: true,
         });
       }, 100);
@@ -272,6 +274,14 @@ export default () => {
     if (index === 3) {
       setReady(true);
     }
+  };
+
+  const searchData = (text) => {
+    setSearch(text);
+    const temp = SHELFLIFE_DATA?.map((i) =>
+      i.items.filter((i) => i.shelfLifeName.includes(search)),
+    );
+    setResult(temp);
   };
 
   const onScroll = onScrollEvent({y});
@@ -299,6 +309,10 @@ export default () => {
       ready={ready}
       gotoAdd={gotoAdd}
       fetchData={fetchData}
+      search={search}
+      result={result}
+      setSearch={setSearch}
+      searchData={searchData}
     />
   );
 };

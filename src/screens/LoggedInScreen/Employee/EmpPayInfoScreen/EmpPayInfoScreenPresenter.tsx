@@ -7,6 +7,7 @@ import {
 
 import EmpPayInfoCard1 from './EmpPayInfoCard1';
 import EmpPayInfoCard2 from './EmpPayInfoCard2';
+import moment from 'moment';
 import {
   ForwardIcon,
   BackIcon,
@@ -60,32 +61,32 @@ const Row = styled.View`
 `;
 
 const DateArrow = styled.TouchableOpacity`
-  width: ${wp('10%')};
-  height: ${wp('10%')};
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background-color: #eee;
+  border-radius: 15px;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #f4aaab;
 `;
 
-const Date = styled.View`
+const DateTextArea = styled.View`
   flex: 1;
+  height: 40px;
   align-items: center;
+  justify-content: center;
+`;
+
+const DateBoxText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 const DateText = styled.Text`
   font-weight: bold;
   font-size: 16px;
-`;
-
-const DateReload = styled.TouchableOpacity`
-  margin-right: 5px;
-  width: ${wp('10%')}px;
-  height: ${wp('10%')}px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background-color: #eee;
 `;
 
 const DateBox = styled(Row)`
@@ -258,18 +259,23 @@ export default ({
       </Profile>
       <DateBox>
         <DateArrow onPress={() => backpay()}>
-          <BackIcon size={22} color={'black'} />
+          <BackIcon size={22} color={'#f4aaab'} />
         </DateArrow>
-        <Date>
-          <DateText>
-            {replaceAll(maindata.START_DAY)} ~ {replaceAll(maindata.END_DAY)}
-          </DateText>
-        </Date>
-        <DateReload onPress={() => onRefresh()}>
-          <ReloadCircleIcon />
-        </DateReload>
+        <DateTextArea>
+          <DateBoxText>
+            {moment(maindata.START_DAY).format('YYYY년 M월')}
+          </DateBoxText>
+          <DateBoxText style={{fontSize: 12, fontWeight: '300'}}>
+            ({moment(maindata.START_DAY).format('M월 D일')}
+            &nbsp;~&nbsp;
+            {moment(maindata.END_DAY).format('M월 D일')})
+          </DateBoxText>
+        </DateTextArea>
+        <DateArrow style={{marginRight: 5}} onPress={() => onRefresh()}>
+          <ReloadCircleIcon size={18} color={'#f4aaab'} />
+        </DateArrow>
         <DateArrow onPress={() => nextpay()}>
-          <ForwardIcon size={22} color={'black'} />
+          <ForwardIcon size={22} color={'#f4aaab'} />
         </DateArrow>
       </DateBox>
     </TopArea>

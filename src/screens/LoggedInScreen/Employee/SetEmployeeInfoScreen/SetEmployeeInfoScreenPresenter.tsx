@@ -322,7 +322,15 @@ const DateBox = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-radius: 15px;
-  background-color: #eee;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #f4aaab;
+`;
+
+const DateBoxText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 const DatePickerContainer = styled.View`
@@ -1405,16 +1413,16 @@ export default ({
                             .format('YYYY'),
                         )
                       }>
-                      <BackIcon size={16} color={'#000'} />
+                      <BackIcon size={22} color={'#f4aaab'} />
                     </DateBox>
-                    <NameText>{annual_START}년</NameText>
+                    <DateBoxText>{annual_START}년</DateBoxText>
                     <DateBox
                       onPress={() =>
                         setAnnual_START(
                           moment(annual_START).add(1, 'year').format('YYYY'),
                         )
                       }>
-                      <ForwardIcon size={16} color={'#000'} />
+                      <ForwardIcon size={22} color={'#f4aaab'} />
                     </DateBox>
                   </Row>
                 </InputCase>

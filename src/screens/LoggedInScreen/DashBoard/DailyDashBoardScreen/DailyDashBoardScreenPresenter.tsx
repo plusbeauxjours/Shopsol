@@ -21,6 +21,7 @@ import {
   ForwardIcon,
 } from '~/constants/Icons';
 import Schedule from '~/components/Schedule';
+import utils from '~/constants/utils';
 
 interface IColor {
   color: string;
@@ -244,6 +245,7 @@ const SearchInput = styled.TextInput`
   padding-top: 2px;
   height: 40px;
   margin-bottom: 20px;
+  justify-content: center;
 `;
 
 const Date = styled.View`
@@ -332,7 +334,6 @@ export default ({
   searchName,
   prevDay,
   nextDay,
-  renderWeekDay,
 }) => {
   const EmpCardComponent = ({i, index}) => (
     <EmpCardContainer
@@ -524,7 +525,7 @@ export default ({
                 <DateTextArea>
                   <DateText>{moment(toDay).format('YYYY년 M월 D일')}</DateText>
                   <DateText style={{fontSize: 12, fontWeight: '300'}}>
-                    {renderWeekDay(moment(toDay).format('d'))}
+                    {utils.renderWeekDay(moment(toDay).format('d'))}
                   </DateText>
                 </DateTextArea>
                 <DateArrowRight onPress={() => nextDay()}>
@@ -692,9 +693,10 @@ export default ({
                 )
               )}
 
-              <Animated.ScrollView
+              <ScrollView
                 horizontal
                 snapToInterval={220}
+                style={{marginBottom: 20}}
                 decelerationRate="fast"
                 showsHorizontalScrollIndicator={false}>
                 <Card
@@ -730,9 +732,7 @@ export default ({
                   <EmpConatainer>
                     {LATE_EMP_LIST.filter((i) => i.LATE && i.LATE !== '0')
                       .length === 0 ? (
-                      <Text style={{marginTop: 20}}>
-                        지각 직원이 없습니다.
-                      </Text>
+                      <Text style={{marginTop: 20}}>지각 직원이 없습니다.</Text>
                     ) : (
                       LATE_EMP_LIST.slice(0, 3).map(
                         (i, index) =>
@@ -801,9 +801,7 @@ export default ({
                   <EmpConatainer>
                     {EARLY_EMP_LIST.filter((i) => i.EARLY && i.EARLY !== '0')
                       .length === 0 ? (
-                      <Text style={{marginTop: 20}}>
-                        조퇴 직원이 없습니다.
-                      </Text>
+                      <Text style={{marginTop: 20}}>조퇴 직원이 없습니다.</Text>
                     ) : (
                       EARLY_EMP_LIST.slice(0, 3).map(
                         (i, index) =>
@@ -872,9 +870,7 @@ export default ({
                   <EmpConatainer>
                     {NOWORK_EMP_LIST.filter((i) => i.NOWORK && i.NOWORK !== '0')
                       .length === 0 ? (
-                      <Text style={{marginTop: 20}}>
-                        결근 직원이 없습니다.
-                      </Text>
+                      <Text style={{marginTop: 20}}>결근 직원이 없습니다.</Text>
                     ) : (
                       NOWORK_EMP_LIST.slice(0, 3).map(
                         (i, index) =>
@@ -1040,7 +1036,7 @@ export default ({
                     )}
                   </EmpConatainer>
                 </Card>
-              </Animated.ScrollView>
+              </ScrollView>
             </>
           )}
         </Animated.ScrollView>

@@ -18,10 +18,10 @@ import {
 } from '~/constants/Icons';
 import moment from 'moment';
 import ChecklistItemsScreenCard from './ChecklistItemsScreenCard';
-import Ripple from 'react-native-material-ripple';
 import LottieView from 'lottie-react-native';
 
-import {AddCircleIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
+import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
+import utils from '~/constants/utils';
 
 interface IsEmpName {
   isEmpName: string;
@@ -66,32 +66,36 @@ const Date = styled.View`
 `;
 
 const DateArrowLeft = styled.TouchableOpacity`
-  width: ${wp('10%')}px;
-  height: ${wp('10%')}px;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background-color: #eee;
+  border-radius: 15px;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #f4aaab;
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
 const CalendarOpenBtn = styled(DateArrowLeft)`
   margin-right: 5px;
 `;
+
 const DateToday = styled(DateArrowLeft)`
   margin-left: 5px;
 `;
 
-const DateTextArea = styled.TouchableOpacity`
+const DateTextArea = styled.View`
   flex: 1;
-  height: ${wp('10%')}px;
+  height: 40px;
   align-items: center;
   justify-content: center;
 `;
 
 const DateText = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 const Container = styled.View`
@@ -106,19 +110,6 @@ const Section = styled.View`
   padding: 20px;
   margin-bottom: 20px;
   background-color: white;
-`;
-
-const AddCheckilistButton = styled(Ripple)`
-  align-items: center;
-  padding: 15px;
-  width: 100%;
-  border-radius: 30px;
-  border-width: 2px;
-  border-color: #e85356;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 20px;
 `;
 
 const AddChecklistButtonText = styled.Text`
@@ -230,6 +221,28 @@ const ChecklistTypeText2 = styled.Text`
   padding-left: 10px;
   color: #7e7c7c;
   font-size: 12px;
+`;
+
+const AddButtonContainer = styled.View`
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const AddButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: #e85356;
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
 `;
 
 export default ({
@@ -369,14 +382,18 @@ export default ({
                   setDate(yesterday);
                   fetchData(yesterday);
                 }}>
-                <BackIcon size={22} color={'#000'} />
+                <BackIcon size={22} color={'#f4aaab'} />
               </DateArrowLeft>
               <DateToday onPress={() => fetchData(date)}>
-                <ReloadCircleIcon size={22} />
+                <ReloadCircleIcon size={18} color={'#f4aaab'} />
               </DateToday>
               <DateTextArea>
-                <DateText>{moment(date).format('YYYY.MM.DD')}</DateText>
+                <DateText>{moment(date).format('YYYY년 M월 D일')}</DateText>
+                <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                  {utils.renderWeekDay(moment(date).format('d'))}
+                </DateText>
               </DateTextArea>
+
               <CalendarOpenBtn
                 onPress={() => {
                   markingFn(
@@ -386,30 +403,16 @@ export default ({
                   );
                   setIsCalendarModalVisible(true);
                 }}>
-                <CalendarIcon size={22} color={'black'} />
+                <CalendarIcon size={18} color={'#f4aaab'} />
               </CalendarOpenBtn>
               <DateArrowRight
                 onPress={() => {
                   setDate(tomorrow);
                   fetchData(tomorrow);
                 }}>
-                <ForwardIcon size={22} color={'#000'} />
+                <ForwardIcon size={22} color={'#f4aaab'} />
               </DateArrowRight>
             </Date>
-            {STORE === '1' && (
-              <AddCheckilistButton
-                onPress={() => onPressAddChecklist()}
-                rippleColor={'#e39a9c'}
-                rippleDuration={600}
-                rippleSize={1200}
-                rippleContainerBorderRadius={30}
-                rippleOpacity={0.1}>
-                <AddChecklistButtonText>
-                  체크리스트 추가하기
-                </AddChecklistButtonText>
-                <AddCircleIcon />
-              </AddCheckilistButton>
-            )}
           </Section>
           {CHECKLIST_DATA?.length == 0 ? (
             STORE == '1' ? (
@@ -547,6 +550,13 @@ export default ({
           onMonthChange={(date) => onMonthChange(date)}
         />
       </Modal>
+      {STORE === '1' && (
+        <AddButtonContainer>
+          <AddButton onPress={() => onPressAddChecklist()}>
+            <AddIcon />
+          </AddButton>
+        </AddButtonContainer>
+      )}
     </BackGround>
   );
 };

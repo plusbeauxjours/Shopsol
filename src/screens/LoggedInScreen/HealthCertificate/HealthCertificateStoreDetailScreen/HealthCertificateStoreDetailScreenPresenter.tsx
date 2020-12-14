@@ -85,11 +85,6 @@ const Container = styled.View`
   padding: 20px;
 `;
 
-const HelpText = styled.Text`
-  font-weight: bold;
-  font-size: 18px;
-`;
-
 const Section = styled.View`
   width: 100%;
   padding: 20px;
@@ -106,35 +101,28 @@ const Date = styled.View`
 `;
 
 const DateArrowLeft = styled.TouchableOpacity`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background-color: #eee;
+  border-radius: 15px;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #f4aaab;
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
-const DateTextArea = styled.TouchableOpacity`
+const DateTextArea = styled.View`
   flex: 1;
   height: 40px;
   align-items: center;
   justify-content: center;
 `;
 
-const DateToday = styled.TouchableOpacity`
-  margin-right: 5px;
-  width: 40px;
-  height: 40px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background-color: #eee;
-`;
-
 const DateText = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 const ContentWrapper = styled.View`
@@ -260,9 +248,6 @@ export default ({
       <BackGround>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Container>
-            <Section style={{alignItems: 'center'}}>
-              <HelpText>보건증 조기경보시스템</HelpText>
-            </Section>
             <Section>
               <Date>
                 <DateArrowLeft
@@ -273,9 +258,9 @@ export default ({
                       increaseSELECT_INDEX();
                     }
                   }}>
-                  <BackIcon size={22} color={'#000'} />
+                  <BackIcon size={22} color={'#f4aaab'} />
                 </DateArrowLeft>
-                <DateTextArea onPress={() => onRefresh()}>
+                <DateTextArea>
                   <DateText>
                     {
                       HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE.split(
@@ -285,12 +270,11 @@ export default ({
                     년
                   </DateText>
                 </DateTextArea>
-                <DateToday
-                  onPress={() => {
-                    onRefresh();
-                  }}>
-                  <ReloadCircleIcon size={22} />
-                </DateToday>
+                <DateArrowRight
+                  style={{marginRight: 5}}
+                  onPress={() => onRefresh()}>
+                  <ReloadCircleIcon size={18} color={'#f4aaab'} />
+                </DateArrowRight>
                 <DateArrowRight
                   onPress={() => {
                     if (SELECT_INDEX == 0) {
@@ -299,7 +283,7 @@ export default ({
                       decreaseSELECT_INDEX();
                     }
                   }}>
-                  <ForwardIcon size={22} color={'#000'} />
+                  <ForwardIcon size={22} color={'#f4aaab'} />
                 </DateArrowRight>
               </Date>
               <ContentWrapper>

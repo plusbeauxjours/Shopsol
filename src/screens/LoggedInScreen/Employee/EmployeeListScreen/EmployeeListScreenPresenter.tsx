@@ -99,10 +99,6 @@ export default ({
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <Container>
-          <StoreBox>
-            <StoreBoxText>{STORE_NAME}의 직원목록</StoreBoxText>
-          </StoreBox>
-
           <Section>
             <BoxTitle>
               <BoxTitleText>전체직원</BoxTitleText>

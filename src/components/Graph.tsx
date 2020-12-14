@@ -143,13 +143,13 @@ const VacationTopText = styled(TopText)<IColumn>`
     props.isSelected ? '#7F7F7F' : 'rgba(127, 127, 127, 0.6)'};
 `;
 
-export default ({data}) => {
+export default ({data, toDay}) => {
   const values = Object.values(data.WORKING)?.map((p) => p[0]);
   const minY = Math.min(...values);
   const maxY = Math.max(...values);
   const lerp = (v0: number, v1: number, t: number) => (1 - t) * v0 + t * v1;
   const [selectedIndex, setSelectedIndex] = useState<string>(
-    (moment().isoWeekday() - 1).toString(),
+    (moment(toDay).isoWeekday() - 1).toString(),
   );
   return (
     <>
@@ -185,7 +185,10 @@ export default ({data}) => {
                 <Column />
                 <Top isSelected={selectedIndex == index.toString()}>
                   <TopText isSelected={selectedIndex == index.toString()}>
-                    {moment().startOf('isoWeek').add(index, 'days').format('D')}
+                    {moment(toDay)
+                      .startOf('isoWeek')
+                      .add(index, 'days')
+                      .format('D')}
                   </TopText>
                 </Top>
               </ColumnContainer>

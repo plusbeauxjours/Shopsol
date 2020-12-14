@@ -221,6 +221,7 @@ const SearchInput = styled.TextInput`
   padding-top: 2px;
   height: 40px;
   margin-bottom: 20px;
+  justify-content: center;
 `;
 
 const Date = styled.View`
@@ -399,7 +400,7 @@ export default ({
         </EmpCardRow>
         {i.TOTAL_WORKING != 0 ? (
           <GraphContainer>
-            <Graph data={i} />
+            <Graph data={i} toDay={toDay} />
           </GraphContainer>
         ) : (
           <Text style={{textAlign: 'center'}}>금주 근무가 없습니다.</Text>
@@ -631,6 +632,7 @@ export default ({
               <ScrollView
                 horizontal
                 snapToInterval={220}
+                style={{marginBottom: 20}}
                 decelerationRate="fast"
                 showsHorizontalScrollIndicator={false}>
                 {Number(moment(toDay).startOf('isoWeek').format('YYYYMMDD')) <=

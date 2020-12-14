@@ -254,7 +254,6 @@ export default ({
 
   return (
     <BackGround>
-      {console.log('endDate', endDate)}
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"

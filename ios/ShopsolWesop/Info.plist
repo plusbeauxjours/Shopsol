@@ -39,6 +39,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSCalendarsUsageDescription</key>
 	<string>$(PRODUCT_NAME) 캘린더 접근을 허용하시겠습니까?</string>
 	<key>NSCameraUsageDescription</key>

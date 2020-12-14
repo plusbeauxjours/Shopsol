@@ -13,6 +13,7 @@ import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import DailyDashBoardScreen from './DailyDashBoardScreen';
 import WeeklyDashBoardScreen from './WeeklyDashBoardScreen';
 import MonthlyDashBoardScreen from './MonthlyDashBoardScreen';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export default () => {
 
   const fetchSchedulesData = async () => {
     try {
+      dispatch(setSplashVisible(true));
       dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       if (
         !CALENDAR_DATA_STORE_SEQ ||
@@ -115,6 +117,7 @@ export default () => {
       console.log(e);
     } finally {
       setLoading(false);
+      dispatch(setSplashVisible(false));
     }
   };
 

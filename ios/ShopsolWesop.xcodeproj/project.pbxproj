@@ -754,7 +754,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolMasterWesop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolwesop;
 				PRODUCT_NAME = ShopsolWesop;
 				SWIFT_OBJC_BRIDGING_HEADER = "ShopsolWesop-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -779,7 +779,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolMasterWesop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopsolwesop;
 				PRODUCT_NAME = ShopsolWesop;
 				SWIFT_OBJC_BRIDGING_HEADER = "ShopsolWesop-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

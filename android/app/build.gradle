@@ -172,8 +172,8 @@ android {
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 14
-        versionName "1.1.4"
+        versionCode 15
+        versionName "1.1.5"
     }
     splits {
         abi {
@@ -202,11 +202,6 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            resValue "string", "CodePushDeploymentKey", ""
-        }
-        releaseStaging {
-            resValue "string", "CodePushDeploymentKey", "IQ-khtu0aKK5BdIbO4km_EtFgAQjWBnmiq-T6"
-            matchingFallbacks = ['release']
         }
         release {
             // signingConfig signingConfigs.debug

@@ -220,6 +220,7 @@ const SearchInput = styled.TextInput`
   padding-top: 2px;
   height: 40px;
   margin-bottom: 20px;
+  justify-content: center;
 `;
 
 const Date = styled.View`
@@ -631,6 +632,7 @@ export default ({
               <ScrollView
                 horizontal
                 snapToInterval={220}
+                style={{marginBottom: 20}}
                 decelerationRate="fast"
                 showsHorizontalScrollIndicator={false}>
                 {Number(moment(toDay).startOf('month').format('YYYYMMDD')) <=

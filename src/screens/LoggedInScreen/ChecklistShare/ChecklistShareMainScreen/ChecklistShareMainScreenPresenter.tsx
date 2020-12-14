@@ -65,12 +65,14 @@ const NewCntViewText = styled.Text`
 `;
 
 const DateArrowLeft = styled.TouchableOpacity`
-  width: ${wp('10%')}px;
-  height: ${wp('10%')}px;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background-color: #eee;
+  border-radius: 15px;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #f4aaab;
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -97,38 +99,17 @@ const Date = styled.View`
   justify-content: center;
 `;
 
-const DateTextArea = styled.TouchableOpacity`
+const DateTextArea = styled.View`
   flex: 1;
-  height: ${wp('10%')}px;
+  height: 40px;
   align-items: center;
   justify-content: center;
 `;
 
 const DateText = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
-`;
-
-const AddChecklistBox = styled.View`
-  width: 100%;
-  align-items: center;
-`;
-
-const AddCheckilistButton = styled.TouchableOpacity`
-  width: 100%;
-  padding: 15px;
-  border-radius: 30px;
-  border-width: 2px;
-  border-color: #e85356;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 20px;
-`;
-
-const AddChecklistButtonText = styled.Text`
-  color: #e85356;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 const CalendarTitle = styled.View`
@@ -214,9 +195,6 @@ const EmptyBox = styled.View`
   width: 100%;
   height: 100px;
   padding: 20px;
-  border-width: 1px;
-  border-color: #999;
-  border-radius: 20px;
 `;
 
 const Column = styled.View`
@@ -271,7 +249,7 @@ export default ({
     }
   };
 
-  const DateController = ({location, text}) => {
+  const DateController = ({location}) => {
     const yesterday = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
     const tomorrow = moment(date).add(1, 'days').format('YYYY-MM-DD');
     return (
@@ -282,38 +260,36 @@ export default ({
               setDate(yesterday);
               fetchData(location, yesterday);
             }}>
-            <BackIcon size={22} color={'#000'} />
+            <BackIcon size={22} color={'#f4aaab'} />
           </DateArrowLeft>
           <DateToday
             onPress={() => {
               setDate(moment(date).format('YYYY-MM-DD'));
               fetchData(location, date);
             }}>
-            <ReloadCircleIcon size={22} />
+            <ReloadCircleIcon size={18} color={'#f4aaab'} />
           </DateToday>
           <DateTextArea>
-            <DateText>{moment(date).format('YYYY.MM.DD')}</DateText>
+            <DateText>{moment(date).format('YYYY년 M월 D일')}</DateText>
+            <DateText style={{fontSize: 12, fontWeight: '300'}}>
+              {utils.renderWeekDay(moment(date).format('d'))}
+            </DateText>
           </DateTextArea>
           <CalendarOpenBtn
             onPress={() => {
               markingFn(moment(date).format('YYYY'), moment(date).format('M'));
               setIsCalendarModalVisible(true);
             }}>
-            <CalendarIcon size={22} color={'black'} />
+            <CalendarIcon size={18} color={'#f4aaab'} />
           </CalendarOpenBtn>
           <DateArrowRight
             onPress={() => {
               setDate(tomorrow);
               fetchData(location, tomorrow);
             }}>
-            <ForwardIcon size={22} color={'#000'} />
+            <ForwardIcon size={22} color={'#f4aaab'} />
           </DateArrowRight>
         </Date>
-        <AddChecklistBox>
-          <AddCheckilistButton disabled={true}>
-            <AddChecklistButtonText>{text}</AddChecklistButtonText>
-          </AddCheckilistButton>
-        </AddChecklistBox>
       </Section>
     );
   };
@@ -331,10 +307,7 @@ export default ({
           />
         }>
         <Container>
-          <DateController
-            location={'firstRoute'}
-            text={'점장 및 매니저가 직원들에게 전달하는 내용입니다.'}
-          />
+          <DateController location={'firstRoute'} />
           {CHECKLIST_SHARE_DATA1?.basic?.length == 0 &&
           CHECKLIST_SHARE_DATA1?.favorite?.length == 0 ? (
             <EmptyList TITLE={'지시사항'} />
@@ -391,10 +364,7 @@ export default ({
           />
         }>
         <Container>
-          <DateController
-            location={'secondRoute'}
-            text={'직원이 점포 운영현황을 점장에게 전달합니다.'}
-          />
+          <DateController location={'secondRoute'} />
           {CHECKLIST_SHARE_DATA2?.basic?.length == 0 &&
           CHECKLIST_SHARE_DATA2?.favorite?.length == 0 ? (
             <EmptyList TITLE={'특이사항'} />
@@ -453,9 +423,7 @@ export default ({
           />
           <Column>
             <EmptyText>{TITLE}을 등록해주세요.</EmptyText>
-            <EmptyText>
-              우측 하단의 버튼을 클릭하여 등록할 수 있습니다.
-            </EmptyText>
+            <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
           </Column>
         </EmptyBox>
       )}
@@ -472,6 +440,9 @@ export default ({
           />
           <Column>
             <EmptyText>{TITLE}이 없습니다.</EmptyText>
+            <EmptyText>
+              점장 및 매니저가 직원들에게 전달하는 내용입니다.
+            </EmptyText>
           </Column>
         </EmptyBox>
       )}
@@ -488,6 +459,7 @@ export default ({
           />
           <Column>
             <EmptyText>{TITLE}이 없습니다.</EmptyText>
+            <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
           </Column>
         </EmptyBox>
       )}
@@ -504,9 +476,8 @@ export default ({
           />
           <Column>
             <EmptyText>{TITLE}을 등록해주세요.</EmptyText>
-
             <EmptyText>
-              우측 하단의 버튼을 클릭하여 등록할 수 있습니다.
+              점장 및 매니저가 직원들에게 전달하는 내용입니다.
             </EmptyText>
           </Column>
         </EmptyBox>

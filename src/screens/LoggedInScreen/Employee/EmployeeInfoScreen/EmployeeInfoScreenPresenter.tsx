@@ -133,13 +133,15 @@ const WorkScheduleBox = styled.TouchableOpacity`
 `;
 
 const DateBox = styled.TouchableOpacity`
-  margin-left: 5px;
-  width: ${wp('10%')}px;
-  height: ${wp('10%')}px;
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background-color: #eee;
+  border-radius: 15px;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #f4aaab;
 `;
 
 const GreyText = styled.Text`
@@ -547,7 +549,7 @@ export default ({
                         moment(date).subtract(1, 'month').format('MM'),
                       );
                     }}>
-                    <BackIcon size={16} color={'#000'} />
+                    <BackIcon size={22} color={'#f4aaab'} />
                   </DateBox>
                   <DateBox
                     onPress={() => {
@@ -558,7 +560,7 @@ export default ({
                         moment().format('MM'),
                       );
                     }}>
-                    <ReloadCircleIcon size={16} />
+                    <ReloadCircleIcon size={18} color={'#f4aaab'} />
                   </DateBox>
                   <DateBox
                     onPress={() => {
@@ -571,7 +573,7 @@ export default ({
                         moment(date).add(1, 'month').format('MM'),
                       );
                     }}>
-                    <ForwardIcon size={16} color={'#000'} />
+                    <ForwardIcon size={22} color={'#f4aaab'} />
                   </DateBox>
                 </Row>
               </WorkTypeAndSalaryBox>

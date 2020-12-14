@@ -48,7 +48,7 @@ const Card = styled(Ripple)<ICard>`
   border-radius: 20px;
   background-color: ${(props) => props.color};
   margin-left: 20px;
-  margin-right: ${(props) => (props.index == 3 ? wp('100%') - 220 : 0)};
+  margin-right: ${(props) => (props.index == 3 ? wp('100%') - 220 : 0)}px;
 `;
 
 const Title = styled.View`
@@ -144,6 +144,18 @@ const AddButton = styled.TouchableOpacity`
   elevation: 6;
 `;
 
+const SearchInput = styled.TextInput`
+  border-width: 2px;
+  border-color: #f4aaab;
+  width: ${wp('100%') - 40}px;
+  background-color: white;
+  border-radius: 30px;
+  padding-left: 20px;
+  padding-top: 2px;
+  height: 40px;
+  justify-content: center;
+`;
+
 export default ({
   onRefresh,
   confirmModal,
@@ -161,6 +173,10 @@ export default ({
   ready,
   gotoAdd,
   fetchData,
+  search,
+  result,
+  setSearch,
+  searchData,
 }) => {
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
     return (
@@ -235,7 +251,13 @@ export default ({
             )}
           />
           <Container>
-            {SHELFLIFE_DATA.map(({name, color, items}, index) => (
+            <SearchInput
+              placeholder="물품 검색"
+              placeholderTextColor={'#999'}
+              onChangeText={(text) => searchData(text)}
+              value={search}
+            />
+            {SHELFLIFE_DATA?.map(({name, color, items}, index) => (
               <View
                 key={index}
                 onLayout={({
@@ -244,25 +266,79 @@ export default ({
                   },
                 }) => index !== 0 && onMeasurement(index, {name, anchor})}>
                 <VerticalLine />
-                {items?.length !== 0 && (
-                  <LineTextContainer
-                    as={Animated.View}
-                    style={{opacity: opacity(tabs[index].anchor)}}
-                    color={color}>
-                    <LineText color={color}>{name}</LineText>
-                  </LineTextContainer>
-                )}
-                {items?.map((item, index) => (
-                  <View key={index}>
-                    <ShelfLifeCheckScreenCard
-                      name={name}
-                      item={item}
-                      confirmModal={confirmModal}
-                      cancelModal={cancelModal}
-                      fetchData={fetchData}
-                    />
-                  </View>
-                ))}
+                {search.length > 0
+                  ? items
+                      ?.filter(
+                        (i) =>
+                          i.shelfLifeName
+                            .toLowerCase()
+                            .includes(search.toLowerCase()) ||
+                          i.shelfLifeMemo
+                            .toLowerCase()
+                            .includes(search.toLowerCase()),
+                      )
+                      .map((item, index) => {
+                        return index == 0 ? (
+                          <>
+                            <LineTextContainer
+                              as={Animated.View}
+                              style={{opacity: opacity(tabs[index].anchor)}}
+                              color={color}>
+                              <LineText color={color}>{name}</LineText>
+                            </LineTextContainer>
+                            <View key={index}>
+                              <ShelfLifeCheckScreenCard
+                                name={name}
+                                item={item}
+                                confirmModal={confirmModal}
+                                cancelModal={cancelModal}
+                                fetchData={fetchData}
+                              />
+                            </View>
+                          </>
+                        ) : (
+                          <View key={index}>
+                            <ShelfLifeCheckScreenCard
+                              name={name}
+                              item={item}
+                              confirmModal={confirmModal}
+                              cancelModal={cancelModal}
+                              fetchData={fetchData}
+                            />
+                          </View>
+                        );
+                      })
+                  : items?.map((item, index) => {
+                      return index == 0 ? (
+                        <>
+                          <LineTextContainer
+                            as={Animated.View}
+                            style={{opacity: opacity(tabs[index].anchor)}}
+                            color={color}>
+                            <LineText color={color}>{name}</LineText>
+                          </LineTextContainer>
+                          <View key={index}>
+                            <ShelfLifeCheckScreenCard
+                              name={name}
+                              item={item}
+                              confirmModal={confirmModal}
+                              cancelModal={cancelModal}
+                              fetchData={fetchData}
+                            />
+                          </View>
+                        </>
+                      ) : (
+                        <View key={index}>
+                          <ShelfLifeCheckScreenCard
+                            name={name}
+                            item={item}
+                            confirmModal={confirmModal}
+                            cancelModal={cancelModal}
+                            fetchData={fetchData}
+                          />
+                        </View>
+                      );
+                    })}
               </View>
             ))}
           </Container>
