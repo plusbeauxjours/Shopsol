@@ -12,7 +12,7 @@ import {
 } from 'react-native-responsive-screen';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {SwipeRow, SwipeListView} from 'react-native-swipe-list-view';
-import {KeyboardAvoidingView} from 'react-native';
+import {KeyboardAvoidingView, ActivityIndicator} from 'react-native';
 import LottieView from 'lottie-react-native';
 import Ripple from 'react-native-material-ripple';
 
@@ -146,6 +146,7 @@ const CommentIconContainer = styled.View`
 `;
 const Footer = styled.View`
   width: ${wp('100%')}px;
+  align-items: center;
 `;
 
 const FooterText = styled.Text`
@@ -337,7 +338,7 @@ export default ({
               </MemoContainer>
               {loading ? (
                 <CommentBox>
-                  <Loader />
+                  <ActivityIndicator size="small" />
                 </CommentBox>
               ) : (
                 <SwipeListView
@@ -533,7 +534,7 @@ export default ({
           useNativeDriver
           enablePreload
           renderFooter={renderFooter}
-          loadingRender={() => <Loader size="large" />}
+          loadingRender={() => <Loader />}
           renderIndicator={() => null}
           renderImage={(props) => (
             <FastImage

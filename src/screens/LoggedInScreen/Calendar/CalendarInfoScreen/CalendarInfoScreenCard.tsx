@@ -16,36 +16,36 @@ import {EllipseIcon} from '~/constants/Icons';
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-right: 10px;
 `;
 
 const Text = styled.Text`
   margin-left: 5px;
   font-weight: 200;
-  font-size: 11px;
+  font-size: 10px;
 `;
 
 const NameText = styled.Text`
   font-size: 15px;
   color: #333;
   margin-bottom: 5px;
+  margin-left: 5px;
 `;
 
 const RowSpace = styled(Row)`
-  margin-top: 10px;
+  margin-top: 5px;
   width: 100%;
   justify-content: space-between;
 `;
 
 const SelectBox = styled(RowSpace)`
-  margin-top: 10;
+  margin-top: 10px;
   margin-bottom: 10px;
   padding: 0 20px;
 `;
 
 const SelectBoxTouchable = styled.TouchableOpacity`
   height: 30px;
-  width: ${wp('28%')}px;
+  width: ${wp('100%') / 3 - 20}px;
   border-width: 1px;
   border-radius: 10px;
   border-color: #999;
@@ -80,19 +80,22 @@ const WorkTime = styled.View`
 
 const WorkTitleText = styled.Text`
   color: #999;
-  font-size: 11px;
+  font-size: 10px;
   margin-left: 5px;
   width: 60px;
 `;
 
 const WorkTimeText = styled.Text`
   color: #999;
-  font-size: 11px;
+  font-size: 10px;
 `;
 
 const CntArea = styled.View`
   flex: 1;
   padding-left: 15px;
+  justify-content: flex-start;
+  padding-bottom: 5px;
+  min-height: 80px;
 `;
 
 const WhiteSpace = styled.View`
@@ -179,7 +182,7 @@ export default ({
     if (STORE === '1') {
       if (VACATION) {
         return (
-          <SelectBox>
+          <SelectBox style={{marginTop: 0}}>
             <SelectBoxTouchable
               style={{width: wp('90%')}}
               onPress={() => confirmModal()}>
@@ -189,7 +192,7 @@ export default ({
         );
       } else {
         return (
-          <SelectBox>
+          <SelectBox style={{marginTop: 0}}>
             <SelectBoxTouchable
               onPress={() => {
                 navigation.navigate('WorkTimeScreen', {
@@ -231,60 +234,7 @@ export default ({
   return (
     <Container key={index}>
       <ContentBox>
-        <RowSpace>
-          <NameText>{NAME}</NameText>
-          <Row>
-            {VACATION == '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#325CBE'} />
-                <Text>휴무</Text>
-              </Row>
-            )}
-            {ICON == '1' && VACATION != '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#23AF3A'} />
-                <Text>출근예정</Text>
-              </Row>
-            )}
-            {TYPE == '3' && VACATION != '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#325CBE'} />
-                <Text>추가일정</Text>
-              </Row>
-            )}
-            {nowork == '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#B91C1B'} />
-                <Text>결근</Text>
-              </Row>
-            )}
-            {workoff == '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#8F8F8F'} />
-                <Text>퇴근</Text>
-              </Row>
-            )}
-            {working == '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#23AF3A'} />
-                <Text>근무중</Text>
-              </Row>
-            )}
-            {alear == '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#E8B12F'} />
-                <Text>조퇴</Text>
-              </Row>
-            )}
-            {jigark == '1' && (
-              <Row>
-                <EllipseIcon size={8} color={'#E8B12F'} />
-                <Text>지각</Text>
-              </Row>
-            )}
-          </Row>
-        </RowSpace>
-        <Row>
+        <Row style={{paddingTop: 10}}>
           <FastImage
             style={{width: 60, height: 60, borderRadius: 30}}
             source={{
@@ -294,8 +244,60 @@ export default ({
             }}
             resizeMode={FastImage.resizeMode.cover}
           />
-
           <CntArea>
+            <RowSpace>
+              <NameText>{NAME}</NameText>
+              <Row>
+                {VACATION == '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#325CBE'} />
+                    <Text>휴무</Text>
+                  </Row>
+                )}
+                {ICON == '1' && VACATION != '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#23AF3A'} />
+                    <Text>출근예정</Text>
+                  </Row>
+                )}
+                {TYPE == '3' && VACATION != '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#325CBE'} />
+                    <Text>추가일정</Text>
+                  </Row>
+                )}
+                {nowork == '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#B91C1B'} />
+                    <Text>결근</Text>
+                  </Row>
+                )}
+                {workoff == '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#8F8F8F'} />
+                    <Text>퇴근</Text>
+                  </Row>
+                )}
+                {working == '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#23AF3A'} />
+                    <Text>근무중</Text>
+                  </Row>
+                )}
+                {alear == '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#E8B12F'} />
+                    <Text>조퇴</Text>
+                  </Row>
+                )}
+                {jigark == '1' && (
+                  <Row style={{marginRight: 10}}>
+                    <EllipseIcon size={8} color={'#E8B12F'} />
+                    <Text>지각</Text>
+                  </Row>
+                )}
+              </Row>
+            </RowSpace>
             {((ATTENDANCE_TIME || START)?.substring(0, 5) ==
               CHANGE_START?.substring(0, 5) ||
               (WORK_OFF_TIME || END)?.substring(0, 5) ==
@@ -333,48 +335,54 @@ export default ({
                 )}
               </WorkTime>
             )}
-            {(START_TIME?.substring(0, 5) == UPDATED_START?.substring(0, 5) &&
-              END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
-            (!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END) ? (
-              <WorkTime>
-                <WorkTitleText>출퇴근시간 </WorkTitleText>
-                <WorkTimeText>
-                  {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
-                  {START_TIME && AUTOWORKOFF == '1'
-                    ? '퇴근미체크'
-                    : isNextDay3
-                    ? `익일 ${END_TIME?.substring(0, 5)}`
-                    : END_TIME
-                    ? END_TIME?.substring(0, 5)
-                    : '미퇴근'}
-                </WorkTimeText>
-              </WorkTime>
-            ) : (
-              <WorkTime>
-                <WorkTitleText>출퇴근시간 </WorkTitleText>
-                <WorkTimeText>
-                  {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
-                  {START_TIME && AUTOWORKOFF == '1'
-                    ? '퇴근미체크'
-                    : isNextDay3
-                    ? `익일 ${END_TIME?.substring(0, 5)}`
-                    : END_TIME
-                    ? END_TIME?.substring(0, 5)
-                    : '미퇴근'}
-                  &nbsp;&gt;&nbsp;
-                  {!UPDATED_START ? '미출근' : UPDATED_START.substring(0, 5)}
-                  &nbsp;~&nbsp;
-                  {UPDATED_START && AUTOWORKOFF == '1'
-                    ? '퇴근미체크'
-                    : isNextDay4
-                    ? `익일 ${UPDATED_END?.substring(0, 5)}`
-                    : UPDATED_END
-                    ? UPDATED_END?.substring(0, 5)
-                    : '미퇴근'}
-                </WorkTimeText>
-              </WorkTime>
+            {!VACATION && (
+              <>
+                {(START_TIME?.substring(0, 5) ==
+                  UPDATED_START?.substring(0, 5) &&
+                  END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
+                (!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END) ? (
+                  <WorkTime>
+                    <WorkTitleText>출퇴근시간 </WorkTitleText>
+                    <WorkTimeText>
+                      {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
+                      {START_TIME && AUTOWORKOFF == '1'
+                        ? '퇴근미체크'
+                        : isNextDay3
+                        ? `익일 ${END_TIME?.substring(0, 5)}`
+                        : END_TIME
+                        ? END_TIME?.substring(0, 5)
+                        : '미퇴근'}
+                    </WorkTimeText>
+                  </WorkTime>
+                ) : (
+                  <WorkTime>
+                    <WorkTitleText>출퇴근시간 </WorkTitleText>
+                    <WorkTimeText>
+                      {(START_TIME || '미출근')?.substring(0, 5)}&nbsp;~&nbsp;
+                      {START_TIME && AUTOWORKOFF == '1'
+                        ? '퇴근미체크'
+                        : isNextDay3
+                        ? `익일 ${END_TIME?.substring(0, 5)}`
+                        : END_TIME
+                        ? END_TIME?.substring(0, 5)
+                        : '미퇴근'}
+                      &nbsp;&gt;&nbsp;
+                      {!UPDATED_START
+                        ? '미출근'
+                        : UPDATED_START.substring(0, 5)}
+                      &nbsp;~&nbsp;
+                      {UPDATED_START && AUTOWORKOFF == '1'
+                        ? '퇴근미체크'
+                        : isNextDay4
+                        ? `익일 ${UPDATED_END?.substring(0, 5)}`
+                        : UPDATED_END
+                        ? UPDATED_END?.substring(0, 5)
+                        : '미퇴근'}
+                    </WorkTimeText>
+                  </WorkTime>
+                )}
+              </>
             )}
-
             <WorkTime>
               <WorkTitleText>휴게시간 </WorkTitleText>
               <WorkTitleText style={{marginLeft: 0}}>

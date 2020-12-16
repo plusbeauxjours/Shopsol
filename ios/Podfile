@@ -42,12 +42,12 @@ target 'ShopsolWesop' do
   end
 end
 
-target 'ShopsolWesop-tvOS' do
-  # Pods for ShopsolWesop-tvOS
+# target 'ShopsolWesop-tvOS' do
+#   # Pods for ShopsolWesop-tvOS
 
-  target 'ShopsolWesop-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end
+#   target 'ShopsolWesop-tvOSTests' do
+#     inherit! :search_paths
+#     # Pods for testing
+#   end
+# end
 

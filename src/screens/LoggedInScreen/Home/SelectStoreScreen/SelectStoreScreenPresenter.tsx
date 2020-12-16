@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Ripple from 'react-native-material-ripple';
+import FastImage from 'react-native-fast-image';
 
 import SelectStoreCard from './SelectStoreCard';
 import {AddCircleIcon} from '~/constants/Icons';
@@ -22,26 +23,26 @@ const BackGround = styled.View<IIsStore>`
 
 const ScrollView = styled.ScrollView``;
 
-const EmptyListWrapper = styled.View`
-  margin-top: 100px;
-  padding: ${hp('5%')}px ${wp('5%')}px;
-  width: ${wp('100%') - 40}px;
-  justify-content: center;
+const EmptyBox = styled.View`
+  flex-direction: column;
   align-items: center;
-  border-width: 1px;
-  border-color: #ddd;
-  border-radius: 10px;
+  justify-content: center;
+  width: 100%;
 `;
 
-const EmptyListText = styled.Text`
+const TextBox = styled.View`
+  margin-top: 10px;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Column = styled.View`
+  align-items: center;
+  flex-direction: column;
+`;
+
+const EmptyText = styled.Text`
   color: #999;
-`;
-
-const EmptyListTitle = styled.Text`
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
 `;
 
 const AddStoreButtonText = styled.Text`
@@ -102,28 +103,55 @@ export default ({
     } else {
       if (STORE == '1') {
         return (
-          <EmptyListWrapper>
-            <EmptyListText>사업장을 등록하시면 입력하신 주소로</EmptyListText>
-            <EmptyListText>
-              출퇴근이 가능한 QR키트를 송부해 드립니다.
-            </EmptyListText>
-            <EmptyListText>(영업일 기준 2~3일 소요)</EmptyListText>
-          </EmptyListWrapper>
+          <EmptyBox>
+            <FastImage
+              style={{
+                width: 377,
+                height: 450,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 50,
+              }}
+              source={require('../../../../assets/images/emptyImg.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+            <TextBox>
+              <Column>
+                <EmptyText>등록된 사업장이 없습니다!</EmptyText>
+                <EmptyText>사업장을 등록하시면 입력하신 주소로</EmptyText>
+                <EmptyText>출퇴근이 가능한 QR키트를 송부해 드립니다.</EmptyText>
+                <EmptyText>(영업일 기준 2~3일 소요)</EmptyText>
+              </Column>
+            </TextBox>
+          </EmptyBox>
         );
       } else {
         return (
-          <EmptyListWrapper>
-            <EmptyListTitle>합류된 사업장이 없습니다!</EmptyListTitle>
-            <EmptyListText>
-              점장 또는 매니저가 직원을 초대할 수 있습니다.
-            </EmptyListText>
-            <EmptyListText>
-              초대 후 재로그인하여 직원이 사업장을 확인하게 되면
-            </EmptyListText>
-            <EmptyListText>
-              관리자가 직원합류를 완료할 수 있습니다.
-            </EmptyListText>
-          </EmptyListWrapper>
+          <EmptyBox>
+            <FastImage
+              style={{
+                width: 377,
+                height: 450,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 50,
+              }}
+              source={require('../../../../assets/images/emptyImg.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+            <TextBox>
+              <Column>
+                <EmptyText>합류된 사업장이 없습니다!</EmptyText>
+                <EmptyText>
+                  점장 또는 매니저가 직원을 초대할 수 있습니다.
+                </EmptyText>
+                <EmptyText>
+                  초대 후 재로그인하여 직원이 사업장을 확인하게 되면
+                </EmptyText>
+                <EmptyText>관리자가 직원합류를 완료할 수 있습니다.</EmptyText>
+              </Column>
+            </TextBox>
+          </EmptyBox>
         );
       }
     }

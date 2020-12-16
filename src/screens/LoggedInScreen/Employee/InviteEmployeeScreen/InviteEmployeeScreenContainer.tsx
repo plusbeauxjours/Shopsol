@@ -116,9 +116,9 @@ export default () => {
     let search1 = Hangul.disassemble(search).join(''); // 렭 -> ㄹㅕㄹr
     const result1 = arr.filter(function (item) {
       return (
-        item.familyName.includes(search) ||
-        item.disassembled.includes(search1) ||
-        item.givenName.includes(search)
+        item?.familyName?.includes(search) ||
+        item?.disassembled?.includes(search1) ||
+        item?.givenName?.includes(search)
       );
     });
     setResult(result1);

@@ -30,6 +30,7 @@ export default ({route: {params}}) => {
       UPDATED_END = null,
       TYPE = null,
       AUTOWORKOFF = null,
+      REST_TIME = null,
     },
     date,
   } = params;
@@ -56,10 +57,9 @@ export default ({route: {params}}) => {
   );
   const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
   const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
-  const [
-    isStartTimeModalVisible,
-    setIsStartTimeModalVisible,
-  ] = useState<boolean>(false);
+  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
+    boolean
+  >(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -167,6 +167,7 @@ export default ({route: {params}}) => {
       setStartTimeSet={setStartTimeSet}
       endTimeSet={endTimeSet}
       setEndTimeSet={setEndTimeSet}
+      REST_TIME={REST_TIME}
     />
   );
 };

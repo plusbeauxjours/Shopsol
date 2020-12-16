@@ -57,3 +57,10 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# fastlane
+ios/*.mobileprovision
+ios/*.cer
+ios/*.dSYM.zip
+android/fastlane/README.md
+ios/fastlane/README.md

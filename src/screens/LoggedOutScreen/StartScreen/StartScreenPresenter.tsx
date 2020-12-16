@@ -81,7 +81,7 @@ export default ({gotoLogin, gotoVerification}) => {
             rippleSize={1200}
             rippleContainerBorderRadius={30}
             rippleOpacity={0.1}>
-            <UnderLineText>회원이신가요???????</UnderLineText>
+            <UnderLineText>회원이신가???</UnderLineText>
           </LoginButton>
         </Logo>
       </Container>

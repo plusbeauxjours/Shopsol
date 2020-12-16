@@ -151,7 +151,7 @@ const SearchInput = styled.TextInput`
   background-color: white;
   border-radius: 30px;
   padding-left: 20px;
-  padding-top: 2px;
+  align-items: center;
   height: 40px;
   justify-content: center;
 `;

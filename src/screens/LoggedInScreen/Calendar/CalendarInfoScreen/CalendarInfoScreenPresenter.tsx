@@ -1,6 +1,8 @@
 import React from 'react';
 import {Agenda} from 'react-native-calendars';
 import styled from 'styled-components/native';
+import FastImage from 'react-native-fast-image';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {DownIcon} from '~/constants/Icons';
 import CalendarInfoScreenCard from './CalendarInfoScreenCard';
@@ -10,12 +12,16 @@ interface IWeekend {
 }
 
 const GreyText = styled.Text`
+  font-size: 12px;
+  position: absolute;
   color: #aaa;
 `;
 
-const View = styled.View`
+const EmptyView = styled.View`
+  width: ${wp('100%')}px;
+  background-color: white;
   align-items: center;
-  padding-bottom: 5px;
+  padding-top: 10px;
 `;
 
 const Row = styled.View`
@@ -98,13 +104,35 @@ export default ({
   );
 
   const renderEmptyDate = () => (
-    <View>
-      <GreyText>
-        {STORE == '1' || (STORE == '0' && CALENDAR_EDIT)
-          ? '일정근무 직원이 없습니다.'
-          : '근무일정이 없습니다.'}
-      </GreyText>
-    </View>
+    <EmptyView>
+      <FastImage
+        style={{
+          width: 220,
+          height: 55,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginRight: 90,
+        }}
+        source={require('../../../../assets/images/emptyBalloons.png')}
+        resizeMode={FastImage.resizeMode.cover}>
+        <GreyText>
+          {STORE == '1' || (STORE == '0' && CALENDAR_EDIT)
+            ? '일정근무 직원이 없습니다.'
+            : '근무일정이 없습니다.'}
+        </GreyText>
+      </FastImage>
+      <FastImage
+        style={{
+          width: 100,
+          height: 63,
+          marginTop: 3,
+          bottom: 0,
+          marginLeft: 170,
+        }}
+        source={require('../../../../assets/images/emptyIcon.png')}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+    </EmptyView>
   );
   return (
     <Agenda

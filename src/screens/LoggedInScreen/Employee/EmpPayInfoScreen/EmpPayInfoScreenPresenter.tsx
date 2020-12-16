@@ -182,6 +182,7 @@ const Footer = styled.View`
   align-items: center;
   margin-bottom: 20px;
 `;
+
 const FooterBtn = styled.TouchableOpacity`
   width: 100%;
   flex-direction: row;

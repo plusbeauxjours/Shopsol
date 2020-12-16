@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pc-api-6324565480490517625-989",
+  "private_key_id": "3b7896afc4306e935b7134e440c325736315d6a9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCYVIHSQPKPmPb3\nJV1+4HkzY/AGy+9UDJsS6ieaNFz5bg/asZI6Kk7niRItTZzwJkJLia7ykEH6aref\nNakCB+ArkXgn2uhUmroubFMahiuaTD2bKHgVbH9Gdi1Ji47kn/btrevLGFO/THp9\nTYpYgvyzwBuT9kgOdaYF2YxHhuouzp1DHBctpM8z3e4As5dsmJ4S+N7Df9R1CHQ2\nEFmrzlzh2wo7oV/COBZEs6D+2A04ZETNPXz6qUsvEGyXQAWmqOKs4Q4t/w4wBt1H\neieSQDh3ItxyvDi+BvjrjP33xQQryCZhdlVknwSUZXO6u8XU5QUs+30Ed7q0rsal\nPfG6PjcDAgMBAAECggEADx0vZlOgXYQRWPNBpBGUpPcw/ROl8uJvToCiHkg8w1ja\nxNmihxfkjU+J2KnfPOqm4ETQcWvDyBtnjanu029BnEEKOXYcYCyb9Xg1BKg0UlJn\nOGpbA9Eoja6zDp2Et4VxpCKCBzwqLwxhCOa1J9QTS6hvdA5XFuwwZVsw8nXd7XfW\nT4gE0KHw/OY8U1rZLoyD6/R39NZz4r/Yra8vLXLq2WsVPMkvc806JldYu/Cwhkio\ns/7VYhWJtOOxwlYKajszr2QO2qc/w1WFqCI0cbSn++G/OjzznYyuPePPfUdNNikg\n+X8BGQuTCVDl8/nOIi+Oxf+jbKiU3btyghz4/HkPUQKBgQDVawAwsQtUUSkURBmH\n5wt4YuuPDwvaqODmtbrlw6oOLLONz7s+reoRtK5HahakCFbO81POSVKUpouooshy\nO1u0byiqytZmrN2RNwoxA+5qd6193QyS7zVktRdsOKlmqd/fhJr1GIUNTLbiiZym\nH3FWenJ/Qell2enrVkscSJ8f0wKBgQC2uUACGTOCIsV+tgAk7ExEec4geBprzbNR\nNKvLou0yuO+2iTZp8+WIfKvDAFDf6EtjmO6bvVRwFZ9pqOzJ4EiExYQEZnEtHACH\nyBTrCzwk3Xk5Ly4++YrmN3EB2PtaNPJAa7/QV0GCZXes7sEQ3eqKW28Cq2MGKY38\nYFnC5yg+EQKBgQCGV3KpM+kzzFsVfMCtgc0AnRQ223vUytW3pNHfbEmR3qWwMQFn\nNUbQmnHSVn+mBfHPF/C7PACVvjjPkJio/6B8djSdPk20GEDo9kKeFCFyN5+oSQtv\nOtDbcfsqjohkLa7VHr4EZsjqVE4TUBihoc1QaIfGf5ESIhhToeBqD3TLLQKBgEpJ\n9Oklf9iX9H2410QrwjJQ52oyCmPsBMyuQm6PdiqaH/Oxw6q+G4MrVNX6SedO1V/P\n7KrrBepwEBjwMh09j55Tg4IaeEcjzF9oDIEnVzORy9hhA0ddQ4in380lf8PEJP3m\nEN1OrHasdESd6WbHIrVPyUlnjuIRgQWr0rK4MpdRAoGBAJ8KoBzMg42Al8qW0pug\nyJS/lUqMFEofCPsCVjK6rSjNgZvAmwtwgVdCvqD+GqV4rCDk9KW/nvxmdg74bXTB\n4tTWvu0aMMZNc4YFIlszCqkIq0ryacDJf1MMTUU3m9wzDXscLlnpP/gQOl+XILRh\nzZx0kNx2LwPKAOJ/7TbMwNRp\n-----END PRIVATE KEY-----\n",
+  "client_email": "shopsol-master-fastlane-releas@pc-api-6324565480490517625-989.iam.gserviceaccount.com",
+  "client_id": "101955142706083890016",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/shopsol-master-fastlane-releas%40pc-api-6324565480490517625-989.iam.gserviceaccount.com"
+}

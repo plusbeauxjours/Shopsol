@@ -7,13 +7,13 @@ const Container = styled.View`
   justify-content: center;
 `;
 
-export default ({size}) => {
+export default () => {
   return (
     <Container>
       <LottieView
         style={{
-          width: size == 'large' ? 200 : 80,
-          height: size == 'large' ? 200 : 80,
+          width: 200,
+          height: 200,
         }}
         source={require('../assets/animations/loader.json')}
         loop

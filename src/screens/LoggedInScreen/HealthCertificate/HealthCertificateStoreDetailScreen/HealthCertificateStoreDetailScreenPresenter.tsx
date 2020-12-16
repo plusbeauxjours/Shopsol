@@ -162,7 +162,8 @@ const RegDateContainer = styled.View`
 `;
 
 const Footer = styled.View`
-  width: 100%;
+  width: ${wp('100%')}px;
+  align-items: center;
 `;
 
 const FooterText = styled.Text`
@@ -403,6 +404,6 @@ export default ({
       </BackGround>
     );
   } else {
-    return <Loader size={'large'} />;
+    return <Loader />;
   }
 };

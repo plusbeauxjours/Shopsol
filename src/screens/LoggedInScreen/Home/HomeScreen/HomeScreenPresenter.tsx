@@ -982,7 +982,6 @@ export default ({
           onPress={() => {
             setShowPictureModal(false);
           }}>
-          <ShowPictureModalText>출퇴근 QR</ShowPictureModalText>
           <ShowPictureModalImage>
             <FastImage
               style={{width: '100%', height: '100%'}}

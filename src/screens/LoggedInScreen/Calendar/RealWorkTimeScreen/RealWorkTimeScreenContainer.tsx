@@ -29,6 +29,7 @@ export default ({route: {params}}) => {
       UPDATED_END = null,
       IMAGE = null,
       AUTOWORKOFF = null,
+      REST_TIME = null,
     } = {},
     date,
   } = params;
@@ -57,10 +58,9 @@ export default ({route: {params}}) => {
   const [noEnd, setNoEnd] = useState<boolean>(
     !WORK_OFF_TIME && !UPDATED_END ? true : false,
   );
-  const [
-    isStartTimeModalVisible,
-    setIsStartTimeModalVisible,
-  ] = useState<boolean>(false);
+  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
+    boolean
+  >(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -199,6 +199,7 @@ export default ({route: {params}}) => {
       noStart={noStart}
       noEnd={noEnd}
       AUTOWORKOFF={AUTOWORKOFF}
+      REST_TIME={REST_TIME}
     />
   );
 };

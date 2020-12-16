@@ -31,7 +31,7 @@ export default codePush(codePushOptions)(App);
 // Andrioid
 // shopsol.master-gmail.com/shopsolWesop-android
 // appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-android -d Production
-// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-android
+// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-android -k
 // ┌────────────┬───────────────────────────────────────┐
 // │ Name       │ Key                                   │
 // ├────────────┼───────────────────────────────────────┤
@@ -41,7 +41,7 @@ export default codePush(codePushOptions)(App);
 // iOS
 // shopsol.master-gmail.com/shopsolWesop-ios
 // appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-ios -d Production
-// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-ios
+// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-ios -k
 // ┌────────────┬───────────────────────────────────────┐
 // │ Name       │ Key                                   │
 // ├────────────┼───────────────────────────────────────┤

@@ -10,6 +10,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
+import FastImage from 'react-native-fast-image';
 
 import utils from '~/constants/utils';
 import {
@@ -189,12 +190,15 @@ const EmptyListContainer = styled.View`
 `;
 
 const EmptyBox = styled.View`
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100px;
-  padding: 20px;
+`;
+
+const TextBox = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;
 
 const Column = styled.View`
@@ -412,74 +416,122 @@ export default ({
     <EmptyListContainer>
       {STORE === '0' && TITLE == '특이사항' && (
         <EmptyBox>
-          <LottieView
+          <FastImage
             style={{
-              width: 60,
-              height: 60,
+              width: 377,
+              height: 450,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            source={require('../../../../assets/animations/emptyContents.json')}
-            loop
-            autoPlay
+            source={require('../../../../assets/images/emptyImg.png')}
+            resizeMode={FastImage.resizeMode.cover}
           />
-          <Column>
-            <EmptyText>{TITLE}을 등록해주세요.</EmptyText>
-            <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
-          </Column>
+          <TextBox>
+            <LottieView
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              source={require('../../../../assets/animations/emptyContents.json')}
+              loop
+              autoPlay
+            />
+            <Column>
+              <EmptyText>특이사항을 등록해주세요.</EmptyText>
+              <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
+            </Column>
+          </TextBox>
         </EmptyBox>
       )}
       {STORE === '0' && !IS_MANAGER && TITLE == '지시사항' && (
         <EmptyBox>
-          <LottieView
+          <FastImage
             style={{
-              width: 60,
-              height: 60,
+              width: 377,
+              height: 450,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            source={require('../../../../assets/animations/emptyContents.json')}
-            loop
-            autoPlay
+            source={require('../../../../assets/images/emptyImg.png')}
+            resizeMode={FastImage.resizeMode.cover}
           />
-          <Column>
-            <EmptyText>{TITLE}이 없습니다.</EmptyText>
-            <EmptyText>
-              점장 및 매니저가 직원들에게 전달하는 내용입니다.
-            </EmptyText>
-          </Column>
+          <TextBox>
+            <LottieView
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              source={require('../../../../assets/animations/emptyContents.json')}
+              loop
+              autoPlay
+            />
+            <Column>
+              <EmptyText>지시사항이 없습니다.</EmptyText>
+              <EmptyText>
+                점장 및 매니저가 직원들에게 전달하는 내용입니다.
+              </EmptyText>
+            </Column>
+          </TextBox>
         </EmptyBox>
       )}
       {STORE === '1' && TITLE == '특이사항' && (
         <EmptyBox>
-          <LottieView
+          <FastImage
             style={{
-              width: 60,
-              height: 60,
+              width: 377,
+              height: 450,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            source={require('../../../../assets/animations/emptyContents.json')}
-            loop
-            autoPlay
+            source={require('../../../../assets/images/emptyImg.png')}
+            resizeMode={FastImage.resizeMode.cover}
           />
-          <Column>
-            <EmptyText>{TITLE}이 없습니다.</EmptyText>
-            <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
-          </Column>
+          <TextBox>
+            <LottieView
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              source={require('../../../../assets/animations/emptyContents.json')}
+              loop
+              autoPlay
+            />
+            <Column>
+              <EmptyText>특이사항이 없습니다.</EmptyText>
+              <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
+            </Column>
+          </TextBox>
         </EmptyBox>
       )}
       {(STORE === '1' || IS_MANAGER) && TITLE == '지시사항' && (
         <EmptyBox>
-          <LottieView
+          <FastImage
             style={{
-              width: 60,
-              height: 60,
+              width: 377,
+              height: 450,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            source={require('../../../../assets/animations/emptyContents.json')}
-            loop
-            autoPlay
+            source={require('../../../../assets/images/emptyImg.png')}
+            resizeMode={FastImage.resizeMode.cover}
           />
-          <Column>
-            <EmptyText>{TITLE}을 등록해주세요.</EmptyText>
-            <EmptyText>
-              점장 및 매니저가 직원들에게 전달하는 내용입니다.
-            </EmptyText>
-          </Column>
+          <TextBox>
+            <LottieView
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              source={require('../../../../assets/animations/emptyContents.json')}
+              loop
+              autoPlay
+            />
+            <Column>
+              <EmptyText>지시사항을 등록해주세요.</EmptyText>
+              <EmptyText>
+                점장 및 매니저가 직원들에게 전달하는 내용입니다.
+              </EmptyText>
+            </Column>
+          </TextBox>
         </EmptyBox>
       )}
     </EmptyListContainer>

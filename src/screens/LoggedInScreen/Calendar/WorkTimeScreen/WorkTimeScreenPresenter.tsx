@@ -60,7 +60,10 @@ const TimePickBox = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 18px;
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 5px;
+  margin-left: 5px;
 `;
 
 const TitleText = styled.Text`
@@ -87,14 +90,14 @@ const WorkTime = styled.View`
 
 const WorkTitleText = styled.Text`
   color: #999;
-  font-size: 11px;
+  font-size: 10px;
   margin-left: 5px;
   width: 60px;
 `;
 
 const WorkTimeText = styled.Text`
   color: #999;
-  font-size: 11px;
+  font-size: 10px;
 `;
 
 const CntArea = styled.View`
@@ -196,6 +199,7 @@ export default ({
   setStartTimeSet,
   endTimeSet,
   setEndTimeSet,
+  REST_TIME,
 }) => {
   const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);
   const isNextDay2 = CHANGE_START > CHANGE_END;
@@ -214,7 +218,7 @@ export default ({
           resizeMode={FastImage.resizeMode.cover}
         />
         <CntArea>
-          <NameText style={{marginBottom: 10}}>{NAME}</NameText>
+          <NameText>{NAME}</NameText>
           {((ATTENDANCE_TIME || START)?.substring(0, 5) ==
             CHANGE_START?.substring(0, 5) ||
             (WORK_OFF_TIME || END)?.substring(0, 5) ==
@@ -293,6 +297,10 @@ export default ({
               </WorkTimeText>
             </WorkTime>
           )}
+          <WorkTime>
+            <WorkTitleText>휴게시간 </WorkTitleText>
+            <WorkTitleText style={{marginLeft: 0}}>{REST_TIME}분</WorkTitleText>
+          </WorkTime>
         </CntArea>
       </Row>
     </Section>

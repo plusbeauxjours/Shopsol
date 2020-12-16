@@ -19,6 +19,7 @@ import {
 import moment from 'moment';
 import ChecklistItemsScreenCard from './ChecklistItemsScreenCard';
 import LottieView from 'lottie-react-native';
+import FastImage from 'react-native-fast-image';
 
 import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
@@ -112,11 +113,6 @@ const Section = styled.View`
   background-color: white;
 `;
 
-const AddChecklistButtonText = styled.Text`
-  color: #e85356;
-  font-weight: bold;
-`;
-
 const CalendarTitle = styled.View`
   flex-direction: row;
   padding: 20px;
@@ -164,15 +160,20 @@ const CircleBotton = styled.TouchableOpacity`
 `;
 
 const EmptyBox = styled.View`
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100px;
-  padding: 20px;
-  border-width: 1px;
-  border-color: #999;
-  border-radius: 20px;
+`;
+
+const TextBox = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Column = styled.View`
+  margin-left: 5px;
+  flex-direction: column;
 `;
 
 const WhiteText = styled.Text`
@@ -417,29 +418,59 @@ export default ({
           {CHECKLIST_DATA?.length == 0 ? (
             STORE == '1' ? (
               <EmptyBox>
-                <LottieView
+                <FastImage
                   style={{
-                    width: 60,
-                    height: 60,
+                    width: 377,
+                    height: 450,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 50,
                   }}
-                  source={require('../../../../assets/animations/emptyContents.json')}
-                  loop
-                  autoPlay
+                  source={require('../../../../assets/images/emptyImg.png')}
+                  resizeMode={FastImage.resizeMode.cover}
                 />
-                <EmptyText>체크리스트를 등록해주세요.</EmptyText>
+                <TextBox>
+                  <LottieView
+                    style={{
+                      width: 60,
+                      height: 60,
+                    }}
+                    source={require('../../../../assets/animations/emptyContents.json')}
+                    loop
+                    autoPlay
+                  />
+                  <Column>
+                    <EmptyText>체크리스트를 등록해주세요.</EmptyText>
+                  </Column>
+                </TextBox>
               </EmptyBox>
             ) : (
               <EmptyBox>
-                <LottieView
+                <FastImage
                   style={{
-                    width: 60,
-                    height: 60,
+                    width: 377,
+                    height: 450,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 50,
                   }}
-                  source={require('../../../../assets/animations/emptyContents.json')}
-                  loop
-                  autoPlay
+                  source={require('../../../../assets/images/emptyImg.png')}
+                  resizeMode={FastImage.resizeMode.cover}
                 />
-                <EmptyText>등록된 체크리스트가 없습니다.</EmptyText>
+                <TextBox>
+                  <LottieView
+                    style={{
+                      width: 60,
+                      height: 60,
+                    }}
+                    source={require('../../../../assets/animations/emptyContents.json')}
+                    loop
+                    autoPlay
+                  />
+                  <Column>
+                    <EmptyText>등록된 체크리스트가 없습니다.</EmptyText>
+                  </Column>
+                </TextBox>
               </EmptyBox>
             )
           ) : (

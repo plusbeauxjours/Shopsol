@@ -118,6 +118,7 @@ const CategoryText = styled.Text<ISelected>`
 
 const Footer = styled.View`
   width: ${wp('100%')}px;
+  align-items: center;
 `;
 
 const FooterText = styled.Text`
