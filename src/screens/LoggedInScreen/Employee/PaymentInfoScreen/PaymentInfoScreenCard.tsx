@@ -1,42 +1,53 @@
 import React from 'react';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
-import {useNavigation} from '@react-navigation/native';
+
 import FastImage from 'react-native-fast-image';
 
-import {ForwardIcon} from '~/constants/Icons';
+import {ForwardIcon, PhoneIcon} from '~/constants/Icons';
+import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
 
 const Touchable = styled.TouchableOpacity`
-  margin-top: 10px;
-  padding: 10px;
-  width: ${wp('100%') - 40}px;
-  flex-direction: row;
+  padding: 0 20px;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 20px;
+  flex-direction: row;
   background-color: white;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
-const ImageArea = styled.View`
-  margin: 0 10px;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const TitleArea = styled.View`
-  margin-left: 10px;
-  flex-direction: row;
-  align-items: center;
+const NameBox = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 const NameText = styled.Text`
+  margin-right: 10px;
+  color: #707070;
   font-size: 15px;
-  font-weight: bold;
 `;
 
-const SubText = styled.Text`
-  margin-left: 3px;
+const DateText = styled.Text`
+  color: #707070;
   font-size: 12px;
+`;
+
+const PayText = styled(DateText)`
+  height: 15px;
+  font-size: 10px;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const IconContainer = styled.View`
+  position: absolute;
+  right: 20px;
 `;
 
 export default ({
@@ -58,26 +69,46 @@ export default ({
       STOREPAY_SHOW,
       MEMBER_NAME: name,
       IS_MANAGER: isManager,
+      EMP_PAY_TYPE: data?.PAY_TYPE,
+      PAY: data?.PAY,
+      image,
+      START: data?.START,
+      END: data?.END,
     });
   };
   return (
     <Touchable key={key} onPress={() => payInfo()}>
-      <ImageArea>
-        <FastImage
-          style={{width: 60, height: 60, borderRadius: 30}}
-          source={{
-            uri: `http://133.186.210.223/uploads/${image}`,
-            headers: {Authorization: 'someAuthToken'},
-            priority: FastImage.priority.low,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-        <TitleArea>
+      <FastImage
+        style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
+        source={{
+          uri: `http://133.186.210.223/uploads/${image}`,
+          headers: {Authorization: 'someAuthToken'},
+          priority: FastImage.priority.low,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+      <NameBox>
+        <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
           <NameText>{name}</NameText>
-          <SubText>[{isManager}]</SubText>
-        </TitleArea>
-      </ImageArea>
-      <ForwardIcon size={22} />
+          <DateText>[{isManager}]</DateText>
+        </Row>
+        <PayText>
+          {data?.PAY_TYPE === '0' && '시급'}
+          {data?.PAY_TYPE === '1' && '일급'}
+          {data?.PAY_TYPE === '2' && '월급'}&nbsp;
+          {data?.PAY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+        </PayText>
+        <PayText>
+          근무기간&nbsp;({moment().diff(moment(data?.START), 'month')}개월)
+        </PayText>
+        <PayText>
+          {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
+          {data?.END ? moment(data?.END).format('YYYY.MM.DD') : '계속'}
+        </PayText>
+      </NameBox>
+      <IconContainer>
+        <ForwardIcon />
+      </IconContainer>
     </Touchable>
   );
 };

@@ -289,12 +289,14 @@ export default ({route: {params}}) => {
   };
 
   // 보라색 테두리의 수정 버튼
-  const gotoSetInfo = (data, IMAGE) => {
+  const gotoSetInfo = (data) => {
     navigation.navigate('SetEmployeeInfoScreen', {
-      data,
+      EMP_NAME: data?.EMP_NAME,
+      STORE_SEQ: data?.STORE_SEQ,
+      EMP_SEQ: data?.EMP_SEQ,
       from: 'EmployeeInfoScreen',
       onRefresh: fetchData,
-      IMAGE,
+      IMAGE: data?.images[0]?.IMAGE,
     });
   };
 

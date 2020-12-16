@@ -9,9 +9,7 @@ import api from '~/constants/LoggedInApi';
 
 export default () => {
   const dispatch = useDispatch();
-  const {STORE_NAME, STORE_SEQ} = useSelector(
-    (state: any) => state.storeReducer,
-  );
+  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
 
@@ -64,7 +62,6 @@ export default () => {
       refreshing={refreshing}
       onRefresh={onRefresh}
       STORE={STORE}
-      STORE_NAME={STORE_NAME}
       adviceModal={adviceModal}
       employeeNowOn={EMPLOYEE_LIST?.workinglist}
       employeeNowOff={EMPLOYEE_LIST?.endlist}

@@ -34,7 +34,7 @@ const Section = styled.View`
   border-radius: 20px;
   background-color: white;
   justify-content: center;
-  padding: 20px;
+  padding: 20px 0;
 `;
 
 const Row = styled.View`
@@ -93,7 +93,11 @@ const Line = styled.View`
 `;
 
 const EmployeeListBox = styled.View`
-  margin: 20px 0;
+  width: 100%;
+  align-items: center;
+  border-radius: 20px;
+  border-color: #f2f2f2;
+  background-color: white;
 `;
 
 const Pay = styled.View`
@@ -188,20 +192,24 @@ export default ({
               </PayBox>
             )}
           </Section>
-          <EmployeeListBox>
-            {EMPLOYEE_LIST?.workinglist?.map((data) => (
-              <PaymentInfoScreenCard
-                key={data.MEMBER_SEQ}
-                name={data.EMP_NAME}
-                isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
-                image={data.images.length == 0 ? '3.png' : data.images[0].IMAGE}
-                data={data}
-                STORE={STORE}
-                STORE_SEQ={STORE_SEQ}
-                STOREPAY_SHOW={STOREPAY_SHOW}
-              />
-            ))}
-          </EmployeeListBox>
+          <Section>
+            <EmployeeListBox>
+              {EMPLOYEE_LIST?.workinglist?.map((data) => (
+                <PaymentInfoScreenCard
+                  key={data.MEMBER_SEQ}
+                  name={data.EMP_NAME}
+                  isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                  image={
+                    data.images.length == 0 ? '3.png' : data.images[0].IMAGE
+                  }
+                  data={data}
+                  STORE={STORE}
+                  STORE_SEQ={STORE_SEQ}
+                  STOREPAY_SHOW={STOREPAY_SHOW}
+                />
+              ))}
+            </EmployeeListBox>
+          </Section>
         </Container>
       </ScrollView>
     </BackGround>

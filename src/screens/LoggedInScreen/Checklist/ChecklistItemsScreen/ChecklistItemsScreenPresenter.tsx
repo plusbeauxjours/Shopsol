@@ -174,6 +174,7 @@ const TextBox = styled.View`
 const Column = styled.View`
   margin-left: 5px;
   flex-direction: column;
+  align-items: center;
 `;
 
 const WhiteText = styled.Text`
@@ -430,15 +431,6 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <TextBox>
-                  <LottieView
-                    style={{
-                      width: 60,
-                      height: 60,
-                    }}
-                    source={require('../../../../assets/animations/emptyContents.json')}
-                    loop
-                    autoPlay
-                  />
                   <Column>
                     <EmptyText>체크리스트를 등록해주세요.</EmptyText>
                   </Column>
@@ -458,15 +450,6 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <TextBox>
-                  <LottieView
-                    style={{
-                      width: 60,
-                      height: 60,
-                    }}
-                    source={require('../../../../assets/animations/emptyContents.json')}
-                    loop
-                    autoPlay
-                  />
                   <Column>
                     <EmptyText>등록된 체크리스트가 없습니다.</EmptyText>
                   </Column>

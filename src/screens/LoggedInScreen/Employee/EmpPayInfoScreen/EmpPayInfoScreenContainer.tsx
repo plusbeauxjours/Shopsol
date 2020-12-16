@@ -15,6 +15,11 @@ export default ({route: {params}}) => {
     STOREPAY_SHOW = null,
     MEMBER_NAME = null,
     IS_MANAGER = null,
+    EMP_PAY_TYPE = null,
+    PAY = null,
+    image = null,
+    START = null,
+    END = null,
   } = params;
 
   const {
@@ -173,6 +178,18 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 보라색 테두리의 수정 버튼
+  const gotoSetInfo = () => {
+    navigation.navigate('SetEmployeeInfoScreen', {
+      EMP_NAME: MEMBER_NAME || MEMBER_NAME_state,
+      STORE_SEQ: STORE_SEQ,
+      EMP_SEQ: EMP_SEQ || EMP_SEQ_state,
+      from: 'EmployeeInfoScreen',
+      onRefresh: fetchData,
+      IMAGE: image,
+    });
+  };
+
   useEffect(() => {
     let DAY_FROM = new Date();
     let YEAR = DAY_FROM.getFullYear();
@@ -208,6 +225,12 @@ export default ({route: {params}}) => {
       setClick2={setClick2}
       setClick3={setClick3}
       onPressFooter={onPressFooter}
+      EMP_PAY_TYPE={EMP_PAY_TYPE}
+      PAY={PAY}
+      image={image}
+      START={START}
+      END={END}
+      gotoSetInfo={gotoSetInfo}
     />
   );
 };

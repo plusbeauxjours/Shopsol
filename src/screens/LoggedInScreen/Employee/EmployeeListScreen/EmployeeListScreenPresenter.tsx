@@ -46,21 +46,6 @@ const BoxTitleText = styled.Text`
   color: #7e7c7c;
 `;
 
-const StoreBox = styled.View`
-  width: 100%;
-  padding: 25px;
-  margin-top: 20px;
-  border-radius: 50px;
-  background-color: white;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StoreBoxText = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
-`;
-
 const NumberText = styled.Text`
   color: #e85356;
   font-size: 18px;
@@ -83,7 +68,6 @@ export default ({
   refreshing,
   onRefresh,
   STORE,
-  STORE_NAME,
   adviceModal,
   employeeNowOn,
   employeeNowOff,
@@ -110,15 +94,15 @@ export default ({
                 return (
                   <EmployeeListCard
                     key={index}
-                    EMP_NAME={data.EMP_NAME}
-                    IS_MANAGER={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                    EMP_NAME={data?.EMP_NAME}
+                    IS_MANAGER={data?.IS_MANAGER == 0 ? '스태프' : '매니저'}
                     image={
-                      data.images.length == 0 ? '3.png' : data.images[0].IMAGE
+                      data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
                     }
-                    START={data.START}
-                    END={data.END}
                     data={data}
-                    onRefresh={onRefresh}
+                    mobileNo={data?.result?.MobileNo}
+                    START={data?.START}
+                    END={data?.END}
                   />
                 );
               })}
@@ -147,15 +131,15 @@ export default ({
               <EmployeeListBox hasEmployeeNow={employeeNowOff}>
                 <EmployeeListCard
                   key={index}
-                  EMP_NAME={data.EMP_NAME}
-                  IS_MANAGER={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                  EMP_NAME={data?.EMP_NAME}
+                  IS_MANAGER={data?.IS_MANAGER == 0 ? '스태프' : '매니저'}
                   image={
-                    data.images.length == 0 ? '3.png' : data.images[0].IMAGE
+                    data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
                   }
-                  START={data.START}
-                  END={data.END}
                   data={data}
-                  onRefresh={onRefresh}
+                  mobileNo={data?.result?.MobileNo}
+                  START={data?.START}
+                  END={data?.END}
                 />
                 <WhiteSpace />
               </EmployeeListBox>

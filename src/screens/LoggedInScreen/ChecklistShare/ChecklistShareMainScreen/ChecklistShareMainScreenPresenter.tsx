@@ -204,6 +204,7 @@ const TextBox = styled.View`
 const Column = styled.View`
   margin-left: 5px;
   flex-direction: column;
+  align-items: center;
 `;
 
 const EmptyText = styled.Text`
@@ -427,15 +428,6 @@ export default ({
             resizeMode={FastImage.resizeMode.cover}
           />
           <TextBox>
-            <LottieView
-              style={{
-                width: 60,
-                height: 60,
-              }}
-              source={require('../../../../assets/animations/emptyContents.json')}
-              loop
-              autoPlay
-            />
             <Column>
               <EmptyText>특이사항을 등록해주세요.</EmptyText>
               <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
@@ -456,15 +448,6 @@ export default ({
             resizeMode={FastImage.resizeMode.cover}
           />
           <TextBox>
-            <LottieView
-              style={{
-                width: 60,
-                height: 60,
-              }}
-              source={require('../../../../assets/animations/emptyContents.json')}
-              loop
-              autoPlay
-            />
             <Column>
               <EmptyText>지시사항이 없습니다.</EmptyText>
               <EmptyText>
@@ -487,15 +470,6 @@ export default ({
             resizeMode={FastImage.resizeMode.cover}
           />
           <TextBox>
-            <LottieView
-              style={{
-                width: 60,
-                height: 60,
-              }}
-              source={require('../../../../assets/animations/emptyContents.json')}
-              loop
-              autoPlay
-            />
             <Column>
               <EmptyText>특이사항이 없습니다.</EmptyText>
               <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
@@ -516,15 +490,6 @@ export default ({
             resizeMode={FastImage.resizeMode.cover}
           />
           <TextBox>
-            <LottieView
-              style={{
-                width: 60,
-                height: 60,
-              }}
-              source={require('../../../../assets/animations/emptyContents.json')}
-              loop
-              autoPlay
-            />
             <Column>
               <EmptyText>지시사항을 등록해주세요.</EmptyText>
               <EmptyText>

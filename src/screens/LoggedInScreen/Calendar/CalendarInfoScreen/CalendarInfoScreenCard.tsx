@@ -26,7 +26,7 @@ const Text = styled.Text`
 
 const NameText = styled.Text`
   font-size: 15px;
-  color: #333;
+  color: #707070;
   margin-bottom: 5px;
   margin-left: 5px;
 `;

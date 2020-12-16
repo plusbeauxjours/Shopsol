@@ -35,9 +35,7 @@ const BackGround = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView``;
 
-const Touchable = styled.TouchableOpacity`
-  margin-bottom: 5px;
-`;
+const Touchable = styled.TouchableOpacity``;
 const TouchableRow = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
@@ -82,6 +80,11 @@ const NameText = styled.Text`
 const DateText = styled.Text`
   color: #707070;
   font-size: 12px;
+`;
+
+const InfoText = styled(DateText)`
+  font-size: 10px;
+  height: 15px;
 `;
 
 const Row = styled.View`
@@ -266,7 +269,7 @@ const TimeListBold = styled.Text`
 
 const NavigationButton = styled.TouchableOpacity`
   position: absolute;
-  right: 10px;
+  right: 20px;
   height: 60px;
   width: 60px;
   align-items: center;
@@ -502,7 +505,8 @@ export default ({
                 />
                 <NameBox>
                   <Touchable onPress={() => Linking.openURL(`tel:${mobileNo}`)}>
-                    <Row style={{justifyContent: 'flex-start'}}>
+                    <Row
+                      style={{justifyContent: 'flex-start', marginBottom: 5}}>
                       <NameText>{data?.EMP_NAME}</NameText>
                       <DateText>
                         {data?.IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
@@ -510,24 +514,27 @@ export default ({
                     </Row>
                     <Row style={{justifyContent: 'flex-start'}}>
                       <PhoneIcon color={'#707070'} />
-                      <DateText style={{marginLeft: 5}}>{mobileNo}</DateText>
-                      <DateText
+                      <InfoText style={{marginLeft: 5}}>{mobileNo}</InfoText>
+                      <InfoText
                         style={{
                           marginLeft: 5,
                           color: '#e85356',
                           fontWeight: '600',
                         }}>
                         전화걸기
-                      </DateText>
+                      </InfoText>
                     </Row>
                   </Touchable>
-                  <DateText>근무기간</DateText>
-                  <DateText>
+                  <InfoText>
+                    근무기간&nbsp;({moment().diff(moment(data?.START), 'month')}
+                    개월)
+                  </InfoText>
+                  <InfoText>
                     {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
                     {data?.END
                       ? moment(data?.END).format('YYYY.MM.DD')
                       : '계속'}
-                  </DateText>
+                  </InfoText>
                 </NameBox>
                 <NavigationButton onPress={() => gotoSetInfo(data, IMAGE)}>
                   <Bold>정보수정</Bold>

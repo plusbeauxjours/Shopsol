@@ -8,6 +8,7 @@ import {
 import EmpPayInfoCard1 from './EmpPayInfoCard1';
 import EmpPayInfoCard2 from './EmpPayInfoCard2';
 import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 import {
   ForwardIcon,
   BackIcon,
@@ -44,10 +45,15 @@ const Profile = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 20px;
-  margin-right: 3px;
-  justify-content: flex-end;
-  font-weight: bold;
+  margin-right: 10px;
+  color: #707070;
+  font-size: 15px;
+`;
+
+const NameBox = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 const GreyText = styled.Text`
@@ -58,6 +64,12 @@ const GreyText = styled.Text`
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+const EmployeeText = styled.Text`
+  color: #707070;
+  height: 15px;
+  font-size: 10px;
 `;
 
 const DateArrow = styled.TouchableOpacity`
@@ -85,8 +97,8 @@ const DateBoxText = styled.Text`
 `;
 
 const DateText = styled.Text`
-  font-weight: bold;
-  font-size: 16px;
+  color: #707070;
+  font-size: 12px;
 `;
 
 const DateBox = styled(Row)`
@@ -194,6 +206,33 @@ const FooterBtn = styled.TouchableOpacity`
   background-color: #fff;
 `;
 
+const EmployeeCardContainer = styled.View`
+  padding: 0 20px;
+  align-items: center;
+  flex-direction: row;
+  background-color: white;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const NavigationButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 20px;
+  height: 60px;
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-color: #e85356;
+  border-radius: 6px;
+`;
+
+const Bold = styled.Text`
+  color: #e85356;
+  font-weight: bold;
+`;
+
 export default ({
   MEMBER_NAME,
   maindata,
@@ -218,6 +257,12 @@ export default ({
   setClick2,
   setClick3,
   onPressFooter,
+  EMP_PAY_TYPE,
+  PAY,
+  image,
+  START,
+  END,
+  gotoSetInfo,
 }) => {
   const MainBoxContainer = ({text, onPress, boxButton}) => (
     <Box>
@@ -253,11 +298,6 @@ export default ({
 
   const TopAreaContainer = () => (
     <TopArea>
-      <Profile>
-        <NameText>{MEMBER_NAME}</NameText>
-        <GreyText>{IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}</GreyText>
-        <GreyText>님의 급여정보</GreyText>
-      </Profile>
       <DateBox>
         <DateArrow onPress={() => backpay()}>
           <BackIcon size={22} color={'#f4aaab'} />
@@ -331,6 +371,48 @@ export default ({
     </>
   );
 
+  const EmployeeCard = () => {
+    return (
+      <TopArea>
+        <EmployeeCardContainer>
+          <FastImage
+            style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
+            source={{
+              uri: `http://133.186.210.223/uploads/${image}`,
+              headers: {Authorization: 'someAuthToken'},
+              priority: FastImage.priority.low,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <NameBox>
+            <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
+              <NameText>{MEMBER_NAME}</NameText>
+              <DateText>
+                {IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
+              </DateText>
+            </Row>
+            <EmployeeText>
+              {EMP_PAY_TYPE === '0' && '시급'}
+              {EMP_PAY_TYPE === '1' && '일급'}
+              {EMP_PAY_TYPE === '2' && '월급'}&nbsp;
+              {PAY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+            </EmployeeText>
+            <EmployeeText>
+              근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)
+            </EmployeeText>
+            <EmployeeText>
+              {moment(START).format('YYYY.MM.DD')} ~&nbsp;
+              {END ? moment(END).format('YYYY.MM.DD') : '계속'}
+            </EmployeeText>
+          </NameBox>
+          <NavigationButton onPress={() => gotoSetInfo()}>
+            <Bold>정보수정</Bold>
+          </NavigationButton>
+        </EmployeeCardContainer>
+      </TopArea>
+    );
+  };
+
   if (PAY_TYPE == '2') {
     const totalearned = maindata.earned + maindata.earned2;
     const emptotal = maindata.realtotal - maindata.fourtotal - totalearned;
@@ -343,8 +425,8 @@ export default ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{alignItems: 'center'}}>
           <Container>
+            <EmployeeCard />
             <TopAreaContainer />
-
             {(STORE == '1' || STOREPAY_SHOW == '1') && (
               <Section>
                 <MainBoxContainer
@@ -470,6 +552,7 @@ export default ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{alignItems: 'center'}}>
           <Container>
+            <EmployeeCard />
             <TopAreaContainer />
 
             {(STORE == '1' || STOREPAY_SHOW == '1') && (
@@ -613,6 +696,7 @@ export default ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{alignItems: 'center'}}>
           <Container>
+            <EmployeeCard />
             <TopAreaContainer />
             {(STORE == '1' || STOREPAY_SHOW == '1') && (
               <Section>

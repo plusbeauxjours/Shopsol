@@ -14,9 +14,12 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const {
-    data: {EMP_NAME = null, STORE_SEQ = null, EMP_SEQ = null, images = []} = {},
+    EMP_NAME = null,
+    STORE_SEQ = null,
+    EMP_SEQ = null,
     from = null,
     onRefresh,
+    IMAGE = null,
   } = params;
   const [START_TYPE, setSTART_TYPE] = useState<string>('0');
   const [isSalaryModalVisible1, setIsSalaryModalVisible1] = useState<boolean>(
@@ -336,17 +339,17 @@ export default ({route: {params}}) => {
       });
 
       if (data.message === 'SUCCESS') {
-        if (from === 'EmployeeInfoScreen') {
-          alertModal('직원정보가 수정되었습니다.');
-          navigation.goBack();
-        } else if (from === 'ManageInviteEmployeeScreen') {
+        if (from === 'ManageInviteEmployeeScreen') {
           navigation.navigate('EmployeeScheduleMainScreen', {
             CALCULATE_DAY: utils.calculateDay,
             EMP_SEQ,
             PAY_TYPE: payChecked,
             PAY: pay,
-            IMAGE: images[0].IMAGE,
+            IMAGE,
           });
+        } else {
+          alertModal('직원정보가 수정되었습니다.');
+          navigation.goBack();
         }
       }
     } catch (e) {
@@ -617,7 +620,7 @@ export default ({route: {params}}) => {
       setRemainderVacation={setRemainderVacation}
       annual_START={annual_START}
       setAnnual_START={setAnnual_START}
-      IMAGE={images[0].IMAGE}
+      IMAGE={IMAGE}
       startDaySet={startDaySet}
       setStartDaySet={setStartDaySet}
       endDaySet={endDaySet}

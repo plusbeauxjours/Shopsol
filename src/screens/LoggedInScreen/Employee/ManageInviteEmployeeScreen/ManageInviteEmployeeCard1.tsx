@@ -82,9 +82,12 @@ export default ({
 
   const gotoSetEmployeeInfo = () => {
     navigation.navigate('SetEmployeeInfoScreen', {
-      data,
+      EMP_NAME: data?.EMP_NAME,
+      STORE_SEQ: data?.STORE_SEQ,
+      EMP_SEQ: data?.EMP_SEQ,
       from: 'ManageInviteEmployeeScreen',
       onRefresh,
+      IMAGE: data?.images[0]?.IMAGE,
     });
   };
 

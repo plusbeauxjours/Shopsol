@@ -565,11 +565,12 @@ export default () => {
       item.disassembled = cho;
     });
     let searchText = Hangul.disassemble(text).join(''); // 렭 -> ㄹㅕㄹr
-    setResult(
-      EMP_LIST.filter((i) => {
-        i.EMP_NAME.includes(text) || i.disassembled.includes(searchText);
-      }),
-    );
+    const result = EMP_LIST.filter(function (item) {
+      return (
+        item.EMP_NAME.includes(text) || item.disassembled.includes(searchText)
+      );
+    });
+    setResult(result);
   };
 
   useEffect(() => {

@@ -63,6 +63,10 @@ const DateText = styled.Text`
   font-size: 12px;
 `;
 
+const InfoText = styled(DateText)`
+  font-size: 10px;
+`;
+
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
@@ -411,14 +415,14 @@ export default ({
                     </DateText>
                   </Row>
                   <Row>
-                    <DateText>근무기간&nbsp;</DateText>
-                    <DateText>
+                    <InfoText>근무기간&nbsp;</InfoText>
+                    <InfoText>
                       {moment(EMPLOYEE_INFO_DATA?.START).format('YYYY.MM.DD')}
                       &nbsp;~&nbsp;
                       {EMPLOYEE_INFO_DATA?.END
                         ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
                         : '계속'}
-                    </DateText>
+                    </InfoText>
                   </Row>
                 </NameBox>
               </EmployeeBox>
