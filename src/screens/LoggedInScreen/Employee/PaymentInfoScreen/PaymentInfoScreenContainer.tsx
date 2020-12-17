@@ -18,12 +18,30 @@ export default () => {
   const {TOTAL_PAYMENT_WORKING_EMP} = useSelector(
     (state: any) => state.paymentReducer,
   );
-  const {STORE_SEQ, STORE_DATA: {STOREPAY_SHOW = null} = {}} = useSelector(
-    (state: any) => state.storeReducer,
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [date, setDate] = useState<string>(moment().format('YYYY-MM-DD'));
+  const {
+    STORE_SEQ,
+    STORE_DATA: {
+      STOREPAY_SHOW = null,
+      resultdata: {CALCULATE_DAY = null} = {},
+    } = {},
+  } = useSelector((state: any) => state.storeReducer);
 
+  let CALCULATE_MONTH_temp= Number(moment().format('D'))<Number(CALCULATE_DAY)?moment().subtract(1,'months').format("MM"):moment().format("MM")
+  let CALCULATE_DAY_temp =
+    Number(CALCULATE_DAY) < 10 ? '0' + CALCULATE_DAY : CALCULATE_DAY;
+    
+  const [loading, setLoading] = useState<boolean>(false);
+  const [startDate, setStartDate] = useState<string>(
+    moment(
+      `${
+        moment().year() +
+        '-' +
+        CALCULATE_MONTH_temp +
+        '-' +
+        CALCULATE_DAY_temp
+      }`,
+    ).format('YYYY-MM-DD'),
+  );
   const alertModal = (title, text) => {
     const params = {
       alertType: 'alert',
@@ -51,34 +69,44 @@ export default () => {
       console.log(e);
     }
   };
-
   const nextpay = async () => {
-    try {
-      await setDate(moment(date).add(1, 'month').format('YYYY-MM-DD'));
-      await setLoading(true);
-      await dispatch(
-        getTOTAL_PAYMENT_WORKING_EMP(
-          moment(date).add(1, 'month').format('YYYY'),
-          moment(date).add(1, 'month').format('MM'),
-        ),
-      );
-    } catch (e) {
-      console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
-      navigation.goBack();
-    } finally {
-      setLoading(false);
+    if (
+      Number(moment(startDate).add(1, 'month').format('YYYYMMDD')) <=
+      Number(moment().format('YYYYMMDD'))
+    ) {
+      try {
+        await setStartDate(
+          moment(startDate).add(1, 'month').format('YYYY-MM-DD'),
+        );
+        await setLoading(true);
+        await dispatch(
+          getTOTAL_PAYMENT_WORKING_EMP(
+            moment(startDate).add(1, 'month').format('YYYY'),
+            moment(startDate).add(1, 'month').format('MM'),
+          ),
+        );
+      } catch (e) {
+        console.log(e);
+        alertModal('', '통신이 원활하지 않습니다.');
+        navigation.goBack();
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      alertModal('', '최신데이터 입니다.');
     }
   };
 
   const backpay = async () => {
     try {
-      await setDate(moment(date).subtract(1, 'month').format('YYYY-MM-DD'));
+      await setStartDate(
+        moment(startDate).subtract(1, 'month').format('YYYY-MM-DD'),
+      );
       await setLoading(true);
       await dispatch(
         getTOTAL_PAYMENT_WORKING_EMP(
-          moment(date).subtract(1, 'month').format('YYYY'),
-          moment(date).subtract(1, 'month').format('MM'),
+          moment(startDate).subtract(1, 'month').format('YYYY'),
+          moment(startDate).subtract(1, 'month').format('MM'),
         ),
       );
     } catch (e) {
@@ -105,7 +133,17 @@ export default () => {
       console.log(e);
     } finally {
       setLoading(false);
-      setDate(moment().format('YYYY-MM-DD'));
+      setStartDate(
+        moment(
+          `${
+            moment().year() +
+            '-' +
+            CALCULATE_MONTH_temp +
+            '-' +
+            CALCULATE_DAY_temp
+          }`,
+        ).format('YYYY-MM-DD'),
+      );
       dispatch(setSplashVisible(false));
     }
   };
@@ -126,7 +164,7 @@ export default () => {
       explainModal={explainModal}
       EMPLOYEE_LIST={EMPLOYEE_LIST}
       loading={loading}
-      date={date}
+      startDate={startDate}
     />
   );
 };

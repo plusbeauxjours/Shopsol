@@ -124,7 +124,7 @@ export default ({
   explainModal,
   EMPLOYEE_LIST,
   loading,
-  date,
+  startDate,
 }) => {
   return (
     <BackGround>
@@ -139,11 +139,15 @@ export default ({
                 <BackIcon size={22} color={'#f4aaab'} />
               </DateArrow>
               <DateTextArea>
-                <DateText>{moment(date).format('YYYY년 M월')}</DateText>
+                <DateText>{moment(startDate).format('YYYY년 M월')}</DateText>
                 <DateText style={{fontSize: 12, fontWeight: '300'}}>
-                  ({moment(date).startOf('month').format('M월 D일')}
+                  ({moment(startDate).format('M월 D일')}
                   &nbsp;~&nbsp;
-                  {moment(date).endOf('month').format('M월 D일')})
+                  {moment(startDate)
+                    .add(1, 'months')
+                    .subtract(1, 'days')
+                    .format('M월 D일')}
+                  )
                 </DateText>
               </DateTextArea>
               <DateArrow style={{marginRight: 5}} onPress={() => onRefresh()}>

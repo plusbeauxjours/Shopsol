@@ -16,7 +16,7 @@ const Container = styled.View`
 
 const Box = styled.View`
   margin-top: 10px;
-  width: 300px;
+  width: 260px;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;

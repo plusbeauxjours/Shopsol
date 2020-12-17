@@ -231,6 +231,7 @@ const NavigationButton = styled.TouchableOpacity`
 
 const HiddenItems = styled.View`
   overflow: hidden;
+  align-items: center;
 `;
 
 const ListContainer = styled.View`
@@ -244,7 +245,7 @@ const ListContainer = styled.View`
   padding: 25px 10px 0 20px;
 `;
 
-const ListItemContainer = styled.View<IsFirst>`
+const MainItemContainer = styled.View<IsFirst>`
   width: ${wp('100%') - 40}px;
   background-color: white;
   flex-direction: row;
@@ -256,7 +257,17 @@ const ListItemContainer = styled.View<IsFirst>`
   height: ${(props) => (props.isFirst ? 60 : 40)}px;
 `;
 
-const ListTouchable = styled.TouchableWithoutFeedback``;
+const SubItemContainer = styled(MainItemContainer)`
+  width: ${wp('100%') - 40}px;
+  padding-left: 40px;
+  padding-top: 0;
+  height: 25px;
+  background-color: #f6f6f6;
+`;
+
+const ListTouchable = styled.TouchableWithoutFeedback`
+  flex-direction: row;
+`;
 
 const BorderFooter = styled.View`
   width: ${wp('100%') - 40}px;
@@ -307,50 +318,32 @@ export default ({
   gotoSetInfo,
   visible,
   loading,
+  date,
 }) => {
   const boxButtonTransition = useTransition(boxButton);
+  const boxButton2Transition = useTransition(boxButton2);
   const cardShowedTransition = useTransition(isCardShowed);
+  const click1Transition = useTransition(click1);
+  const click2Transition = useTransition(click2);
+  const click3Transition = useTransition(click3);
 
-  const Item = ({isFirst = false, text, value}) => {
+  const MainItem = ({isFirst = false, text, value}) => {
     return (
-      <ListItemContainer isFirst={isFirst}>
+      <MainItemContainer isFirst={isFirst}>
         <DetailRowText>{text}</DetailRowText>
         <DetailRowText>{value}&nbsp;원</DetailRowText>
-      </ListItemContainer>
+      </MainItemContainer>
     );
   };
 
-  const MainBoxContainer = ({text, onPress, boxButton}) => (
-    <Box>
-      <BoxTitle>
-        <BoxTitleText>{text}</BoxTitleText>
-      </BoxTitle>
-      <BoxButton onPress={onPress}>
-        {boxButton ? (
-          <BoxButtonText>접기</BoxButtonText>
-        ) : (
-          <BoxButtonText>자세히보기</BoxButtonText>
-        )}
-      </BoxButton>
-    </Box>
-  );
-
-  const DetailListRow = ({text, value}) => (
-    <DetailRowContainer>
-      <DetailRowText>{text}</DetailRowText>
-      <DetailRowText>{visible ? 0 : value} 원</DetailRowText>
-    </DetailRowContainer>
-  );
-
-  const MainInfoOfPay = ({text, value, click, onPress}) => (
-    <DetailRowContainer>
-      <ToggleIcon onPress={onPress}>
-        {click ? <UpIcon color="#BCC5D3" /> : <DownIcon color="#777" />}
+  const SubItem = ({isFirst = false, text, value}) => {
+    return (
+      <SubItemContainer isFirst={isFirst}>
         <DetailRowText>{text}</DetailRowText>
-      </ToggleIcon>
-      <DetailRowText>{visible ? 0 : value} 원</DetailRowText>
-    </DetailRowContainer>
-  );
+        <DetailRowText>{value}&nbsp;원</DetailRowText>
+      </SubItemContainer>
+    );
+  };
 
   const TopAreaContainer = () => (
     <TopArea>
@@ -359,13 +352,15 @@ export default ({
           <BackIcon size={22} color={'#f4aaab'} />
         </DateArrow>
         <DateTextArea>
-          <DateBoxText>
-            {moment(maindata.START_DAY).format('YYYY년 M월')}
-          </DateBoxText>
+          <DateBoxText>{moment(date).format('YYYY년 M월')}</DateBoxText>
           <DateBoxText style={{fontSize: 12, fontWeight: '300'}}>
-            ({moment(maindata.START_DAY).format('M월 D일')}
+            ({moment(date).format('M월 D일')}
             &nbsp;~&nbsp;
-            {moment(maindata.END_DAY).format('M월 D일')})
+            {moment(date)
+              .add(1, 'months')
+              .subtract(1, 'days')
+              .format('M월 D일')}
+            )
           </DateBoxText>
         </DateTextArea>
         <DateArrow style={{marginRight: 5}} onPress={() => fetchData()}>
@@ -380,50 +375,58 @@ export default ({
 
   const DetailAreaContainer = ({totalearned}) => (
     <>
-      <MainInfoOfPay
-        text={'4대보험 근로자d부담금'}
-        value={`(-)${numberComma(maindata.fourtotal)}`}
-        click={click2}
-        onPress={() => setClick2(!click2)}
-      />
-      {click2 && (
-        <DetailBox>
-          <DetailListRow
-            text={'국민연금'}
-            value={`(-)${numberComma(maindata.pension_pay)}`}
-          />
-          <DetailListRow
-            text={'건강보험'}
-            value={`(-)${numberComma(maindata.health_pay)}`}
-          />
-          <DetailListRow
-            text={'장기요양'}
-            value={`(-)${numberComma(maindata.health2_pay)}`}
-          />
-          <DetailListRow
-            text={'고용보험'}
-            value={`(-)${numberComma(maindata.employment_pay)}`}
-          />
-        </DetailBox>
-      )}
-      <MainInfoOfPay
-        text={'원천세'}
-        value={`(-)${numberComma(totalearned)}`}
-        click={click3}
-        onPress={() => setClick3(!click3)}
-      />
-      {click3 && (
-        <DetailBox>
-          <DetailListRow
-            text={'소득세'}
-            value={`(-)${numberComma(maindata.earned)}`}
-          />
-          <DetailListRow
-            text={'지방소득세'}
-            value={`(-)${numberComma(maindata.earned2)}`}
-          />
-        </DetailBox>
-      )}
+      <ListTouchable onPress={() => setClick2(!click2)}>
+        <MainItemContainer style={{paddingRight: 10}} as={Animated.View}>
+          <DetailRowText>4대보험 근로자부담금</DetailRowText>
+          <DetailRowText style={{position: 'absolute', right: 40}}>
+            (-){numberComma(maindata.fourtotal)}&nbsp;원
+          </DetailRowText>
+          <Chevron {...{transition: click2Transition}} />
+        </MainItemContainer>
+      </ListTouchable>
+      <HiddenItems
+        as={Animated.View}
+        style={{height: mix(click2Transition, 0, 25 * 4)}}>
+        <SubItem
+          isFirst={true}
+          text={'국민연금'}
+          value={`(-)${numberComma(maindata.pension_pay)}`}
+        />
+        <SubItem
+          text={'건강보험'}
+          value={`(-)${numberComma(maindata.health_pay)}`}
+        />
+        <SubItem
+          text={'장기요양'}
+          value={`(-)${numberComma(maindata.health2_pay)}`}
+        />
+        <SubItem
+          text={'고용보험'}
+          value={`(-)${numberComma(maindata.employment_pay)}`}
+        />
+      </HiddenItems>
+      <ListTouchable onPress={() => setClick3(!click3)}>
+        <MainItemContainer style={{paddingRight: 10}} as={Animated.View}>
+          <DetailRowText>원천세</DetailRowText>
+          <DetailRowText style={{position: 'absolute', right: 40}}>
+            (-){numberComma(totalearned)}&nbsp;원
+          </DetailRowText>
+          <Chevron {...{transition: click3Transition}} />
+        </MainItemContainer>
+      </ListTouchable>
+      <HiddenItems
+        as={Animated.View}
+        style={{height: mix(click3Transition, 0, 25 * 2 + 10)}}>
+        <SubItem
+          isFirst={true}
+          text={'소득세'}
+          value={`(-)${numberComma(maindata.earned)}`}
+        />
+        <SubItem
+          text={'지방소득세'}
+          value={`(-)${numberComma(maindata.earned2)}`}
+        />
+      </HiddenItems>
     </>
   );
 
@@ -499,20 +502,20 @@ export default ({
                 <HiddenItems
                   as={Animated.View}
                   style={{height: mix(boxButtonTransition, 0, 40 * 4 + 10)}}>
-                  <Item
+                  <MainItem
                     isFirst={true}
                     text={'급여지급액'}
                     value={numberComma(emptotal)}
                   />
-                  <Item
+                  <MainItem
                     text={'4대보험 고용주부담금'}
                     value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
                   />
-                  <Item
+                  <MainItem
                     text={'4대보험 근로자부담금'}
                     value={`(+) ${numberComma(maindata.fourtotal)}`}
                   />
-                  <Item
+                  <MainItem
                     text={'원천세'}
                     value={`(+) ${numberComma(totalearned)}`}
                   />
@@ -521,64 +524,75 @@ export default ({
               </>
             )}
 
-            <Section>
-              {STORE == '1' || STOREPAY_SHOW == '1' ? (
-                <MainBoxContainer
-                  text={'근로자 수령액(월급)'}
-                  onPress={() => setBoxButton2(!boxButton2)}
-                  boxButton={boxButton2}
-                />
-              ) : (
-                <Box>
-                  <BoxTitle>
-                    <BoxTitleText>근로자 수령액(월급)</BoxTitleText>
-                  </BoxTitle>
-                </Box>
-              )}
-              <PayInfoBox>
-                <MainPayBox>
-                  <MainPayBoxText>
-                    {emptotal ? `${numberComma(emptotal)} 원` : '0 원'}
-                  </MainPayBoxText>
-                </MainPayBox>
-                {boxButton2 && (
-                  <DetailBox>
-                    <Line />
-                    <MainInfoOfPay
-                      text={'공제전 금액'}
-                      value={numberComma(maindata.realtotal)}
-                      click={click1}
-                      onPress={() => setClick1(!click1)}
-                    />
-                    {click1 && (
-                      <DetailBox>
-                        <DetailListRow
-                          text={'기본급'}
-                          value={numberComma(maindata.PAY)}
-                        />
-                        <DetailListRow
-                          text={'식대'}
-                          value={numberComma(maindata.MEALS)}
-                        />
-                        <DetailListRow
-                          text={'자가운전'}
-                          value={numberComma(maindata.SELF_DRIVING)}
-                        />
-                        <DetailListRow
-                          text={'상여'}
-                          value={numberComma(maindata.BONUS)}
-                        />
-                        <DetailListRow
-                          text={'성과급'}
-                          value={numberComma(maindata.INCENTIVE)}
-                        />
-                      </DetailBox>
-                    )}
-                    <DetailAreaContainer totalearned={totalearned} />
-                  </DetailBox>
+            <ListTouchable
+              onPress={() => setBoxButton2(!boxButton2)}
+              disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
+              <ListContainer as={Animated.View}>
+                <DateBoxText>근로자 수령액(월급)</DateBoxText>
+                <MainPayBoxText>
+                  {emptotal ? `${numberComma(emptotal)} 원` : '0 원'}
+                </MainPayBoxText>
+                {(STORE == '1' || STOREPAY_SHOW == '1') && (
+                  <Chevron {...{transition: boxButton2Transition}} />
                 )}
-              </PayInfoBox>
-            </Section>
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{
+                height: mix(
+                  boxButton2Transition,
+                  0,
+                  40 * 3 +
+                    10 +
+                    (click1 ? 25 * 5 : 0) +
+                    (click2 ? 25 * 4 : 0) +
+                    (click3 ? 25 * 2 + 10 : 0),
+                ),
+              }}>
+              <ListTouchable onPress={() => setClick1(!click1)}>
+                <MainItemContainer
+                  style={{paddingRight: 10}}
+                  isFirst={true}
+                  as={Animated.View}>
+                  <DetailRowText>공제전 금액</DetailRowText>
+                  <DetailRowText
+                    style={{bottom: 10, position: 'absolute', right: 40}}>
+                    {numberComma(maindata.realtotal)}&nbsp;원
+                  </DetailRowText>
+                  <Chevron {...{transition: click1Transition}} />
+                </MainItemContainer>
+              </ListTouchable>
+              <HiddenItems
+                as={Animated.View}
+                style={{height: mix(click1Transition, 0, 25 * 5)}}>
+                <SubItem
+                  isFirst={true}
+                  text={'기본급'}
+                  value={numberComma(maindata.PAY)}
+                />
+                <SubItem text={'식대'} value={numberComma(maindata.MEALS)} />
+                <SubItem
+                  text={'자가운전'}
+                  value={numberComma(maindata.SELF_DRIVING)}
+                />
+                <SubItem text={'상여'} value={numberComma(maindata.BONUS)} />
+                <SubItem
+                  text={'성과급'}
+                  value={numberComma(maindata.INCENTIVE)}
+                />
+              </HiddenItems>
+              <DetailAreaContainer totalearned={totalearned} />
+
+              <MainItemContainer isFirst={true}>
+                <DetailRowText>공제전 금액</DetailRowText>
+                <DetailRowText>
+                  {numberComma(maindata.realtotal)}&nbsp;원
+                </DetailRowText>
+              </MainItemContainer>
+              <DetailAreaContainer totalearned={totalearned} />
+            </HiddenItems>
+            <BorderFooter />
           </Container>
         </ScrollView>
       </BackGround>
@@ -610,7 +624,6 @@ export default ({
           <Container>
             <EmployeeCard />
             <TopAreaContainer />
-
             {(STORE == '1' || STOREPAY_SHOW == '1') && (
               <>
                 <ListTouchable onPress={() => setBoxButton(!boxButton)}>
@@ -625,22 +638,22 @@ export default ({
                 <HiddenItems
                   as={Animated.View}
                   style={{
-                    height: mix(boxButtonTransition, 0, 40 * 4 + 10 + 20),
+                    height: mix(boxButtonTransition, 0, 40 * 4 + 10),
                   }}>
-                  <Item
+                  <MainItem
                     isFirst={true}
                     text={'급여지급액'}
                     value={numberComma(realemptotal)}
                   />
-                  <Item
+                  <MainItem
                     text={'4대보험 고용주부담금'}
                     value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
                   />
-                  <Item
+                  <MainItem
                     text={'4대보험 근로자부담금'}
                     value={`(+) ${numberComma(maindata.fourtotal)}`}
                   />
-                  <Item
+                  <MainItem
                     text={'원천세'}
                     value={`(+) ${numberComma(totalearned)}`}
                   />
@@ -648,100 +661,116 @@ export default ({
                 <BorderFooter />
               </>
             )}
-            <Section>
-              {STORE == '1' || STOREPAY_SHOW == '1' ? (
-                <MainBoxContainer
-                  text={'근로자 수령액(시급)'}
-                  onPress={() => setBoxButton2(!boxButton2)}
-                  boxButton={boxButton2}
-                />
-              ) : (
-                <Box>
-                  <BoxTitle>
-                    <BoxTitleText>근로자 수령액(월급)</BoxTitleText>
-                  </BoxTitle>
-                </Box>
-              )}
-              <PayInfoBox>
-                <MainPayBox>
-                  <MainPayBoxText>
-                    {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
-                  </MainPayBoxText>
-                </MainPayBox>
-                {boxButton2 && (
-                  <DetailBox>
-                    <Line />
-                    <MainInfoOfPay
-                      text={'공제전 금액'}
-                      value={numberComma(emptotal)}
-                      click={click1}
-                      onPress={() => setClick1(!click1)}
-                    />
-                    {click1 && (
-                      <DetailBox>
-                        <DetailListRow
-                          text={'기본급'}
-                          value={numberComma(maindata.realtotal)}
-                        />
-                        <DetailListRow
-                          text={'주휴수당'}
-                          value={`(+)${numberComma(maindata.weekpaytotal)}`}
-                        />
-                        <DetailListRow
-                          text={'야간/초과/휴일 수당'}
-                          value={`(+)${numberComma(maindata.addtotal)}`}
-                        />
-                        <DetailListRow
-                          text={'지각/조퇴 차감'}
-                          value={`(-)${numberComma(maindata.minertotalpay)}`}
-                        />
-                        <DetailListRow
-                          text={'결근/휴무 차감'}
-                          value={`(-)${numberComma(maindata.noworktotalpay)}`}
-                        />
-                      </DetailBox>
-                    )}
-                    <DetailAreaContainer totalearned={totalearned} />
-                  </DetailBox>
+
+            <ListTouchable
+              onPress={() => setBoxButton2(!boxButton2)}
+              disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
+              <ListContainer as={Animated.View}>
+                <DateBoxText>근로자 수령액(시급)</DateBoxText>
+                <MainPayBoxText>
+                  {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
+                </MainPayBoxText>
+                {(STORE == '1' || STOREPAY_SHOW == '1') && (
+                  <Chevron {...{transition: boxButton2Transition}} />
                 )}
-              </PayInfoBox>
-            </Section>
-            <>
-              <ListTouchable onPress={() => onPressFooter('click4')}>
-                <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
-                  <DateBoxText>일별 급여현황</DateBoxText>
-                  <Chevron {...{transition: cardShowedTransition}} />
-                </ListContainer>
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{
+                height: mix(
+                  boxButton2Transition,
+                  0,
+                  40 * 3 +
+                    10 +
+                    (click1 ? 25 * 5 : 0) +
+                    (click2 ? 25 * 4 : 0) +
+                    (click3 ? 25 * 2 + 10 : 0),
+                ),
+              }}>
+              <ListTouchable onPress={() => setClick1(!click1)}>
+                <MainItemContainer
+                  style={{paddingRight: 10}}
+                  isFirst={true}
+                  as={Animated.View}>
+                  <DetailRowText>공제전 금액</DetailRowText>
+                  <DetailRowText
+                    style={{bottom: 10, position: 'absolute', right: 40}}>
+                    {numberComma(emptotal)}&nbsp;원
+                  </DetailRowText>
+                  <Chevron {...{transition: click1Transition}} />
+                </MainItemContainer>
               </ListTouchable>
               <HiddenItems
                 as={Animated.View}
-                style={{
-                  height: mix(
-                    cardShowedTransition,
-                    0,
-                    320 * maindata.CARDLIST.length,
-                  ),
-                }}>
-                <CardContainer>
-                  {maindata.CARDLIST.map((data) => {
-                    return (
-                      <EmpPayInfoCard1
-                        key={data.key}
-                        day={data.START}
-                        yoil={data.DAY}
-                        base={data.basic_payment}
-                        night={data.night_payment}
-                        over={data.day_payment}
-                        holi={0}
-                        late={data.miner_payment}
-                        total={data.payment}
-                      />
-                    );
-                  })}
-                </CardContainer>
+                style={{height: mix(click1Transition, 0, 25 * 5)}}>
+                <SubItem
+                  isFirst={true}
+                  text={'기본급'}
+                  value={numberComma(maindata.realtotal)}
+                />
+                <SubItem
+                  text={'주휴수당'}
+                  value={`(+)${numberComma(maindata.weekpaytotal)}`}
+                />
+                <SubItem
+                  text={'야간/초과/휴일 수당'}
+                  value={`(+)${numberComma(maindata.addtotal)}`}
+                />
+                <SubItem
+                  text={'지각/조퇴 차감'}
+                  value={`(-)${numberComma(maindata.minertotalpay)}`}
+                />
+                <SubItem
+                  text={'결근/휴무 차감'}
+                  value={`(-)${numberComma(maindata.noworktotalpay)}`}
+                />
               </HiddenItems>
-              <BorderFooter />
-            </>
+              <DetailAreaContainer totalearned={totalearned} />
+
+              <MainItemContainer isFirst={true}>
+                <DetailRowText>공제전 금액</DetailRowText>
+                <DetailRowText>
+                  {numberComma(maindata.realtotal)}&nbsp;원
+                </DetailRowText>
+              </MainItemContainer>
+              <DetailAreaContainer totalearned={totalearned} />
+            </HiddenItems>
+            <BorderFooter />
+            <ListTouchable onPress={() => onPressFooter('click4')}>
+              <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
+                <DateBoxText>일별 급여현황</DateBoxText>
+                <Chevron {...{transition: cardShowedTransition}} />
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{
+                height: mix(
+                  cardShowedTransition,
+                  0,
+                  320 * maindata.CARDLIST?.length,
+                ),
+              }}>
+              <CardContainer>
+                {maindata.CARDLIST?.map((data, index) => {
+                  return (
+                    <EmpPayInfoCard1
+                      key={index}
+                      day={data.START}
+                      yoil={data.DAY}
+                      base={data.basic_payment}
+                      night={data.night_payment}
+                      over={data.day_payment}
+                      holi={0}
+                      late={data.miner_payment}
+                      total={data.payment}
+                    />
+                  );
+                })}
+              </CardContainer>
+            </HiddenItems>
+            <BorderFooter />
           </Container>
         </ScrollView>
       </BackGround>
@@ -774,22 +803,22 @@ export default ({
                 <HiddenItems
                   as={Animated.View}
                   style={{
-                    height: mix(boxButtonTransition, 0, 40 * 4 + 10 + 20),
+                    height: mix(boxButtonTransition, 0, 40 * 4 + 10),
                   }}>
-                  <Item
+                  <MainItem
                     isFirst={true}
                     text={'급여지급액'}
                     value={numberComma(realemptotal)}
                   />
-                  <Item
+                  <MainItem
                     text={'4대보험 고용주부담금'}
                     value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
                   />
-                  <Item
+                  <MainItem
                     text={'4대보험 근로자부담금'}
                     value={`(+) ${numberComma(maindata.fourtotal)}`}
                   />
-                  <Item
+                  <MainItem
                     text={'원천세'}
                     value={`(+) ${numberComma(totalearned)}`}
                   />
@@ -797,112 +826,96 @@ export default ({
                 <BorderFooter />
               </>
             )}
-
-            <Section>
-              {STORE == '1' || STOREPAY_SHOW == '1' ? (
-                <MainBoxContainer
-                  text={'근로자 수령액(월급)'}
-                  onPress={() => setBoxButton2(!boxButton2)}
-                  boxButton={boxButton2}
-                />
-              ) : (
-                <Box>
-                  <BoxTitle>
-                    <BoxTitleText>근로자 수령액(월급)</BoxTitleText>
-                  </BoxTitle>
-                </Box>
-              )}
-              <PayInfoBox>
-                <MainPayBox>
-                  <MainPayBoxText>
-                    {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
-                  </MainPayBoxText>
-                </MainPayBox>
-                {boxButton2 && (
-                  <DetailBox>
-                    <Line />
-                    <MainInfoOfPay
-                      text={'공제전 금액'}
-                      value={numberComma(maindata.realtotal)}
-                      click={click1}
-                      onPress={() => setClick1(!click1)}
-                    />
-                    {click1 && (
-                      <DetailBox>
-                        <DetailListRow
-                          text={'기본급'}
-                          value={numberComma(maindata.realtotal)}
-                        />
-                      </DetailBox>
-                    )}
-                    <DetailAreaContainer totalearned={totalearned} />
-                  </DetailBox>
+            <ListTouchable
+              onPress={() => setBoxButton2(!boxButton2)}
+              disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
+              <ListContainer as={Animated.View}>
+                <DateBoxText>근로자 수령액(일급)</DateBoxText>
+                <MainPayBoxText>
+                  {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
+                </MainPayBoxText>
+                {(STORE == '1' || STOREPAY_SHOW == '1') && (
+                  <Chevron {...{transition: boxButton2Transition}} />
                 )}
-              </PayInfoBox>
-            </Section>
-            <>
-              <ListTouchable onPress={() => onPressFooter('click5')}>
-                <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
-                  <DateBoxText>일별 급여현황</DateBoxText>
-                  <Chevron {...{transition: cardShowedTransition}} />
-                </ListContainer>
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{
+                height: mix(
+                  boxButton2Transition,
+                  0,
+                  40 * 3 +
+                    10 +
+                    (click1 ? 25 * 1 : 0) +
+                    (click2 ? 25 * 4 : 0) +
+                    (click3 ? 25 * 2 + 10 : 0),
+                ),
+              }}>
+              <ListTouchable onPress={() => setClick1(!click1)}>
+                <MainItemContainer
+                  style={{paddingRight: 10}}
+                  isFirst={true}
+                  as={Animated.View}>
+                  <DetailRowText>공제전 금액</DetailRowText>
+                  <DetailRowText
+                    style={{bottom: 10, position: 'absolute', right: 40}}>
+                    {numberComma(maindata.realtotal)}&nbsp;원
+                  </DetailRowText>
+                  <Chevron {...{transition: click1Transition}} />
+                </MainItemContainer>
               </ListTouchable>
               <HiddenItems
                 as={Animated.View}
-                style={{
-                  height: mix(
-                    cardShowedTransition,
-                    0,
-                    170 * maindata.CARDLIST1.length,
-                  ),
-                }}>
-                <CardContainer>
-                  {maindata.CARDLIST1.map((data) => {
-                    return (
-                      <EmpPayInfoCard1
-                        key={data.key}
-                        day={data.START}
-                        yoil={data.DAY}
-                        base={data.basic_payment}
-                        night={data.night_payment}
-                        over={data.day_payment}
-                        holi={0}
-                        late={data.miner_payment}
-                        total={data.payment}
-                      />
-                    );
-                  })}
-                </CardContainer>
+                style={{height: mix(click1Transition, 0, 25 * 1)}}>
+                <SubItem
+                  isFirst={true}
+                  text={'기본급'}
+                  value={numberComma(maindata.realtotal)}
+                />
               </HiddenItems>
-              <BorderFooter />
-            </>
+              <DetailAreaContainer totalearned={totalearned} />
 
-            <Footer>
-              <FooterBtn
-                onPress={() => {
-                  onPressFooter('click5');
-                }}>
-                <DateText>일별 급여현황</DateText>
-                {isCardShowed ? (
-                  <UpIcon color="#BCC5D3" />
-                ) : (
-                  <DownIcon color="#777" />
-                )}
-              </FooterBtn>
-              {isCardShowed && (
-                <CardBox>
-                  {maindata.CARDLIST1.map((data) => {
-                    return (
-                      <EmpPayInfoCard2
-                        day={data.START}
-                        yoil={data.DAY}
-                        total={data.payment}
-                      />
-                    );
-                  })}
-                </CardBox>
-              )}
-            </Footer>
+              <MainItemContainer isFirst={true}>
+                <DetailRowText>공제전 금액</DetailRowText>
+                <DetailRowText>
+                  {numberComma(maindata.realtotal)}&nbsp;원
+                </DetailRowText>
+              </MainItemContainer>
+
+              <DetailAreaContainer totalearned={totalearned} />
+            </HiddenItems>
+            <BorderFooter />
+
+            <ListTouchable onPress={() => onPressFooter('click5')}>
+              <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
+                <DateBoxText>일별 급여현황</DateBoxText>
+                <Chevron {...{transition: cardShowedTransition}} />
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{
+                height: mix(
+                  cardShowedTransition,
+                  0,
+                  170 * maindata.CARDLIST1?.length,
+                ),
+              }}>
+              <CardContainer>
+                {maindata.CARDLIST1?.map((data, index) => {
+                  return (
+                    <EmpPayInfoCard2
+                      key={index}
+                      day={data.START}
+                      yoil={data.DAY}
+                      total={data.payment}
+                    />
+                  );
+                })}
+              </CardContainer>
+            </HiddenItems>
+            <BorderFooter />
           </Container>
         </ScrollView>
       </BackGround>

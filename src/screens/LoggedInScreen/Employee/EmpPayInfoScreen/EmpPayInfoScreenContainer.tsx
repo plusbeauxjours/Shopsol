@@ -28,7 +28,10 @@ export default ({route: {params}}) => {
     EMP_SEQ: EMP_SEQ_state,
     IS_MANAGER: IS_MANAGER_state,
     STORE_DATA: {
-      resultdata: {STOREPAY_SHOW: STOREPAY_SHOW_state = null} = {},
+      resultdata: {
+        STOREPAY_SHOW: STOREPAY_SHOW_state = null,
+        CALCULATE_DAY = null,
+      } = {},
     } = {},
   } = useSelector((state: any) => state.storeReducer);
   const {MEMBER_NAME: MEMBER_NAME_state} = useSelector(
@@ -37,8 +40,21 @@ export default ({route: {params}}) => {
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
 
+  let CALCULATE_MONTH_temp =
+    Number(moment().format('D')) < Number(CALCULATE_DAY)
+      ? moment().subtract(1, 'months').format('MM')
+      : moment().format('MM');
+  let CALCULATE_DAY_temp =
+    Number(CALCULATE_DAY) < 10 ? '0' + CALCULATE_DAY : CALCULATE_DAY;
+
   const [loading, setLoading] = useState<boolean>(true);
-  const [date, setDate] = useState<any>(moment());
+  const [date, setDate] = useState<any>(
+    moment(
+      `${
+        moment().year() + '-' + CALCULATE_MONTH_temp + '-' + CALCULATE_DAY_temp
+      }`,
+    ).format('YYYY-MM-DD'),
+  );
   const [boxButton, setBoxButton] = useState<boolean>(false);
   const [boxButton2, setBoxButton2] = useState<boolean>(false);
   const [isCardShowed, setIsCardShowed] = useState<boolean>(false);
@@ -88,8 +104,8 @@ export default ({route: {params}}) => {
 
   const nextpay = async () => {
     if (
-      Number(moment(date).add(1, 'month').format('YYYYMM')) <=
-      Number(moment().format('YYYYMM'))
+      Number(moment(date).add(1, 'month').format('YYYYMMDD')) <=
+      Number(moment().format('YYYYMMDD'))
     ) {
       try {
         dispatch(setSplashVisible(true));
@@ -202,6 +218,7 @@ export default ({route: {params}}) => {
       gotoSetInfo={gotoSetInfo}
       visible={visible}
       loading={loading}
+      date={date}
     />
   );
 };

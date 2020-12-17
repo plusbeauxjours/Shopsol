@@ -18,6 +18,7 @@ const storeSlice = createSlice({
     },
     setSTORE_DATA(state, action) {
       const {payload: STORE_DATA} = action;
+      console.log(STORE_DATA);
       return {
         ...state,
         STORE_DATA,
