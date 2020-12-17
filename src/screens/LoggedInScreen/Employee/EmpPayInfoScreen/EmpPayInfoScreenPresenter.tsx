@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import Animated from 'react-native-reanimated';
+import {mix, useTransition} from 'react-native-redash';
 
 import EmpPayInfoCard1 from './EmpPayInfoCard1';
 import EmpPayInfoCard2 from './EmpPayInfoCard2';
@@ -16,6 +15,11 @@ import {
   UpIcon,
   DownIcon,
 } from '~/constants/Icons';
+import Chevron from '~/components/Chevron';
+
+interface IsFirst {
+  isFirst?: boolean;
+}
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -166,6 +170,9 @@ const MainPayBox = styled.View`
 `;
 
 const MainPayBoxText = styled.Text`
+  bottom: -3px;
+  position: absolute;
+  right: 40px;
   font-size: 23px;
 `;
 
@@ -222,9 +229,50 @@ const NavigationButton = styled.TouchableOpacity`
   border-radius: 6px;
 `;
 
-const Bold = styled.Text`
-  color: #e85356;
-  font-weight: bold;
+const HiddenItems = styled.View`
+  overflow: hidden;
+`;
+
+const ListContainer = styled.View`
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: ${wp('100%') - 40}px;
+  padding: 25px 10px 0 20px;
+`;
+
+const ListItemContainer = styled.View<IsFirst>`
+  width: ${wp('100%') - 40}px;
+  background-color: white;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 40px;
+  padding-top: ${(props) => (props.isFirst ? 20 : 0)}px;
+  height: ${(props) => (props.isFirst ? 60 : 40)}px;
+`;
+
+const ListTouchable = styled.TouchableWithoutFeedback``;
+
+const BorderFooter = styled.View`
+  width: ${wp('100%') - 40}px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: white;
+  height: 25px;
+  margin-bottom: 20px;
+  overflow: hidden;
+`;
+
+const CardContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: ${wp('100%') - 40}px;
 `;
 
 export default ({
@@ -257,7 +305,21 @@ export default ({
   START,
   END,
   gotoSetInfo,
+  visible,
+  loading,
 }) => {
+  const boxButtonTransition = useTransition(boxButton);
+  const cardShowedTransition = useTransition(isCardShowed);
+
+  const Item = ({isFirst = false, text, value}) => {
+    return (
+      <ListItemContainer isFirst={isFirst}>
+        <DetailRowText>{text}</DetailRowText>
+        <DetailRowText>{value}&nbsp;원</DetailRowText>
+      </ListItemContainer>
+    );
+  };
+
   const MainBoxContainer = ({text, onPress, boxButton}) => (
     <Box>
       <BoxTitle>
@@ -276,7 +338,7 @@ export default ({
   const DetailListRow = ({text, value}) => (
     <DetailRowContainer>
       <DetailRowText>{text}</DetailRowText>
-      <DetailRowText>{value} 원</DetailRowText>
+      <DetailRowText>{visible ? 0 : value} 원</DetailRowText>
     </DetailRowContainer>
   );
 
@@ -286,7 +348,7 @@ export default ({
         {click ? <UpIcon color="#BCC5D3" /> : <DownIcon color="#777" />}
         <DetailRowText>{text}</DetailRowText>
       </ToggleIcon>
-      <DetailRowText>{value} 원</DetailRowText>
+      <DetailRowText>{visible ? 0 : value} 원</DetailRowText>
     </DetailRowContainer>
   );
 
@@ -320,7 +382,7 @@ export default ({
     <>
       <MainInfoOfPay
         text={'4대보험 근로자d부담금'}
-        value={`(-)${numberComma(maindata.fourtotal ?? 0)}`}
+        value={`(-)${numberComma(maindata.fourtotal)}`}
         click={click2}
         onPress={() => setClick2(!click2)}
       />
@@ -328,25 +390,25 @@ export default ({
         <DetailBox>
           <DetailListRow
             text={'국민연금'}
-            value={`(-)${numberComma(maindata.pension_pay ?? 0)}`}
+            value={`(-)${numberComma(maindata.pension_pay)}`}
           />
           <DetailListRow
             text={'건강보험'}
-            value={`(-)${numberComma(maindata.health_pay ?? 0)}`}
+            value={`(-)${numberComma(maindata.health_pay)}`}
           />
           <DetailListRow
             text={'장기요양'}
-            value={`(-)${numberComma(maindata.health2_pay ?? 0)}`}
+            value={`(-)${numberComma(maindata.health2_pay)}`}
           />
           <DetailListRow
             text={'고용보험'}
-            value={`(-)${numberComma(maindata.employment_pay ?? 0)}`}
+            value={`(-)${numberComma(maindata.employment_pay)}`}
           />
         </DetailBox>
       )}
       <MainInfoOfPay
         text={'원천세'}
-        value={`(-)${numberComma(totalearned ?? 0)}`}
+        value={`(-)${numberComma(totalearned)}`}
         click={click3}
         onPress={() => setClick3(!click3)}
       />
@@ -354,11 +416,11 @@ export default ({
         <DetailBox>
           <DetailListRow
             text={'소득세'}
-            value={`(-)${numberComma(maindata.earned ?? 0)}`}
+            value={`(-)${numberComma(maindata.earned)}`}
           />
           <DetailListRow
             text={'지방소득세'}
-            value={`(-)${numberComma(maindata.earned2 ?? 0)}`}
+            value={`(-)${numberComma(maindata.earned2)}`}
           />
         </DetailBox>
       )}
@@ -407,7 +469,9 @@ export default ({
     );
   };
 
-  if (PAY_TYPE == '2') {
+  if (loading) {
+    return null;
+  } else if (PAY_TYPE == '2') {
     const totalearned = maindata.earned + maindata.earned2;
     const emptotal = maindata.realtotal - maindata.fourtotal - totalearned;
     const ownertotal =
@@ -422,45 +486,39 @@ export default ({
             <EmployeeCard />
             <TopAreaContainer />
             {(STORE == '1' || STOREPAY_SHOW == '1') && (
-              <Section>
-                <MainBoxContainer
-                  text={'고용주 지출액'}
-                  onPress={() => setBoxButton(!boxButton)}
-                  boxButton={boxButton}
-                />
-                <PayInfoBox>
-                  <MainPayBox>
+              <>
+                <ListTouchable onPress={() => setBoxButton(!boxButton)}>
+                  <ListContainer as={Animated.View}>
+                    <DateBoxText>고용주 지출액</DateBoxText>
                     <MainPayBoxText>
-                      {ownertotal
-                        ? `${numberComma(ownertotal ?? 0)} 원`
-                        : '0 원'}
+                      {ownertotal ? `${numberComma(ownertotal)} 원` : '0 원'}
                     </MainPayBoxText>
-                  </MainPayBox>
-                  {boxButton && (
-                    <DetailBox>
-                      <Line />
-                      <DetailListRow
-                        text={'급여지급액'}
-                        value={numberComma(emptotal ?? 0)}
-                      />
-                      <DetailListRow
-                        text={'4대보험 고용주부담금'}
-                        value={`(+) ${numberComma(
-                          maindata.ownerfourtotal ?? 0,
-                        )}`}
-                      />
-                      <DetailListRow
-                        text={'4대보험 근로자부담금'}
-                        value={`(+) ${numberComma(maindata.fourtotal ?? 0)}`}
-                      />
-                      <DetailListRow
-                        text={'원천세'}
-                        value={`(+) ${numberComma(totalearned ?? 0)}`}
-                      />
-                    </DetailBox>
-                  )}
-                </PayInfoBox>
-              </Section>
+                    <Chevron {...{transition: boxButtonTransition}} />
+                  </ListContainer>
+                </ListTouchable>
+                <HiddenItems
+                  as={Animated.View}
+                  style={{height: mix(boxButtonTransition, 0, 40 * 4 + 10)}}>
+                  <Item
+                    isFirst={true}
+                    text={'급여지급액'}
+                    value={numberComma(emptotal)}
+                  />
+                  <Item
+                    text={'4대보험 고용주부담금'}
+                    value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
+                  />
+                  <Item
+                    text={'4대보험 근로자부담금'}
+                    value={`(+) ${numberComma(maindata.fourtotal)}`}
+                  />
+                  <Item
+                    text={'원천세'}
+                    value={`(+) ${numberComma(totalearned)}`}
+                  />
+                </HiddenItems>
+                <BorderFooter />
+              </>
             )}
 
             <Section>
@@ -480,7 +538,7 @@ export default ({
               <PayInfoBox>
                 <MainPayBox>
                   <MainPayBoxText>
-                    {emptotal ? `${numberComma(emptotal ?? 0)} 원` : '0 원'}
+                    {emptotal ? `${numberComma(emptotal)} 원` : '0 원'}
                   </MainPayBoxText>
                 </MainPayBox>
                 {boxButton2 && (
@@ -488,7 +546,7 @@ export default ({
                     <Line />
                     <MainInfoOfPay
                       text={'공제전 금액'}
-                      value={numberComma(maindata.realtotal ?? 0)}
+                      value={numberComma(maindata.realtotal)}
                       click={click1}
                       onPress={() => setClick1(!click1)}
                     />
@@ -496,23 +554,23 @@ export default ({
                       <DetailBox>
                         <DetailListRow
                           text={'기본급'}
-                          value={numberComma(maindata.PAY ?? 0)}
+                          value={numberComma(maindata.PAY)}
                         />
                         <DetailListRow
                           text={'식대'}
-                          value={numberComma(maindata.MEALS ?? 0)}
+                          value={numberComma(maindata.MEALS)}
                         />
                         <DetailListRow
                           text={'자가운전'}
-                          value={numberComma(maindata.SELF_DRIVING ?? 0)}
+                          value={numberComma(maindata.SELF_DRIVING)}
                         />
                         <DetailListRow
                           text={'상여'}
-                          value={numberComma(maindata.BONUS ?? 0)}
+                          value={numberComma(maindata.BONUS)}
                         />
                         <DetailListRow
                           text={'성과급'}
-                          value={numberComma(maindata.INCENTIVE ?? 0)}
+                          value={numberComma(maindata.INCENTIVE)}
                         />
                       </DetailBox>
                     )}
@@ -554,45 +612,41 @@ export default ({
             <TopAreaContainer />
 
             {(STORE == '1' || STOREPAY_SHOW == '1') && (
-              <Section>
-                <MainBoxContainer
-                  text={'고용주 지출액'}
-                  onPress={() => setBoxButton(!boxButton)}
-                  boxButton={boxButton}
-                />
-                <PayInfoBox>
-                  <MainPayBox>
+              <>
+                <ListTouchable onPress={() => setBoxButton(!boxButton)}>
+                  <ListContainer as={Animated.View}>
+                    <DateBoxText>고용주 지출액</DateBoxText>
                     <MainPayBoxText>
-                      {ownertotal
-                        ? `${numberComma(ownertotal ?? 0)} 원`
-                        : '0 원'}
+                      {ownertotal ? `${numberComma(ownertotal)} 원` : '0 원'}
                     </MainPayBoxText>
-                  </MainPayBox>
-                  {boxButton && (
-                    <DetailBox>
-                      <Line />
-                      <DetailListRow
-                        text={'급여지급액'}
-                        value={numberComma(realemptotal ?? 0)}
-                      />
-                      <DetailListRow
-                        text={'4대보험 고용주부담금'}
-                        value={`(+) ${numberComma(
-                          maindata.ownerfourtotal ?? 0,
-                        )}`}
-                      />
-                      <DetailListRow
-                        text={'4대보험 근로자부담금'}
-                        value={`(+) ${numberComma(maindata.fourtotal ?? 0)}`}
-                      />
-                      <DetailListRow
-                        text={'원천세'}
-                        value={`(+) ${numberComma(totalearned ?? 0)}`}
-                      />
-                    </DetailBox>
-                  )}
-                </PayInfoBox>
-              </Section>
+                    <Chevron {...{transition: boxButtonTransition}} />
+                  </ListContainer>
+                </ListTouchable>
+                <HiddenItems
+                  as={Animated.View}
+                  style={{
+                    height: mix(boxButtonTransition, 0, 40 * 4 + 10 + 20),
+                  }}>
+                  <Item
+                    isFirst={true}
+                    text={'급여지급액'}
+                    value={numberComma(realemptotal)}
+                  />
+                  <Item
+                    text={'4대보험 고용주부담금'}
+                    value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
+                  />
+                  <Item
+                    text={'4대보험 근로자부담금'}
+                    value={`(+) ${numberComma(maindata.fourtotal)}`}
+                  />
+                  <Item
+                    text={'원천세'}
+                    value={`(+) ${numberComma(totalearned)}`}
+                  />
+                </HiddenItems>
+                <BorderFooter />
+              </>
             )}
             <Section>
               {STORE == '1' || STOREPAY_SHOW == '1' ? (
@@ -611,9 +665,7 @@ export default ({
               <PayInfoBox>
                 <MainPayBox>
                   <MainPayBoxText>
-                    {realemptotal
-                      ? `${numberComma(realemptotal ?? 0)} 원`
-                      : '0 원'}
+                    {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
                   </MainPayBoxText>
                 </MainPayBox>
                 {boxButton2 && (
@@ -621,7 +673,7 @@ export default ({
                     <Line />
                     <MainInfoOfPay
                       text={'공제전 금액'}
-                      value={numberComma(emptotal ?? 0)}
+                      value={numberComma(emptotal)}
                       click={click1}
                       onPress={() => setClick1(!click1)}
                     />
@@ -629,29 +681,23 @@ export default ({
                       <DetailBox>
                         <DetailListRow
                           text={'기본급'}
-                          value={numberComma(maindata.realtotal ?? 0)}
+                          value={numberComma(maindata.realtotal)}
                         />
                         <DetailListRow
                           text={'주휴수당'}
-                          value={`(+)${numberComma(
-                            maindata.weekpaytotal ?? 0,
-                          )}`}
+                          value={`(+)${numberComma(maindata.weekpaytotal)}`}
                         />
                         <DetailListRow
                           text={'야간/초과/휴일 수당'}
-                          value={`(+)${numberComma(maindata.addtotal ?? 0)}`}
+                          value={`(+)${numberComma(maindata.addtotal)}`}
                         />
                         <DetailListRow
                           text={'지각/조퇴 차감'}
-                          value={`(-)${numberComma(
-                            maindata.minertotalpay ?? 0,
-                          )}`}
+                          value={`(-)${numberComma(maindata.minertotalpay)}`}
                         />
                         <DetailListRow
                           text={'결근/휴무 차감'}
-                          value={`(-)${numberComma(
-                            maindata.noworktotalpay ?? 0,
-                          )}`}
+                          value={`(-)${numberComma(maindata.noworktotalpay)}`}
                         />
                       </DetailBox>
                     )}
@@ -660,18 +706,23 @@ export default ({
                 )}
               </PayInfoBox>
             </Section>
-
-            <Footer>
-              <FooterBtn onPress={() => onPressFooter('click4')}>
-                <DateText>일별 급여현황</DateText>
-                {isCardShowed ? (
-                  <UpIcon color="#BCC5D3" />
-                ) : (
-                  <DownIcon color="#777" />
-                )}
-              </FooterBtn>
-              {isCardShowed && (
-                <CardBox>
+            <>
+              <ListTouchable onPress={() => onPressFooter('click4')}>
+                <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
+                  <DateBoxText>일별 급여현황</DateBoxText>
+                  <Chevron {...{transition: cardShowedTransition}} />
+                </ListContainer>
+              </ListTouchable>
+              <HiddenItems
+                as={Animated.View}
+                style={{
+                  height: mix(
+                    cardShowedTransition,
+                    0,
+                    320 * maindata.CARDLIST.length,
+                  ),
+                }}>
+                <CardContainer>
                   {maindata.CARDLIST.map((data) => {
                     return (
                       <EmpPayInfoCard1
@@ -687,9 +738,10 @@ export default ({
                       />
                     );
                   })}
-                </CardBox>
-              )}
-            </Footer>
+                </CardContainer>
+              </HiddenItems>
+              <BorderFooter />
+            </>
           </Container>
         </ScrollView>
       </BackGround>
@@ -709,46 +761,43 @@ export default ({
             <EmployeeCard />
             <TopAreaContainer />
             {(STORE == '1' || STOREPAY_SHOW == '1') && (
-              <Section>
-                <MainBoxContainer
-                  text={'고용주 지출액'}
-                  onPress={() => setBoxButton(!boxButton)}
-                  boxButton={boxButton}
-                />
-                <PayInfoBox>
-                  <MainPayBox>
+              <>
+                <ListTouchable onPress={() => setBoxButton(!boxButton)}>
+                  <ListContainer as={Animated.View}>
+                    <DateBoxText>고용주 지출액</DateBoxText>
                     <MainPayBoxText>
-                      {ownertotal
-                        ? `${numberComma(ownertotal ?? 0)} 원`
-                        : '0 원'}
+                      {ownertotal ? `${numberComma(ownertotal)} 원` : '0 원'}
                     </MainPayBoxText>
-                  </MainPayBox>
-                  {boxButton && (
-                    <DetailBox>
-                      <Line />
-                      <DetailListRow
-                        text={'급여지급액'}
-                        value={numberComma(realemptotal ?? 0)}
-                      />
-                      <DetailListRow
-                        text={'4대보험 고용주부담금'}
-                        value={`(+) ${numberComma(
-                          maindata.ownerfourtotal ?? 0,
-                        )}`}
-                      />
-                      <DetailListRow
-                        text={'4대보험 근로자부담금'}
-                        value={`(+) ${numberComma(maindata.fourtotal ?? 0)}`}
-                      />
-                      <DetailListRow
-                        text={'원천세'}
-                        value={`(+) ${numberComma(totalearned ?? 0)}`}
-                      />
-                    </DetailBox>
-                  )}
-                </PayInfoBox>
-              </Section>
+                    <Chevron {...{transition: boxButtonTransition}} />
+                  </ListContainer>
+                </ListTouchable>
+                <HiddenItems
+                  as={Animated.View}
+                  style={{
+                    height: mix(boxButtonTransition, 0, 40 * 4 + 10 + 20),
+                  }}>
+                  <Item
+                    isFirst={true}
+                    text={'급여지급액'}
+                    value={numberComma(realemptotal)}
+                  />
+                  <Item
+                    text={'4대보험 고용주부담금'}
+                    value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
+                  />
+                  <Item
+                    text={'4대보험 근로자부담금'}
+                    value={`(+) ${numberComma(maindata.fourtotal)}`}
+                  />
+                  <Item
+                    text={'원천세'}
+                    value={`(+) ${numberComma(totalearned)}`}
+                  />
+                </HiddenItems>
+                <BorderFooter />
+              </>
             )}
+
             <Section>
               {STORE == '1' || STOREPAY_SHOW == '1' ? (
                 <MainBoxContainer
@@ -766,9 +815,7 @@ export default ({
               <PayInfoBox>
                 <MainPayBox>
                   <MainPayBoxText>
-                    {realemptotal
-                      ? `${numberComma(realemptotal ?? 0)} 원`
-                      : '0 원'}
+                    {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
                   </MainPayBoxText>
                 </MainPayBox>
                 {boxButton2 && (
@@ -776,7 +823,7 @@ export default ({
                     <Line />
                     <MainInfoOfPay
                       text={'공제전 금액'}
-                      value={numberComma(maindata.realtotal ?? 0)}
+                      value={numberComma(maindata.realtotal)}
                       click={click1}
                       onPress={() => setClick1(!click1)}
                     />
@@ -784,7 +831,7 @@ export default ({
                       <DetailBox>
                         <DetailListRow
                           text={'기본급'}
-                          value={numberComma(maindata.realtotal ?? 0)}
+                          value={numberComma(maindata.realtotal)}
                         />
                       </DetailBox>
                     )}
@@ -793,6 +840,43 @@ export default ({
                 )}
               </PayInfoBox>
             </Section>
+            <>
+              <ListTouchable onPress={() => onPressFooter('click5')}>
+                <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
+                  <DateBoxText>일별 급여현황</DateBoxText>
+                  <Chevron {...{transition: cardShowedTransition}} />
+                </ListContainer>
+              </ListTouchable>
+              <HiddenItems
+                as={Animated.View}
+                style={{
+                  height: mix(
+                    cardShowedTransition,
+                    0,
+                    170 * maindata.CARDLIST1.length,
+                  ),
+                }}>
+                <CardContainer>
+                  {maindata.CARDLIST1.map((data) => {
+                    return (
+                      <EmpPayInfoCard1
+                        key={data.key}
+                        day={data.START}
+                        yoil={data.DAY}
+                        base={data.basic_payment}
+                        night={data.night_payment}
+                        over={data.day_payment}
+                        holi={0}
+                        late={data.miner_payment}
+                        total={data.payment}
+                      />
+                    );
+                  })}
+                </CardContainer>
+              </HiddenItems>
+              <BorderFooter />
+            </>
+
             <Footer>
               <FooterBtn
                 onPress={() => {

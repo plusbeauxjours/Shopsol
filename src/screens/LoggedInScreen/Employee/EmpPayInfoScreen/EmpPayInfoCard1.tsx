@@ -1,31 +1,29 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import moment from 'moment';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 interface IsRight {
-  isRight: boolean;
+  isRight?: boolean;
 }
 const Container = styled.View`
-  height: ${hp('40%')}px;
-  width: ${wp('80%')}px;
+  height: 300px;
+  width: 300px;
   background-color: white;
   border-radius: 20px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-`;
-
-const DayText = styled.Text`
-  color: #707070;
-  font-size: 15px;
+  border-width: 0.5px;
+  border-color: #7f7f7f;
+  margin-top: 20px;
 `;
 
 const Box = styled.View`
   margin-top: 10px;
-  width: ${wp('60%')}px;
+  width: 260px;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
@@ -33,19 +31,32 @@ const Box = styled.View`
 
 const Line = styled(Box)`
   margin-top: 10px;
-  border-width: 1px;
-  border-color: #707070;
+  border-width: 0.5px;
+  border-color: #7f7f7f;
 `;
 
 const Text = styled.Text<IsRight>`
-  color: #707070;
-  font-size: 14px;
+  color: #7f7f7f;
+  font-size: 10px;
   width: ${(props) => (props.isRight ? wp('25%') : wp('35%'))};
   text-align: ${(props) => (props.isRight ? 'right' : 'left')};
 `;
 
 const Title = styled(Text)<IsRight>`
-  font-size: 17px;
+  font-size: 16px;
+`;
+
+const DateTextArea = styled.View`
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+const DateText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 export default ({key, day, yoil, base, night, over, holi, late, total}) => {
@@ -61,9 +72,12 @@ export default ({key, day, yoil, base, night, over, holi, late, total}) => {
 
   return (
     <Container>
-      <DayText>
-        {day.split('-').join('.')} {yoil}요일
-      </DayText>
+      <DateTextArea>
+        <DateText>{moment(day).format('YYYY년 M월 D일')}</DateText>
+        <DateText style={{fontSize: 12, fontWeight: '300'}}>
+          {yoil}요일
+        </DateText>
+      </DateTextArea>
       <Box>
         <Title isRight={false}>기본급여</Title>
         <Title isRight={true}>{numberComma(base)} 원</Title>
@@ -86,8 +100,8 @@ export default ({key, day, yoil, base, night, over, holi, late, total}) => {
       </Box>
       <Line />
       <Box>
-        <Text isRight={false}>합계</Text>
-        <Text isRight={true}>{numberComma(total)} 원</Text>
+        <Title isRight={false}>합계</Title>
+        <Title isRight={true}>{numberComma(total)} 원</Title>
       </Box>
     </Container>
   );

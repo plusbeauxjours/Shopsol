@@ -35,10 +35,12 @@ export default ({route: {params}}) => {
     (state: any) => state.userReducer,
   );
   const {STORE} = useSelector((state: any) => state.userReducer);
+  const {visible} = useSelector((state: any) => state.splashReducer);
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [date, setDate] = useState<any>(moment());
-  const [boxButton, setBoxButton] = useState<boolean>(true);
-  const [boxButton2, setBoxButton2] = useState<boolean>(true);
+  const [boxButton, setBoxButton] = useState<boolean>(false);
+  const [boxButton2, setBoxButton2] = useState<boolean>(false);
   const [isCardShowed, setIsCardShowed] = useState<boolean>(false);
   const [click1, setClick1] = useState<boolean>(false);
   const [click2, setClick2] = useState<boolean>(false);
@@ -147,6 +149,7 @@ export default ({route: {params}}) => {
       navigation.goBack();
     } finally {
       dispatch(setSplashVisible(false));
+      setLoading(false);
     }
   };
 
@@ -197,6 +200,8 @@ export default ({route: {params}}) => {
       START={START}
       END={END}
       gotoSetInfo={gotoSetInfo}
+      visible={visible}
+      loading={loading}
     />
   );
 };

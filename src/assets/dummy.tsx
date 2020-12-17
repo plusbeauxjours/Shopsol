@@ -894,3 +894,19 @@ export const resultdata = {
   '2020-12-30': [],
   '2020-12-31': [],
 };
+[
+  {
+    OPAY: 0,
+    PAY: 1000000,
+    earned: 0,
+    earned2: 0,
+    employment_pay: 8000,
+    fourtotal: 89768,
+    health2_pay: 3418,
+    health_pay: 33350,
+    ownerfourtotal: 100268,
+    payment: 1000000,
+    pension_pay: 45000,
+    realtotal: 1000000,
+  },
+];
