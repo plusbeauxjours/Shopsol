@@ -28,8 +28,8 @@ const EmployeeBox = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 15px;
-  font-weight: bold;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const PhoneText = styled.Text`

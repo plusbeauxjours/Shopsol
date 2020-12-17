@@ -60,7 +60,7 @@ const TimePickBox = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
   color: #333;
   margin-bottom: 5px;
   margin-left: 5px;

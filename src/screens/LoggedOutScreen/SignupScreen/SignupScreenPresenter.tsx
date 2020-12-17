@@ -42,8 +42,8 @@ const Container = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const Row = styled.View`

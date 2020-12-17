@@ -622,6 +622,7 @@ export default () => {
       toDay={toDay}
       prevMonth={prevMonth}
       nextMonth={nextMonth}
+      setSearch={setSearch}
     />
   );
 };

@@ -8,7 +8,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import DonutCard from '~/components/DonutCard';
 import ShelfLifeCheckScreenCard from './ShelfLifeCheckScreenCard';
 import ShelfLifeCheckScreenHeader from './ShelfLifeCheckScreenHeader';
-import {AddIcon} from '../../../../constants/Icons';
+import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 
 interface IColor {
   color: string;
@@ -156,6 +156,19 @@ const SearchInput = styled.TextInput`
   justify-content: center;
 `;
 
+const SearchInputContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const CloseIconContainer = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+  height: 40px;
+  justify-content: center;
+`;
+
 export default ({
   onRefresh,
   confirmModal,
@@ -251,12 +264,17 @@ export default ({
             )}
           />
           <Container>
-            <SearchInput
-              placeholder="물품 검색"
-              placeholderTextColor={'#999'}
-              onChangeText={(text) => searchData(text)}
-              value={search}
-            />
+            <SearchInputContainer>
+              <SearchInput
+                placeholder="물품 검색"
+                placeholderTextColor={'#999'}
+                onChangeText={(text) => searchData(text)}
+                value={search}
+              />
+              <CloseIconContainer onPress={() => setSearch('')}>
+                <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
+              </CloseIconContainer>
+            </SearchInputContainer>
             {SHELFLIFE_DATA?.map(({name, color, items}, index) => (
               <View
                 key={index}

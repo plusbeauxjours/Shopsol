@@ -43,8 +43,8 @@ const Name = styled.View`
 
 const NameText = styled.Text<IsChecked>`
   color: ${(props) => (props.isChecked ? '#ccc' : '#333')};
+  color: #7f7f7f;
   font-size: 16px;
-  font-weight: bold;
 `;
 
 const Line = styled.View`

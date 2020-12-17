@@ -100,6 +100,7 @@ export default ({
       END_TIME={data.END_TIME}
       REST_TIME={data.REST_TIME}
       AUTOWORKOFF={data.AUTOWORKOFF}
+      IS_MANAGER={data.IS_MANAGER}
     />
   );
 
@@ -179,7 +180,11 @@ export default ({
                   weekend={day.toString()}
                   style={{
                     color:
-                      DAY == '토' ? 'skyblue' : DAY == '일' ? 'red' : 'black',
+                      DAY == '토'
+                        ? '#87ceeb'
+                        : DAY == '일'
+                        ? '#e85356'
+                        : 'black',
                   }}>
                   {day.month}월 {day.day}일 {DAY}요일
                 </Bold>
@@ -193,7 +198,11 @@ export default ({
                     weekend={day.toString()}
                     style={{
                       color:
-                        DAY == '토' ? 'skyblue' : DAY == '일' ? 'red' : 'black',
+                        DAY == '토'
+                          ? '#87ceeb'
+                          : DAY == '일'
+                          ? '#e85356'
+                          : 'black',
                     }}>
                     {day.month}월 {day.day}일 {DAY}요일
                   </Bold>

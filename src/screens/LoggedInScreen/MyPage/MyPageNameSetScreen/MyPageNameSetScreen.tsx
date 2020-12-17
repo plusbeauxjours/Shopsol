@@ -22,9 +22,9 @@ const Container = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 15px;
   margin-bottom: 20px;
-  font-weight: bold;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const TextInput = styled.TextInput`

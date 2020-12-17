@@ -29,7 +29,8 @@ const Section = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 18px;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 const GreySmallText = styled.Text`
   color: #aaa;

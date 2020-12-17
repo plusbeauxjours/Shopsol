@@ -43,8 +43,8 @@ const Touchable = styled(Ripple)<IIsStore>`
 `;
 
 const NameText = styled.Text`
-  font-size: 17px;
-  font-weight: bold;
+  color: #7f7f7f;
+  font-size: 16px;
   margin-bottom: 15px;
 `;
 

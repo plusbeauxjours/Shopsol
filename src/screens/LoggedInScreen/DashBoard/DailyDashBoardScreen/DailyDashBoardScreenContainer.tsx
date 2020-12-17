@@ -402,6 +402,7 @@ export default () => {
       searchName={searchName}
       prevDay={prevDay}
       nextDay={nextDay}
+      setSearch={setSearch}
     />
   );
 };

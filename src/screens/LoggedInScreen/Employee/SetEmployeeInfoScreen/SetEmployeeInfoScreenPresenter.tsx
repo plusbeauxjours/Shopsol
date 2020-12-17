@@ -186,7 +186,8 @@ const ModalContainerRow = styled(Row)`
   justify-content: center;
 `;
 const NameText = styled.Text`
-  font-size: 18px;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 const Bold = styled(NameText)`
   font-weight: bold;

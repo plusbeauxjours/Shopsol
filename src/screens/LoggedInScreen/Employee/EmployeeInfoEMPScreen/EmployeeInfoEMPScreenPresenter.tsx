@@ -53,13 +53,13 @@ const EmployeeBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #707070;
-  font-size: 17px;
+  color: #7c7c7c;
+  font-size: 16px;
   margin-bottom: 5px;
 `;
 
 const DateText = styled.Text`
-  color: #707070;
+  color: #7c7c7c;
   font-size: 12px;
 `;
 

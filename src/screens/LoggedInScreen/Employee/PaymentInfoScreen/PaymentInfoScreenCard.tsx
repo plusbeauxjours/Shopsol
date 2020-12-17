@@ -25,8 +25,8 @@ const NameBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #707070;
-  font-size: 15px;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const DateText = styled.Text`

@@ -36,18 +36,11 @@ const TopArea = styled.View`
   background-color: white;
   margin-bottom: 20px;
 `;
-const Profile = styled.View`
-  flex: 1;
-  padding: 20px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #707070;
-  font-size: 15px;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const NameBox = styled.View`
@@ -56,18 +49,13 @@ const NameBox = styled.View`
   align-items: flex-start;
 `;
 
-const GreyText = styled.Text`
-  margin-right: 5px;
-  color: #999;
-`;
-
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
 `;
 
 const EmployeeText = styled.Text`
-  color: #707070;
+  color: #7f7f7f;
   height: 15px;
   font-size: 10px;
 `;
@@ -97,7 +85,7 @@ const DateBoxText = styled.Text`
 `;
 
 const DateText = styled.Text`
-  color: #707070;
+  color: #7f7f7f;
   font-size: 12px;
 `;
 
@@ -132,9 +120,10 @@ const BoxTitle = styled.View`
 
 const BoxTitleText = styled.Text`
   font-weight: bold;
-  font-size: 20px;
+  font-size: 12px;
   color: #e85356;
 `;
+
 const DetailRowContainer = styled.View`
   flex: 1;
   flex-direction: row;
@@ -142,6 +131,7 @@ const DetailRowContainer = styled.View`
   align-items: center;
   justify-content: space-between;
 `;
+
 const DetailRowText = styled.Text`
   font-size: 15px;
   color: #999;
@@ -166,6 +156,7 @@ const PayInfoBox = styled.View`
   border-color: #bbb;
   border-width: 1px;
 `;
+
 const MainPayBox = styled.View`
   padding: 20px;
   width: 100%;
@@ -173,6 +164,7 @@ const MainPayBox = styled.View`
   justify-content: flex-end;
   align-items: center;
 `;
+
 const MainPayBoxText = styled.Text`
   font-size: 23px;
 `;
@@ -180,10 +172,12 @@ const MainPayBoxText = styled.Text`
 const DetailBox = styled.View`
   width: 100%;
 `;
+
 const Line = styled.View`
   height: 1px;
   background-color: #bbb;
 `;
+
 const ToggleIcon = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
@@ -247,7 +241,7 @@ export default ({
   setBoxButton,
   boxButton2,
   setBoxButton2,
-  onRefresh,
+  fetchData,
   numberComma,
   click1,
   click2,
@@ -312,7 +306,7 @@ export default ({
             {moment(maindata.END_DAY).format('M월 D일')})
           </DateBoxText>
         </DateTextArea>
-        <DateArrow style={{marginRight: 5}} onPress={() => onRefresh()}>
+        <DateArrow style={{marginRight: 5}} onPress={() => fetchData()}>
           <ReloadCircleIcon size={18} color={'#f4aaab'} />
         </DateArrow>
         <DateArrow onPress={() => nextpay()}>
@@ -325,8 +319,8 @@ export default ({
   const DetailAreaContainer = ({totalearned}) => (
     <>
       <MainInfoOfPay
-        text={'4대보험 근로자부담금'}
-        value={`(-)${numberComma(maindata.fourtotal)}`}
+        text={'4대보험 근로자d부담금'}
+        value={`(-)${numberComma(maindata.fourtotal ?? 0)}`}
         click={click2}
         onPress={() => setClick2(!click2)}
       />
@@ -334,25 +328,25 @@ export default ({
         <DetailBox>
           <DetailListRow
             text={'국민연금'}
-            value={`(-)${numberComma(maindata.pension_pay)}`}
+            value={`(-)${numberComma(maindata.pension_pay ?? 0)}`}
           />
           <DetailListRow
             text={'건강보험'}
-            value={`(-)${numberComma(maindata.health_pay)}`}
+            value={`(-)${numberComma(maindata.health_pay ?? 0)}`}
           />
           <DetailListRow
             text={'장기요양'}
-            value={`(-)${numberComma(maindata.health2_pay)}`}
+            value={`(-)${numberComma(maindata.health2_pay ?? 0)}`}
           />
           <DetailListRow
             text={'고용보험'}
-            value={`(-)${numberComma(maindata.employment_pay)}`}
+            value={`(-)${numberComma(maindata.employment_pay ?? 0)}`}
           />
         </DetailBox>
       )}
       <MainInfoOfPay
         text={'원천세'}
-        value={`(-)${numberComma(totalearned)}`}
+        value={`(-)${numberComma(totalearned ?? 0)}`}
         click={click3}
         onPress={() => setClick3(!click3)}
       />
@@ -360,11 +354,11 @@ export default ({
         <DetailBox>
           <DetailListRow
             text={'소득세'}
-            value={`(-)${numberComma(maindata.earned)}`}
+            value={`(-)${numberComma(maindata.earned ?? 0)}`}
           />
           <DetailListRow
             text={'지방소득세'}
-            value={`(-)${numberComma(maindata.earned2)}`}
+            value={`(-)${numberComma(maindata.earned2 ?? 0)}`}
           />
         </DetailBox>
       )}
@@ -406,7 +400,7 @@ export default ({
             </EmployeeText>
           </NameBox>
           <NavigationButton onPress={() => gotoSetInfo()}>
-            <Bold>정보수정</Bold>
+            <BoxTitleText>정보수정</BoxTitleText>
           </NavigationButton>
         </EmployeeCardContainer>
       </TopArea>
@@ -437,7 +431,9 @@ export default ({
                 <PayInfoBox>
                   <MainPayBox>
                     <MainPayBoxText>
-                      {ownertotal ? `${numberComma(ownertotal)} 원` : '0 원'}
+                      {ownertotal
+                        ? `${numberComma(ownertotal ?? 0)} 원`
+                        : '0 원'}
                     </MainPayBoxText>
                   </MainPayBox>
                   {boxButton && (
@@ -445,19 +441,21 @@ export default ({
                       <Line />
                       <DetailListRow
                         text={'급여지급액'}
-                        value={numberComma(emptotal)}
+                        value={numberComma(emptotal ?? 0)}
                       />
                       <DetailListRow
                         text={'4대보험 고용주부담금'}
-                        value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
+                        value={`(+) ${numberComma(
+                          maindata.ownerfourtotal ?? 0,
+                        )}`}
                       />
                       <DetailListRow
                         text={'4대보험 근로자부담금'}
-                        value={`(+) ${numberComma(maindata.fourtotal)}`}
+                        value={`(+) ${numberComma(maindata.fourtotal ?? 0)}`}
                       />
                       <DetailListRow
                         text={'원천세'}
-                        value={`(+) ${numberComma(totalearned)}`}
+                        value={`(+) ${numberComma(totalearned ?? 0)}`}
                       />
                     </DetailBox>
                   )}
@@ -482,7 +480,7 @@ export default ({
               <PayInfoBox>
                 <MainPayBox>
                   <MainPayBoxText>
-                    {emptotal ? `${numberComma(emptotal)} 원` : '0 원'}
+                    {emptotal ? `${numberComma(emptotal ?? 0)} 원` : '0 원'}
                   </MainPayBoxText>
                 </MainPayBox>
                 {boxButton2 && (
@@ -490,7 +488,7 @@ export default ({
                     <Line />
                     <MainInfoOfPay
                       text={'공제전 금액'}
-                      value={numberComma(maindata.realtotal)}
+                      value={numberComma(maindata.realtotal ?? 0)}
                       click={click1}
                       onPress={() => setClick1(!click1)}
                     />
@@ -498,23 +496,23 @@ export default ({
                       <DetailBox>
                         <DetailListRow
                           text={'기본급'}
-                          value={numberComma(maindata.PAY)}
+                          value={numberComma(maindata.PAY ?? 0)}
                         />
                         <DetailListRow
                           text={'식대'}
-                          value={numberComma(maindata.MEALS)}
+                          value={numberComma(maindata.MEALS ?? 0)}
                         />
                         <DetailListRow
                           text={'자가운전'}
-                          value={numberComma(maindata.SELF_DRIVING)}
+                          value={numberComma(maindata.SELF_DRIVING ?? 0)}
                         />
                         <DetailListRow
                           text={'상여'}
-                          value={numberComma(maindata.BONUS)}
+                          value={numberComma(maindata.BONUS ?? 0)}
                         />
                         <DetailListRow
                           text={'성과급'}
-                          value={numberComma(maindata.INCENTIVE)}
+                          value={numberComma(maindata.INCENTIVE ?? 0)}
                         />
                       </DetailBox>
                     )}
@@ -565,7 +563,9 @@ export default ({
                 <PayInfoBox>
                   <MainPayBox>
                     <MainPayBoxText>
-                      {ownertotal ? `${numberComma(ownertotal)} 원` : '0 원'}
+                      {ownertotal
+                        ? `${numberComma(ownertotal ?? 0)} 원`
+                        : '0 원'}
                     </MainPayBoxText>
                   </MainPayBox>
                   {boxButton && (
@@ -573,19 +573,21 @@ export default ({
                       <Line />
                       <DetailListRow
                         text={'급여지급액'}
-                        value={numberComma(realemptotal)}
+                        value={numberComma(realemptotal ?? 0)}
                       />
                       <DetailListRow
                         text={'4대보험 고용주부담금'}
-                        value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
+                        value={`(+) ${numberComma(
+                          maindata.ownerfourtotal ?? 0,
+                        )}`}
                       />
                       <DetailListRow
                         text={'4대보험 근로자부담금'}
-                        value={`(+) ${numberComma(maindata.fourtotal)}`}
+                        value={`(+) ${numberComma(maindata.fourtotal ?? 0)}`}
                       />
                       <DetailListRow
                         text={'원천세'}
-                        value={`(+) ${numberComma(totalearned)}`}
+                        value={`(+) ${numberComma(totalearned ?? 0)}`}
                       />
                     </DetailBox>
                   )}
@@ -609,7 +611,9 @@ export default ({
               <PayInfoBox>
                 <MainPayBox>
                   <MainPayBoxText>
-                    {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
+                    {realemptotal
+                      ? `${numberComma(realemptotal ?? 0)} 원`
+                      : '0 원'}
                   </MainPayBoxText>
                 </MainPayBox>
                 {boxButton2 && (
@@ -617,7 +621,7 @@ export default ({
                     <Line />
                     <MainInfoOfPay
                       text={'공제전 금액'}
-                      value={numberComma(emptotal)}
+                      value={numberComma(emptotal ?? 0)}
                       click={click1}
                       onPress={() => setClick1(!click1)}
                     />
@@ -625,23 +629,29 @@ export default ({
                       <DetailBox>
                         <DetailListRow
                           text={'기본급'}
-                          value={numberComma(maindata.realtotal)}
+                          value={numberComma(maindata.realtotal ?? 0)}
                         />
                         <DetailListRow
                           text={'주휴수당'}
-                          value={`(+)${numberComma(maindata.weekpaytotal)}`}
+                          value={`(+)${numberComma(
+                            maindata.weekpaytotal ?? 0,
+                          )}`}
                         />
                         <DetailListRow
                           text={'야간/초과/휴일 수당'}
-                          value={`(+)${numberComma(maindata.addtotal)}`}
+                          value={`(+)${numberComma(maindata.addtotal ?? 0)}`}
                         />
                         <DetailListRow
                           text={'지각/조퇴 차감'}
-                          value={`(-)${numberComma(maindata.minertotalpay)}`}
+                          value={`(-)${numberComma(
+                            maindata.minertotalpay ?? 0,
+                          )}`}
                         />
                         <DetailListRow
                           text={'결근/휴무 차감'}
-                          value={`(-)${numberComma(maindata.noworktotalpay)}`}
+                          value={`(-)${numberComma(
+                            maindata.noworktotalpay ?? 0,
+                          )}`}
                         />
                       </DetailBox>
                     )}
@@ -708,7 +718,9 @@ export default ({
                 <PayInfoBox>
                   <MainPayBox>
                     <MainPayBoxText>
-                      {ownertotal ? `${numberComma(ownertotal)} 원` : '0 원'}
+                      {ownertotal
+                        ? `${numberComma(ownertotal ?? 0)} 원`
+                        : '0 원'}
                     </MainPayBoxText>
                   </MainPayBox>
                   {boxButton && (
@@ -716,19 +728,21 @@ export default ({
                       <Line />
                       <DetailListRow
                         text={'급여지급액'}
-                        value={numberComma(realemptotal)}
+                        value={numberComma(realemptotal ?? 0)}
                       />
                       <DetailListRow
                         text={'4대보험 고용주부담금'}
-                        value={`(+) ${numberComma(maindata.ownerfourtotal)}`}
+                        value={`(+) ${numberComma(
+                          maindata.ownerfourtotal ?? 0,
+                        )}`}
                       />
                       <DetailListRow
                         text={'4대보험 근로자부담금'}
-                        value={`(+) ${numberComma(maindata.fourtotal)}`}
+                        value={`(+) ${numberComma(maindata.fourtotal ?? 0)}`}
                       />
                       <DetailListRow
                         text={'원천세'}
-                        value={`(+) ${numberComma(totalearned)}`}
+                        value={`(+) ${numberComma(totalearned ?? 0)}`}
                       />
                     </DetailBox>
                   )}
@@ -752,7 +766,9 @@ export default ({
               <PayInfoBox>
                 <MainPayBox>
                   <MainPayBoxText>
-                    {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
+                    {realemptotal
+                      ? `${numberComma(realemptotal ?? 0)} 원`
+                      : '0 원'}
                   </MainPayBoxText>
                 </MainPayBox>
                 {boxButton2 && (
@@ -760,7 +776,7 @@ export default ({
                     <Line />
                     <MainInfoOfPay
                       text={'공제전 금액'}
-                      value={numberComma(maindata.realtotal)}
+                      value={numberComma(maindata.realtotal ?? 0)}
                       click={click1}
                       onPress={() => setClick1(!click1)}
                     />
@@ -768,7 +784,7 @@ export default ({
                       <DetailBox>
                         <DetailListRow
                           text={'기본급'}
-                          value={numberComma(maindata.realtotal)}
+                          value={numberComma(maindata.realtotal ?? 0)}
                         />
                       </DetailBox>
                     )}

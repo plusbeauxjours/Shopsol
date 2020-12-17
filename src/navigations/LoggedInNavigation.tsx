@@ -85,7 +85,8 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SelectStoreScreen'}
+        // initialRouteName={'SelectStoreScreen'}
+        initialRouteName={'DashBoardScreen'}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#e85356',

@@ -51,8 +51,8 @@ const RequestButton = styled.TouchableOpacity`
 `;
 
 const NameText = styled.Text`
+  color: #7f7f7f;
   font-size: 16px;
-  font-weight: bold;
 `;
 
 const WhiteSpace = styled.View`

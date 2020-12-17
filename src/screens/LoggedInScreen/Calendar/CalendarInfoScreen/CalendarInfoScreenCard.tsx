@@ -25,10 +25,16 @@ const Text = styled.Text`
 `;
 
 const NameText = styled.Text`
-  font-size: 15px;
-  color: #707070;
+  font-size: 16px;
+  color: #7f7f7f;
+  margin-right: 10px;
   margin-bottom: 5px;
   margin-left: 5px;
+`;
+
+const DateText = styled.Text`
+  color: #7f7f7f;
+  font-size: 12px;
 `;
 
 const RowSpace = styled(Row)`
@@ -132,6 +138,7 @@ export default ({
   END_TIME,
   REST_TIME,
   AUTOWORKOFF,
+  IS_MANAGER,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -246,7 +253,12 @@ export default ({
           />
           <CntArea>
             <RowSpace>
-              <NameText>{NAME}</NameText>
+              <Row>
+                <NameText>{NAME}</NameText>
+                <DateText>
+                  {IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
+                </DateText>
+              </Row>
               <Row>
                 {VACATION == '1' && (
                   <Row style={{marginRight: 10}}>

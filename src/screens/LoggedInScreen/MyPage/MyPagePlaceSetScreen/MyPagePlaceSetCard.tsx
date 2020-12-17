@@ -23,8 +23,8 @@ const Container = styled.TouchableOpacity`
 `;
 
 const NameText = styled.Text`
-  font-size: 17px;
-  font-weight: bold;
+  color: #7f7f7f;
+  font-size: 16px;
   margin-bottom: ${hp('1.5%')}px;
 `;
 

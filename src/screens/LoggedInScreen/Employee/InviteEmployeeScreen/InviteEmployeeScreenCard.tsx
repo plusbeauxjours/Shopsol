@@ -15,7 +15,8 @@ const Name = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 14px;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const Phone = styled(Name)`

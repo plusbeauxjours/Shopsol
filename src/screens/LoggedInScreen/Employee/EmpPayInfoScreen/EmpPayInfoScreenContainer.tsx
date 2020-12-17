@@ -6,6 +6,7 @@ import {setSplashVisible} from '~/redux/splashSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import EmpPayInfoScreenPresenter from './EmpPayInfoScreenPresenter';
+import moment from 'moment';
 
 export default ({route: {params}}) => {
   const navigation = useNavigation();
@@ -35,8 +36,7 @@ export default ({route: {params}}) => {
   );
   const {STORE} = useSelector((state: any) => state.userReducer);
 
-  const [year, setYear] = useState<number>();
-  const [month, setMonth] = useState<number>();
+  const [date, setDate] = useState<any>(moment());
   const [boxButton, setBoxButton] = useState<boolean>(true);
   const [boxButton2, setBoxButton2] = useState<boolean>(true);
   const [isCardShowed, setIsCardShowed] = useState<boolean>(false);
@@ -46,17 +46,6 @@ export default ({route: {params}}) => {
   const [click4, setClick4] = useState<boolean>(false);
   const [click5, setClick5] = useState<boolean>(false);
   const [maindata, setMaindata] = useState<any>({});
-
-  const onRefresh = async () => {
-    try {
-      dispatch(setSplashVisible(true));
-      await fetchData(year, month);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      dispatch(setSplashVisible(false));
-    }
-  };
 
   const alertModal = (title, text) => {
     const params = {
@@ -96,58 +85,43 @@ export default ({route: {params}}) => {
   };
 
   const nextpay = async () => {
-    let YEAR = year;
-    let MONTH = month;
-    if (MONTH == 12) {
-      YEAR = YEAR + 1;
-      MONTH = 1;
+    if (
+      Number(moment(date).add(1, 'month').format('YYYYMM')) <=
+      Number(moment().format('YYYYMM'))
+    ) {
+      try {
+        dispatch(setSplashVisible(true));
+        setDate(moment(date).add(1, 'month'));
+        const {data} = await api.monthLists(
+          STORE_SEQ,
+          EMP_SEQ || EMP_SEQ_state,
+          moment(date).add(1, 'month').format('YYYY'),
+          moment(date).add(1, 'month').format('MM'),
+        );
+        setMaindata(data.message);
+      } catch (e) {
+        console.log(e);
+        alertModal('', '통신이 원활하지 않습니다.');
+        navigation.goBack();
+      } finally {
+        dispatch(setSplashVisible(false));
+      }
     } else {
-      MONTH = Number(MONTH) + 1;
-    }
-    if (MONTH < 10) {
-      MONTH = Number('0' + MONTH);
-    }
-    try {
-      dispatch(setSplashVisible(true));
-      const {data} = await api.monthLists(
-        STORE_SEQ,
-        EMP_SEQ || EMP_SEQ_state,
-        YEAR.toString(),
-        MONTH.toString(),
-      );
-      setMaindata(data.message);
-      setYear(YEAR);
-      setMonth(MONTH);
-    } catch (e) {
-      console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
-      navigation.goBack();
-    } finally {
-      dispatch(setSplashVisible(false));
+      alertModal('', '최신데이터 입니다.');
     }
   };
 
   const backpay = async () => {
-    let YEAR = year;
-    let MONTH = month - 1;
-    if (MONTH == 0) {
-      YEAR = YEAR - 1;
-      MONTH = 12;
-    }
-    if (MONTH < 10) {
-      MONTH = Number('0' + MONTH);
-    }
     try {
       dispatch(setSplashVisible(true));
+      setDate(moment(date).subtract(1, 'month'));
       const {data} = await api.monthLists(
         STORE_SEQ,
         EMP_SEQ || EMP_SEQ_state,
-        YEAR.toString(),
-        MONTH.toString(),
+        moment(date).subtract(1, 'month').format('YYYY'),
+        moment(date).subtract(1, 'month').format('MM'),
       );
       setMaindata(data.message);
-      setYear(YEAR);
-      setMonth(MONTH);
     } catch (e) {
       console.log(e);
       alertModal('', '통신이 원활하지 않습니다.');
@@ -157,18 +131,16 @@ export default ({route: {params}}) => {
     }
   };
 
-  const fetchData = async (year, month) => {
+  const fetchData = async () => {
     try {
       dispatch(setSplashVisible(true));
       const {data} = await api.monthLists(
         STORE_SEQ,
         EMP_SEQ || EMP_SEQ_state,
-        year,
-        month,
+        moment(date).format('YYYY'),
+        moment(date).format('MM'),
       );
       setMaindata(data.message);
-      setYear(year);
-      setMonth(month);
     } catch (e) {
       console.log(e);
       alertModal('', '통신이 원활하지 않습니다.');
@@ -191,13 +163,7 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
-    let DAY_FROM = new Date();
-    let YEAR = DAY_FROM.getFullYear();
-    let MONTH = DAY_FROM.getMonth() + 1;
-    if (MONTH < 10) {
-      MONTH = Number('0' + MONTH);
-    }
-    fetchData(YEAR, MONTH);
+    fetchData();
   }, []);
 
   return (
@@ -215,7 +181,7 @@ export default ({route: {params}}) => {
       setBoxButton={setBoxButton}
       boxButton2={boxButton2}
       setBoxButton2={setBoxButton2}
-      onRefresh={onRefresh}
+      fetchData={fetchData}
       numberComma={numberComma}
       click1={click1}
       click2={click2}

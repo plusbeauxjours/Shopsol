@@ -14,7 +14,12 @@ import {
 
 import DonutCard from '~/components/DonutCard';
 import Heatmap from '~/components/Heatmap';
-import {UpIcon, BackIcon, ForwardIcon} from '~/constants/Icons';
+import {
+  UpIcon,
+  BackIcon,
+  ForwardIcon,
+  CloseCircleOutlineIcon,
+} from '~/constants/Icons';
 
 interface IColor {
   color: string;
@@ -219,7 +224,6 @@ const SearchInput = styled.TextInput`
   padding-left: 20px;
   align-items: center;
   height: 40px;
-  margin-bottom: 20px;
   justify-content: center;
 `;
 
@@ -262,6 +266,19 @@ const DateText = styled.Text`
   font-size: 16px;
   font-weight: 600;
   color: #7f7f7f;
+`;
+
+const SearchInputContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const CloseIconContainer = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+  height: 40px;
+  justify-content: center;
 `;
 
 export default ({
@@ -308,6 +325,7 @@ export default ({
   toDay,
   prevMonth,
   nextMonth,
+  setSearch,
 }) => {
   const EmpCardComponent = ({i, index}) => (
     <SectionCard>
@@ -602,12 +620,17 @@ export default ({
                   absolute={false}
                 /> */}
                 </Section>
-                <SearchInput
-                  placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-                  placeholderTextColor={'#999'}
-                  onChangeText={(text) => searchName(text)}
-                  value={search}
-                />
+                <SearchInputContainer>
+                  <SearchInput
+                    placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
+                    placeholderTextColor={'#999'}
+                    onChangeText={(text) => searchName(text)}
+                    value={search}
+                  />
+                  <CloseIconContainer onPress={() => setSearch('')}>
+                    <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
+                  </CloseIconContainer>
+                </SearchInputContainer>
                 {search?.length !== 0 ? (
                   result.length > 0 ? (
                     result?.map((i, index) => (

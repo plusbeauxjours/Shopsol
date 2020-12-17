@@ -73,12 +73,12 @@ const EmployeeBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #707070;
-  font-size: 17px;
+  color: #7c7c7c;
+  font-size: 16px;
 `;
 
 const DateText = styled.Text`
-  color: #707070;
+  color: #7c7c7c;
   font-size: 12px;
 `;
 
@@ -280,8 +280,9 @@ const NavigationButton = styled.TouchableOpacity`
 `;
 
 const Bold = styled.Text`
-  color: #e85356;
   font-weight: bold;
+  font-size: 12px;
+  color: #e85356;
 `;
 
 export default ({
@@ -513,7 +514,7 @@ export default ({
                       </DateText>
                     </Row>
                     <Row style={{justifyContent: 'flex-start'}}>
-                      <PhoneIcon color={'#707070'} />
+                      <PhoneIcon color={'#7c7c7c'} />
                       <InfoText style={{marginLeft: 5}}>{mobileNo}</InfoText>
                       <InfoText
                         style={{

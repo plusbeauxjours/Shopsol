@@ -26,7 +26,7 @@ const NameBox = styled.View`
 const NameText = styled.Text`
   margin-right: 10px;
   color: #707070;
-  font-size: 15px;
+  font-size: 16px;
 `;
 
 const DateText = styled.Text`
@@ -83,7 +83,7 @@ export default ({
         </Row>
         <Row style={{justifyContent: 'flex-start'}}>
           <PhoneIcon color={'#707070'} />
-          <InfoText style={{marginLeft: 5}}>{mobileNo}01085201031</InfoText>
+          <InfoText style={{marginLeft: 5}}>{mobileNo}</InfoText>
         </Row>
         <InfoText>
           근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)

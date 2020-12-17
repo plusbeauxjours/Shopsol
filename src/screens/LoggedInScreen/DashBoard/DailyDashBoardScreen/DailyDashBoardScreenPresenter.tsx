@@ -19,6 +19,7 @@ import {
   StopCircleOutlineIcon,
   BackIcon,
   ForwardIcon,
+  CloseCircleOutlineIcon,
 } from '~/constants/Icons';
 import Schedule from '~/components/Schedule';
 import utils from '~/constants/utils';
@@ -244,7 +245,6 @@ const SearchInput = styled.TextInput`
   padding-left: 20px;
   align-items: center;
   height: 40px;
-  margin-bottom: 20px;
   justify-content: center;
 `;
 
@@ -287,6 +287,19 @@ const DateText = styled.Text`
   font-size: 16px;
   font-weight: 600;
   color: #7f7f7f;
+`;
+
+const SearchInputContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const CloseIconContainer = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+  height: 40px;
+  justify-content: center;
 `;
 
 export default ({
@@ -334,6 +347,7 @@ export default ({
   searchName,
   prevDay,
   nextDay,
+  setSearch,
 }) => {
   const EmpCardComponent = ({i, index}) => (
     <EmpCardContainer
@@ -633,12 +647,17 @@ export default ({
           </Container>
           {totlaWORKING_EMP != 0 && EMP_LIST.length != 0 && (
             <>
-              <SearchInput
-                placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-                placeholderTextColor={'#999'}
-                onChangeText={(text) => searchName(text)}
-                value={search}
-              />
+              <SearchInputContainer>
+                <SearchInput
+                  placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
+                  placeholderTextColor={'#999'}
+                  onChangeText={(text) => searchName(text)}
+                  value={search}
+                />
+                <CloseIconContainer onPress={() => setSearch('')}>
+                  <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
+                </CloseIconContainer>
+              </SearchInputContainer>
               <Animated.ScrollView
                 ref={cardScrollRef}
                 horizontal

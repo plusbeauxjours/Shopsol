@@ -620,6 +620,7 @@ export default () => {
       toDay={toDay}
       prevWeek={prevWeek}
       nextWeek={nextWeek}
+      setSearch={setSearch}
     />
   );
 };

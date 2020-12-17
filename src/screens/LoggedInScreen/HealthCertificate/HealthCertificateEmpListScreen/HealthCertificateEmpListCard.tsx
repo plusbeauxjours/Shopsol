@@ -21,8 +21,8 @@ const AddressText = styled.Text<IText>`
 `;
 
 const NameText = styled.Text`
-  font-size: 17px;
-  font-weight: bold;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const Container = styled.TouchableOpacity`

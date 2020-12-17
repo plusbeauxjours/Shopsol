@@ -51,7 +51,7 @@ const Row = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const RowTouchable = styled.TouchableOpacity`

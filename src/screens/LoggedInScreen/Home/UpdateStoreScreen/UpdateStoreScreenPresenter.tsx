@@ -69,8 +69,8 @@ const InputCaseRow = styled.View`
 `;
 
 const NameText = styled.Text`
-  font-size: 15px;
-  font-weight: 400;
+  color: #7f7f7f;
+  font-size: 16px;
 `;
 
 const RequestButton = styled.TouchableOpacity`

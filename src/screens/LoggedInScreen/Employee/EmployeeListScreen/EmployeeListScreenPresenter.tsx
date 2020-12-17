@@ -100,7 +100,7 @@ export default ({
                       data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
                     }
                     data={data}
-                    mobileNo={data?.result?.MobileNo}
+                    mobileNo={data?.MobileNo}
                     START={data?.START}
                     END={data?.END}
                   />
@@ -137,7 +137,7 @@ export default ({
                     data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
                   }
                   data={data}
-                  mobileNo={data?.result?.MobileNo}
+                  mobileNo={data?.MobileNo}
                   START={data?.START}
                   END={data?.END}
                 />

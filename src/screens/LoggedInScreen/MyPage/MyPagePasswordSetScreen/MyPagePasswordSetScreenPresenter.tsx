@@ -27,8 +27,8 @@ const Container = styled.View`
 `;
 
 const NameText = styled.Text`
+  color: #7f7f7f;
   font-size: 16px;
-  font-weight: bold;
 `;
 
 const TextinputCase = styled.View`
