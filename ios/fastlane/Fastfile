@@ -39,7 +39,7 @@ platform :ios do
   lane :release do |options|
     cert
     sigh(force: true)
-    ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = " "
+    ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = '-t Signiant'
     updateVersion(options)
 
     increment_build_number(xcodeproj: "ShopsolWesop.xcodeproj")

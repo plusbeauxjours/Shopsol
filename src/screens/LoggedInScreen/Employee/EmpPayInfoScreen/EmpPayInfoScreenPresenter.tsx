@@ -8,13 +8,7 @@ import EmpPayInfoCard1 from './EmpPayInfoCard1';
 import EmpPayInfoCard2 from './EmpPayInfoCard2';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
-import {
-  ForwardIcon,
-  BackIcon,
-  ReloadCircleIcon,
-  UpIcon,
-  DownIcon,
-} from '~/constants/Icons';
+import {ForwardIcon, BackIcon, ReloadCircleIcon} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
 
 interface IsFirst {
@@ -97,43 +91,10 @@ const DateBox = styled(Row)`
   padding: 20px 15px;
 `;
 
-const Section = styled.View`
-  width: ${wp('100%') - 40}px;
-  border-radius: 20px;
-  padding: 20px;
-  background-color: white;
-  margin-bottom: 20px;
-`;
-
-const CardBox = styled.View`
-  flex: 1;
-  margin-top: 20px;
-  align-items: center;
-`;
-
-const Box = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const BoxTitle = styled.View`
-  align-items: flex-start;
-  justify-content: center;
-`;
-
 const BoxTitleText = styled.Text`
   font-weight: bold;
   font-size: 12px;
   color: #e85356;
-`;
-
-const DetailRowContainer = styled.View`
-  flex: 1;
-  flex-direction: row;
-  padding: 5px 20px;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 const DetailRowText = styled.Text`
@@ -141,70 +102,11 @@ const DetailRowText = styled.Text`
   color: #999;
 `;
 
-const BoxButton = styled.TouchableOpacity`
-  width: ${wp('25%')}px;
-  padding: 10px 0;
-  border-radius: 30px;
-  border-width: 1px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const BoxButtonText = styled.Text`
-  font-size: 15px;
-`;
-
-const PayInfoBox = styled.View`
-  margin-top: 10px;
-  align-items: center;
-  border-color: #bbb;
-  border-width: 1px;
-`;
-
-const MainPayBox = styled.View`
-  padding: 20px;
-  width: 100%;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
 const MainPayBoxText = styled.Text`
   bottom: -3px;
   position: absolute;
   right: 40px;
   font-size: 23px;
-`;
-
-const DetailBox = styled.View`
-  width: 100%;
-`;
-
-const Line = styled.View`
-  height: 1px;
-  background-color: #bbb;
-`;
-
-const ToggleIcon = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const Footer = styled.View`
-  width: 100%;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const FooterBtn = styled.TouchableOpacity`
-  width: 100%;
-  flex-direction: row;
-  padding: 15px 10px;
-  border-radius: 10px;
-  border-width: 1px;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
 `;
 
 const EmployeeCardContainer = styled.View`
@@ -269,7 +171,7 @@ const ListTouchable = styled.TouchableWithoutFeedback`
   flex-direction: row;
 `;
 
-const BorderFooter = styled.View`
+const BorderFooter = styled.TouchableOpacity`
   width: ${wp('100%') - 40}px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -320,6 +222,8 @@ export default ({
   loading,
   date,
 }) => {
+  console.log('EMP_PAY_TYPE', EMP_PAY_TYPE);
+
   const boxButtonTransition = useTransition(boxButton);
   const boxButton2Transition = useTransition(boxButton2);
   const cardShowedTransition = useTransition(isCardShowed);
@@ -520,7 +424,10 @@ export default ({
                     value={`(+) ${numberComma(totalearned)}`}
                   />
                 </HiddenItems>
-                <BorderFooter />
+                <BorderFooter
+                  onPress={() => setBoxButton(!boxButton)}
+                  activeOpacity={1}
+                />
               </>
             )}
 
@@ -528,7 +435,7 @@ export default ({
               onPress={() => setBoxButton2(!boxButton2)}
               disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
               <ListContainer as={Animated.View}>
-                <DateBoxText>근로자 수령액(월급)</DateBoxText>
+                <DateBoxText>근로자 수령액</DateBoxText>
                 <MainPayBoxText>
                   {emptotal ? `${numberComma(emptotal)} 원` : '0 원'}
                 </MainPayBoxText>
@@ -592,7 +499,10 @@ export default ({
               </MainItemContainer>
               <DetailAreaContainer totalearned={totalearned} />
             </HiddenItems>
-            <BorderFooter />
+            <BorderFooter
+              onPress={() => setBoxButton2(!boxButton2)}
+              activeOpacity={1}
+            />
           </Container>
         </ScrollView>
       </BackGround>
@@ -658,7 +568,10 @@ export default ({
                     value={`(+) ${numberComma(totalearned)}`}
                   />
                 </HiddenItems>
-                <BorderFooter />
+                <BorderFooter
+                  onPress={() => setBoxButton(!boxButton)}
+                  activeOpacity={1}
+                />
               </>
             )}
 
@@ -666,7 +579,7 @@ export default ({
               onPress={() => setBoxButton2(!boxButton2)}
               disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
               <ListContainer as={Animated.View}>
-                <DateBoxText>근로자 수령액(시급)</DateBoxText>
+                <DateBoxText>근로자 수령액</DateBoxText>
                 <MainPayBoxText>
                   {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
                 </MainPayBoxText>
@@ -736,7 +649,10 @@ export default ({
               </MainItemContainer>
               <DetailAreaContainer totalearned={totalearned} />
             </HiddenItems>
-            <BorderFooter />
+            <BorderFooter
+              onPress={() => setBoxButton2(!boxButton2)}
+              activeOpacity={1}
+            />
             <ListTouchable onPress={() => onPressFooter('click4')}>
               <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
                 <DateBoxText>일별 급여현황</DateBoxText>
@@ -770,7 +686,10 @@ export default ({
                 })}
               </CardContainer>
             </HiddenItems>
-            <BorderFooter />
+            <BorderFooter
+              onPress={() => onPressFooter('click4')}
+              activeOpacity={1}
+            />
           </Container>
         </ScrollView>
       </BackGround>
@@ -809,6 +728,7 @@ export default ({
                     isFirst={true}
                     text={'급여지급액'}
                     value={numberComma(realemptotal)}
+                    aㅁ
                   />
                   <MainItem
                     text={'4대보험 고용주부담금'}
@@ -823,14 +743,17 @@ export default ({
                     value={`(+) ${numberComma(totalearned)}`}
                   />
                 </HiddenItems>
-                <BorderFooter />
+                <BorderFooter
+                  onPress={() => setBoxButton(!boxButton)}
+                  activeOpacity={1}
+                />
               </>
             )}
             <ListTouchable
               onPress={() => setBoxButton2(!boxButton2)}
               disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
               <ListContainer as={Animated.View}>
-                <DateBoxText>근로자 수령액(일급)</DateBoxText>
+                <DateBoxText>근로자 수령액</DateBoxText>
                 <MainPayBoxText>
                   {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
                 </MainPayBoxText>
@@ -885,7 +808,10 @@ export default ({
 
               <DetailAreaContainer totalearned={totalearned} />
             </HiddenItems>
-            <BorderFooter />
+            <BorderFooter
+              onPress={() => setBoxButton2(!boxButton2)}
+              activeOpacity={1}
+            />
 
             <ListTouchable onPress={() => onPressFooter('click5')}>
               <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
@@ -915,7 +841,10 @@ export default ({
                 })}
               </CardContainer>
             </HiddenItems>
-            <BorderFooter />
+            <BorderFooter
+              onPress={() => onPressFooter('click5')}
+              activeOpacity={1}
+            />
           </Container>
         </ScrollView>
       </BackGround>

@@ -172,8 +172,8 @@ android {
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 34
-        versionName "1.1.8"
+        versionCode 38
+        versionName "1.1.9"
     }
     splits {
         abi {
@@ -202,6 +202,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            resValue "string", "CodePushDeploymentKey", '""'
         }
         release {
             // signingConfig signingConfigs.debug
@@ -209,7 +210,7 @@ android {
             shrinkResources enableProguardInReleaseBuilds
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
-            resValue "string", "CodePushDeploymentKey", "ivwSWKqVV09l04m1eS2AOLe7hAyvo5VXgaoat"
+            resValue "string", "CodePushDeploymentKey", "IQ-khtu0aKK5BdIbO4km_EtFgAQjWBnmiq-T6"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }

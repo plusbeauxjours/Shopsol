@@ -88,6 +88,7 @@ export default ({
       from: 'ManageInviteEmployeeScreen',
       onRefresh,
       IMAGE: data?.images[0]?.IMAGE,
+      mobileNo: data?.MobileNo,
     });
   };
 

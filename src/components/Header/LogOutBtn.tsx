@@ -23,7 +23,6 @@ export default () => {
   return (
     <Touchable
       onPress={() => {
-        dispatch(userLogout());
         navigation.reset({
           index: 0,
           routes: [
@@ -33,6 +32,9 @@ export default () => {
             },
           ],
         });
+        setTimeout(() => {
+          dispatch(userLogout());
+        }, 1000);
       }}>
       <LogoutIcon size={24} color="white" />
       <Text>로그아웃</Text>

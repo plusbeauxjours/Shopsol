@@ -91,7 +91,7 @@ export default ({route: {params}}) => {
   };
 
   const onPressFooter = (click) => {
-    if (maindata?.CARDLIST?.length == 0) {
+    if (click === 'click4' && maindata?.CARDLIST?.length == 0) {
       alertModal('', '급여현황이 존재하지 않습니다.');
     }
     if (click === 'click4') {
@@ -178,6 +178,11 @@ export default ({route: {params}}) => {
       from: 'EmployeeInfoScreen',
       onRefresh: fetchData,
       IMAGE: image,
+      IS_MANAGER: IS_MANAGER || IS_MANAGER_state,
+      EMP_PAY_TYPE,
+      START,
+      END,
+      PAY,
     });
   };
 

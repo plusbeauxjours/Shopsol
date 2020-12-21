@@ -15,10 +15,12 @@ export default () => {
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
   const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
+  const {visible} = useSelector((state: any) => state.splashReducer);
   const {STORE, STORELIST_DATA} = useSelector(
     (state: any) => state.userReducer,
   );
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const onRefresh = async () => {
     try {
@@ -70,6 +72,14 @@ export default () => {
   };
 
   useEffect(() => {
+    try {
+      dispatch(getSTORELIST_DATA());
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+      dispatch(setAlertVisible(false));
+    }
     // if (utils.isAndroid()) {
     //   if (STORE_NAME == '') {
     //     SharedStorage.set(
@@ -82,10 +92,6 @@ export default () => {
     //     );
     //   }
     // }
-
-    dispatch(getSTORELIST_DATA());
-    dispatch(setSplashVisible(false));
-    dispatch(setAlertVisible(false));
   }, []);
 
   return (
@@ -96,6 +102,8 @@ export default () => {
       onRefresh={onRefresh}
       gotoAddStore={gotoAddStore}
       gotoHomeScreen={gotoHomeScreen}
+      visible={visible}
+      loading={loading}
     />
   );
 };

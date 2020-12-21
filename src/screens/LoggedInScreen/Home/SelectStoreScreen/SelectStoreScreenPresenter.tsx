@@ -82,77 +82,85 @@ export default ({
   onRefresh,
   gotoAddStore,
   gotoHomeScreen,
+  visible,
+  loading,
 }) => {
   const StoreList = () => {
-    if (STORELIST_DATA && STORELIST_DATA.length !== 0) {
-      return STORELIST_DATA?.map((data, index) => (
-        <SelectStoreCard
-          key={index}
-          data={data}
-          name={data.NAME}
-          address1={data.ADDR1}
-          address2={data.ADDR2}
-          employee={data.emplist}
-          STORE={STORE}
-          TYPE={data.TYPE}
-          MANAGER={data.IS_MANAGER == 1 ? '[매니저]' : '[스태프]'}
-          workinglist={data.workinglist}
-          gotoHomeScreen={gotoHomeScreen}
-        />
-      ));
+    if (visible || loading) {
+      return null;
     } else {
-      if (STORE == '1') {
-        return (
-          <EmptyBox>
-            <FastImage
-              style={{
-                width: 377,
-                height: 450,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 50,
-              }}
-              source={require('../../../../assets/images/emptyImg.png')}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-            <TextBox>
-              <Column>
-                <EmptyText>등록된 사업장이 없습니다!</EmptyText>
-                <EmptyText>사업장을 등록하시면 입력하신 주소로</EmptyText>
-                <EmptyText>출퇴근이 가능한 QR키트를 송부해 드립니다.</EmptyText>
-                <EmptyText>(영업일 기준 2~3일 소요)</EmptyText>
-              </Column>
-            </TextBox>
-          </EmptyBox>
-        );
+      if (STORELIST_DATA?.length > 0) {
+        return STORELIST_DATA?.map((data, index) => (
+          <SelectStoreCard
+            key={index}
+            data={data}
+            name={data.NAME}
+            address1={data.ADDR1}
+            address2={data.ADDR2}
+            employee={data.emplist}
+            STORE={STORE}
+            TYPE={data.TYPE}
+            MANAGER={data.IS_MANAGER == 1 ? '[매니저]' : '[스태프]'}
+            workinglist={data.workinglist}
+            gotoHomeScreen={gotoHomeScreen}
+          />
+        ));
       } else {
-        return (
-          <EmptyBox>
-            <FastImage
-              style={{
-                width: 377,
-                height: 450,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 50,
-              }}
-              source={require('../../../../assets/images/emptyImg.png')}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-            <TextBox>
-              <Column>
-                <EmptyText>합류된 사업장이 없습니다!</EmptyText>
-                <EmptyText>
-                  점장 또는 매니저가 직원을 초대할 수 있습니다.
-                </EmptyText>
-                <EmptyText>
-                  초대 후 재로그인하여 직원이 사업장을 확인하게 되면
-                </EmptyText>
-                <EmptyText>관리자가 직원합류를 완료할 수 있습니다.</EmptyText>
-              </Column>
-            </TextBox>
-          </EmptyBox>
-        );
+        if (STORE == '1') {
+          return (
+            <EmptyBox>
+              <FastImage
+                style={{
+                  width: 377,
+                  height: 450,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 50,
+                }}
+                source={require('../../../../assets/images/emptyImg.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+              <TextBox>
+                <Column>
+                  <EmptyText>등록된 사업장이 없습니다!</EmptyText>
+                  <EmptyText>사업장을 등록하시면 입력하신 주소로</EmptyText>
+                  <EmptyText>
+                    출퇴근이 가능한 QR키트를 송부해 드립니다.
+                  </EmptyText>
+                  <EmptyText>(영업일 기준 2~3일 소요)</EmptyText>
+                </Column>
+              </TextBox>
+            </EmptyBox>
+          );
+        } else {
+          return (
+            <EmptyBox>
+              <FastImage
+                style={{
+                  width: 377,
+                  height: 450,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 50,
+                }}
+                source={require('../../../../assets/images/emptyImg.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+              <TextBox>
+                <Column>
+                  <EmptyText>합류된 사업장이 없습니다!</EmptyText>
+                  <EmptyText>
+                    점장 또는 매니저가 직원을 초대할 수 있습니다.
+                  </EmptyText>
+                  <EmptyText>
+                    초대 후 재로그인하여 직원이 사업장을 확인하게 되면
+                  </EmptyText>
+                  <EmptyText>관리자가 직원합류를 완료할 수 있습니다.</EmptyText>
+                </Column>
+              </TextBox>
+            </EmptyBox>
+          );
+        }
       }
     }
   };

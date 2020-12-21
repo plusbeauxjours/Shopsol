@@ -93,7 +93,7 @@ export default () => {
   useEffect(() => {
     dispatch(getRESPONSE_EMPLOYEE());
   }, []);
-
+  console.log(RESPONSE_EMPLOYEE);
   return (
     <BackGround>
       <ScrollView

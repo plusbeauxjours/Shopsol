@@ -7,6 +7,8 @@ import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
+import {mix, useTransition} from 'react-native-redash';
+import Animated from 'react-native-reanimated';
 
 import {
   WeekType,
@@ -35,12 +37,18 @@ import InputLine from '~/components/InputLine';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import {BackIcon, ForwardIcon} from '~/constants/Icons';
+import Chevron from '~/components/Chevron';
 
 interface IBox {
   isBold: boolean;
 }
 interface IsBefore {
   isBefore: boolean;
+}
+
+interface IsFirst {
+  height?: number;
+  isFirst?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -88,26 +96,12 @@ const TextInputText = styled.Text`
   margin-right: 20px;
 `;
 
-const EmployeeBox = styled.View`
-  width: 100%;
-  height: 60px;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const EmployeeText = styled.Text`
-  margin-left: 10px;
-  color: #707070;
-  font-size: 20px;
-`;
-
 const RedText = styled.Text`
   color: #ff3d3d;
 `;
 
 const GreyText = styled.Text`
-  color: #aaa;
+  color: #7c7c7c;
   font-size: 13px;
 `;
 
@@ -148,7 +142,7 @@ const InsuranceBox = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   color: #999;
 `;
@@ -156,16 +150,7 @@ const TitleText = styled.Text`
 const DateTouchable = styled.TouchableOpacity`
   justify-content: flex-end;
   padding-bottom: 5px;
-  height: 40px;
-`;
-
-const AuthorityBox = styled.View`
-  margin: 0 10px;
-  padding: 20px;
-  border-radius: 10px;
-  border-color: #e5e5e5;
-  border-width: 2px;
-  align-items: flex-start;
+  height: 35px;
 `;
 
 const BigText = styled.Text`
@@ -177,6 +162,10 @@ const WhiteText = styled.Text`
   font-size: 16px;
   color: white;
 `;
+const NameText = styled(WhiteText)`
+  color: #7f7f7f;
+`;
+
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
@@ -185,10 +174,7 @@ const Row = styled.View`
 const ModalContainerRow = styled(Row)`
   justify-content: center;
 `;
-const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
-`;
+
 const Bold = styled(NameText)`
   font-weight: bold;
 `;
@@ -201,20 +187,20 @@ const SideBox = styled.View`
   align-items: center;
 `;
 
-const InputCase = styled.View`
-  margin: 10px;
+const InputCase = styled.View<IsFirst>`
+  width: ${wp('100%') - 40}px;
+  background-color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: ${(props) => (props.isFirst ? 25 : 0)}px;
+  height: ${(props) =>
+    props.height ? props.height : props.isFirst ? 110 : 70}px;
 `;
 
 const ContentsBox = styled.View`
   width: 100%;
   padding-bottom: 20px;
   justify-content: space-around;
-`;
-
-const SideText = styled.Text`
-  margin-left: 10px;
-  font-size: 15px;
-  color: #212121;
 `;
 
 const PayBox = styled.View`
@@ -230,8 +216,8 @@ const PayBox = styled.View`
 `;
 
 const ColumnPayBox = styled.View`
-  width: 100%;
-  padding: 30px 50px;
+  width: ${wp('100%') - 80}px;
+  padding: 20px;
   border-width: 1px;
   border-radius: 20px;
   border-color: #cccccc;
@@ -376,6 +362,70 @@ const DatePickerText = styled.Text`
   text-align: center;
 `;
 
+const TopArea = styled.View`
+  width: 100%;
+  border-radius: 20px;
+  background-color: white;
+  margin-bottom: 20px;
+`;
+
+const EmployeeCardText = styled.Text`
+  color: #7f7f7f;
+  height: 15px;
+  font-size: 10px;
+`;
+
+const EmployeeCardContainer = styled.View`
+  padding: 0 20px;
+  align-items: center;
+  flex-direction: row;
+  background-color: white;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const NameBox = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
+const DateText = styled.Text`
+  color: #7f7f7f;
+  font-size: 12px;
+`;
+
+const ListTouchable = styled.TouchableWithoutFeedback`
+  flex-direction: row;
+`;
+
+const ListContainer = styled.View`
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: ${wp('100%') - 40}px;
+  padding: 25px 20px 0 20px;
+`;
+
+const HiddenItems = styled.View`
+  overflow: hidden;
+  align-items: center;
+`;
+
+const BorderFooter = styled.TouchableOpacity`
+  width: ${wp('100%') - 40}px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: white;
+  height: 25px;
+  margin-bottom: 20px;
+  overflow: hidden;
+`;
+
 export default ({
   submitFn,
   payDay,
@@ -486,9 +536,68 @@ export default ({
   setEndDaySet,
   probationPeriodSet,
   setProbationPeriodSet,
+  IS_MANAGER,
+  EMP_PAY_TYPE,
+  START,
+  END,
+  PAY,
+  mobileNo,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const py = Number(moment().format('YY'));
+  const click1Transition = useTransition(click1);
+  const click2Transition = useTransition(click2);
+  const click4Transition = useTransition(click4);
+  const click5Transition = useTransition(click5);
+
+  const EmployeeCard = () => {
+    return (
+      <TopArea>
+        <EmployeeCardContainer>
+          <FastImage
+            style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
+            source={{
+              uri: `http://133.186.210.223/uploads/${IMAGE}`,
+              headers: {Authorization: 'someAuthToken'},
+              priority: FastImage.priority.low,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <NameBox>
+            <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
+              <NameText style={{marginRight: 10}}>{name}</NameText>
+              {IS_MANAGER && (
+                <DateText>
+                  {IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
+                </DateText>
+              )}
+            </Row>
+            {mobileNo && <EmployeeCardText>{mobileNo}</EmployeeCardText>}
+            {EMP_PAY_TYPE && PAY && (
+              <EmployeeCardText>
+                {EMP_PAY_TYPE === '0' && '시급'}
+                {EMP_PAY_TYPE === '1' && '일급'}
+                {EMP_PAY_TYPE === '2' && '월급'}&nbsp;
+                {PAY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+              </EmployeeCardText>
+            )}
+            {START && (
+              <>
+                <EmployeeCardText>
+                  근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)
+                </EmployeeCardText>
+                <EmployeeCardText>
+                  {moment(START).format('YYYY.MM.DD')} ~&nbsp;
+                  {END ? moment(END).format('YYYY.MM.DD') : '계속'}
+                </EmployeeCardText>
+              </>
+            )}
+          </NameBox>
+        </EmployeeCardContainer>
+      </TopArea>
+    );
+  };
+
   return (
     <BackGround>
       <ScrollView
@@ -497,89 +606,81 @@ export default ({
         showsVerticalScrollIndicator={false}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Container>
-            <EmployeeBox>
-              <FastImage
-                style={{width: 60, height: 60, borderRadius: 30}}
-                source={{
-                  uri: `http://133.186.210.223/uploads/${IMAGE}`,
-                  headers: {Authorization: 'someAuthToken'},
-                  priority: FastImage.priority.low,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-              <EmployeeText>{name}</EmployeeText>
-            </EmployeeBox>
-            <Box isBold={click1} onPress={() => setClick1(!click1)}>
-              <BoxTitle>
-                <TitleText>
+            <EmployeeCard />
+
+            <ListTouchable onPress={() => setClick1(!click1)}>
+              <ListContainer as={Animated.View}>
+                <DateBoxText style={{fontWeight: '600'}}>
                   <RedText>(필수) </RedText>
                   출퇴근정보 입력
-                </TitleText>
-                {click1 ? <UpIcon color="#999" /> : <DownIcon color="#999" />}
-              </BoxTitle>
-            </Box>
-            {click1 && (
-              <ContentsBox>
-                <InputCase>
-                  <Row>
-                    <Text>입사일</Text>
-                    <RedText>*</RedText>
-                    <Touchable
-                      onPress={() => {
-                        explainModal(
-                          '직원의 출퇴근관리가 시작되는 날입니다.\n\n기존 직원은 앱 설치 당일로 설정하시길 권장드립니다.\n신규 직원일 경우에는 근로계약서 상 근무시작일로 입력해 주세요.',
-                        );
-                      }}>
-                      <HelpCircleIcon />
-                    </Touchable>
-                  </Row>
-
-                  <DateTouchable
-                    onPress={() => setIsStartDayModalVisible(true)}>
-                    <Text>{moment(startDay).format('YYYY.MM.DD')}</Text>
-                  </DateTouchable>
-                  <InputLine isBefore={false} />
-                </InputCase>
-                <InputCase>
-                  <Row>
-                    <Text>퇴사일</Text>
-                    <RedText>*</RedText>
-                    <Touchable
-                      onPress={() => {
-                        explainModal(
-                          '정해진 근무종료일이 없다면 [퇴사일 없음]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
-                        );
-                      }}>
-                      <HelpCircleIcon />
-                    </Touchable>
-                  </Row>
-
-                  <DateTouchable
-                    onPress={() => setIsEndDayModalVisible(true)}
-                    disabled={endDayCheck}>
-                    <Text>
-                      {!endDayCheck ? moment(endDay).format('YYYY.MM.DD') : ''}
-                    </Text>
-                  </DateTouchable>
-                  <InputLine isBefore={endDayCheck} />
+                </DateBoxText>
+                <Chevron {...{transition: click1Transition}} />
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{height: mix(click1Transition, 0, 100 * 2 + 10)}}>
+              <InputCase isFirst={true}>
+                <Row>
+                  <RedText>*</RedText>
+                  <Text>입사일</Text>
                   <Touchable
-                    style={{marginTop: 20}}
                     onPress={() => {
-                      setEndDayCheck(!endDayCheck);
-                      setEndDay(moment());
+                      explainModal(
+                        '직원의 출퇴근관리가 시작되는 날입니다.\n\n기존 직원은 앱 설치 당일로 설정하시길 권장드립니다.\n신규 직원일 경우에는 근로계약서 상 근무시작일로 입력해 주세요.',
+                      );
                     }}>
-                    <SideBox>
-                      {endDayCheck ? (
-                        <CheckBoxIcon size={25} color="#e85356" />
-                      ) : (
-                        <CheckBoxIcon size={25} color="#CCCCCC" />
-                      )}
-                      <SideText>퇴사일 없음</SideText>
-                    </SideBox>
+                    <HelpCircleIcon />
                   </Touchable>
-                </InputCase>
-              </ContentsBox>
-            )}
+                </Row>
+                <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
+                  <Text>{moment(startDay).format('YYYY.MM.DD')}</Text>
+                </DateTouchable>
+                <InputLine isBefore={false} />
+              </InputCase>
+              <InputCase height={150}>
+                <Row>
+                  <RedText>*</RedText>
+                  <Text>퇴사일</Text>
+                  <Touchable
+                    onPress={() => {
+                      explainModal(
+                        '정해진 근무종료일이 없다면 [퇴사일 없음]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
+                      );
+                    }}>
+                    <HelpCircleIcon />
+                  </Touchable>
+                </Row>
+                <DateTouchable
+                  onPress={() => setIsEndDayModalVisible(true)}
+                  disabled={endDayCheck}>
+                  <Text>
+                    {!endDayCheck ? moment(endDay).format('YYYY.MM.DD') : ''}
+                  </Text>
+                </DateTouchable>
+                <InputLine isBefore={endDayCheck} />
+                <Touchable
+                  style={{marginTop: 10}}
+                  onPress={() => {
+                    setEndDayCheck(!endDayCheck);
+                    setEndDay(moment());
+                  }}>
+                  <SideBox>
+                    {endDayCheck ? (
+                      <CheckBoxIcon size={25} color="#e85356" />
+                    ) : (
+                      <CheckBoxIcon size={25} color="#CCCCCC" />
+                    )}
+                    <GreyText style={{marginLeft: 10}}>퇴사일 없음</GreyText>
+                  </SideBox>
+                </Touchable>
+              </InputCase>
+            </HiddenItems>
+            <BorderFooter
+              onPress={() => setClick1(!click1)}
+              activeOpacity={1}
+            />
+
             <Box
               isBold={click2}
               onPress={() => {
@@ -597,8 +698,8 @@ export default ({
               <ContentsBox>
                 <InputCase>
                   <Row>
-                    <Text>급여 유형&nbsp;</Text>
                     <RedText>*</RedText>
+                    <Text>급여 유형&nbsp;</Text>
                   </Row>
                   <Line />
                   <SelectArea>
@@ -986,8 +1087,8 @@ export default ({
                   )}
                   <ContentsBox>
                     <Row>
-                      <Text>공제 유형 선택&nbsp;</Text>
                       <RedText>*</RedText>
+                      <Text>공제 유형 선택&nbsp;</Text>
                     </Row>
                     <Line />
                     <SelectArea>
@@ -1043,8 +1144,8 @@ export default ({
                     )}
                   </ContentsBox>
                   <Row>
-                    <Text>적용 시작 월 설정</Text>
                     <RedText>*</RedText>
+                    <Text>적용 시작 월 설정</Text>
                     <Touchable
                       onPress={() => {
                         explainModal(
@@ -1315,21 +1416,19 @@ export default ({
                 <Text style={{fontSize: 16, color: 'white'}}>확인</Text>
               </ModalBarButton>
             </Modal>
-            <Box isBold={click4} onPress={() => setClick4(!click4)}>
-              <BoxTitle>
-                <TitleText>(선택) 연차 설정</TitleText>
-                {click4 ? <UpIcon color="#999" /> : <DownIcon color="#999" />}
-              </BoxTitle>
-            </Box>
-            {click4 && (
-              <ContentsBox>
-                <InputCase>
-                  <Row>
-                    <Text>연차 입력</Text>
-                    <RedText>*</RedText>
-                  </Row>
-                  <Line />
-                </InputCase>
+
+            <ListTouchable onPress={() => setClick4(!click4)}>
+              <ListContainer as={Animated.View}>
+                <DateBoxText style={{fontWeight: '600'}}>
+                  (선택) 연차 설정
+                </DateBoxText>
+                <Chevron {...{transition: click4Transition}} />
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{height: mix(click4Transition, 0, 200 + 70)}}>
+              <InputCase isFirst={true} height={200}>
                 <ColumnPayBox>
                   <BoxTitle>
                     <Text>총 연차</Text>
@@ -1399,73 +1498,80 @@ export default ({
                     </Row>
                   </BoxTitle>
                 </ColumnPayBox>
-                <InputCase>
-                  <Row>
-                    <Text>연차적용 연도</Text>
-                    <RedText>*</RedText>
-                  </Row>
-                  <Line />
-                  <Row style={{justifyContent: 'center'}}>
-                    <DateBox
-                      onPress={() =>
-                        setAnnual_START(
-                          moment(annual_START)
-                            .subtract(1, 'year')
-                            .format('YYYY'),
-                        )
-                      }>
-                      <BackIcon size={22} color={'#f4aaab'} />
-                    </DateBox>
-                    <DateBoxText>{annual_START}년</DateBoxText>
-                    <DateBox
-                      onPress={() =>
-                        setAnnual_START(
-                          moment(annual_START).add(1, 'year').format('YYYY'),
-                        )
-                      }>
-                      <ForwardIcon size={22} color={'#f4aaab'} />
-                    </DateBox>
-                  </Row>
-                </InputCase>
-              </ContentsBox>
-            )}
-            <Box isBold={click5} onPress={() => setClick5(!click5)}>
-              <BoxTitle>
-                <TitleText>(선택) 직책/권한 설정, 급여보기 설정</TitleText>
-                {click5 ? <UpIcon color="#999" /> : <DownIcon color="#999" />}
-              </BoxTitle>
-            </Box>
-            {click5 && (
-              <ContentsBox>
-                <InputCase>
-                  <Row>
-                    <Text>직책 선택</Text>
-                    <RedText>*</RedText>
-                  </Row>
-                  <Line />
-                  <SelectArea>
-                    <PositionType
-                      selection={0}
-                      text={'스태프'}
-                      positionCheck={positionCheck}
-                      setPositionCheck={setPositionCheck}
-                      authorityCheck={authorityCheck}
-                      setAuthorityCheck={setAuthorityCheck}
-                      explainModal={explainModal}
-                    />
-                    <PositionType
-                      selection={1}
-                      text={'매니저'}
-                      positionCheck={positionCheck}
-                      setPositionCheck={setPositionCheck}
-                      authorityCheck={authorityCheck}
-                      setAuthorityCheck={setAuthorityCheck}
-                      explainModal={explainModal}
-                    />
-                  </SelectArea>
-                </InputCase>
-                {positionCheck.includes(true) && (
-                  <AuthorityBox>
+              </InputCase>
+              <InputCase>
+                <Row style={{justifyContent: 'center', marginVertical: 10}}>
+                  <DateBox
+                    onPress={() =>
+                      setAnnual_START(
+                        moment(annual_START).subtract(1, 'year').format('YYYY'),
+                      )
+                    }>
+                    <BackIcon size={22} color={'#f4aaab'} />
+                  </DateBox>
+                  <DateBoxText>{annual_START}년</DateBoxText>
+                  <DateBox
+                    onPress={() =>
+                      setAnnual_START(
+                        moment(annual_START).add(1, 'year').format('YYYY'),
+                      )
+                    }>
+                    <ForwardIcon size={22} color={'#f4aaab'} />
+                  </DateBox>
+                </Row>
+                <GreyText style={{textAlign: 'center'}}>
+                  {annual_START}년에 연차가 적용됩니다.
+                </GreyText>
+              </InputCase>
+            </HiddenItems>
+            <BorderFooter
+              onPress={() => setClick4(!click4)}
+              activeOpacity={1}
+            />
+
+            <ListTouchable onPress={() => setClick5(!click5)}>
+              <ListContainer as={Animated.View}>
+                <DateBoxText style={{fontWeight: '600'}}>
+                  (선택) 직책/권한 설정, 급여보기 설정
+                </DateBoxText>
+                <Chevron {...{transition: click5Transition}} />
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{
+                height: mix(
+                  click5Transition,
+                  0,
+                  positionCheck[1] ? 50 + 340 : 50 + 115,
+                ),
+              }}>
+              <InputCase isFirst={true} height={50}>
+                <SelectArea>
+                  <PositionType
+                    selection={0}
+                    text={'스태프'}
+                    positionCheck={positionCheck}
+                    setPositionCheck={setPositionCheck}
+                    authorityCheck={authorityCheck}
+                    setAuthorityCheck={setAuthorityCheck}
+                    explainModal={explainModal}
+                  />
+                  <PositionType
+                    selection={1}
+                    text={'매니저'}
+                    positionCheck={positionCheck}
+                    setPositionCheck={setPositionCheck}
+                    authorityCheck={authorityCheck}
+                    setAuthorityCheck={setAuthorityCheck}
+                    explainModal={explainModal}
+                  />
+                </SelectArea>
+              </InputCase>
+
+              {positionCheck[1] ? (
+                <InputCase isFirst={true} height={340}>
+                  <ColumnPayBox>
                     <Authority
                       selection={0}
                       text={'선택 시 본인급여 확인 가능'}
@@ -1474,50 +1580,65 @@ export default ({
                       alertModal={alertModal}
                       explainModal={explainModal}
                     />
-                    {positionCheck[1] && (
-                      <>
-                        <WhiteSpace />
-                        <Authority
-                          selection={4}
-                          text={'선택 시 사업장 급여 확인 가능'}
-                          authorityCheck={authorityCheck}
-                          setAuthorityCheck={setAuthorityCheck}
-                          alertModal={alertModal}
-                          explainModal={explainModal}
-                        />
-                        <Line />
-                        <Authority
-                          selection={1}
-                          text={'[매니저] 직원급여/일정 수정 가능'}
-                          authorityCheck={authorityCheck}
-                          setAuthorityCheck={setAuthorityCheck}
-                          alertModal={alertModal}
-                          explainModal={explainModal}
-                        />
-                        <WhiteSpace />
-                        <Authority
-                          selection={2}
-                          text={'[매니저] 직원 캘린더 수정 가능'}
-                          authorityCheck={authorityCheck}
-                          setAuthorityCheck={setAuthorityCheck}
-                          alertModal={alertModal}
-                          explainModal={explainModal}
-                        />
-                        <WhiteSpace />
-                        <Authority
-                          selection={3}
-                          text={'[매니저] 타 직원 출퇴근 알람 받기'}
-                          authorityCheck={authorityCheck}
-                          setAuthorityCheck={setAuthorityCheck}
-                          alertModal={alertModal}
-                          explainModal={explainModal}
-                        />
-                      </>
-                    )}
-                  </AuthorityBox>
-                )}
-              </ContentsBox>
-            )}
+                    <WhiteSpace />
+
+                    <Authority
+                      selection={4}
+                      text={'선택 시 사업장 급여 확인 가능'}
+                      authorityCheck={authorityCheck}
+                      setAuthorityCheck={setAuthorityCheck}
+                      alertModal={alertModal}
+                      explainModal={explainModal}
+                    />
+                    <Line />
+                    <Authority
+                      selection={1}
+                      text={'[매니저] 직원급여/일정 수정 가능'}
+                      authorityCheck={authorityCheck}
+                      setAuthorityCheck={setAuthorityCheck}
+                      alertModal={alertModal}
+                      explainModal={explainModal}
+                    />
+                    <WhiteSpace />
+                    <Authority
+                      selection={2}
+                      text={'[매니저] 직원 캘린더 수정 가능'}
+                      authorityCheck={authorityCheck}
+                      setAuthorityCheck={setAuthorityCheck}
+                      alertModal={alertModal}
+                      explainModal={explainModal}
+                    />
+                    <WhiteSpace />
+                    <Authority
+                      selection={3}
+                      text={'[매니저] 타 직원 출퇴근 알람 받기'}
+                      authorityCheck={authorityCheck}
+                      setAuthorityCheck={setAuthorityCheck}
+                      alertModal={alertModal}
+                      explainModal={explainModal}
+                    />
+                  </ColumnPayBox>
+                </InputCase>
+              ) : (
+                <InputCase isFirst={true} height={115}>
+                  <ColumnPayBox>
+                    <Authority
+                      selection={0}
+                      text={'선택 시 본인급여 확인 가능'}
+                      authorityCheck={authorityCheck}
+                      setAuthorityCheck={setAuthorityCheck}
+                      alertModal={alertModal}
+                      explainModal={explainModal}
+                    />
+                  </ColumnPayBox>
+                </InputCase>
+              )}
+            </HiddenItems>
+            <BorderFooter
+              onPress={() => setClick5(!click5)}
+              activeOpacity={1}
+            />
+
             <WhiteSpace />
             <SubmitBtn
               isRegisted={true}
@@ -1554,7 +1675,6 @@ export default ({
             <DatePickerRoundBtn
               onPress={() => {
                 setIsStartDayModalVisible(false);
-                setEndDayCheck(false);
                 setStartDaySet(true);
               }}
               rippleColor={'#666'}

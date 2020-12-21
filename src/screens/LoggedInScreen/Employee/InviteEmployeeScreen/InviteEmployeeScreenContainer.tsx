@@ -189,28 +189,11 @@ export default () => {
   const requestPermissionsIOS = async () => {
     try {
       Contacts.checkPermission((err, permission) => {
-        if (permission !== 'authorized') {
-          Alert.alert(
-            '연락처 탐색 동의',
-            '연락처 탐색 기능을 사용하기 위해 확인을 누른 뒤, 환경 설정에서 탐색을 켜주세요.',
-            [
-              {
-                text: '취소',
-                style: 'cancel',
-              },
-              {
-                text: '확인',
-                onPress: () => Linking.openURL('app-settings:'),
-              },
-            ],
-          );
-        } else {
-          Contacts.getAll((err, contacts: any) => {
-            setContacts(contacts);
-            setResult(contacts);
-          });
-          setIsModalVisible(true);
-        }
+        Contacts.getAll((err, contacts: any) => {
+          setContacts(contacts);
+          setResult(contacts);
+        });
+        setIsModalVisible(true);
       });
     } catch (e) {
       console.log(e);

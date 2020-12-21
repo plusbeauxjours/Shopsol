@@ -296,6 +296,10 @@ export default ({route: {params}}) => {
       from: 'EmployeeInfoScreen',
       onRefresh: fetchData,
       IMAGE: data?.images[0]?.IMAGE,
+      IS_MANAGER: data?.IS_MANAGER,
+      mobileNo: params?.data.MobileNo,
+      START: data?.START,
+      END: data?.END,
     });
   };
 

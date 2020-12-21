@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import api from '~/constants/LoggedInApi';
 import {removeSTORE_NAME} from './storeSlice';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 const userSlice = createSlice({
   name: 'user',
@@ -133,6 +134,12 @@ export const getSTORELIST_DATA = () => async (dispatch, getState) => {
   const {
     userReducer: {STORE, MEMBER_SEQ},
   } = getState();
+  const {
+    userReducer: {STORELIST_DATA},
+  } = getState();
+  if (!STORELIST_DATA || STORELIST_DATA?.length === 0) {
+    dispatch(setSplashVisible(true));
+  }
   try {
     const {data} = await api.storeList(STORE, MEMBER_SEQ);
     if (data.message === 'SUCCESS') {
@@ -140,6 +147,8 @@ export const getSTORELIST_DATA = () => async (dispatch, getState) => {
     }
   } catch (e) {
     console.log(e);
+  } finally {
+    dispatch(setSplashVisible(false));
   }
 };
 

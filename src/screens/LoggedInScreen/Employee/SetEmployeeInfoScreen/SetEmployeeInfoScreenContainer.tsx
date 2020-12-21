@@ -14,13 +14,30 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const {
-    EMP_NAME = null,
-    STORE_SEQ = null,
-    EMP_SEQ = null,
-    from = null,
-    onRefresh,
-    IMAGE = null,
-  } = params;
+    // EMP_NAME = null,
+    // STORE_SEQ = null,
+    // EMP_SEQ = null,
+    // from = null,
+    // onRefresh,
+    // IMAGE = null,
+    // IS_MANAGER = null,
+    // EMP_PAY_TYPE = null,
+    // START = null,
+    // END = null,
+    // PAY = null,
+    // mobileNo = null,
+    EMP_NAME = '허군1',
+    EMP_SEQ = '6057',
+    IMAGE = '8aff5a1e9b56d9ed421b769c895fa7fe.jpeg',
+    from = 'EmployeeInfoScreen',
+    IS_MANAGER = '1',
+    EMP_PAY_TYPE = null,
+    START = null,
+    END = null,
+    PAY = null,
+    mobileNo = '01085201031',
+  } = (params = {});
+
   const [START_TYPE, setSTART_TYPE] = useState<string>('0');
   const [isSalaryModalVisible1, setIsSalaryModalVisible1] = useState<boolean>(
     false,
@@ -627,6 +644,12 @@ export default ({route: {params}}) => {
       setEndDaySet={setEndDaySet}
       probationPeriodSet={probationPeriodSet}
       setProbationPeriodSet={setProbationPeriodSet}
+      IS_MANAGER={IS_MANAGER}
+      EMP_PAY_TYPE={EMP_PAY_TYPE}
+      START={START}
+      END={END}
+      PAY={PAY}
+      mobileNo={mobileNo}
     />
   );
 };
