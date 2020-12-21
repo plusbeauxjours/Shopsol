@@ -17,38 +17,26 @@ import {
   PositionType,
   RestType,
 } from './SetEmployeeInfoScreenType';
-import {
-  RenderProbation2,
-  RenderPayYear,
-  RenderPayMonth,
-} from './SetEmployeeInfoScreenRender';
+import {RenderProbation2} from './SetEmployeeInfoScreenRender';
 import {
   PayCheck,
   SalarySystem,
   Authority,
 } from './SetEmployeeInfoScreenComponents';
-import {
-  CheckBoxIcon,
-  UpIcon,
-  DownIcon,
-  HelpCircleIcon,
-} from '~/constants/Icons';
+import {CheckBoxIcon, HelpCircleIcon} from '~/constants/Icons';
 import InputLine from '~/components/InputLine';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import {BackIcon, ForwardIcon} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
 
-interface IBox {
-  isBold: boolean;
-}
-interface IsBefore {
-  isBefore: boolean;
-}
-
 interface IsFirst {
   height?: number;
   isFirst?: boolean;
+}
+
+interface IIsBefore {
+  isBefore: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -73,27 +61,28 @@ const WhiteSpace = styled.View`
 `;
 
 const Line = styled.View`
-  width: ${wp('90%') - 60}px;
-  border-bottom-width: 2px;
-  border-color: #e5e5e5;
-  margin: 20px 0;
-`;
-const DivideLine = styled(Line)`
-  width: 100%;
+  width: ${wp('100%') - 80}px;
+  border-bottom-width: 0.7px;
+  border-color: #cccccc;
+  margin: 20px 0 30px 0;
 `;
 
 const TextInput = styled.TextInput`
   font-size: 15px;
   margin-left: 5px;
   text-align: center;
-  margin-right: 20px;
+  margin-right: 5px;
+  width: 125px;
+  text-align: right;
 `;
 
 const TextInputText = styled.Text`
   font-size: 15px;
   margin-left: 5px;
   text-align: center;
-  margin-right: 20px;
+  margin-right: 5px;
+  width: 125px;
+  text-align: right;
 `;
 
 const RedText = styled.Text`
@@ -105,40 +94,15 @@ const GreyText = styled.Text`
   font-size: 13px;
 `;
 
-const Box = styled.TouchableOpacity<IBox>`
-  width: 100%;
-  height: 60px;
-  margin: 10px 0;
-  border-width: ${(props) => (props.isBold ? 2 : 1)};
-  border-color: #999;
-  border-radius: 10px;
-  background-color: #f7f5f5;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+const Bold = styled.Text`
+  font-weight: 600;
 `;
 
 const BoxTitle = styled.View`
-  width: 100%;
-  padding: 0 20px;
+  width: 200px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-`;
-
-const WorkTypeRow = styled(BoxTitle)`
-  margin-top: 20px;
-  padding: 0;
-`;
-
-const InsuranceBox = styled.View`
-  margin-top: 20px;
-  border-width: 1px;
-  border-radius: 10px;
-  border-color: #cccccc;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 20px;
 `;
 
 const TitleText = styled.Text`
@@ -175,12 +139,6 @@ const ModalContainerRow = styled(Row)`
   justify-content: center;
 `;
 
-const Bold = styled(NameText)`
-  font-weight: bold;
-`;
-const SmallBold = styled(Text)`
-  font-weight: bold;
-`;
 const SideBox = styled.View`
   flex-direction: row;
   justify-content: flex-start;
@@ -197,24 +155,6 @@ const InputCase = styled.View<IsFirst>`
     props.height ? props.height : props.isFirst ? 110 : 70}px;
 `;
 
-const ContentsBox = styled.View`
-  width: 100%;
-  padding-bottom: 20px;
-  justify-content: space-around;
-`;
-
-const PayBox = styled.View`
-  width: 100%;
-  padding: 30px 50px;
-  border-width: 1px;
-  border-radius: 20px;
-  border-color: #cccccc;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  margin: 10px 0;
-`;
-
 const ColumnPayBox = styled.View`
   width: ${wp('100%') - 80}px;
   padding: 20px;
@@ -223,17 +163,6 @@ const ColumnPayBox = styled.View`
   border-color: #cccccc;
   align-items: center;
   margin: 10px 0;
-`;
-
-const FlexEndBox = styled.View`
-  align-items: flex-end;
-  margin-top: 15px;
-`;
-
-const ProbationText = styled.Text`
-  text-align: right;
-  font-size: 15px;
-  width: ${wp('60%') - 10};
 `;
 
 const ModalContainer = styled.View`
@@ -271,35 +200,10 @@ const ModalButton = styled(ModalBarButton)`
   background-color: white;
 `;
 
-const SalarySystemBox = styled.View`
-  margin-bottom: 10px;
-  align-items: flex-start;
-`;
-
-const DateInputCase = styled.TouchableOpacity<IsBefore>`
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 30px;
-  border-color: ${(props) => (props.isBefore ? '#E5E5E5' : '#e85356')};
-  border-width: 2px;
-  margin-left: 20px;
-`;
-
 const ModalSelectBox = styled.View`
   height: 100%;
   justify-content: center;
   align-items: flex-start;
-`;
-
-const ProbationTouchable = styled(Touchable)`
-  width: 120px;
-  height: 30px;
-  border-width: 1px;
-  border-color: #999;
-  justify-content: center;
-  align-items: center;
-  margin: 5px;
 `;
 
 const DateBox = styled.TouchableOpacity`
@@ -426,23 +330,39 @@ const BorderFooter = styled.TouchableOpacity`
   overflow: hidden;
 `;
 
+const SystemSettingButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 0;
+  width: 50px;
+  height: 20px;
+  right: 20px;
+  border-radius: 20px;
+  background-color: #e85356;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SystemSettingText = styled.Text`
+  color: white;
+  font-size: 15px;
+`;
+
+const TextInputLine = styled.View<IIsBefore>`
+  width: ${wp('100%') - 120}px;
+  height: 0.7px;
+  background-color: ${(props) => (props.isBefore ? '#CCCCCC' : '#e85356')};
+`;
+
 export default ({
   submitFn,
   payDay,
-  payMonth,
-  payYear,
-  payYearModal,
-  setPayYearModal,
-  payMonthModal,
-  setPayMonthModal,
+  setPayDay,
   startDay,
   setStartDay,
   endDay,
   setEndDay,
   endDayCheck,
   setEndDayCheck,
-  setPayDay,
-  setPayMonth,
   name,
   click1,
   setClick1,
@@ -510,14 +430,6 @@ export default ({
   setDeductionTypeCheck,
   insuranceCheck,
   setInsuranceCheck,
-  getPeriod,
-  payYearCheck,
-  setPayYearCheck,
-  payMonthCheck,
-  setPayMonthCheck,
-  payYearDirectInput,
-  setPayYearDirectInput,
-  PYcheckDirectInput,
   weekTypeCheck,
   weekTime,
   isEditMode,
@@ -542,9 +454,9 @@ export default ({
   END,
   PAY,
   mobileNo,
+  CALCULATE_DAY,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
-  const py = Number(moment().format('YY'));
   const click1Transition = useTransition(click1);
   const click2Transition = useTransition(click2);
   const click4Transition = useTransition(click4);
@@ -607,22 +519,26 @@ export default ({
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Container>
             <EmployeeCard />
-
             <ListTouchable onPress={() => setClick1(!click1)}>
               <ListContainer as={Animated.View}>
                 <DateBoxText style={{fontWeight: '600'}}>
                   <RedText>(필수) </RedText>
-                  출퇴근정보 입력
+                  출퇴근정보
                 </DateBoxText>
                 <Chevron {...{transition: click1Transition}} />
               </ListContainer>
             </ListTouchable>
             <HiddenItems
               as={Animated.View}
-              style={{height: mix(click1Transition, 0, 100 * 2 + 10)}}>
+              style={{
+                height: mix(
+                  click1Transition,
+                  0,
+                  100 + (endDayCheck ? 35 : 100) + 10,
+                ),
+              }}>
               <InputCase isFirst={true}>
                 <Row>
-                  <RedText>*</RedText>
                   <Text>입사일</Text>
                   <Touchable
                     onPress={() => {
@@ -634,33 +550,12 @@ export default ({
                   </Touchable>
                 </Row>
                 <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
-                  <Text>{moment(startDay).format('YYYY.MM.DD')}</Text>
+                  <Text>{moment(startDay).format('YYYY년 M월 D일')}</Text>
                 </DateTouchable>
                 <InputLine isBefore={false} />
               </InputCase>
               <InputCase height={150}>
-                <Row>
-                  <RedText>*</RedText>
-                  <Text>퇴사일</Text>
-                  <Touchable
-                    onPress={() => {
-                      explainModal(
-                        '정해진 근무종료일이 없다면 [퇴사일 없음]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
-                      );
-                    }}>
-                    <HelpCircleIcon />
-                  </Touchable>
-                </Row>
-                <DateTouchable
-                  onPress={() => setIsEndDayModalVisible(true)}
-                  disabled={endDayCheck}>
-                  <Text>
-                    {!endDayCheck ? moment(endDay).format('YYYY.MM.DD') : ''}
-                  </Text>
-                </DateTouchable>
-                <InputLine isBefore={endDayCheck} />
                 <Touchable
-                  style={{marginTop: 10}}
                   onPress={() => {
                     setEndDayCheck(!endDayCheck);
                     setEndDay(moment());
@@ -674,6 +569,31 @@ export default ({
                     <GreyText style={{marginLeft: 10}}>퇴사일 없음</GreyText>
                   </SideBox>
                 </Touchable>
+                {!endDayCheck && (
+                  <>
+                    <Row style={{marginTop: 10}}>
+                      <Text>퇴사일</Text>
+                      <Touchable
+                        onPress={() => {
+                          explainModal(
+                            '정해진 근무종료일이 없다면 [퇴사일 없음]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
+                          );
+                        }}>
+                        <HelpCircleIcon />
+                      </Touchable>
+                    </Row>
+                    <DateTouchable
+                      onPress={() => setIsEndDayModalVisible(true)}
+                      disabled={endDayCheck}>
+                      <Text>
+                        {!endDayCheck
+                          ? moment(endDay).format('YYYY년 M월 D일')
+                          : ''}
+                      </Text>
+                    </DateTouchable>
+                    <InputLine isBefore={endDayCheck} />
+                  </>
+                )}
               </InputCase>
             </HiddenItems>
             <BorderFooter
@@ -681,66 +601,70 @@ export default ({
               activeOpacity={1}
             />
 
-            <Box
-              isBold={click2}
-              onPress={() => {
-                setClick2(!click2), setPayMonth(moment(payDay).format('MM'));
-              }}>
-              <BoxTitle>
-                <TitleText>
+            <ListTouchable onPress={() => setClick2(!click2)}>
+              <ListContainer as={Animated.View}>
+                <DateBoxText style={{fontWeight: '600'}}>
                   <RedText>(필수) </RedText>
-                  급여정보 입력
-                </TitleText>
-                {click2 ? <UpIcon color="#999" /> : <DownIcon color="#999" />}
-              </BoxTitle>
-            </Box>
-            {click2 && (
-              <ContentsBox>
-                <InputCase>
-                  <Row>
-                    <RedText>*</RedText>
-                    <Text>급여 유형&nbsp;</Text>
-                  </Row>
-                  <Line />
-                  <SelectArea>
-                    <PayCheck
-                      selection={0}
-                      text={'시급'}
-                      payCheck={payCheck}
-                      setPay2={setPay2}
-                      setPay3={setPay3}
-                      setPay4={setPay4}
-                      setPay5={setPay5}
-                      setPayCheck={setPayCheck}
-                    />
-                    <PayCheck
-                      selection={1}
-                      text={'일급'}
-                      payCheck={payCheck}
-                      setPay2={setPay2}
-                      setPay3={setPay3}
-                      setPay4={setPay4}
-                      setPay5={setPay5}
-                      setPayCheck={setPayCheck}
-                    />
-                    <PayCheck
-                      selection={2}
-                      text={'월급'}
-                      payCheck={payCheck}
-                      setPay2={setPay2}
-                      setPay3={setPay3}
-                      setPay4={setPay4}
-                      setPay5={setPay5}
-                      setPayCheck={setPayCheck}
-                    />
-                  </SelectArea>
-                  {payCheck[0] && (
-                    <>
-                      <PayBox>
+                  급여정보
+                </DateBoxText>
+                <Chevron {...{transition: click2Transition}} />
+              </ListContainer>
+            </ListTouchable>
+            <HiddenItems
+              as={Animated.View}
+              style={{
+                height: mix(
+                  click2Transition,
+                  0,
+                  410 +
+                    (payCheck[0] ? 80 : 0) +
+                    (probation ? 260 : 0) +
+                    (deductionTypeCheck.indexOf(true) == 0 ? 540 : 290),
+                ),
+              }}>
+              <InputCase style={{paddingTop: 40}} isFirst={true} height={410}>
+                <SelectArea>
+                  <PayCheck
+                    selection={0}
+                    text={'시급'}
+                    payCheck={payCheck}
+                    setPay2={setPay2}
+                    setPay3={setPay3}
+                    setPay4={setPay4}
+                    setPay5={setPay5}
+                    setPayCheck={setPayCheck}
+                  />
+                  <PayCheck
+                    selection={1}
+                    text={'일급'}
+                    payCheck={payCheck}
+                    setPay2={setPay2}
+                    setPay3={setPay3}
+                    setPay4={setPay4}
+                    setPay5={setPay5}
+                    setPayCheck={setPayCheck}
+                  />
+                  <PayCheck
+                    selection={2}
+                    text={'월급'}
+                    payCheck={payCheck}
+                    setPay2={setPay2}
+                    setPay3={setPay3}
+                    setPay4={setPay4}
+                    setPay5={setPay5}
+                    setPayCheck={setPayCheck}
+                  />
+                </SelectArea>
+                {payCheck[0] && (
+                  <>
+                    <WhiteSpace />
+                    <ColumnPayBox>
+                      <Row
+                        style={{width: 200, justifyContent: 'space-between'}}>
                         <Text>시급</Text>
                         <Row>
                           <TextInput
-                            placeholder={'금액을 입력해주세요.'}
+                            placeholder={'금액을 입력해주세요'}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay(text.replace(/,/g, ''));
@@ -752,38 +676,52 @@ export default ({
                           />
                           <Text>원</Text>
                         </Row>
-                      </PayBox>
-                      <GreyText>
-                        *2020년 최저 시급은 {utils.miniPay}원 입니다.
-                      </GreyText>
-                    </>
-                  )}
-                  {payCheck[1] && (
-                    <PayBox>
-                      <Text>일급</Text>
-                      <Row>
-                        <TextInput
-                          placeholder={'금액을 입력해주세요.'}
-                          placeholderTextColor={'#E5E5E5'}
-                          onChangeText={(text) => {
-                            setPay(text.replace(/,/g, ''));
-                          }}
-                          value={pay
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                          keyboardType={'number-pad'}
-                        />
-                        <Text>원</Text>
                       </Row>
-                    </PayBox>
-                  )}
-                  {payCheck[2] && (
+                    </ColumnPayBox>
+                    <GreyText
+                      style={{
+                        position: 'absolute',
+                        alignSelf: 'center',
+                        top: 160,
+                      }}>
+                      2020년 최저 시급은 {utils.miniPay}원 입니다.
+                    </GreyText>
+                  </>
+                )}
+                {payCheck[1] && (
+                  <>
+                    <WhiteSpace />
+                    <ColumnPayBox>
+                      <Row
+                        style={{width: 200, justifyContent: 'space-between'}}>
+                        <Text>일급</Text>
+                        <Row>
+                          <TextInput
+                            placeholder={'금액을 입력해주세요'}
+                            placeholderTextColor={'#E5E5E5'}
+                            onChangeText={(text) => {
+                              setPay(text.replace(/,/g, ''));
+                            }}
+                            value={pay
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            keyboardType={'number-pad'}
+                          />
+                          <Text>원</Text>
+                        </Row>
+                      </Row>
+                    </ColumnPayBox>
+                  </>
+                )}
+                {payCheck[2] && (
+                  <>
+                    <WhiteSpace />
                     <ColumnPayBox>
                       <BoxTitle>
                         <Text>기본급</Text>
                         <Row>
                           <TextInput
-                            placeholder={'금액을 입력해주세요.'}
+                            placeholder={'금액을 입력해주세요'}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay(text.replace(/,/g, ''));
@@ -801,7 +739,7 @@ export default ({
                         <Text>식대</Text>
                         <Row>
                           <TextInput
-                            placeholder={'금액을 입력해주세요.'}
+                            placeholder={'금액을 입력해주세요'}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay2(text.replace(/,/g, ''));
@@ -821,7 +759,7 @@ export default ({
                         <Text>자가운전</Text>
                         <Row>
                           <TextInput
-                            placeholder={'금액을 입력해주세요.'}
+                            placeholder={'금액을 입력해주세요'}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay3(text.replace(/,/g, ''));
@@ -841,7 +779,7 @@ export default ({
                         <Text>상여</Text>
                         <Row>
                           <TextInput
-                            placeholder={'금액을 입력해주세요.'}
+                            placeholder={'금액을 입력해주세요'}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay4(text.replace(/,/g, ''));
@@ -861,7 +799,7 @@ export default ({
                         <Text>성과급</Text>
                         <Row>
                           <TextInput
-                            placeholder={'금액을 입력해주세요.'}
+                            placeholder={'금액을 입력해주세요'}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay5(text.replace(/,/g, ''));
@@ -885,147 +823,12 @@ export default ({
                         </Row>
                       </BoxTitle>
                     </ColumnPayBox>
-                  )}
-                  {payCheck[0] && (
-                    <>
-                      <WorkTypeRow>
-                        <Row>
-                          <Text>수습기간 설정</Text>
-                          <Touchable
-                            onPress={() =>
-                              explainModal(
-                                "급여계산 : 입력하신 '입사일'부터 '수습종료일'까지의 기간동안 '급여비율'에 따라 일할계산 됩니다.",
-                              )
-                            }>
-                            <HelpCircleIcon />
-                          </Touchable>
-                        </Row>
-                        <Touchable
-                          onPress={() => {
-                            if (probation) {
-                              let periodvalue = JSON.parse(
-                                JSON.stringify(periodCheck),
-                              ).fill(false);
-                              let percentvalue = JSON.parse(
-                                JSON.stringify(percentCheck),
-                              ).fill(false);
-                              setProbationPeriod('');
-                              setProbationPercent('');
-                              setPeriodCheck(periodvalue);
-                              setPercentCheck(percentvalue);
-                              setPercentDirectInput('');
-                            }
-                            setProbation(!probation);
-                          }}>
-                          {probation ? (
-                            <CheckBoxIcon size={25} color="#e85356" />
-                          ) : (
-                            <CheckBoxIcon size={25} color="#CCCCCC" />
-                          )}
-                        </Touchable>
-                      </WorkTypeRow>
-                      <DivideLine />
-                      {probation && (
-                        <>
-                          <GreyText>
-                            * 수습기간은 [입사일]인&nbsp;
-                            {moment(startDay).format('YYYY년 M월 D일')}부터
-                            [수습종료일]까지 적용됩니다.
-                          </GreyText>
-                          <FlexEndBox>
-                            <Row>
-                              <ProbationText>수습종료일</ProbationText>
-                              <ProbationTouchable
-                                onPress={() =>
-                                  setIsProbationPeriodModalVisible(true)
-                                }>
-                                <Text>
-                                  {moment(probationPeriod).format(
-                                    'YYYY년 M월 D일',
-                                  )}
-                                </Text>
-                              </ProbationTouchable>
-                            </Row>
-                            <Row>
-                              <ProbationText>급여비율</ProbationText>
-                              <ProbationTouchable
-                                onPress={() => {
-                                  setIsProbationPercentModalVisible(true);
-                                }}>
-                                <Text>
-                                  {probationPercent}
-                                  {probationPercent && '%'}
-                                </Text>
-                              </ProbationTouchable>
-                            </Row>
-                          </FlexEndBox>
-                        </>
-                      )}
-                      <Modal
-                        onRequestClose={() => {
-                          let value = JSON.parse(JSON.stringify(percentCheck));
-                          value.fill(false);
-                          setIsProbationPercentModalVisible(false);
-                          setPercentCheck(value);
-                          setPercentDirectInput('');
-                        }}
-                        onBackdropPress={() => {
-                          let value = JSON.parse(JSON.stringify(percentCheck));
-                          value.fill(false);
-                          setIsProbationPercentModalVisible(false);
-                          setPercentCheck(value);
-                          setPercentDirectInput('');
-                        }}
-                        isVisible={isProbationPercentModalVisible}
-                        style={{margin: 0, justifyContent: 'flex-end'}}
-                        avoidKeyboard={true}>
-                        <ModalContainer>
-                          <TitleText>급여비율 선택(%)</TitleText>
-                          <ModalBox>
-                            <RenderProbation2
-                              rowData={[100, 90, 80, 70]}
-                              rowNum={1}
-                              percentCheck={percentCheck}
-                              setPercentCheck={setPercentCheck}
-                              percentDirectInput={percentDirectInput}
-                              setPercentDirectInput={setPercentDirectInput}
-                            />
-                            <RenderProbation2
-                              rowData={[60, 50, 'directInput']}
-                              rowNum={2}
-                              percentCheck={percentCheck}
-                              setPercentCheck={setPercentCheck}
-                              percentDirectInput={percentDirectInput}
-                              setPercentDirectInput={setPercentDirectInput}
-                            />
-                          </ModalBox>
-                        </ModalContainer>
-                        <ModalFooter>
-                          <ModalButton
-                            onPress={() => {
-                              let value = JSON.parse(
-                                JSON.stringify(percentCheck),
-                              );
-                              value.fill(false);
-                              setIsProbationPercentModalVisible(false);
-                              setPercentCheck(value);
-                              setPercentDirectInput('');
-                            }}>
-                            <NameText style={{color: '#e85356'}}>닫기</NameText>
-                          </ModalButton>
-                          <ModalButton
-                            style={{backgroundColor: '#e85356'}}
-                            onPress={() => checkDirectInput2()}>
-                            <NameText style={{color: 'white'}}>확인</NameText>
-                          </ModalButton>
-                        </ModalFooter>
-                      </Modal>
-                    </>
-                  )}
-                  {!payCheck[2] && (
-                    <SalarySystemBox>
-                      <Text>항목 선택</Text>
-                      <DivideLine />
+                  </>
+                )}
+                {!payCheck[2] && (
+                  <>
+                    <Line />
+                    <ColumnPayBox>
                       <SalarySystem
                         selection={1}
                         weekTime={weekTime}
@@ -1045,6 +848,7 @@ export default ({
                         isHelpModalVisible={isHelpModalVisible}
                         setIsHelpModalVisible={setIsHelpModalVisible}
                       />
+                      <WhiteSpace />
                       <SalarySystem
                         selection={2}
                         weekTime={weekTime}
@@ -1064,6 +868,7 @@ export default ({
                         isHelpModalVisible={isHelpModalVisible}
                         setIsHelpModalVisible={setIsHelpModalVisible}
                       />
+                      <WhiteSpace />
                       <SalarySystem
                         selection={0}
                         weekTime={weekTime}
@@ -1083,240 +888,286 @@ export default ({
                         isHelpModalVisible={isHelpModalVisible}
                         setIsHelpModalVisible={setIsHelpModalVisible}
                       />
-                    </SalarySystemBox>
-                  )}
-                  <ContentsBox>
-                    <Row>
-                      <RedText>*</RedText>
-                      <Text>공제 유형 선택&nbsp;</Text>
-                    </Row>
-                    <Line />
-                    <SelectArea>
-                      <DeductionType
-                        selection={0}
-                        text={'4대보험'}
-                        deductionTypeCheck={deductionTypeCheck}
-                        setDeductionTypeCheck={setDeductionTypeCheck}
-                      />
-                      <DeductionType
-                        selection={1}
-                        text={'프리랜서(3.3%)'}
-                        deductionTypeCheck={deductionTypeCheck}
-                        setDeductionTypeCheck={setDeductionTypeCheck}
-                      />
-                      <DeductionType
-                        selection={2}
-                        text={'적용안함'}
-                        deductionTypeCheck={deductionTypeCheck}
-                        setDeductionTypeCheck={setDeductionTypeCheck}
-                      />
-                    </SelectArea>
-                    {deductionTypeCheck[DEDUCTION_TYPE_INDEX_INSURANCE] && (
-                      <InsuranceBox>
-                        <InsuranceType
-                          selection={0}
-                          text={'국민연금'}
-                          insuranceCheck={insuranceCheck}
-                          setInsuranceCheck={setInsuranceCheck}
-                        />
-                        <WhiteSpace />
-                        <InsuranceType
-                          selection={1}
-                          text={'건강보험'}
-                          insuranceCheck={insuranceCheck}
-                          setInsuranceCheck={setInsuranceCheck}
-                        />
-                        <WhiteSpace />
-                        <InsuranceType
-                          selection={2}
-                          text={'고용보험'}
-                          insuranceCheck={insuranceCheck}
-                          setInsuranceCheck={setInsuranceCheck}
-                        />
-                        <WhiteSpace />
-                        <InsuranceType
-                          selection={3}
-                          text={'산재보험'}
-                          insuranceCheck={insuranceCheck}
-                          setInsuranceCheck={setInsuranceCheck}
-                        />
-                      </InsuranceBox>
-                    )}
-                  </ContentsBox>
-                  <Row>
-                    <RedText>*</RedText>
-                    <Text>적용 시작 월 설정</Text>
-                    <Touchable
-                      onPress={() => {
-                        explainModal(
-                          '[ 급여 적용 시작월 이란? ]\n\n설정한 급여가 적용되는 월이며, 7월로 설정할 경우 정산일 기준 7월에 시작하는 날부터 적용됩니다.\nEx) 적용시작월 7월, 정산일 15일\n= 급여 계산 시작일: 7월16일\n\n[ 급여가 변경되었을 경우? ]\n\n기존 직원의 급여가 변경된 경우 [직원설정]에서 변경된 직원의 급여를 입력 후 변경이 시작되는 월을 설정해놓으면 해당 월부터 자동으로 급여 변경이 적용됩니다.',
-                        );
-                      }}>
-                      <HelpCircleIcon />
-                    </Touchable>
-                  </Row>
+                    </ColumnPayBox>
+                  </>
+                )}
+              </InputCase>
+              {payCheck[0] && (
+                <InputCase height={probation ? 340 : 80}>
                   <Line />
-                  <Row style={{marginBottom: 5}}>
-                    <SmallBold>급여정산일:&nbsp;</SmallBold>
-                    <Text>
-                      {utils.calculateDay == 1
-                        ? '매월 말일'
-                        : `${utils.calculateDay - 1}일`}
-                    </Text>
-                  </Row>
-                  <Row>
-                    <SmallBold>{getPeriod(utils.calculateDay)}</SmallBold>
-                    <Text>부터 급여에 적용됩니다</Text>
-                  </Row>
-                  <WhiteSpace />
-                  <FlexEndBox>
-                    <Row>
-                      <Text>20</Text>
-                      <DateInputCase
-                        style={{marginLeft: 5}}
-                        onPress={() => setPayYearModal(true)}
-                        isBefore={payMonth === ''}>
-                        <Bold>{payYear}</Bold>
-                      </DateInputCase>
-                      <Text>&nbsp;년</Text>
-                      <DateInputCase
-                        onPress={() => setPayMonthModal(true)}
-                        isBefore={payMonth === ''}>
-                        <Bold>{payMonth}</Bold>
-                      </DateInputCase>
-                      <Text>&nbsp;월</Text>
-                    </Row>
-                  </FlexEndBox>
+                  <Touchable
+                    onPress={() => {
+                      if (probation) {
+                        let periodvalue = JSON.parse(
+                          JSON.stringify(periodCheck),
+                        ).fill(false);
+                        let percentvalue = JSON.parse(
+                          JSON.stringify(percentCheck),
+                        ).fill(false);
+                        setProbationPeriod(moment());
+                        setProbationPercent('');
+                        setPeriodCheck(periodvalue);
+                        setPercentCheck(percentvalue);
+                        setPercentDirectInput('');
+                      }
+                      setProbation(!probation);
+                    }}>
+                    <SideBox>
+                      {!probation ? (
+                        <CheckBoxIcon size={25} color="#e85356" />
+                      ) : (
+                        <CheckBoxIcon size={25} color="#CCCCCC" />
+                      )}
+                      <GreyText style={{marginLeft: 10}}>
+                        수습기간 없음
+                      </GreyText>
+                    </SideBox>
+                  </Touchable>
+                  {probation && (
+                    <>
+                      <WhiteSpace />
+                      <ColumnPayBox>
+                        <Row
+                          style={{
+                            width: wp('100%') - 80,
+                            paddingHorizontal: 20,
+                            justifyContent: 'space-between',
+                          }}>
+                          <Text>수습종료일</Text>
+                          <Touchable
+                            onPress={() =>
+                              explainModal(
+                                "급여계산 : 입력하신 '입사일'부터 '수습종료일'까지의 기간동안 '급여비율'에 따라 일할계산 됩니다.",
+                              )
+                            }>
+                            <HelpCircleIcon />
+                          </Touchable>
+                        </Row>
+                        <DateTouchable
+                          style={{
+                            paddingHorizontal: 20,
+                            alignItems: 'flex-start',
+                            width: wp('100%') - 80,
+                          }}
+                          onPress={() => setIsProbationPeriodModalVisible(true)}
+                          disabled={!probation}>
+                          <Text>
+                            {probation
+                              ? moment(probationPeriod).format('YYYY년 M월 D일')
+                              : ''}
+                          </Text>
+                        </DateTouchable>
+                        <TextInputLine isBefore={!probation} />
+                        <WhiteSpace />
+                        <Row
+                          style={{
+                            width: wp('100%') - 80,
+                            paddingHorizontal: 20,
+                            justifyContent: 'space-between',
+                          }}>
+                          <Text>수습기간 급여비율</Text>
+                          <SystemSettingButton
+                            onPress={() =>
+                              setIsProbationPercentModalVisible(true)
+                            }>
+                            <SystemSettingText>
+                              {probationPercent
+                                ? `${probationPercent}%`
+                                : '설정'}
+                            </SystemSettingText>
+                          </SystemSettingButton>
+                        </Row>
+                        <WhiteSpace />
+                        <GreyText style={{marginTop: 10, textAlign: 'center'}}>
+                          * 수습기간은 [입사일]인&nbsp;
+                          <Bold>
+                            {moment(startDay).format('YYYY년 M월 D일')}
+                          </Bold>
+                          부터
+                        </GreyText>
+                        <GreyText style={{marginTop: 10, textAlign: 'center'}}>
+                          [수습종료일]까지 적용됩니다.
+                        </GreyText>
+                      </ColumnPayBox>
+                    </>
+                  )}
+
+                  <Modal
+                    onRequestClose={() => {
+                      let value = JSON.parse(JSON.stringify(percentCheck));
+                      value.fill(false);
+                      setIsProbationPercentModalVisible(false);
+                      setPercentCheck(value);
+                      setPercentDirectInput('');
+                    }}
+                    onBackdropPress={() => {
+                      let value = JSON.parse(JSON.stringify(percentCheck));
+                      value.fill(false);
+                      setIsProbationPercentModalVisible(false);
+                      setPercentCheck(value);
+                      setPercentDirectInput('');
+                    }}
+                    isVisible={isProbationPercentModalVisible}
+                    style={{margin: 0, justifyContent: 'flex-end'}}
+                    avoidKeyboard={true}>
+                    <ModalContainer>
+                      <TitleText>급여비율 선택(%)</TitleText>
+                      <ModalBox>
+                        <RenderProbation2
+                          rowData={[100, 90, 80, 70]}
+                          rowNum={1}
+                          percentCheck={percentCheck}
+                          setPercentCheck={setPercentCheck}
+                          percentDirectInput={percentDirectInput}
+                          setPercentDirectInput={setPercentDirectInput}
+                        />
+                        <RenderProbation2
+                          rowData={[60, 50, 'directInput']}
+                          rowNum={2}
+                          percentCheck={percentCheck}
+                          setPercentCheck={setPercentCheck}
+                          percentDirectInput={percentDirectInput}
+                          setPercentDirectInput={setPercentDirectInput}
+                        />
+                      </ModalBox>
+                    </ModalContainer>
+                    <ModalFooter>
+                      <ModalButton
+                        onPress={() => {
+                          let value = JSON.parse(JSON.stringify(percentCheck));
+                          value.fill(false);
+                          setIsProbationPercentModalVisible(false);
+                          setPercentCheck(value);
+                          setPercentDirectInput('');
+                        }}>
+                        <NameText style={{color: '#e85356'}}>닫기</NameText>
+                      </ModalButton>
+                      <ModalButton
+                        style={{backgroundColor: '#e85356'}}
+                        onPress={() => checkDirectInput2()}>
+                        <NameText style={{color: 'white'}}>확인</NameText>
+                      </ModalButton>
+                    </ModalFooter>
+                  </Modal>
                 </InputCase>
-              </ContentsBox>
-            )}
-            <Modal
-              onRequestClose={() => {
-                let value = JSON.parse(JSON.stringify(payYearCheck));
-                value.fill(false);
-                setPayYearModal(false);
-                setPayYearCheck(value);
-              }}
-              onBackdropPress={() => {
-                let value = JSON.parse(JSON.stringify(payYearCheck));
-                value.fill(false);
-                setPayYearModal(false);
-                setPayYearCheck(value);
-              }}
-              isVisible={payYearModal}
-              style={{margin: 0, justifyContent: 'flex-end'}}
-              avoidKeyboard={true}>
-              <ModalContainer>
-                <TitleText>년도 선택</TitleText>
-                <ModalBox>
-                  <RenderPayYear
-                    rowData={[py - 3, py - 2, py - 1, py]}
-                    rowNum={1}
-                    payYearCheck={payYearCheck}
-                    setPayYearCheck={setPayYearCheck}
-                    payYearDirectInput={payYearDirectInput}
-                    setPayYearDirectInput={setPayYearDirectInput}
+              )}
+              <InputCase
+                style={{paddingTop: 10}}
+                isFirst={true}
+                height={deductionTypeCheck.indexOf(true) == 0 ? 540 : 290}>
+                <Line />
+                <SelectArea>
+                  <DeductionType
+                    selection={0}
+                    text={'4대보험'}
+                    deductionTypeCheck={deductionTypeCheck}
+                    setDeductionTypeCheck={setDeductionTypeCheck}
                   />
-                  <RenderPayYear
-                    rowData={[Number(py) + 1, Number(py) + 2, 'directInput']}
-                    rowNum={2}
-                    payYearCheck={payYearCheck}
-                    setPayYearCheck={setPayYearCheck}
-                    payYearDirectInput={payYearDirectInput}
-                    setPayYearDirectInput={setPayYearDirectInput}
+                  <DeductionType
+                    selection={1}
+                    text={'프리랜서(3.3%)'}
+                    deductionTypeCheck={deductionTypeCheck}
+                    setDeductionTypeCheck={setDeductionTypeCheck}
                   />
-                </ModalBox>
-              </ModalContainer>
-              <ModalFooter>
-                <ModalButton
-                  onPress={() => {
-                    let value = JSON.parse(JSON.stringify(payYearCheck));
-                    value.fill(false);
-                    setPayYearModal(false);
-                    setPayYearCheck(value);
-                  }}>
-                  <NameText style={{color: '#e85356'}}>닫기</NameText>
-                </ModalButton>
-                <ModalButton
-                  style={{backgroundColor: '#e85356'}}
-                  onPress={() => {
-                    PYcheckDirectInput();
-                  }}>
-                  <NameText style={{color: 'white'}}>확인</NameText>
-                </ModalButton>
-              </ModalFooter>
-            </Modal>
-            <Modal
-              onRequestClose={() => {
-                let value = JSON.parse(JSON.stringify(payMonthCheck));
-                value.fill(false);
-                setPayMonthModal(false);
-                setPayMonthCheck(value);
-              }}
-              onBackdropPress={() => {
-                let value = JSON.parse(JSON.stringify(payMonthCheck));
-                value.fill(false);
-                setPayMonthModal(false);
-                setPayMonthCheck(value);
-              }}
-              isVisible={payMonthModal}
-              style={{margin: 0, justifyContent: 'flex-end'}}
-              avoidKeyboard={true}>
-              <ModalContainer style={{height: 250}}>
-                <TitleText>월 선택</TitleText>
-                <ModalBox>
-                  <RenderPayMonth
-                    rowData={[1, 2, 3, 4]}
-                    rowNum={1}
-                    payMonthCheck={payMonthCheck}
-                    setPayMonthCheck={setPayMonthCheck}
+                  <DeductionType
+                    selection={2}
+                    text={'적용안함'}
+                    deductionTypeCheck={deductionTypeCheck}
+                    setDeductionTypeCheck={setDeductionTypeCheck}
                   />
-                  <RenderPayMonth
-                    rowData={[5, 6, 7, 8]}
-                    rowNum={2}
-                    payMonthCheck={payMonthCheck}
-                    setPayMonthCheck={setPayMonthCheck}
-                  />
-                  <RenderPayMonth
-                    rowData={[9, 10, 11, 12]}
-                    rowNum={3}
-                    payMonthCheck={payMonthCheck}
-                    setPayMonthCheck={setPayMonthCheck}
-                  />
-                </ModalBox>
-              </ModalContainer>
-              <ModalFooter>
-                <ModalButton
-                  onPress={() => {
-                    let value = JSON.parse(JSON.stringify(payMonthCheck));
-                    value.fill(false);
-                    setPayMonthModal(false);
-                    setPayMonthCheck(value);
-                  }}>
-                  <NameText style={{color: '#e85356'}}>닫기</NameText>
-                </ModalButton>
-                <ModalButton
-                  style={{backgroundColor: '#e85356'}}
-                  onPress={() => {
-                    let value = JSON.parse(JSON.stringify(payMonthCheck));
-                    value.fill(false);
-                    if (!payMonthCheck.includes(true)) {
-                      return;
-                    }
-                    let payMonth = payMonthCheck.indexOf(true) + 1;
-                    let payMonthFormat = payMonth;
-                    payMonthFormat < 10
-                      ? (payMonthFormat = '0' + payMonthFormat)
-                      : payMonthFormat;
-                    setPayMonthModal(false);
-                    setPayMonth(payMonth);
-                    setPayDay(`20${payYear}-${payMonthFormat}-01`);
-                    setPayMonthCheck(value);
-                  }}>
-                  <NameText style={{color: 'white'}}>확인</NameText>
-                </ModalButton>
-              </ModalFooter>
-            </Modal>
+                </SelectArea>
+                <WhiteSpace />
+                {deductionTypeCheck[DEDUCTION_TYPE_INDEX_INSURANCE] && (
+                  <ColumnPayBox style={{alignItems: 'flex-start'}}>
+                    <InsuranceType
+                      selection={0}
+                      text={'국민연금'}
+                      insuranceCheck={insuranceCheck}
+                      setInsuranceCheck={setInsuranceCheck}
+                    />
+                    <WhiteSpace />
+                    <InsuranceType
+                      selection={1}
+                      text={'건강보험'}
+                      insuranceCheck={insuranceCheck}
+                      setInsuranceCheck={setInsuranceCheck}
+                    />
+                    <WhiteSpace />
+                    <InsuranceType
+                      selection={2}
+                      text={'고용보험'}
+                      insuranceCheck={insuranceCheck}
+                      setInsuranceCheck={setInsuranceCheck}
+                    />
+                    <WhiteSpace />
+                    <InsuranceType
+                      selection={3}
+                      text={'산재보험'}
+                      insuranceCheck={insuranceCheck}
+                      setInsuranceCheck={setInsuranceCheck}
+                    />
+                  </ColumnPayBox>
+                )}
+
+                <GreyText
+                  style={{marginTop: 15, marginBottom: 5, textAlign: 'center'}}>
+                  급여정산일은&nbsp;
+                  <Bold>
+                    {CALCULATE_DAY == 1
+                      ? '매월 말일'
+                      : `${CALCULATE_DAY - 1}일`}
+                  </Bold>
+                  입니다.
+                </GreyText>
+                <GreyText style={{marginBottom: 15, textAlign: 'center'}}>
+                  <Bold>
+                    {moment(payDay).format('YYYY년 M월')} {CALCULATE_DAY}
+                  </Bold>
+                  일부터 급여에 적용됩니다
+                </GreyText>
+                <Row style={{justifyContent: 'center', marginVertical: 10}}>
+                  <DateBox
+                    onPress={() =>
+                      setPayDay(
+                        moment(payDay)
+                          .subtract(1, 'months')
+                          .format('YYYY-MM-01'),
+                      )
+                    }>
+                    <BackIcon size={22} color={'#f4aaab'} />
+                  </DateBox>
+                  <DateBoxText>
+                    {moment(payDay).format('YYYY년 M월')}
+                  </DateBoxText>
+                  <DateBox
+                    onPress={() =>
+                      setPayDay(
+                        moment(payDay).add(1, 'months').format('YYYY-MM-01'),
+                      )
+                    }>
+                    <ForwardIcon size={22} color={'#f4aaab'} />
+                  </DateBox>
+                </Row>
+                <Row style={{marginTop: 10, justifyContent: 'center'}}>
+                  <GreyText style={{textAlign: 'center'}}>
+                    급여 적용 시작월은&nbsp;
+                    <Bold>{moment(payDay).format('M월')}</Bold>입니다.
+                  </GreyText>
+                  <Touchable
+                    onPress={() => {
+                      explainModal(
+                        '[ 급여 적용 시작월 이란? ]\n\n설정한 급여가 적용되는 월이며, 7월로 설정할 경우 정산일 기준 7월에 시작하는 날부터 적용됩니다.\nEx) 적용시작월 7월, 정산일 15일\n= 급여 계산 시작일: 7월16일\n\n[ 급여가 변경되었을 경우? ]\n\n기존 직원의 급여가 변경된 경우 [직원설정]에서 변경된 직원의 급여를 입력 후 변경이 시작되는 월을 설정해놓으면 해당 월부터 자동으로 급여 변경이 적용됩니다.',
+                      );
+                    }}>
+                    <HelpCircleIcon />
+                  </Touchable>
+                </Row>
+              </InputCase>
+            </HiddenItems>
+            <BorderFooter
+              onPress={() => setClick2(!click2)}
+              activeOpacity={1}
+            />
             <Modal
               isVisible={isSalaryModalVisible1}
               onRequestClose={() => setIsSalaryModalVisible1(false)}
@@ -1420,7 +1271,7 @@ export default ({
             <ListTouchable onPress={() => setClick4(!click4)}>
               <ListContainer as={Animated.View}>
                 <DateBoxText style={{fontWeight: '600'}}>
-                  (선택) 연차 설정
+                  (선택) 연차
                 </DateBoxText>
                 <Chevron {...{transition: click4Transition}} />
               </ListContainer>
@@ -1447,10 +1298,6 @@ export default ({
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         keyboardType={'number-pad'}
                         maxLength={3}
-                        style={{
-                          width: 130,
-                          textAlign: 'right',
-                        }}
                       />
                       <Text>일</Text>
                     </Row>
@@ -1464,7 +1311,7 @@ export default ({
                         placeholderTextColor={'#E5E5E5'}
                         onChangeText={(text) => {
                           if (Number(totalVacation) - Number(text) < 0) {
-                            alertModal('총연차보다 낮게 입력해주세요.');
+                            alertModal('총연차보다 낮게 입력해주세요');
                             setUseVacation('0');
                             setRemainderVacation(
                               Number(totalVacation) - Number('0'),
@@ -1481,10 +1328,6 @@ export default ({
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         keyboardType={'number-pad'}
                         maxLength={3}
-                        style={{
-                          width: 130,
-                          textAlign: 'right',
-                        }}
                       />
                       <Text>일</Text>
                     </Row>
@@ -1520,7 +1363,7 @@ export default ({
                   </DateBox>
                 </Row>
                 <GreyText style={{textAlign: 'center'}}>
-                  {annual_START}년에 연차가 적용됩니다.
+                  <Bold>{annual_START}년</Bold>에 연차가 적용됩니다.
                 </GreyText>
               </InputCase>
             </HiddenItems>
@@ -1532,7 +1375,7 @@ export default ({
             <ListTouchable onPress={() => setClick5(!click5)}>
               <ListContainer as={Animated.View}>
                 <DateBoxText style={{fontWeight: '600'}}>
-                  (선택) 직책/권한 설정, 급여보기 설정
+                  (선택) 직책 / 권한 , 급여보기
                 </DateBoxText>
                 <Chevron {...{transition: click5Transition}} />
               </ListContainer>
@@ -1543,10 +1386,10 @@ export default ({
                 height: mix(
                   click5Transition,
                   0,
-                  positionCheck[1] ? 50 + 340 : 50 + 115,
+                  positionCheck[1] ? 65 + 340 : 65 + 115,
                 ),
               }}>
-              <InputCase isFirst={true} height={50}>
+              <InputCase style={{paddingTop: 40}} isFirst={true} height={65}>
                 <SelectArea>
                   <PositionType
                     selection={0}

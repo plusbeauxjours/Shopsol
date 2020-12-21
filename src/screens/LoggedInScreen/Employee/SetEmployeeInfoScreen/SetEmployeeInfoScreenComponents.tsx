@@ -28,7 +28,6 @@ const TypeContainer = styled.TouchableOpacity`
 `;
 
 const Text = styled.Text`
-  font-size: 15px;
   margin-left: 5px;
 `;
 
@@ -172,7 +171,7 @@ export const SalarySystem = ({
   let value = JSON.parse(JSON.stringify(salarySystemCheck));
   const {STORE} = useSelector((state: any) => state.userReducer);
   return (
-    <Row style={{marginBottom: 25}}>
+    <Row>
       <TypeContainer
         onPress={() => {
           value[selection] = !value[selection];

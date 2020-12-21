@@ -19,7 +19,6 @@ const Row = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: 15px;
   margin-left: 5px;
 `;
 

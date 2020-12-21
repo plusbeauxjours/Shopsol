@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 import {setAlertVisible, setAlertInfo} from '~/redux/alertSlice';
@@ -12,6 +12,9 @@ import utils from '~/constants/utils';
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const {
+    STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
+  } = useSelector((state: any) => state.storeReducer);
 
   const {
     // EMP_NAME = null,
@@ -72,15 +75,9 @@ export default ({route: {params}}) => {
     false,
     false,
   ]); //  [시급,일급,월급 ]
-  const [payYear, setPayYear] = useState<string>(moment().format('YY')); //  급여 적용 시작 연도
-  const [payMonth, setPayMonth] = useState<string>(moment().format('MM')); //  급여 적용 시작 월
-  const [payDay, setPayDay] = useState<string>(moment().format('YYYY-MM-DD')); //  급여 적용 시작 년월
-  const [payYearModal, setPayYearModal] = useState<boolean>(false);
-  const [payMonthModal, setPayMonthModal] = useState<boolean>(false);
-  const [payYearCheck, setPayYearCheck] = useState<any>(new Array(4));
-  const [payMonthCheck, setPayMonthCheck] = useState<any>(new Array(12));
-  const [payYearDirectInput, setPayYearDirectInput] = useState<string>('');
-
+  const [payDay, setPayDay] = useState<string>(
+    moment().format(`YYYY-MM-${CALCULATE_DAY}`),
+  ); //  급여 적용 시작 년월
   ///// STEP 3 /////
   const [pay, setPay] = useState<string>(''); //  pay
   const [pay2, setPay2] = useState<string>(''); //  pay2
@@ -198,47 +195,10 @@ export default ({route: {params}}) => {
     setPercentDirectInput('');
   };
 
-  const getPeriod = (CALCULATE_DAY) => {
-    return `20${payYear}년 ${payMonth}월 ${CALCULATE_DAY}일`;
-  };
-
   const total = () => {
     let value =
       Number(pay) + Number(pay2) + Number(pay3) + Number(pay4) + Number(pay5);
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
-
-  const PYcheckDirectInput = () => {
-    let value = JSON.parse(JSON.stringify(payYearCheck));
-    value.fill(false); // ES6
-    if (
-      payYearCheck[6] === true &&
-      (Number(payYearDirectInput) < 1 || Number(payYearDirectInput) > 99)
-    ) {
-      return alertModal('0 ~ 60 사이의 수를 적어주세요.');
-    }
-    let payYeared = payYearCheck.indexOf(true) + 1;
-    if (payYeared == 1) {
-      payYeared = Number(payYear) - 3;
-    } else if (Number(payYeared) == 2) {
-      payYeared = Number(payYear) - 2;
-    } else if (Number(payYeared) == 3) {
-      payYeared = Number(payYear) - 1;
-    } else if (Number(payYeared) == 4) {
-      payYeared = Number(payYear);
-    } else if (Number(payYeared) == 5) {
-      payYeared = Number(payYear) + 1;
-    } else if (Number(payYeared) == 6) {
-      payYeared = Number(payYear) + 2;
-    }
-    if (payYearCheck[6] === true) {
-      payYeared = payYearDirectInput;
-    }
-    setPayYearModal(false);
-    setPayYear(payYeared);
-    setPayDay(`20${payYeared}-${payDay.substr(5, 5)}`);
-    setPayYearCheck(value);
-    setPayYearDirectInput('');
   };
 
   const submitFn = async () => {
@@ -461,7 +421,6 @@ export default ({route: {params}}) => {
           // ↓ STEP 2(급여정보 입력)
           setPayCheck(payChecked);
           setPayDay(data.result.PAY_START);
-
           setPay(data.result.PAY_TYPE !== '2' ? data.result.PAY : '');
           setPay2(data.result.PAY_TYPE === '2' ? data.result.MEALS : '');
           setPay3(data.result.PAY_TYPE === '2' ? data.result.SELF_DRIVING : '');
@@ -471,7 +430,7 @@ export default ({route: {params}}) => {
           //수습
           setProbation(data.result.probation == '1' ? true : false);
           setProbationPeriod(
-            data.result.probation == '1' ? data.result.probationDATE : '',
+            data.result.probation == '1' ? data.result.probationDATE : moment(),
           );
           setProbationPercent(
             data.result.probation == '1' ? data.result.probationPercent : '',
@@ -537,20 +496,13 @@ export default ({route: {params}}) => {
     <SetEmployeeInfoScreenPresenter
       submitFn={submitFn}
       payDay={payDay}
-      payMonth={payMonth}
-      payYear={payYear}
-      payYearModal={payYearModal}
-      setPayYearModal={setPayYearModal}
-      payMonthModal={payMonthModal}
-      setPayMonthModal={setPayMonthModal}
+      setPayDay={setPayDay}
       startDay={startDay}
       setStartDay={setStartDay}
       endDay={endDay}
       setEndDay={setEndDay}
       endDayCheck={endDayCheck}
       setEndDayCheck={setEndDayCheck}
-      setPayDay={setPayDay}
-      setPayMonth={setPayMonth}
       name={EMP_NAME}
       click1={click1}
       setClick1={setClick1}
@@ -618,14 +570,6 @@ export default ({route: {params}}) => {
       setDeductionTypeCheck={setDeductionTypeCheck}
       insuranceCheck={insuranceCheck}
       setInsuranceCheck={setInsuranceCheck}
-      getPeriod={getPeriod}
-      payYearCheck={payYearCheck}
-      setPayYearCheck={setPayYearCheck}
-      payMonthCheck={payMonthCheck}
-      setPayMonthCheck={setPayMonthCheck}
-      payYearDirectInput={payYearDirectInput}
-      setPayYearDirectInput={setPayYearDirectInput}
-      PYcheckDirectInput={PYcheckDirectInput}
       weekTypeCheck={weekTypeCheck}
       weekTime={weekTime}
       isEditMode={params?.from !== 'ManageInviteEmployeeScreen'}
@@ -650,6 +594,7 @@ export default ({route: {params}}) => {
       END={END}
       PAY={PAY}
       mobileNo={mobileNo}
+      CALCULATE_DAY={CALCULATE_DAY}
     />
   );
 };
