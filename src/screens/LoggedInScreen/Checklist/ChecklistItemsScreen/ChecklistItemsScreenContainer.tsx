@@ -70,16 +70,6 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
-  const adviceModal = (title, text) => {
-    const params = {
-      alertType: 'explain',
-      title: title,
-      content: text,
-    };
-    dispatch(setAlertInfo(params));
-    dispatch(setAlertVisible(true));
-  };
-
   // 캘린더에서 월을 이동이도하는 경우 해당 월의 Marking 로드
   const onMonthChange = (date) => {
     markingFn(date.year, date.month, date.day);

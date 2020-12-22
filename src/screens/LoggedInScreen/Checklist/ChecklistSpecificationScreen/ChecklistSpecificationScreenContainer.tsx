@@ -263,6 +263,10 @@ export default ({route: {params}}) => {
           STORE_SEQ,
           MEMBER_SEQ,
         });
+        if (data.result === 'SUCCESS') {
+          alertModal('체크가 완료되었습니다.');
+          dispatch(getCHECKLIST_DATA(params?.data.CHECK_DAT));
+        }
       } catch (e) {
         console.log(e);
         alertModal('연결에 실패하였습니다.');

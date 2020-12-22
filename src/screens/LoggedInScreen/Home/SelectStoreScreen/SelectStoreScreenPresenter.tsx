@@ -54,6 +54,10 @@ const WhiteSpace = styled.View`
   height: 50px;
 `;
 
+const SmallWhiteSpace = styled.View`
+  height: 20px;
+`;
+
 const AddStoreButton = styled(Ripple)`
   margin-top: 30px;
   z-index: 3;
@@ -191,7 +195,7 @@ export default ({
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}>
-        {STORE == '1' && <WhiteSpace />}
+        {STORE == '1' ? <WhiteSpace /> : <SmallWhiteSpace />}
         <StoreList />
       </ScrollView>
     </BackGround>

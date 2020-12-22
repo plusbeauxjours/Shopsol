@@ -139,6 +139,7 @@ export default ({
   REST_TIME,
   AUTOWORKOFF,
   IS_MANAGER,
+  CALENDAR_EDIT,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -186,7 +187,7 @@ export default ({
   };
 
   const ButtonGroup = () => {
-    if (STORE === '1') {
+    if (STORE == '1' || (STORE == '0' && CALENDAR_EDIT)) {
       if (VACATION) {
         return (
           <SelectBox style={{marginTop: 0}}>
@@ -352,7 +353,8 @@ export default ({
                 {(START_TIME?.substring(0, 5) ==
                   UPDATED_START?.substring(0, 5) &&
                   END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
-                (!START_TIME && !END_TIME && !UPDATED_START && !UPDATED_END) ? (
+                (!START_TIME && !END_TIME) ||
+                (!UPDATED_START && !UPDATED_END) ? (
                   <WorkTime>
                     <WorkTitleText>출퇴근시간 </WorkTitleText>
                     <WorkTimeText>

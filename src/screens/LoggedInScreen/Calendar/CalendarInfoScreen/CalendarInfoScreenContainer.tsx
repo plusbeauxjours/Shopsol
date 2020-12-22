@@ -22,11 +22,9 @@ export default () => {
 
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
-  const {
-    STORE_SEQ,
-    EMP_SEQ,
-    STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
-  } = useSelector((state: any) => state.storeReducer);
+  const {STORE_SEQ, EMP_SEQ, STORE_DATA: {CalendarEdit} = {}} = useSelector(
+    (state: any) => state.storeReducer,
+  );
 
   const [markedDates, setMarkedDates] = useState<any>(null);
 
@@ -41,7 +39,7 @@ export default () => {
       let jigark1 = false;
       let vacation1 = false;
 
-      if (STORE == '1' || CALENDAR_EDIT == '1') {
+      if (STORE == '1' || CalendarEdit == '1') {
         data.result[key]['EMP_LIST'].map((data) => {
           if (data.nowork == '1') {
             nowork1 = true;
@@ -126,7 +124,7 @@ export default () => {
             }
           }
         }
-        if (STORE == '0' && CALENDAR_EDIT !== 1) {
+        if (STORE == '0' && CalendarEdit !== 1) {
           for (const key of iterator) {
             buffer[key] = buffer[key]?.filter((info) => info.EMP_ID == EMP_SEQ);
           }
@@ -157,7 +155,7 @@ export default () => {
     <CalendarInfoScreenPresenter
       STORE={STORE}
       STORE_SEQ={STORE_SEQ}
-      CALENDAR_EDIT={CALENDAR_EDIT}
+      CALENDAR_EDIT={CalendarEdit}
       onDayPressFn={onDayPressFn}
       onChangeMonth={onChangeMonth}
       markedDates={markedDates}

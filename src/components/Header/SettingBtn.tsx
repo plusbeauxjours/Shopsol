@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+
 import {HelpIcon, SettingIcon} from '~/constants/Icons';
 
 const Container = styled.View`
@@ -20,15 +22,19 @@ const Text = styled.Text`
 
 export default () => {
   const navigation = useNavigation();
+  const {STORE} = useSelector((state: any) => state.userReducer);
+
   return (
     <Container>
-      <Touchable
-        onPress={() => {
-          navigation.navigate('HelpModalScreen');
-        }}>
-        <HelpIcon size={20} />
-        <Text>도움말</Text>
-      </Touchable>
+      {STORE == '1' && (
+        <Touchable
+          onPress={() => {
+            navigation.navigate('HelpModalScreen');
+          }}>
+          <HelpIcon size={20} />
+          <Text>도움말</Text>
+        </Touchable>
+      )}
       <Touchable
         onPress={() => {
           navigation.navigate('MyPageMainScreen');

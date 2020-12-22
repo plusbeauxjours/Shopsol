@@ -101,6 +101,7 @@ export default ({
       REST_TIME={data.REST_TIME}
       AUTOWORKOFF={data.AUTOWORKOFF}
       IS_MANAGER={data.IS_MANAGER}
+      CALENDAR_EDIT={CALENDAR_EDIT}
     />
   );
 
