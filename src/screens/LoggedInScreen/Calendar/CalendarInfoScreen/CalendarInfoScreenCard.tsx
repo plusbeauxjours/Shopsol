@@ -12,6 +12,7 @@ import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {toggleVACATION} from '~/redux/calendarSlice';
 import {EllipseIcon} from '~/constants/Icons';
+import {ForwardArrowIcon} from '../../../../constants/Icons';
 
 const Row = styled.View`
   flex-direction: row;
@@ -339,7 +340,7 @@ export default ({
                     {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
                     {isNextDay1 && '익일 '}
                     {(WORK_OFF_TIME || END)?.substring(0, 5)}
-                    {CHANGE_START && CHANGE_END && ' > '}
+                    {CHANGE_START && CHANGE_END && <ForwardArrowIcon />}
                     {CHANGE_START && CHANGE_START?.substring(0, 5)}
                     {CHANGE_START && CHANGE_END && ' ~ '}
                     {isNextDay2 && '익일 '}
@@ -380,7 +381,9 @@ export default ({
                         : END_TIME
                         ? END_TIME?.substring(0, 5)
                         : '미퇴근'}
-                      &nbsp;&gt;&nbsp;
+                    </WorkTimeText>
+                    <ForwardArrowIcon />
+                    <WorkTimeText>
                       {!UPDATED_START
                         ? '미출근'
                         : UPDATED_START.substring(0, 5)}

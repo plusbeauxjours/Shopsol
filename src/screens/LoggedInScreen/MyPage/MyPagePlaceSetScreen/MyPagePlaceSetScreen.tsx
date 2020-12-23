@@ -10,36 +10,36 @@ import api from '~/constants/LoggedInApi';
 import MyPagePlaceSetCard from './MyPagePlaceSetCard';
 import {setCLOSED_STORE_DATA} from '~/redux/mypageSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
+import {useNavigation} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: #f6f6f6;
 `;
 
-const BoxText = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
-  color: #999999;
+const EmptyBox = styled.View`
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
-const Section = styled.View`
-  z-index: 3;
-  width: ${wp('100%') - 40}px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color: white;
-  margin: 20px 20px 0 20px;
-  shadow-opacity: 0.55;
-  shadow-radius: 5px;
-  shadow-color: grey;
-  shadow-offset: 5px 5px;
-  elevation: 6;
+const EmptyText = styled.Text`
+  color: #999;
+  font-size: 16px;
+`;
+
+const TextBox = styled.View`
+  margin-top: 10px;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const ScrollView = styled.ScrollView``;
 
 export default () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
   const {CLOSED_STORE_DATA} = useSelector((state: any) => state.mypageReducer);
@@ -78,15 +78,13 @@ export default () => {
 
   useEffect(() => {
     fetchData();
+    STORE == '1'
+      ? navigation.setOptions({headerTitle: '폐업 사업장 목록'})
+      : navigation.setOptions({headerTitle: '종료 사업장 목록'});
   }, []);
 
   return (
     <BackGround>
-      <Section style={{alignItems: 'center'}}>
-        <BoxText>
-          {STORE == '1' ? '폐업 사업장 목록' : '종료 사업장 목록'}
-        </BoxText>
-      </Section>
       <ScrollView
         contentContainerStyle={{
           width: wp('100%'),
@@ -95,9 +93,24 @@ export default () => {
         }}
         showsVerticalScrollIndicator={false}>
         {CLOSED_STORE_DATA?.length === 0 && (
-          <BoxText style={{marginTop: 30}}>
-            {STORE == '1' ? '폐업 사업장' : '종료 사업장'}이 없습니다
-          </BoxText>
+          <EmptyBox>
+            <FastImage
+              style={{
+                width: 377,
+                height: 450,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 50,
+              }}
+              source={require('../../../../assets/images/emptyImg.png')}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+            <TextBox>
+              <EmptyText>
+                {STORE == '1' ? '폐업 사업장' : '종료 사업장'}이 없습니다
+              </EmptyText>
+            </TextBox>
+          </EmptyBox>
         )}
         {CLOSED_STORE_DATA?.map((data: any, index) => (
           <MyPagePlaceSetCard

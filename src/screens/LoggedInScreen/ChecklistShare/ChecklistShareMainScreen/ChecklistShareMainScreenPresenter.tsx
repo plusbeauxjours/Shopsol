@@ -209,6 +209,7 @@ const Column = styled.View`
 
 const EmptyText = styled.Text`
   color: #999;
+  font-size: 16px;
 `;
 
 export default ({

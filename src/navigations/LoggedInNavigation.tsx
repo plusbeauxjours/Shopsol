@@ -192,7 +192,7 @@ export default () => {
           name="MyPageIdSetMainScreen"
           component={MyPageIdSetMainScreen}
           options={{
-            headerTitle: '마이페이지',
+            headerTitle: '계정관리',
             title: '마이페이지 개인정보변경',
             headerRight: null,
           }}

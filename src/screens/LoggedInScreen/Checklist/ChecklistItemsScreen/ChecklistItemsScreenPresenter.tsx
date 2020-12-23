@@ -143,6 +143,8 @@ const CalendarTitleText2 = styled.Text`
 
 const EmptyText = styled.Text`
   color: #999;
+  font-size: 16px;
+
 `;
 
 const CircleBotton = styled.TouchableOpacity`

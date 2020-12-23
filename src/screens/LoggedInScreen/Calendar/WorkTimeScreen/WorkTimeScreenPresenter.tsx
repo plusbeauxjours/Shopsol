@@ -7,6 +7,7 @@ import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
+import {ForwardArrowIcon} from '../../../../constants/Icons';
 import {
   UpIcon,
   DownIcon,
@@ -247,7 +248,7 @@ export default ({
                   {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
                   {isNextDay1 && '익일 '}
                   {(WORK_OFF_TIME || END)?.substring(0, 5)}
-                  {CHANGE_START && CHANGE_END && ' > '}
+                  {CHANGE_START && CHANGE_END && <ForwardArrowIcon />}
                   {CHANGE_START && CHANGE_START?.substring(0, 5)}
                   {CHANGE_START && CHANGE_END && ' ~ '}
                   {isNextDay2 && '익일 '}
@@ -285,7 +286,9 @@ export default ({
                   : END_TIME
                   ? END_TIME?.substring(0, 5)
                   : '미퇴근'}
-                &nbsp;&gt;&nbsp;
+              </WorkTimeText>
+              <ForwardArrowIcon />
+              <WorkTimeText>
                 {!UPDATED_START ? '미출근' : UPDATED_START.substring(0, 5)}
                 &nbsp;~&nbsp;
                 {UPDATED_START && AUTOWORKOFF == '1'

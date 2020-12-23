@@ -2,6 +2,7 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import styled from 'styled-components/native';
 import utils from './utils';
 
 interface IProps {
@@ -13,6 +14,10 @@ FontAwesome.loadFont();
 Ionicons.loadFont();
 MaterialCommunityIcons.loadFont();
 
+const ForwardArrowIconContainer = styled.View`
+  margin: 0 5px;
+`;
+
 export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={
@@ -23,6 +28,16 @@ export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
     size={size ?? 14}
     color={color ?? '#e85356'}
   />
+);
+
+export const ForwardArrowIcon: React.FC<IProps> = ({size, color}) => (
+  <ForwardArrowIconContainer>
+    <Ionicons
+      name={'arrow-forward-sharp'}
+      size={size ?? 12}
+      color={color ?? '#999'}
+    />
+  </ForwardArrowIconContainer>
 );
 
 export const PlayCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
