@@ -23,12 +23,13 @@ import {
   SalarySystem,
   Authority,
 } from './SetEmployeeInfoScreenComponents';
-import {CheckBoxIcon, HelpCircleIcon} from '~/constants/Icons';
+import {HelpCircleIcon} from '~/constants/Icons';
 import InputLine from '~/components/InputLine';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import {BackIcon, ForwardIcon} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
+import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
 
 interface IsFirst {
   height?: number;
@@ -68,16 +69,18 @@ const Line = styled.View`
 `;
 
 const TextInput = styled.TextInput`
-  font-size: 15px;
+  font-size: 16px;
   margin-left: 5px;
   text-align: center;
   margin-right: 5px;
   width: 125px;
   text-align: right;
+  padding: 0;
+  height: 18px;
 `;
 
 const TextInputText = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
   margin-left: 5px;
   text-align: center;
   margin-right: 5px;
@@ -179,7 +182,7 @@ const ModalBox = styled.View`
 
 const SelectArea = styled.View`
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const ModalFooter = styled(SelectArea)`
@@ -220,8 +223,8 @@ const DateBox = styled.TouchableOpacity`
 
 const DateBoxText = styled.Text`
   font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-weight: bold;
+  color: #999;
 `;
 
 const DatePickerContainer = styled.View`
@@ -296,7 +299,7 @@ const NameBox = styled.View`
 `;
 
 const DateText = styled.Text`
-  color: #7f7f7f;
+  color: #999;
   font-size: 12px;
 `;
 
@@ -344,7 +347,7 @@ const SystemSettingButton = styled.TouchableOpacity`
 
 const SystemSettingText = styled.Text`
   color: white;
-  font-size: 15px;
+  font-size: 16px;
 `;
 
 const TextInputLine = styled.View<IIsBefore>`
@@ -534,7 +537,7 @@ export default ({
                 height: mix(
                   click1Transition,
                   0,
-                  100 + (endDayCheck ? 35 : 100) + 10,
+                  100 + (endDayCheck ? 45 : 170),
                 ),
               }}>
               <InputCase isFirst={true}>
@@ -554,7 +557,7 @@ export default ({
                 </DateTouchable>
                 <InputLine isBefore={false} />
               </InputCase>
-              <InputCase height={150}>
+              <InputCase height={160}>
                 <Touchable
                   onPress={() => {
                     setEndDayCheck(!endDayCheck);
@@ -562,17 +565,12 @@ export default ({
                   }}>
                   <SideBox>
                     {endDayCheck ? (
-                      <CheckBoxIcon size={25} color="#e85356" />
+                      <RadioBtnOnIcon size={22} color="#e85356" />
                     ) : (
-                      <CheckBoxIcon size={25} color="#CCCCCC" />
+                      <RadioBtnOffIcon size={22} />
                     )}
-                    <GreyText style={{marginLeft: 10}}>퇴사일 없음</GreyText>
-                  </SideBox>
-                </Touchable>
-                {!endDayCheck && (
-                  <>
-                    <Row style={{marginTop: 10}}>
-                      <Text>퇴사일</Text>
+                    <Row>
+                      <Text style={{marginLeft: 5}}>퇴사일 없음</Text>
                       <Touchable
                         onPress={() => {
                           explainModal(
@@ -582,16 +580,35 @@ export default ({
                         <HelpCircleIcon />
                       </Touchable>
                     </Row>
-                    <DateTouchable
-                      onPress={() => setIsEndDayModalVisible(true)}
-                      disabled={endDayCheck}>
-                      <Text>
-                        {!endDayCheck
-                          ? moment(endDay).format('YYYY년 M월 D일')
-                          : ''}
-                      </Text>
-                    </DateTouchable>
-                    <InputLine isBefore={endDayCheck} />
+                  </SideBox>
+                </Touchable>
+                {!endDayCheck && (
+                  <>
+                    <WhiteSpace />
+                    <ColumnPayBox>
+                      <Row
+                        style={{
+                          width: wp('100%') - 80,
+                          paddingHorizontal: 20,
+                        }}>
+                        <Text>퇴사일</Text>
+                      </Row>
+                      <DateTouchable
+                        style={{
+                          paddingHorizontal: 20,
+                          alignItems: 'flex-start',
+                          width: wp('100%') - 80,
+                        }}
+                        onPress={() => setIsEndDayModalVisible(true)}
+                        disabled={endDayCheck}>
+                        <Text>
+                          {!endDayCheck
+                            ? moment(endDay).format('YYYY년 M월 D일')
+                            : ''}
+                        </Text>
+                      </DateTouchable>
+                      <TextInputLine isBefore={endDayCheck} />
+                    </ColumnPayBox>
                   </>
                 )}
               </InputCase>
@@ -617,13 +634,13 @@ export default ({
                   click2Transition,
                   0,
                   410 +
-                    (payCheck[0] ? 80 : 0) +
+                    (payCheck[0] ? 85 : 0) +
                     (probation ? 260 : 0) +
-                    (deductionTypeCheck.indexOf(true) == 0 ? 540 : 290),
+                    (deductionTypeCheck.indexOf(true) == 0 ? 480 : 260),
                 ),
               }}>
               <InputCase style={{paddingTop: 40}} isFirst={true} height={410}>
-                <SelectArea>
+                <SelectArea style={{paddingHorizontal: 40}}>
                   <PayCheck
                     selection={0}
                     text={'시급'}
@@ -814,7 +831,7 @@ export default ({
                           <Text>원</Text>
                         </Row>
                       </BoxTitle>
-                      <Line />
+                      <Line style={{marginBottom: 20}} />
                       <BoxTitle>
                         <Text>합계</Text>
                         <Row>
@@ -828,7 +845,7 @@ export default ({
                 {!payCheck[2] && (
                   <>
                     <Line />
-                    <ColumnPayBox>
+                    <ColumnPayBox style={{padding: 20}}>
                       <SalarySystem
                         selection={1}
                         weekTime={weekTime}
@@ -893,7 +910,8 @@ export default ({
                 )}
               </InputCase>
               {payCheck[0] && (
-                <InputCase height={probation ? 340 : 80}>
+                <InputCase height={probation ? 340 : 85}>
+                  <WhiteSpace style={{height: 10}} />
                   <Line />
                   <Touchable
                     onPress={() => {
@@ -914,13 +932,11 @@ export default ({
                     }}>
                     <SideBox>
                       {!probation ? (
-                        <CheckBoxIcon size={25} color="#e85356" />
+                        <RadioBtnOnIcon size={22} color="#e85356" />
                       ) : (
-                        <CheckBoxIcon size={25} color="#CCCCCC" />
+                        <RadioBtnOffIcon size={22} />
                       )}
-                      <GreyText style={{marginLeft: 10}}>
-                        수습기간 없음
-                      </GreyText>
+                      <Text style={{marginLeft: 5}}>수습기간 없음</Text>
                     </SideBox>
                   </Touchable>
                   {probation && (
@@ -931,7 +947,6 @@ export default ({
                           style={{
                             width: wp('100%') - 80,
                             paddingHorizontal: 20,
-                            justifyContent: 'space-between',
                           }}>
                           <Text>수습종료일</Text>
                           <Touchable
@@ -1054,7 +1069,7 @@ export default ({
               <InputCase
                 style={{paddingTop: 10}}
                 isFirst={true}
-                height={deductionTypeCheck.indexOf(true) == 0 ? 540 : 290}>
+                height={deductionTypeCheck.indexOf(true) == 0 ? 480 : 260}>
                 <Line />
                 <SelectArea>
                   <DeductionType
@@ -1278,7 +1293,7 @@ export default ({
             </ListTouchable>
             <HiddenItems
               as={Animated.View}
-              style={{height: mix(click4Transition, 0, 200 + 70)}}>
+              style={{height: mix(click4Transition, 0, 200 + 80)}}>
               <InputCase isFirst={true} height={200}>
                 <ColumnPayBox>
                   <BoxTitle>
@@ -1342,7 +1357,7 @@ export default ({
                   </BoxTitle>
                 </ColumnPayBox>
               </InputCase>
-              <InputCase>
+              <InputCase height={80}>
                 <Row style={{justifyContent: 'center', marginVertical: 10}}>
                   <DateBox
                     onPress={() =>
@@ -1362,7 +1377,7 @@ export default ({
                     <ForwardIcon size={22} color={'#f4aaab'} />
                   </DateBox>
                 </Row>
-                <GreyText style={{textAlign: 'center'}}>
+                <GreyText style={{marginTop: 10, textAlign: 'center'}}>
                   <Bold>{annual_START}년</Bold>에 연차가 적용됩니다.
                 </GreyText>
               </InputCase>
@@ -1390,7 +1405,7 @@ export default ({
                 ),
               }}>
               <InputCase style={{paddingTop: 40}} isFirst={true} height={65}>
-                <SelectArea>
+                <SelectArea style={{paddingHorizontal: 50}}>
                   <PositionType
                     selection={0}
                     text={'스태프'}

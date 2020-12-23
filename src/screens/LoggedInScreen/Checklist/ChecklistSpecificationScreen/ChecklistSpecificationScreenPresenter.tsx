@@ -1,6 +1,5 @@
-import React, {useRef} from 'react';
+import React, {useRef, createRef} from 'react';
 import styled from 'styled-components/native';
-import {FlatList} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import {
   widthPercentageToDP as wp,
@@ -9,10 +8,16 @@ import {
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import {RNCamera} from 'react-native-camera';
+import {isIphoneX} from 'react-native-iphone-x-helper';
+import Animated from 'react-native-reanimated';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {CheckBoxIcon, CameraIcon, PictureIcon} from '~/constants/Icons';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import {CloseCircleIcon} from '~/constants/Icons';
+
+interface IsLast {
+  isLast?: boolean;
+}
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -46,7 +51,8 @@ const Section = styled.View`
 `;
 
 const SectionText = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
 `;
 
@@ -58,15 +64,16 @@ const WhiteSpace = styled.View`
 
 const Box = styled.View`
   border-width: 1px;
-  border-color: #f2f2f2;
+  border-color: #cccccc;
+  border-radius: 10px;
   min-height: 100px;
   padding: 10px;
 `;
 
-const ChecklistItem = styled.View`
+const ChecklistItem = styled.View<IsLast>`
   width: 100%;
-  border-bottom-width: 0.7px;
-  border-color: #eee;
+  border-bottom-width: ${(props) => (props.isLast ? 0 : 0.7)}px;
+  border-color: #ccc;
   padding: 6px;
   flex-direction: row;
   justify-content: space-between;
@@ -86,44 +93,9 @@ const ChecklistTitle = styled.View`
   padding-right: 5px;
 `;
 
-const ChecklistText = styled.Text`
-  width: ${wp('100%') - 180}px;
-  flex-wrap: wrap;
-  font-size: 15px;
-  color: #999;
-`;
-
-const TitleText = styled.Text`
-  font-size: 17px;
-  color: #000;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-right: 5px;
-`;
-
 const GreyText = styled(Text)`
   margin: 10px 0;
   color: #bbb;
-`;
-
-const RowCenter = styled(Row)`
-  justify-content: center;
-  margin-bottom: 30px;
-`;
-
-const IconContainer = styled.View`
-  width: ${wp('45%')}px;
-  align-items: center;
-`;
-
-const IconBox = styled.View`
-  margin-top: 10px;
-  width: ${wp('20%')};
-  height: ${wp('20%')};
-  border-width: 1px;
-  border-color: #e85356;
-  justify-content: center;
-  align-items: center;
 `;
 
 const CameraPictureCloseButtonText = styled.Text`
@@ -172,6 +144,63 @@ const CameraLastPictureContainer = styled.View`
   align-items: center;
 `;
 
+const Line = styled.View`
+  width: ${wp('100%') - 80}px;
+  height: 0.7px;
+  background-color: #cccccc;
+  margin: 20px 0 20px 0;
+`;
+
+const PictureBorderBox = styled.View`
+  width: 125px;
+  height: 125px;
+  border-radius: 10px;
+  border-width: 0.7px;
+  border-color: #eee;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+`;
+
+const CloseIconContainer = styled.View`
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background-color: #aaa;
+  border-width: 2px;
+  border-color: white;
+  z-index: 30;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: -10px;
+  right: -10px;
+`;
+
+const BorderBox = styled.View`
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  border-width: 0.7px;
+  border-color: #ccc;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+`;
+
+const Column = styled.View`
+  flex-direction: column;
+  margin-right: 10px;
+`;
+
+const EndRow = styled.View`
+  flex-direction: row;
+  align-items: flex-start;
+  align-items: flex-end;
+  margin-top: 10px;
+  height: 140px;
+`;
+
 export default ({
   scan,
   gotoChecklistAdd,
@@ -201,6 +230,8 @@ export default ({
   setCameraPictureList,
 }) => {
   const cameraRef = useRef(null);
+  const scrollRef = createRef(0);
+
   return (
     <>
       <BackGround>
@@ -219,18 +250,26 @@ export default ({
                 <SectionText>체크예정시간</SectionText>
                 <Text>{END_TIME == '' ? '미사용' : END_TIME}</Text>
               </RowSpace>
-            </Section>
-            <Section>
-              <RowSpace>
+              <Line />
+              <RowSpace style={{alignItems: 'flex-start'}}>
                 <SectionText>{NAME ? '담당직원' : '확인직원'}</SectionText>
-                <Text style={{color: '#e85356', fontWeight: 'bold'}}>
+                <Text
+                  style={{
+                    maxWidth: wp('100') - 160,
+                    color: NAME ? '#000' : '#e85356',
+                    fontWeight: NAME ? 'normal' : 'bold',
+                  }}>
                   {NAME ? NAME.split('@').join(' / ') : EMP_NAME ?? '체크전'}
                 </Text>
               </RowSpace>
               <WhiteSpace />
               <RowSpace>
                 <SectionText>확인시간</SectionText>
-                <Text style={{color: '#e85356', fontWeight: 'bold'}}>
+                <Text
+                  style={{
+                    color: CHECK_TIME ? '#000' : '#e85356',
+                    fontWeight: CHECK_TIME ? 'normal' : 'bold',
+                  }}>
                   {CHECK_TIME ? moment(CHECK_TIME).format('HH:mm') : '체크전'}
                 </Text>
               </RowSpace>
@@ -241,21 +280,21 @@ export default ({
               <Box>
                 <ChecklistTitle>
                   {LIST?.length === 0 ? (
-                    <ChecklistItem>
-                      <ChecklistText>ex. 가스벨브 잠그기</ChecklistText>
+                    <ChecklistItem isLast={true}>
+                      <Text>ex. 가스벨브 잠그기</Text>
                     </ChecklistItem>
                   ) : (
                     <CheckBoxIconContainer>
                       <Text
                         style={{
-                          fontSize: 15,
+                          fontSize: 12,
                           color: scan == '0' ? '#CCCCCC' : '#000',
                         }}>
                         정상
                       </Text>
                       <Text
                         style={{
-                          fontSize: 15,
+                          fontSize: 12,
                           color: scan == '0' ? '#CCCCCC' : '#B91C1B',
                         }}>
                         이상
@@ -264,8 +303,8 @@ export default ({
                   )}
                 </ChecklistTitle>
                 {LIST?.map((data, index) => (
-                  <ChecklistItem key={index}>
-                    <ChecklistText>{data}</ChecklistText>
+                  <ChecklistItem key={index} isLast={LIST?.length - 1 == index}>
+                    <Text>{data}</Text>
                     <CheckBoxIconContainer>
                       <Touchable
                         onPress={() => {
@@ -338,67 +377,72 @@ export default ({
             )}
             {PHOTO_CHECK === '1' && STORE === '0' && scan === '1' && (
               <Section>
-                <TitleText>사진</TitleText>
-                {cameraPictureList?.length > 0 && (
-                  <GreyText>
-                    등록된 사진을 클릭하면 리스트에서 제거됩니다
-                  </GreyText>
-                )}
-                <RowCenter>
-                  <IconContainer>
-                    <Text>촬영</Text>
-                    <Touchable
-                      onPress={() => {
-                        setCameraPictureLast(null);
-                        setIsCameraModalVisible(true);
-                      }}>
-                      <IconBox>
-                        <CameraIcon size={40} />
-                      </IconBox>
-                    </Touchable>
-                  </IconContainer>
-                  <IconContainer>
-                    <Text>보관함</Text>
-                    <Touchable
-                      onPress={() => {
-                        launchImageLibraryFn();
-                      }}>
-                      <IconBox>
-                        <PictureIcon />
-                      </IconBox>
-                    </Touchable>
-                  </IconContainer>
-                </RowCenter>
-                {cameraPictureList?.length > 0 && (
-                  <FlatList
-                    horizontal
-                    keyExtractor={(_, index) => index.toString()}
-                    style={{flexDirection: 'row'}}
-                    contentContainerStyle={{justifyContent: 'center'}}
-                    data={cameraPictureList}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item, index}: any) => (
+                <SectionText>관련사진</SectionText>
+                <Animated.ScrollView
+                  ref={scrollRef}
+                  onContentSizeChange={() => {
+                    scrollRef.current?.getNode()?.scrollToEnd({animated: true});
+                  }}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal={true}>
+                  <EndRow>
+                    <Column>
                       <Touchable
-                        key={index}
-                        onPress={() => onPressImageFn(item)}>
-                        <FastImage
-                          style={{
-                            width: 100,
-                            height: 100,
-                            borderRadius: 10,
-                            marginRight: 10,
-                          }}
-                          source={{
-                            uri: item.uri,
-                            headers: {Authorization: 'someAuthToken'},
-                            priority: FastImage.priority.low,
-                          }}
-                          resizeMode={FastImage.resizeMode.cover}
-                        />
+                        onPress={() => {
+                          setCameraPictureLast(null);
+                          setIsCameraModalVisible(true);
+                        }}>
+                        <BorderBox>
+                          <CameraIcon size={25} color={'#ccc'} />
+                          <Text style={{color: '#bbb', fontSize: 10}}>
+                            사진촬영
+                          </Text>
+                        </BorderBox>
                       </Touchable>
+                      <Touchable onPress={() => launchImageLibraryFn()}>
+                        <BorderBox>
+                          <PictureIcon size={25} color={'#ccc'} />
+                          <Text style={{color: '#bbb', fontSize: 10}}>
+                            보관함
+                          </Text>
+                        </BorderBox>
+                      </Touchable>
+                    </Column>
+                    {cameraPictureList.length > 0 ? (
+                      cameraPictureList?.map((cameraPicture, index) => (
+                        <Touchable
+                          key={index}
+                          onPress={() => onPressImageFn(cameraPicture)}
+                          style={{
+                            marginRight: 10,
+                            marginBottom: 5,
+                            justifyContent: 'flex-end',
+                          }}>
+                          <CloseIconContainer>
+                            <CloseCircleIcon />
+                          </CloseIconContainer>
+                          <FastImage
+                            style={{
+                              width: 125,
+                              height: 125,
+                              borderRadius: 10,
+                            }}
+                            source={{
+                              uri: cameraPicture.uri,
+                              headers: {Authorization: 'someAuthToken'},
+                              priority: FastImage.priority.low,
+                            }}
+                            resizeMode={FastImage.resizeMode.cover}
+                          />
+                        </Touchable>
+                      ))
+                    ) : (
+                      <PictureBorderBox>
+                        <Text style={{color: '#eee'}}>사진 미등록</Text>
+                      </PictureBorderBox>
                     )}
-                  />
-                )}
+                  </EndRow>
+                </Animated.ScrollView>
               </Section>
             )}
             {STORE == '0' && scan === '1' && (

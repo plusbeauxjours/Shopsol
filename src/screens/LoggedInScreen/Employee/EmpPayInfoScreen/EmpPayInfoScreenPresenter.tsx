@@ -222,8 +222,6 @@ export default ({
   loading,
   date,
 }) => {
-  console.log('EMP_PAY_TYPE', EMP_PAY_TYPE);
-
   const boxButtonTransition = useTransition(boxButton);
   const boxButton2Transition = useTransition(boxButton2);
   const cardShowedTransition = useTransition(isCardShowed);

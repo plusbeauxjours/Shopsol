@@ -183,34 +183,40 @@ export default () => {
   };
 
   // 직원이 체크 버튼을 실행한 뒤 모달에서 아이템을 눌렀을 때
-  const checkdataFn = async (item) => {
-    let flag = true;
-    if (item.EMP_SEQ != null) {
-      flag = false;
-      let emparr = item.EMP_SEQ.split('@');
-      for (let index = 0; index < emparr.length; index++) {
-        if (emparr[index] == EMP_SEQ) {
-          flag = true;
+  const checkdataFn = (item) => {
+    setTimeout(async () => {
+      setIsChecklistModalVisible(false);
+      let flag = true;
+      if (item.EMP_SEQ != null) {
+        flag = false;
+        let emparr = item.EMP_SEQ.split('@');
+        for (let index = 0; index < emparr.length; index++) {
+          if (emparr[index] == EMP_SEQ) {
+            flag = true;
+          }
         }
       }
-    }
-    if (flag) {
-      setIsChecklistModalVisible(false);
-      const {data} = await api.checkChecklist({
-        STORE_ID: STORE_SEQ + '-' + item.QR_SEQ,
-        LAT: lat,
-        LONG: long,
-        MEMBER_SEQ,
-      });
-      if (data.message == 'SUCCESS' && data.result.length > 0) {
-        navigation.navigate('ChecklistSpecificationScreen', {
-          data: data.result[0],
-          scan: '1',
+
+      if (flag) {
+        setIsChecklistModalVisible(false);
+        const {data} = await api.checkChecklist({
+          STORE_ID: STORE_SEQ + '-' + item.QR_SEQ,
+          LAT: lat,
+          LONG: long,
+          MEMBER_SEQ,
         });
+        if (data.message == 'SUCCESS' && data.result.length > 0) {
+          navigation.navigate('ChecklistSpecificationScreen', {
+            data: data.result[0],
+            scan: '1',
+          });
+        }
+      } else {
+        setTimeout(async () => {
+          alertModal('담당직원이 아닙니다.');
+        }, 300);
       }
-    } else {
-      alertModal('담당직원이 아닙니다.');
-    }
+    }, 300);
   };
 
   const fetchData = (date) => {

@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux';
 import {
   RadioBtnOnIcon,
   RadioBtnOffIcon,
-  CheckBoxIcon,
   HelpCircleIcon,
 } from '~/constants/Icons';
 
@@ -33,9 +32,11 @@ const TypeContainer = styled.TouchableOpacity`
 `;
 
 const TextInput = styled.TextInput`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   color: #e85356;
+  padding: 0;
+  height: 18px;
 `;
 
 const InputCase = styled.TouchableOpacity<IsBefore>`
@@ -87,9 +88,9 @@ export const InsuranceType = ({
           setInsuranceCheck(value);
         }}>
         {insuranceCheck[selection] ? (
-          <CheckBoxIcon size={25} color="#e85356" />
+          <RadioBtnOnIcon size={18} color="#e85356" />
         ) : (
-          <CheckBoxIcon size={25} color="#CCCCCC" />
+          <RadioBtnOffIcon size={18} color="#CCCCCC" />
         )}
         <Text>{text}</Text>
       </TypeContainer>

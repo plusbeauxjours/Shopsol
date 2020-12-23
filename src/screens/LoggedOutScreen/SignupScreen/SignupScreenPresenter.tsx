@@ -203,7 +203,7 @@ export default ({
         }}>
         <Row>
           {positionTypeCheck[selection] ? (
-            <RadioBtnOnIcon size={25} color="#e85356" />
+            <RadioBtnOnIcon size={22} color="#e85356" />
           ) : (
             <RadioBtnOffIcon size={25} color="#CCCCCC" />
           )}
@@ -223,7 +223,7 @@ export default ({
         }}>
         <Row>
           {genderTypeCheck[selection] ? (
-            <RadioBtnOnIcon size={25} color="#e85356" />
+            <RadioBtnOnIcon size={22} color="#e85356" />
           ) : (
             <RadioBtnOffIcon size={25} color="#CCCCCC" />
           )}

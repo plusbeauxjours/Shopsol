@@ -8,7 +8,6 @@ import {useSelector} from 'react-redux';
 import Modal from 'react-native-modal';
 
 import {
-  CheckBoxIcon,
   HelpCircleIcon,
   RadioBtnOnIcon,
   RadioBtnOffIcon,
@@ -115,9 +114,9 @@ export const Authority = ({
           }
         }}>
         {authorityCheck[selection] ? (
-          <CheckBoxIcon size={25} color="#e85356" />
+          <RadioBtnOnIcon size={18} color="#e85356" />
         ) : (
-          <CheckBoxIcon size={25} color="#CCCCCC" />
+          <RadioBtnOffIcon size={18} />
         )}
         <Text>{text}</Text>
         {STORE == '1' && selection !== 4 && (
@@ -186,9 +185,9 @@ export const SalarySystem = ({
           setSalarySystemCheck(value);
         }}>
         {salarySystemCheck[selection] ? (
-          <CheckBoxIcon size={25} color="#e85356" />
+          <RadioBtnOnIcon size={18} color="#e85356" />
         ) : (
-          <CheckBoxIcon size={25} color="#CCCCCC" />
+          <RadioBtnOffIcon size={18} />
         )}
         {selection === 0 && (
           <SalarySystemText>
@@ -291,7 +290,7 @@ export const PayCheck = ({
   let value = JSON.parse(JSON.stringify(payCheck));
   return (
     <TypeContainer
-      style={{marginRight: 15}}
+      style={{width: 50, marginRight: 15}}
       onPress={() => {
         value.fill(false);
         value[selection] = true;

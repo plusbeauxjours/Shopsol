@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {RefreshControl} from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import {Calendar} from 'react-native-calendars';
+import {isIphoneX} from 'react-native-iphone-x-helper';
+import Ripple from 'react-native-material-ripple';
+
 import Modal from 'react-native-modal';
 
 import {
@@ -18,7 +17,6 @@ import {
 } from '~/constants/Icons';
 import moment from 'moment';
 import ChecklistItemsScreenCard from './ChecklistItemsScreenCard';
-import LottieView from 'lottie-react-native';
 import FastImage from 'react-native-fast-image';
 
 import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
@@ -38,12 +36,9 @@ const Row = styled.View`
   align-items: center;
 `;
 
-const RowTouchable = styled.TouchableOpacity`
+const ModalItemTouchable = styled(Ripple)`
   flex-direction: row;
   align-items: center;
-`;
-
-const ModalItemTouchable = styled(RowTouchable)`
   margin-bottom: 20px;
 `;
 
@@ -144,21 +139,6 @@ const CalendarTitleText2 = styled.Text`
 const EmptyText = styled.Text`
   color: #999;
   font-size: 16px;
-
-`;
-
-const CircleBotton = styled.TouchableOpacity`
-  height: 60px;
-  width: 60px;
-  border-radius: 30px;
-  background-color: #e85356;
-  position: absolute;
-  bottom: ${hp('5%')}px;
-  right: ${wp('7%')}px;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
-  elevation: 6;
 `;
 
 const EmptyBox = styled.View`
@@ -185,8 +165,8 @@ const WhiteText = styled.Text`
 
 const IconContainer = styled.TouchableOpacity`
   position: absolute;
-  right: 20;
-  top: 0;
+  right: -15px;
+  top: ${(props) => (isIphoneX() ? -15 : -45)}px;
 `;
 
 const WhiteBigText = styled(WhiteText)`
@@ -315,7 +295,13 @@ export default ({
   };
 
   const ModalItem = ({item, key}) => (
-    <ModalItemTouchable key={key} onPress={() => checkdataFn(item)}>
+    <ModalItemTouchable
+      key={key}
+      onPress={() => checkdataFn(item)}
+      rippleColor={'#111111'}
+      rippleDuration={400}
+      rippleSize={1200}
+      rippleOpacity={0.45}>
       <ChecklistModalBox>
         <RowSpace>
           <CheckState check={item.CHECK_LIST} />
@@ -476,9 +462,11 @@ export default ({
         </Container>
       </ScrollView>
       {STORE == '0' && (
-        <CircleBotton onPress={() => selectCheckListFn()}>
-          <WhiteText>체크</WhiteText>
-        </CircleBotton>
+        <AddButtonContainer>
+          <AddButton onPress={() => selectCheckListFn()}>
+            <WhiteText>체크</WhiteText>
+          </AddButton>
+        </AddButtonContainer>
       )}
       <Modal
         isVisible={isChecklistModalVisible}
@@ -490,17 +478,17 @@ export default ({
             <WhiteBigText>등록된 체크리스트가 없습니다</WhiteBigText>
           </Row>
         ) : (
-          <Row style={{top: -10, marginBottom: 20, justifyContent: 'center'}}>
-            <WhiteBigText>체크항목를 선택해주세요.</WhiteBigText>
-            <IconContainer onPress={() => setIsChecklistModalVisible(false)}>
-              <CloseCircleOutlineIcon size={30} color={'white'} />
-            </IconContainer>
-          </Row>
+          <IconContainer onPress={() => setIsChecklistModalVisible(false)}>
+            <CloseCircleOutlineIcon size={30} color={'white'} />
+          </IconContainer>
         )}
         <ScrollView
           keyboardDismissMode="on-drag"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{alignItems: 'center'}}>
+          contentContainerStyle={{
+            paddingTop: isIphoneX() ? 40 : 10,
+            alignItems: 'center',
+          }}>
           {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '0').map(
             (item, index) => (
               <ModalItem item={item} key={index} />

@@ -130,7 +130,7 @@ export const RadioBtnOffIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'radio-button-off-outline'}
     size={size ?? 14}
-    color={color ?? '#F2F2F2'}
+    color={color ?? '#CCCCCC'}
   />
 );
 

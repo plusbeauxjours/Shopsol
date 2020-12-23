@@ -18,6 +18,10 @@ interface ISelected {
   isSelected: boolean;
 }
 
+interface IsLast {
+  isLast?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: #f6f6f6;
@@ -41,7 +45,8 @@ const RowSpace = styled(Row)`
 `;
 
 const SectionText = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
 `;
 
@@ -55,7 +60,8 @@ const Section = styled.View`
 
 const Box = styled.View`
   border-width: 1px;
-  border-color: #f2f2f2;
+  border-color: #cccccc;
+  border-radius: 10px;
   min-height: 100px;
   padding: 10px;
 `;
@@ -66,14 +72,14 @@ const WhiteSpace = styled.View`
   height: 10px;
 `;
 
-const ChecklistItem = styled.View`
+const ChecklistItem = styled.View<IsLast>`
   width: 100%;
-  border-bottom-width: 0.7px;
-  border-color: #eee;
+  border-bottom-width: ${(props) => (props.isLast ? 0 : 0.7)}px;
+  border-color: #ccc;
   padding: 6px;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;ㅊ
+  align-items: center;
 `;
 
 const ChecklistTitle = styled.View`
@@ -88,8 +94,7 @@ const ChecklistTitle = styled.View`
 const ChecklistText = styled.Text`
   max-width: 230px;
   flex-wrap: wrap;
-  font-size: 15px;
-  color: #999;
+  font-size: 12px;
 `;
 
 const CheckBoxIconContainer = styled(RowSpace)`
@@ -135,6 +140,13 @@ const CloseIconContainer = styled.TouchableOpacity`
   height: 30px;
   right: 20px;
   top: ${(props) => (isIphoneX() ? 35 : 15)}px;
+`;
+
+const Line = styled.View`
+  width: ${wp('100%') - 80}px;
+  height: 0.7px;
+  background-color: #cccccc;
+  margin: 20px 0 20px 0;
 `;
 
 export default ({
@@ -292,18 +304,26 @@ export default ({
               <SectionText>체크예정시간</SectionText>
               <Text>{END_TIME == '' ? '미사용' : END_TIME}</Text>
             </RowSpace>
-          </Section>
-          <Section>
+            <Line />
             <RowSpace>
               <SectionText>{EMP_NAME ? '담당직원' : '확인직원'}</SectionText>
-              <Text style={{color: '#e85356', fontWeight: 'bold'}}>
+              <Text
+                style={{
+                  maxWidth: wp('100') - 160,
+                  color: EMP_NAME ? '#000' : '#e85356',
+                  fontWeight: EMP_NAME ? 'normal' : 'bold',
+                }}>
                 {EMP_NAME ?? '체크전'}
               </Text>
             </RowSpace>
             <WhiteSpace />
             <RowSpace>
               <SectionText>확인시간</SectionText>
-              <Text style={{color: '#e85356', fontWeight: 'bold'}}>
+              <Text
+                style={{
+                  color: CHECK_TIME ? '#000' : '#e85356',
+                  fontWeight: CHECK_TIME ? 'normal' : 'bold',
+                }}>
                 {CHECK_TIME ? moment(CHECK_TIME).format('HH:mm') : '체크전'}
               </Text>
             </RowSpace>
@@ -315,20 +335,22 @@ export default ({
             <Box>
               <ChecklistTitle>
                 {checklist?.length === 0 ? (
-                  <ChecklistItem>
-                    <ChecklistText>ex. 가스벨브 잠그기</ChecklistText>
+                  <ChecklistItem isLast={true}>
+                    <Text>ex. 가스벨브 잠그기</Text>
                   </ChecklistItem>
                 ) : (
                   <CheckBoxIconContainer>
-                    <Text style={{fontSize: 15, color: '#000'}}>정상</Text>
-                    <Text style={{fontSize: 15, color: '#B91C1B'}}>이상</Text>
+                    <Text style={{fontSize: 12, color: '#000'}}>정상</Text>
+                    <Text style={{fontSize: 12, color: '#B91C1B'}}>이상</Text>
                   </CheckBoxIconContainer>
                 )}
               </ChecklistTitle>
 
               {checklist?.map((data, index) => (
-                <ChecklistItem key={index}>
-                  <ChecklistText>{data}</ChecklistText>
+                <ChecklistItem
+                  key={index}
+                  isLast={checklist?.length - 1 == index}>
+                  <Text>{data}</Text>
                   <CheckBoxIconContainer>
                     <Touchable
                       onPress={() => {
@@ -396,8 +418,8 @@ export default ({
 
           {cameraPictureList?.length > 0 && (
             <Section>
-              <SectionText>체크리스트 관련사진</SectionText>
-              <WhiteSpace />
+              <SectionText>관련사진</SectionText>
+              <WhiteSpace style={{height: 20}} />
               <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}

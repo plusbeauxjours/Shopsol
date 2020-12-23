@@ -19,10 +19,6 @@ import RoundBtn from '~/components/Btn/RoundBtn';
 import ChecklistAddScreenCard from './ChecklistAddScreenCard';
 import utils from '~/constants/utils';
 
-interface IsSelected {
-  isSelected?: boolean;
-}
-
 interface IsError {
   isError: boolean;
 }
@@ -63,22 +59,24 @@ const RowTitle = styled(Row)`
 const TextInput = styled.TextInput`
   width: 100%;
   flex-wrap: wrap;
-  font-size: 15px;
+  font-size: 16px;
   border-bottom-width: 1px;
   border-color: #e5e5e5;
-  padding-bottom: 5px;
+  padding: 0;
+  height: 30px;
 `;
 
 const TitleText = styled.Text`
-  font-size: 17px;
-  color: #000;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
-  margin-bottom: 10px;
-  margin-right: 5px;
 `;
 
-const RedText = styled.Text`
-  color: #b91c1b;
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 10px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
 const ChecktimeButton = styled.TouchableOpacity`
@@ -88,20 +86,20 @@ const ChecktimeButton = styled.TouchableOpacity`
   border-color: #e85356;
 `;
 
-const ChecktimeButtonText = styled.Text<IsSelected>`
+const ChecktimeButtonText = styled.Text`
   color: #e85356;
-  font-weight: ${(props) => (props.isSelected ? 'bold' : '400')};
+  font-weight: 400;
 `;
 
 const SubTitleText = styled.Text`
   margin-left: 5px;
-  font-size: 15px;
+  font-size: 12px;
 `;
 
 const SubText = styled.Text`
   margin-top: 5px;
-  margin-left: 21px;
-  font-size: 13px;
+  margin-left: 25px;
+  font-size: 12px;
   color: #aaa;
 `;
 
@@ -144,8 +142,9 @@ const ChecklistBox = styled.View`
   margin-top: 20px;
   min-height: 200px;
   border-width: 1px;
-  border-color: #e5e5e5;
+  border-color: #cccccc;
   padding: 10px;
+  border-radius: 10px;
 `;
 
 const SmallWhiteSpace = styled.View`
@@ -153,7 +152,7 @@ const SmallWhiteSpace = styled.View`
 `;
 
 const WhiteSpace = styled.View`
-  height: 30px;
+  height: 20px;
 `;
 
 const ModalPopupArea = styled.View`
@@ -269,10 +268,8 @@ export default ({
         contentContainerStyle={{alignItems: 'center'}}>
         <Container>
           <Section>
-            <Row>
-              <TitleText>체크항목</TitleText>
-              <RedText>*</RedText>
-            </Row>
+            <TitleText>체크항목</TitleText>
+            <WhiteSpace style={{height: 10}} />
             <TextInput
               placeholder={'ex. 주방'}
               selectionColor={'#999'}
@@ -285,10 +282,8 @@ export default ({
             </GreyText>
           </Section>
           <Section>
-            <Row>
-              <TitleText>체크리스트</TitleText>
-              <RedText>*</RedText>
-            </Row>
+            <TitleText>체크리스트</TitleText>
+            <WhiteSpace style={{height: 10}} />
             <TextInput
               placeholder={'ex. 가스벨브 잠그기'}
               selectionColor={'#999'}
@@ -320,7 +315,7 @@ export default ({
               )}
               {LIST?.map((data, index) => (
                 <ChecklistItem key={index}>
-                  <GreyText isError={false}>{data}</GreyText>
+                  <Text isError={false}>{data}</Text>
                   <Touchable
                     onPress={() => {
                       let value = JSON.parse(JSON.stringify(LIST));
@@ -335,13 +330,10 @@ export default ({
           </Section>
           <Section>
             <RowTitle>
-              <Row>
-                <TitleText>체크예정시간</TitleText>
-                <RedText>*</RedText>
-              </Row>
+              <TitleText>체크예정시간</TitleText>
               {!isNoCheckedtime && (
                 <ChecktimeButton onPress={() => setIsCustomModalVisible(true)}>
-                  <ChecktimeButtonText isSelected={customChecktime}>
+                  <ChecktimeButtonText>
                     {customChecktimeSet
                       ? moment(customChecktime).format('HH:mm')
                       : '선택'}
@@ -349,6 +341,7 @@ export default ({
                 </ChecktimeButton>
               )}
             </RowTitle>
+            <GreyLine />
             <SmallWhiteSpace />
             <Touchable
               onPress={() => {
@@ -369,13 +362,11 @@ export default ({
               </SubText>
             </Touchable>
           </Section>
-
           <Section>
             <RowTitle>
-              <Row>
-                <TitleText>체크리스트 사진촬영</TitleText>
-              </Row>
+              <TitleText>체크리스트 사진촬영</TitleText>
             </RowTitle>
+            <GreyLine />
             <SmallWhiteSpace />
             <Touchable onPress={() => setIsCheckedCamera(!isCheckedCamera)}>
               <Row>
@@ -391,13 +382,9 @@ export default ({
               </SubText>
             </Touchable>
           </Section>
-
           <Section>
             <RowTitle>
-              <Row>
-                <TitleText>체크리스트 담당자</TitleText>
-                <RedText>*</RedText>
-              </Row>
+              <TitleText>체크리스트 담당자</TitleText>
               {isCheckedEmpChoise && (
                 <ChecktimeButton
                   onPress={() =>
@@ -411,6 +398,7 @@ export default ({
                 </ChecktimeButton>
               )}
             </RowTitle>
+            <GreyLine />
             <SmallWhiteSpace />
             <Touchable
               onPress={() => setIsCheckedEmpChoise(!isCheckedEmpChoise)}>
@@ -428,9 +416,7 @@ export default ({
             </Touchable>
             <WhiteSpace />
             {isCheckedEmpChoise && (
-              <ScrollView
-                horizontal={true}
-                contentContainerStyle={{marginTop: 10}}>
+              <ScrollView horizontal={true}>
                 {choiceEmp?.map((data, index) => (
                   <Touchable
                     key={index}
@@ -442,9 +428,6 @@ export default ({
                   </Touchable>
                 ))}
               </ScrollView>
-            )}
-            {choiceEmp?.length !== 0 && (
-              <SubText>* 직원 이미지를 클릭하면 목록에서 제외됩니다.</SubText>
             )}
           </Section>
           <SubmitBtn

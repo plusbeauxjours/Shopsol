@@ -20,10 +20,11 @@ const EmployeeText = styled.Text`
   font-size: 13px;
   color: grey;
 `;
+
 const ContentBox = styled.View`
   flex: 1;
   justify-content: center;
-  margin-left: ${wp('5%')}px;
+  margin-left: 20px;
 `;
 
 const Touchable = styled(Ripple)<IIsStore>`

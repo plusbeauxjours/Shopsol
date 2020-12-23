@@ -2,16 +2,17 @@ import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
-import {EllipseIcon, ForwardIcon} from '~/constants/Icons';
 import Ripple from 'react-native-material-ripple';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
+import {EllipseIcon, ForwardIcon} from '~/constants/Icons';
 
 const Touchable = styled(Ripple)`
   width: 100%;
   flex-direction: row;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 20px;
   margin-bottom: 20px;
-  height: 140px;
   background-color: white;
 `;
 
@@ -43,8 +44,9 @@ const GreyText = styled.Text`
 `;
 const CheckpointBox = styled.View`
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 5px;
+  width: ${wp('100') - 150}px;
 `;
 
 const ChecktimeText = styled.Text`
@@ -120,7 +122,7 @@ export default ({key, date, data}) => {
       rippleColor={'#666'}
       rippleDuration={600}
       rippleSize={1700}
-      rippleContainerBorderRadius={30}
+      rippleContainerBorderRadius={20}
       rippleOpacity={0.1}>
       <ContentBox>
         <Row
@@ -167,9 +169,7 @@ export default ({key, date, data}) => {
             {data.EMP_SEQ ? (
               <CheckpointBox>
                 <ChecktimeText>담당직원</ChecktimeText>
-                <GreyText numberOfLines={1} ellipsizeMode="tail">
-                  {data.NAME.split('@').join(' / ')}
-                </GreyText>
+                <GreyText>{data.NAME.split('@').join(' / ')}</GreyText>
               </CheckpointBox>
             ) : (
               <CheckpointBox>
@@ -189,9 +189,7 @@ export default ({key, date, data}) => {
             {data.EMP_SEQ && (
               <CheckpointBox>
                 <ChecktimeText>담당직원</ChecktimeText>
-                <GreyText numberOfLines={1} ellipsizeMode="tail">
-                  {data.NAME.split('@').join(' / ')}
-                </GreyText>
+                <GreyText>{data.NAME.split('@').join(' / ')}</GreyText>
               </CheckpointBox>
             )}
           </>

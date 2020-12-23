@@ -34,6 +34,7 @@ const Section = styled.TouchableOpacity`
   border-radius: 20px;
   background-color: white;
   margin-bottom: 20px;
+  justify-content: center;
 `;
 
 const Touchable = styled.TouchableOpacity``;
@@ -80,10 +81,9 @@ const IconContainer = styled(Row)`
   align-items: center;
 `;
 
-const ViewBtnText = styled.Text`
-  font-size: 12px;
-  font-weight: bold;
-  padding-right: 3px;
+const ForwardIconContainer = styled.View`
+  position: absolute;
+  right: 20px;
 `;
 
 export default ({
@@ -99,29 +99,6 @@ export default ({
   dday,
 }) => {
   const navigation = useNavigation();
-
-  const SanitaryEducation = () => (
-    <TypeTitle>
-      <Row>
-        <TypeTitleBox>
-          <TypeTitleText>위생교육증</TypeTitleText>
-        </TypeTitleBox>
-        <Touchable
-          onPress={() => {
-            explainModal(
-              '',
-              '위생교육증을 등록하시면 갱신시점 알람 및 기존 교육증 이력관리가 가능합니다.\n(현재는 한국휴게음식업중앙회 발급 수료증에 한하여 등록이 가능합니다. 추후 종류 추가 예정)',
-            );
-          }}>
-          <HelpCircleIcon color="#aaa" />
-        </Touchable>
-      </Row>
-      <Row>
-        <ViewBtnText>등록 및 상세</ViewBtnText>
-        <ForwardIcon />
-      </Row>
-    </TypeTitle>
-  );
 
   if (STORE == '0') {
     return (
@@ -144,10 +121,6 @@ export default ({
                   <TypeTitleBox>
                     <TypeTitleText>보건증</TypeTitleText>
                   </TypeTitleBox>
-                </Row>
-                <Row>
-                  <ViewBtnText>등록 및 상세</ViewBtnText>
-                  <ForwardIcon />
                 </Row>
               </TypeTitle>
               {HEALTH_CERTIFICATE_APPLY == 0 ? (
@@ -182,6 +155,9 @@ export default ({
                   </Row>
                 </IconContainer>
               )}
+              <ForwardIconContainer>
+                <ForwardIcon />
+              </ForwardIconContainer>
             </Section>
             <Footer>
               <FooterText>조기경보시스템을 등록하시면</FooterText>
@@ -211,7 +187,22 @@ export default ({
                 onPress={() =>
                   navigation.navigate('HealthCertificateStoreDetailScreen')
                 }>
-                <SanitaryEducation />
+                <TypeTitle>
+                  <Row>
+                    <TypeTitleBox>
+                      <TypeTitleText>위생교육증</TypeTitleText>
+                    </TypeTitleBox>
+                    <Touchable
+                      onPress={() => {
+                        explainModal(
+                          '',
+                          '위생교육증을 등록하시면 갱신시점 알람 및 기존 교육증 이력관리가 가능합니다.\n(현재는 한국휴게음식업중앙회 발급 수료증에 한하여 등록이 가능합니다. 추후 종류 추가 예정)',
+                        );
+                      }}>
+                      <HelpCircleIcon color="#aaa" />
+                    </Touchable>
+                  </Row>
+                </TypeTitle>
                 <IconContainer
                   style={{
                     flexDirection: 'column',
@@ -236,6 +227,9 @@ export default ({
                     {Math.abs(Math.floor(dday))})
                   </Text>
                 </IconContainer>
+                <ForwardIconContainer>
+                  <ForwardIcon size={20} />
+                </ForwardIconContainer>
               </Section>
             ) : (
               <Section
@@ -244,12 +238,30 @@ export default ({
                     count: 3,
                   })
                 }>
-                <SanitaryEducation />
+                <TypeTitle>
+                  <Row>
+                    <TypeTitleBox>
+                      <TypeTitleText>위생교육증</TypeTitleText>
+                    </TypeTitleBox>
+                    <Touchable
+                      onPress={() => {
+                        explainModal(
+                          '',
+                          '위생교육증을 등록하시면 갱신시점 알람 및 기존 교육증 이력관리가 가능합니다.\n(현재는 한국휴게음식업중앙회 발급 수료증에 한하여 등록이 가능합니다. 추후 종류 추가 예정)',
+                        );
+                      }}>
+                      <HelpCircleIcon color="#aaa" />
+                    </Touchable>
+                  </Row>
+                </TypeTitle>
 
                 <IconContainer>
                   <EllipseIcon size={8} color={'#CE0505'} />
                   <Text isSubmited={false}>위생교육증 미등록</Text>
                 </IconContainer>
+                <ForwardIconContainer>
+                  <ForwardIcon size={20} />
+                </ForwardIconContainer>
               </Section>
             )}
             <Section
@@ -270,10 +282,6 @@ export default ({
                     }}>
                     <HelpCircleIcon color="#7e7c7c" />
                   </Touchable>
-                </Row>
-                <Row>
-                  <ViewBtnText>등록 및 상세</ViewBtnText>
-                  <ForwardIcon />
                 </Row>
               </TypeTitle>
               {HEALTH_CERTIFICATE_APPLY == 0 ? (
@@ -299,6 +307,9 @@ export default ({
                   </Text>
                 </IconContainer>
               )}
+              <ForwardIconContainer>
+                <ForwardIcon size={20} />
+              </ForwardIconContainer>
             </Section>
             <Section disabled={true}>
               <TypeTitleBox style={{alignItems: 'flex-start'}}>
