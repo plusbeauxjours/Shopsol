@@ -27,6 +27,9 @@ import {
   CloseCircleOutlineIcon,
 } from '~/constants/Icons';
 
+interface IsLast {
+  isLast?: boolean;
+}
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: #f6f6f6;
@@ -118,9 +121,9 @@ const MemoBox = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const CommentBox = styled(Ripple)`
+const CommentBox = styled(Ripple)<IsLast>`
   padding: 10px 0;
-  border-bottom-width: 0.7px;
+  border-bottom-width: ${(props) => (props.isLast ? 0 : 0.7)}px;
   border-color: #ddd;
   min-height: 70px;
   justify-content: center;
@@ -337,7 +340,7 @@ export default ({
                 </MemoBox>
               </MemoContainer>
               {loading ? (
-                <CommentBox>
+                <CommentBox isLast={true}>
                   <ActivityIndicator size="small" />
                 </CommentBox>
               ) : (
@@ -376,6 +379,7 @@ export default ({
                       </BackBtn>
                       <CommentBox
                         key={index}
+                        isLast={CHECKLIST_SHARE_COMMENTS?.length - 1 == index}
                         onPress={() => {
                           openRow(rowMap[index]);
                         }}

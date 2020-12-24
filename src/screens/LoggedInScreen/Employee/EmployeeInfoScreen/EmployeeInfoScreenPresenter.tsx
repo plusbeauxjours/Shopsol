@@ -388,7 +388,7 @@ export default ({
         </RenderDayBox>
         <RenderDayTime>
           <RenderDayTimeText isSelected={isSelected} substract={substract}>
-            {isSelected ? startTime : '00:00'} ~{' '}
+            {isSelected ? startTime : '00:00'}&nbsp;~&nbsp;
             {isSelected ? endTime : '00:00'}
           </RenderDayTimeText>
         </RenderDayTime>

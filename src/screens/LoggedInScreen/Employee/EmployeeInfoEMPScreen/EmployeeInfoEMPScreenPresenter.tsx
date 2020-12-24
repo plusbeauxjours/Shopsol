@@ -405,8 +405,9 @@ export default ({
                   }}
                   resizeMode={FastImage.resizeMode.cover}
                 />
+
                 <NameBox>
-                  <Row>
+                  <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
                     <NameText>{EMPLOYEE_INFO_DATA?.EMP_NAME}</NameText>
                     <DateText>
                       {EMPLOYEE_INFO_DATA?.IS_MANAGER === '1'
@@ -414,16 +415,18 @@ export default ({
                         : '[스태프]'}
                     </DateText>
                   </Row>
-                  <Row>
-                    <InfoText>근무기간&nbsp;</InfoText>
-                    <InfoText>
-                      {moment(EMPLOYEE_INFO_DATA?.START).format('YYYY.MM.DD')}
-                      &nbsp;~&nbsp;
-                      {EMPLOYEE_INFO_DATA?.END
-                        ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
-                        : '계속'}
-                    </InfoText>
-                  </Row>
+                  <InfoText>
+                    근무기간&nbsp;(
+                    {moment().diff(moment(EMPLOYEE_INFO_DATA?.START), 'month')}
+                    개월)
+                  </InfoText>
+                  <InfoText>
+                    {moment(EMPLOYEE_INFO_DATA?.START).format('YYYY.MM.DD')}{' '}
+                    ~&nbsp;
+                    {EMPLOYEE_INFO_DATA?.END
+                      ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
+                      : '계속'}
+                  </InfoText>
                 </NameBox>
               </EmployeeBox>
             </Section>
