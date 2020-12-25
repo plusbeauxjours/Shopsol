@@ -1,7 +1,8 @@
 import React from 'react';
-
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {RefreshControl} from 'react-native';
+
 import EmployeeListCard from './EmployeeListCard';
 import {HelpCircleIcon} from '~/constants/Icons';
 
@@ -22,28 +23,28 @@ const Touchable = styled.TouchableOpacity`
 
 const Container = styled.View`
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
   align-items: center;
 `;
 
 const Section = styled.View`
   width: 100%;
-  margin-top: 20px;
+  padding: 20px;
   border-radius: 20px;
+  margin-bottom: 20px;
   background-color: white;
 `;
 
-const BoxTitle = styled.View`
-  margin: 0 20px;
-  padding: 20px 0;
+const Row = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `;
 
-const BoxTitleText = styled.Text`
-  font-size: 20px;
-  color: #7e7c7c;
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
 `;
 
 const NumberText = styled.Text`
@@ -55,13 +56,20 @@ const NumberText = styled.Text`
 const WhiteSpace = styled.View`
   height: 30px;
 `;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 10px 0 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
+`;
+
 const EmployeeListBox = styled.View<IEmployeeListBox>`
   width: 100%;
   align-items: center;
   border-radius: 20px;
   border-color: #f2f2f2;
   background-color: white;
-  border-top-width: ${(props) => (props.hasEmployeeNow ? '1px' : 0)};
 `;
 
 export default ({
@@ -84,11 +92,11 @@ export default ({
         }>
         <Container>
           <Section>
-            <BoxTitle>
-              <BoxTitleText>전체직원</BoxTitleText>
+            <Row>
+              <TitleText>전체직원</TitleText>
               <NumberText>{employeeNowOn?.length ?? 0}</NumberText>
-            </BoxTitle>
-
+            </Row>
+            <GreyLine />
             <EmployeeListBox hasEmployeeNow={employeeNowOn}>
               {employeeNowOn?.map((data, index) => {
                 return (
@@ -110,7 +118,7 @@ export default ({
             <WhiteSpace />
           </Section>
           <Section>
-            <BoxTitle>
+            <Row>
               {STORE == '1' ? (
                 <Touchable
                   onPress={() => {
@@ -119,14 +127,16 @@ export default ({
                       '근무종료된 직원은 본인의 근무내역 확인이 불가능합니다.',
                     );
                   }}>
-                  <BoxTitleText>근무종료</BoxTitleText>
+                  <TitleText>근무종료</TitleText>
                   <HelpCircleIcon />
                 </Touchable>
               ) : (
-                <BoxTitleText>근무종료</BoxTitleText>
+                <TitleText>근무종료</TitleText>
               )}
               <NumberText>{employeeNowOff?.length ?? 0}</NumberText>
-            </BoxTitle>
+            </Row>
+
+            {employeeNowOff && <GreyLine />}
             {employeeNowOff?.map((data, index) => (
               <EmployeeListBox hasEmployeeNow={employeeNowOff}>
                 <EmployeeListCard

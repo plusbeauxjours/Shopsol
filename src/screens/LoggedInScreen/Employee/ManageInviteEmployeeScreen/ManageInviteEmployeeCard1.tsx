@@ -2,32 +2,32 @@ import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+
 import FastImage from 'react-native-fast-image';
 
 import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 
-const Container = styled.View`
-  height: ${hp('10%')}px;
-  width: ${wp('100%')}px;
-  padding: 0 20px;
+interface IsLast {
+  isLast?: boolean;
+}
+
+const Container = styled.View<IsLast>`
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: ${(props) => (props.isLast ? 0 : 10)}px;
 `;
 
 const EmployeeBox = styled.View`
-  width: ${wp('30%')}px;
+  width: 120px;
   align-items: flex-start;
-  padding-left: 20px;
+  margin-left: 10px;
 `;
 
 const AdmitText = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
   color: #e85356;
 `;
 
@@ -36,16 +36,17 @@ const RefuseText = styled(AdmitText)`
 `;
 
 const TextBox = styled.TouchableOpacity`
-  width: ${wp('13%')}px;
+  width: 50px;
   justify-content: center;
   align-items: center;
 `;
 
 const ButtonBox = styled.View`
-  width: ${wp('35%')}px;
+  width: 100px;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  right: 0;
 `;
 
 const NameText = styled.Text`
@@ -56,7 +57,6 @@ const NameText = styled.Text`
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
-  padding-left: 20px;
 `;
 
 const PhoneText = styled.Text`
@@ -68,6 +68,7 @@ const PhoneText = styled.Text`
 export default ({
   key,
   data,
+  isLast,
   EMP_NAME,
   EMP_SEQ,
   PHONE,
@@ -136,7 +137,7 @@ export default ({
   };
 
   return (
-    <Container key={key}>
+    <Container isLast={isLast}>
       <Row>
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30}}

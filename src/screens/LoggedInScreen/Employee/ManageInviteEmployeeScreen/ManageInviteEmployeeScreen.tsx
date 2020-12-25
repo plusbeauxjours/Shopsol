@@ -3,6 +3,7 @@ import {RefreshControl} from 'react-native';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
@@ -17,24 +18,23 @@ const BackGround = styled.SafeAreaView`
 `;
 
 const ScrollView = styled.ScrollView``;
+const Text = styled.Text``;
 
 const Container = styled.View`
-  width: 100%;
+  width: ${wp('100%')}px;
   padding: 20px;
   align-items: center;
 `;
 
 const Section = styled.View`
   width: 100%;
-  padding-bottom: 20px;
+  padding: 20px;
   border-radius: 20px;
   margin-bottom: 20px;
   background-color: white;
 `;
 
-const BoxTitle = styled.TouchableOpacity`
-  padding: 20px 0;
-  justify-content: center;
+const Row = styled.TouchableOpacity`
   align-items: center;
   flex-direction: row;
 `;
@@ -43,15 +43,22 @@ const EmployeeListBox = styled.View`
   align-items: center;
 `;
 
-const BoxTitleText = styled.Text`
-  padding-left: 20px;
+const TitleText = styled.Text`
   font-size: 16px;
+  color: #999;
   font-weight: bold;
 `;
 
 const GreyText = styled.Text`
   text-align: center;
   color: #aaa;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 10px 0 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
 export default () => {
@@ -104,15 +111,14 @@ export default () => {
         }>
         <Container>
           <Section>
-            <BoxTitle
+            <Row
               onPress={() =>
                 explainModal('', 'App 설치 및 회원가입이 완료된 직원입니다.')
               }>
-              <BoxTitleText style={{paddingRight: 5}}>
-                초대에 응한 직원
-              </BoxTitleText>
+              <TitleText style={{paddingRight: 5}}>초대에 응한 직원</TitleText>
               <HelpCircleIcon />
-            </BoxTitle>
+            </Row>
+            <GreyLine />
             {RESPONSE_EMPLOYEE?.length === 0 && (
               <GreyText>초대에 응한 직원이 없습니다</GreyText>
             )}
@@ -121,6 +127,7 @@ export default () => {
                 <ManageInviteEmployeeCard1
                   key={index}
                   data={data}
+                  isLast={RESPONSE_EMPLOYEE?.length - 1 == index}
                   EMP_NAME={data.EMP_NAME}
                   EMP_SEQ={data.EMP_SEQ}
                   PHONE={data.MobileNo}
@@ -132,29 +139,33 @@ export default () => {
             </EmployeeListBox>
           </Section>
           <Section>
-            <BoxTitle
+            <Row
               onPress={() => {
                 explainModal(
                   '',
                   'App 설치가 완료되지 않은 직원입니다. 초대메시지 재전송을 눌러 다시한번 알려주세요.',
                 );
               }}>
-              <BoxTitleText style={{paddingRight: 5}}>
+              <TitleText style={{paddingRight: 5}}>
                 초대 메시지 미열람 직원
-              </BoxTitleText>
+              </TitleText>
               <HelpCircleIcon />
-            </BoxTitle>
+            </Row>
+            <GreyLine />
             {NO_RESPONSE_EMPLOYEE?.length === 0 && (
               <GreyText>초대 메시지 미열람 직원이 없습니다.</GreyText>
             )}
             <EmployeeListBox>
+              {console.log(NO_RESPONSE_EMPLOYEE)}
               {NO_RESPONSE_EMPLOYEE?.map((data, index) => (
                 <ManageInviteEmployeeCard2
                   key={index}
+                  isLast={RESPONSE_EMPLOYEE?.length - 1 == index}
                   join_emp_seq={data.join_emp_seq}
                   EMP_NAME={data.EMP_NAME}
                   PHONE={data.PHONE}
                   STORE_SEQ={STORE_SEQ}
+                  IMAGE={data.images[0].IMAGE}
                 />
               ))}
             </EmployeeListBox>

@@ -1,35 +1,63 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+
 import {useDispatch} from 'react-redux';
 
 import api from '~/constants/LoggedInApi';
-import {RemoveCircleIcon} from '~/constants/Icons';
 import {setSplashVisible} from '~/redux/splashSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {getRESPONSE_EMPLOYEE} from '~/redux/employeeSlice';
+import FastImage from 'react-native-fast-image';
 
-const Container = styled.View`
-  height: ${hp('10%')}px;
-  width: ${wp('100%')}px;
-  padding: 0 20px;
+interface IsLast {
+  isLast?: boolean;
+}
+
+const Container = styled.View<IsLast>`
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: ${(props) => (props.isLast ? 0 : 10)}px;
 `;
 
 const EmployeeBox = styled.View`
-  width: ${wp('30%')}px;
-  align-items: flex-start
-  padding-left: 20px;
+  width: 120px;
+  align-items: flex-start;
+  margin-left: 10px;
+`;
+
+const AdmitText = styled.Text`
+  font-size: 16px;
+  color: #e85356;
+`;
+
+const RefuseText = styled(AdmitText)`
+  color: #3d3d3d;
+`;
+
+const TextBox = styled.TouchableOpacity`
+  width: 50px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ButtonBox = styled.View`
+  width: 100px;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  right: 0;
 `;
 
 const NameText = styled.Text`
   color: #7f7f7f;
   font-size: 16px;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;
 
 const PhoneText = styled.Text`
@@ -38,30 +66,15 @@ const PhoneText = styled.Text`
   font-size: 14px;
 `;
 
-const SendText = styled.Text`
-  font-size: 12px;
-`;
-
-const Touchable = styled.TouchableOpacity`
-  margin-left: 5px;
-`;
-
-const Row = styled.View`
-  flex-direction: row;
-  align-items: center;
-  margin-right: 10px;
-`;
-
-const ButtonBox = styled.TouchableOpacity`
-  width: ${wp('35%')}px;
-  justify-content: center;
-  align-items: center;
-  border-width: 1px;
-  border-radius: 20px;
-  padding: 7px 14px;
-`;
-
-export default ({key, join_emp_seq, EMP_NAME, PHONE, STORE_SEQ}) => {
+export default ({
+  key,
+  isLast,
+  join_emp_seq,
+  EMP_NAME,
+  PHONE,
+  STORE_SEQ,
+  IMAGE,
+}) => {
   const dispatch = useDispatch();
 
   const [isSent, setIsSent] = useState<boolean>(false);
@@ -111,25 +124,37 @@ export default ({key, join_emp_seq, EMP_NAME, PHONE, STORE_SEQ}) => {
   };
 
   return (
-    <Container key={key}>
-      <EmployeeBox>
-        <NameText>{EMP_NAME}</NameText>
-        <PhoneText>{PHONE}</PhoneText>
-      </EmployeeBox>
+    <Container isLast={isLast}>
+      {console.log(IMAGE)}
       <Row>
-        {isSent ? (
-          <ButtonBox disabled={true}>
-            <SendText>전송 완료</SendText>
-          </ButtonBox>
-        ) : (
-          <ButtonBox onPress={() => sendFn(PHONE)}>
-            <SendText>초대 메시지 재전송</SendText>
-          </ButtonBox>
-        )}
-        <Touchable onPress={() => deleteModal(join_emp_seq)}>
-          <RemoveCircleIcon size={36} />
-        </Touchable>
+        <FastImage
+          style={{width: 60, height: 60, borderRadius: 30}}
+          source={{
+            uri: `http://133.186.210.223/uploads/${IMAGE}`,
+            headers: {Authorization: 'someAuthToken'},
+            priority: FastImage.priority.low,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <EmployeeBox>
+          <NameText>{EMP_NAME}</NameText>
+          <PhoneText>{PHONE}</PhoneText>
+        </EmployeeBox>
       </Row>
+      {isSent ? (
+        <ButtonBox disabled={true}>
+          <RefuseText>전송 완료</RefuseText>
+        </ButtonBox>
+      ) : (
+        <ButtonBox>
+          <TextBox onPress={() => sendFn(PHONE)}>
+            <AdmitText>재전송</AdmitText>
+          </TextBox>
+          <TextBox onPress={() => deleteModal(join_emp_seq)}>
+            <RefuseText>삭제</RefuseText>
+          </TextBox>
+        </ButtonBox>
+      )}
     </Container>
   );
 };

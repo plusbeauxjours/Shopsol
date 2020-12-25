@@ -8,7 +8,6 @@ import {ForwardIcon, PhoneIcon} from '~/constants/Icons';
 import moment from 'moment';
 
 const Touchable = styled.TouchableOpacity`
-  padding: 0 20px;
   align-items: center;
   flex-direction: row;
   background-color: white;
@@ -47,7 +46,7 @@ const Row = styled.View`
 
 const IconContainer = styled.View`
   position: absolute;
-  right: 20px;
+  right: 5px;
 `;
 
 export default ({

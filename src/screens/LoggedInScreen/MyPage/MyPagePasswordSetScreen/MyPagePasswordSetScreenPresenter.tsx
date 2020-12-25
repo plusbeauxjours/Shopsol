@@ -26,9 +26,11 @@ const Container = styled.View`
   padding: 20px;
 `;
 
-const NameText = styled.Text`
-  color: #7f7f7f;
+const TitleText = styled.Text`
   font-size: 16px;
+  color: #999;
+  font-weight: bold;
+  margin-bottom: 10px;
 `;
 
 const TextinputCase = styled.View`
@@ -130,7 +132,7 @@ export default ({
         <Container>
           <Section>
             <Case>
-              <NameText>새 비밀번호</NameText>
+              <TitleText>새 비밀번호</TitleText>
               <TextinputCase>
                 <TextInput
                   placeholder={'영문, 숫자 조합 6자 이상'}
@@ -169,7 +171,7 @@ export default ({
             </Case>
             <WhiteSpace />
             <Case>
-              <NameText>새 비밀번호 확인</NameText>
+              <TitleText>새 비밀번호 확인</TitleText>
               <TextinputCase>
                 <TextInput
                   placeholder={'새 비밀번호 확인'}
@@ -200,7 +202,7 @@ export default ({
             </Case>
             <WhiteSpace />
             <Case>
-              <NameText>휴대폰 번호</NameText>
+              <TitleText>휴대폰 번호</TitleText>
               <TextinputCase>
                 <MobileNoText>{MOBILE_NO}</MobileNoText>
                 <RequestButton
@@ -229,7 +231,7 @@ export default ({
               <>
                 <WhiteSpace />
                 <Case>
-                  <NameText>인증번호입력</NameText>
+                  <TitleText>인증번호입력</TitleText>
                   <TextinputCase>
                     <TextInput
                       placeholder={'인증번호를 입력해주세요'}

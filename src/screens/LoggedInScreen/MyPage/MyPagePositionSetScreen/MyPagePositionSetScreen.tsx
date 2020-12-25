@@ -6,25 +6,22 @@ import {setSTORE} from '~/redux/userSlice';
 import api from '~/constants/LoggedInApi';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {RadioBtnOnIcon, RadioBtnOffIcon} from '../../../../constants/Icons';
-import {getSTORELIST_DATA} from '../../../../redux/userSlice';
+import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
+import {getSTORELIST_DATA} from '~/redux/userSlice';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: #f6f6f6; ;
 `;
 
-const WhiteSpace = styled.View`
-  height: 30px;
-`;
-
 const Container = styled.View`
   padding: 20px;
 `;
 
-const NameText = styled.Text`
-  color: #7f7f7f;
+const TitleText = styled.Text`
   font-size: 16px;
+  color: #999;
+  font-weight: bold;
 `;
 
 const Row = styled.View`
@@ -124,7 +121,7 @@ export default () => {
       <Container>
         <Section>
           <Row style={{justifyContent: 'space-between', alignItems: 'center'}}>
-            <NameText>가입유형</NameText>
+            <TitleText>가입유형</TitleText>
             <TypeCheckCase>
               <View>{positionType(1, '점장')}</View>
               <View>{positionType(0, '직원')}</View>

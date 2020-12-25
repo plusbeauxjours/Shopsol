@@ -21,10 +21,11 @@ const Container = styled.View`
   padding: 20px;
 `;
 
-const NameText = styled.Text`
-  margin-bottom: 20px;
-  color: #7f7f7f;
+const TitleText = styled.Text`
   font-size: 16px;
+  color: #999;
+  font-weight: bold;
+  margin-bottom: 10px;
 `;
 
 const TextInput = styled.TextInput`
@@ -92,7 +93,7 @@ export default () => {
     <BackGround>
       <Container>
         <Section>
-          <NameText>이름</NameText>
+          <TitleText>이름</TitleText>
           <TextInput
             placeholder={'변경하실 이름을 입력해주세요.'}
             selectionColor={'#999'}

@@ -55,11 +55,6 @@ const TypeTitleBox = styled.View`
   align-items: center;
 `;
 
-const TypeTitleText = styled.Text`
-  font-weight: bold;
-  font-size: 16px;
-`;
-
 const GreyText = styled.Text`
   color: #7e7c7c;
   font-size: 13px;
@@ -84,6 +79,12 @@ const IconContainer = styled(Row)`
 const ForwardIconContainer = styled.View`
   position: absolute;
   right: 20px;
+`;
+
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
 `;
 
 export default ({
@@ -119,7 +120,7 @@ export default ({
               <TypeTitle>
                 <Row>
                   <TypeTitleBox>
-                    <TypeTitleText>보건증</TypeTitleText>
+                    <TitleText>보건증</TitleText>
                   </TypeTitleBox>
                 </Row>
               </TypeTitle>
@@ -190,7 +191,7 @@ export default ({
                 <TypeTitle>
                   <Row>
                     <TypeTitleBox>
-                      <TypeTitleText>위생교육증</TypeTitleText>
+                      <TitleText>위생교육증</TitleText>
                     </TypeTitleBox>
                     <Touchable
                       onPress={() => {
@@ -241,7 +242,7 @@ export default ({
                 <TypeTitle>
                   <Row>
                     <TypeTitleBox>
-                      <TypeTitleText>위생교육증</TypeTitleText>
+                      <TitleText>위생교육증</TitleText>
                     </TypeTitleBox>
                     <Touchable
                       onPress={() => {
@@ -271,7 +272,7 @@ export default ({
               <TypeTitle>
                 <Row>
                   <TypeTitleBox>
-                    <TypeTitleText>보건증</TypeTitleText>
+                    <TitleText>보건증</TitleText>
                   </TypeTitleBox>
                   <Touchable
                     onPress={() => {
@@ -313,7 +314,7 @@ export default ({
             </Section>
             <Section disabled={true}>
               <TypeTitleBox style={{alignItems: 'flex-start'}}>
-                <TypeTitleText>영업신고증</TypeTitleText>
+                <TitleText>영업신고증</TitleText>
               </TypeTitleBox>
               <IconContainer>
                 <GreyText>* 추후 업데이트 예정입니다.</GreyText>

@@ -5,19 +5,22 @@ import DatePicker from 'react-native-date-picker';
 import Modal from 'react-native-modal';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
+import Animated from 'react-native-reanimated';
+import {mix, useTransition} from 'react-native-redash';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {ForwardArrowIcon} from '../../../../constants/Icons';
-import {
-  UpIcon,
-  DownIcon,
-  RadioBtnOnIcon,
-  RadioBtnOffIcon,
-} from '~/constants/Icons';
+import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
+import Chevron from '~/components/Chevron';
 
 interface IsSelected {
   isSelected: boolean;
   color?: string;
+}
+
+interface IsFirst {
+  isFirst?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -53,25 +56,11 @@ const RowTitle = styled(Row)`
   height: 30px;
 `;
 
-const TimePickBox = styled.View`
-  margin-top: 20px;
-  padding: 20px;
-  border-color: #f2f2f2;
-  border-top-width: 1px;
-`;
-
 const NameText = styled.Text`
   font-size: 16px;
   color: #333;
   margin-bottom: 5px;
   margin-left: 5px;
-`;
-
-const TitleText = styled.Text`
-  font-size: 17px;
-  color: #000;
-  font-weight: bold;
-  margin-right: 5px;
 `;
 
 const WhiteSpace = styled.View`
@@ -168,6 +157,66 @@ const DatePickerText = styled.Text`
   text-align: center;
 `;
 
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 10px 0 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
+`;
+
+const ListTouchable = styled.TouchableWithoutFeedback`
+  flex-direction: row;
+`;
+
+const DateBoxText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
+`;
+
+const ListContainer = styled.View`
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: ${wp('100%') - 40}px;
+  padding: 25px 20px 0 20px;
+`;
+
+const HiddenItems = styled.View`
+  overflow: hidden;
+  align-items: flex-start;
+`;
+
+const BorderFooter = styled.TouchableOpacity`
+  width: ${wp('100%') - 40}px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: white;
+  height: 25px;
+  margin-bottom: 20px;
+  overflow: hidden;
+`;
+
+const MainItemContainer = styled.TouchableOpacity<IsFirst>`
+  width: ${wp('100%') - 40}px;
+  background-color: white;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 40px;
+  padding-top: ${(props) => (props.isFirst ? 20 : 0)}px;
+  height: ${(props) => (props.isFirst ? 60 : 40)}px;
+`;
+
 export default ({
   startTime,
   endTime,
@@ -202,10 +251,22 @@ export default ({
   setEndTimeSet,
   REST_TIME,
 }) => {
+  const stepFourClickTransition = useTransition(stepFourClick);
+
   const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);
   const isNextDay2 = CHANGE_START > CHANGE_END;
   const isNextDay3 = START_TIME > END_TIME;
   const isNextDay4 = UPDATED_START > UPDATED_END;
+
+  const MainItem = ({isFirst = false, text, value}) => {
+    return (
+      <MainItemContainer isFirst={isFirst}>
+        <DetailRowText>{text}</DetailRowText>
+        <DetailRowText>{value}&nbsp;원</DetailRowText>
+      </MainItemContainer>
+    );
+  };
+
   const FixScheduleStepOne = () => (
     <Section>
       <Row>
@@ -315,54 +376,52 @@ export default ({
       <RowTitle>
         <TitleText>변경할 근무시간</TitleText>
       </RowTitle>
-      <TimePickBox>
-        <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
-          <SideText>근무 시작시간</SideText>
-          <TimePickBoxTimeText isSelected={!!moment(startTime).format('HH:mm')}>
-            {moment(startTime).format('HH:mm')}
-          </TimePickBoxTimeText>
-        </RowSpaceTouchable>
-        <WhiteSpace />
-        <RowSpaceTouchable onPress={() => setIsEndTimeModalVisible(true)}>
-          <SideText>근무 종료시간</SideText>
-          <TimePickBoxTimeText isSelected={!!moment(endTime).format('HH:mm')}>
-            {moment(endTime).format('HH:mm')}
-          </TimePickBoxTimeText>
-        </RowSpaceTouchable>
-      </TimePickBox>
+      <GreyLine />
+      <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
+        <SideText>근무 시작시간</SideText>
+        <TimePickBoxTimeText isSelected={!!moment(startTime).format('HH:mm')}>
+          {moment(startTime).format('HH:mm')}
+        </TimePickBoxTimeText>
+      </RowSpaceTouchable>
+      <WhiteSpace />
+      <RowSpaceTouchable onPress={() => setIsEndTimeModalVisible(true)}>
+        <SideText>근무 종료시간</SideText>
+        <TimePickBoxTimeText isSelected={!!moment(endTime).format('HH:mm')}>
+          {moment(endTime).format('HH:mm')}
+        </TimePickBoxTimeText>
+      </RowSpaceTouchable>
     </Section>
   );
 
   const FixScheduleStepFour = () => (
-    <Section>
-      <Touchable onPress={() => setStepFourClick(!stepFourClick)}>
-        <RowTitle>
-          <RowTitle>
-            <TitleText>(선택) 수당 포함여부</TitleText>
-          </RowTitle>
-          {stepFourClick ? (
-            <UpIcon color={'#BCC5D3'} />
-          ) : (
-            <DownIcon color={'#000'} />
-          )}
-        </RowTitle>
-      </Touchable>
-
-      {stepFourClick && (
-        <>
-          <Incentive selection={0} text={'적용(1배)'} />
-          <Incentive selection={1} text={'초과, 야간근무수당 적용(1.5배)'} />
-          <Incentive selection={2} text={'초과, 야간근무수당 중복적용(2배)'} />
-        </>
-      )}
-    </Section>
+    <>
+      <ListTouchable onPress={() => setStepFourClick(!stepFourClick)}>
+        <ListContainer as={Animated.View}>
+          <DateBoxText>(선택) 수당 포함여부</DateBoxText>
+          <Chevron {...{transition: stepFourClickTransition}} />
+        </ListContainer>
+      </ListTouchable>
+      <HiddenItems
+        as={Animated.View}
+        style={{
+          height: mix(stepFourClickTransition, 0, 60 + 40 + 40),
+        }}>
+        <Incentive selection={0} text={'적용(1배)'} isFirst={true} />
+        <Incentive selection={1} text={'초과, 야간근무수당 적용(1.5배)'} />
+        <Incentive selection={2} text={'초과, 야간근무수당 중복적용(2배)'} />
+      </HiddenItems>
+      <BorderFooter
+        onPress={() => setStepFourClick(!stepFourClick)}
+        activeOpacity={1}
+      />
+    </>
   );
 
-  const Incentive = ({selection, text}) => {
+  const Incentive = ({isFirst = false, selection, text}) => {
     let valueI = JSON.parse(JSON.stringify(incentiveCheck));
     return (
-      <Touchable
-        style={{flexDirection: 'row', margin: 10}}
+      <MainItemContainer
+        isFirst={isFirst}
         onPress={() => {
           valueI.fill(false);
           valueI[selection] = true;
@@ -372,11 +431,11 @@ export default ({
           {incentiveCheck[selection] ? (
             <RadioBtnOnIcon size={22} color="#e85356" />
           ) : (
-            <RadioBtnOffIcon size={25} color="#CCCCCC" />
+            <RadioBtnOffIcon size={22} color="#CCCCCC" />
           )}
           <IncentiveText>{text}</IncentiveText>
         </Row>
-      </Touchable>
+      </MainItemContainer>
     );
   };
 

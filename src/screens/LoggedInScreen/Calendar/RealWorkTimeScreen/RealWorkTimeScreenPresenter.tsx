@@ -66,10 +66,16 @@ const NameText = styled.Text`
 `;
 
 const TitleText = styled.Text`
-  font-size: 17px;
-  color: #000;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
-  margin-right: 5px;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 10px 0 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
 const WhiteSpace = styled.View`
@@ -325,25 +331,24 @@ export default ({
       <RowTitle>
         <TitleText>변경할 출퇴근시간</TitleText>
       </RowTitle>
-      <TimePickBox>
-        <RowSpaceTouchable
-          disabled={noStart}
-          onPress={() => setIsStartTimeModalVisible(true)}>
-          <SideText>출근시간</SideText>
-          <TimePickBoxTimeText>
-            {noStart ? '미출근' : moment(startTime).format('HH:mm')}
-          </TimePickBoxTimeText>
-        </RowSpaceTouchable>
-        <WhiteSpace />
-        <RowSpaceTouchable
-          disabled={noEnd}
-          onPress={() => setIsEndTimeModalVisible(true)}>
-          <SideText>퇴근시간</SideText>
-          <TimePickBoxTimeText>
-            {noEnd ? '미출근' : moment(endTime).format('HH:mm')}
-          </TimePickBoxTimeText>
-        </RowSpaceTouchable>
-      </TimePickBox>
+      <GreyLine />
+      <RowSpaceTouchable
+        disabled={noStart}
+        onPress={() => setIsStartTimeModalVisible(true)}>
+        <SideText>출근시간</SideText>
+        <TimePickBoxTimeText>
+          {noStart ? '미출근' : moment(startTime).format('HH:mm')}
+        </TimePickBoxTimeText>
+      </RowSpaceTouchable>
+      <WhiteSpace />
+      <RowSpaceTouchable
+        disabled={noEnd}
+        onPress={() => setIsEndTimeModalVisible(true)}>
+        <SideText>퇴근시간</SideText>
+        <TimePickBoxTimeText>
+          {noEnd ? '미출근' : moment(endTime).format('HH:mm')}
+        </TimePickBoxTimeText>
+      </RowSpaceTouchable>
       <WhiteSpace />
       <NormalContainer>
         <NormalBox
