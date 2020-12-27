@@ -57,7 +57,8 @@ export default ({
             <AddressText
               color={dday <= 0 ? '#CE0505' : '#7e7c7c'}
               style={dday <= 0 && {textDecorationLine: 'underline'}}>
-              검진일 : {data?.RESULT_DATE} (갱신 D{dday <= 0 ? '+' : '-'}
+              검진일 : {moment(data?.RESULT_DATE).format('YYYY.MM.DD')} (갱신 D
+              {dday <= 0 ? '+' : '-'}
               {Math.abs(Math.floor(dday))})
             </AddressText>
           ) : (
@@ -94,7 +95,7 @@ export default ({
             <AddressText
               color={dday <= 0 ? '#CE0505' : '#7e7c7c'}
               style={dday <= 0 && {textDecorationLine: 'underline'}}>
-              검진일 : {data?.RESULT_DATE}
+              검진일 : {moment(data?.RESULT_DATE).format('YYYY.MM.DD')}
             </AddressText>
           ) : (
             <AddressText

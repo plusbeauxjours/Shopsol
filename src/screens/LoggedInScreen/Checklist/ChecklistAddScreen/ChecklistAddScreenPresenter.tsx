@@ -74,7 +74,7 @@ const TitleText = styled.Text`
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
-  margin: 10px 0;
+  margin: 20px 0;
   background-color: #f2f2f2;
   height: 1px;
 `;

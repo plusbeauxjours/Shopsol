@@ -114,7 +114,7 @@ export const Authority = ({
           }
         }}>
         {authorityCheck[selection] ? (
-          <RadioBtnOnIcon size={18} color="#e85356" />
+          <RadioBtnOnIcon size={18} />
         ) : (
           <RadioBtnOffIcon size={18} />
         )}
@@ -185,7 +185,7 @@ export const SalarySystem = ({
           setSalarySystemCheck(value);
         }}>
         {salarySystemCheck[selection] ? (
-          <RadioBtnOnIcon size={18} color="#e85356" />
+          <RadioBtnOnIcon size={18} />
         ) : (
           <RadioBtnOffIcon size={18} />
         )}

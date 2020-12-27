@@ -56,36 +56,13 @@ const ContentDataText = styled(ContentLabelText)`
   font-weight: bold;
 `;
 
-const ImageButtonWrapper = styled.TouchableOpacity`
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ImageButtonText = styled.Text`
-  text-align: center;
-  text-decoration-line: underline;
-`;
-
-const ImageIconContainer = styled.View`
-  position: absolute;
-  right: 10px;
-  flex-direction: row;
-  align-items: center;
-`;
-
+const Touchable = styled.TouchableOpacity``;
 const WhiteSpace = styled.View`
   height: 50px;
 `;
 
 const Container = styled.View`
   padding: 20px;
-`;
-
-const HelpText = styled.Text`
-  font-weight: bold;
-  font-size: 18px;
 `;
 
 const Section = styled.View`
@@ -220,30 +197,29 @@ export default ({
       </ContentLine>
     );
 
-    const GetContentComponent = ({label}) => (
+    const GetContentComponent = ({label, images}) => (
       <ContentLine>
         <ContentLabelWrapper>
           <ContentLabelText>{label}</ContentLabelText>
         </ContentLabelWrapper>
-        {label == '교육 구분' ? (
-          <ContentDataWrapper>
-            <ContentDataText>
-              {HEALTH_EMP_DETAIL[SELECT_INDEX]?.EDUCATION_TYPE == 'online'
-                ? '온라인교육'
-                : '집체교육'}
-            </ContentDataText>
-          </ContentDataWrapper>
-        ) : (
-          <ImageButtonWrapper
-            onPress={() => {
-              setIsImageViewVisible(true);
-            }}>
-            <ImageButtonText>사진 보기</ImageButtonText>
-            <ImageIconContainer>
-              <ForwardIcon size={22} />
-            </ImageIconContainer>
-          </ImageButtonWrapper>
-        )}
+        <ContentDataWrapper>
+          <Touchable onPress={() => setIsImageViewVisible(true)}>
+            <FastImage
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 10,
+                marginHorizontal: 5,
+              }}
+              source={{
+                uri: images[0].url,
+                headers: {Authorization: 'someAuthToken'},
+                priority: FastImage.priority.low,
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </Touchable>
+        </ContentDataWrapper>
       </ContentLine>
     );
 
@@ -299,11 +275,11 @@ export default ({
                     HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
                   ).format('YYYY.MM.DD')}
                 />
-                <GetContentComponent label={'사진'} />
+                <GetContentComponent label={'사진'} images={images} />
               </ContentWrapper>
               <RegDateContainer>
                 <RegDate>
-                  ※ 입력일자 :&nbsp;
+                  입력일자 :&nbsp;
                   {moment(HEALTH_EMP_DETAIL[SELECT_INDEX]?.CREATE_TIME).format(
                     'YYYY.MM.DD',
                   )}

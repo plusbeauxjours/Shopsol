@@ -1,9 +1,6 @@
 import React, {useRef} from 'react';
 import Modal from 'react-native-modal';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
@@ -15,7 +12,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
-import {CameraIcon} from '~/constants/Icons';
+import {CameraIcon, CloseCircleIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 
 const WhiteSpace = styled.View`
@@ -38,49 +35,42 @@ const Container = styled.View`
 `;
 
 const TitleText = styled.Text`
-  margin-bottom: 20px;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
-  font-size: 22px;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
 const CameraBoxContainer = styled.View`
   width: 100%;
   align-items: center;
-`;
-
-const CameraBox = styled.TouchableOpacity`
-  margin-top: 20px;
-  margin-bottom: 5px;
-  width: 300px;
-  height: 120px;
-  align-items: center;
-  justify-content: center;
-  border-width: 2px;
-  border-color: #e85356;
+  margin-top: 30px;
 `;
 
 const TextContainer = styled.View`
-  align-items: center;
+  align-items: flex-start;
 `;
-
-const Text = styled.Text``;
 
 const DateText = styled.Text`
   width: 100%;
-  font-size: 17px;
+  font-size: 14px;
   margin-left: 5px;
   margin-top: 10px;
 `;
 
 const TextInput = styled.TextInput`
   width: 100%;
-  font-size: 17px;
+  font-size: 14px;
   color: black;
   margin-left: 5px;
   height: 40px;
 `;
-
-const Bold = styled(Text)``;
 
 const Section = styled.View`
   width: 100%;
@@ -97,13 +87,43 @@ const TextInputContainer = styled.View`
 `;
 
 const GreyText = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
   color: #999;
   font-weight: bold;
 `;
 
-const Touchable = styled.TouchableOpacity`
-  width: 100%;
+const BorderBox = styled.View`
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: #f4aaab;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+`;
+
+const GreySmallText = styled.Text`
+  font-size: 12px;
+  color: #999;
+  text-align: left;
+`;
+
+const Touchable = styled.TouchableOpacity``;
+
+const CloseIconContainer = styled.View`
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background-color: #aaa;
+  border-width: 2px;
+  border-color: white;
+  z-index: 30;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: -10px;
+  right: -10px;
 `;
 
 const Row = styled.View`
@@ -231,41 +251,48 @@ export default ({
           <Container>
             <Section>
               <TextContainer>
-                <TitleText>보건증을 촬영해주세요</TitleText>
-                <Text>문자인식(OCR) 기술로</Text>
-                <Text>정보를 자동으로 입력할 수 있습니다</Text>
+                <TitleText>보건증 촬영</TitleText>
               </TextContainer>
+              <GreyLine />
+              <GreySmallText>문자인식(OCR) 기술로</GreySmallText>
+              <GreySmallText>정보를 자동으로 입력할 수 있습니다</GreySmallText>
+              <GreySmallText>
+                인식이 불안정할 경우 직접 입력하여 진행해 주세요.
+              </GreySmallText>
               {cameraPictureLast ? (
                 <CameraBoxContainer>
-                  <CameraBox onPress={() => setCameraPictureLast(null)}>
-                    <FastImage
-                      style={{
-                        width: 100,
-                        height: 100,
-                        borderRadius: 10,
-                        marginHorizontal: 5,
-                      }}
-                      source={{
-                        uri: cameraPictureLast,
-                        headers: {Authorization: 'someAuthToken'},
-                        priority: FastImage.priority.low,
-                      }}
-                      resizeMode={FastImage.resizeMode.cover}
-                    />
-                  </CameraBox>
-                  <Bold>
-                    * 인식이 불안정할 경우 직접입력하여 진행해 주세요.
-                  </Bold>
+                  <Touchable onPress={() => setCameraPictureLast(null)}>
+                    <BorderBox>
+                      <CloseIconContainer>
+                        <CloseCircleIcon />
+                      </CloseIconContainer>
+                      <FastImage
+                        style={{
+                          width: 100,
+                          height: 100,
+                          borderRadius: 10,
+                          marginHorizontal: 5,
+                        }}
+                        source={{
+                          uri: cameraPictureLast,
+                          headers: {Authorization: 'someAuthToken'},
+                          priority: FastImage.priority.low,
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                      />
+                    </BorderBox>
+                  </Touchable>
                 </CameraBoxContainer>
               ) : (
                 <CameraBoxContainer>
-                  <CameraBox onPress={() => setIsCameraModalVisible(true)}>
-                    <Bold style={{color: '#e85356'}}>촬영하기</Bold>
-                    <CameraIcon size={40} />
-                  </CameraBox>
-                  <Bold>
-                    * 인식이 불안정할 경우 직접입력하여 진행해 주세요.
-                  </Bold>
+                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                    <BorderBox>
+                      <CameraIcon size={25} color={'#f4aaab'} />
+                      <GreySmallText style={{color: '#f4aaab', fontSize: 10}}>
+                        사진촬영
+                      </GreySmallText>
+                    </BorderBox>
+                  </Touchable>
                 </CameraBoxContainer>
               )}
             </Section>
@@ -300,7 +327,9 @@ export default ({
               <InputLine isBefore={!RESULT_COUNT} />
               <WhiteSpace />
               <TextInputContainer>
-                <Touchable onPress={() => setDateModalVisible(true)}>
+                <Touchable
+                  style={{alignItems: 'flex-start'}}
+                  onPress={() => setDateModalVisible(true)}>
                   <GreyText>검진일</GreyText>
                   <DateText>
                     {moment(EDUCATION_DATE).format('YYYY.MM.DD')}

@@ -308,9 +308,9 @@ export default ({
           setTYPE(selection);
         }}>
         {sizeTypeCheck[selection] ? (
-          <RadioBtnOnIcon size={22} color="#e85356" />
+          <RadioBtnOnIcon size={22} />
         ) : (
-          <RadioBtnOffIcon size={25} color="#CCCCCC" />
+          <RadioBtnOffIcon size={22} />
         )}
         <TypeText>{text}</TypeText>
       </TypeContainer>
@@ -328,9 +328,9 @@ export default ({
           setCommuteType(selection);
         }}>
         {commuteTypeCheck[selection] ? (
-          <RadioBtnOnIcon size={22} color="#e85356" />
+          <RadioBtnOnIcon size={22} />
         ) : (
-          <RadioBtnOffIcon size={25} color="#CCCCCC" />
+          <RadioBtnOffIcon size={22} />
         )}
         <TypeText>{text}</TypeText>
       </TypeContainer>

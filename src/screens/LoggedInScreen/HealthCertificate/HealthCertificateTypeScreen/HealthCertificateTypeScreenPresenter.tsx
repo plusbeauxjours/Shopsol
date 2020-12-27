@@ -4,7 +4,7 @@ import {RefreshControl} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 
-import {ForwardIcon, EllipseIcon, HelpCircleIcon} from '~/constants/Icons';
+import {ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 import moment from 'moment';
 
 interface IText {
@@ -22,10 +22,26 @@ const Container = styled.View`
   padding: 20px;
 `;
 
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
+`;
+
 const Text = styled.Text<IText>`
-  margin-left: 3px;
-  font-size: 13px;
+  margin-left: 5px;
+  font-size: 12px;
   color: ${(props) => (props.isSubmited ? '#7e7c7c' : '#CE0505')};
+`;
+
+const FooterText = styled(Text)`
+  margin-top: 5px;
+  color: #7f7f7f;
+`;
+
+const GreyText = styled(Text)`
+  color: #7e7c7c;
+  font-size: 13px;
 `;
 
 const Section = styled.TouchableOpacity`
@@ -44,20 +60,8 @@ const Footer = styled.View`
   margin: 0 20px;
 `;
 
-const FooterText = styled.Text`
-  margin-top: 5px;
-  color: #7f7f7f;
-  font-weight: bold;
-  font-size: 15px;
-`;
-
 const TypeTitleBox = styled.View`
   align-items: center;
-`;
-
-const GreyText = styled.Text`
-  color: #7e7c7c;
-  font-size: 13px;
 `;
 
 const TypeTitle = styled.View`
@@ -79,12 +83,6 @@ const IconContainer = styled(Row)`
 const ForwardIconContainer = styled.View`
   position: absolute;
   right: 20px;
-`;
-
-const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
 `;
 
 export default ({
@@ -118,15 +116,10 @@ export default ({
                 navigation.navigate('HealthCertificateEmpListScreen')
               }>
               <TypeTitle>
-                <Row>
-                  <TypeTitleBox>
-                    <TitleText>보건증</TitleText>
-                  </TypeTitleBox>
-                </Row>
+                <TitleText>보건증</TitleText>
               </TypeTitle>
               {HEALTH_CERTIFICATE_APPLY == 0 ? (
                 <IconContainer>
-                  <EllipseIcon size={8} color={'#CE0505'} />
                   <Text isSubmited={false}> 미등록</Text>
                 </IconContainer>
               ) : (
@@ -135,25 +128,20 @@ export default ({
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                   }}>
-                  <Row>
-                    <EllipseIcon size={8} color={'#7e7c7c'} />
-                    <Text isSubmited={true}>위생교육증 등록완료</Text>
-                  </Row>
-                  <Row>
-                    <Text
-                      style={
-                        dday <= 0
-                          ? {
-                              textDecorationLine: 'underline',
-                              marginTop: 5,
-                              color: 'red',
-                            }
-                          : {marginTop: 5, color: '#aaa'}
-                      }>
-                      검진일시: {HEALTH_DDAY} (갱신 D{dday <= 0 ? '+' : '-'}
-                      {Math.abs(Math.floor(dday))})
-                    </Text>
-                  </Row>
+                  <Text isSubmited={true}>위생교육증 등록완료</Text>
+                  <Text
+                    style={
+                      dday <= 0
+                        ? {
+                            textDecorationLine: 'underline',
+                            marginTop: 5,
+                            color: 'red',
+                          }
+                        : {marginTop: 5, color: '#aaa'}
+                    }>
+                    검진일시: {HEALTH_DDAY} (갱신 D{dday <= 0 ? '+' : '-'}
+                    {Math.abs(Math.floor(dday))})
+                  </Text>
                 </IconContainer>
               )}
               <ForwardIconContainer>
@@ -190,9 +178,7 @@ export default ({
                 }>
                 <TypeTitle>
                   <Row>
-                    <TypeTitleBox>
-                      <TitleText>위생교육증</TitleText>
-                    </TypeTitleBox>
+                    <TitleText>위생교육증</TitleText>
                     <Touchable
                       onPress={() => {
                         explainModal(
@@ -209,10 +195,7 @@ export default ({
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                   }}>
-                  <Row>
-                    <EllipseIcon size={8} color={'#7e7c7c'} />
-                    <Text isSubmited={true}>위생교육증 등록완료</Text>
-                  </Row>
+                  <Text isSubmited={true}>위생교육증 등록완료</Text>
                   <Text
                     style={
                       dday <= 0
@@ -241,9 +224,7 @@ export default ({
                 }>
                 <TypeTitle>
                   <Row>
-                    <TypeTitleBox>
-                      <TitleText>위생교육증</TitleText>
-                    </TypeTitleBox>
+                    <TitleText>위생교육증</TitleText>
                     <Touchable
                       onPress={() => {
                         explainModal(
@@ -257,7 +238,6 @@ export default ({
                 </TypeTitle>
 
                 <IconContainer>
-                  <EllipseIcon size={8} color={'#CE0505'} />
                   <Text isSubmited={false}>위생교육증 미등록</Text>
                 </IconContainer>
                 <ForwardIconContainer>
@@ -271,14 +251,12 @@ export default ({
               }>
               <TypeTitle>
                 <Row>
-                  <TypeTitleBox>
-                    <TitleText>보건증</TitleText>
-                  </TypeTitleBox>
+                  <TitleText>보건증</TitleText>
                   <Touchable
                     onPress={() => {
                       explainModal(
                         '',
-                        '직원별 보건증 등록이 가능하며, 등록 후 갱신시점 알람 및 보건증 이력관리가 가능합니다.',
+                        "직원별 보건증 등록이 가능하며, 등록 후 갱신시점 알람 및 보건증 이력관리가 가능합니다. \n\n직원이 '조기경보'화면에서 직접 등록이 가능합니다. \n직원은 본인 보건증만 확인이 가능합니다.",
                       );
                     }}>
                     <HelpCircleIcon color="#7e7c7c" />
@@ -287,13 +265,11 @@ export default ({
               </TypeTitle>
               {HEALTH_CERTIFICATE_APPLY == 0 ? (
                 <IconContainer>
-                  <EllipseIcon size={8} color={'#CE0505'} />
                   <Text isSubmited={false}>미등록</Text>
                 </IconContainer>
               ) : Number(HEALTH_CERTIFICATE_APPLY) ==
                 Number(HEALTH_CERTIFICATE_TARGET) ? (
                 <IconContainer>
-                  <EllipseIcon size={8} color={'#7e7c7c'} />
                   <Text isSubmited={true}>
                     등록 중({HEALTH_CERTIFICATE_TARGET}명 중&nbsp;
                     {HEALTH_CERTIFICATE_APPLY}명 완료)
@@ -301,7 +277,6 @@ export default ({
                 </IconContainer>
               ) : (
                 <IconContainer>
-                  <EllipseIcon size={8} color={'#CE0505'} />
                   <Text isSubmited={false}>
                     등록 중({HEALTH_CERTIFICATE_TARGET}명 중&nbsp;
                     {HEALTH_CERTIFICATE_APPLY}명 완료)
@@ -317,7 +292,7 @@ export default ({
                 <TitleText>영업신고증</TitleText>
               </TypeTitleBox>
               <IconContainer>
-                <GreyText>* 추후 업데이트 예정입니다.</GreyText>
+                <GreyText>추후 업데이트 예정입니다.</GreyText>
               </IconContainer>
             </Section>
             <Footer>

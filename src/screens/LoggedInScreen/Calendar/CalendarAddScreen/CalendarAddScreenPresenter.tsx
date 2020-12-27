@@ -460,9 +460,9 @@ export default ({
         }}>
         <Row>
           {incentiveCheck[selection] ? (
-            <RadioBtnOnIcon size={22} color="#e85356" />
+            <RadioBtnOnIcon size={22} />
           ) : (
-            <RadioBtnOffIcon size={25} color="#CCCCCC" />
+            <RadioBtnOffIcon size={22} />
           )}
           <IncentiveText>{text}</IncentiveText>
         </Row>

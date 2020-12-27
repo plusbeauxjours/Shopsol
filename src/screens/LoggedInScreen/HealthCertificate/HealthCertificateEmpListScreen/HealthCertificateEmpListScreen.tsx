@@ -5,7 +5,6 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
 import HealthCertificateEmpListCard from './HealthCertificateEmpListCard';
-import {CheckMarkIcon} from '~/constants/Icons';
 import {getSTORE_HEALTH_EMP_LIST} from '~/redux/healthSlice';
 
 const BackGround = styled.SafeAreaView`
@@ -15,17 +14,7 @@ const BackGround = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView``;
 const Container = styled.View`
-  margin-top: 20px;
   padding: 20px;
-`;
-const Bold = styled.Text`
-  font-weight: bold;
-  margin-left: 5px;
-`;
-
-const Row = styled.View`
-  flex-direction: row;
-  align-items: center;
 `;
 
 const Box = styled.View`
@@ -83,18 +72,6 @@ export default () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <Container>
-          {STORE == '1' && (
-            <Box>
-              <Row>
-                <CheckMarkIcon />
-                <Bold>직원이 '조기경보'화면에서 직접 등록이 가능합니다.</Bold>
-              </Row>
-              <Row>
-                <CheckMarkIcon />
-                <Bold>직원은 본인 보건증만 확인이 가능합니다.</Bold>
-              </Row>
-            </Box>
-          )}
           {HEALTH_EMP_LIST && HEALTH_EMP_LIST.length !== 0 ? (
             HEALTH_EMP_LIST?.map((data: any, index) => (
               <HealthCertificateEmpListCard

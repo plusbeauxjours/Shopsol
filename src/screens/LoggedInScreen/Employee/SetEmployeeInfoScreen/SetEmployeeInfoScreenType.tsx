@@ -88,9 +88,9 @@ export const InsuranceType = ({
           setInsuranceCheck(value);
         }}>
         {insuranceCheck[selection] ? (
-          <RadioBtnOnIcon size={18} color="#e85356" />
+          <RadioBtnOnIcon size={18} />
         ) : (
-          <RadioBtnOffIcon size={18} color="#CCCCCC" />
+          <RadioBtnOffIcon size={18} />
         )}
         <Text>{text}</Text>
       </TypeContainer>

@@ -27,9 +27,13 @@ import {HelpCircleIcon} from '~/constants/Icons';
 import InputLine from '~/components/InputLine';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
-import {BackIcon, ForwardIcon} from '~/constants/Icons';
+import {
+  RadioBtnOnIcon,
+  RadioBtnOffIcon,
+  BackIcon,
+  ForwardIcon,
+} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
-import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
 
 interface IsFirst {
   height?: number;
@@ -565,7 +569,7 @@ export default ({
                   }}>
                   <SideBox>
                     {endDayCheck ? (
-                      <RadioBtnOnIcon size={22} color="#e85356" />
+                      <RadioBtnOnIcon size={22} />
                     ) : (
                       <RadioBtnOffIcon size={22} />
                     )}
@@ -932,7 +936,7 @@ export default ({
                     }}>
                     <SideBox>
                       {!probation ? (
-                        <RadioBtnOnIcon size={22} color="#e85356" />
+                        <RadioBtnOnIcon size={22} />
                       ) : (
                         <RadioBtnOffIcon size={22} />
                       )}

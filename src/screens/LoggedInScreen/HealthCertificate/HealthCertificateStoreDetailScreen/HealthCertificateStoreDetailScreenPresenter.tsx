@@ -49,33 +49,13 @@ const ContentLabelWrapper = styled.View`
   width: ${wp('28%')}px;
 `;
 
-const ContentLabelText = styled.Text`
-  color: #000;
-`;
+const ContentLabelText = styled.Text``;
 
 const ContentDataText = styled.Text`
   font-weight: bold;
-  color: #000;
 `;
 
-const ImageButtonWrapper = styled.TouchableOpacity`
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ImageButtonText = styled.Text`
-  text-align: center;
-  text-decoration-line: underline;
-`;
-
-const ImageIconContainer = styled.View`
-  position: absolute;
-  right: 10px;
-  flex-direction: row;
-  align-items: center;
-`;
+const Touchable = styled.TouchableOpacity``;
 
 const WhiteSpace = styled.View`
   height: 50px;
@@ -218,7 +198,7 @@ export default ({
       </ContentLine>
     );
 
-    const GetContentComponent = ({label}) => (
+    const GetContentComponent = ({label, images = []}) => (
       <ContentLine>
         <ContentLabelWrapper>
           <ContentLabelText>{label}</ContentLabelText>
@@ -232,15 +212,24 @@ export default ({
             </ContentDataText>
           </ContentDataWrapper>
         ) : (
-          <ImageButtonWrapper
-            onPress={() => {
-              setIsImageViewVisible(true);
-            }}>
-            <ImageButtonText>사진 보기</ImageButtonText>
-            <ImageIconContainer>
-              <ForwardIcon size={22} />
-            </ImageIconContainer>
-          </ImageButtonWrapper>
+          <ContentDataWrapper>
+            <Touchable onPress={() => setIsImageViewVisible(true)}>
+              <FastImage
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 10,
+                  marginHorizontal: 5,
+                }}
+                source={{
+                  uri: images[0].url,
+                  headers: {Authorization: 'someAuthToken'},
+                  priority: FastImage.priority.low,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </Touchable>
+          </ContentDataWrapper>
         )}
       </ContentLine>
     );
@@ -315,11 +304,11 @@ export default ({
                   data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.businesstype}
                 />
                 <GetContentComponent label={'교육 구분'} />
-                <GetContentComponent label={'사진'} />
+                <GetContentComponent label={'사진'} images={images} />
               </ContentWrapper>
               <RegDateContainer>
                 <RegDate>
-                  ※ 입력일자 :
+                  입력일자 :
                   {moment(
                     HEALTH_STORE_DETAIL[SELECT_INDEX]?.CREATE_TIME,
                   ).format('YYYY.MM.DD')}
