@@ -36,12 +36,12 @@ const Row = styled.View`
 `;
 
 const SpaceRow = styled(Row)`
-  min-width: 90px;
+  min-width: 60px;
   justify-content: space-between;
 `;
 
 const Card = styled(Ripple)<ICard>`
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 200px;
   height: 280px;
@@ -51,46 +51,47 @@ const Card = styled(Ripple)<ICard>`
   margin-right: ${(props) => (props.index == 3 ? wp('100%') - 220 : 0)}px;
 `;
 
-const Title = styled.View`
-  flex-direction: row;
-  align-items: flex-start;
-  position: absolute;
-  top: 0;
-  left: 10px;
+const CardGreyLine = styled.View`
+  width: 180px;
+  height: 1px;
+  background-color: #f2f2f2;
+  margin: 10px 0 10px 0;
 `;
 
-const TitleNumber = styled.Text<IColor>`
+const TitleText = styled.Text<IColor>`
+  align-self: flex-start;
+  font-size: 16px;
   color: ${(props) => props.color};
-  font-size: 60px;
   font-weight: bold;
-`;
-
-const TitleWord = styled(TitleNumber)`
-  color: ${(props) => props.color};
-  margin-top: 12px;
-  font-size: 30px;
+  margin-left: 20px;
 `;
 
 const PercentageText = styled.Text<IColor>`
-  color: ${(props) => props.color};
-  font-size: 30px;
+  color: ${(props) => props.color ?? 'black'};
+  font-size: 25px;
   font-weight: bold;
-  position: absolute;
 `;
 
 const Footer = styled.View`
-  bottom: 10px;
-  position: absolute;
-  right: 20px;
+  margin-right: 10px;
 `;
 
 const SmallText = styled.Text<IColor>`
   color: ${(props) => props.color};
-  font-size: 14px;
+  font-size: 10px;
 `;
 
 const SmallBold = styled(SmallText)<IColor>`
   font-weight: bold;
+`;
+
+const DodnutTextContainer = styled.View`
+  width: 70px;
+  top: 145px;
+  text-align: center;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LineTextContainer = styled.View<IColor>`
@@ -208,8 +209,8 @@ export default ({
             />
           }>
           <FlatList
+            keyExtractor={(_, index) => index.toString()}
             data={data}
-            keyExtractor={(item) => item.id}
             horizontal
             snapToInterval={220}
             decelerationRate="fast"
@@ -226,40 +227,45 @@ export default ({
                 rippleSize={1700}
                 rippleContainerBorderRadius={20}
                 rippleOpacity={0.1}>
-                <Title>
-                  <TitleNumber color={item.textColor}>
-                    {item.titleNumber}
-                  </TitleNumber>
-                  <TitleWord color={item.textColor}>{item.titleWord}</TitleWord>
-                </Title>
+                <Row
+                  style={{
+                    marginTop: 20,
+                    width: '100%',
+                    justifyContent: 'space-between',
+                  }}>
+                  <TitleText color={item.textColor}>{item.titleWord}</TitleText>
+                  <Footer>
+                    <SpaceRow>
+                      <SmallText color={item.textColor}>전체 수량</SmallText>
+                      <SmallText color={item.textColor}>
+                        <SmallBold color={item.textColor}>
+                          {item.totalQTY}
+                        </SmallBold>
+                        &nbsp;개
+                      </SmallText>
+                    </SpaceRow>
+                    <SpaceRow>
+                      <SmallText color={item.textColor}>처리 수량</SmallText>
+                      <SmallText color={item.textColor}>
+                        <SmallBold color={item.textColor}>
+                          {item.doneQTY}
+                        </SmallBold>
+                        &nbsp;개
+                      </SmallText>
+                    </SpaceRow>
+                  </Footer>
+                </Row>
+                <CardGreyLine />
                 <DonutCard
                   percentage={item.percentage}
                   color={item.textColor}
                   max={100}
                 />
-                <PercentageText color={item.textColor}>
-                  {item.percentage}%
-                </PercentageText>
-                <Footer>
-                  <SpaceRow>
-                    <SmallText color={item.textColor}>전체 수량</SmallText>
-                    <SmallText color={item.textColor}>
-                      <SmallBold color={item.textColor}>
-                        {item.totalQTY}
-                      </SmallBold>
-                      &nbsp;개
-                    </SmallText>
-                  </SpaceRow>
-                  <SpaceRow>
-                    <SmallText color={item.textColor}>처리 수량</SmallText>
-                    <SmallText color={item.textColor}>
-                      <SmallBold color={item.textColor}>
-                        {item.doneQTY}
-                      </SmallBold>
-                      &nbsp;개
-                    </SmallText>
-                  </SpaceRow>
-                </Footer>
+                <DodnutTextContainer>
+                  <PercentageText color={item.textColor}>
+                    {item.percentage}%
+                  </PercentageText>
+                </DodnutTextContainer>
               </Card>
             )}
           />
@@ -297,7 +303,7 @@ export default ({
                       )
                       .map((item, index) => {
                         return index == 0 ? (
-                          <>
+                          <React.Fragment key={index}>
                             <LineTextContainer
                               as={Animated.View}
                               style={{opacity: opacity(tabs[index].anchor)}}
@@ -313,7 +319,7 @@ export default ({
                                 fetchData={fetchData}
                               />
                             </View>
-                          </>
+                          </React.Fragment>
                         ) : (
                           <View key={index}>
                             <ShelfLifeCheckScreenCard
@@ -328,7 +334,7 @@ export default ({
                       })
                   : items?.map((item, index) => {
                       return index == 0 ? (
-                        <>
+                        <React.Fragment key={index}>
                           <LineTextContainer
                             as={Animated.View}
                             style={{opacity: opacity(tabs[index].anchor)}}
@@ -344,7 +350,7 @@ export default ({
                               fetchData={fetchData}
                             />
                           </View>
-                        </>
+                        </React.Fragment>
                       ) : (
                         <View key={index}>
                           <ShelfLifeCheckScreenCard

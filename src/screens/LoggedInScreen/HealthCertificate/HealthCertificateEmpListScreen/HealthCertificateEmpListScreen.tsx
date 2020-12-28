@@ -19,11 +19,6 @@ const BackGround = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView``;
 
-const GreyText = styled.Text`
-  color: #aaa;
-  font-size: 16px;
-`;
-
 const Container = styled.View`
   width: 100%;
   padding: 20px;
@@ -54,10 +49,6 @@ const NumberText = styled.Text`
   color: #e85356;
   font-size: 18px;
   font-weight: bold;
-`;
-
-const WhiteSpace = styled.View`
-  height: 30px;
 `;
 
 const GreyLine = styled.View`

@@ -6,7 +6,6 @@ import Animated from 'react-native-reanimated';
 
 import ShelfLifeCheckScreenPresenter from './ShelfLifeCheckScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {resultdata} from '~/assets/dummy';
 import api from '~/constants/LoggedInApi';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -99,6 +98,7 @@ export default () => {
     try {
       setRefreshing(true);
       dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
+      fetchData();
     } catch (e) {
       console.log(e);
     } finally {
@@ -113,6 +113,8 @@ export default () => {
       const {data} = await api.cancelShelfLifeData({shelfLife_SEQ});
       if (data.resultmsg !== '1') {
         alertModal('연결에 실패하였습니다.');
+      } else {
+        fetchData();
       }
     } catch (e) {
       console.log(e);
@@ -137,6 +139,8 @@ export default () => {
       });
       if (data.resultmsg !== '1') {
         alertModal('연결에 실패하였습니다.');
+      } else {
+        fetchData();
       }
     } catch (e) {
       console.log(e);
@@ -189,17 +193,19 @@ export default () => {
 
       const dayDone = defaultData[0].items.filter((i) => i.checkType === '1')
         .length;
-      const weekDone = defaultData[1].items.filter((i) => i.checkType === '1')
-        .length;
-      const weeksDone = defaultData[2].items.filter((i) => i.checkType === '1')
-        .length;
-      const monthDone = defaultData[3].items.filter((i) => i.checkType === '1')
-        .length;
+      const weekDone =
+        defaultData[1].items.filter((i) => i.checkType === '1').length +
+        dayDone;
+      const weeksDone =
+        defaultData[2].items.filter((i) => i.checkType === '1').length +
+        weekDone;
+      const monthDone =
+        defaultData[3].items.filter((i) => i.checkType === '1').length +
+        weeksDone;
 
       setData([
         {
-          titleNumber: '1',
-          titleWord: '일전',
+          titleWord: '1일전',
           backgroundColor: 'white',
           textColor: '#f4aaab',
           radius: 60,
@@ -210,10 +216,9 @@ export default () => {
             : Math.ceil((dayDone / dayCount) * 100),
         },
         {
-          titleNumber: '1',
-          titleWord: '주전',
+          titleWord: '1주전',
           backgroundColor: 'white',
-          textColor: '#ccc',
+          textColor: '#999',
           radius: 50,
           totalQTY: weekCount ?? 0,
           doneQTY: weekDone,
@@ -222,10 +227,9 @@ export default () => {
             : Math.ceil((weekDone / weekCount) * 100),
         },
         {
-          titleNumber: '2',
-          titleWord: '주전',
+          titleWord: '2주전',
           backgroundColor: 'white',
-          textColor: '#ccc',
+          textColor: '#999',
           radius: 40,
           totalQTY: weeksCount ?? 0,
           doneQTY: weeksDone,
@@ -234,10 +238,9 @@ export default () => {
             : Math.ceil((weeksDone / weeksCount) * 100),
         },
         {
-          titleNumber: '1',
-          titleWord: '달전',
+          titleWord: '1달전',
           backgroundColor: 'white',
-          textColor: '#ccc',
+          textColor: '#999',
           radius: 30,
           totalQTY: monthCount ?? 0,
           doneQTY: monthDone ?? 0,

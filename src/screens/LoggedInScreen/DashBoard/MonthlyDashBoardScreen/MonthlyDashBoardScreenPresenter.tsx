@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Ripple from 'react-native-material-ripple';
-import {PieChart} from 'react-native-chart-kit';
 import Animated from 'react-native-reanimated';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
@@ -82,25 +81,32 @@ const Card = styled(Ripple)<ICard>`
   justify-content: flex-start;
   align-items: center;
   width: 200px;
-  height: 480px;
+  height: 520px;
   border-radius: 20px;
   background-color: white;
   margin-left: 20px;
   margin-right: ${(props) => (props.isLast ? wp('100%') - 220 : 0)}px;
 `;
 
-const TitleWord = styled.Text<IColor>`
-  color: ${(props) => props.color};
+const CardGreyLine = styled.View`
+  width: 180px;
+  height: 1px;
+  background-color: #f2f2f2;
+  margin: 10px 0 10px 0;
+`;
+
+const TitleText = styled.Text`
   align-self: flex-start;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
   margin-top: 20px;
   margin-left: 20px;
-  font-size: 18px;
 `;
 
 const DodnutTextContainer = styled.View`
   width: 70px;
-  top: 115px;
+  top: 130px;
   text-align: center;
   position: absolute;
   justify-content: center;
@@ -131,8 +137,8 @@ const EmpCardRow = styled.View`
   justify-content: space-between;
   align-items: center;
   width: ${wp('100%') - 80}px;
-  border-bottom-width: 0.7px;
-  border-bottom-color: #7f7f7f;
+  border-bottom-width: 1px;
+  border-bottom-color: #f2f2f2;
   padding-bottom: 10px;
   margin-bottom: 20px;
 `;
@@ -600,25 +606,6 @@ export default ({
                       </DonutColumnText>
                     </DonutColumn>
                   </Row>
-                  {/* <PieChart
-                  data={EMP_LIST}
-                  width={wp('100%') - 60}
-                  height={200}
-                  chartConfig={{
-                    backgroundGradientFrom: '#1E2923',
-                    backgroundGradientFromOpacity: 0,
-                    backgroundGradientTo: '#08130D',
-                    backgroundGradientToOpacity: 0.5,
-                    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-                    strokeWidth: 2, // optional, default 3
-                    barPercentage: 0.5,
-                    useShadowColorFromDataset: false, // optional
-                  }}
-                  accessor="TOTAL_WORKING"
-                  backgroundColor="transparent"
-                  paddingLeft="20"
-                  absolute={false}
-                /> */}
                 </Section>
                 <SearchInputContainer>
                   <SearchInput
@@ -668,12 +655,13 @@ export default ({
                       rippleSize={1700}
                       rippleContainerBorderRadius={20}
                       rippleOpacity={0.1}>
-                      <TitleWord color={'#e85356'}>
+                      <TitleText>
                         {moment(toDay).format('YYYYMM') ==
                         moment().format('YYYYMM')
                           ? `금월 ${moment().date()}일간 지각률`
                           : `${moment(toDay).format('M')}월 지각률`}
-                      </TitleWord>
+                      </TitleText>
+                      <CardGreyLine />
                       <DonutCard
                         percentage={Math.ceil(
                           (totalLATE_COUNT / totalSUB_WORKING_EMP) * 100,
@@ -702,7 +690,8 @@ export default ({
                           </PercentageSubText>
                         </DodnutTextContainer>
                       )}
-                      <TitleWord color={'#e85356'}>지각 상위직원</TitleWord>
+                      <TitleText>지각 상위직원</TitleText>
+                      <CardGreyLine />
                       <EmpConatainer>
                         {LATE_EMP_LIST.filter((i) => i.TOTAL_LATE > 0)
                           .length === 0 ? (
@@ -754,12 +743,13 @@ export default ({
                       rippleSize={1700}
                       rippleContainerBorderRadius={20}
                       rippleOpacity={0.1}>
-                      <TitleWord color={'#e85356'}>
+                      <TitleText>
                         {moment(toDay).format('YYYYMM') ==
                         moment().format('YYYYMM')
                           ? `금월 ${moment().date()}일간 조퇴률`
                           : `${moment(toDay).format('M')}월 조퇴률`}
-                      </TitleWord>
+                      </TitleText>
+                      <CardGreyLine />
                       {console.log(
                         'month',
                         totalEARLY_COUNT / totalSUB_WORKING_EMP,
@@ -797,7 +787,8 @@ export default ({
                           </PercentageSubText>
                         </DodnutTextContainer>
                       )}
-                      <TitleWord color={'#e85356'}>조퇴 상위직원</TitleWord>
+                      <TitleText>조퇴 상위직원</TitleText>
+                      <CardGreyLine />
                       <EmpConatainer>
                         {EARLY_EMP_LIST.filter((i) => i.TOTAL_EARLY > 0)
                           .length === 0 ? (
@@ -849,12 +840,13 @@ export default ({
                       rippleSize={1700}
                       rippleContainerBorderRadius={20}
                       rippleOpacity={0.1}>
-                      <TitleWord color={'#e85356'}>
+                      <TitleText>
                         {moment(toDay).format('YYYYMM') ==
                         moment().format('YYYYMM')
                           ? `금월 ${moment().date()}일간 결근률`
                           : `${moment(toDay).format('M')}월 결근률`}
-                      </TitleWord>
+                      </TitleText>
+                      <CardGreyLine />
                       <DonutCard
                         percentage={Math.ceil(
                           (totalNOWORK_COUNT / totalSUB_WORKING_EMP) * 100,
@@ -883,7 +875,8 @@ export default ({
                           </PercentageSubText>
                         </DodnutTextContainer>
                       )}
-                      <TitleWord color={'#e85356'}>결근 상위직원</TitleWord>
+                      <TitleText>결근 상위직원</TitleText>
+                      <CardGreyLine />
                       <EmpConatainer>
                         {NOWORK_EMP_LIST.filter((i) => i.TOTAL_NOWORK > 0)
                           .length === 0 ? (
@@ -937,7 +930,8 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleWord color={'#e85356'}>평균 휴게시간</TitleWord>
+                  <TitleText>평균 휴게시간</TitleText>
+                  <CardGreyLine />
                   <DonutCard
                     percentage={totalREST_TIME_COUNT / totalWORKING_EMP}
                     color={'#e85356'}
@@ -952,7 +946,8 @@ export default ({
                       분
                     </PercentageText>
                   </DodnutTextContainer>
-                  <TitleWord color={'#e85356'}>휴게시간 상위직원</TitleWord>
+                  <TitleText>휴게시간 상위직원</TitleText>
+                  <CardGreyLine />
                   <EmpConatainer>
                     {REST_TIME_EMP_LIST.filter(
                       (i) => i.REST_TIME && i.REST_TIME > 0,
@@ -1003,11 +998,12 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleWord color={'#e85356'}>
+                  <TitleText>
                     {moment(toDay).format('YYYYMM') == moment().format('YYYYMM')
                       ? `금월 ${moment().date()}일간 휴가 직원`
                       : `${moment(toDay).format('M')}월 휴가 직원`}
-                  </TitleWord>
+                  </TitleText>
+                  <CardGreyLine />
                   <DonutCard
                     percentage={totalVACATION_COUNT}
                     color={'#e85356'}
@@ -1032,7 +1028,8 @@ export default ({
                       </PercentageSubText>
                     </DodnutTextContainer>
                   )}
-                  <TitleWord color={'#e85356'}>휴가 상위직원</TitleWord>
+                  <TitleText>휴가 상위직원</TitleText>
+                  <CardGreyLine />
                   <EmpConatainer>
                     {VACATION_EMP_LIST.filter(
                       (i) => i.TOTAL_VACATION && i.TOTAL_VACATION > 0,

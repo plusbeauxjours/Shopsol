@@ -5,7 +5,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {PieChart} from 'react-native-chart-kit';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
@@ -64,25 +63,32 @@ const Card = styled(Ripple)<ICard>`
   justify-content: flex-start;
   align-items: center;
   width: 200px;
-  height: 480px;
+  height: 520px;
   border-radius: 20px;
   background-color: white;
   margin-left: 20px;
   margin-right: ${(props) => (props.isLast ? wp('100%') - 220 : 0)}px;
 `;
 
-const TitleWord = styled.Text<IColor>`
-  color: ${(props) => props.color};
+const CardGreyLine = styled.View`
+  width: 180px;
+  height: 1px;
+  background-color: #f2f2f2;
+  margin: 10px 0 10px 0;
+`;
+
+const TitleText = styled.Text`
   align-self: flex-start;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
   margin-top: 20px;
   margin-left: 20px;
-  font-size: 18px;
 `;
 
 const DodnutTextContainer = styled.View`
   width: 70px;
-  top: 115px;
+  top: 130px;
   text-align: center;
   position: absolute;
   justify-content: center;
@@ -106,6 +112,10 @@ const EmpCard = styled.View`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  border-bottom-width: 1px;
+  border-bottom-color: #f2f2f2;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const Bold = styled.Text`
@@ -157,10 +167,6 @@ const EmpCardRow = styled.View`
   justify-content: space-between;
   align-items: center;
   width: 100px;
-  border-bottom-width: 0.7px;
-  border-bottom-color: #7f7f7f;
-  padding-bottom: 5px;
-  margin-bottom: 20px;
 `;
 
 const SmallText = styled.Text`
@@ -371,7 +377,6 @@ export default ({
         style={{
           width: 160,
           marginBottom: 20,
-          alignItems: 'flex-start',
         }}>
         <FastImage
           style={{
@@ -623,25 +628,6 @@ export default ({
                     </DonutColumnText>
                   </DonutColumn>
                 </Row>
-                {/* <PieChart
-                  data={EMP_LIST}
-                  width={wp('100%') - 60}
-                  height={200}
-                  chartConfig={{
-                    backgroundGradientFrom: '#1E2923',
-                    backgroundGradientFromOpacity: 0,
-                    backgroundGradientTo: '#08130D',
-                    backgroundGradientToOpacity: 0.5,
-                    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-                    strokeWidth: 2, // optional, default 3
-                    barPercentage: 0.5,
-                    useShadowColorFromDataset: false, // optional
-                  }}
-                  accessor="WORKING"
-                  backgroundColor="transparent"
-                  paddingLeft="20"
-                  absolute={false}
-                /> */}
               </Section>
             )}
           </Container>
@@ -725,7 +711,8 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleWord color={'#e85356'}>지각률</TitleWord>
+                  <TitleText>지각률</TitleText>
+                  <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}
                     color={'#e85356'}
@@ -747,7 +734,8 @@ export default ({
                       </PercentageSubText>
                     </DodnutTextContainer>
                   )}
-                  <TitleWord color={'#e85356'}>지각 직원</TitleWord>
+                  <TitleText>지각 직원</TitleText>
+                  <CardGreyLine />
                   <EmpConatainer>
                     {LATE_EMP_LIST.filter((i) => i.LATE && i.LATE !== '0')
                       .length === 0 ? (
@@ -792,7 +780,8 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleWord color={'#e85356'}>조퇴률</TitleWord>
+                  <TitleText>조퇴률</TitleText>
+                  <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil(
                       (totalEARLY / totlaWORKING_EMP) * 100,
@@ -816,7 +805,8 @@ export default ({
                       </PercentageSubText>
                     </DodnutTextContainer>
                   )}
-                  <TitleWord color={'#e85356'}>조퇴 직원</TitleWord>
+                  <TitleText>조퇴 직원</TitleText>
+                  <CardGreyLine />
                   <EmpConatainer>
                     {EARLY_EMP_LIST.filter((i) => i.EARLY && i.EARLY !== '0')
                       .length === 0 ? (
@@ -861,7 +851,8 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleWord color={'#e85356'}>결근률</TitleWord>
+                  <TitleText>결근률</TitleText>
+                  <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil(
                       (totalNOWORK / totlaWORKING_EMP) * 100,
@@ -885,7 +876,8 @@ export default ({
                       </PercentageSubText>
                     </DodnutTextContainer>
                   )}
-                  <TitleWord color={'#e85356'}>결근 직원</TitleWord>
+                  <TitleText>결근 직원</TitleText>
+                  <CardGreyLine />
                   <EmpConatainer>
                     {NOWORK_EMP_LIST.filter((i) => i.NOWORK && i.NOWORK !== '0')
                       .length === 0 ? (
@@ -930,7 +922,8 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleWord color={'#e85356'}>평균 휴게시간</TitleWord>
+                  <TitleText>평균 휴게시간</TitleText>
+                  <CardGreyLine />
                   <DonutCard
                     percentage={totalREST_TIME / totlaWORKING_EMP}
                     color={'#e85356'}
@@ -941,7 +934,8 @@ export default ({
                       {totalREST_TIME / totlaWORKING_EMP}분
                     </PercentageText>
                   </DodnutTextContainer>
-                  <TitleWord color={'#e85356'}>휴게시간 상위직원</TitleWord>
+                  <TitleText>휴게시간 상위직원</TitleText>
+                  <CardGreyLine />
                   <EmpConatainer>
                     {REST_TIME_EMP_LIST.filter(
                       (i) => i.REST_TIME && i.REST_TIME !== '0',
@@ -993,7 +987,8 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleWord color={'#e85356'}>휴가중인 직원</TitleWord>
+                  <TitleText>휴가중인 직원</TitleText>
+                  <CardGreyLine />
                   <DonutCard
                     percentage={totalVACATION}
                     color={'#e85356'}
@@ -1016,7 +1011,8 @@ export default ({
                     </DodnutTextContainer>
                   )}
 
-                  <TitleWord color={'#e85356'}>휴가 직원</TitleWord>
+                  <TitleText>휴가 직원</TitleText>
+                  <CardGreyLine />
                   <EmpConatainer>
                     {VACATION_EMP_LIST.filter((i) => i.VACATION).length ===
                     0 ? (
