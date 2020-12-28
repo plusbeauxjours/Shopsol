@@ -115,7 +115,6 @@ export default ({
                 );
               })}
             </EmployeeListBox>
-            <WhiteSpace />
           </Section>
           <Section>
             <Row>
@@ -151,7 +150,6 @@ export default ({
                   START={data?.START}
                   END={data?.END}
                 />
-                <WhiteSpace />
               </EmployeeListBox>
             ))}
           </Section>

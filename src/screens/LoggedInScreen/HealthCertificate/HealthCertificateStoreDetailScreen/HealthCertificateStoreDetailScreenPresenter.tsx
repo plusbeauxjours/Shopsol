@@ -113,15 +113,18 @@ const ContentWrapper = styled.View`
 `;
 
 const ModifyButton = styled.TouchableOpacity`
-  height: ${hp('8%')}px;
-  width: ${wp('45%')}px;
+  height: 50px;
+  width: ${(wp('100%') - 50) / 2}px;
   align-items: center;
   justify-content: center;
   background-color: #e85356;
+  border-radius: 20px;
 `;
 
 const SaveButton = styled(ModifyButton)`
-  background-color: #393939;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #e85356;
 `;
 
 const RegDate = styled.Text`
@@ -132,7 +135,7 @@ const RegDate = styled.Text`
 const Row = styled.View`
   width: 100%;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const RegDateContainer = styled.View`
@@ -347,7 +350,7 @@ export default ({
                     IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                   });
                 }}>
-                <Text style={{fontSize: 16, color: 'white'}}>갱신하기</Text>
+                <Text style={{fontSize: 16, color: '#e85356'}}>갱신하기</Text>
               </SaveButton>
             </Row>
             <WhiteSpace />

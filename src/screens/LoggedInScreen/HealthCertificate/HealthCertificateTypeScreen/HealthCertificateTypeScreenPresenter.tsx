@@ -212,7 +212,7 @@ export default ({
                   </Text>
                 </IconContainer>
                 <ForwardIconContainer>
-                  <ForwardIcon size={20} />
+                  <ForwardIcon />
                 </ForwardIconContainer>
               </Section>
             ) : (
@@ -241,7 +241,7 @@ export default ({
                   <Text isSubmited={false}>위생교육증 미등록</Text>
                 </IconContainer>
                 <ForwardIconContainer>
-                  <ForwardIcon size={20} />
+                  <ForwardIcon />
                 </ForwardIconContainer>
               </Section>
             )}
@@ -284,7 +284,7 @@ export default ({
                 </IconContainer>
               )}
               <ForwardIconContainer>
-                <ForwardIcon size={20} />
+                <ForwardIcon />
               </ForwardIconContainer>
             </Section>
             <Section disabled={true}>
