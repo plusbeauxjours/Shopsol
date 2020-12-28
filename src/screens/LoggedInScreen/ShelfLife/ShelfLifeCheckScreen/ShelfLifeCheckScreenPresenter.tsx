@@ -9,6 +9,7 @@ import DonutCard from '~/components/DonutCard';
 import ShelfLifeCheckScreenCard from './ShelfLifeCheckScreenCard';
 import ShelfLifeCheckScreenHeader from './ShelfLifeCheckScreenHeader';
 import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
+import FastImage from 'react-native-fast-image';
 
 interface IColor {
   color: string;
@@ -170,6 +171,29 @@ const CloseIconContainer = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+const EmptyBox = styled.View`
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const TextBox = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Column = styled.View`
+  margin-left: 5px;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const EmptyText = styled.Text`
+  color: #999;
+  font-size: 16px;
+`;
+
 export default ({
   onRefresh,
   confirmModal,
@@ -188,120 +212,187 @@ export default ({
   gotoAdd,
   fetchData,
   search,
-  result,
   setSearch,
-  searchData,
 }) => {
+  console.log(SHELFLIFE_DATA);
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
-    return (
-      <BackGround>
-        <Animated.ScrollView
-          ref={scrollRef}
-          style={StyleSheet.absoluteFill}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{alignItems: 'center', paddingTop: 20}}
-          scrollEventThrottle={16}
-          onScroll={onScroll}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={() => onRefresh('firstRoute')}
-            />
-          }>
-          <FlatList
-            keyExtractor={(_, index) => index.toString()}
-            data={data}
-            horizontal
-            snapToInterval={220}
-            decelerationRate="fast"
-            scrollEventThrottle={16}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
-              <Card
-                key={index}
-                color={item.backgroundColor}
-                index={index}
-                onPress={() => gotoCategory(index)}
-                rippleColor={'#666'}
-                rippleDuration={600}
-                rippleSize={1700}
-                rippleContainerBorderRadius={20}
-                rippleOpacity={0.1}>
-                <Row
-                  style={{
-                    marginTop: 20,
-                    width: '100%',
-                    justifyContent: 'space-between',
-                  }}>
-                  <TitleText color={item.textColor}>{item.titleWord}</TitleText>
-                  <Footer>
-                    <SpaceRow>
-                      <SmallText color={item.textColor}>전체 수량</SmallText>
-                      <SmallText color={item.textColor}>
-                        <SmallBold color={item.textColor}>
-                          {item.totalQTY}
-                        </SmallBold>
-                        &nbsp;개
-                      </SmallText>
-                    </SpaceRow>
-                    <SpaceRow>
-                      <SmallText color={item.textColor}>처리 수량</SmallText>
-                      <SmallText color={item.textColor}>
-                        <SmallBold color={item.textColor}>
-                          {item.doneQTY}
-                        </SmallBold>
-                        &nbsp;개
-                      </SmallText>
-                    </SpaceRow>
-                  </Footer>
-                </Row>
-                <CardGreyLine />
-                <DonutCard
-                  percentage={item.percentage}
-                  color={item.textColor}
-                  max={100}
-                />
-                <DodnutTextContainer>
-                  <PercentageText color={item.textColor}>
-                    {item.percentage}%
-                  </PercentageText>
-                </DodnutTextContainer>
-              </Card>
-            )}
-          />
-          <Container>
-            <SearchInputContainer>
-              <SearchInput
-                placeholder="물품 검색"
-                placeholderTextColor={'#999'}
-                onChangeText={(text) => searchData(text)}
-                value={search}
+    if (
+      SHELFLIFE_DATA[0]?.items.length == 0 &&
+      SHELFLIFE_DATA[1]?.items.length == 0 &&
+      SHELFLIFE_DATA[2]?.items.length == 0 &&
+      SHELFLIFE_DATA[3]?.items.length == 0
+    ) {
+      return (
+        <BackGround>
+          <Container style={{flex: 1, marginTop: 40}}>
+            <EmptyBox>
+              <FastImage
+                style={{
+                  width: 377,
+                  height: 450,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                source={require('../../../../assets/images/emptyImg.png')}
+                resizeMode={FastImage.resizeMode.cover}
               />
-              <CloseIconContainer onPress={() => setSearch('')}>
-                <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
-              </CloseIconContainer>
-            </SearchInputContainer>
-            {SHELFLIFE_DATA?.map(({name, color, items}, index) => (
-              <View
-                key={index}
-                onLayout={({
-                  nativeEvent: {
-                    layout: {y: anchor},
-                  },
-                }) => index !== 0 && onMeasurement(index, {name, anchor})}>
-                <VerticalLine />
-                {search.length > 0
-                  ? items
-                      ?.filter(
-                        (i) =>
-                          i.shelfLifeName
-                            .toLowerCase()
-                            .includes(search.toLowerCase()) ||
-                          i.shelfLifeMemo
-                            .toLowerCase()
-                            .includes(search.toLowerCase()),
-                      )
-                      .map((item, index) => {
+              <TextBox>
+                <Column>
+                  <EmptyText>유통기한 정보를 등록해주세요.</EmptyText>
+                </Column>
+              </TextBox>
+            </EmptyBox>
+            <AddButtonContainer>
+              <AddButton onPress={() => gotoAdd()}>
+                <AddIcon />
+              </AddButton>
+            </AddButtonContainer>
+          </Container>
+        </BackGround>
+      );
+    } else {
+      return (
+        <BackGround>
+          <Animated.ScrollView
+            ref={scrollRef}
+            style={StyleSheet.absoluteFill}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{alignItems: 'center', paddingTop: 20}}
+            scrollEventThrottle={16}
+            onScroll={onScroll}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={() => onRefresh('firstRoute')}
+              />
+            }>
+            <FlatList
+              keyExtractor={(_, index) => index.toString()}
+              data={data}
+              horizontal
+              snapToInterval={220}
+              decelerationRate="fast"
+              scrollEventThrottle={16}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({item, index}) => (
+                <Card
+                  key={index}
+                  color={item.backgroundColor}
+                  index={index}
+                  onPress={() => gotoCategory(index)}
+                  rippleColor={'#666'}
+                  rippleDuration={600}
+                  rippleSize={1700}
+                  rippleContainerBorderRadius={20}
+                  rippleOpacity={0.1}>
+                  <Row
+                    style={{
+                      marginTop: 20,
+                      width: '100%',
+                      justifyContent: 'space-between',
+                    }}>
+                    <TitleText color={item.textColor}>
+                      {item.titleWord}
+                    </TitleText>
+                    <Footer>
+                      <SpaceRow>
+                        <SmallText color={item.textColor}>전체 수량</SmallText>
+                        <SmallText color={item.textColor}>
+                          <SmallBold color={item.textColor}>
+                            {item.totalQTY}
+                          </SmallBold>
+                          &nbsp;개
+                        </SmallText>
+                      </SpaceRow>
+                      <SpaceRow>
+                        <SmallText color={item.textColor}>처리 수량</SmallText>
+                        <SmallText color={item.textColor}>
+                          <SmallBold color={item.textColor}>
+                            {item.doneQTY}
+                          </SmallBold>
+                          &nbsp;개
+                        </SmallText>
+                      </SpaceRow>
+                    </Footer>
+                  </Row>
+                  <CardGreyLine />
+                  <DonutCard
+                    percentage={item.percentage}
+                    color={item.textColor}
+                    max={100}
+                  />
+                  <DodnutTextContainer>
+                    <PercentageText color={item.textColor}>
+                      {item.percentage}%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                </Card>
+              )}
+            />
+            <Container>
+              <SearchInputContainer>
+                <SearchInput
+                  placeholder="물품 검색"
+                  placeholderTextColor={'#999'}
+                  onChangeText={(text) => setSearch(text)}
+                  value={search}
+                />
+                <CloseIconContainer onPress={() => setSearch('')}>
+                  <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
+                </CloseIconContainer>
+              </SearchInputContainer>
+              {SHELFLIFE_DATA?.map(({name, color, items}, index) => (
+                <View
+                  key={index}
+                  onLayout={({
+                    nativeEvent: {
+                      layout: {y: anchor},
+                    },
+                  }) => index !== 0 && onMeasurement(index, {name, anchor})}>
+                  <VerticalLine />
+                  {search.length > 0
+                    ? items
+                        ?.filter(
+                          (i) =>
+                            i.shelfLifeName
+                              .toLowerCase()
+                              .includes(search.toLowerCase()) ||
+                            i.shelfLifeMemo
+                              .toLowerCase()
+                              .includes(search.toLowerCase()),
+                        )
+                        .map((item, index) => {
+                          return index == 0 ? (
+                            <React.Fragment key={index}>
+                              <LineTextContainer
+                                as={Animated.View}
+                                style={{opacity: opacity(tabs[index].anchor)}}
+                                color={color}>
+                                <LineText color={color}>{name}</LineText>
+                              </LineTextContainer>
+                              <View key={index}>
+                                <ShelfLifeCheckScreenCard
+                                  name={name}
+                                  item={item}
+                                  confirmModal={confirmModal}
+                                  cancelModal={cancelModal}
+                                  fetchData={fetchData}
+                                />
+                              </View>
+                            </React.Fragment>
+                          ) : (
+                            <View key={index}>
+                              <ShelfLifeCheckScreenCard
+                                name={name}
+                                item={item}
+                                confirmModal={confirmModal}
+                                cancelModal={cancelModal}
+                                fetchData={fetchData}
+                              />
+                            </View>
+                          );
+                        })
+                    : items?.map((item, index) => {
                         return index == 0 ? (
                           <React.Fragment key={index}>
                             <LineTextContainer
@@ -331,57 +422,27 @@ export default ({
                             />
                           </View>
                         );
-                      })
-                  : items?.map((item, index) => {
-                      return index == 0 ? (
-                        <React.Fragment key={index}>
-                          <LineTextContainer
-                            as={Animated.View}
-                            style={{opacity: opacity(tabs[index].anchor)}}
-                            color={color}>
-                            <LineText color={color}>{name}</LineText>
-                          </LineTextContainer>
-                          <View key={index}>
-                            <ShelfLifeCheckScreenCard
-                              name={name}
-                              item={item}
-                              confirmModal={confirmModal}
-                              cancelModal={cancelModal}
-                              fetchData={fetchData}
-                            />
-                          </View>
-                        </React.Fragment>
-                      ) : (
-                        <View key={index}>
-                          <ShelfLifeCheckScreenCard
-                            name={name}
-                            item={item}
-                            confirmModal={confirmModal}
-                            cancelModal={cancelModal}
-                            fetchData={fetchData}
-                          />
-                        </View>
-                      );
-                    })}
-              </View>
-            ))}
-          </Container>
-        </Animated.ScrollView>
-        {tabs[3]?.anchor !== 20 && (
-          <ShelfLifeCheckScreenHeader
-            y={y}
-            tabs={tabs}
-            gotoCategory={gotoCategory}
-            ready={ready}
-          />
-        )}
-        <AddButtonContainer>
-          <AddButton onPress={() => gotoAdd()}>
-            <AddIcon />
-          </AddButton>
-        </AddButtonContainer>
-      </BackGround>
-    );
+                      })}
+                </View>
+              ))}
+            </Container>
+          </Animated.ScrollView>
+          {tabs[3]?.anchor !== 20 && (
+            <ShelfLifeCheckScreenHeader
+              y={y}
+              tabs={tabs}
+              gotoCategory={gotoCategory}
+              ready={ready}
+            />
+          )}
+          <AddButtonContainer>
+            <AddButton onPress={() => gotoAdd()}>
+              <AddIcon />
+            </AddButton>
+          </AddButtonContainer>
+        </BackGround>
+      );
+    }
   } else {
     return null;
   }

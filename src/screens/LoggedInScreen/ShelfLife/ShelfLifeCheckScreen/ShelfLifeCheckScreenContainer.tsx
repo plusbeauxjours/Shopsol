@@ -56,7 +56,6 @@ export default () => {
   const [tabs, setTabs] = useState<any>(defaultTabs);
   const [ready, setReady] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
-  const [result, setResult] = useState<any>([]);
 
   const confirmModal = (name, shelfLife_SEQ) => {
     const params = {
@@ -279,14 +278,6 @@ export default () => {
     }
   };
 
-  const searchData = (text) => {
-    setSearch(text);
-    const temp = SHELFLIFE_DATA?.map((i) =>
-      i.items.filter((i) => i.shelfLifeName.includes(search)),
-    );
-    setResult(temp);
-  };
-
   const onScroll = onScrollEvent({y});
 
   useEffect(() => {
@@ -313,9 +304,7 @@ export default () => {
       gotoAdd={gotoAdd}
       fetchData={fetchData}
       search={search}
-      result={result}
       setSearch={setSearch}
-      searchData={searchData}
     />
   );
 };

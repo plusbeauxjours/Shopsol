@@ -4,12 +4,14 @@ import DatePicker from 'react-native-date-picker';
 import Modal from 'react-native-modal';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {
   EllipseIcon,
   RemoveCircleIcon,
   HelpCircleIcon,
-  CheckBoxIcon,
+  RadioBtnOnIcon,
+  RadioBtnOffIcon,
 } from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import RoundBtn from '~/components/Btn/RoundBtn';
@@ -22,6 +24,10 @@ interface IsSelected {
   isSelected: boolean;
   substract?: string;
   color?: string;
+}
+
+interface IIsBefore {
+  isBefore: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -50,8 +56,17 @@ const Row = styled.View`
   align-items: center;
 `;
 
-const NameText = styled.Text`
+const TitleText = styled.Text`
   font-size: 16px;
+  color: #999;
+  font-weight: bold;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
 const RowTouchable = styled.TouchableOpacity`
@@ -67,13 +82,6 @@ const RenderWorkDayTouchable = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   margin-left: 15px;
-`;
-
-const StepTitle = styled.Text`
-  font-weight: bold;
-  font-size: 17px;
-  color: #000;
-  margin-bottom: 20px;
 `;
 
 const DayPickRowBox = styled.View`
@@ -134,7 +142,8 @@ const TimeListRowTouchable = styled.TouchableOpacity<IsSelected>`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  border-width: 1px;
+  border-width: 0.7px;
+  border-radius: 15px;
   border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
@@ -178,6 +187,21 @@ const DatePickerText = styled.Text`
   font-size: 16px;
   color: #888;
   text-align: center;
+`;
+
+const TextInputLine = styled.View<IIsBefore>`
+  width: ${wp('100%') - 120}px;
+  height: 0.7px;
+  background-color: ${(props) => (props.isBefore ? '#CCCCCC' : '#e85356')};
+`;
+
+const ColumnPayBox = styled.View`
+  width: ${wp('100%') - 80}px;
+  padding: 20px;
+  border-width: 1px;
+  border-radius: 20px;
+  border-color: #cccccc;
+  align-items: center;
 `;
 
 export default ({
@@ -261,42 +285,24 @@ export default ({
         <Container>
           <Section>
             <InputCase>
+              <TitleText>일정 정보</TitleText>
+              <GreyLine />
               <Row>
                 <RowTouchable
                   onPress={() =>
                     explainModal('샵솔 출퇴근관리가 시작되는 일자입니다.')
                   }>
-                  <NameText>일정 시작일</NameText>
+                  <Text>일정 시작일</Text>
                   <HelpCircleIcon />
                 </RowTouchable>
               </Row>
 
               <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
-                <Text>{moment(startDate).format('YYYY.MM.DD') ?? ''}</Text>
+                <Text>{moment(startDate).format('YYYY년 M월 D일') ?? ''}</Text>
               </DateTouchable>
               <InputLine isBefore={startDate === ''} />
             </InputCase>
             <InputCase>
-              <Row>
-                <RowTouchable
-                  onPress={() => {
-                    explainModal(
-                      '정해진 근무종료일이 없다면 [퇴사일 없음]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
-                    );
-                  }}>
-                  <NameText>일정 종료일</NameText>
-                  <HelpCircleIcon />
-                </RowTouchable>
-              </Row>
-
-              <DateTouchable
-                disabled={checkNoEndDate}
-                onPress={() => setIsEndDayModalVisible(true)}>
-                <Text>
-                  {!checkNoEndDate ? moment(endDate).format('YYYY.MM.DD') : ''}
-                </Text>
-              </DateTouchable>
-              <InputLine isBefore={checkNoEndDate} />
               <RowTouchable
                 style={{marginTop: 20}}
                 onPress={() => {
@@ -305,17 +311,47 @@ export default ({
                 }}>
                 <SideBox>
                   {checkNoEndDate ? (
-                    <CheckBoxIcon size={25} color="#e85356" />
+                    <RadioBtnOnIcon size={22} />
                   ) : (
-                    <CheckBoxIcon size={25} color="#CCCCCC" />
+                    <RadioBtnOffIcon size={22} />
                   )}
-                  <SideText>일정 종료일 없음</SideText>
+                  <Text>일정 종료일 없음</Text>
                 </SideBox>
               </RowTouchable>
+              {!checkNoEndDate && (
+                <>
+                  <WhiteSpace />
+                  <ColumnPayBox>
+                    <Row
+                      style={{
+                        width: wp('100%') - 80,
+                        paddingHorizontal: 20,
+                      }}>
+                      <Text>일정 종료일</Text>
+                    </Row>
+                    <DateTouchable
+                      style={{
+                        paddingHorizontal: 20,
+                        alignItems: 'flex-start',
+                        width: wp('100%') - 80,
+                      }}
+                      onPress={() => setIsEndDayModalVisible(true)}
+                      disabled={checkNoEndDate}>
+                      <Text>
+                        {!checkNoEndDate
+                          ? moment(endDate).format('YYYY년 M월 D일')
+                          : ''}
+                      </Text>
+                    </DateTouchable>
+                    <TextInputLine isBefore={checkNoEndDate} />
+                  </ColumnPayBox>
+                </>
+              )}
             </InputCase>
           </Section>
           <Section>
-            <StepTitle>(STEP 1) 출퇴근 시간 입력</StepTitle>
+            <TitleText>출퇴근 시간 입력</TitleText>
+            <GreyLine />
             <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
               <SideText>출근시간</SideText>
               <TimePickBoxTimeText
@@ -333,7 +369,8 @@ export default ({
             </RowSpaceTouchable>
           </Section>
           <Section>
-            <StepTitle>(STEP 2) 출퇴근 요일 선택</StepTitle>
+            <TitleText>출퇴근 요일 선택</TitleText>
+            <GreyLine />
             <DayPickRowBox>
               <RenderDayPicker />
             </DayPickRowBox>
@@ -346,7 +383,8 @@ export default ({
           </Section>
           {timeList && timeList.length !== 0 && (
             <Section>
-              <StepTitle>(STEP 3) 근무일정 확인</StepTitle>
+              <TitleText>근무일정 확인</TitleText>
+              <GreyLine />
               {timeList.map((data, index) => (
                 <TimeListRowTouchable
                   key={index}

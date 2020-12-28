@@ -30,8 +30,6 @@ const BackGround = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView``;
 
-const Touchable = styled.TouchableOpacity``;
-
 const Container = styled.View`
   width: 100%;
   padding: 20px;
@@ -257,15 +255,6 @@ export default ({
   const isNextDay2 = CHANGE_START > CHANGE_END;
   const isNextDay3 = START_TIME > END_TIME;
   const isNextDay4 = UPDATED_START > UPDATED_END;
-
-  const MainItem = ({isFirst = false, text, value}) => {
-    return (
-      <MainItemContainer isFirst={isFirst}>
-        <DetailRowText>{text}</DetailRowText>
-        <DetailRowText>{value}&nbsp;원</DetailRowText>
-      </MainItemContainer>
-    );
-  };
 
   const FixScheduleStepOne = () => (
     <Section>

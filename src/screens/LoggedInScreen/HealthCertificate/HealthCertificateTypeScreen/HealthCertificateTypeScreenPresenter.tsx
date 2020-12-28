@@ -238,7 +238,11 @@ export default ({
                 </TypeTitle>
 
                 <IconContainer>
-                  <Text isSubmited={false}>위생교육증 미등록</Text>
+                  <Text
+                    style={{textDecorationLine: 'underline'}}
+                    isSubmited={false}>
+                    위생교육증 미등록
+                  </Text>
                 </IconContainer>
                 <ForwardIconContainer>
                   <ForwardIcon />
