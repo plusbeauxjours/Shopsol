@@ -26,7 +26,9 @@ export default () => {
   const [result, setResult] = useState<any>([]);
   const [contacts, setContacts] = useState<any>([]);
   const [choice, setChoice] = useState<any>([]);
-
+  const [isInputModalVisible, setIsInputModalVisible] = useState<boolean>(
+    false,
+  );
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
 
@@ -55,13 +57,6 @@ export default () => {
   };
 
   const addFn = () => {
-    if (!phone || !name) {
-      return alertModal('', '초대할 직원의 연락처를 입력하세요');
-    }
-    var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-    if (!regExp_ctn.test(phone)) {
-      return alertModal('', '올바른 휴대폰번호 11자리를 입력해주세요.');
-    }
     let buffer = choice;
     let flag = true;
     for (var i = 0; i < buffer.length; i++) {
@@ -73,8 +68,6 @@ export default () => {
     }
     if (flag == true) {
       buffer.unshift({key: phone, NAME: name, phone: phone});
-    } else {
-      alertModal('', '동일한 전화번호의 직원이 등록되어있습니다');
     }
     setChoice(buffer);
     setName(null);
@@ -271,6 +264,8 @@ export default () => {
       onPressSubmitButton={onPressSubmitButton}
       toastFn={toastFn}
       isToastVisible={isToastVisible}
+      isInputModalVisible={isInputModalVisible}
+      setIsInputModalVisible={setIsInputModalVisible}
     />
   );
 };

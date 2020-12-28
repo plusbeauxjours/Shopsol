@@ -8,9 +8,8 @@ import {
 import Ripple from 'react-native-material-ripple';
 
 import InviteEmployeeScreenCard from './InviteEmployeeScreenCard';
-import {PersonAddIcon, HelpCircleIcon, SearchIcon} from '~/constants/Icons';
+import {HelpCircleIcon, SearchIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import RoundBtn from '~/components/Btn/RoundBtn';
 import utils from '~/constants/utils';
 
 interface IIsBefore {
@@ -23,15 +22,10 @@ const BackGround = styled.SafeAreaView`
 `;
 
 const ScrollView = styled.ScrollView``;
+const Text = styled.Text``;
 
 const Container = styled.View`
   padding: 20px;
-`;
-
-const Line = styled.View`
-  height: 1px;
-  margin-bottom: 20px;
-  background-color: #666;
 `;
 
 const Section = styled.View`
@@ -42,24 +36,33 @@ const Section = styled.View`
   background-color: white;
 `;
 
-const TextContainer = styled.View`
-  margin-bottom: 15px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
 `;
 
-const TitleText = styled.Text`
-  font-size: 20px;
-  color: #e85356;
-  font-weight: bold;
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
 const TextInput = styled.TextInput`
-  padding: 15px 0;
-  font-size: 15px;
-  font-weight: bold;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  font-size: 16px;
+  text-align: center;
+  width: ${wp('100%') - 80}px;
+  background-color: rgba(30, 30, 30, 0.6);
+  color: white;
+  height: 60px;
+  border-color: #999;
+  border-width: 1px;
+  border-radius: 30px;
+  padding: 20px;
 `;
 
 const Touchable = styled.TouchableOpacity``;
@@ -70,32 +73,8 @@ const Refer = styled.View`
 `;
 
 const ReferText = styled.Text`
-  font-size: 13px;
-  color: #b5b5b5;
-`;
-
-const Contact = styled.TouchableOpacity`
-  padding: 15px 0;
-  width: 100%;
-  border-radius: 30px;
-  border-width: 1px;
-  border-color: #e85356;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ContactIconContainer = styled(Contact)`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  padding: 5px;
-`;
-
-const Box = styled.View`
-  padding-bottom: 20px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
 `;
 
 const Row = styled.TouchableOpacity`
@@ -103,31 +82,23 @@ const Row = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const BoxText = styled.Text`
-  font-size: 15px;
-  color: #7e7c7c;
-`;
-
-const NameContainer = styled.View`
-  flex: 1.5;
+const RoundBtn = styled(Ripple)`
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-color: #e2e2e2;
+  border-color: #999;
   border-width: 1px;
-  background-color: white;
-  margin-right: 10px;
-`;
-
-const PhoneContainer = styled(NameContainer)`
-  flex: 2.5;
-  width: 120px;
-  margin-right: 0;
+  border-radius: 30px;
+  width: ${wp('100%') - 80}px;
+  background-color: rgba(30, 30, 30, 0.6);
+  height: 60px;
 `;
 
 const ModalContainer = styled.View`
   height: ${hp('50%')};
   background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 const SearchBox = styled.View`
@@ -190,6 +161,41 @@ const ModalPopup = styled.View`
   background-color: ${utils.isAndroid ? '#888' : 'rgba(0,0,0,0.7)'};
 `;
 
+const SpaceRow = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Button = styled(Ripple)`
+  height: 50px;
+  width: ${(wp('100%') - 90) / 2}px;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-width: 1px;
+  border-color: #bbb;
+  border-radius: 25px;
+`;
+
+const ModalWhiteText = styled.Text`
+  font-size: 16px;
+  color: white;
+`;
+
+const WhiteSpace = styled.View`
+  height: 60px;
+`;
+
+const HelpText = styled.Text`
+  width: 100%;
+  font-size: 10px;
+  color: white;
+  margin-bottom: 20px;
+  text-align: left;
+  margin-left: 80px;
+`;
+
 export default ({
   explainModal,
   setName,
@@ -210,7 +216,10 @@ export default ({
   onPressSubmitButton,
   toastFn,
   isToastVisible,
+  isInputModalVisible,
+  setIsInputModalVisible,
 }) => {
+  var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
   return (
     <BackGround>
       <ScrollView
@@ -219,72 +228,52 @@ export default ({
         showsVerticalScrollIndicator={false}>
         <Container>
           <Section>
-            <TextContainer>
-              <TitleText>(STEP1)</TitleText>
-              <TitleText style={{color: '#000'}}> 직원 초대하기</TitleText>
-            </TextContainer>
-            <Box>
-              <Row
-                onPress={() => {
-                  explainModal(
-                    '',
-                    '방법1, 방법2 중 편한 방법을 선택하여 직원을 초대해 보세요.\n\n[추가하기] 버튼을 눌러 여러명의 직원을 한번에 초대할 수 있습니다.',
-                  );
-                }}>
-                <BoxText>(방법1) 연락처로 추가하기</BoxText>
-                <HelpCircleIcon />
-              </Row>
-              <ContactIconContainer onPress={() => getContactsFn()}>
-                <PersonAddIcon />
-              </ContactIconContainer>
-            </Box>
-            <Line />
-            <TextContainer>
-              <BoxText>(방법2) 직접 입력해서 추가하기</BoxText>
-            </TextContainer>
-            <Box>
-              <NameContainer>
-                <TextInput
-                  placeholder={'홍길동'}
-                  selectionColor={'#999'}
-                  placeholderTextColor={'#CCCCCC'}
-                  onChangeText={(text) => setName(text)}
-                  value={name}
-                  maxLength={6}
-                  style={{width: 100}}
-                />
-              </NameContainer>
-              <PhoneContainer>
-                <TextInput
-                  placeholder={'01012345678'}
-                  selectionColor={'#999'}
-                  placeholderTextColor={'#CCCCCC'}
-                  onChangeText={(text) => setPhone(text)}
-                  value={phone}
-                  maxLength={11}
-                  keyboardType={'number-pad'}
-                  style={{width: utils.isAndroid() ? 200 : 230}}
-                  locale="ko"
-                />
-              </PhoneContainer>
-            </Box>
-            <RoundBtn
-              isInSection={true}
-              text={'초대할 직원목록에 추가'}
-              onPress={() => addFn()}
-              isRegisted={name && phone}
-            />
+            <Row
+              onPress={() => {
+                explainModal(
+                  '',
+                  '방법1, 방법2 중 편한 방법을 선택하여 직원을 초대해 보세요.\n\n[추가하기] 버튼을 눌러 여러명의 직원을 한번에 초대할 수 있습니다.',
+                );
+              }}>
+              <TitleText> 직원 초대하기</TitleText>
+              <HelpCircleIcon />
+            </Row>
+            <GreyLine />
+            <SpaceRow>
+              <Button
+                rippleContainerBorderRadius={25}
+                rippleColor={'#ccc'}
+                rippleDuration={400}
+                rippleSize={400}
+                rippleOpacity={0.45}
+                onPress={() => getContactsFn()}>
+                <Text style={{fontSize: 14, color: '#999'}}>연락처로 추가</Text>
+              </Button>
+              <Button
+                rippleContainerBorderRadius={25}
+                rippleColor={'#ccc'}
+                rippleDuration={400}
+                rippleSize={400}
+                rippleOpacity={0.45}
+                onPress={() =>
+                  setTimeout(() => {
+                    setIsInputModalVisible(true);
+                    setName(null);
+                    setPhone(null);
+                  }, 400)
+                }>
+                <Text style={{fontSize: 14, color: '#999'}}>직접 입력</Text>
+              </Button>
+            </SpaceRow>
           </Section>
           <Section>
-            <TextContainer>
-              <TitleText>(STEP2)</TitleText>
-              <TitleText style={{color: '#000'}}> 초대할 직원목록</TitleText>
-            </TextContainer>
+            <TitleText> 초대할 직원목록</TitleText>
+            <GreyLine />
             <Refer>
               <ReferText>
-                &nbsp; * 카카오톡을 통하여 직원에게 초대 메시지를 발송합니다.
-                (카카오톡 미설치 시 문자 발송)
+                카카오톡을 통하여 직원에게 초대 메시지를 발송합니다.
               </ReferText>
+              <ReferText>(카카오톡 미설치 시 문자 발송)</ReferText>
             </Refer>
             {choice?.map((data, index) => (
               <Touchable
@@ -307,6 +296,63 @@ export default ({
           />
         </Container>
       </ScrollView>
+      <Modal
+        isVisible={isInputModalVisible}
+        onRequestClose={() => {
+          setIsInputModalVisible(false);
+        }}
+        onBackdropPress={() => {
+          setIsInputModalVisible(false);
+        }}
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <TextInput
+          placeholder={'홍길동'}
+          selectionColor={'white'}
+          placeholderTextColor={'#777'}
+          onChangeText={(text) => setName(text)}
+          value={name}
+          maxLength={6}
+        />
+        {!name ? (
+          <HelpText>초대할 직원의 연락처를 입력하세요.</HelpText>
+        ) : (
+          <HelpText>&nbsp;</HelpText>
+        )}
+        <TextInput
+          placeholder={'01012345678'}
+          selectionColor={'white'}
+          placeholderTextColor={'#777'}
+          onChangeText={(text) => setPhone(text)}
+          value={phone}
+          maxLength={11}
+          keyboardType={'number-pad'}
+          locale="ko"
+        />
+        {!regExp_ctn.test(phone) ? (
+          <HelpText>올바른 휴대폰번호 11자리를 입력해주세요.</HelpText>
+        ) : (
+          <HelpText>&nbsp;</HelpText>
+        )}
+        {name && phone && regExp_ctn.test(phone) ? (
+          <RoundBtn
+            rippleColor={'#ccc'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}
+            isInSection={true}
+            text={'초대할 직원목록에 추가'}
+            onPress={() => addFn()}>
+            <ModalWhiteText>초대할 직원목록에 추가</ModalWhiteText>
+          </RoundBtn>
+        ) : (
+          <WhiteSpace />
+        )}
+      </Modal>
       <Modal
         isVisible={isModalVisible}
         onRequestClose={() => setIsModalVisible(false)}
