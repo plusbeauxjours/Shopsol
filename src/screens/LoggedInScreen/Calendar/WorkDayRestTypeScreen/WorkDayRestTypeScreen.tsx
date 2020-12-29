@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
-import Modal from 'react-native-modal';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
@@ -24,30 +23,20 @@ const Container = styled.View`
   padding: 20px;
   align-items: center;
 `;
-const Touchable = styled.TouchableOpacity``;
 
-const Box = styled.TouchableOpacity`
-  width: 160px;
-  height: 70px;
-  border-width: 1px;
-  border-color: #e85356;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-`;
 const BoxContainer = styled.View`
   flex-direction: row;
+  justify-content: space-between;
   width: 100%;
-  justify-content: space-around;
-  margin: 20px 0;
 `;
+
 const Section = styled.View`
   width: 100%;
   border-radius: 20px;
-  padding: 20px;
+  padding: 40px 20px;
   align-items: center;
   background-color: white;
+  margin-bottom: 20px;
 `;
 
 const Row = styled.View`
@@ -67,21 +56,14 @@ const TextWrapper = styled(RowSpace)`
 
 const MidText = styled.Text`
   flex: 1;
-  font-size: 15px;
+  font-size: 16px;
   margin: 0 5px;
   text-align: right;
 `;
 
 const BigText = styled.Text`
-  font-size: 26px;
-  margin-bottom: 20px;
-`;
-
-const GreyText = styled.Text`
-  align-self: flex-start;
-  color: #aaa;
-  margin-top: 10px;
-  margin-left: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
 `;
 
 const ContentsBoxLine = styled.View`
@@ -91,31 +73,27 @@ const ContentsBoxLine = styled.View`
   margin: 10px 0;
 `;
 
-const ModalContainer = styled.View`
-  height: 280px;
-  background-color: white;
-`;
-
-const ModalBox = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-const BoxText = styled.Text`
+const ButtonText = styled.Text`
   font-size: 16px;
-  color: #e85356;
-  font-weight: bold;
-`;
-const WhiteSpace = styled.View`
-  height: 30px;
 `;
 
-const ModalYesButton = styled.TouchableOpacity`
-  height: 60px;
-  width: ${wp('100%')}px;
+const LeftButton = styled.TouchableOpacity`
+  height: 50px;
+  width: ${(wp('100%') - 50) / 2}px;
   align-items: center;
   justify-content: center;
   background-color: #e85356;
+  border-radius: 20px;
+`;
+
+const RightButton = styled(LeftButton)`
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #e85356;
+`;
+
+const WhiteSpace = styled.View`
+  height: 30px;
 `;
 
 export default ({route: {params}}) => {
@@ -127,7 +105,6 @@ export default ({route: {params}}) => {
   } = params;
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
-  const [isHelpModalVisible, setisHelpModalVisible] = useState<boolean>(false);
   const [totalVacation, setTotalVacation] = useState<string>('0');
   const [useVacation, setUseVacation] = useState<string>('0');
   const [remainderVacation, setRemainderVacation] = useState<string>('0');
@@ -216,56 +193,31 @@ export default ({route: {params}}) => {
           <BigText>
             <Text
               style={{
-                color: '#e85356',
                 fontWeight: 'bold',
-                fontSize: 30,
+                fontSize: 16,
               }}>
               {NAME}
             </Text>
             직원의 휴무설정
           </BigText>
-        </Section>
-        <BoxContainer>
-          <Box onPress={() => registerFn('1')}>
-            <BoxText>유급휴무 적용</BoxText>
-          </Box>
-          <Box onPress={() => registerFn('0')}>
-            <BoxText>무급휴무 적용</BoxText>
-          </Box>
-        </BoxContainer>
-        <Section>
+          <WhiteSpace />
           <Vacation vacation={totalVacation} title={'총 연차'} />
           <Vacation vacation={useVacation} title={'사용한 연차'} />
           <ContentsBoxLine />
           <Vacation vacation={remainderVacation} title={'남은 연차'} />
         </Section>
-        <GreyText>
-          * 직원정보의 연차설정에 입력된 값으로 셋팅이 됩니다.
-        </GreyText>
-        {isHelpModalVisible && (
-          <Modal
-            onRequestClose={() => setisHelpModalVisible(false)}
-            onBackdropPress={() => setisHelpModalVisible(false)}
-            isVisible={isHelpModalVisible}
-            style={{margin: 0, justifyContent: 'flex-end'}}>
-            <ModalContainer>
-              <ModalBox>
-                <Text style={{fontSize: 30, color: '#e85356'}}>
-                  도움말 입니다.
-                </Text>
-                <WhiteSpace />
-                <Text style={{fontSize: 15, color: '#707070'}}>
-                  세부 도움말이 작성될 공간입니다.
-                </Text>
-              </ModalBox>
-              <Row>
-                <ModalYesButton onPress={() => setisHelpModalVisible(false)}>
-                  <Text style={{fontSize: 16, color: 'white'}}>확인</Text>
-                </ModalYesButton>
-              </Row>
-            </ModalContainer>
-          </Modal>
-        )}
+        <BoxContainer>
+          <LeftButton onPress={() => registerFn('1')}>
+            <ButtonText style={{fontSize: 16, color: 'white'}}>
+              유급휴무 적용
+            </ButtonText>
+          </LeftButton>
+          <RightButton onPress={() => registerFn('0')}>
+            <ButtonText style={{fontSize: 16, color: '#e85356'}}>
+              무급휴무 적용
+            </ButtonText>
+          </RightButton>
+        </BoxContainer>
       </Container>
     </BackGround>
   );

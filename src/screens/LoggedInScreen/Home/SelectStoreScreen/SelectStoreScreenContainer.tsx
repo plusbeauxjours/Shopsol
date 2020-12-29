@@ -33,10 +33,9 @@ export default () => {
     }
   };
 
-  const alertModal = (title, text, okCallback = () => {}) => {
+  const alertModal = (text, okCallback = () => {}) => {
     const params = {
       alertType: 'alert',
-      title,
       content: text,
       okCallback,
     };
@@ -47,7 +46,7 @@ export default () => {
   // GOTO 홈스크린
   const gotoHomeScreen = (data) => {
     if (STORE == 0 && data.TYPE == '0') {
-      alertModal('', '합류승인 대기중입니다.');
+      alertModal('합류승인 대기중입니다.');
     } else {
       dispatch(
         selectSTORE({

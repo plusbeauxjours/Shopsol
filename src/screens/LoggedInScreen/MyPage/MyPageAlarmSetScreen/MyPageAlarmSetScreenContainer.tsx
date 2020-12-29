@@ -49,7 +49,7 @@ export default () => {
       });
     } catch (e) {
       console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
+      alertModal('통신이 원활하지 않습니다.');
       toggleAlarm(value);
     }
   };
@@ -67,10 +67,9 @@ export default () => {
     }
   };
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));

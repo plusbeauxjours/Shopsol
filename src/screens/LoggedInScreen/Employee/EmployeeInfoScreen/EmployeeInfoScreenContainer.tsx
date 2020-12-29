@@ -38,10 +38,9 @@ export default ({route: {params}}) => {
   const [PAY, setPAY] = useState<number>(0);
   const [PAY_TYPE, setPAY_TYPE] = useState<string>('0');
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title || '',
       content: text || '',
     };
     dispatch(setAlertInfo(params));
@@ -148,7 +147,7 @@ export default ({route: {params}}) => {
       }
     } catch (e) {
       console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
+      alertModal('통신이 원활하지 않습니다.');
     }
   };
 
@@ -380,7 +379,7 @@ export default ({route: {params}}) => {
       }
     } catch (e) {
       console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
+      alertModal('통신이 원활하지 않습니다.');
     }
   };
 
@@ -404,7 +403,7 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
       dispatch(setSplashVisible(false));
-      alertModal('', '통신이 원활하지 않습니다.');
+      alertModal('통신이 원활하지 않습니다.');
     }
   };
 

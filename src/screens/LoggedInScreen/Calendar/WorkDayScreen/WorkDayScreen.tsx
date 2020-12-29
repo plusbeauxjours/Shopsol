@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 
@@ -12,26 +12,29 @@ const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: #f6f6f6;
 `;
-const Touchable = styled.TouchableOpacity`
-  width: 100%;
+
+const Card = styled.TouchableOpacity`
+  padding: 20px;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
-  height: 60px;
-  padding: 10px;
+  align-items: center;
 `;
 
-const ScrollView = styled.ScrollView``;
-
 const Text = styled.Text`
-  margin-left: 10px;
-  font-size: 15px;
+  font-size: 16px;
 `;
 
 const Container = styled.View`
-  width: 100%;
   padding: 20px;
   align-items: center;
+`;
+
+const Section = styled.View`
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  padding: 10px 0;
+  background-color: white;
 `;
 
 export default ({route: {params}}) => {
@@ -86,48 +89,45 @@ export default ({route: {params}}) => {
 
   return (
     <BackGround>
-      <ScrollView
-        keyboardShouldPersistTaps={'handled'}
-        keyboardDismissMode="on-drag"
-        contentContainerStyle={{alignItems: 'center'}}>
-        <Container>
-          <Touchable
+      <Container>
+        <Section>
+          <Card
             onPress={() =>
               navigation.navigate('WorkDayRestTypeScreen', {
                 data: params?.data,
                 date,
               })
             }>
-            <Text style={{color: '#e85356'}}>
-              <CalendarTimesIcon color={'#e85356'} />
+            <Text>
+              <CalendarTimesIcon color={'#999'} />
               &nbsp;&nbsp;휴무 설정
             </Text>
             <ForwardIcon size={24} color={'#e85356'} />
-          </Touchable>
-          <Touchable
+          </Card>
+          <Card
             onPress={() =>
               navigation.navigate('WorkDayRestTimeScreen', {
                 data: params?.data,
                 date,
               })
             }>
-            <Text style={{color: '#e85356'}}>
-              <TimerIcon color={'#e85356'} />
+            <Text>
+              <TimerIcon color={'#999'} />
               &nbsp;&nbsp;휴게시간 설정
             </Text>
             <ForwardIcon size={24} color={'#e85356'} />
-          </Touchable>
+          </Card>
           {addWork == 'addWork' && (
-            <Touchable
+            <Card
               onPress={() =>
                 confirmModal('', `추가일정을 삭제합니다`, '취소', '삭제')
               }>
-              <Text style={{color: '#e85356'}}>&nbsp;&nbsp;추가일정 삭제</Text>
+              <Text>&nbsp;&nbsp;추가일정 삭제</Text>
               <ForwardIcon size={24} color={'#e85356'} />
-            </Touchable>
+            </Card>
           )}
-        </Container>
-      </ScrollView>
+        </Section>
+      </Container>
     </BackGround>
   );
 };

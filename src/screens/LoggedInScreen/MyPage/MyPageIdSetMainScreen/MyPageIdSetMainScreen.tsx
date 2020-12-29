@@ -12,6 +12,19 @@ const BackGround = styled.SafeAreaView`
   background-color: #f6f6f6; ;
 `;
 
+const Container = styled.View`
+  padding: 20px;
+  align-items: center;
+`;
+
+const Section = styled.View`
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  padding: 10px 0;
+  background-color: white;
+`;
+
 const Arrow = styled.View`
   color: #5887f9;
   font-size: 20px;
@@ -38,34 +51,38 @@ export default () => {
   );
   return (
     <BackGround>
-      <Card
-        onPress={() => {
-          navigation.navigate('MyPageNameSetScreen');
-        }}>
-        <CardText>이름 변경</CardText>
-        <ArrowIcon />
-      </Card>
-      <Card
-        onPress={() => {
-          navigation.navigate('MyPagePositionSetScreen');
-        }}>
-        <CardText>점장 - 직원 전환</CardText>
-        <ArrowIcon />
-      </Card>
-      <Card
-        onPress={() => {
-          navigation.navigate('MyPagePasswordSetScreen');
-        }}>
-        <CardText>비밀번호 재설정</CardText>
-        <ArrowIcon />
-      </Card>
-      <Card
-        onPress={() => {
-          navigation.navigate('MyPageDeleteSetScreen');
-        }}>
-        <CardText>회원 탈퇴</CardText>
-        <ArrowIcon />
-      </Card>
+      <Container>
+        <Section>
+          <Card
+            onPress={() => {
+              navigation.navigate('MyPageNameSetScreen');
+            }}>
+            <CardText>이름 변경</CardText>
+            <ArrowIcon />
+          </Card>
+          <Card
+            onPress={() => {
+              navigation.navigate('MyPagePositionSetScreen');
+            }}>
+            <CardText>점장 - 직원 전환</CardText>
+            <ArrowIcon />
+          </Card>
+          <Card
+            onPress={() => {
+              navigation.navigate('MyPagePasswordSetScreen');
+            }}>
+            <CardText>비밀번호 재설정</CardText>
+            <ArrowIcon />
+          </Card>
+          <Card
+            onPress={() => {
+              navigation.navigate('MyPageDeleteSetScreen');
+            }}>
+            <CardText>회원 탈퇴</CardText>
+            <ArrowIcon />
+          </Card>
+        </Section>
+      </Container>
     </BackGround>
   );
 };

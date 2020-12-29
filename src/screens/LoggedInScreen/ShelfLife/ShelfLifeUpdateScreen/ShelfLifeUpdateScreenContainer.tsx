@@ -33,10 +33,9 @@ export default ({route: {params}}) => {
   );
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -61,7 +60,7 @@ export default ({route: {params}}) => {
 
   const deleteShelfLife = async () => {
     try {
-      alertModal('', '상품을 삭제하였습니다.');
+      alertModal('상품을 삭제하였습니다.');
       navigation.goBack();
       dispatch(removeSHELFLIFE_DATA({name: params?.name, shelfLife_SEQ}));
       await api.deleteShelfLifeData({shelfLife_SEQ});
@@ -72,11 +71,11 @@ export default ({route: {params}}) => {
 
   const submit = async () => {
     if (shelfLifeName == '') {
-      alertModal('', '수정할 상품명을 입력해주세요.');
+      alertModal('수정할 상품명을 입력해주세요.');
     }
     try {
       navigation.goBack();
-      alertModal('', '수정이 완료되었습니다.');
+      alertModal('수정이 완료되었습니다.');
       dispatch(
         updateSHELFLIFE_DATA({
           name: params?.name,
@@ -94,7 +93,7 @@ export default ({route: {params}}) => {
       });
       await params?.fetchData();
       if (data.result == '0') {
-        alertModal('', '연결에 실패하였습니다.');
+        alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {
       console.log(e);

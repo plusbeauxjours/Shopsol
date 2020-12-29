@@ -55,10 +55,9 @@ export default ({route: {params}}) => {
   const [modalVisible5, setModalVisible5] = useState<boolean>(false);
   const [helparr, setHelparr] = useState<[]>([]);
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -127,31 +126,31 @@ export default ({route: {params}}) => {
   const submit = async () => {
     if (NAME == '') {
       dispatch(setSplashVisible(false));
-      alertModal('', '점포명을 입력해주세요.');
+      alertModal('점포명을 입력해주세요.');
     } else if (ADDR1 == '') {
       dispatch(setSplashVisible(false));
-      alertModal('', '기본주소를 입력해주세요.');
+      alertModal('기본주소를 입력해주세요.');
     } else if (ADDR2 == '') {
       dispatch(setSplashVisible(false));
-      alertModal('', '상세주소를 입력해주세요.');
+      alertModal('상세주소를 입력해주세요.');
     } else if (timeCheck == false) {
       dispatch(setSplashVisible(false));
-      alertModal('', '지각허용시간을 선택해주세요.');
+      alertModal('지각허용시간을 선택해주세요.');
     } else if (EARLYtimeCheck == false) {
       dispatch(setSplashVisible(false));
-      alertModal('', '조퇴허용시간을 선택해주세요.');
+      alertModal('조퇴허용시간을 선택해주세요.');
     } else if (dayCheck == false) {
       dispatch(setSplashVisible(false));
-      alertModal('', '급여정산일을 선택해주세요.');
+      alertModal('급여정산일을 선택해주세요.');
     } else if (storeCategoryType == '분류 선택') {
       dispatch(setSplashVisible(false));
-      alertModal('', '사업장분류를 선택해주세요.');
+      alertModal('사업장분류를 선택해주세요.');
     } else if (storeCategoryType == '기타' && storeCategoryTypeEtc == '') {
       dispatch(setSplashVisible(false));
-      alertModal('', '기타 사업장분류를 입력해주세요.');
+      alertModal('기타 사업장분류를 입력해주세요.');
     } else if (commuteTypeCheck[1] && distanceCheck == false) {
       dispatch(setSplashVisible(false));
-      alertModal('', '출퇴근 허용거리를 선택해주세요.');
+      alertModal('출퇴근 허용거리를 선택해주세요.');
     } else {
       try {
         dispatch(setSplashVisible(true));
@@ -175,8 +174,7 @@ export default ({route: {params}}) => {
         });
         if (data.message == 'SUCCESS') {
           alertModal(
-            '사업장 추가완료',
-            '사업장을 클릭하신 후 직원을 초대하세요.',
+            '사업장 추가완료\n\n사업장을 클릭하신 후 직원을 초대하세요.',
           );
           dispatch(getSTORELIST_DATA());
           navigation.goBack();

@@ -46,10 +46,9 @@ export default ({route: {params}}) => {
     false,
   );
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -86,7 +85,7 @@ export default ({route: {params}}) => {
 
   const editFn = async () => {
     if (comment == '') {
-      return alertModal('', '댓글을 입력해주세요.');
+      return alertModal('댓글을 입력해주세요.');
     }
     try {
       setCommentInputBox(false);
@@ -96,7 +95,7 @@ export default ({route: {params}}) => {
       updatedToastFn();
       const {data} = await api.editNoticeComment(selectedCOM_SEQ, comment);
       if (data.message === 'SUCCESS') {
-        alertModal('', '연결에 실패하였습니다.');
+        alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {
       console.log(e);
@@ -112,7 +111,7 @@ export default ({route: {params}}) => {
       removedToastFn();
       const {data} = await api.delNoticeComment(selectedCOM_SEQ);
       if (data.message !== 'SUCCESS') {
-        alertModal('', '연결에 실패하였습니다.');
+        alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {
       console.log(e);
@@ -121,7 +120,7 @@ export default ({route: {params}}) => {
 
   const registFn = async () => {
     if (comment == '') {
-      return alertModal('', '댓글을 입력해주세요.');
+      return alertModal('댓글을 입력해주세요.');
     }
     try {
       setCommentInputBox(false);

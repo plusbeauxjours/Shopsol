@@ -238,7 +238,7 @@ const InputCase = styled.View`
 `;
 
 const DeleteBtn = styled.TouchableOpacity`
-  height: ${hp('5%')}px;
+  height: 20px;
   align-items: center;
   justify-content: center;
 `;

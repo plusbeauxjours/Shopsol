@@ -975,7 +975,7 @@ export default ({
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
         isVisible={showPictureModal}
-        style={{position: 'relative', marginVertical: hp('5%')}}
+        style={{position: 'relative', marginVertical: 20}}
         onBackdropPress={() => setShowPictureModal(false)}
         onRequestClose={() => setShowPictureModal(false)}>
         <ShowPictureModalTouchable

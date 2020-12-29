@@ -19,7 +19,7 @@ const BackGround = styled.View`
 
 const Container = styled.View`
   flex: 1;
-  padding: ${hp('5%')}px 0;
+  padding: 20px 0;
   align-items: center;
   justify-content: center;
 `;

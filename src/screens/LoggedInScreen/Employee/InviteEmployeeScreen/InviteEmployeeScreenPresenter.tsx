@@ -194,6 +194,7 @@ const HelpText = styled.Text`
   margin-bottom: 20px;
   text-align: left;
   margin-left: 80px;
+  margin-top: 5px;
 `;
 
 export default ({

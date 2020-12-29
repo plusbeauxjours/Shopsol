@@ -99,7 +99,6 @@ export const Authority = ({
             authorityCheck[4] == true
           ) {
             alertModal(
-              '',
               '사업장 급여에 본인급여도 포함되어 있어 사업장 급여만 선택은 불가합니다.',
             );
             return false;

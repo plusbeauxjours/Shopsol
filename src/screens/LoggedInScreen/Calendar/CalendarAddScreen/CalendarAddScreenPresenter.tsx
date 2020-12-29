@@ -108,8 +108,6 @@ const Bold = styled.Text`
 
 const TimePickBox = styled.View`
   padding: 20px;
-  border-color: #f2f2f2;
-  border-top-width: 1px;
 `;
 
 const ChecktimeButton = styled.TouchableOpacity`
@@ -422,7 +420,6 @@ export default ({
           todayTextColor: '#e85356',
         }}
         monthFormat={'yyyy년 M월'}
-        style={{borderColor: '#F2F2F2', borderTopWidth: 1}}
         hideExtraDays={true}
         onDayPress={(day) => {
           if (timeSelected === null) {

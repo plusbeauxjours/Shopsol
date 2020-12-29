@@ -44,10 +44,9 @@ export default () => {
   const [originalDayList, setOriginalDayList] = useState<any>([]); // dayList 원본 값
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title || '',
       content: text || '',
     };
     dispatch(setAlertInfo(params));
@@ -81,7 +80,7 @@ export default () => {
       }
     } catch (e) {
       console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.1');
+      alertModal('통신이 원활하지 않습니다.1');
     }
   };
 
@@ -104,7 +103,7 @@ export default () => {
     } catch (e) {
       console.log(e);
       dispatch(setSplashVisible(false));
-      alertModal('', '통신이 원활하지 않습니다.2');
+      alertModal('통신이 원활하지 않습니다.2');
     } finally {
       dispatch(setSplashVisible(false));
     }

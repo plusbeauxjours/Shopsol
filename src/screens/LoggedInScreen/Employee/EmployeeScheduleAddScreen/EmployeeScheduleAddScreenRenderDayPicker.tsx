@@ -66,7 +66,8 @@ export default ({
         }
       }}
       key={index}>
-      <RenderDayPickerText color={day.isChecked ? '#fff' : '#000'}>
+      <RenderDayPickerText
+        color={day.isChecked ? '#ffffff' : isDisabled ? '#ffffff' : '#bbb'}>
         {day.text}
       </RenderDayPickerText>
     </RenderDayPickerTouchable>

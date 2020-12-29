@@ -58,6 +58,19 @@ const Center = styled.View`
   align-items: center;
 `;
 
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
+`;
+
 const TextContainer = styled.View`
   flex-direction: row;
   align-items: center;
@@ -66,12 +79,6 @@ const TextContainer = styled.View`
 
 const ListContasiner = styled(TextContainer)`
   justify-content: space-between;
-`;
-
-const TitleText = styled.Text`
-  font-size: 20px;
-  color: #e85356;
-  font-weight: bold;
 `;
 
 const Row = styled.View`
@@ -299,8 +306,7 @@ export default ({
               <Touchable
                 style={{
                   flexDirection: 'row',
-                  alignItems: 'flex-start',
-                  marginBottom: 10,
+                  alignItems: 'center',
                 }}
                 onPress={() => {
                   explainModal(
@@ -312,6 +318,7 @@ export default ({
                 <HelpCircleIcon />
               </Touchable>
             </TextContainer>
+            <GreyLine />
             <Row style={{marginTop: 10, marginBottom: 20}}>
               {cameraPictureLast ? (
                 <Touchable
@@ -334,9 +341,7 @@ export default ({
                 <Column>
                   {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
                   <Touchable
-                    onPress={() =>
-                      alertModal('', '사진등록 서비스 준비중입니다.')
-                    }>
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: 10}}>사진촬영</GreyText>
@@ -344,18 +349,14 @@ export default ({
                   </Touchable>
                   {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
                   <Touchable
-                    onPress={() =>
-                      alertModal('', '사진등록 서비스 준비중입니다.')
-                    }>
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: 10}}>보관함</GreyText>
                     </BorderBox>
                   </Touchable>
                   <Touchable
-                    onPress={() =>
-                      alertModal('', '바코드 서비스 준비중입니다.')
-                    }>
+                    onPress={() => alertModal('바코드 서비스 준비중입니다.')}>
                     <BorderBox>
                       <BarCodeIcon size={20} color={'#ccc'} />
                       <GreyText style={{fontSize: 10}}>바코드</GreyText>
@@ -436,11 +437,7 @@ export default ({
               <TitleText>상품목록</TitleText>
               <TitleText>{list.length}&nbsp;&nbsp;</TitleText>
             </ListContasiner>
-            {list && list.length !== 0 && (
-              <GreyText style={{marginTop: 10}}>
-                상품을 탭하고 있으면 리스트에서 삭제할 수 있습니다.
-              </GreyText>
-            )}
+            {list && list.length !== 0 && <GreyLine />}
             {list.length > 1 && (
               <View>
                 <VerticalLine />

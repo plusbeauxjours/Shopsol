@@ -42,10 +42,9 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -132,8 +131,7 @@ export default () => {
       });
       if (data.message === 'SUCCESS') {
         alertModal(
-          '초대완료',
-          '초대확인 알림이 오면 직원합류승인에서 정보를 입력하여 합류를 완료해주세요. (초대받은 직원이 앱에 로그인 하게되면 초대확인 알림이 도착합니다)',
+          '초대 완료\n\n초대확인 알림이 오면 직원합류승인에서 정보를 입력하여 합류를 완료해주세요. (초대받은 직원이 앱에 로그인 하게되면 초대확인 알림이 도착합니다)',
         );
         setChoice([]);
         dispatch(getRESPONSE_EMPLOYEE());

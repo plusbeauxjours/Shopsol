@@ -118,7 +118,9 @@ export default () => {
                 {HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)?.length ?? 0}
               </NumberText>
             </Row>
-            <GreyLine />
+            {HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)?.length != 0 && (
+              <GreyLine />
+            )}
             <EmployeeListBox
               hasEmployeeNow={HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)}>
               {HEALTH_EMP_LIST &&

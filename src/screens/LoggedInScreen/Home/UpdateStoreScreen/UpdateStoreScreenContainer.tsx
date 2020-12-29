@@ -94,10 +94,9 @@ export default ({route: {params}}) => {
   const [modalVisible5, setModalVisible5] = useState<boolean>(false);
   const [helparr, setHelparr] = useState<[]>([]);
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -178,7 +177,7 @@ export default ({route: {params}}) => {
   // 수정하기버튼
   const submit = async (sign) => {
     if (sign == 'close') {
-      alertModal('', '매장의 폐업처리가 완료되었습니다.');
+      alertModal('매장의 폐업처리가 완료되었습니다.');
       navigation.reset({
         index: 0,
         routes: [{name: 'SelectStoreScreen'}],
@@ -186,7 +185,7 @@ export default ({route: {params}}) => {
       dispatch(closeSTORE_DATA());
       dispatch(getSTORELIST_DATA());
     } else {
-      alertModal('', '수정이 완료됐습니다.');
+      alertModal('수정이 완료됐습니다.');
       dispatch(
         updateSTORE({
           NAME,
@@ -233,7 +232,7 @@ export default ({route: {params}}) => {
         other: storeCategoryTypeEtc,
       });
       if (data.message !== 'SUCCESS') {
-        alertModal('', '연결에 실패하였습니다.');
+        alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {
       console.log(e);

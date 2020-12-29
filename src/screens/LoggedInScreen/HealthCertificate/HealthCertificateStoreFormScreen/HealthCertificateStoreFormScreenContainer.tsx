@@ -34,10 +34,9 @@ export default ({route: {params}}) => {
     'online',
   ); // 교육구분
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -76,33 +75,31 @@ export default ({route: {params}}) => {
     const reg = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/;
     if (reg.test(moment(EDUCATION_DATE).format('YYYY-MM-DD')) === false) {
       return alertModal(
-        '교육일시 날짜형식',
         '교육일시 날짜형식은 "2020-01-01"과 같은 형식이어야 합니다. 사진이 인식되지 않는다면 항목을 눌러 날짜를 직접 선택해주세요.',
       );
     }
     if (!cameraPictureLast) {
       return alertModal(
-        '',
         '위생교육증을 촬영하여 사진을 등록해주세요.\n\n사진촬영 시 인식실패 문구가 나와도 사진은 정상적으로 등록이 됩니다.',
       );
     }
     if (NAME.length === 0 || !NAME) {
-      return alertModal('', '교육이수자 성명을 입력해주세요.');
+      return alertModal('교육이수자 성명을 입력해주세요.');
     }
     if (position.length === 0 || !position) {
-      return alertModal('', '직책을 입력해주세요.');
+      return alertModal('직책을 입력해주세요.');
     }
     if (owner.length === 0 || !owner) {
-      return alertModal('', '대표자 성명을 입력해주세요.');
+      return alertModal('대표자 성명을 입력해주세요.');
     }
     if (storename.length === 0 || !storename) {
-      return alertModal('', '영업소 명칭을 입력해주세요.');
+      return alertModal('영업소 명칭을 입력해주세요.');
     }
     if (businesstype.length === 0 || !businesstype) {
-      return alertModal('', '영업의 종류를 입력해주세요.');
+      return alertModal('영업의 종류를 입력해주세요.');
     }
     if (EDUCATION_TYPE.length === 0 || !EDUCATION_TYPE) {
-      return alertModal('', '교육구분을 선택해주세요.');
+      return alertModal('교육구분을 선택해주세요.');
     }
     try {
       dispatch(setSplashVisible(true));
@@ -144,7 +141,7 @@ export default ({route: {params}}) => {
         dispatch(getHEALTH_CERTIFICATE_DATA());
         params?.fetchData && params?.fetchData();
         navigation.goBack();
-        alertModal('', '저장 완료');
+        alertModal('저장 완료');
       }
     } catch (e) {
       console.log(e);
@@ -181,15 +178,14 @@ export default ({route: {params}}) => {
       const {data} = await api.checkocr1(formData);
       if (data.result == '0') {
         return alertModal(
-          '인식 실패',
-          '촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
+          '인식 실패\n\n촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
         );
       } else {
         var date = data.resultdate;
         var yearstr = date.split('년');
         var monthstr = yearstr[1].split('월');
         var daystr = monthstr[1].split('일');
-        alertModal('', '인식 완료');
+        alertModal('인식 완료');
         setNAME(data.name);
         setPosition(data.position);
         setOwner(data.owner);
@@ -206,8 +202,7 @@ export default ({route: {params}}) => {
       }
     } catch (e) {
       alertModal(
-        '인식 실패',
-        '촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
+        '인식 실패\n\n촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
       );
     } finally {
       dispatch(setSplashVisible(false));

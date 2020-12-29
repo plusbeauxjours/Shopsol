@@ -65,10 +65,9 @@ export default ({route: {params}}) => {
   const [click5, setClick5] = useState<boolean>(false);
   const [maindata, setMaindata] = useState<any>({});
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -92,7 +91,7 @@ export default ({route: {params}}) => {
 
   const onPressFooter = (click) => {
     if (click === 'click4' && maindata?.CARDLIST?.length == 0) {
-      alertModal('', '급여현황이 존재하지 않습니다.');
+      alertModal('급여현황이 존재하지 않습니다.');
     }
     if (click === 'click4') {
       setClick4(!click4);
@@ -119,13 +118,13 @@ export default ({route: {params}}) => {
         setMaindata(data.message);
       } catch (e) {
         console.log(e);
-        alertModal('', '통신이 원활하지 않습니다.');
+        alertModal('통신이 원활하지 않습니다.');
         navigation.goBack();
       } finally {
         dispatch(setSplashVisible(false));
       }
     } else {
-      alertModal('', '최신데이터 입니다.');
+      alertModal('최신데이터 입니다.');
     }
   };
 
@@ -142,7 +141,7 @@ export default ({route: {params}}) => {
       setMaindata(data.message);
     } catch (e) {
       console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
+      alertModal('통신이 원활하지 않습니다.');
       navigation.goBack();
     } finally {
       dispatch(setSplashVisible(false));
@@ -161,7 +160,7 @@ export default ({route: {params}}) => {
       setMaindata(data.message);
     } catch (e) {
       console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
+      alertModal('통신이 원활하지 않습니다.');
       navigation.goBack();
     } finally {
       dispatch(setSplashVisible(false));

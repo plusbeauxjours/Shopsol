@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Ripple from 'react-native-material-ripple';
+import {CloseCircleIcon} from '../../../../constants/Icons';
 
 const Text = styled.Text`
   color: #333;
@@ -76,6 +77,21 @@ const GreyText = styled.Text`
   color: #aaa;
 `;
 
+const CloseIconContainer = styled.View`
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background-color: #aaa;
+  border-width: 2px;
+  border-color: white;
+  z-index: 30;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: -10px;
+  right: -10px;
+`;
+
 export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
   return (
     <Row style={{marginTop: 10, marginBottom: 10}}>
@@ -97,12 +113,15 @@ export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
         )}
       </Touchable>
       <WhiteItem
-        onLongPress={() => deleteBuffer(NAME, DATE)}
+        onPress={() => deleteBuffer(NAME, DATE)}
         rippleColor={'#666'}
         rippleDuration={600}
         rippleSize={1700}
         rippleContainerBorderRadius={10}
         rippleOpacity={0.1}>
+        <CloseIconContainer>
+          <CloseCircleIcon />
+        </CloseIconContainer>
         <Name>
           <NameText>
             {NAME.length > 10 ? `${NAME.substring(0, 10)}...` : NAME}

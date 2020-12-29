@@ -3,10 +3,7 @@ import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView} from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
 
 import {userLogout} from '~/redux/userSlice';
@@ -19,52 +16,47 @@ const BackGround = styled.View`
   background-color: #f6f6f6;
 `;
 
-const Text = styled.Text``;
-const Info = styled.View`
-  height: 100px;
-  width: ${wp('100%')}px;
-  flex-direction: row;
+const Container = styled.View`
+  padding: 20px;
   align-items: center;
-  padding: 10px 20px;
+`;
+
+const Section = styled.View`
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  padding: 10px 0;
   background-color: white;
 `;
 
-const BoxArea = styled.View`
-  margin-top: 20px;
+const EmployeeBox = styled.View`
+  padding: 0 20px;
+  align-items: center;
+  flex-direction: row;
   background-color: white;
 `;
 
-const PersonInfo = styled.View`
-  margin-left: 20px;
-  height: 80px;
-  justify-content: center;
+const NameBox = styled.View`
+  margin-left: 10px;
 `;
 
-const Name = styled.View`
+const Row = styled.View`
   flex-direction: row;
-  height: 30px;
   align-items: center;
+`;
+
+const DateText = styled.Text`
+  color: #7c7c7c;
+  font-size: 12px;
+`;
+
+const InfoText = styled(DateText)`
+  font-size: 10px;
 `;
 
 const NameText = styled.Text`
   color: #7f7f7f;
   font-size: 16px;
-`;
-
-const PositionText = styled.Text`
-  font-size: 13px;
-  margin-left: 5px;
-  color: #707070;
-`;
-
-const Phone = styled.View`
-  height: 30px;
-  justify-content: center;
-`;
-
-const PhoneText = styled.Text`
-  font-size: 13px;
-  color: #707070;
 `;
 
 const BoxTitle = styled.Text`
@@ -80,7 +72,7 @@ const Arrow = styled.View`
 `;
 
 const Card = styled.TouchableOpacity`
-  padding: ${hp('2%')}px 20px;
+  padding: 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -131,71 +123,72 @@ export default () => {
   return (
     <BackGround>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Info>
-          <FastImage
-            style={{width: 60, height: 60, borderRadius: 30}}
-            source={{
-              uri: utils.avatarUrl(GENDER),
-              headers: {Authorization: 'someAuthToken'},
-              priority: FastImage.priority.low,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-          <PersonInfo>
-            <Name>
-              <NameText>{MEMBER_NAME}</NameText>
-              <PositionText>{STORE == 1 ? '[점장]' : '[직원]'}</PositionText>
-            </Name>
-
-            <Phone>
-              <PhoneText>{MOBILE_NO}</PhoneText>
-            </Phone>
-          </PersonInfo>
-        </Info>
-        <BoxArea>
-          <Card
-            onPress={() => {
-              navigation.navigate('MyPageAlarmSetScreen');
-            }}>
-            <CardText>알림 설정</CardText>
-            <ArrowIcon />
-          </Card>
-          <Card
-            onPress={() => {
-              navigation.navigate('MyPagePlaceSetScreen');
-            }}>
-            <CardText>
-              {STORE == 1 ? '사업장관리 이력' : '근무종료 사업장'}
-            </CardText>
-            <ArrowIcon />
-          </Card>
-          <Card
-            onPress={() => {
-              navigation.navigate('MyPageAppointmentScreen');
-            }}>
-            <CardText>약관보기</CardText>
-            <ArrowIcon />
-          </Card>
-          <Card
-            onPress={() => {
-              navigation.navigate('MyPageIdSetMainScreen');
-            }}>
-            <CardText>계정관리</CardText>
-            <ArrowIcon />
-          </Card>
-          <Card disabled={true}>
-            <CardText>앱버전</CardText>
-            <Arrow>
-              <BoxTitle>{utils.appVersion}</BoxTitle>
-            </Arrow>
-          </Card>
-          <Card onPress={() => logOut()}>
-            <CardText>로그 아웃</CardText>
-            <Arrow>
-              <LogoutIcon size={24} />
-            </Arrow>
-          </Card>
-        </BoxArea>
+        <Container>
+          <Section>
+            <EmployeeBox>
+              <FastImage
+                style={{width: 60, height: 60, borderRadius: 30}}
+                source={{
+                  uri: utils.avatarUrl(GENDER),
+                  headers: {Authorization: 'someAuthToken'},
+                  priority: FastImage.priority.low,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+              <NameBox>
+                <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
+                  <NameText>{MEMBER_NAME}&nbsp;</NameText>
+                  <DateText>{STORE == 1 ? '[점장]' : '[직원]'}</DateText>
+                </Row>
+                <InfoText>{MOBILE_NO}</InfoText>
+              </NameBox>
+            </EmployeeBox>
+          </Section>
+          <Section>
+            <Card
+              onPress={() => {
+                navigation.navigate('MyPageAlarmSetScreen');
+              }}>
+              <CardText>알림 설정</CardText>
+              <ArrowIcon />
+            </Card>
+            <Card
+              onPress={() => {
+                navigation.navigate('MyPagePlaceSetScreen');
+              }}>
+              <CardText>
+                {STORE == 1 ? '사업장관리 이력' : '근무종료 사업장'}
+              </CardText>
+              <ArrowIcon />
+            </Card>
+            <Card
+              onPress={() => {
+                navigation.navigate('MyPageAppointmentScreen');
+              }}>
+              <CardText>약관보기</CardText>
+              <ArrowIcon />
+            </Card>
+            <Card
+              onPress={() => {
+                navigation.navigate('MyPageIdSetMainScreen');
+              }}>
+              <CardText>계정관리</CardText>
+              <ArrowIcon />
+            </Card>
+            <Card disabled={true}>
+              <CardText>앱버전</CardText>
+              <Arrow>
+                <BoxTitle>{utils.appVersion}</BoxTitle>
+              </Arrow>
+            </Card>
+            <Card onPress={() => logOut()}>
+              <CardText>로그 아웃</CardText>
+              <Arrow>
+                <LogoutIcon size={24} />
+              </Arrow>
+            </Card>
+          </Section>
+        </Container>
       </ScrollView>
     </BackGround>
   );

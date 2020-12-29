@@ -23,9 +23,9 @@ const Section = styled.View`
   width: 100%;
   border-radius: 20px;
   margin-bottom: 20px;
-  padding: 20px;
+  padding: 40px 20px;
   background-color: white;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const Row = styled.View`
@@ -38,26 +38,27 @@ const WhiteSpace = styled.View`
 `;
 
 const BigText = styled.Text`
-  font-size: 24px;
+  font-size: 16px;
 `;
 
 const TextInput = styled.TextInput`
-  font-size: 24px;
+  font-size: 16px;
   color: #e85356;
-  flex: 1;
-  text-align: right;
   margin: 0 5px;
+  width: 30px;
+  text-align: right;
 `;
 
 const TextReadOnly = styled(BigText)`
   color: #e85356;
   margin: 0 5px;
+  width: 30px;
   text-align: right;
 `;
 
 const Bold = styled.Text`
   margin-left: 10px;
-  font-size: 26px;
+  font-size: 16px;
 `;
 
 export default ({route: {params}}) => {
@@ -132,23 +133,19 @@ export default ({route: {params}}) => {
     <BackGround>
       <Container>
         <Section>
-          <Bold>현재 휴게시간 설정값</Bold>
-          <WhiteSpace />
           <Row>
+            <Bold>현재 휴게시간 설정값</Bold>
             <TextReadOnly>{REST_TIME ?? '0'}</TextReadOnly>
             <BigText>분</BigText>
           </Row>
           <WhiteSpace />
-          <Bold>수정할 휴게시간</Bold>
-          <WhiteSpace />
           <Row>
+            <Bold>수정할 휴게시간</Bold>
             <TextInput
-              placeholder={'시간을 입력해주세요'}
+              placeholder={'0'}
               placeholderTextColor={'#E5E5E5'}
               selectionColor={'#999'}
-              onChangeText={(text) => {
-                setRestTime(text);
-              }}
+              onChangeText={(text) => setRestTime(text)}
               maxLength={3}
               value={restTime}
               autoFocus={true}

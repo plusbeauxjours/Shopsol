@@ -31,10 +31,9 @@ export default ({route: {params}}) => {
     params?.RESULT_COUNT || null,
   ); // 회차
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -65,18 +64,17 @@ export default ({route: {params}}) => {
     const reg = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/;
     if (reg.test(moment(EDUCATION_DATE).format('YYYY-MM-DD')) === false) {
       return alertModal(
-        '검진일 날짜형식',
         '검진일 날짜형식은 "2020-01-01"과 같은 형식이어야 합니다. 사진이 인식되지 않는다면 항목을 눌러 날짜를 직접 선택해주세요.',
       );
     }
     if (!cameraPictureLast) {
-      return alertModal('', '위생교육증을 촬영해주세요.');
+      return alertModal('위생교육증을 촬영해주세요.');
     }
     if (NAME.length === 0 || !NAME) {
-      return alertModal('', '성명을 입력해주세요.');
+      return alertModal('성명을 입력해주세요.');
     }
     if (RESULT_COUNT.length === 0 || !RESULT_COUNT) {
-      alertModal('', '회차를 입력해주세요.');
+      alertModal('회차를 입력해주세요.');
     }
     try {
       dispatch(setSplashVisible(true));
@@ -117,7 +115,7 @@ export default ({route: {params}}) => {
         }
         dispatch(getSTORE_HEALTH_EMP_LIST());
         navigation.goBack();
-        alertModal('', '저장 완료');
+        alertModal('저장 완료');
       }
     } catch (e) {
       console.log(e);
@@ -154,19 +152,17 @@ export default ({route: {params}}) => {
       const {data} = await api.checkOcr(formData);
       if (data.result == '0') {
         return alertModal(
-          '인식 실패',
-          '촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
+          '인식 실패\n\n촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
         );
       } else {
-        alertModal('', '인식 완료');
+        alertModal('인식 완료');
         setNAME(data.name);
         setEDUCATION_DATE(data.resultdate);
         setRESULT_COUNT(data.count);
       }
     } catch (e) {
       alertModal(
-        '인식 실패',
-        '촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
+        '인식 실패\n\n촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
       );
     } finally {
       dispatch(setSplashVisible(false));

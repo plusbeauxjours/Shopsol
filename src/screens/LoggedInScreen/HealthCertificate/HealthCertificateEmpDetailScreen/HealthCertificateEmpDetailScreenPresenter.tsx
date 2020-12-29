@@ -236,7 +236,7 @@ export default ({
                 <DateArrowLeft
                   onPress={() => {
                     if (SELECT_INDEX == HEALTH_EMP_DETAIL?.length - 1) {
-                      alertModal('', '최초데이터 입니다.');
+                      alertModal('최초데이터 입니다.');
                     } else {
                       increaseSELECT_INDEX();
                     }
@@ -256,7 +256,7 @@ export default ({
                 <DateArrowRight
                   onPress={() => {
                     if (SELECT_INDEX == 0) {
-                      alertModal('', '최신데이터 입니다.');
+                      alertModal('최신데이터 입니다.');
                     } else {
                       decreaseSELECT_INDEX();
                     }

@@ -26,26 +26,24 @@ export default () => {
     } = {},
   } = useSelector((state: any) => state.storeReducer);
 
-  let CALCULATE_MONTH_temp= Number(moment().format('D'))<Number(CALCULATE_DAY)?moment().subtract(1,'months').format("MM"):moment().format("MM")
+  let CALCULATE_MONTH_temp =
+    Number(moment().format('D')) < Number(CALCULATE_DAY)
+      ? moment().subtract(1, 'months').format('MM')
+      : moment().format('MM');
   let CALCULATE_DAY_temp =
     Number(CALCULATE_DAY) < 10 ? '0' + CALCULATE_DAY : CALCULATE_DAY;
-    
+
   const [loading, setLoading] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<string>(
     moment(
       `${
-        moment().year() +
-        '-' +
-        CALCULATE_MONTH_temp +
-        '-' +
-        CALCULATE_DAY_temp
+        moment().year() + '-' + CALCULATE_MONTH_temp + '-' + CALCULATE_DAY_temp
       }`,
     ).format('YYYY-MM-DD'),
   );
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));
@@ -87,13 +85,13 @@ export default () => {
         );
       } catch (e) {
         console.log(e);
-        alertModal('', '통신이 원활하지 않습니다.');
+        alertModal('통신이 원활하지 않습니다.');
         navigation.goBack();
       } finally {
         setLoading(false);
       }
     } else {
-      alertModal('', '최신데이터 입니다.');
+      alertModal('최신데이터 입니다.');
     }
   };
 
@@ -111,7 +109,7 @@ export default () => {
       );
     } catch (e) {
       console.log(e);
-      alertModal('', '통신이 원활하지 않습니다.');
+      alertModal('통신이 원활하지 않습니다.');
       navigation.goBack();
     } finally {
       setLoading(false);

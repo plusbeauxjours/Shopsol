@@ -43,7 +43,6 @@ export default ({name, image}) => {
         }}
         resizeMode={FastImage.resizeMode.cover}
       />
-
       <Text>{name}</Text>
     </Container>
   );

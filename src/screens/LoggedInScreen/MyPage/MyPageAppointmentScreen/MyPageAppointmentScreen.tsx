@@ -12,12 +12,18 @@ import {ForwardIcon} from '~/constants/Icons';
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: white;
+  background-color: #f6f6f6;
 `;
 
 const Container = styled.View`
-  flex: 1;
-  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
+`;
+const Section = styled.View`
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  padding: 10px 0;
   background-color: white;
 `;
 
@@ -99,27 +105,31 @@ export default () => {
       <Sheet sheetRef={RBSheet1} getText={getText1()} />
       <Sheet sheetRef={RBSheet2} getText={getText2()} />
       <Sheet sheetRef={RBSheet3} getText={getText3()} />
-      <Card
-        onPress={() => {
-          RBSheet1.current.open();
-        }}>
-        <CardText>서비스 이용약관</CardText>
-        <ArrowIcon />
-      </Card>
-      <Card
-        onPress={() => {
-          RBSheet2.current.open();
-        }}>
-        <CardText>개인정보 수집</CardText>
-        <ArrowIcon />
-      </Card>
-      <Card
-        onPress={() => {
-          RBSheet3.current.open();
-        }}>
-        <CardText>위치정보 수집</CardText>
-        <ArrowIcon />
-      </Card>
+      <Container>
+        <Section>
+          <Card
+            onPress={() => {
+              RBSheet1.current.open();
+            }}>
+            <CardText>서비스 이용약관</CardText>
+            <ArrowIcon />
+          </Card>
+          <Card
+            onPress={() => {
+              RBSheet2.current.open();
+            }}>
+            <CardText>개인정보 수집</CardText>
+            <ArrowIcon />
+          </Card>
+          <Card
+            onPress={() => {
+              RBSheet3.current.open();
+            }}>
+            <CardText>위치정보 수집</CardText>
+            <ArrowIcon />
+          </Card>
+        </Section>
+      </Container>
     </BackGround>
   );
 };

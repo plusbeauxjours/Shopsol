@@ -16,10 +16,9 @@ export default ({route: {params}}) => {
   const {data: {EMP_SEQ = null} = {}} = params;
   const [isImageViewVisible, setIsImageViewVisible] = useState<boolean>(false);
 
-  const alertModal = (title, text) => {
+  const alertModal = (text) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
     };
     dispatch(setAlertInfo(params));

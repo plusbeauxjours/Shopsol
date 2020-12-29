@@ -27,10 +27,9 @@ export default ({route: {params}}) => {
     false,
   );
 
-  const alertModal = (title, text, okCallback = () => {}) => {
+  const alertModal = (text, okCallback = () => {}) => {
     const params = {
       alertType: 'alert',
-      title: title,
       content: text,
       okCallback,
     };
@@ -50,10 +49,10 @@ export default ({route: {params}}) => {
 
   const addFn = () => {
     if (shelfLifeName == '') {
-      return alertModal('', '상품명을 입력해주세요.');
+      return alertModal('상품명을 입력해주세요.');
     }
     if (!shelfLifeDateSet) {
-      return alertModal('', '기한을 입력해주세요.', () =>
+      return alertModal('기한을 입력해주세요.', () =>
         setIsDateModalVisible(true),
       );
     }
@@ -62,7 +61,7 @@ export default ({route: {params}}) => {
         shelfLifeName == list[i].NAME &&
         moment(shelfLifeDate).format('YYYY-MM-DD') == list[i].DATE
       ) {
-        return alertModal('', '같은 일자에 동일한 상품이 작성되어 있습니다.');
+        return alertModal('같은 일자에 동일한 상품이 작성되어 있습니다.');
       }
     }
     let buffer = list;
@@ -74,7 +73,8 @@ export default ({route: {params}}) => {
     });
     setCameraPictureLast(null);
     setShelfLifeName('');
-    setShelfLifeDate('');
+    setShelfLifeDate(moment());
+    setShelfLifeDateSet(false);
     setShelfLifeMemo('');
     setList(buffer);
   };
@@ -91,10 +91,7 @@ export default ({route: {params}}) => {
 
   const submitFn = async () => {
     if (list.length == 0) {
-      return alertModal(
-        '',
-        '등록하실 상품을 목록에 추가하신 후 등록을 해주세요.',
-      );
+      return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
     }
     try {
       const {data} = await api.setShelfLifeData({STORE_SEQ, LIST: list});
@@ -102,9 +99,9 @@ export default ({route: {params}}) => {
       dispatch(setSplashVisible(true));
       navigation.goBack();
       if (data.result == '0') {
-        alertModal('', '연결에 실패하였습니다.');
+        alertModal('연결에 실패하였습니다.');
       } else {
-        alertModal('', '등록이 완료되었습니다.');
+        alertModal('등록이 완료되었습니다.');
       }
     } catch (e) {
       console.log(e);

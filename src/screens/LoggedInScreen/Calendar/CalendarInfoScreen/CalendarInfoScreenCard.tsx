@@ -161,19 +161,8 @@ export default ({
     dispatch(setAlertVisible(true));
   };
 
-  const alertModal = () => {
-    const params = {
-      alertType: 'alert',
-      title: '',
-      content: '휴무를 취소하였습니다',
-    };
-    dispatch(setAlertInfo(params));
-    dispatch(setAlertVisible(true));
-  };
-
   const cancelVacationFn = async () => {
     try {
-      alertModal();
       dispatch(
         toggleVACATION({
           VACATION: null,
