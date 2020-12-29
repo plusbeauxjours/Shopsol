@@ -43,6 +43,15 @@ export default () => {
   const [timeList, setTimeList] = useState<any>([]); // 저장된 근무 시간 목록
   const [originalDayList, setOriginalDayList] = useState<any>([]); // dayList 원본 값
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [date, setDate] = useState<string>(
+    moment().format(
+      `YYYY-MM-${
+        Number(CALCULATE_DAY) < 10 ? 0 + CALCULATE_DAY : CALCULATE_DAY
+      }`,
+    ),
+  );
+  const [PAY, setPAY] = useState<number>(0);
+  const [PAY_TYPE, setPAY_TYPE] = useState<string>('0');
 
   const alertModal = (text) => {
     const params = {
@@ -61,6 +70,35 @@ export default () => {
       console.log(e);
     } finally {
       setRefreshing(false);
+    }
+  };
+
+  const numberComma = (num) => {
+    let result = num;
+    if (isNaN(num)) {
+      result = Number(num);
+    }
+    let resultArray = result.toString().split('.');
+    resultArray[0] = resultArray[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return resultArray.join('.');
+  };
+
+  const calculateFn = async (YEAR, MONTH) => {
+    try {
+      const {data} = await api.getEmpPay({
+        EMP_SEQ,
+        YEAR,
+        MONTH,
+      });
+      if (data.message.length !== 0) {
+        setPAY(data.message[0].PAY);
+        setPAY_TYPE(data.message[0].PAY_TYPE);
+      } else {
+        setPAY(0);
+        setPAY_TYPE('0');
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -84,47 +122,12 @@ export default () => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      if (!EMPLOYEE_INFO_DATA) {
-        dispatch(setSplashVisible(true));
-      }
-      const {data} = await api.getEmp(EMP_SEQ);
-      if (data.message === 'SUCCESS') {
-        dispatch(setEMPLOYEE_INFO_DATA(data.result));
-        if (data.result.CALENDAR === '1') {
-          setIsFreeWorkingType(true);
-        }
-        if (data.result.CALENDAR === '0') {
-          setIsFreeWorkingType(false);
-          fetchSchedule(EMP_SEQ);
-        }
-      }
-    } catch (e) {
-      console.log(e);
-      dispatch(setSplashVisible(false));
-      alertModal('통신이 원활하지 않습니다.2');
-    } finally {
-      dispatch(setSplashVisible(false));
-    }
-  };
-
   const getNumberToday = (stringDate?) => {
     if (stringDate) {
       return Number(stringDate.replace(/-/g, ''));
     }
     const numToday = Number(`${moment().format('YYYYMMDD')}`);
     return numToday;
-  };
-
-  const numberComma = (num) => {
-    let result = num;
-    if (isNaN(num)) {
-      result = Number(num);
-    }
-    let resultArray = result.toString().split('.');
-    resultArray[0] = resultArray[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return resultArray.join('.');
   };
 
   const initTimeTable = (rawTimeList) => {
@@ -252,33 +255,29 @@ export default () => {
     setTimeList(result[timeTableIndex].data);
   };
 
-  const getPeriod = (CALCULATE_DAY) => {
-    let dayFrom = new Date();
-    let dayTo = new Date();
-    let dayFromMonth, dayToMonth, dayFromDay, dayToDay, NowYear;
-    NowYear = dayFrom.getFullYear();
-    dayFrom.setDate(CALCULATE_DAY); // 시작일 => 정산일로설정
-    dayTo.setDate(CALCULATE_DAY); // 종료일 => 정산일로 설정
-
-    dayTo.setMonth(dayTo.getMonth() + 1); // 종료월 => 정산일의 월 +1로 설정
-    dayTo.setDate(dayTo.getDate() - 1); // 종료일 => 종료일 -1로 설정
-
-    dayFromMonth = dayFrom.getMonth() + 1;
-    dayFromMonth =
-      dayFromMonth < 10 ? '0' + String(dayFromMonth) : String(dayFromMonth);
-
-    dayToMonth = dayTo.getMonth() + 1;
-    dayToMonth =
-      dayToMonth < 10 ? '0' + String(dayToMonth) : String(dayToMonth);
-
-    dayFromDay = dayFrom.getDate();
-    dayFromDay < 10 ? (dayFromDay = '0' + dayFromDay) : dayFromDay;
-    dayToDay = dayTo.getDate();
-    dayToDay < 10 ? (dayToDay = '0' + dayToDay) : dayToDay;
-
-    return `기간: ${NowYear}.${dayFromMonth}.${dayFromDay} ~ ${
-      dayToMonth == '01' ? NowYear + 1 : NowYear
-    }.${dayToMonth}.${dayToDay}`;
+  const fetchData = async () => {
+    try {
+      if (!EMPLOYEE_INFO_DATA) {
+        dispatch(setSplashVisible(true));
+      }
+      const {data} = await api.getEmp(EMP_SEQ);
+      if (data.message === 'SUCCESS') {
+        dispatch(setEMPLOYEE_INFO_DATA(data.result));
+        if (data.result.CALENDAR === '1') {
+          setIsFreeWorkingType(true);
+        }
+        if (data.result.CALENDAR === '0') {
+          setIsFreeWorkingType(false);
+          fetchSchedule(EMP_SEQ);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+      dispatch(setSplashVisible(false));
+      alertModal('통신이 원활하지 않습니다.2');
+    } finally {
+      dispatch(setSplashVisible(false));
+    }
   };
 
   useEffect(() => {
@@ -294,7 +293,6 @@ export default () => {
       refreshing={refreshing}
       onRefresh={onRefresh}
       EMPLOYEE_INFO_DATA={EMPLOYEE_INFO_DATA}
-      getPeriod={getPeriod}
       numberComma={numberComma}
       isFreeWorkingType={isFreeWorkingType}
       timeTable={timeTable}
@@ -302,8 +300,12 @@ export default () => {
       setTimeListIndex={setTimeListIndex}
       setTimeList={setTimeList}
       getNumberToday={getNumberToday}
-      CALCULATE_DAY={CALCULATE_DAY}
       GENDER={GENDER}
+      date={date}
+      setDate={setDate}
+      PAY={PAY}
+      PAY_TYPE={PAY_TYPE}
+      calculateFn={calculateFn}
     />
   );
 };

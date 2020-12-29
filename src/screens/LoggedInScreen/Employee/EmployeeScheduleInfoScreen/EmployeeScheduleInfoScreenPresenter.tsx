@@ -210,15 +210,16 @@ const RenderScheduleTitle = styled.View`
 `;
 
 const TimeListBox = styled.TouchableOpacity<IsSelected>`
-  border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
-  border-width: 0.6px;
   width: 100%;
+  padding: 10px;
   height: 60px;
-  padding: 10px 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  border-width: 0.7px;
+  border-radius: 15px;
+  border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
 const TimeListRow = styled(Row)`
@@ -235,6 +236,14 @@ const TimeListBold = styled.Text`
   font-size: 15px;
   margin-left: 15px;
   margin: 0 20px;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 20px 0;
+  background-color: #f2f2f2;
+  background-color: green;
+  height: 1px;
 `;
 
 export default ({
@@ -477,6 +486,7 @@ export default ({
               <WorkTypeAndSalaryBox>
                 <WorkTypeAndSalaryBoxTitle>급여</WorkTypeAndSalaryBoxTitle>
               </WorkTypeAndSalaryBox>
+              <GreyLine />
               <WorkTypeAndSalaryInfoBox>
                 <GreyText style={{fontSize: 12}}>
                   {getPeriod(CALCULATE_DAY)}
@@ -515,6 +525,7 @@ export default ({
                     </WorkTypeAndSalaryBoxTitle>
                     <HelpCircleIcon />
                   </Touchable>
+                  <GreyLine />
                   <WorkScheduleBox onPress={() => toggleWorkScheduleFn()}>
                     {isFreeWorkingType ? (
                       <WhiteText>일정출퇴근으로 전환하기</WhiteText>
@@ -527,9 +538,9 @@ export default ({
               {isFreeWorkingType && (
                 <FixTypeDayChangeBox>
                   <FixTypeDayChangeButton
-                    style={{borderColor: '#999', width: '100%'}}
+                    style={{borderColor: '#393939', width: '100%'}}
                     disabled={true}>
-                    <FixTypeDayChangeButtonText style={{color: '#999'}}>
+                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
                       자율출퇴근 근무 중
                     </FixTypeDayChangeButtonText>
                   </FixTypeDayChangeButton>

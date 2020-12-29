@@ -59,7 +59,6 @@ export default () => {
       });
       switch (data.message) {
         case 'SUCCESS':
-          console.log(data.result);
           dispatch(setUSER(data.result));
           dispatch(setMOBILE_NO(mobileNo));
           dispatch(userLogin());

@@ -66,7 +66,11 @@ export default ({route: {params}}) => {
     false,
   ]); //  [시급,일급,월급 ]
   const [payDay, setPayDay] = useState<string>(
-    moment().format(`YYYY-MM-${CALCULATE_DAY}`),
+    moment().format(
+      `YYYY-MM-${
+        Number(CALCULATE_DAY) < 10 ? 0 + CALCULATE_DAY : CALCULATE_DAY
+      }`,
+    ),
   ); //  급여 적용 시작 년월
   ///// STEP 3 /////
   const [pay, setPay] = useState<string>(''); //  pay

@@ -34,7 +34,13 @@ export default ({route: {params}}) => {
   const [timeListIndex, setTimeListIndex] = useState<number>(0); // 저장된 근무 시간 목록 중 선택된 항목의 인덱스
   const [timeList, setTimeList] = useState<any>([]); // 저장된 근무 시간 목록
   const [originalDayList, setOriginalDayList] = useState<any>([]); // dayList 원본 값
-  const [date, setDate] = useState<string>(moment().format('YYYY-MM-DD'));
+  const [date, setDate] = useState<string>(
+    moment().format(
+      `YYYY-MM-${
+        Number(CALCULATE_DAY) < 10 ? 0 + CALCULATE_DAY : CALCULATE_DAY
+      }`,
+    ),
+  );
   const [PAY, setPAY] = useState<number>(0);
   const [PAY_TYPE, setPAY_TYPE] = useState<string>('0');
 
@@ -99,36 +105,6 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  // 급여란의 근무 일수 계산
-  const getPeriod = (CALCULATE_DAY) => {
-    let dayFrom = new Date(date);
-    let dayTo = new Date(date);
-    let dayFromMonth, dayToMonth, dayFromDay, dayToDay, NowYear;
-    NowYear = dayFrom.getFullYear();
-    dayFrom.setDate(CALCULATE_DAY); // 시작일 => 정산일로설정
-    dayTo.setDate(CALCULATE_DAY); // 종료일 => 정산일로 설정
-
-    dayTo.setMonth(dayTo.getMonth() + 1); // 종료월 => 정산일의 월 +1로 설정
-    dayTo.setDate(dayTo.getDate() - 1); // 종료일 => 종료일 -1로 설정
-
-    dayFromMonth = dayFrom.getMonth() + 1;
-    dayFromMonth =
-      dayFromMonth < 10 ? '0' + String(dayFromMonth) : String(dayFromMonth);
-
-    dayToMonth = dayTo.getMonth() + 1;
-    dayToMonth =
-      dayToMonth < 10 ? '0' + String(dayToMonth) : String(dayToMonth);
-
-    dayFromDay = dayFrom.getDate();
-    dayFromDay < 10 ? (dayFromDay = '0' + dayFromDay) : dayFromDay;
-    dayToDay = dayTo.getDate();
-    dayToDay < 10 ? (dayToDay = '0' + dayToDay) : dayToDay;
-
-    return `기간: ${NowYear}.${dayFromMonth}.${dayFromDay} ~ ${
-      dayToMonth == '01' ? NowYear + 1 : NowYear
-    }.${dayToMonth}.${dayToDay}`;
   };
 
   const fetchSchedule = async (EMP_SEQ) => {
@@ -422,8 +398,6 @@ export default ({route: {params}}) => {
       calculateFn={calculateFn}
       EMP_SEQ={EMP_SEQ}
       date={date}
-      getPeriod={getPeriod}
-      CALCULATE_DAY={CALCULATE_DAY}
       PAY_TYPE={PAY_TYPE}
       numberComma={numberComma}
       PAY={PAY}

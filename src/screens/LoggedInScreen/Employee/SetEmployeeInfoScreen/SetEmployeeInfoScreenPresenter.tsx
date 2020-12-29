@@ -639,7 +639,7 @@ export default ({
                   0,
                   410 +
                     (payCheck[0] ? 85 : 0) +
-                    (probation ? 260 : 0) +
+                    (probation ? 255 : 0) +
                     (deductionTypeCheck.indexOf(true) == 0 ? 480 : 260),
                 ),
               }}>

@@ -125,7 +125,6 @@ export default ({
 
   return (
     <Container isLast={isLast}>
-      {console.log(IMAGE)}
       <Row>
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30}}

@@ -1,12 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {
-  RefreshControl,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableHighlight,
-} from 'react-native';
+import {RefreshControl, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 
@@ -26,6 +21,12 @@ const BackGround = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView``;
 
+const Touchable = styled.TouchableOpacity``;
+const TouchableRow = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+`;
+
 const Container = styled.View`
   padding: 20px;
   align-items: center;
@@ -33,19 +34,25 @@ const Container = styled.View`
 
 const RenderDayListContainer = styled.View``;
 
+const WhiteText = styled.Text`
+  font-size: 12px;
+  color: white;
+`;
+
 const Section = styled.View`
   width: 100%;
-  margin-bottom: 20px;
   border-radius: 20px;
-  padding: 20px 0;
+  margin-bottom: 20px;
+  padding: 20px;
   background-color: white;
 `;
+
 const NameBox = styled.View`
   margin-left: 10px;
 `;
 
 const EmployeeBox = styled.View`
-  padding: 0 20px;
+  width: ${wp('100%') - 80}px;
   align-items: center;
   flex-direction: row;
   background-color: white;
@@ -55,20 +62,23 @@ const NameText = styled.Text`
   margin-right: 10px;
   color: #7c7c7c;
   font-size: 16px;
-  margin-bottom: 5px;
 `;
 
 const DateText = styled.Text`
-  color: #7c7c7c;
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
-const InfoText = styled(DateText)`
+const InfoText = styled.Text`
   font-size: 10px;
+  height: 15px;
+  color: #7f7f7f;
 `;
 
 const Row = styled.View`
   flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -79,29 +89,22 @@ const SmallLine = styled.View`
   background-color: #f2f2f2;
 `;
 
-const WorkTypeAndSalaryBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px 20px 0 20px;
-`;
-
 const WorkTypeAndSalaryInfoBox = styled.View`
   align-items: flex-end;
-  border-color: #f2f2f2;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
   padding: 10px 20px;
   margin: 10px 0;
 `;
 
-const WorkTypeAndSalaryBoxTitle = styled.Text`
-  font-size: 17px;
-  color: #e85356;
-`;
-
-const WorkTypeCheckSection = styled.View`
-  padding: 0 20px;
+const DateBox = styled.TouchableOpacity`
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #f4aaab;
 `;
 
 const GreyText = styled.Text`
@@ -112,6 +115,25 @@ const GreyText = styled.Text`
 const FixedGreyText = styled(GreyText)`
   position: absolute;
   right: 100px;
+`;
+
+const FixTypeDayChangeBox = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const FixTypeDayChangeButton = styled.TouchableOpacity`
+  width: ${(wp('100') - 100) / 3}px;
+  height: 40px;
+  border-radius: 15px;
+  border-width: 0.7px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FixTypeDayChangeButtonText = styled.Text`
+  font-size: 15px;
 `;
 
 const RenderDayRow = styled.View`
@@ -132,6 +154,7 @@ const RenderDayBox = styled.View<IsSelected>`
   align-items: center;
   justify-content: center;
 `;
+
 const RenderDayBoxText = styled.Text<IsSelected>`
   color: ${(props) => (props.isSelected ? 'white' : '#CCCCCC')};
 `;
@@ -165,19 +188,27 @@ const RenderScheduleTitle = styled.View`
 `;
 
 const TimeListBox = styled.TouchableOpacity<IsSelected>`
-  border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
-  border-width: 0.6px;
   width: 100%;
+  padding: 10px;
   height: 60px;
-  padding: 10px 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  border-width: 0.7px;
+  border-radius: 15px;
+  border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
 const TimeListRow = styled(Row)`
-  margin: 20px;
+  width: 100%;
+  margin-bottom: 40px;
+`;
+
+const DateBoxText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 const TimeListBoxText = styled.Text<IsSelected>`
@@ -185,20 +216,24 @@ const TimeListBoxText = styled.Text<IsSelected>`
   color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
-const TimeListBold = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
-  margin-left: 15px;
-  margin: 0 20px;
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
-const FreeTypeInfoBox = styled.View`
-  margin: 10px 20px;
-  padding: 20px 0;
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
+`;
+
+const DateTextArea = styled.View`
+  flex: 1;
+  height: 40px;
   align-items: center;
   justify-content: center;
-  border-color: #e5e5e5;
-  border-width: 1px;
 `;
 
 export default ({
@@ -209,7 +244,6 @@ export default ({
   refreshing,
   onRefresh,
   EMPLOYEE_INFO_DATA,
-  getPeriod,
   numberComma,
   isFreeWorkingType,
   timeTable,
@@ -217,8 +251,12 @@ export default ({
   setTimeListIndex,
   setTimeList,
   getNumberToday,
-  CALCULATE_DAY,
   GENDER,
+  date,
+  setDate,
+  PAY,
+  PAY_TYPE,
+  calculateFn,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -322,17 +360,18 @@ export default ({
                 <>
                   <TimeListRow>
                     {timeTableIndex > 0 && (
-                      <TouchableHighlight
+                      <DateBox
+                        style={{position: 'absolute', left: 0, marginLeft: 0}}
                         onPress={() => {
                           const timeTableIndexed = timeTableIndex - 1;
                           setTimeTableIndex(timeTableIndexed);
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <BackIcon size={22} color={'#999'} />
-                      </TouchableHighlight>
+                        <BackIcon size={22} color={'#f4aaab'} />
+                      </DateBox>
                     )}
-                    <TimeListBold>
+                    <DateBoxText>
                       {moment(table.startDate).format('YYYY.MM.DD')}
                       &nbsp;~&nbsp;
                       {(table.endDate &&
@@ -340,17 +379,18 @@ export default ({
                         (getNumberToday() < getNumberToday(table.startDate)
                           ? ''
                           : '현재')}
-                    </TimeListBold>
+                    </DateBoxText>
                     {timeTableIndex < timeTable.length - 1 && (
-                      <TouchableHighlight
+                      <DateBox
+                        style={{position: 'absolute', right: 0}}
                         onPress={() => {
                           const timeTableIndexed = timeTableIndex + 1;
                           setTimeTableIndex(timeTableIndexed);
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <ForwardIcon size={22} color={'#999'} />
-                      </TouchableHighlight>
+                        <ForwardIcon size={22} color={'#f4aaab'} />
+                      </DateBox>
                     )}
                   </TimeListRow>
                   {table?.data?.map((data, index) => (
@@ -365,14 +405,20 @@ export default ({
                           setTimeListIndex(index);
                         }
                       }}>
-                      <TimeListBoxText isSelected={timeListIndex === index}>
+                      <TimeListBoxText
+                        isSelected={timeListIndex === index}
+                        color={timeListIndex === index ? data.color : '#ddd'}>
                         <EllipseIcon
                           color={timeListIndex === index ? data.color : '#ddd'}
                         />
                         &nbsp;&nbsp;
-                        {data.startTime} ~ {data.endTime}
+                        {data.startTime}&nbsp;~&nbsp;{data.endTime}
                       </TimeListBoxText>
-                      <TimeListBoxText isSelected={true}>보기</TimeListBoxText>
+                      <TimeListBoxText
+                        isSelected={true}
+                        color={timeListIndex === index ? data.color : '#ddd'}>
+                        보기
+                      </TimeListBoxText>
                     </TimeListBox>
                   ))}
                 </>
@@ -421,8 +467,8 @@ export default ({
                     개월)
                   </InfoText>
                   <InfoText>
-                    {moment(EMPLOYEE_INFO_DATA?.START).format('YYYY.MM.DD')}{' '}
-                    ~&nbsp;
+                    {moment(EMPLOYEE_INFO_DATA?.START).format('YYYY.MM.DD')}
+                    &nbsp; ~&nbsp;
                     {EMPLOYEE_INFO_DATA?.END
                       ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
                       : '계속'}
@@ -431,43 +477,80 @@ export default ({
               </EmployeeBox>
             </Section>
             <Section>
-              <WorkTypeAndSalaryBox>
-                <WorkTypeAndSalaryBoxTitle>급여</WorkTypeAndSalaryBoxTitle>
-              </WorkTypeAndSalaryBox>
+              <TitleText>급여</TitleText>
+              <GreyLine />
+              <Row>
+                <DateBox
+                  style={{marginLeft: 0}}
+                  onPress={() => {
+                    setDate(
+                      moment(date).subtract(1, 'month').format('YYYY-MM-DD'),
+                    );
+                    calculateFn(
+                      moment(date).subtract(1, 'month').format('YYYY'),
+                      moment(date).subtract(1, 'month').format('MM'),
+                    );
+                  }}>
+                  <BackIcon size={22} color={'#f4aaab'} />
+                </DateBox>
+                <DateTextArea>
+                  <DateText>{moment(date).format('YYYY년 M월')}</DateText>
+                  <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                    {moment(date).format('M월 D일')}&nbsp;~&nbsp;
+                    {moment(date)
+                      .add(1, 'month')
+                      .subtract(1, 'day')
+                      .format('M월 D일')}
+                  </DateText>
+                </DateTextArea>
+                <DateBox
+                  onPress={() => {
+                    setDate(moment(date).add(1, 'month').format('YYYY-MM-DD'));
+                    calculateFn(
+                      moment(date).add(1, 'month').format('YYYY'),
+                      moment(date).add(1, 'month').format('MM'),
+                    );
+                  }}>
+                  <ForwardIcon size={22} color={'#f4aaab'} />
+                </DateBox>
+              </Row>
               <WorkTypeAndSalaryInfoBox>
-                <GreyText style={{fontSize: 12}}>
-                  {getPeriod(CALCULATE_DAY)}
-                </GreyText>
                 <SmallLine />
                 <Row>
                   <FixedGreyText style={{marginRight: 50}}>
-                    {EMPLOYEE_INFO_DATA?.PAY_TYPE == '0'
+                    {PAY_TYPE == '0'
                       ? '시급'
-                      : EMPLOYEE_INFO_DATA?.PAY_TYPE == '1'
+                      : PAY_TYPE == '1'
                       ? '일급'
                       : '월급'}
                   </FixedGreyText>
                   <GreyText style={{marginRight: 20}}>
-                    {EMPLOYEE_INFO_DATA?.PAY &&
-                      numberComma(EMPLOYEE_INFO_DATA?.PAY)}
+                    {numberComma(PAY)}
                   </GreyText>
                   <GreyText>원</GreyText>
                 </Row>
               </WorkTypeAndSalaryInfoBox>
             </Section>
             <Section>
-              <WorkTypeAndSalaryBox>
-                <WorkTypeAndSalaryBoxTitle>근무일정</WorkTypeAndSalaryBoxTitle>
-              </WorkTypeAndSalaryBox>
+              <TitleText>근무일정</TitleText>
               {isFreeWorkingType ? (
-                <FreeTypeInfoBox>
-                  <GreyText>자율출퇴근 근무 중</GreyText>
-                </FreeTypeInfoBox>
+                <>
+                  <GreyLine />
+                  <FixTypeDayChangeButtonText
+                    style={{
+                      marginTop: 20,
+                      textAlign: 'center',
+                      color: '#393939',
+                    }}>
+                    자율출퇴근 근무 중
+                  </FixTypeDayChangeButtonText>
+                </>
               ) : (
-                <WorkTypeCheckSection>
+                <>
+                  <GreyLine />
                   <RenderScheduleList />
                   <RenderDayList />
-                </WorkTypeCheckSection>
+                </>
               )}
             </Section>
           </Container>

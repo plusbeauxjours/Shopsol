@@ -4,23 +4,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableHighlight,
-  Linking,
-} from 'react-native';
+import {TouchableWithoutFeedback, Keyboard, Linking} from 'react-native';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 
 import {EllipseIcon, PhoneIcon} from '~/constants/Icons';
 
-import {
-  BackIcon,
-  ForwardIcon,
-  ReloadCircleIcon,
-  HelpCircleIcon,
-} from '~/constants/Icons';
+import {BackIcon, ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 
 interface IsSelected {
   isSelected: boolean;
@@ -55,17 +45,18 @@ const WhiteText = styled.Text`
 
 const Section = styled.View`
   width: 100%;
-  margin-bottom: 20px;
   border-radius: 20px;
-  padding: 20px 0;
+  margin-bottom: 20px;
+  padding: 20px;
   background-color: white;
 `;
+
 const NameBox = styled.View`
   margin-left: 10px;
 `;
 
 const EmployeeBox = styled.View`
-  padding: 0 20px;
+  width: ${wp('100%') - 80}px;
   align-items: center;
   flex-direction: row;
   background-color: white;
@@ -78,13 +69,15 @@ const NameText = styled.Text`
 `;
 
 const DateText = styled.Text`
-  color: #7c7c7c;
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
-const InfoText = styled(DateText)`
+const InfoText = styled.Text`
   font-size: 10px;
   height: 15px;
+  color: #7f7f7f;
 `;
 
 const Row = styled.View`
@@ -100,29 +93,10 @@ const SmallLine = styled.View`
   background-color: #f2f2f2;
 `;
 
-const WorkTypeAndSalaryBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px 20px 0 20px;
-`;
-
 const WorkTypeAndSalaryInfoBox = styled.View`
   align-items: flex-end;
-  border-color: #f2f2f2;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
   padding: 10px 20px;
   margin: 10px 0;
-`;
-
-const WorkTypeAndSalaryBoxTitle = styled.Text`
-  font-size: 17px;
-  color: #e85356;
-`;
-
-const WorkTypeCheckSection = styled.View`
-  padding: 0 20px;
 `;
 
 const WorkScheduleBox = styled.TouchableOpacity`
@@ -157,29 +131,17 @@ const FixedGreyText = styled(GreyText)`
   right: 100px;
 `;
 
-const FreeTypeInfoBox = styled.View`
-  border-color: #e5e5e5;
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  border-width: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
 const FixTypeDayChangeBox = styled.View`
   width: 100%;
-  margin-top: 20px;
-  padding: 0 20px;
   flex-direction: row;
   justify-content: space-between;
 `;
 
 const FixTypeDayChangeButton = styled.TouchableOpacity`
-  width: 30%;
+  width: ${(wp('100') - 100) / 3}px;
   height: 40px;
-  border-radius: 5px;
-  border-width: 1;
+  border-radius: 15px;
+  border-width: 0.7px;
   align-items: center;
   justify-content: center;
 `;
@@ -240,19 +202,27 @@ const RenderScheduleTitle = styled.View`
 `;
 
 const TimeListBox = styled.TouchableOpacity<IsSelected>`
-  border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
-  border-width: 0.6px;
   width: 100%;
+  padding: 10px;
   height: 60px;
-  padding: 10px 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  border-width: 0.7px;
+  border-radius: 15px;
+  border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
 const TimeListRow = styled(Row)`
-  margin: 20px;
+  width: 100%;
+  margin-bottom: 40px;
+`;
+
+const DateBoxText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f7f7f;
 `;
 
 const TimeListBoxText = styled.Text<IsSelected>`
@@ -260,16 +230,9 @@ const TimeListBoxText = styled.Text<IsSelected>`
   color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
-const TimeListBold = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
-  margin-left: 15px;
-  margin: 0 20px;
-`;
-
 const NavigationButton = styled.TouchableOpacity`
   position: absolute;
-  right: 20px;
+  right: 0px;
   height: 60px;
   width: 60px;
   align-items: center;
@@ -285,6 +248,31 @@ const Bold = styled.Text`
   color: #e85356;
 `;
 
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
+`;
+
+const TitleText = styled.Text`
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
+`;
+
+const SpaceRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const DateTextArea = styled.View`
+  flex: 1;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default ({
   STORE,
   originalDayList,
@@ -297,8 +285,6 @@ export default ({
   date,
   data,
   IMAGE,
-  getPeriod,
-  CALCULATE_DAY,
   PAY_TYPE,
   numberComma,
   PAY,
@@ -418,17 +404,18 @@ export default ({
                 <>
                   <TimeListRow>
                     {timeTableIndex > 0 && (
-                      <TouchableHighlight
+                      <DateBox
+                        style={{position: 'absolute', left: 0, marginLeft: 0}}
                         onPress={() => {
                           const timeTableIndexed = timeTableIndex - 1;
                           setTimeTableIndex(timeTableIndexed);
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <BackIcon size={22} color={'#999'} />
-                      </TouchableHighlight>
+                        <BackIcon size={22} color={'#f4aaab'} />
+                      </DateBox>
                     )}
-                    <TimeListBold>
+                    <DateBoxText>
                       {moment(table.startDate).format('YYYY.MM.DD')}
                       &nbsp;~&nbsp;
                       {(table.endDate &&
@@ -436,17 +423,18 @@ export default ({
                         (getNumberToday() < getNumberToday(table.startDate)
                           ? ''
                           : '현재')}
-                    </TimeListBold>
+                    </DateBoxText>
                     {timeTableIndex < timeTable.length - 1 && (
-                      <TouchableHighlight
+                      <DateBox
+                        style={{position: 'absolute', right: 0}}
                         onPress={() => {
                           const timeTableIndexed = timeTableIndex + 1;
                           setTimeTableIndex(timeTableIndexed);
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <ForwardIcon size={22} color={'#999'} />
-                      </TouchableHighlight>
+                        <ForwardIcon size={22} color={'#f4aaab'} />
+                      </DateBox>
                     )}
                   </TimeListRow>
                   {table?.data?.map((data, index) => (
@@ -543,52 +531,46 @@ export default ({
               </EmployeeBox>
             </Section>
             <Section>
-              <WorkTypeAndSalaryBox>
-                <WorkTypeAndSalaryBoxTitle>급여</WorkTypeAndSalaryBoxTitle>
-                <Row>
-                  <DateBox
-                    onPress={() => {
-                      setDate(
-                        moment(date).subtract(1, 'month').format('YYYY-MM-DD'),
-                      );
-                      calculateFn(
-                        EMP_SEQ,
-                        moment(date).subtract(1, 'month').format('YYYY'),
-                        moment(date).subtract(1, 'month').format('MM'),
-                      );
-                    }}>
-                    <BackIcon size={22} color={'#f4aaab'} />
-                  </DateBox>
-                  <DateBox
-                    onPress={() => {
-                      setDate(moment().format('YYYY-MM-DD'));
-                      calculateFn(
-                        EMP_SEQ,
-                        moment().format('YYYY'),
-                        moment().format('MM'),
-                      );
-                    }}>
-                    <ReloadCircleIcon size={18} color={'#f4aaab'} />
-                  </DateBox>
-                  <DateBox
-                    onPress={() => {
-                      setDate(
-                        moment(date).add(1, 'month').format('YYYY-MM-DD'),
-                      );
-                      calculateFn(
-                        EMP_SEQ,
-                        moment(date).add(1, 'month').format('YYYY'),
-                        moment(date).add(1, 'month').format('MM'),
-                      );
-                    }}>
-                    <ForwardIcon size={22} color={'#f4aaab'} />
-                  </DateBox>
-                </Row>
-              </WorkTypeAndSalaryBox>
+              <TitleText>급여</TitleText>
+              <GreyLine />
+              <Row>
+                <DateBox
+                  style={{marginLeft: 0}}
+                  onPress={() => {
+                    setDate(
+                      moment(date).subtract(1, 'month').format('YYYY-MM-DD'),
+                    );
+                    calculateFn(
+                      EMP_SEQ,
+                      moment(date).subtract(1, 'month').format('YYYY'),
+                      moment(date).subtract(1, 'month').format('MM'),
+                    );
+                  }}>
+                  <BackIcon size={22} color={'#f4aaab'} />
+                </DateBox>
+                <DateTextArea>
+                  <DateText>{moment(date).format('YYYY년 M월')}</DateText>
+                  <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                    {moment(date).format('M월 D일')}&nbsp;~&nbsp;
+                    {moment(date)
+                      .add(1, 'month')
+                      .subtract(1, 'day')
+                      .format('M월 D일')}
+                  </DateText>
+                </DateTextArea>
+                <DateBox
+                  onPress={() => {
+                    setDate(moment(date).add(1, 'month').format('YYYY-MM-DD'));
+                    calculateFn(
+                      EMP_SEQ,
+                      moment(date).add(1, 'month').format('YYYY'),
+                      moment(date).add(1, 'month').format('MM'),
+                    );
+                  }}>
+                  <ForwardIcon size={22} color={'#f4aaab'} />
+                </DateBox>
+              </Row>
               <WorkTypeAndSalaryInfoBox>
-                <GreyText style={{fontSize: 12}}>
-                  {getPeriod(CALCULATE_DAY)}
-                </GreyText>
                 <SmallLine />
                 <Row>
                   <FixedGreyText style={{marginRight: 50}}>
@@ -606,11 +588,9 @@ export default ({
               </WorkTypeAndSalaryInfoBox>
             </Section>
             <Section>
-              <WorkTypeAndSalaryBox>
+              <SpaceRow>
                 <Row>
-                  <WorkTypeAndSalaryBoxTitle>
-                    근무일정
-                  </WorkTypeAndSalaryBoxTitle>
+                  <TitleText>근무일정</TitleText>
                   {STORE == '1' && (
                     <TouchableRow
                       onPress={() => {
@@ -630,65 +610,71 @@ export default ({
                     </TouchableRow>
                   )}
                 </Row>
-                <WorkScheduleBox onPress={() => toggleWorkSchedule()}>
-                  {isFreeWorkingType ? (
-                    <WhiteText>일정출퇴근으로 전환하기</WhiteText>
-                  ) : (
-                    <WhiteText>자율출퇴근으로 전환하기</WhiteText>
-                  )}
-                </WorkScheduleBox>
-              </WorkTypeAndSalaryBox>
-              {isFreeWorkingType && (
-                <FixTypeDayChangeBox>
-                  <FreeTypeInfoBox>
-                    <GreyText>자율출퇴근 근무 중</GreyText>
-                  </FreeTypeInfoBox>
-                </FixTypeDayChangeBox>
-              )}
-              <Row>
-                {isFreeWorkingType !== true &&
-                  timeTable.length == 0 && ( // 자율출퇴근★
-                    <FixTypeDayChangeBox>
-                      <FixTypeDayChangeButton
-                        style={{borderColor: '#393939', width: '100%'}}
-                        onPress={() => registerScheduleFn()}>
-                        <FixTypeDayChangeButtonText style={{color: '#393939'}}>
-                          일정 추가
-                        </FixTypeDayChangeButtonText>
-                      </FixTypeDayChangeButton>
-                    </FixTypeDayChangeBox>
-                  )}
-                {isFreeWorkingType !== true && timeTable.length > 0 && (
+                <Row>
+                  <WorkScheduleBox onPress={() => toggleWorkSchedule()}>
+                    {isFreeWorkingType ? (
+                      <WhiteText>일정출퇴근으로 전환하기</WhiteText>
+                    ) : (
+                      <WhiteText>자율출퇴근으로 전환하기</WhiteText>
+                    )}
+                  </WorkScheduleBox>
+                </Row>
+              </SpaceRow>
+              <GreyLine />
+              {isFreeWorkingType ? (
+                <>
+                  <GreyLine />
                   <FixTypeDayChangeBox>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#393939'}}
-                      onPress={() => registerScheduleFn()}>
+                      style={{borderColor: '#393939', width: '100%'}}
+                      disabled={true}>
                       <FixTypeDayChangeButtonText style={{color: '#393939'}}>
-                        추가
-                      </FixTypeDayChangeButtonText>
-                    </FixTypeDayChangeButton>
-                    <FixTypeDayChangeButton
-                      style={{borderColor: '#393939'}}
-                      onPress={() => modifyScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
-                        수정
-                      </FixTypeDayChangeButtonText>
-                    </FixTypeDayChangeButton>
-                    <FixTypeDayChangeButton
-                      style={{borderColor: '#B91C1B'}}
-                      onPress={() => removeScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#B91C1B'}}>
-                        삭제
+                        자율출퇴근 근무 중
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
                   </FixTypeDayChangeBox>
-                )}
-              </Row>
-              {!isFreeWorkingType && (
-                <WorkTypeCheckSection>
+                </>
+              ) : (
+                <>
+                  <GreyLine />
                   <RenderScheduleList />
                   <RenderDayList />
-                </WorkTypeCheckSection>
+                </>
+              )}
+              {isFreeWorkingType !== true &&
+                timeTable.length == 0 && ( // 자율출퇴근★
+                  <FixTypeDayChangeButton
+                    style={{borderColor: '#393939', width: '100%'}}
+                    onPress={() => registerScheduleFn()}>
+                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      일정 추가
+                    </FixTypeDayChangeButtonText>
+                  </FixTypeDayChangeButton>
+                )}
+              {isFreeWorkingType !== true && timeTable.length > 0 && (
+                <SpaceRow>
+                  <FixTypeDayChangeButton
+                    style={{borderColor: '#393939'}}
+                    onPress={() => registerScheduleFn()}>
+                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      추가
+                    </FixTypeDayChangeButtonText>
+                  </FixTypeDayChangeButton>
+                  <FixTypeDayChangeButton
+                    style={{borderColor: '#393939'}}
+                    onPress={() => modifyScheduleFn()}>
+                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      수정
+                    </FixTypeDayChangeButtonText>
+                  </FixTypeDayChangeButton>
+                  <FixTypeDayChangeButton
+                    style={{borderColor: '#B91C1B'}}
+                    onPress={() => removeScheduleFn()}>
+                    <FixTypeDayChangeButtonText style={{color: '#B91C1B'}}>
+                      삭제
+                    </FixTypeDayChangeButtonText>
+                  </FixTypeDayChangeButton>
+                </SpaceRow>
               )}
             </Section>
           </Container>

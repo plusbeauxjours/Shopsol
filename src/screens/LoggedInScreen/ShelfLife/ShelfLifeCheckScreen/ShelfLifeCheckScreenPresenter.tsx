@@ -214,7 +214,6 @@ export default ({
   search,
   setSearch,
 }) => {
-  console.log(SHELFLIFE_DATA);
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
     if (
       SHELFLIFE_DATA[0]?.items.length == 0 &&

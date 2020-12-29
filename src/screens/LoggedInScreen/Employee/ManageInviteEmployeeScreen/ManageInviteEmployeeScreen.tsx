@@ -18,7 +18,6 @@ const BackGround = styled.SafeAreaView`
 `;
 
 const ScrollView = styled.ScrollView``;
-const Text = styled.Text``;
 
 const Container = styled.View`
   width: ${wp('100%')}px;
@@ -37,6 +36,10 @@ const Section = styled.View`
 const Row = styled.TouchableOpacity`
   align-items: center;
   flex-direction: row;
+`;
+
+const SpaceRow = styled(Row)`
+  justify-content: space-between;
 `;
 
 const EmployeeListBox = styled.View`
@@ -59,6 +62,12 @@ const GreyLine = styled.View`
   margin: 10px 0 20px 0;
   background-color: #f2f2f2;
   height: 1px;
+`;
+
+const NumberText = styled.Text`
+  color: #e85356;
+  font-size: 18px;
+  font-weight: bold;
 `;
 
 export default () => {
@@ -111,17 +120,19 @@ export default () => {
         }>
         <Container>
           <Section>
-            <Row
-              onPress={() =>
-                explainModal('', 'App 설치 및 회원가입이 완료된 직원입니다.')
-              }>
-              <TitleText style={{paddingRight: 5}}>초대에 응한 직원</TitleText>
-              <HelpCircleIcon />
-            </Row>
-            <GreyLine />
-            {RESPONSE_EMPLOYEE?.length === 0 && (
-              <GreyText>초대에 응한 직원이 없습니다</GreyText>
-            )}
+            <SpaceRow>
+              <Row
+                onPress={() =>
+                  explainModal('', 'App 설치 및 회원가입이 완료된 직원입니다.')
+                }>
+                <TitleText style={{paddingRight: 5}}>
+                  초대에 응한 직원
+                </TitleText>
+                <HelpCircleIcon />
+              </Row>
+              <NumberText>{RESPONSE_EMPLOYEE?.length ?? 0}</NumberText>
+            </SpaceRow>
+            {RESPONSE_EMPLOYEE?.length !== 0 && <GreyLine />}
             <EmployeeListBox>
               {RESPONSE_EMPLOYEE?.map((data, index) => (
                 <ManageInviteEmployeeCard1
@@ -139,24 +150,23 @@ export default () => {
             </EmployeeListBox>
           </Section>
           <Section>
-            <Row
-              onPress={() => {
-                explainModal(
-                  '',
-                  'App 설치가 완료되지 않은 직원입니다. 초대메시지 재전송을 눌러 다시한번 알려주세요.',
-                );
-              }}>
-              <TitleText style={{paddingRight: 5}}>
-                초대 메시지 미열람 직원
-              </TitleText>
-              <HelpCircleIcon />
-            </Row>
-            <GreyLine />
-            {NO_RESPONSE_EMPLOYEE?.length === 0 && (
-              <GreyText>초대 메시지 미열람 직원이 없습니다.</GreyText>
-            )}
+            <SpaceRow>
+              <Row
+                onPress={() => {
+                  explainModal(
+                    '',
+                    'App 설치가 완료되지 않은 직원입니다. 초대메시지 재전송을 눌러 다시한번 알려주세요.',
+                  );
+                }}>
+                <TitleText style={{paddingRight: 5}}>
+                  초대 메시지 미열람 직원
+                </TitleText>
+                <HelpCircleIcon />
+              </Row>
+              <NumberText>{NO_RESPONSE_EMPLOYEE?.length ?? 0}</NumberText>
+            </SpaceRow>
+            {NO_RESPONSE_EMPLOYEE?.length !== 0 && <GreyLine />}
             <EmployeeListBox>
-              {console.log(NO_RESPONSE_EMPLOYEE)}
               {NO_RESPONSE_EMPLOYEE?.map((data, index) => (
                 <ManageInviteEmployeeCard2
                   key={index}
