@@ -31,7 +31,7 @@ export default ({route: {params}}) => {
     '분류 선택',
   ); // 사업장 분류 유형, 0: 요식업, 1: 도,소매업, 2: 서비스업, 3: 일반회사, 4: 기타
 
-  const [distance, setDistance] = useState<string>('0');
+  const [distance, setDistance] = useState<string>('-1');
   const [days, setDays] = useState<any>(new Array(30));
   const [sizeTypeCheck, setSizeTypeCheck] = useState<[boolean, boolean]>([
     false,

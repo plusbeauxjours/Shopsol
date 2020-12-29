@@ -87,6 +87,7 @@ const RequestBorderButton = styled.TouchableOpacity`
 `;
 
 const RequestText = styled.Text`
+  font-size: 12px;
   color: white;
 `;
 

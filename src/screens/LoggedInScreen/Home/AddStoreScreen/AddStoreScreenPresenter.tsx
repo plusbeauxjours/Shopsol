@@ -33,6 +33,7 @@ const BackGround = styled.SafeAreaView`
   background-color: #f6f6f6;
 `;
 
+const Text = styled.Text``;
 const ScrollView = styled.ScrollView``;
 const Container = styled.View`
   width: ${wp('100%')}px;
@@ -68,11 +69,6 @@ const InputCaseRow = styled.View`
   align-items: baseline;
 `;
 
-const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
-`;
-
 const RequestButton = styled.TouchableOpacity`
   padding: 7px 14px;
   align-items: center;
@@ -92,6 +88,17 @@ const TextInput = styled.TextInput`
   margin-left: 5px;
   font-size: 15px;
   color: black;
+`;
+
+const Column = styled.View`
+  flex-direction: column;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  margin: 10px 0 20px 0;
+  background-color: #f2f2f2;
+  height: 1px;
 `;
 
 const CheckDay = styled.TouchableOpacity<IIsPerple>`
@@ -125,12 +132,9 @@ const GreyText = styled.Text<IsError>`
 `;
 
 const TitleText = styled.Text`
-  font-size: 17px;
-  color: #000;
+  font-size: 16px;
+  color: #999;
   font-weight: bold;
-  margin-bottom: 30px;
-  margin-right: 10px;
-  align-self: center;
 `;
 
 const Touchable = styled.TouchableOpacity``;
@@ -221,6 +225,19 @@ const SubmitBtnText = styled.Text`
   color: white;
   margin-left: 10px;
   padding-top: 5px;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: #e85356;
+  border-width: 1px;
+  border-radius: 20px;
+`;
+
+const RequestBorderText = styled.Text`
+  color: #e85356;
 `;
 
 export default ({
@@ -345,7 +362,9 @@ export default ({
         showsVerticalScrollIndicator={false}>
         <Container>
           <Section>
-            <NameText>사업장명</NameText>
+            <TitleText>사업장 정보</TitleText>
+            <GreyLine />
+            <Text>사업장명</Text>
             <Row>
               <TextInput
                 placeholder={'ex) OOO점'}
@@ -361,7 +380,7 @@ export default ({
               * 사업장명은 10자 이하로 입력해주세요.
             </GreyText>
             <WhiteSpace />
-            <InputCaseRow>
+            <InputCaseRow style={{alignItems: 'flex-end'}}>
               <RowTouchable
                 onPress={() => {
                   explainModal(
@@ -369,7 +388,7 @@ export default ({
                     '입력하신 주소로 출퇴근관리 QR키트를 발송해 드립니다. 일반우편으로 발송되며, 원활한 수령을 위하여 정확한 주소 입력 부탁드립니다.',
                   );
                 }}>
-                <NameText>기본주소</NameText>
+                <Text>기본주소</Text>
                 <HelpCircleIcon />
               </RowTouchable>
               <RequestButton onPress={() => gotoSearchAddress()}>
@@ -384,8 +403,8 @@ export default ({
               editable={false}
             />
             <InputLine isBefore={ADDR1 === ''} />
-            <WhiteSpace />
-            <NameText>상세주소</NameText>
+            <WhiteSpace style={{height: 30}} />
+            <Text>상세주소</Text>
             <TextInput
               placeholder={'1층 102호'}
               placeholderTextColor={'#E5E5E5'}
@@ -395,14 +414,13 @@ export default ({
               value={ADDR2}
             />
             <InputLine isBefore={ADDR2 === ''} />
-            <WhiteSpace />
-            <NameText>사업장분류</NameText>
-            <Touchable onPress={() => setModalVisible5(true)}>
-              <InputText isBefore={categoryCheck === false}>
-                {storeCategoryType}
-              </InputText>
-              <InputLine isBefore={categoryCheck === false} />
-            </Touchable>
+            <WhiteSpace style={{height: 30}} />
+            <InputCaseRow>
+              <Text>사업장분류</Text>
+              <RequestBorderButton onPress={() => setModalVisible5(true)}>
+                <RequestBorderText> {storeCategoryType}</RequestBorderText>
+              </RequestBorderButton>
+            </InputCaseRow>
             {storeCategoryType == '기타' && (
               <>
                 <WhiteSpace />
@@ -420,6 +438,7 @@ export default ({
           </Section>
           <Section>
             <TitleText>출퇴근정보 설정</TitleText>
+            <GreyLine />
             <RowTouchable
               onPress={() => {
                 explainModal(
@@ -427,7 +446,7 @@ export default ({
                   '-QR코드 출퇴근 : 샵솔에서 제공한 QR로만 출퇴근이 가능합니다.\n-GPS출퇴근 : 직원앱에서 GPS를 이용하여 바로 출퇴근 할 수 있습니다. 또한 QR코드 출퇴근 기능도 함께 사용할 수 있습니다.\n* 추후에 변경 가능합니다.',
                 );
               }}>
-              <NameText>출퇴근방법 설정</NameText>
+              <Text>출퇴근방법 설정</Text>
               <HelpCircleIcon />
             </RowTouchable>
             <TypeCheckCase>
@@ -435,70 +454,64 @@ export default ({
               <CommuteType selection={0} text={'QR코드 출퇴근'} />
             </TypeCheckCase>
             <WhiteSpace />
-            {commuteTypeCheck[1] == true && (
-              <>
-                <RowTouchable
-                  onPress={() =>
-                    explainModal(
-                      '출퇴근 허용거리',
-                      '설정하신 거리 이내에서 출퇴근이 가능합니다.',
-                    )
-                  }>
-                  <NameText>출퇴근 허용거리</NameText>
-                  <HelpCircleIcon />
-                </RowTouchable>
-                <Touchable onPress={() => setModalVisible4(true)}>
-                  <InputText isBefore={distanceCheck === false}>
-                    {distance === '-1'
-                      ? '거리 제한 없음'
-                      : Number(distance) < 1000
-                      ? distance + 'm'
-                      : Number(distance) / 1000 + 'km'}
-                  </InputText>
-                  <InputLine isBefore={distanceCheck === false} />
-                </Touchable>
-                <WhiteSpace />
-              </>
-            )}
-            <RowTouchable
-              onPress={() => {
-                explainModal(
-                  '지각 허용시간',
-                  '설정한 시간까지는 지각을 하여도 급여에서 차감되지 않습니다. 단, 지각 허용시간을 초과할 경우에는 지각시간(허용시간+초과시간)이 차감됩니다.\nEx) 10분 설정 후 5분 지각 시 : 미차감\nEx) 10분 설정 후 15분 지각 시 : 15분 차감',
-                );
-              }}>
-              <NameText>지각 허용시간</NameText>
-              <HelpCircleIcon />
-            </RowTouchable>
-            <Touchable onPress={() => setModalVisible2(true)}>
-              <InputText isBefore={timeCheck === false}>
-                {LATE_TIME}분
-              </InputText>
-              <InputLine isBefore={timeCheck === false} />
-            </Touchable>
+            <InputCaseRow>
+              <RowTouchable
+                style={{alignItems: 'flex-end'}}
+                onPress={() =>
+                  explainModal(
+                    '출퇴근 허용거리',
+                    '설정하신 거리 이내에서 출퇴근이 가능합니다.',
+                  )
+                }>
+                <Text>출퇴근 허용거리</Text>
+                <HelpCircleIcon />
+              </RowTouchable>
+              <RequestBorderButton onPress={() => setModalVisible4(true)}>
+                <RequestBorderText>
+                  {distance == '-1'
+                    ? '거리 제한 없음'
+                    : Number(distance) < 1000
+                    ? distance + 'm'
+                    : Number(distance) / 1000 + 'km'}
+                </RequestBorderText>
+              </RequestBorderButton>
+            </InputCaseRow>
             <WhiteSpace />
-            <RowTouchable
-              onPress={() => {
-                explainModal(
-                  '조퇴 허용시간',
-                  '설정한 시간까지는 지각을 하여도 급여에서 차감되지 않습니다. 단, 조퇴 허용시간을 초과할 경우에는 조퇴시간(허용시간+초과시간)이 차감됩니다.\nEx) 10분 설정 후 5분 조퇴 시 : 미차감\nEx) 10분 설정 후 15분 조퇴 시 : 15분 차감',
-                );
-              }}>
-              <NameText>조퇴 허용시간</NameText>
-              <HelpCircleIcon />
-            </RowTouchable>
-            <Touchable
-              onPress={() => {
-                setModalVisible1(true);
-              }}>
-              <InputText isBefore={EARLYtimeCheck === false}>
-                {EARLY_TIME}분
-              </InputText>
-              <InputLine isBefore={EARLYtimeCheck === false} />
-            </Touchable>
+            <InputCaseRow>
+              <RowTouchable
+                onPress={() => {
+                  explainModal(
+                    '지각 허용시간',
+                    '설정한 시간까지는 지각을 하여도 급여에서 차감되지 않습니다. 단, 지각 허용시간을 초과할 경우에는 지각시간(허용시간+초과시간)이 차감됩니다.\nEx) 10분 설정 후 5분 지각 시 : 미차감\nEx) 10분 설정 후 15분 지각 시 : 15분 차감',
+                  );
+                }}>
+                <Text>지각 허용시간</Text>
+                <HelpCircleIcon />
+              </RowTouchable>
+              <RequestBorderButton onPress={() => setModalVisible2(true)}>
+                <RequestBorderText>{LATE_TIME}분</RequestBorderText>
+              </RequestBorderButton>
+            </InputCaseRow>
+            <WhiteSpace />
+            <InputCaseRow>
+              <RowTouchable
+                onPress={() => {
+                  explainModal(
+                    '조퇴 허용시간',
+                    '설정한 시간까지는 지각을 하여도 급여에서 차감되지 않습니다. 단, 조퇴 허용시간을 초과할 경우에는 조퇴시간(허용시간+초과시간)이 차감됩니다.\nEx) 10분 설정 후 5분 조퇴 시 : 미차감\nEx) 10분 설정 후 15분 조퇴 시 : 15분 차감',
+                  );
+                }}>
+                <Text>조퇴 허용시간</Text>
+                <HelpCircleIcon />
+              </RowTouchable>
+              <RequestBorderButton onPress={() => setModalVisible1(true)}>
+                <RequestBorderText>{EARLY_TIME}분</RequestBorderText>
+              </RequestBorderButton>
+            </InputCaseRow>
           </Section>
           <Section>
             <TitleText>급여정보 설정</TitleText>
+            <GreyLine />
             <RowTouchable
               onPress={() => {
                 explainModal(
@@ -506,7 +519,7 @@ export default ({
                   '5인 이상 사업장 선택 시 추가근무, 야간근무 수당이 자동으로 가산됩니다. 자세한 설명은 [도움말 전체보기]에서 확인하세요.',
                 );
               }}>
-              <NameText>사업장 규모</NameText>
+              <Text>사업장 규모</Text>
               <HelpCircleIcon />
             </RowTouchable>
             <TypeCheckCase>
@@ -514,38 +527,41 @@ export default ({
               <SizeType selection={1} text={'5인 이상'} />
             </TypeCheckCase>
             <WhiteSpace />
-            <RowTouchable
-              onPress={() => {
-                explainModal(
-                  '급여정산일',
-                  '급여가 계산되는 기간 설정입니다.\n(급여지급일과 혼동하지 마세요.)\nEx1) 25일 설정 : 전월 26일 ~ 당월 25일 기간동안의 급여계산\nEx2) 말일 설정 : 당월 1일 ~ 당월 말일 기간동안의 급여계산',
-                );
-              }}>
-              <NameText>급여정산일</NameText>
-              <HelpCircleIcon />
-            </RowTouchable>
-            <Touchable
-              onPress={() => {
-                let value = JSON.parse(JSON.stringify(days));
-                value.fill(false);
-                if (dayCheck) {
-                  if (CALCULATE_DAY == '1') {
-                    value[29] = true;
-                  } else {
-                    value[Number(CALCULATE_DAY) - 2] = true;
+            <InputCaseRow>
+              <Column>
+                <RowTouchable
+                  onPress={() => {
+                    explainModal(
+                      '급여정산일',
+                      '급여가 계산되는 기간 설정입니다.\n(급여지급일과 혼동하지 마세요.)\nEx1) 25일 설정 : 전월 26일 ~ 당월 25일 기간동안의 급여계산\nEx2) 말일 설정 : 당월 1일 ~ 당월 말일 기간동안의 급여계산',
+                    );
+                  }}>
+                  <Text>급여정산일</Text>
+                  <HelpCircleIcon />
+                </RowTouchable>
+                <GreyText isError={false}>
+                  급여산정 기간 설정으로 급여지급일과 혼동하지 마세요
+                </GreyText>
+              </Column>
+              <RequestBorderButton
+                onPress={() => {
+                  let value = JSON.parse(JSON.stringify(days));
+                  value.fill(false);
+                  if (dayCheck) {
+                    if (CALCULATE_DAY == '1') {
+                      value[29] = true;
+                    } else {
+                      value[Number(CALCULATE_DAY) - 2] = true;
+                    }
                   }
-                }
-                setModalVisible3(!modalVisible3);
-                setDays(value);
-              }}>
-              <InputText>
-                {CALCULATE_DAY == 1 ? '말일' : `${CALCULATE_DAY - 1}일`}
-              </InputText>
-              <InputLine isBefore={dayCheck === false} />
-            </Touchable>
-            <GreyText>
-              * 급여산정 기간 설정으로 급여지급일과 혼동하지 마세요
-            </GreyText>
+                  setModalVisible3(!modalVisible3);
+                  setDays(value);
+                }}>
+                <RequestBorderText>
+                  {CALCULATE_DAY == 1 ? '말일' : `${CALCULATE_DAY - 1}일`}
+                </RequestBorderText>
+              </RequestBorderButton>
+            </InputCaseRow>
           </Section>
           <Modal
             isVisible={modalVisible1}
