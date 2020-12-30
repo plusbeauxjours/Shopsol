@@ -620,8 +620,7 @@ export default ({
                   </WorkScheduleBox>
                 </Row>
               </SpaceRow>
-              <GreyLine />
-              {isFreeWorkingType ? (
+              {isFreeWorkingType && (
                 <>
                   <GreyLine />
                   <FixTypeDayChangeBox>
@@ -634,47 +633,54 @@ export default ({
                     </FixTypeDayChangeButton>
                   </FixTypeDayChangeBox>
                 </>
-              ) : (
+              )}
+              {!isFreeWorkingType &&
+                timeTable.length == 0 && ( // 자율출퇴근★
+                  <>
+                    <GreyLine />
+                    <FixTypeDayChangeButton
+                      style={{borderColor: '#393939', width: '100%'}}
+                      onPress={() => registerScheduleFn()}>
+                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                        일정 추가
+                      </FixTypeDayChangeButtonText>
+                    </FixTypeDayChangeButton>
+                  </>
+                )}
+              {!isFreeWorkingType && timeTable.length > 0 && (
+                <>
+                  <GreyLine />
+                  <SpaceRow>
+                    <FixTypeDayChangeButton
+                      style={{borderColor: '#393939'}}
+                      onPress={() => registerScheduleFn()}>
+                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                        추가
+                      </FixTypeDayChangeButtonText>
+                    </FixTypeDayChangeButton>
+                    <FixTypeDayChangeButton
+                      style={{borderColor: '#393939'}}
+                      onPress={() => modifyScheduleFn()}>
+                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                        수정
+                      </FixTypeDayChangeButtonText>
+                    </FixTypeDayChangeButton>
+                    <FixTypeDayChangeButton
+                      style={{borderColor: '#B91C1B'}}
+                      onPress={() => removeScheduleFn()}>
+                      <FixTypeDayChangeButtonText style={{color: '#B91C1B'}}>
+                        삭제
+                      </FixTypeDayChangeButtonText>
+                    </FixTypeDayChangeButton>
+                  </SpaceRow>
+                </>
+              )}
+              {!isFreeWorkingType && (
                 <>
                   <GreyLine />
                   <RenderScheduleList />
                   <RenderDayList />
                 </>
-              )}
-              {isFreeWorkingType !== true &&
-                timeTable.length == 0 && ( // 자율출퇴근★
-                  <FixTypeDayChangeButton
-                    style={{borderColor: '#393939', width: '100%'}}
-                    onPress={() => registerScheduleFn()}>
-                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
-                      일정 추가
-                    </FixTypeDayChangeButtonText>
-                  </FixTypeDayChangeButton>
-                )}
-              {isFreeWorkingType !== true && timeTable.length > 0 && (
-                <SpaceRow>
-                  <FixTypeDayChangeButton
-                    style={{borderColor: '#393939'}}
-                    onPress={() => registerScheduleFn()}>
-                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
-                      추가
-                    </FixTypeDayChangeButtonText>
-                  </FixTypeDayChangeButton>
-                  <FixTypeDayChangeButton
-                    style={{borderColor: '#393939'}}
-                    onPress={() => modifyScheduleFn()}>
-                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
-                      수정
-                    </FixTypeDayChangeButtonText>
-                  </FixTypeDayChangeButton>
-                  <FixTypeDayChangeButton
-                    style={{borderColor: '#B91C1B'}}
-                    onPress={() => removeScheduleFn()}>
-                    <FixTypeDayChangeButtonText style={{color: '#B91C1B'}}>
-                      삭제
-                    </FixTypeDayChangeButtonText>
-                  </FixTypeDayChangeButton>
-                </SpaceRow>
               )}
             </Section>
           </Container>
