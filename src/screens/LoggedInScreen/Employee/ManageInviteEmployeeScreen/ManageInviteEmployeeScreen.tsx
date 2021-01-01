@@ -11,10 +11,11 @@ import ManageInviteEmployeeCard1 from './ManageInviteEmployeeCard1';
 import ManageInviteEmployeeCard2 from './ManageInviteEmployeeCard2';
 import {HelpCircleIcon} from '~/constants/Icons';
 import {getRESPONSE_EMPLOYEE} from '~/redux/employeeSlice';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -60,12 +61,12 @@ const GreyText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
 const NumberText = styled.Text`
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   font-size: 18px;
   font-weight: bold;
 `;

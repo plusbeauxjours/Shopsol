@@ -2,16 +2,18 @@ import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+
 import {setSTORE} from '~/redux/userSlice';
 import api from '~/constants/LoggedInApi';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
 import {getSTORELIST_DATA} from '~/redux/userSlice';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6; ;
+  background-color: ${styleGuide.palette.backgroundPrimary}; ;
 `;
 
 const Container = styled.View`

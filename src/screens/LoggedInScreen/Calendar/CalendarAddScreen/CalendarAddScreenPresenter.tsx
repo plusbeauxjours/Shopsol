@@ -25,6 +25,7 @@ import CalendarAddScreenCard from './CalendarAddScreenCard';
 import RoundBtn from '~/components/Btn/RoundBtn';
 import {} from '~/constants/Icons';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 import Chevron from '~/components/Chevron';
 
 interface IsFirst {
@@ -41,12 +42,12 @@ interface IColor {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
 const Text = styled.Text<IColor>`
-  color: ${(props) => (props.color ? '#e85356' : 'black')};
+  color: ${(props) => (props.color ? styleGuide.palette.primary : 'black')};
 `;
 
 const SelectedText = styled.Text<IsSelected>`
@@ -114,11 +115,11 @@ const ChecktimeButton = styled.TouchableOpacity`
   padding: 5px 20px;
   border-width: 1px;
   border-radius: 30px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
 `;
 
 const ChecktimeButtonText = styled.Text`
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   font-weight: 400;
 `;
 
@@ -159,7 +160,8 @@ const SideText = styled.Text`
 
 const TimePickBoxTimeText = styled.Text<IsSelected>`
   font-size: 17px;
-  color: ${(props) => (props.isSelected ? '#e85356' : '#cccccc')};
+  color: ${(props) =>
+    props.isSelected ? styleGuide.palette.primary : '#cccccc'};
 `;
 
 const ModalPopupArea = styled.View`
@@ -182,7 +184,9 @@ const ModalPopup = styled.View`
   shadow-offset: 3px 3px;
   shadow-opacity: 0.5;
   shadow-radius: 3px;
-  background-color: ${utils.isAndroid ? '#888' : 'rgba(0,0,0,0.7)'};
+  background-color: ${utils.isAndroid
+    ? styleGuide.palette.greyColor
+    : 'rgba(0,0,0,0.7)'};
 `;
 
 const DatePickerContainer = styled.View`
@@ -202,7 +206,7 @@ const DatePickerRoundBtn = styled(Ripple)`
   height: 60px;
   border-width: 0.5px;
   border-radius: 30px;
-  border-color: #888;
+  border-color: ${styleGuide.palette.greyColor};
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -223,7 +227,7 @@ const DatePickerRoundView = styled.View`
 const DatePickerText = styled.Text`
   font-weight: 200;
   font-size: 16px;
-  color: #888;
+  color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
 
@@ -236,7 +240,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -247,7 +251,7 @@ const ListTouchable = styled.TouchableWithoutFeedback`
 const DateBoxText = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const ListContainer = styled.View`
@@ -417,7 +421,7 @@ export default ({
       <Calendar
         theme={{
           arrowColor: 'black',
-          todayTextColor: '#e85356',
+          todayTextColor: styleGuide.palette.primary,
         }}
         monthFormat={'yyyy년 M월'}
         hideExtraDays={true}

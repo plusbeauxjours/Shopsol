@@ -11,7 +11,8 @@ import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import {ForwardArrowIcon} from '../../../../constants/Icons';
+import {ForwardArrowIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsSelected {
   isSelected: boolean;
@@ -20,7 +21,7 @@ interface IsSelected {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -52,7 +53,7 @@ const RowTitle = styled(Row)`
 const TimePickBox = styled.View`
   margin-top: 20px;
   padding: 20px;
-  border-color: #f2f2f2;
+  border-color: #${styleGuide.palette.borderColor};
   border-top-width: 1px;
   justify-content: space-around;
   height: 110px;
@@ -74,7 +75,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -97,7 +98,7 @@ const NormalBox = styled.TouchableOpacity<IsSelected>`
   border-width: ${(props) => (props.isSelected ? 0 : 1)}px;
   border-color: ${(props) => (props.isSelected ? 'transparent' : '#dedede')};
   background-color: ${(props) =>
-    props.isSelected ? '#e85356' : 'transparent'};
+    props.isSelected ? styleGuide.palette.primary : 'transparent'};
   align-items: center;
   justify-content: center;
 `;
@@ -149,7 +150,7 @@ const SideText = styled.Text`
 
 const TimePickBoxTimeText = styled.Text`
   font-size: 17px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const DatePickerContainer = styled.View`

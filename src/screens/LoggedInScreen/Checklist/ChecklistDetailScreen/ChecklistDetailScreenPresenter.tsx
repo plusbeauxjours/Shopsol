@@ -13,6 +13,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import {CheckBoxIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import Loader from '~/components/Loader';
+import styleGuide from '~/constants/styleGuide';
 
 interface ISelected {
   isSelected: boolean;
@@ -24,7 +25,7 @@ interface IsLast {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -91,12 +92,6 @@ const ChecklistTitle = styled.View`
   padding-right: 5px;
 `;
 
-const ChecklistText = styled.Text`
-  max-width: 230px;
-  flex-wrap: wrap;
-  font-size: 12px;
-`;
-
 const CheckBoxIconContainer = styled(RowSpace)`
   width: 60px;
 `;
@@ -108,8 +103,9 @@ const CategoryList = styled.View`
 const Category = styled.TouchableOpacity<ISelected>`
   border-radius: 15px;
   height: 30px;
-  background-color: ${(props) => (props.isSelected ? '#e85356' : '#ffffff')};
-  border-color: #e85356;
+  background-color: ${(props) =>
+    props.isSelected ? styleGuide.palette.primary : '#ffffff'};
+  border-color: ${styleGuide.palette.primary};
   border-width: 1px;
   justify-content: center;
   align-items: center;
@@ -118,7 +114,8 @@ const Category = styled.TouchableOpacity<ISelected>`
 `;
 
 const CategoryText = styled.Text<ISelected>`
-  color: ${(props) => (props.isSelected ? '#ffffff' : '#e85356')};
+  color: ${(props) =>
+    props.isSelected ? '#ffffff' : styleGuide.palette.primary};
 `;
 
 const Footer = styled.View`
@@ -128,7 +125,7 @@ const Footer = styled.View`
 
 const FooterText = styled.Text`
   text-align: center;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   font-size: 18px;
   margin-bottom: 20px;
 `;
@@ -310,7 +307,7 @@ export default ({
               <Text
                 style={{
                   maxWidth: wp('100') - 160,
-                  color: EMP_NAME ? '#000' : '#e85356',
+                  color: EMP_NAME ? '#000' : styleGuide.palette.primary,
                   fontWeight: EMP_NAME ? 'normal' : 'bold',
                 }}>
                 {EMP_NAME ?? '체크전'}
@@ -321,7 +318,7 @@ export default ({
               <SectionText>확인시간</SectionText>
               <Text
                 style={{
-                  color: CHECK_TIME ? '#000' : '#e85356',
+                  color: CHECK_TIME ? '#000' : styleGuide.palette.primary,
                   fontWeight: CHECK_TIME ? 'normal' : 'bold',
                 }}>
                 {CHECK_TIME ? moment(CHECK_TIME).format('HH:mm') : '체크전'}

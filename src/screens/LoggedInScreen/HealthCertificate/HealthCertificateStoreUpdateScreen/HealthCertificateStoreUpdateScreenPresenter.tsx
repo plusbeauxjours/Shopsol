@@ -22,6 +22,7 @@ import {
   CloseCircleIcon,
 } from '~/constants/Icons';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 const WhiteSpace = styled.View`
   height: 20px;
@@ -32,7 +33,7 @@ const SmallWhiteSpace = styled.View`
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -50,7 +51,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -107,7 +108,7 @@ const BorderBox = styled.View`
   height: 100px;
   border-radius: 10px;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
@@ -150,7 +151,7 @@ const CameraPictureCloseButtonText = styled.Text`
 const CameraPictureCloseButton = styled.TouchableOpacity`
   height: 60px;
   width: 100%;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   align-self: flex-end;
   align-items: center;
   justify-content: center;
@@ -160,7 +161,7 @@ const CameraPictureButton = styled.TouchableOpacity`
   width: 60px;
   height: 60px;
   border-radius: 60px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   background-color: #ffffff;
   align-items: center;
   justify-content: center;
@@ -176,7 +177,7 @@ const HalfBotton = styled.TouchableOpacity`
   align-self: flex-end;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: white;
 `;
 
 const HalfBottonText = styled.Text`
@@ -311,8 +312,15 @@ export default ({
                 <CameraBoxContainer>
                   <Touchable onPress={() => setIsCameraModalVisible(true)}>
                     <BorderBox>
-                      <CameraIcon size={25} color={'#f4aaab'} />
-                      <GreySmallText style={{color: '#f4aaab', fontSize: 10}}>
+                      <CameraIcon
+                        size={25}
+                        color={styleGuide.palette.secondary}
+                      />
+                      <GreySmallText
+                        style={{
+                          color: styleGuide.palette.secondary,
+                          fontSize: 10,
+                        }}>
                         사진촬영
                       </GreySmallText>
                     </BorderBox>
@@ -491,17 +499,17 @@ export default ({
               />
               <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
                 <HalfBotton onPress={() => setCameraPictureLast(null)}>
-                  <HalfBottonText style={{color: '#e85356'}}>
+                  <HalfBottonText style={{color: styleGuide.palette.primary}}>
                     재촬영
                   </HalfBottonText>
                 </HalfBotton>
                 <HalfBotton
-                  style={{backgroundColor: '#e85356'}}
+                  style={{backgroundColor: styleGuide.palette.primary}}
                   onPress={() => {
                     checkOrcFn();
                     setIsCameraModalVisible(false);
                   }}>
-                  <HalfBottonText style={{color: '#fff'}}>선택</HalfBottonText>
+                  <HalfBottonText style={{color: 'white'}}>선택</HalfBottonText>
                 </HalfBotton>
               </Row>
             </CameraLastPictureContainer>

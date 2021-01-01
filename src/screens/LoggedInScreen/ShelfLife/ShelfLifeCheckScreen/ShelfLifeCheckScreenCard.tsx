@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import Ripple from 'react-native-material-ripple';
 
 import {CheckMarkIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsChecked {
   isChecked?: boolean;
@@ -31,7 +32,7 @@ const TextContainer = styled.View`
 
 const Touchable = styled.TouchableOpacity`
   z-index: 30;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
   padding: 3px 0;
 `;
 
@@ -68,7 +69,7 @@ const Item = styled.TouchableOpacity`
 `;
 
 const WhiteItem = styled(Ripple)`
-  background-color: #fff;
+  background-color: white;
   width: ${wp('100%') - 110}px;
   border-radius: 10px;
   padding: 10px;
@@ -80,7 +81,7 @@ const WhiteItem = styled(Ripple)`
 const IconBorder = styled.View`
   width: 22px;
   height: 22px;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
   border-radius: 11px;
   top: -5px;
   right: -5px;
@@ -143,7 +144,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           )}
           <IconBorder>
             <IconContainer isChecked={true}>
-              <CheckMarkIcon size={12} color={'#fff'} />
+              <CheckMarkIcon size={12} color={'white'} />
             </IconContainer>
           </IconBorder>
         </Touchable>

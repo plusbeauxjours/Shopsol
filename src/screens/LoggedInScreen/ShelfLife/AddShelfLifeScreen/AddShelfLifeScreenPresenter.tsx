@@ -16,7 +16,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import AddShelfLifeScreenCard from './AddShelfLifeScreenCard';
 import RoundBtn from '~/components/Btn/RoundBtn';
 import utils from '~/constants/utils';
-import {CloseCircleOutlineIcon} from '../../../../constants/Icons';
+import {CloseCircleOutlineIcon} from '~/constants/Icons';
 import {
   HelpCircleIcon,
   CloseCircleIcon,
@@ -24,10 +24,11 @@ import {
   PictureIcon,
   BarCodeIcon,
 } from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -67,7 +68,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -166,7 +167,7 @@ const CameraPictureCloseButtonText = styled.Text`
 const CameraPictureCloseButton = styled.TouchableOpacity`
   height: 60px;
   width: 100%;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   align-self: flex-end;
   align-items: center;
   justify-content: center;
@@ -176,7 +177,7 @@ const CameraPictureButton = styled.TouchableOpacity`
   width: 60px;
   height: 60px;
   border-radius: 60px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   background-color: #ffffff;
   align-items: center;
   justify-content: center;
@@ -192,7 +193,7 @@ const HalfBotton = styled.TouchableOpacity`
   align-self: flex-end;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: white;
 `;
 
 const HalfBottonText = styled.Text`
@@ -339,17 +340,17 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
-                  <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
+                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                    {/* <Touchable
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: 10}}>사진촬영</GreyText>
                     </BorderBox>
                   </Touchable>
-                  {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
-                  <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
+                  <Touchable onPress={() => launchImageLibraryFn()}>
+                    {/* <Touchable
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: 10}}>보관함</GreyText>
@@ -491,14 +492,14 @@ export default ({
                 />
                 <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
                   <HalfBotton onPress={() => setCameraPictureLast(null)}>
-                    <HalfBottonText style={{color: '#e85356'}}>
+                    <HalfBottonText style={{color: styleGuide.palette.primary}}>
                       재촬영
                     </HalfBottonText>
                   </HalfBotton>
                   <HalfBotton
-                    style={{backgroundColor: '#e85356'}}
+                    style={{backgroundColor: styleGuide.palette.primary}}
                     onPress={() => setIsCameraModalVisible(false)}>
-                    <HalfBottonText style={{color: '#fff'}}>
+                    <HalfBottonText style={{color: 'white'}}>
                       선택
                     </HalfBottonText>
                   </HalfBotton>

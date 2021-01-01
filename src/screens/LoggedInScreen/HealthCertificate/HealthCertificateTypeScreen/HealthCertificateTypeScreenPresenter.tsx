@@ -3,9 +3,10 @@ import styled from 'styled-components/native';
 import {RefreshControl} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 import {ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
-import moment from 'moment';
+import styleGuide from '~/constants/styleGuide';
 
 interface IText {
   isSubmited?: boolean;
@@ -13,7 +14,7 @@ interface IText {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;

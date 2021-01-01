@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+import styleGuide from '~/constants/styleGuide';
+
 interface IsBefore {
   isBefore: boolean;
 }
@@ -13,7 +15,10 @@ const TextInputContainer = styled.View<IsBefore>`
   width: 50%;
   height: 40px;
   border-width: 1px;
-  border-color: ${(props) => (props.isBefore ? '#e85356' : '#F2F2F2')};
+  border-color: ${(props) =>
+    props.isBefore
+      ? styleGuide.palette.primary
+      : styleGuide.palette.borderColor};
   align-items: center;
   justify-content: center;
 `;
@@ -21,14 +26,17 @@ const TextInputContainer = styled.View<IsBefore>`
 const TextInput = styled.TextInput`
   font-size: 15px;
   font-weight: bold;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const Box = styled.TouchableOpacity<IsBefore>`
   width: 25%;
   height: 40px;
   border-width: 1px;
-  border-color: ${(props) => (props.isBefore ? '#e85356' : '#F2F2F2')};
+  border-color: ${(props) =>
+    props.isBefore
+      ? styleGuide.palette.primary
+      : styleGuide.palette.borderColor};
   align-items: center;
   justify-content: center;
 `;
@@ -36,7 +44,8 @@ const Box = styled.TouchableOpacity<IsBefore>`
 const BoxText = styled.Text<IsBefore>`
   font-size: 15px;
   font-weight: bold;
-  color: ${(props) => (props.isBefore ? '#e85356' : '#CCCCCC')};
+  color: ${(props) =>
+    props.isBefore ? styleGuide.palette.primary : '#CCCCCC'};
 `;
 
 export const RenderProbation2 = ({

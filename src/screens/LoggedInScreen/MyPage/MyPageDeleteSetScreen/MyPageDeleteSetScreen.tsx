@@ -5,17 +5,18 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
+import Ripple from 'react-native-material-ripple';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import {userLogout} from '~/redux/userSlice';
 import {CheckBoxIcon} from '~/constants/Icons';
-import {useNavigation} from '@react-navigation/native';
-import Ripple from 'react-native-material-ripple';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6; ;
+  background-color: ${styleGuide.palette.backgroundPrimary}; ;
 `;
 
 const WhiteSpace = styled.View`
@@ -58,7 +59,7 @@ const SubmitBtn = styled(Ripple)<IIsConfirm>`
   margin-top: 30px;
   width: ${wp('100%') - 40}px;
   height: 60px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   justify-content: center;
   align-items: center;
   border-radius: 30px;
@@ -136,7 +137,7 @@ export default () => {
         </Title>
         <Check onPress={() => setIsConfirmed(!isConfirmed)}>
           {isConfirmed ? (
-            <CheckBoxIcon size={22} color={'#e85356'} />
+            <CheckBoxIcon size={22} color={styleGuide.palette.primary} />
           ) : (
             <CheckBoxIcon size={22} color={'#E5E5E5'} />
           )}

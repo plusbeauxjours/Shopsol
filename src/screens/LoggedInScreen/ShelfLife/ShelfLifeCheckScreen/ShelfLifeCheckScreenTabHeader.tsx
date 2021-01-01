@@ -7,6 +7,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import {interpolateColor} from 'react-native-redash';
 
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 const ListContainer = styled.View`
   height: 50px;
@@ -112,7 +113,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
             <Tab
               key={index}
               index={index}
-              color={index === 0 ? '#e85356' : '#7f7f7f'}
+              color={index === 0 ? styleGuide.palette.primary : '#7f7f7f'}
               gotoCategory={gotoCategory}
               {...tab}
             />

@@ -34,6 +34,7 @@ import {
   ForwardIcon,
 } from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsFirst {
   height?: number;
@@ -46,7 +47,7 @@ interface IIsBefore {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -97,7 +98,7 @@ const RedText = styled.Text`
 `;
 
 const GreyText = styled.Text`
-  color: #7c7c7c;
+  color: ${styleGuide.palette.greyColor};
   font-size: 13px;
 `;
 
@@ -115,7 +116,7 @@ const BoxTitle = styled.View`
 const TitleText = styled.Text`
   font-size: 16px;
   font-weight: bold;
-  color: #999;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const DateTouchable = styled.TouchableOpacity`
@@ -126,7 +127,7 @@ const DateTouchable = styled.TouchableOpacity`
 
 const BigText = styled.Text`
   font-size: 24px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const WhiteText = styled.Text`
@@ -134,7 +135,7 @@ const WhiteText = styled.Text`
   color: white;
 `;
 const NameText = styled(WhiteText)`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Row = styled.View`
@@ -179,7 +180,7 @@ const ModalContainer = styled.View`
 `;
 
 const ModalBox = styled.View`
-  border-color: #f2f2f2;
+  border-color: #${styleGuide.palette.borderColor};
   border-width: 1px;
   margin: 20px 0;
 `;
@@ -198,12 +199,12 @@ const ModalBarButton = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const ModalButton = styled(ModalBarButton)`
   width: ${wp('50%')}px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   background-color: white;
 `;
 
@@ -222,7 +223,7 @@ const DateBox = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const DateBoxText = styled.Text`
@@ -248,7 +249,7 @@ const DatePickerRoundBtn = styled(Ripple)`
   height: 60px;
   border-width: 0.5px;
   border-radius: 30px;
-  border-color: #888;
+  border-color: ${styleGuide.palette.greyColor};
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -269,7 +270,7 @@ const DatePickerRoundView = styled.View`
 const DatePickerText = styled.Text`
   font-weight: 200;
   font-size: 16px;
-  color: #888;
+  color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
 
@@ -281,7 +282,7 @@ const TopArea = styled.View`
 `;
 
 const EmployeeCardText = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   height: 15px;
   font-size: 10px;
 `;
@@ -303,7 +304,7 @@ const NameBox = styled.View`
 `;
 
 const DateText = styled.Text`
-  color: #999;
+  color: ${styleGuide.palette.greyColor};
   font-size: 12px;
 `;
 
@@ -344,7 +345,7 @@ const SystemSettingButton = styled.TouchableOpacity`
   height: 20px;
   right: 20px;
   border-radius: 20px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   align-items: center;
   justify-content: center;
 `;
@@ -357,7 +358,8 @@ const SystemSettingText = styled.Text`
 const TextInputLine = styled.View<IIsBefore>`
   width: ${wp('100%') - 120}px;
   height: 0.7px;
-  background-color: ${(props) => (props.isBefore ? '#CCCCCC' : '#e85356')};
+  background-color: ${(props) =>
+    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
 `;
 
 export default ({
@@ -1059,10 +1061,12 @@ export default ({
                           setPercentCheck(value);
                           setPercentDirectInput('');
                         }}>
-                        <NameText style={{color: '#e85356'}}>닫기</NameText>
+                        <NameText style={{color: styleGuide.palette.primary}}>
+                          닫기
+                        </NameText>
                       </ModalButton>
                       <ModalButton
-                        style={{backgroundColor: '#e85356'}}
+                        style={{backgroundColor: styleGuide.palette.primary}}
                         onPress={() => checkDirectInput2()}>
                         <NameText style={{color: 'white'}}>확인</NameText>
                       </ModalButton>
@@ -1153,7 +1157,7 @@ export default ({
                           .format('YYYY-MM-01'),
                       )
                     }>
-                    <BackIcon size={22} color={'#f4aaab'} />
+                    <BackIcon size={22} color={styleGuide.palette.secondary} />
                   </DateBox>
                   <DateBoxText>
                     {moment(payDay).format('YYYY년 M월')}
@@ -1164,7 +1168,10 @@ export default ({
                         moment(payDay).add(1, 'months').format('YYYY-MM-01'),
                       )
                     }>
-                    <ForwardIcon size={22} color={'#f4aaab'} />
+                    <ForwardIcon
+                      size={22}
+                      color={styleGuide.palette.secondary}
+                    />
                   </DateBox>
                 </Row>
                 <Row style={{marginTop: 10, justifyContent: 'center'}}>
@@ -1369,7 +1376,7 @@ export default ({
                         moment(annual_START).subtract(1, 'year').format('YYYY'),
                       )
                     }>
-                    <BackIcon size={22} color={'#f4aaab'} />
+                    <BackIcon size={22} color={styleGuide.palette.secondary} />
                   </DateBox>
                   <DateBoxText>{annual_START}년</DateBoxText>
                   <DateBox
@@ -1378,7 +1385,10 @@ export default ({
                         moment(annual_START).add(1, 'year').format('YYYY'),
                       )
                     }>
-                    <ForwardIcon size={22} color={'#f4aaab'} />
+                    <ForwardIcon
+                      size={22}
+                      color={styleGuide.palette.secondary}
+                    />
                   </DateBox>
                 </Row>
                 <GreyText style={{marginTop: 10, textAlign: 'center'}}>

@@ -45,16 +45,16 @@ export default ({
   }
   return (
     <RenderDayPickerTouchable
-      color={isChecked ? '#e85356' : '#CCCCCC'}
+      color={isChecked ? styleGuide.palette.primary : '#CCCCCC'}
       style={{
         backgroundColor:
           isChecked && !isDisabled
-            ? '#e85356'
+            ? styleGuide.palette.primary
             : !isChecked && isDisabled
             ? '#bbb'
             : isChecked && isDisabled
             ? '#bbb'
-            : '#fff',
+            : 'white',
       }}
       disabled={isDisabled}
       onPress={() => {

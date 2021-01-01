@@ -17,6 +17,7 @@ import LoggedInNavigation from '../navigations/LoggedInNavigation';
 import LoggedOutNavigation from '../navigations/LoggedOutNavigation';
 import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/index';
 import Loader from './Loader';
+import styleGuide from '~/constants/styleGuide';
 
 LogBox.ignoreAllLogs(true);
 
@@ -113,11 +114,11 @@ export default () => {
             title: '도움말 전체보기',
             headerRight: () => <CloseBtn />,
             headerStyle: {
-              backgroundColor: '#e85356',
-              borderColor: '#fff',
+              backgroundColor: styleGuide.palette.primary,
+              borderColor: 'white',
               borderWidth: 0,
             },
-            headerTintColor: '#fff',
+            headerTintColor: 'white',
             headerLeft: null,
           }}
         />

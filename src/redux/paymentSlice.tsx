@@ -31,7 +31,7 @@ export const getTOTAL_PAYMENT_WORKING_EMP = (
   try {
     const {data} = await api.getWorkingEmpTotalPay(YEAR, MONTH, STORE_SEQ);
     if (data.message === 'SUCCESS') {
-      dispatch(setTOTAL_PAYMENT_WORKING_EMP(data.result));
+      dispatch(setTOTAL_PAYMENT_WORKING_EMP(data));
     }
   } catch (e) {
     console.log(e);

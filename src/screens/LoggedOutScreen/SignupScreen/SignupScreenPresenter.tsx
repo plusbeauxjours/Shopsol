@@ -17,6 +17,7 @@ import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
 import InputLine from '~/components/InputLine';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsError {
   isError?: boolean;
@@ -24,7 +25,7 @@ interface IsError {
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const TypeContainer = styled.TouchableOpacity`

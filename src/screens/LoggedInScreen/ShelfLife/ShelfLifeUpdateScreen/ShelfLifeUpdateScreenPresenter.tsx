@@ -10,12 +10,13 @@ import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {PictureIcon, CameraIcon, BarCodeIcon} from '~/constants/Icons';
-import {CloseCircleIcon} from '../../../../constants/Icons';
+import {CloseCircleIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import styleGuide from '~/constants/styleGuide';
 
 interface ITextInput {
   isBefore: boolean;
@@ -23,7 +24,7 @@ interface ITextInput {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -59,7 +60,8 @@ const GreyText = styled.Text`
 `;
 
 const TextInput = styled.TextInput<ITextInput>`
-  border-color: ${(props) => (props.isBefore ? '#ddd' : '#e85356')};
+  border-color: ${(props) =>
+    props.isBefore ? '#ddd' : styleGuide.palette.primary};
   justify-content: center;
   align-items: center;
   padding: 10px;
@@ -126,7 +128,7 @@ const CameraPictureCloseButtonText = styled.Text`
 const CameraPictureCloseButton = styled.TouchableOpacity`
   height: 60px;
   width: 100%;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   align-self: flex-end;
   align-items: center;
   justify-content: center;
@@ -136,7 +138,7 @@ const CameraPictureButton = styled.TouchableOpacity`
   width: 60px;
   height: 60px;
   border-radius: 60px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   background-color: #ffffff;
   align-items: center;
   justify-content: center;
@@ -152,7 +154,7 @@ const HalfBotton = styled.TouchableOpacity`
   align-self: flex-end;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: white;
 `;
 
 const HalfBottonText = styled.Text`
@@ -392,14 +394,14 @@ export default ({
                 />
                 <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
                   <HalfBotton onPress={() => setCameraPictureLast(null)}>
-                    <HalfBottonText style={{color: '#e85356'}}>
+                    <HalfBottonText style={{color: styleGuide.palette.primary}}>
                       재촬영
                     </HalfBottonText>
                   </HalfBotton>
                   <HalfBotton
-                    style={{backgroundColor: '#e85356'}}
+                    style={{backgroundColor: styleGuide.palette.primary}}
                     onPress={() => setIsCameraModalVisible(false)}>
-                    <HalfBottonText style={{color: '#fff'}}>
+                    <HalfBottonText style={{color: 'white'}}>
                       선택
                     </HalfBottonText>
                   </HalfBotton>

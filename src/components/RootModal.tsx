@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 
 import {setAlertVisible} from '../redux/alertSlice';
+import styleGuide from '~/constants/styleGuide';
 
 interface IColor {
   color: string;
@@ -38,18 +39,19 @@ const Box = styled.View`
 
 const Title = styled.Text`
   font-size: 24px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   margin-bottom: 30px;
 `;
 
 const Content = styled.Text`
   font-size: 15px;
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const WithHelpBtn = styled(Ripple)<IColor>`
   height: 60px;
-  width: ${(props) => (props.color === '#e85356' ? wp('20%') : wp('80%'))}px;
+  width: ${(props) =>
+    props.color === styleGuide.palette.primary ? wp('20%') : wp('80%')}px;
   align-items: center;
   justify-content: center;
   background-color: ${(props) => props.color};
@@ -66,17 +68,18 @@ const HalfBtnLeft = styled(Ripple)<IWarning>`
 
 const HalfTextLeft = styled.Text`
   font-size: 18px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const HalfBtnRight = styled(HalfBtnLeft)<IWarning>`
-  background-color: ${(props) => (props.warning == 'yes' ? '#fff' : '#e85356')};
+  background-color: ${(props) =>
+    props.warning == 'yes' ? 'white' : styleGuide.palette.primary};
   border-left-width: ${(props) => (props.warning == 'yes' ? '1px' : 0)};
 `;
 
 const HalfTextRight = styled.Text<IWarning>`
   font-size: 18px;
-  color: ${(props) => (props.warning == 'yes' ? '#B91C1B' : '#fff')};
+  color: ${(props) => (props.warning == 'yes' ? '#B91C1B' : 'white')};
 `;
 
 const BarBtn = styled(Ripple)`
@@ -84,7 +87,7 @@ const BarBtn = styled(Ripple)`
   width: ${wp('100%')}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 const WhiteText = styled.Text`
   font-size: 16px;
@@ -133,7 +136,7 @@ export default ({alert}) => {
           </BackGround>
           <Row>
             <WithHelpBtn
-              color={'#fff'}
+              color={'white'}
               onPress={() => onOKPress()}
               rippleColor={'#666'}
               rippleSize={1200}
@@ -142,9 +145,9 @@ export default ({alert}) => {
               <HalfTextLeft>{alert.okButtonText}</HalfTextLeft>
             </WithHelpBtn>
             <WithHelpBtn
-              color={'#e85356'}
+              color={styleGuide.palette.primary}
               onPress={() => onPressExplain()}
-              rippleColor={'##e39a9c'}
+              rippleColor={'##d6cbcc'}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.1}>
@@ -163,7 +166,7 @@ export default ({alert}) => {
               <HalfBtnLeft
                 warning={alert.warning}
                 onPress={() => onCancelPress()}
-                rippleColor={'#e39a9c'}
+                rippleColor={styleGuide.palette.secondary}
                 rippleSize={1200}
                 rippleDuration={600}
                 rippleOpacity={0.45}>
@@ -184,7 +187,7 @@ export default ({alert}) => {
           ) : (
             <BarBtn
               onPress={() => onOKPress()}
-              rippleColor={'#e39a9c'}
+              rippleColor={styleGuide.palette.secondary}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.45}>

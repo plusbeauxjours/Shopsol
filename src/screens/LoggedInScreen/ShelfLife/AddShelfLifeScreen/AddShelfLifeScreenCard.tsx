@@ -50,7 +50,7 @@ const DateText = styled.Text`
 
 const WhiteItem = styled(Ripple)`
   flex: 1;
-  background-color: #fff;
+  background-color: white;
   border-width: 0.7px;
   border-color: #ccc;
   width: ${wp('100%') - 150}px;

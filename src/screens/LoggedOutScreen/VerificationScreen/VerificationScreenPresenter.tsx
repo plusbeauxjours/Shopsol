@@ -11,6 +11,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import {getText1, getText2, getText3} from '~/constants/getText';
 import {CheckMarkIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IIsBefore {
   isBefore: boolean;
@@ -28,12 +29,12 @@ const Container = styled.View`
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const RequestText = styled.Text`
   font-size: 14px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const VerifyText = styled.Text`
@@ -46,12 +47,12 @@ const RequestButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   font-size: 16px;
 `;
 
@@ -94,7 +95,8 @@ const VerifyButton = styled.TouchableOpacity<IIsBefore>`
   padding: 8px 14px;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.isBefore ? '#CCCCCC' : '#e85356')};
+  background-color: ${(props) =>
+    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
@@ -104,7 +106,7 @@ const WhiteText = styled.Text`
 `;
 
 const Text = styled.Text`
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
   font-size: 15px;
 `;
 
@@ -113,7 +115,7 @@ const ButtonAfter = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const Row = styled.TouchableOpacity`
@@ -125,14 +127,15 @@ const Row = styled.TouchableOpacity`
 const PolicyText = styled.Text<IPolicyCheck>`
   flex: 1;
   margin-left: 5px;
-  color: ${(props) => (props.policyCheck ? '#000' : '#aaa')};
+  color: ${(props) =>
+    props.policyCheck ? 'black' : styleGuide.palette.greyColor};
   font-size: 20px;
   font-weight: bold;
 `;
 
 const GreyText = styled.Text`
-color: #999
-font-size: 14px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: 14px;
 `;
 
 const BoxText = styled.Text`

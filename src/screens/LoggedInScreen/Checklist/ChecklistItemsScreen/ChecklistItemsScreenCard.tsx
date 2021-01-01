@@ -6,6 +6,7 @@ import Ripple from 'react-native-material-ripple';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {EllipseIcon, ForwardIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Touchable = styled(Ripple)`
   width: 100%;
@@ -51,7 +52,7 @@ const CheckpointBox = styled.View`
 
 const ChecktimeText = styled.Text`
   font-size: 13px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const CalendarText = styled.Text`

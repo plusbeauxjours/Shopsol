@@ -7,6 +7,8 @@ import {
 import FastImage from 'react-native-fast-image';
 import Ripple from 'react-native-material-ripple';
 
+import styleGuide from '~/constants/styleGuide';
+
 const Container = styled.View`
   flex: 1;
   justify-content: space-between;
@@ -25,12 +27,12 @@ const BarButton = styled(Ripple)`
   height: ${hp('8%')}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const Text = styled.Text`
-  color: #707070;
-  font-size: 15px;
+  color: ${styleGuide.palette.greyColor}
+  font-size: ${styleGuide.fontSize.middle};;
 `;
 
 const UnderLineText = styled(Text)`
@@ -39,7 +41,7 @@ const UnderLineText = styled(Text)`
 
 const WhiteText = styled.Text`
   color: white;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large};
 `;
 
 const Footer = styled.View`

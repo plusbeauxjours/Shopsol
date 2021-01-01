@@ -4,6 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
 import utils from './utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IProps {
   size?: number;
@@ -26,7 +27,7 @@ export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
         : 'ios-chevron-forward-outline'
     }
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -44,7 +45,7 @@ export const PlayCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'play-circle-outline'}
     size={size ?? 22}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -52,7 +53,7 @@ export const StopCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'stop-circle-outline'}
     size={size ?? 22}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -62,7 +63,7 @@ export const BackIcon: React.FC<IProps> = ({size, color}) => (
       utils.isAndroid ? 'md-chevron-back-outline' : 'ios-chevron-back-outline'
     }
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -70,7 +71,7 @@ export const CartIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-cart-outline' : 'ios-cart-outline'}
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -78,19 +79,23 @@ export const HomeIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-home-outline' : 'ios-home-outline'}
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
 export const CloseIcon: React.FC<IProps> = ({size, color}) => (
-  <Ionicons name={'close-sharp'} size={size ?? 14} color={color ?? '#e85356'} />
+  <Ionicons
+    name={'close-sharp'}
+    size={size ?? 14}
+    color={color ?? styleGuide.palette.primary}
+  />
 );
 
 export const LocationIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-location' : 'ios-location'}
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -98,7 +103,7 @@ export const LogoutIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'log-out-outline'}
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -106,7 +111,7 @@ export const CheckBoxIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'checkbox-outline'}
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -114,7 +119,7 @@ export const CheckMarkIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid ? 'md-checkmark' : 'ios-checkmark;'}
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -122,7 +127,7 @@ export const RadioBtnOnIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'radio-button-on-outline'}
     size={size ?? 14}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -147,7 +152,7 @@ export const AddCircleIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name="add-circle-outline"
     size={size ?? 30}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -157,7 +162,7 @@ export const PersonCircleIcon: React.FC<IProps> = ({size, color}) => (
       utils.isAndroid ? 'md-person-circle-outline' : 'ios-person-circle-outline'
     }
     size={size ?? 17}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -209,7 +214,7 @@ export const QrCodeIcon: React.FC<IProps> = ({size, color}) => (
   <MaterialCommunityIcons
     name="qrcode-scan"
     size={size ?? 36}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -225,7 +230,7 @@ export const CameraIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'camera-outline'}
     size={size ?? 30}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -241,7 +246,7 @@ export const PersonAddIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'person-add-outline'}
     size={size ?? 22}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -257,19 +262,19 @@ export const SearchIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'search-outline'}
     size={size ?? 28}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 export const CreateIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'create-outline'}
     size={size ?? 28}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
 export const AddIcon: React.FC<IProps> = ({size, color}) => (
-  <Ionicons name={'add-outline'} size={size ?? 40} color={color ?? '#fff'} />
+  <Ionicons name={'add-outline'} size={size ?? 40} color={color ?? 'white'} />
 );
 
 export const NewBoxIcon: React.FC<IProps> = ({size, color}) => (
@@ -308,7 +313,7 @@ export const PictureIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'image-outline'}
     size={size ?? 40}
-    color={color ?? '#e85356'}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 
@@ -317,7 +322,11 @@ export const PhoneIcon: React.FC<IProps> = ({size, color}) => (
 );
 
 export const BarCodeIcon: React.FC<IProps> = ({size, color}) => (
-  <FontAwesome name={'barcode'} size={size ?? 40} color={color ?? '#e85356'} />
+  <FontAwesome
+    name={'barcode'}
+    size={size ?? 40}
+    color={color ?? styleGuide.palette.primary}
+  />
 );
 
 export const CalendarTimesIcon: React.FC<IProps> = ({size, color}) => (

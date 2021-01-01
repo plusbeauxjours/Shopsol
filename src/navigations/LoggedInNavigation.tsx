@@ -78,6 +78,8 @@ import BackBtn from '../components/Header/BackBtn';
 import HomeBtn from '../components/Header/HomeBtn';
 import CalendarInfoHeader from '../components/Header/CalendarInfoHeader';
 
+import styleGuide from './styleGuide';
+
 const LoggedInNavigation = createStackNavigator();
 export default () => {
   const alert = useSelector((state: any) => state.alertReducer);
@@ -88,12 +90,12 @@ export default () => {
         initialRouteName={'SelectStoreScreen'}
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#e85356',
-            borderColor: '#fff',
+            backgroundColor: styleGuide.palette.primary,
+            borderColor: 'white',
             borderWidth: 0,
           },
           headerTitleAlign: 'center',
-          headerTintColor: '#fff',
+          headerTintColor: 'white',
           headerBackTitleVisible: false,
           headerBackImage: () => <BackBtn />,
           headerRight: () => <HomeBtn />,

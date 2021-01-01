@@ -5,6 +5,7 @@ import {mix, mixColor} from 'react-native-redash';
 import styled from 'styled-components/native';
 
 import {DownIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const IconContainer = styled.View`
   height: 20px;
@@ -22,7 +23,7 @@ export default ({transition}) => {
   const backgroundColor = mixColor(
     transition,
     processColor('#ddd'),
-    processColor('#e85356'),
+    processColor(styleGuide.palette.primary),
   ) as Animated.Node<number>;
   return (
     <IconContainer

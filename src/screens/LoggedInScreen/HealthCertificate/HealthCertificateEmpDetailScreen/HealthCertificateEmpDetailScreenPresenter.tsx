@@ -18,10 +18,11 @@ import {
   CloseCircleOutlineIcon,
 } from '~/constants/Icons';
 import Loader from '~/components/Loader';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6; ;
+  background-color: ${styleGuide.palette.backgroundPrimary}; ;
 `;
 const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
@@ -88,7 +89,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 const DateArrowRight = styled(DateArrowLeft)``;
 const DateTextArea = styled.View`
@@ -115,14 +116,14 @@ const ModifyButton = styled.TouchableOpacity`
   width: ${(wp('100%') - 50) / 2}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
 const SaveButton = styled(ModifyButton)`
   background-color: transparent;
   border-width: 2px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
 `;
 
 const RegDate = styled.Text`
@@ -241,7 +242,7 @@ export default ({
                       increaseSELECT_INDEX();
                     }
                   }}>
-                  <BackIcon size={22} color={'#f4aaab'} />
+                  <BackIcon size={22} color={styleGuide.palette.secondary} />
                 </DateArrowLeft>
                 <DateTextArea>
                   <DateText>
@@ -251,7 +252,10 @@ export default ({
                 <DateArrowRight
                   style={{marginRight: 5}}
                   onPress={() => onRefresh()}>
-                  <ReloadCircleIcon size={18} color={'#f4aaab'} />
+                  <ReloadCircleIcon
+                    size={18}
+                    color={styleGuide.palette.secondary}
+                  />
                 </DateArrowRight>
                 <DateArrowRight
                   onPress={() => {
@@ -261,7 +265,7 @@ export default ({
                       decreaseSELECT_INDEX();
                     }
                   }}>
-                  <ForwardIcon size={22} color={'#f4aaab'} />
+                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
                 </DateArrowRight>
               </Date>
               <ContentWrapper>
@@ -321,7 +325,9 @@ export default ({
                     SELECT_INDEX,
                   });
                 }}>
-                <Text style={{fontSize: 16, color: '#e85356'}}>갱신하기</Text>
+                <Text style={{fontSize: 16, color: styleGuide.palette.primary}}>
+                  갱신하기
+                </Text>
               </SaveButton>
             </Row>
             <WhiteSpace />

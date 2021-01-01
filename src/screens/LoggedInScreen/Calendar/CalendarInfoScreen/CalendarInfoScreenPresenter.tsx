@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {DownIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 import CalendarInfoScreenCard from './CalendarInfoScreenCard';
 
 interface IWeekend {
@@ -39,7 +40,7 @@ const KnobIconContainer = styled.View`
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const Bold = styled.Text<IWeekend>`
@@ -144,9 +145,9 @@ export default ({
       renderKnob={renderKnob}
       markedDates={markedDates}
       theme={{
-        agendaTodayColor: '#e85356',
+        agendaTodayColor: styleGuide.palette.primary,
         selectedDayBackgroundColor: '#ddd',
-        todayTextColor: '#e85356',
+        todayTextColor: styleGuide.palette.primary,
         'stylesheet.agenda.list': {
           container: {
             flexDirection: 'column',
@@ -184,7 +185,7 @@ export default ({
                       DAY == '토'
                         ? '#87ceeb'
                         : DAY == '일'
-                        ? '#e85356'
+                        ? styleGuide.palette.primary
                         : 'black',
                   }}>
                   {day.month}월 {day.day}일 {DAY}요일
@@ -202,7 +203,7 @@ export default ({
                         DAY == '토'
                           ? '#87ceeb'
                           : DAY == '일'
-                          ? '#e85356'
+                          ? styleGuide.palette.primary
                           : 'black',
                     }}>
                     {day.month}월 {day.day}일 {DAY}요일

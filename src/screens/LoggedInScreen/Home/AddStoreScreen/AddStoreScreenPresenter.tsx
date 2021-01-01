@@ -13,6 +13,7 @@ import {
   RadioBtnOffIcon,
   HelpCircleIcon,
 } from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IIsPerple {
   isPerple: boolean;
@@ -30,7 +31,7 @@ interface IsError {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Text = styled.Text``;
@@ -73,7 +74,7 @@ const RequestButton = styled.TouchableOpacity`
   padding: 7px 14px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
@@ -97,7 +98,7 @@ const Column = styled.View`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -105,13 +106,19 @@ const CheckDay = styled.TouchableOpacity<IIsPerple>`
   width: 20%;
   height: 40px;
   border-width: 1px;
-  border-color: ${(props) => (props.isPerple ? '#e85356' : '#F2F2F2')};
+  border-color: ${(props) =>
+    props.isPerple
+      ? styleGuide.palette.primary
+      : styleGuide.palette.borderColor};
   align-items: center;
   justify-content: center;
 `;
 
 const CheckDayText = styled.Text<IIsPerple>`
-  color: ${(props) => (props.isPerple ? '#e85356' : '#F2F2F2')};
+  color: ${(props) =>
+    props.isPerple
+      ? styleGuide.palette.primary
+      : styleGuide.palette.borderColor};
 `;
 
 const TypeContainer = styled.TouchableOpacity`
@@ -145,13 +152,6 @@ const TypeCheckCase = styled.View`
   flex-direction: row;
   justify-content: space-around;
   margin-top: 8px;
-`;
-
-const InputText = styled.Text<IIsBefore>`
-  padding: 12px 0;
-  margin-left: 5px;
-  font-size: 15px;
-  color: ${(props) => (props.isBefore ? '#E5E5E5' : 'black')};
 `;
 
 const WhiteSpace = styled.View`
@@ -194,7 +194,7 @@ const ModalConfirmText = styled.Text<IColor>`
 
 const ModalTitle = styled.Text`
   font-size: 17px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   padding: 0 20px;
   margin-top: 20px;
 `;
@@ -207,7 +207,7 @@ const ModalInfoText = styled.Text`
 
 const ModalCalendar = styled.View`
   background-color: white;
-  border-color: #f2f2f2;
+  border-color: #${styleGuide.palette.borderColor};
   border-width: 1px;
   margin: 20px 0;
 `;
@@ -215,7 +215,7 @@ const ModalCalendar = styled.View`
 const SubmitBtnContainer = styled.TouchableOpacity`
   width: 100%;
   height: ${hp('7%')}px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   justify-content: center;
   align-items: center;
 `;
@@ -231,13 +231,13 @@ const RequestBorderButton = styled.TouchableOpacity`
   padding: 7px 14px;
   align-items: center;
   justify-content: center;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   border-width: 1px;
   border-radius: 20px;
 `;
 
 const RequestBorderText = styled.Text`
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 export default ({
@@ -644,14 +644,16 @@ export default ({
               </ModalCalendar>
               <ModalConfirmArea>
                 <ModalConfirm
-                  color={'#fff'}
+                  color={'white'}
                   onPress={() => {
                     setModalVisible3(!modalVisible3);
                   }}>
-                  <ModalConfirmText color={'#e85356'}>닫기</ModalConfirmText>
+                  <ModalConfirmText color={styleGuide.palette.primary}>
+                    닫기
+                  </ModalConfirmText>
                 </ModalConfirm>
                 <ModalConfirm
-                  color={'#e85356'}
+                  color={styleGuide.palette.primary}
                   onPress={() => checkDirectInput()}>
                   <ModalConfirmText color={'white'}>확인</ModalConfirmText>
                 </ModalConfirm>

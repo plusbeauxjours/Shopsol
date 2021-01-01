@@ -18,6 +18,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import RoundBtn from '~/components/Btn/RoundBtn';
 import ChecklistAddScreenCard from './ChecklistAddScreenCard';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsError {
   isError: boolean;
@@ -25,7 +26,7 @@ interface IsError {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -75,7 +76,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -83,11 +84,11 @@ const ChecktimeButton = styled.TouchableOpacity`
   padding: 5px 20px;
   border-width: 1px;
   border-radius: 30px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
 `;
 
 const ChecktimeButtonText = styled.Text`
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   font-weight: 400;
 `;
 

@@ -4,20 +4,21 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
-import PaymentInfoScreenCard from './PaymentInfoScreenCard';
+import {ActivityIndicator} from 'react-native';
+import moment from 'moment';
 
+import PaymentInfoScreenCard from './PaymentInfoScreenCard';
 import {
   ForwardIcon,
   BackIcon,
   ReloadCircleIcon,
   HelpCircleIcon,
 } from '~/constants/Icons';
-import {ActivityIndicator} from 'react-native';
-import moment from 'moment';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
   align-items: center;
 `;
 
@@ -57,7 +58,7 @@ const DateArrow = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const DateTextArea = styled.View`
@@ -89,14 +90,14 @@ const Line = styled.View`
   height: 1px;
   width: ${wp('80%')};
   margin-bottom: 10px;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
 `;
 
 const EmployeeListBox = styled.View`
   width: 100%;
   align-items: center;
   border-radius: 20px;
-  border-color: #f2f2f2;
+  border-color: #${styleGuide.palette.borderColor};
   background-color: white;
 `;
 
@@ -122,7 +123,6 @@ export default ({
   backpay,
   TOTAL_PAYMENT_WORKING_EMP,
   explainModal,
-  EMPLOYEE_LIST,
   loading,
   startDate,
 }) => {
@@ -136,7 +136,7 @@ export default ({
           <Section>
             <DateBox>
               <DateArrow onPress={() => backpay()}>
-                <BackIcon size={22} color={'#f4aaab'} />
+                <BackIcon size={22} color={styleGuide.palette.secondary} />
               </DateArrow>
               <DateTextArea>
                 <DateText>{moment(startDate).format('YYYY년 M월')}</DateText>
@@ -151,10 +151,13 @@ export default ({
                 </DateText>
               </DateTextArea>
               <DateArrow style={{marginRight: 5}} onPress={() => onRefresh()}>
-                <ReloadCircleIcon size={18} color={'#f4aaab'} />
+                <ReloadCircleIcon
+                  size={18}
+                  color={styleGuide.palette.secondary}
+                />
               </DateArrow>
               <DateArrow onPress={() => nextpay()}>
-                <ForwardIcon size={22} color={'#f4aaab'} />
+                <ForwardIcon size={22} color={styleGuide.palette.secondary} />
               </DateArrow>
             </DateBox>
             <Line />
@@ -178,42 +181,42 @@ export default ({
                     </Touchable>
                   </Row>
                   <BoxTitleText3>
-                    {TOTAL_PAYMENT_WORKING_EMP.stackedpay}
+                    {TOTAL_PAYMENT_WORKING_EMP?.STACKEDPAY}
                   </BoxTitleText3>
                 </Pay>
                 <Pay>
                   <BoxTitleText3>누적급여</BoxTitleText3>
                   <BoxTitleText3>
-                    {TOTAL_PAYMENT_WORKING_EMP.total}
+                    {TOTAL_PAYMENT_WORKING_EMP?.TOTALPAY}
                   </BoxTitleText3>
                 </Pay>
                 <Pay>
                   <BoxTitleText3>주휴수당</BoxTitleText3>
                   <BoxTitleText3>
-                    {TOTAL_PAYMENT_WORKING_EMP.weekpay}
+                    {TOTAL_PAYMENT_WORKING_EMP?.WEEKPAY}
                   </BoxTitleText3>
                 </Pay>
               </PayBox>
             )}
           </Section>
-          <Section>
-            <EmployeeListBox>
-              {EMPLOYEE_LIST?.workinglist?.map((data) => (
-                <PaymentInfoScreenCard
-                  key={data.MEMBER_SEQ}
-                  name={data.EMP_NAME}
-                  isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
-                  image={
-                    data.images.length == 0 ? '3.png' : data.images[0].IMAGE
-                  }
-                  data={data}
-                  STORE={STORE}
-                  STORE_SEQ={STORE_SEQ}
-                  STOREPAY_SHOW={STOREPAY_SHOW}
-                />
-              ))}
-            </EmployeeListBox>
-          </Section>
+          {TOTAL_PAYMENT_WORKING_EMP && (
+            <Section>
+              <EmployeeListBox>
+                {TOTAL_PAYMENT_WORKING_EMP?.emps?.map((data) => (
+                  <PaymentInfoScreenCard
+                    key={data.MEMBER_SEQ}
+                    name={data.EMP_NAME}
+                    isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                    image={data.IMAGE}
+                    data={data}
+                    STORE={STORE}
+                    STORE_SEQ={STORE_SEQ}
+                    STOREPAY_SHOW={STOREPAY_SHOW}
+                  />
+                ))}
+              </EmployeeListBox>
+            </Section>
+          )}
         </Container>
       </ScrollView>
     </BackGround>

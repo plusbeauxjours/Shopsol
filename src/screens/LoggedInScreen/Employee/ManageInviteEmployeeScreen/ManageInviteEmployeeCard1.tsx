@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 
 import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsLast {
   isLast?: boolean;
@@ -28,7 +29,7 @@ const EmployeeBox = styled.View`
 
 const AdmitText = styled.Text`
   font-size: 16px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const RefuseText = styled(AdmitText)`

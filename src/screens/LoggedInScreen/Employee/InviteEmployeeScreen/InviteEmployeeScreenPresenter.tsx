@@ -11,6 +11,7 @@ import InviteEmployeeScreenCard from './InviteEmployeeScreenCard';
 import {HelpCircleIcon, SearchIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IIsBefore {
   isBefore: boolean;
@@ -18,7 +19,7 @@ interface IIsBefore {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -45,7 +46,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -115,7 +116,7 @@ const SearchIconContainer = styled.View`
 
 const SearchInput = styled.TextInput`
   border-width: 1px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   border-radius: 30px;
   padding-left: 20px;
   padding-top: 2px;
@@ -130,7 +131,8 @@ const SubmitButton = styled(Ripple)<IIsBefore>`
   height: 60px;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.isBefore ? '#cccccc' : '#e85356')};
+  background-color: ${(props) =>
+    props.isBefore ? '#cccccc' : styleGuide.palette.primary};
 `;
 
 const WhiteText = styled.Text`
@@ -422,7 +424,7 @@ export default ({
             onPress={() => {
               choice?.length === 0 ? {} : onPressSubmitButton();
             }}
-            rippleColor={choice?.length === 0 ? '#fff' : '#e39a9c'}
+            rippleColor={choice?.length === 0 ? 'white' : '#e39a9c'}
             rippleDuration={600}
             rippleSize={1200}
             rippleOpacity={0.45}>

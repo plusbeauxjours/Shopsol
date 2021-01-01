@@ -4,12 +4,13 @@ import {RefreshControl, FlatList, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 import Ripple from 'react-native-material-ripple';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import FastImage from 'react-native-fast-image';
 
 import DonutCard from '~/components/DonutCard';
 import ShelfLifeCheckScreenCard from './ShelfLifeCheckScreenCard';
 import ShelfLifeCheckScreenHeader from './ShelfLifeCheckScreenHeader';
 import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
-import FastImage from 'react-native-fast-image';
+import styleGuide from '~/constants/styleGuide';
 
 interface IColor {
   color: string;
@@ -22,7 +23,7 @@ interface ICard {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 const View = styled.View``;
 const Container = styled.View`
@@ -55,7 +56,7 @@ const Card = styled(Ripple)<ICard>`
 const CardGreyLine = styled.View`
   width: 180px;
   height: 1px;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   margin: 10px 0 10px 0;
 `;
 
@@ -141,14 +142,14 @@ const AddButton = styled.TouchableOpacity`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
 
 const SearchInput = styled.TextInput`
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
   width: ${wp('100%') - 40}px;
   background-color: white;
   border-radius: 30px;
@@ -337,7 +338,10 @@ export default ({
                   value={search}
                 />
                 <CloseIconContainer onPress={() => setSearch('')}>
-                  <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
+                  <CloseCircleOutlineIcon
+                    color={styleGuide.palette.secondary}
+                    size={24}
+                  />
                 </CloseIconContainer>
               </SearchInputContainer>
               {SHELFLIFE_DATA?.map(({name, color, items}, index) => (

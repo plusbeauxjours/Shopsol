@@ -10,10 +10,10 @@ import {mix, useTransition} from 'react-native-redash';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import {ForwardArrowIcon} from '../../../../constants/Icons';
+import {ForwardArrowIcon} from '~/constants/Icons';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
-
+import styleGuide from '~/constants/styleGuide';
 interface IsSelected {
   isSelected: boolean;
   color?: string;
@@ -25,7 +25,7 @@ interface IsFirst {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -110,7 +110,8 @@ const SideText = styled.Text`
 
 const TimePickBoxTimeText = styled.Text<IsSelected>`
   font-size: 17px;
-  color: ${(props) => (props.isSelected ? '#e85356' : '#cccccc')};
+  color: ${(props) =>
+    props.isSelected ? styleGuide.palette.primary : '#cccccc'};
 `;
 
 const DatePickerContainer = styled.View`
@@ -164,7 +165,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 

@@ -21,6 +21,7 @@ import FastImage from 'react-native-fast-image';
 
 import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsEmpName {
   isEmpName: string;
@@ -49,7 +50,7 @@ const RowSpace = styled(Row)`
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -69,7 +70,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -113,7 +114,7 @@ const CalendarTitle = styled.View`
   padding: 20px;
   justify-content: space-between;
   align-items: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const CalendarTextBox = styled.View`
@@ -191,12 +192,13 @@ const ChecklistIconContainer = styled.View<IsEmpName>`
   height: 100px;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.isEmpName ? '#e85356' : '#ddd')};
+  background-color: ${(props) =>
+    props.isEmpName ? styleGuide.palette.primary : '#ddd'};
 `;
 
 const ChecklistTypeText1 = styled.Text`
   align-self: flex-start;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   font-size: 11px;
 `;
 
@@ -224,7 +226,7 @@ const AddButton = styled.TouchableOpacity`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
@@ -372,10 +374,13 @@ export default ({
                   setDate(yesterday);
                   fetchData(yesterday);
                 }}>
-                <BackIcon size={22} color={'#f4aaab'} />
+                <BackIcon size={22} color={styleGuide.palette.secondary} />
               </DateArrowLeft>
               <DateToday onPress={() => fetchData(date)}>
-                <ReloadCircleIcon size={18} color={'#f4aaab'} />
+                <ReloadCircleIcon
+                  size={18}
+                  color={styleGuide.palette.secondary}
+                />
               </DateToday>
               <DateTextArea>
                 <DateText>{moment(date).format('YYYY년 M월 D일')}</DateText>
@@ -393,14 +398,14 @@ export default ({
                   );
                   setIsCalendarModalVisible(true);
                 }}>
-                <CalendarIcon size={18} color={'#f4aaab'} />
+                <CalendarIcon size={18} color={styleGuide.palette.secondary} />
               </CalendarOpenBtn>
               <DateArrowRight
                 onPress={() => {
                   setDate(tomorrow);
                   fetchData(tomorrow);
                 }}>
-                <ForwardIcon size={22} color={'#f4aaab'} />
+                <ForwardIcon size={22} color={styleGuide.palette.secondary} />
               </DateArrowRight>
             </Date>
           </Section>
@@ -543,7 +548,7 @@ export default ({
           }}
           theme={{
             arrowColor: '#000',
-            todayTextColor: '#e85356',
+            todayTextColor: styleGuide.palette.primary,
           }}
           markingType={'multi-dot'}
           hideExtraDays={true}

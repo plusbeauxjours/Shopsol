@@ -10,14 +10,14 @@ import FastImage from 'react-native-fast-image';
 
 import SelectStoreCard from './SelectStoreCard';
 import {AddCircleIcon} from '~/constants/Icons';
-
+import styleGuide from '~/constants/styleGuide';
 interface IIsStore {
   isStore?: boolean;
 }
 
 const BackGround = styled.View<IIsStore>`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
   padding-top: ${(props) => (props.isStore ? 60 : 0)}px;
 `;
 
@@ -47,7 +47,7 @@ const EmptyText = styled.Text`
 `;
 
 const AddStoreButtonText = styled.Text`
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   font-weight: bold;
 `;
 
@@ -71,7 +71,7 @@ const AddStoreButton = styled(Ripple)`
   border-radius: 30px;
   background-color: white;
   border-width: 2px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   align-self: center;
   shadow-opacity: 0.9;
   shadow-radius: 5px;

@@ -3,13 +3,14 @@ import styled from 'styled-components/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Animated from 'react-native-reanimated';
 import {mix, useTransition} from 'react-native-redash';
+import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 
 import EmpPayInfoCard1 from './EmpPayInfoCard1';
 import EmpPayInfoCard2 from './EmpPayInfoCard2';
-import moment from 'moment';
-import FastImage from 'react-native-fast-image';
 import {ForwardIcon, BackIcon, ReloadCircleIcon} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsFirst {
   isFirst?: boolean;
@@ -17,7 +18,7 @@ interface IsFirst {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -66,7 +67,7 @@ const DateArrow = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const DateTextArea = styled.View`
@@ -94,7 +95,7 @@ const DateBox = styled(Row)`
 const BoxTitleText = styled.Text`
   font-weight: bold;
   font-size: 12px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const DetailRowText = styled.Text`
@@ -127,7 +128,7 @@ const NavigationButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   border-radius: 6px;
 `;
 
@@ -164,7 +165,7 @@ const SubItemContainer = styled(MainItemContainer)`
   padding-left: 40px;
   padding-top: 0;
   height: 25px;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ListTouchable = styled.TouchableWithoutFeedback`
@@ -251,7 +252,7 @@ export default ({
     <TopArea>
       <DateBox>
         <DateArrow onPress={() => backpay()}>
-          <BackIcon size={22} color={'#f4aaab'} />
+          <BackIcon size={22} color={styleGuide.palette.secondary} />
         </DateArrow>
         <DateTextArea>
           <DateBoxText>{moment(date).format('YYYY년 M월')}</DateBoxText>
@@ -266,10 +267,10 @@ export default ({
           </DateBoxText>
         </DateTextArea>
         <DateArrow style={{marginRight: 5}} onPress={() => fetchData()}>
-          <ReloadCircleIcon size={18} color={'#f4aaab'} />
+          <ReloadCircleIcon size={18} color={styleGuide.palette.secondary} />
         </DateArrow>
         <DateArrow onPress={() => nextpay()}>
-          <ForwardIcon size={22} color={'#f4aaab'} />
+          <ForwardIcon size={22} color={styleGuide.palette.secondary} />
         </DateArrow>
       </DateBox>
     </TopArea>

@@ -8,17 +8,18 @@ import {
 import Animated from 'react-native-reanimated';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import Modal from 'react-native-modal';
+import LottieView from 'lottie-react-native';
 
 import DonutCard from '~/components/DonutCard';
 import Graph from '~/components/Graph';
-import Modal from 'react-native-modal';
-import LottieView from 'lottie-react-native';
 import {
   UpIcon,
   BackIcon,
   ForwardIcon,
   CloseCircleOutlineIcon,
 } from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IColor {
   color: string;
@@ -31,7 +32,7 @@ interface ICard {
 const ScrollView = styled.ScrollView``;
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const View = styled.View``;
@@ -91,7 +92,7 @@ const Card = styled(Ripple)<ICard>`
 const CardGreyLine = styled.View`
   width: 180px;
   height: 1px;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   margin: 10px 0 10px 0;
 `;
 
@@ -138,7 +139,7 @@ const EmpCardRow = styled.View`
   align-items: center;
   width: ${wp('100%') - 80}px;
   border-bottom-width: 1px;
-  border-bottom-color: #f2f2f2;
+  border-bottom-color: #${styleGuide.palette.borderColor};
   padding-bottom: 10px;
   margin-bottom: 20px;
 `;
@@ -210,7 +211,7 @@ const GotoTopButton = styled.TouchableOpacity`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
@@ -224,7 +225,7 @@ const ModalSection = styled.View`
 
 const SearchInput = styled.TextInput`
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color:${styleGuide.palette.secondary}
   width: ${wp('100%') - 40}px;
   background-color: white;
   border-radius: 30px;
@@ -249,7 +250,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -464,7 +465,7 @@ export default ({
             <DateSection>
               <Date>
                 <DateArrowLeft onPress={() => prevWeek()}>
-                  <BackIcon size={22} color={'#f4aaab'} />
+                  <BackIcon size={22} color={styleGuide.palette.secondary} />
                 </DateArrowLeft>
                 <DateTextArea>
                   <DateText>
@@ -477,7 +478,7 @@ export default ({
                   </DateText>
                 </DateTextArea>
                 <DateArrowRight onPress={() => nextWeek()}>
-                  <ForwardIcon size={22} color={'#f4aaab'} />
+                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
                 </DateArrowRight>
               </Date>
             </DateSection>
@@ -498,7 +499,7 @@ export default ({
                     {totalWORKING_COUNT != 0 && totalWORKING_EMP != 0 && (
                       <DonutCard
                         percentage={totalWORKING_COUNT / totalWORKING_EMP}
-                        color={'#e85356'}
+                        color={styleGuide.palette.primary}
                         max={86400000}
                       />
                     )}
@@ -514,7 +515,7 @@ export default ({
                           .asHours(),
                       ) != 0 && (
                         <PercentageSubText
-                          color={'#e85356'}
+                          color={styleGuide.palette.primary}
                           style={{fontSize: 18}}>
                           {Math.trunc(
                             moment
@@ -530,7 +531,7 @@ export default ({
                           .minutes(),
                       ) != 0 && (
                         <PercentageSubText
-                          color={'#e85356'}
+                          color={styleGuide.palette.primary}
                           style={{fontSize: 18}}>
                           {moment
                             .duration(totalWORKING_COUNT / totalWORKING_EMP)
@@ -615,7 +616,10 @@ export default ({
                     value={search}
                   />
                   <CloseIconContainer onPress={() => setSearch('')}>
-                    <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
+                    <CloseCircleOutlineIcon
+                      color={styleGuide.palette.secondary}
+                      size={24}
+                    />
                   </CloseIconContainer>
                 </SearchInputContainer>
                 {search?.length !== 0 ? (
@@ -666,26 +670,26 @@ export default ({
                         percentage={Math.ceil(
                           (totalLATE_COUNT / totalSUB_WORKING_EMP) * 100,
                         )}
-                        color={'#e85356'}
+                        color={styleGuide.palette.primary}
                         max={100}
                       />
                       {totalLATE_COUNT / totalSUB_WORKING_EMP == 0 ? (
                         <DodnutTextContainer>
                           <PercentageText
-                            color={'#e85356'}
+                            color={styleGuide.palette.primary}
                             style={{marginTop: 10}}>
                             0%
                           </PercentageText>
                         </DodnutTextContainer>
                       ) : (
                         <DodnutTextContainer style={{marginTop: 5}}>
-                          <PercentageText color={'#e85356'}>
+                          <PercentageText color={styleGuide.palette.primary}>
                             {Math.ceil(
                               (totalLATE_COUNT / totalSUB_WORKING_EMP) * 100,
                             )}
                             %
                           </PercentageText>
-                          <PercentageSubText color={'#e85356'}>
+                          <PercentageSubText color={styleGuide.palette.primary}>
                             {totalLATE_COUNT}일 / {totalLATE_EMP}명
                           </PercentageSubText>
                         </DodnutTextContainer>
@@ -754,26 +758,26 @@ export default ({
                         percentage={Math.ceil(
                           (totalEARLY_COUNT / totalSUB_WORKING_EMP) * 100,
                         )}
-                        color={'#e85356'}
+                        color={styleGuide.palette.primary}
                         max={100}
                       />
                       {totalEARLY_COUNT / totalSUB_WORKING_EMP == 0 ? (
                         <DodnutTextContainer>
                           <PercentageText
-                            color={'#e85356'}
+                            color={styleGuide.palette.primary}
                             style={{marginTop: 10}}>
                             0%
                           </PercentageText>
                         </DodnutTextContainer>
                       ) : (
                         <DodnutTextContainer style={{marginTop: 5}}>
-                          <PercentageText color={'#e85356'}>
+                          <PercentageText color={styleGuide.palette.primary}>
                             {Math.ceil(
                               (totalEARLY_COUNT / totalSUB_WORKING_EMP) * 100,
                             )}
                             %
                           </PercentageText>
-                          <PercentageSubText color={'#e85356'}>
+                          <PercentageSubText color={styleGuide.palette.primary}>
                             {totalEARLY_COUNT}일 / {totalEARLY_EMP}명
                           </PercentageSubText>
                         </DodnutTextContainer>
@@ -842,26 +846,26 @@ export default ({
                         percentage={Math.ceil(
                           (totalNOWORK_COUNT / totalSUB_WORKING_EMP) * 100,
                         )}
-                        color={'#e85356'}
+                        color={styleGuide.palette.primary}
                         max={100}
                       />
                       {totalNOWORK_COUNT / totalSUB_WORKING_EMP == 0 ? (
                         <DodnutTextContainer>
                           <PercentageText
-                            color={'#e85356'}
+                            color={styleGuide.palette.primary}
                             style={{marginTop: 10}}>
                             0%
                           </PercentageText>
                         </DodnutTextContainer>
                       ) : (
                         <DodnutTextContainer style={{marginTop: 5}}>
-                          <PercentageText color={'#e85356'}>
+                          <PercentageText color={styleGuide.palette.primary}>
                             {Math.ceil(
                               (totalNOWORK_COUNT / totalSUB_WORKING_EMP) * 100,
                             )}
                             %
                           </PercentageText>
-                          <PercentageSubText color={'#e85356'}>
+                          <PercentageSubText color={styleGuide.palette.primary}>
                             {totalNOWORK_COUNT}일 / {totalNOWORK_EMP}명
                           </PercentageSubText>
                         </DodnutTextContainer>
@@ -925,12 +929,14 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={totalREST_TIME_COUNT / totalWORKING_EMP}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={60}
                   />
 
                   <DodnutTextContainer>
-                    <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                    <PercentageText
+                      color={styleGuide.palette.primary}
+                      style={{marginTop: 10}}>
                       {totalREST_TIME_COUNT / totalWORKING_EMP == 0
                         ? 0
                         : Math.ceil(totalREST_TIME_COUNT / totalWORKING_EMP)}
@@ -998,24 +1004,26 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={totalVACATION_COUNT}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={totalSUB_WORKING_EMP || 1}
                   />
                   {totalVACATION_COUNT / totalSUB_WORKING_EMP == 0 ? (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      <PercentageText
+                        color={styleGuide.palette.primary}
+                        style={{marginTop: 10}}>
                         0%
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
                     <DodnutTextContainer style={{marginTop: 5}}>
-                      <PercentageText color={'#e85356'}>
+                      <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil(
                           (totalVACATION_COUNT / totalSUB_WORKING_EMP) * 100,
                         )}
                         %
                       </PercentageText>
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText color={styleGuide.palette.primary}>
                         {totalVACATION_COUNT}일 / {totalVACATION_EMP}명
                       </PercentageSubText>
                     </DodnutTextContainer>

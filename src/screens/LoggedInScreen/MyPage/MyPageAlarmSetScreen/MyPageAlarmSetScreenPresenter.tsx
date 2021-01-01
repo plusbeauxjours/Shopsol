@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+import styleGuide from '~/constants/styleGuide';
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Box = styled.View`
@@ -44,7 +46,7 @@ export default ({
   const SwitchBox = ({value, alarm}) => (
     <Switch
       trackColor={{true: '#e39a9c', false: '#ddd'}}
-      thumbColor={'#fff'}
+      thumbColor={'white'}
       onValueChange={() => {
         toggleAlarm(alarm);
         updateAlarm(value, alarm);

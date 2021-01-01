@@ -14,6 +14,7 @@ import DailyDashBoardScreen from './DailyDashBoardScreen';
 import WeeklyDashBoardScreen from './WeeklyDashBoardScreen';
 import MonthlyDashBoardScreen from './MonthlyDashBoardScreen';
 import {setSplashVisible} from '~/redux/splashSlice';
+import styleGuide from '~/constants/styleGuide';
 
 export default () => {
   const dispatch = useDispatch();
@@ -136,9 +137,9 @@ export default () => {
           indicatorStyle: {
             height: 4,
             borderRadius: 10,
-            backgroundColor: '#e85356',
+            backgroundColor: styleGuide.palette.primary,
           },
-          style: {backgroundColor: '#fff'},
+          style: {backgroundColor: 'white'},
         }}>
         <Tab.Screen name="일별현황" component={DailyDashBoardScreen} />
         <Tab.Screen name="주별현황" component={WeeklyDashBoardScreen} />

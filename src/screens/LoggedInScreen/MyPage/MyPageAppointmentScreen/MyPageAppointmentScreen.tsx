@@ -9,10 +9,11 @@ import {
 
 import {getText1, getText2, getText3} from '~/constants/getText';
 import {ForwardIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Container = styled.View`
@@ -32,7 +33,7 @@ const ButtonAfter = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const Text = styled.Text`
@@ -97,7 +98,7 @@ export default () => {
   );
   const ArrowIcon = () => (
     <Arrow>
-      <ForwardIcon size={16} color={'#e85356'} />
+      <ForwardIcon size={16} color={styleGuide.palette.primary} />
     </Arrow>
   );
   return (

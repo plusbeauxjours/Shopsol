@@ -48,7 +48,7 @@ const KakaoBox = styled.TouchableOpacity`
 
 const AdviceBox = styled(KakaoBox)`
   border-width: 1px;
-  background-color: #fff;
+  background-color: white;
   border-color: #ddd;
 `;
 

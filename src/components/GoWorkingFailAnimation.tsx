@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 
+import styleGuide from '~/constants/styleGuide';
+
 const BigText = styled.Text`
   color: #000;
   font-size: 24px;
@@ -34,7 +36,7 @@ const Touchable = styled(Ripple)`
   border-radius: 30px;
   margin: 20px;
   border-width: 1px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
 `;
 
 const TextBox = styled.View`
@@ -63,7 +65,7 @@ export default ({
         <BigText style={{color: 'red', fontWeight: 'bold', marginBottom: 5}}>
           {errorMessage}
         </BigText>
-        <Text>현재시간 {moment().format('hh:mm')} 입니다.</Text>
+        <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>
       </TextBox>
       <WhiteSpace />
       <Touchable
@@ -73,7 +75,7 @@ export default ({
         rippleSize={1200}
         rippleContainerBorderRadius={30}
         rippleOpacity={0.45}>
-        <Text style={{color: '#e85356'}}>확인</Text>
+        <Text style={{color: styleGuide.palette.primary}}>확인</Text>
       </Touchable>
     </View>
   );

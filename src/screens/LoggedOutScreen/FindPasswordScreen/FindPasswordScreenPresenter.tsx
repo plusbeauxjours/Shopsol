@@ -5,6 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
+import styleGuide from '~/constants/styleGuide';
 
 interface IIsBefore {
   isBefore: boolean;
@@ -16,7 +17,7 @@ interface IsError {
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Container = styled.View`
@@ -25,7 +26,7 @@ const Container = styled.View`
 
 const RequestText = styled.Text`
   font-size: 14px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const VerifyText = styled.Text`
@@ -44,12 +45,12 @@ const RequestButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   font-size: 16px;
 `;
 
@@ -93,7 +94,8 @@ const VerifyButton = styled.TouchableOpacity<IIsBefore>`
   padding: 8px 14px;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.isBefore ? '#CCCCCC' : '#e85356')};
+  background-color: ${(props) =>
+    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
@@ -101,7 +103,7 @@ const Section = styled.View`
   width: 100%;
   padding: 20px;
   border-radius: 20px;
-  margin-bottom: 20px;
+  margin-bottom: ${styleGuide.marginSpacing}px;
   background-color: white;
 `;
 

@@ -6,11 +6,12 @@ import styled from 'styled-components/native';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {updateREST_TIME} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
+import styleGuide from '~/constants/styleGuide';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Container = styled.View`
@@ -43,14 +44,14 @@ const BigText = styled.Text`
 
 const TextInput = styled.TextInput`
   font-size: 16px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   margin: 0 5px;
   width: 30px;
   text-align: right;
 `;
 
 const TextReadOnly = styled(BigText)`
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   margin: 0 5px;
   width: 30px;
   text-align: right;

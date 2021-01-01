@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import {BackIcon, ForwardIcon, EllipseIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsSelected {
   isSelected: boolean;
@@ -16,16 +17,10 @@ interface IsSelected {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
-
-const Touchable = styled.TouchableOpacity``;
-const TouchableRow = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-`;
 
 const Container = styled.View`
   padding: 20px;
@@ -33,11 +28,6 @@ const Container = styled.View`
 `;
 
 const RenderDayListContainer = styled.View``;
-
-const WhiteText = styled.Text`
-  font-size: 12px;
-  color: white;
-`;
 
 const Section = styled.View`
   width: 100%;
@@ -60,20 +50,20 @@ const EmployeeBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #7c7c7c;
+  color: ${styleGuide.palette.greyColor};
   font-size: 16px;
 `;
 
 const DateText = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const InfoText = styled.Text`
   font-size: 10px;
   height: 15px;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Row = styled.View`
@@ -86,7 +76,7 @@ const SmallLine = styled.View`
   width: ${wp('50%')}px;
   height: 0.5px;
   margin: 10px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
 `;
 
 const WorkTypeAndSalaryInfoBox = styled.View`
@@ -104,32 +94,17 @@ const DateBox = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const GreyText = styled.Text`
   font-size: 15px;
-  color: #7e7c7c;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const FixedGreyText = styled(GreyText)`
   position: absolute;
   right: 100px;
-`;
-
-const FixTypeDayChangeBox = styled.View`
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const FixTypeDayChangeButton = styled.TouchableOpacity`
-  width: ${(wp('100') - 100) / 3}px;
-  height: 40px;
-  border-radius: 15px;
-  border-width: 0.7px;
-  align-items: center;
-  justify-content: center;
 `;
 
 const FixTypeDayChangeButtonText = styled.Text`
@@ -219,7 +194,7 @@ const TimeListBoxText = styled.Text<IsSelected>`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -368,7 +343,10 @@ export default ({
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <BackIcon size={22} color={'#f4aaab'} />
+                        <BackIcon
+                          size={22}
+                          color={styleGuide.palette.secondary}
+                        />
                       </DateBox>
                     )}
                     <DateBoxText>
@@ -389,7 +367,10 @@ export default ({
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <ForwardIcon size={22} color={'#f4aaab'} />
+                        <ForwardIcon
+                          size={22}
+                          color={styleGuide.palette.secondary}
+                        />
                       </DateBox>
                     )}
                   </TimeListRow>
@@ -491,7 +472,7 @@ export default ({
                       moment(date).subtract(1, 'month').format('MM'),
                     );
                   }}>
-                  <BackIcon size={22} color={'#f4aaab'} />
+                  <BackIcon size={22} color={styleGuide.palette.secondary} />
                 </DateBox>
                 <DateTextArea>
                   <DateText>{moment(date).format('YYYY년 M월')}</DateText>
@@ -511,7 +492,7 @@ export default ({
                       moment(date).add(1, 'month').format('MM'),
                     );
                   }}>
-                  <ForwardIcon size={22} color={'#f4aaab'} />
+                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
                 </DateBox>
               </Row>
               <WorkTypeAndSalaryInfoBox>

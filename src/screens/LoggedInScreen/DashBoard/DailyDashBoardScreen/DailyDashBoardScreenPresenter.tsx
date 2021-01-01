@@ -22,6 +22,7 @@ import {
 } from '~/constants/Icons';
 import Schedule from '~/components/Schedule';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IColor {
   color: string;
@@ -39,7 +40,7 @@ interface IEmpCard {
 const ScrollView = styled.ScrollView``;
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Text = styled.Text`
@@ -73,7 +74,7 @@ const Card = styled(Ripple)<ICard>`
 const CardGreyLine = styled.View`
   width: 180px;
   height: 1px;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   margin: 10px 0 10px 0;
 `;
 
@@ -113,7 +114,7 @@ const EmpCard = styled.View`
   align-items: center;
   width: 100%;
   border-bottom-width: 1px;
-  border-bottom-color: #f2f2f2;
+  border-bottom-color: #${styleGuide.palette.borderColor};
   padding-bottom: 10px;
   margin-bottom: 20px;
 `;
@@ -230,7 +231,7 @@ const GotoTopButton = styled.TouchableOpacity`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
@@ -244,7 +245,7 @@ const ModalSection = styled.View`
 
 const SearchInput = styled.TextInput`
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color:${styleGuide.palette.secondary}
   width: ${wp('100%') - 40}px;
   background-color: white;
   border-radius: 30px;
@@ -269,7 +270,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -539,7 +540,7 @@ export default ({
             <DateSection>
               <Date>
                 <DateArrowLeft onPress={() => prevDay()}>
-                  <BackIcon size={22} color={'#f4aaab'} />
+                  <BackIcon size={22} color={styleGuide.palette.secondary} />
                 </DateArrowLeft>
                 <DateTextArea>
                   <DateText>{moment(toDay).format('YYYY년 M월 D일')}</DateText>
@@ -548,7 +549,7 @@ export default ({
                   </DateText>
                 </DateTextArea>
                 <DateArrowRight onPress={() => nextDay()}>
-                  <ForwardIcon size={22} color={'#f4aaab'} />
+                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
                 </DateArrowRight>
               </Date>
             </DateSection>
@@ -565,7 +566,7 @@ export default ({
                 <Row>
                   <DonutCard
                     percentage={totalWORKING / totlaWORKING_EMP}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={86400000}
                   />
                   <DodnutTextContainer
@@ -579,7 +580,7 @@ export default ({
                         .duration(totalWORKING / totlaWORKING_EMP)
                         .asHours(),
                     ) != 0 && (
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText color={styleGuide.palette.primary}>
                         {Math.trunc(
                           moment
                             .duration(totalWORKING / totlaWORKING_EMP)
@@ -591,7 +592,7 @@ export default ({
                     {moment
                       .duration(totalWORKING / totlaWORKING_EMP)
                       .minutes() != 0 && (
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText color={styleGuide.palette.primary}>
                         {moment
                           .duration(totalWORKING / totlaWORKING_EMP)
                           .minutes()}
@@ -641,7 +642,10 @@ export default ({
                   value={search}
                 />
                 <CloseIconContainer onPress={() => setSearch('')}>
-                  <CloseCircleOutlineIcon color={'#f4aaab'} size={24} />
+                  <CloseCircleOutlineIcon
+                    color={styleGuide.palette.secondary}
+                    size={24}
+                  />
                 </CloseIconContainer>
               </SearchInputContainer>
               <Animated.ScrollView
@@ -715,21 +719,23 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={100}
                   />
                   {totalLATE / totlaWORKING_EMP == 0 ? (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      <PercentageText
+                        color={styleGuide.palette.primary}
+                        style={{marginTop: 10}}>
                         {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'}>
+                      <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText color={styleGuide.palette.primary}>
                         {totalLATE}명
                       </PercentageSubText>
                     </DodnutTextContainer>
@@ -786,21 +792,23 @@ export default ({
                     percentage={Math.ceil(
                       (totalEARLY / totlaWORKING_EMP) * 100,
                     )}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={100}
                   />
                   {totalEARLY / totlaWORKING_EMP == 0 ? (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      <PercentageText
+                        color={styleGuide.palette.primary}
+                        style={{marginTop: 10}}>
                         {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'}>
+                      <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText color={styleGuide.palette.primary}>
                         {totalEARLY}명
                       </PercentageSubText>
                     </DodnutTextContainer>
@@ -857,21 +865,23 @@ export default ({
                     percentage={Math.ceil(
                       (totalNOWORK / totlaWORKING_EMP) * 100,
                     )}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={100}
                   />
                   {totalNOWORK / totlaWORKING_EMP == 0 ? (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      <PercentageText
+                        color={styleGuide.palette.primary}
+                        style={{marginTop: 10}}>
                         {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'}>
+                      <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText color={styleGuide.palette.primary}>
                         {totalNOWORK}명
                       </PercentageSubText>
                     </DodnutTextContainer>
@@ -926,11 +936,13 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={totalREST_TIME / totlaWORKING_EMP}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={60}
                   />
                   <DodnutTextContainer>
-                    <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                    <PercentageText
+                      color={styleGuide.palette.primary}
+                      style={{marginTop: 10}}>
                       {totalREST_TIME / totlaWORKING_EMP}분
                     </PercentageText>
                   </DodnutTextContainer>
@@ -991,21 +1003,23 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={totalVACATION}
-                    color={'#e85356'}
+                    color={styleGuide.palette.primary}
                     max={totlaWORKING_EMP}
                   />
                   {totalVACATION / totlaWORKING_EMP == 0 ? (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'} style={{marginTop: 10}}>
+                      <PercentageText
+                        color={styleGuide.palette.primary}
+                        style={{marginTop: 10}}>
                         {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
                     <DodnutTextContainer>
-                      <PercentageText color={'#e85356'}>
+                      <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
-                      <PercentageSubText color={'#e85356'}>
+                      <PercentageSubText color={styleGuide.palette.primary}>
                         {totalVACATION}명
                       </PercentageSubText>
                     </DodnutTextContainer>

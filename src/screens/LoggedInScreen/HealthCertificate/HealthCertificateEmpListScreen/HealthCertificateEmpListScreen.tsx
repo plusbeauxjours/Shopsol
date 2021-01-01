@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import HealthCertificateEmpListCard from './HealthCertificateEmpListCard';
 import {getSTORE_HEALTH_EMP_LIST} from '~/redux/healthSlice';
+import styleGuide from '~/constants/styleGuide';
 
 interface IEmployeeListBox {
   hasEmployeeNow?: boolean;
@@ -14,7 +15,7 @@ interface IEmployeeListBox {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -46,7 +47,7 @@ const TitleText = styled.Text`
 `;
 
 const NumberText = styled.Text`
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   font-size: 18px;
   font-weight: bold;
 `;
@@ -54,7 +55,7 @@ const NumberText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -62,7 +63,7 @@ const EmployeeListBox = styled.View<IEmployeeListBox>`
   width: 100%;
   align-items: center;
   border-radius: 20px;
-  border-color: #f2f2f2;
+  border-color: #${styleGuide.palette.borderColor};
   background-color: white;
 `;
 

@@ -10,6 +10,7 @@ import {
   RadioBtnOnIcon,
   RadioBtnOffIcon,
 } from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const WhiteSpace = styled.View`
   height: 30px;
@@ -17,7 +18,7 @@ const WhiteSpace = styled.View`
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Section = styled.View`

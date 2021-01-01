@@ -5,11 +5,13 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+
 import {ForwardIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6; ;
+  background-color: ${styleGuide.palette.backgroundPrimary}; ;
 `;
 
 const Container = styled.View`

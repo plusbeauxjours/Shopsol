@@ -5,7 +5,6 @@ import moment from 'moment';
 import * as Hangul from 'hangul-js';
 
 import MonthlyDashBoardScreenPresenter from './MonthlyDashBoardScreenPresenter';
-import colors from '~/constants/colors';
 import api from '~/constants/LoggedInApi';
 import {setCALENDAR_DATA} from '~/redux/calendarSlice';
 
@@ -173,7 +172,6 @@ export default () => {
           name: i.EMP_NAME,
           legendFontColor: '#7F7F7F',
           legendFontSize: 12,
-          color: colors[index],
           TOTAL_WORKING: 0,
           TOTAL_WORKING_DAY: 0,
           TOTAL_VACATION_TIME: 0,

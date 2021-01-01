@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import Underlay from './Underlay';
 import {PlayCircleOutlineIcon, StopCircleOutlineIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IColumn {
   index?: number;
@@ -32,7 +33,7 @@ const Box = styled.View`
 `;
 
 const Text = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Column = styled.View`
@@ -42,7 +43,7 @@ const Column = styled.View`
   align-self: center;
   opacity: 0.06;
   width: 30px;
-  background-color: #e85356;
+  background-color:${styleGuide.palette.primary}
   border-top-right-radius: 13px;
   border-top-left-radius: 13px;
 `;
@@ -54,7 +55,7 @@ const Top = styled.View<IColumn>`
   align-self: center;
   width: 30px;
   background-color: ${(props) =>
-    props.isSelected ? '#e85356' : 'rgba(232, 83, 86, 0.2)'};
+    props.isSelected ? styleGuide.palette.primary : 'rgba(232, 83, 86, 0.2)'};
   border-radius: 14px;
   justify-content: center;
   align-items: center;
@@ -89,14 +90,14 @@ const IconContainer = styled.View`
 const SmallTextRound = styled.View`
   border-radius: 15px;
   border-width: 0.5px;
-  border-color: #7f7f7f;
+  border-color: ${styleGuide.palette.greyColor};
   padding: 5px;
   margin-right: 5px;
 `;
 
 const SmallText = styled.Text`
   font-size: 9px;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const TopText = styled.Text<IColumn>`
@@ -126,7 +127,7 @@ const VacationTop = styled.View<IColumn>`
   align-self: center;
   width: 30px;
   background-color: ${(props) =>
-    props.isSelected ? '#e85356' : 'rgba(232, 83, 86, 0.2)'};
+    props.isSelected ? styleGuide.palette.primary : 'rgba(232, 83, 86, 0.2)'};
   border-radius: 14px;
   justify-content: center;
   align-items: center;
@@ -140,7 +141,9 @@ const VacationTopText = styled(TopText)<IColumn>`
   font-size: 12px;
   font-weight: 200;
   color: ${(props) =>
-    props.isSelected ? '#7F7F7F' : 'rgba(127, 127, 127, 0.6)'};
+    props.isSelected
+      ? styleGuide.palette.greyColor
+      : 'rgba(127, 127, 127, 0.6)'};
 `;
 
 export default ({data, toDay}) => {

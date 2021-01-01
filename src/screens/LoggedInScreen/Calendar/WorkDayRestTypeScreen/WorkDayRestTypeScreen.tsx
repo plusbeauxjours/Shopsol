@@ -4,16 +4,17 @@ import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {toggleVACATION} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
-import moment from 'moment';
+import styleGuide from '~/constants/styleGuide';
 import {setSplashVisible} from '~/redux/splashSlice';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Text = styled.Text``;
@@ -82,14 +83,14 @@ const LeftButton = styled.TouchableOpacity`
   width: ${(wp('100%') - 50) / 2}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
 const RightButton = styled(LeftButton)`
   background-color: transparent;
   border-width: 2px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
 `;
 
 const WhiteSpace = styled.View`
@@ -213,7 +214,8 @@ export default ({route: {params}}) => {
             </ButtonText>
           </LeftButton>
           <RightButton onPress={() => registerFn('0')}>
-            <ButtonText style={{fontSize: 16, color: '#e85356'}}>
+            <ButtonText
+              style={{fontSize: 16, color: styleGuide.palette.primary}}>
               무급휴무 적용
             </ButtonText>
           </RightButton>

@@ -7,6 +7,7 @@ import moment from 'moment';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 const BigText = styled.Text`
   color: #000;
@@ -36,7 +37,7 @@ const Touchable = styled(Ripple)`
   border-radius: 30px;
   margin: 20px;
   border-width: 1px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
 `;
 
 const TextBox = styled.View`
@@ -84,7 +85,7 @@ export default ({
           <BigText style={{textAlign: 'center'}}>
             무사히 {actionTYPE}하였습니다.
           </BigText>
-          <Text>현재시간 {moment().format('hh:mm')} 입니다.</Text>
+          <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>
         </TextBox>
         <Touchable
           onPress={() => setSucessModalOpen(false)}
@@ -93,7 +94,7 @@ export default ({
           rippleSize={1200}
           rippleContainerBorderRadius={30}
           rippleOpacity={0.45}>
-          <Text style={{color: '#e85356'}}>확인</Text>
+          <Text style={{color: styleGuide.palette.primary}}>확인</Text>
         </Touchable>
       </View>
     </>

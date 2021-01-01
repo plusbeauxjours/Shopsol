@@ -9,7 +9,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import LottieView from 'lottie-react-native';
 import FastImage from 'react-native-fast-image';
 
 import utils from '~/constants/utils';
@@ -21,10 +20,11 @@ import {
   ForwardIcon,
 } from '~/constants/Icons';
 import ChecklistShareMainScreenCard from './ChecklistShareMainScreenCard';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -73,7 +73,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -118,7 +118,7 @@ const CalendarTitle = styled.View`
   padding: 20px;
   justify-content: space-between;
   align-items: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const CalendarTextBox = styled.View`
@@ -177,7 +177,7 @@ const AddButton = styled.TouchableOpacity`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
@@ -266,14 +266,14 @@ export default ({
               setDate(yesterday);
               fetchData(location, yesterday);
             }}>
-            <BackIcon size={22} color={'#f4aaab'} />
+            <BackIcon size={22} color={styleGuide.palette.secondary} />
           </DateArrowLeft>
           <DateToday
             onPress={() => {
               setDate(moment(date).format('YYYY-MM-DD'));
               fetchData(location, date);
             }}>
-            <ReloadCircleIcon size={18} color={'#f4aaab'} />
+            <ReloadCircleIcon size={18} color={styleGuide.palette.secondary} />
           </DateToday>
           <DateTextArea>
             <DateText>{moment(date).format('YYYY년 M월 D일')}</DateText>
@@ -286,14 +286,14 @@ export default ({
               markingFn(moment(date).format('YYYY'), moment(date).format('M'));
               setIsCalendarModalVisible(true);
             }}>
-            <CalendarIcon size={18} color={'#f4aaab'} />
+            <CalendarIcon size={18} color={styleGuide.palette.secondary} />
           </CalendarOpenBtn>
           <DateArrowRight
             onPress={() => {
               setDate(tomorrow);
               fetchData(location, tomorrow);
             }}>
-            <ForwardIcon size={22} color={'#f4aaab'} />
+            <ForwardIcon size={22} color={styleGuide.palette.secondary} />
           </DateArrowRight>
         </Date>
       </Section>
@@ -512,9 +512,9 @@ export default ({
           indicatorStyle: {
             height: 4,
             borderRadius: 10,
-            backgroundColor: '#e85356',
+            backgroundColor: styleGuide.palette.primary,
           },
-          style: {backgroundColor: '#fff'},
+          style: {backgroundColor: 'white'},
         }}>
         <Tab.Screen name="지시사항" component={FirstRoute} />
         <Tab.Screen name="특이사항" component={SecondRoute} />
@@ -568,7 +568,7 @@ export default ({
           }}
           theme={{
             arrowColor: '#000',
-            todayTextColor: '#e85356',
+            todayTextColor: styleGuide.palette.primary,
           }}
           markingType={'multi-dot'}
           hideExtraDays={true}

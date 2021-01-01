@@ -10,7 +10,8 @@ import VerificationScreen from '../screens/LoggedOutScreen/VerificationScreen';
 import BackBtn from '../components/Header/BackBtn';
 import {useSelector} from 'react-redux';
 import RootModal from '../components/RootModal';
-import utils from '../constants/utils';
+
+import styleGuide from '~/constants/styleGuide';
 
 const LoggedOutNavigation = createStackNavigator();
 
@@ -35,8 +36,8 @@ export default () => {
         headerMode={'screen'}
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#e85356',
-            borderColor: '#fff',
+            backgroundColor: styleGuide.palette.primary,
+            borderColor: 'white',
             borderWidth: 0,
           },
           headerBackTitleVisible: false,
@@ -57,7 +58,7 @@ export default () => {
           options={{
             headerTitle: '로그인',
             title: '로그인',
-            headerTintColor: '#fff',
+            headerTintColor: 'white',
           }}
         />
         <LoggedOutNavigation.Screen
@@ -66,7 +67,7 @@ export default () => {
           options={{
             headerTitle: '회원가입',
             title: '전화번호 인증',
-            headerTintColor: '#fff',
+            headerTintColor: 'white',
           }}
         />
         <LoggedOutNavigation.Screen
@@ -75,7 +76,7 @@ export default () => {
           options={{
             headerTitle: '회원가입',
             title: '회원가입',
-            headerTintColor: '#fff',
+            headerTintColor: 'white',
           }}
         />
         <LoggedOutNavigation.Screen
@@ -84,7 +85,7 @@ export default () => {
           options={{
             headerTitle: '비밀번호 찾기',
             title: '비밀번호 찾기',
-            headerTintColor: '#fff',
+            headerTintColor: 'white',
           }}
         />
       </LoggedOutNavigation.Navigator>

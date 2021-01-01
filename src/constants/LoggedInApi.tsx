@@ -71,6 +71,8 @@ export default {
     callApi('post', '/auth/deleteshelfLifeData/', data),
   setShelfLifeData: (data: any) =>
     callApi('post', '/auth/setshelfLifeData/', data),
+  setshelfLifeDataImg: (data: any) =>
+    callApi('post', '/auth/setshelfLifeDataImg/', data),
   checkChecklist: (data: any) => oldApi('post', '/StoreAuth/checklist', data),
   getChecklist: (STORE: string, DATE: string) =>
     oldApi('get', `/Store/Checklist?STORE=${STORE}&DATE=${DATE}`),
@@ -182,9 +184,9 @@ export default {
   updateEmpSchedule: (data: any) =>
     oldApi('post', '/Employee/update_emp_schedules3', data),
   getWorkingEmpTotalPay: (YEAR: string, MONTH: string, STORE_SEQ: string) =>
-    oldApi(
+    callApi(
       'get',
-      `/Store/get_working_emp_totalpay2?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
+      `/auth/emppaylistapp?YEAR=${YEAR}&MONTH=${MONTH}&STORE_SEQ=${STORE_SEQ}&`,
     ),
   monthLists: (STORE_ID: string, EMP_ID: string, YEAR: string, MONTH: string) =>
     oldApi(

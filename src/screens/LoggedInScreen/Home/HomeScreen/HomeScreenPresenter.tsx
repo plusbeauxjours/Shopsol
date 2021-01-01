@@ -18,6 +18,7 @@ import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 import utils from '~/constants/utils';
 import Ripple from 'react-native-material-ripple';
+import styleGuide from '~/constants/styleGuide';
 
 interface IHasHeight {
   hasHeight: boolean;
@@ -97,19 +98,6 @@ const MenuBox = styled.View`
   align-items: center;
 `;
 
-const Qr = styled.TouchableOpacity`
-  width: ${wp('100%') - 40}px;
-  border-width: 1px;
-  border-color: #e85356;
-  padding: ${hp('2%')}px ${wp('10%')}px;
-  flex-direction: row;
-  margin-top: 30px;
-  border-radius: 5px;
-  background-color: #fff;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
@@ -165,7 +153,7 @@ const MenuTitleArea = styled.View`
   margin-top: 20px;
   border-radius: 30px;
   padding: 10px 20px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const MenuTitle = styled.Text`
@@ -184,12 +172,6 @@ const ShowPictureModalTouchable = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-const ShowPictureModalText = styled.Text`
-  padding: 10px 0;
-  font-size: 30px;
-  color: white;
-`;
-
 const ShowPictureModalImage = styled.View`
   width: ${wp('90%')}px;
   height: ${wp('90%')}px;
@@ -202,7 +184,7 @@ const GoWork = styled.TouchableOpacity`
   bottom: 0;
   justify-content: center;
   align-items: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const WorkText = styled.Text`
@@ -242,7 +224,7 @@ const Box = styled.TouchableOpacity<IBox>`
   width: ${(props) => (props.hasGPS ? (wp('100%') - 60) / 2 : wp('100%') - 40)};
   height: 60px;
   border-width: 1px;
-  border-color: #fff;
+  border-color: white;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
@@ -251,7 +233,7 @@ const Box = styled.TouchableOpacity<IBox>`
 
 const BoxText = styled.Text`
   font-size: 16px;
-  color: #fff;
+  color: white;
   font-weight: bold;
 `;
 
@@ -353,7 +335,7 @@ export default ({
   const navigation = useNavigation();
   const MenuCntContainer = ({selection, paging, source, count = 0}) => (
     <MenuCnt
-      rippleColor={'#fff'}
+      rippleColor={'white'}
       rippleDuration={300}
       rippleSize={200}
       rippleContainerBorderRadius={0}
@@ -385,12 +367,18 @@ export default ({
       <ShopMarkerContainer>
         <MenuTitle style={{marginBottom: 5}}>{STORE_NAME}점</MenuTitle>
         <SpaceRow>
-          <MarkerText>출퇴근 허용거리: </MarkerText>
-          <MarkerText style={{fontWeight: '600'}}>
-            {Number(STORE_DATA.resultdata.JULI) < 1000
-              ? Number(STORE_DATA.resultdata.JULI) + 'm'
-              : Number(STORE_DATA.resultdata.JULI) / 1000 + 'km'}
-          </MarkerText>
+          {STORE_DATA.resultdata.JULI == -1 ? (
+            <MarkerText>출퇴근 거리 제한 없음</MarkerText>
+          ) : (
+            <>
+              <MarkerText>출퇴근 허용거리: </MarkerText>
+              <MarkerText style={{fontWeight: '600'}}>
+                {Number(STORE_DATA.resultdata.JULI) < 1000
+                  ? Number(STORE_DATA.resultdata.JULI) + 'm'
+                  : Number(STORE_DATA.resultdata.JULI) / 1000 + 'km'}
+              </MarkerText>
+            </>
+          )}
         </SpaceRow>
         {STORE_DATA.resultdata.LATE_FLAG === '1' && (
           <SpaceRow>
@@ -575,10 +563,10 @@ export default ({
                 style={{width: wp('100%') - 40, height: 300}}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={{
-                  latitude: lat,
-                  longitude: long,
-                  // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                  // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                  // latitude: lat,
+                  // longitude: long,
+                  latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                  longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   latitudeDelta: 0.005,
                   longitudeDelta: 0.005,
                 }}>
@@ -605,15 +593,16 @@ export default ({
                 )}
                 <Marker
                   onPress={() =>
-                    STORE_DATA.resultdata.JULI >
-                      Math.round(getDistance() * 10) / 10 &&
+                    (STORE_DATA.resultdata.JULI >
+                      Math.round(getDistance() * 10) / 10 ||
+                      STORE_DATA.resultdata.JULI == -1) &&
                     setWorkingModalOpen(true)
                   }
                   coordinate={{
-                    latitude: lat,
-                    longitude: long,
-                    // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                    // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                    // latitude: lat,
+                    // longitude: long,
+                    latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                    longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   }}>
                   <UserMarker
                     distance={
@@ -873,11 +862,11 @@ export default ({
             </>
           )}
           <GrayLinearGradient
-            colors={['#222', '#fff']}
+            colors={['#222', 'white']}
             hasHeight={STORE == '1'}
           />
           <BlackLinearGradient
-            colors={['#fff', '#222']}
+            colors={['white', '#222']}
             hasHeight={STORE_DATA?.IS_MANAGER == '0'}
           />
         </MenuBox>

@@ -12,6 +12,7 @@ import {
   RadioBtnOnIcon,
   RadioBtnOffIcon,
 } from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Row = styled.View`
   width: 100%;
@@ -56,7 +57,7 @@ const ModalButton = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const SalarySystemSettingButton = styled.TouchableOpacity`
@@ -65,7 +66,7 @@ const SalarySystemSettingButton = styled.TouchableOpacity`
   width: 50px;
   height: 20px;
   border-radius: 20px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   align-items: center;
   justify-content: center;
 `;

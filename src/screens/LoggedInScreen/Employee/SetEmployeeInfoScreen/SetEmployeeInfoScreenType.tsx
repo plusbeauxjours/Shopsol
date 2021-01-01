@@ -1,11 +1,13 @@
 import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
+
 import {
   RadioBtnOnIcon,
   RadioBtnOffIcon,
   HelpCircleIcon,
 } from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsBefore {
   isBefore: boolean;
@@ -23,7 +25,7 @@ const Text = styled.Text`
 
 const TimeText = styled(Text)`
   margin-left: 0;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const TypeContainer = styled.TouchableOpacity`
@@ -34,7 +36,7 @@ const TypeContainer = styled.TouchableOpacity`
 const TextInput = styled.TextInput`
   font-size: 16px;
   font-weight: bold;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
   padding: 0;
   height: 18px;
 `;
@@ -43,7 +45,8 @@ const InputCase = styled.TouchableOpacity<IsBefore>`
   align-items: center;
   justify-content: center;
   width: 40px;
-  border-color: ${(props) => (props.isBefore ? '#E5E5E5' : '#e85356')};
+  border-color: ${(props) =>
+    props.isBefore ? '#E5E5E5' : styleGuide.palette.primary};
   border-bottom-width: 2px;
 `;
 

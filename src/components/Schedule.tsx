@@ -6,9 +6,10 @@ import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import Slider, {Ballon} from 'react-native-reanimated-slider';
 import Animated from 'react-native-reanimated';
+import {Value} from 'react-native-reanimated';
 
 import ScheduleUnderlay from './ScheduleUnderlay';
-import {Value} from 'react-native-reanimated';
+import styleGuide from '~/constants/styleGuide';
 
 interface ITouchable {
   isSelected?: boolean;
@@ -41,7 +42,7 @@ const View = styled.View<ITouchable>`
   width: ${(props) => (props.width * maxWidth) / 108000000}px;
   background-color: ${(props) => props.backgroundColor};
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const Touchable = styled(RNBounceable)<ITouchable>`
@@ -73,7 +74,7 @@ const FrontView = styled.View<ITouchable>`
   width: ${(props) => ((props.width + 10800000) * maxWidth) / 108000000 + 20}px;
   left: -20px;
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const BackView = styled.View<ITouchable>`
@@ -92,7 +93,7 @@ const BackView = styled.View<ITouchable>`
     ((props.endTime + 10800000) * maxWidth) / 108000000 -
     20}px;
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const Bold = styled.Text`
@@ -144,7 +145,7 @@ const RedLine = styled.View<IRedLine>`
   width: 1;
   height: ${(props) => props.height}px;
   max-height: 430px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const IconConatainer = styled.View`
@@ -187,7 +188,7 @@ export default ({
   const renderBallon = () => (
     <Ballon
       ref={ballonRef}
-      color={'#e85356'}
+      color={styleGuide.palette.primary}
       textStyle={{width: 70, textAlign: 'center', color: 'white'}}
     />
   );
@@ -199,9 +200,9 @@ export default ({
     <GraphSection>
       <Slider
         style={{flex: 1, marginHorizontal: (wp('100') - 90) * 0.1}}
-        maximumTrackTintColor="#f6f6f6"
-        minimumTrackTintColor="#f6f6f6"
-        thumbTintColor="#fff"
+        maximumTrackTintColor={styleGuide.palette.backgroundPrimary}
+        minimumTrackTintColor={styleGuide.palette.backgroundPrimary}
+        thumbTintColor="white"
         min={valueMin}
         max={valueMax}
         ballon={(value) =>

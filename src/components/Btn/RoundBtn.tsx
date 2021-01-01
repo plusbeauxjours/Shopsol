@@ -6,6 +6,8 @@ import {
 import styled from 'styled-components/native';
 import Ripple from 'react-native-material-ripple';
 
+import styleGuide from '~/constants/styleGuide';
+
 interface IIsWhiteBack {
   isWhiteBack: boolean;
   isInSection?: boolean;
@@ -18,9 +20,10 @@ const SubmitButton = styled(Ripple)<IIsWhiteBack>`
   justify-content: center;
   border-radius: 30px;
   background-color: ${(props) =>
-    props.isWhiteBack ? 'transparent' : '#e85356'};
+    props.isWhiteBack ? 'transparent' : styleGuide.palette.primary};
   border-width: ${(props) => (props.isWhiteBack ? '1' : '0')};
-  border-color: ${(props) => (props.isWhiteBack ? '#e85356' : 'transparent')};
+  border-color: ${(props) =>
+    props.isWhiteBack ? styleGuide.palette.primary : 'transparent'};
 `;
 
 const NoSubmitButton = styled(SubmitButton)`
@@ -38,7 +41,8 @@ const NoSubmitButtonText = styled.Text<IIsWhiteBack>`
 
 const SubmitButtonText = styled.Text<IIsWhiteBack>`
   font-size: 16px;
-  color: ${(props) => (props.isWhiteBack ? '#e85356' : 'white')};
+  color: ${(props) =>
+    props.isWhiteBack ? styleGuide.palette.primary : 'white'};
 `;
 
 export default ({

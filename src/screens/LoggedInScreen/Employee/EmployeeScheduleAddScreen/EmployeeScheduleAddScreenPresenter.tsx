@@ -19,6 +19,7 @@ import InputLine from '~/components/InputLine';
 import EmployeeScheduleAddScreenRenderDayPicker from './EmployeeScheduleAddScreenRenderDayPicker';
 import EmployeeScheduleAddScreenRenderWorkDay from './EmployeeScheduleAddScreenRenderWorkDay';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsSelected {
   isSelected: boolean;
@@ -32,7 +33,7 @@ interface IIsBefore {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -65,7 +66,7 @@ const TitleText = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -123,7 +124,8 @@ const WhiteSpace = styled.View`
 
 const TimePickBoxTimeText = styled.Text<IsSelected>`
   font-size: 17px;
-  color: ${(props) => (props.isSelected ? '#e85356' : '#cccccc')};
+  color: ${(props) =>
+    props.isSelected ? styleGuide.palette.primary : '#cccccc'};
 `;
 
 const EmptySpace = styled.View`
@@ -192,7 +194,8 @@ const DatePickerText = styled.Text`
 const TextInputLine = styled.View<IIsBefore>`
   width: ${wp('100%') - 120}px;
   height: 0.7px;
-  background-color: ${(props) => (props.isBefore ? '#CCCCCC' : '#e85356')};
+  background-color: ${(props) =>
+    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
 `;
 
 const ColumnPayBox = styled.View`

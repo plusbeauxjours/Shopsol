@@ -12,10 +12,11 @@ import {
   Keyboard,
   TouchableHighlight,
 } from 'react-native';
+import moment from 'moment';
+
 import {BackIcon, ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import moment from 'moment';
-import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsSelected {
   isSelected: boolean;
@@ -25,7 +26,7 @@ interface IsSelected {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -64,13 +65,13 @@ const EmployeeBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #7c7c7c;
+  color: ${styleGuide.palette.greyColor};
   font-size: 16px;
   margin-bottom: 5px;
 `;
 
 const DateText = styled.Text`
-  color: #7c7c7c;
+  color: ${styleGuide.palette.greyColor};
   font-size: 12px;
 `;
 
@@ -90,7 +91,7 @@ const SmallLine = styled.View`
   width: ${wp('50%')}px;
   height: 0.5px;
   margin: 10px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
 `;
 
 const WorkTypeAndSalaryBox = styled.View`
@@ -102,7 +103,7 @@ const WorkTypeAndSalaryBox = styled.View`
 
 const WorkTypeAndSalaryInfoBox = styled.View`
   align-items: flex-end;
-  border-color: #f2f2f2;
+  border-color: #${styleGuide.palette.borderColor};
   border-top-width: 1px;
   border-bottom-width: 1px;
   padding: 10px 20px;
@@ -111,7 +112,7 @@ const WorkTypeAndSalaryInfoBox = styled.View`
 
 const WorkTypeAndSalaryBoxTitle = styled.Text`
   font-size: 17px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const WorkTypeCheckSection = styled.View`
@@ -125,12 +126,12 @@ const WorkScheduleBox = styled.TouchableOpacity`
   padding: 5px 20px;
   justify-content: center;
   align-items: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const GreyText = styled.Text`
   font-size: 15px;
-  color: #7e7c7c;
+  color: #${styleGuide.palette.borderColor};
 `;
 
 const FixedGreyText = styled(GreyText)`
@@ -241,7 +242,7 @@ const TimeListBold = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   background-color: green;
   height: 1px;
 `;
@@ -383,7 +384,10 @@ export default ({
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <BackIcon size={22} color={'#999'} />
+                        <BackIcon
+                          size={22}
+                          color={styleGuide.palette.greyColor}
+                        />
                       </TouchableHighlight>
                     )}
                     <TimeListBold>
@@ -403,7 +407,10 @@ export default ({
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <ForwardIcon size={22} color={'#999'} />
+                        <ForwardIcon
+                          size={22}
+                          color={styleGuide.palette.greyColor}
+                        />
                       </TouchableHighlight>
                     )}
                   </TimeListRow>
@@ -538,9 +545,13 @@ export default ({
               {isFreeWorkingType && (
                 <FixTypeDayChangeBox>
                   <FixTypeDayChangeButton
-                    style={{borderColor: '#393939', width: '100%'}}
+                    style={{
+                      borderColor: styleGuide.palette.greyColor,
+                      width: '100%',
+                    }}
                     disabled={true}>
-                    <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                    <FixTypeDayChangeButtonText
+                      style={{color: styleGuide.palette.greyColor}}>
                       자율출퇴근 근무 중
                     </FixTypeDayChangeButtonText>
                   </FixTypeDayChangeButton>
@@ -551,9 +562,13 @@ export default ({
                   timeTable.length == 0 && ( // 자율출퇴근★
                     <FixTypeDayChangeBox>
                       <FixTypeDayChangeButton
-                        style={{borderColor: '#393939', width: '100%'}}
+                        style={{
+                          borderColor: styleGuide.palette.greyColor,
+                          width: '100%',
+                        }}
                         onPress={() => registerScheduleFn()}>
-                        <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                        <FixTypeDayChangeButtonText
+                          style={{color: styleGuide.palette.greyColor}}>
                           일정 추가
                         </FixTypeDayChangeButtonText>
                       </FixTypeDayChangeButton>
@@ -562,16 +577,18 @@ export default ({
                 {!isFreeWorkingType && timeTable.length > 0 && (
                   <FixTypeDayChangeBox>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#393939'}}
+                      style={{borderColor: styleGuide.palette.greyColor}}
                       onPress={() => registerScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
                         추가
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#393939'}}
+                      style={{borderColor: styleGuide.palette.greyColor}}
                       onPress={() => modifyScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
                         수정
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>

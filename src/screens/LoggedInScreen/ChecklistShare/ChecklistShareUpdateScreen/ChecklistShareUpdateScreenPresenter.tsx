@@ -7,16 +7,17 @@ import {
 import FastImage from 'react-native-fast-image';
 import {RNCamera} from 'react-native-camera';
 import Modal from 'react-native-modal';
-
-import SubmitBtn from '~/components/Btn/SubmitBtn';
-import {CameraIcon, PictureIcon, CloseCircleIcon} from '~/constants/Icons';
 import moment from 'moment';
 import Animated from 'react-native-reanimated';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
+import SubmitBtn from '~/components/Btn/SubmitBtn';
+import {CameraIcon, PictureIcon, CloseCircleIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -73,7 +74,7 @@ const CameraPictureCloseButtonText = styled.Text`
 const CameraPictureCloseButton = styled.TouchableOpacity`
   height: 60px;
   width: 100%;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
   align-self: flex-end;
   align-items: center;
   justify-content: center;
@@ -83,7 +84,7 @@ const CameraPictureButton = styled.TouchableOpacity`
   width: 60px;
   height: 60px;
   border-radius: 60px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   background-color: #ffffff;
   align-items: center;
   justify-content: center;
@@ -99,7 +100,7 @@ const HalfBotton = styled.TouchableOpacity`
   align-self: flex-end;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: white;
 `;
 
 const HalfBottonText = styled.Text`
@@ -220,7 +221,7 @@ export default ({
                 <Name>
                   <TextInput
                     placeholder={'최대 글자수는 15자 입니다'}
-                    selectionColor={'#e85356'}
+                    selectionColor={styleGuide.palette.primary}
                     placeholderTextColor={'#E5E5E5'}
                     onChangeText={(text) => {
                       setTitle(text);
@@ -377,14 +378,14 @@ export default ({
               />
               <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
                 <HalfBotton onPress={() => setCameraPictureLast(null)}>
-                  <HalfBottonText style={{color: '#e85356'}}>
+                  <HalfBottonText style={{color: styleGuide.palette.primary}}>
                     재촬영
                   </HalfBottonText>
                 </HalfBotton>
                 <HalfBotton
-                  style={{backgroundColor: '#e85356'}}
+                  style={{backgroundColor: styleGuide.palette.primary}}
                   onPress={() => selectPicture()}>
-                  <HalfBottonText style={{color: '#fff'}}>선택</HalfBottonText>
+                  <HalfBottonText style={{color: 'white'}}>선택</HalfBottonText>
                 </HalfBotton>
               </Row>
             </CameraLastPictureContainer>

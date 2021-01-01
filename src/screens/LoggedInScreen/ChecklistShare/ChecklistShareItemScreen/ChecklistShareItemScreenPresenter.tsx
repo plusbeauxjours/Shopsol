@@ -19,6 +19,7 @@ import Ripple from 'react-native-material-ripple';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import Loader from '~/components/Loader';
+import styleGuide from '~/constants/styleGuide';
 
 import {
   ForwardIcon,
@@ -32,7 +33,7 @@ interface IsLast {
 }
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -70,7 +71,7 @@ const CommentTextInputContainer = styled.View`
   margin: 3px;
   margin-top: 0;
   border-radius: 20px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   flex-direction: row;
   align-items: center;
 `;
@@ -88,7 +89,7 @@ const ForwardIconContainer = styled.View`
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const ForwardIconTouchable = styled.TouchableOpacity`
@@ -111,7 +112,7 @@ const MemoContainer = styled.View`
 
 const CommentTitleText = styled.Text`
   font-size: 15px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const MemoBox = styled.TouchableOpacity`

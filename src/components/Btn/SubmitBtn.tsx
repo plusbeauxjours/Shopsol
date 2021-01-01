@@ -6,6 +6,8 @@ import {
 import styled from 'styled-components/native';
 import Ripple from 'react-native-material-ripple';
 
+import styleGuide from '~/constants/styleGuide';
+
 interface IIsBefore {
   isBefore: boolean;
 }
@@ -15,7 +17,7 @@ const SubmitButton = styled(Ripple)<IIsBefore>`
   height: 60px;
   align-items: center;
   justify-content: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const NoSubmitButton = styled(SubmitButton)`
@@ -44,7 +46,7 @@ export default ({onPressIn = null, text, onPress = null, isRegisted}) => {
     return (
       <NoSubmitButton
         onPress={() => {}}
-        rippleColor={'#fff'}
+        rippleColor={'white'}
         rippleDuration={600}
         rippleSize={1200}
         rippleOpacity={0.25}>

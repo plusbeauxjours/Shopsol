@@ -9,8 +9,8 @@ import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 
 import {EllipseIcon, PhoneIcon} from '~/constants/Icons';
-
 import {BackIcon, ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsSelected {
   isSelected: boolean;
@@ -20,7 +20,7 @@ interface IsSelected {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
@@ -64,20 +64,20 @@ const EmployeeBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #7c7c7c;
+  color: ${styleGuide.palette.greyColor};
   font-size: 16px;
 `;
 
 const DateText = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const InfoText = styled.Text`
   font-size: 10px;
   height: 15px;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Row = styled.View`
@@ -90,7 +90,7 @@ const SmallLine = styled.View`
   width: ${wp('50%')}px;
   height: 0.5px;
   margin: 10px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
 `;
 
 const WorkTypeAndSalaryInfoBox = styled.View`
@@ -106,7 +106,7 @@ const WorkScheduleBox = styled.TouchableOpacity`
   padding: 5px 20px;
   justify-content: center;
   align-items: center;
-  background-color: #e85356;
+  background-color: ${styleGuide.palette.primary};
 `;
 
 const DateBox = styled.TouchableOpacity`
@@ -118,12 +118,12 @@ const DateBox = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: #f4aaab;
+  border-color: ${styleGuide.palette.secondary};
 `;
 
 const GreyText = styled.Text`
   font-size: 15px;
-  color: #7e7c7c;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const FixedGreyText = styled(GreyText)`
@@ -222,7 +222,7 @@ const TimeListRow = styled(Row)`
 const DateBoxText = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const TimeListBoxText = styled.Text<IsSelected>`
@@ -238,26 +238,26 @@ const NavigationButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  border-color: #e85356;
+  border-color: ${styleGuide.palette.primary};
   border-radius: 6px;
 `;
 
 const Bold = styled.Text`
   font-weight: bold;
   font-size: 12px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #f2f2f2;
+  background-color: #${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
 const TitleText = styled.Text`
   font-size: 16px;
-  color: #999;
+  color: ${styleGuide.palette.greyColor};
   font-weight: bold;
 `;
 
@@ -412,7 +412,10 @@ export default ({
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <BackIcon size={22} color={'#f4aaab'} />
+                        <BackIcon
+                          size={22}
+                          color={styleGuide.palette.secondary}
+                        />
                       </DateBox>
                     )}
                     <DateBoxText>
@@ -433,7 +436,10 @@ export default ({
                           setTimeListIndex(null);
                           setTimeList(timeTable[timeTableIndex].data);
                         }}>
-                        <ForwardIcon size={22} color={'#f4aaab'} />
+                        <ForwardIcon
+                          size={22}
+                          color={styleGuide.palette.secondary}
+                        />
                       </DateBox>
                     )}
                   </TimeListRow>
@@ -502,12 +508,12 @@ export default ({
                       </DateText>
                     </Row>
                     <Row style={{justifyContent: 'flex-start'}}>
-                      <PhoneIcon color={'#7c7c7c'} />
+                      <PhoneIcon color={styleGuide.palette.greyColor} />
                       <InfoText style={{marginLeft: 5}}>{mobileNo}</InfoText>
                       <InfoText
                         style={{
                           marginLeft: 5,
-                          color: '#e85356',
+                          color: styleGuide.palette.primary,
                           fontWeight: '600',
                         }}>
                         전화걸기
@@ -546,7 +552,7 @@ export default ({
                       moment(date).subtract(1, 'month').format('MM'),
                     );
                   }}>
-                  <BackIcon size={22} color={'#f4aaab'} />
+                  <BackIcon size={22} color={styleGuide.palette.secondary} />
                 </DateBox>
                 <DateTextArea>
                   <DateText>{moment(date).format('YYYY년 M월')}</DateText>
@@ -567,7 +573,7 @@ export default ({
                       moment(date).add(1, 'month').format('MM'),
                     );
                   }}>
-                  <ForwardIcon size={22} color={'#f4aaab'} />
+                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
                 </DateBox>
               </Row>
               <WorkTypeAndSalaryInfoBox>
@@ -625,9 +631,13 @@ export default ({
                   <GreyLine />
                   <FixTypeDayChangeBox>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#393939', width: '100%'}}
+                      style={{
+                        borderColor: styleGuide.palette.greyColor,
+                        width: '100%',
+                      }}
                       disabled={true}>
-                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
                         자율출퇴근 근무 중
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
@@ -639,9 +649,13 @@ export default ({
                   <>
                     <GreyLine />
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#393939', width: '100%'}}
+                      style={{
+                        borderColor: styleGuide.palette.greyColor,
+                        width: '100%',
+                      }}
                       onPress={() => registerScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
                         일정 추가
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
@@ -652,16 +666,18 @@ export default ({
                   <GreyLine />
                   <SpaceRow>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#393939'}}
+                      style={{borderColor: styleGuide.palette.greyColor}}
                       onPress={() => registerScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
                         추가
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
                     <FixTypeDayChangeButton
-                      style={{borderColor: '#393939'}}
+                      style={{borderColor: styleGuide.palette.greyColor}}
                       onPress={() => modifyScheduleFn()}>
-                      <FixTypeDayChangeButtonText style={{color: '#393939'}}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
                         수정
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>

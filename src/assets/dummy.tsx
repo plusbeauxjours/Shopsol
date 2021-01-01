@@ -1021,10 +1021,28 @@ export const resultdata = {
 
 [
   {
-    EMP_NAME: '허군1',
-    EMP_SEQ: '6057',
-    IMAGE: '8aff5a1e9b56d9ed421b769c895fa7fe.jpeg',
+    LIST: [
+      {
+        shelfLifeDATE: '2020-12-31',
+        shelfLifeIMAGE: null,
+        shelfLifeMEMO: 'C',
+        shelfLifeNAME: 'C',
+      },
+    ],
     STORE_SEQ: '4878',
-    from: 'EmployeeInfoScreen',
+  },
+];
+
+[
+  {
+    LIST: [
+      {
+        shelfLifeDATE: '2020-12-31',
+        shelfLifeIMAGE: undefined,
+        shelfLifeMEMO: 'shelfLifeMemo',
+        shelfLifeNAME: 'shelfLifeName',
+      },
+    ],
+    STORE_SEQ: '4878',
   },
 ];

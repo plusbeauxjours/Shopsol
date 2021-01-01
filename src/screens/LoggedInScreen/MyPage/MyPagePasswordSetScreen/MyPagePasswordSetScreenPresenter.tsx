@@ -5,6 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsError {
   isError: boolean;
@@ -15,7 +16,7 @@ interface HasCheckedVerifyCode {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6; ;
+  background-color: ${styleGuide.palette.backgroundPrimary}; ;
 `;
 
 const Case = styled.View`
@@ -83,13 +84,14 @@ const RequestButton = styled.TouchableOpacity<HasCheckedVerifyCode>`
   align-items: center;
   justify-content: center;
   border-width: 1px;
-  border-color: ${(props) => (props.hasCheckedVerifyCode ? '#aaa' : '#e85356')};
+  border-color: ${(props) =>
+    props.hasCheckedVerifyCode ? '#aaa' : styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
 const RequestText = styled.Text`
   font-size: 14px;
-  color: #e85356;
+  color: ${styleGuide.palette.primary};
 `;
 
 const MobileNoText = styled.Text`

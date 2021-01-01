@@ -5,17 +5,18 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useSelector, useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 import api from '~/constants/LoggedInApi';
 import MyPagePlaceSetCard from './MyPagePlaceSetCard';
 import {setCLOSED_STORE_DATA} from '~/redux/mypageSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
-import {useNavigation} from '@react-navigation/native';
-import FastImage from 'react-native-fast-image';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const EmptyBox = styled.View`

@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+
 import {setMEMBER_NAME} from '~/redux/userSlice';
 import api from '~/constants/LoggedInApi';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsError {
   isError: boolean;
@@ -14,7 +16,7 @@ interface IsError {
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6; ;
+  background-color: ${styleGuide.palette.backgroundPrimary}; ;
 `;
 
 const Container = styled.View`

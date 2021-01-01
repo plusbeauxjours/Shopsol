@@ -3,17 +3,17 @@ import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView} from 'react-native';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
 
 import {userLogout} from '~/redux/userSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {ForwardIcon, LogoutIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Container = styled.View`
@@ -46,7 +46,7 @@ const Row = styled.View`
 `;
 
 const DateText = styled.Text`
-  color: #7c7c7c;
+  color: ${styleGuide.palette.greyColor};
   font-size: 12px;
 `;
 
@@ -55,14 +55,14 @@ const InfoText = styled(DateText)`
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   font-size: 16px;
 `;
 
 const BoxTitle = styled.Text`
   font-weight: bold;
   font-size: 15px;
-  color: #212121;
+  color: ${styleGuide.palette.greyColor};
   margin-left: 30px;
 `;
 
@@ -80,7 +80,7 @@ const Card = styled.TouchableOpacity`
 
 const CardText = styled.Text`
   font-size: 15px;
-  color: #212121;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 export default () => {

@@ -3,9 +3,11 @@ import {useNavigation} from '@react-navigation/native';
 import {WebView} from 'react-native-webview';
 import styled from 'styled-components/native';
 
+import styleGuide from '~/constants/styleGuide';
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6; ;
+  background-color: ${styleGuide.palette.backgroundPrimary}; ;
 `;
 
 export default ({route: {params}}) => {

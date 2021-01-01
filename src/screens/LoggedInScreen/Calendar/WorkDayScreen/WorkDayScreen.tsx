@@ -7,10 +7,11 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {removeAddWork} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
 import {ForwardIcon, TimerIcon, CalendarTimesIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
-  background-color: #f6f6f6;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const Card = styled.TouchableOpacity`
@@ -102,7 +103,7 @@ export default ({route: {params}}) => {
               <CalendarTimesIcon color={'#999'} />
               &nbsp;&nbsp;휴무 설정
             </Text>
-            <ForwardIcon size={24} color={'#e85356'} />
+            <ForwardIcon size={24} color={styleGuide.palette.primary} />
           </Card>
           <Card
             onPress={() =>
@@ -115,7 +116,7 @@ export default ({route: {params}}) => {
               <TimerIcon color={'#999'} />
               &nbsp;&nbsp;휴게시간 설정
             </Text>
-            <ForwardIcon size={24} color={'#e85356'} />
+            <ForwardIcon size={24} color={styleGuide.palette.primary} />
           </Card>
           {addWork == 'addWork' && (
             <Card
@@ -123,7 +124,7 @@ export default ({route: {params}}) => {
                 confirmModal('', `추가일정을 삭제합니다`, '취소', '삭제')
               }>
               <Text>&nbsp;&nbsp;추가일정 삭제</Text>
-              <ForwardIcon size={24} color={'#e85356'} />
+              <ForwardIcon size={24} color={styleGuide.palette.primary} />
             </Card>
           )}
         </Section>

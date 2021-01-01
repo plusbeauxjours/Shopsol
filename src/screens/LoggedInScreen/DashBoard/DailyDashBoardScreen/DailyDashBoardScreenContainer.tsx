@@ -6,7 +6,6 @@ import api from '~/constants/LoggedInApi';
 import {setCALENDAR_DATA} from '~/redux/calendarSlice';
 
 import DailyDashBoardScreenPresenter from './DailyDashBoardScreenPresenter';
-import colors from '~/constants/colors';
 
 export default () => {
   const screenScrollRef = createRef(0);
@@ -159,7 +158,6 @@ export default () => {
           name: i.EMP_NAME,
           legendFontColor: '#7F7F7F',
           legendFontSize: 12,
-          color: colors[index],
           WORKING: 0,
           IMAGE: i.images[0].IMAGE || '',
         });

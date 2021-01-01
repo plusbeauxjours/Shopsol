@@ -3,11 +3,12 @@ import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {onScrollEvent, useValue} from 'react-native-redash';
 import Animated from 'react-native-reanimated';
+import {useNavigation} from '@react-navigation/native';
 
 import ShelfLifeCheckScreenPresenter from './ShelfLifeCheckScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
-import {useNavigation} from '@react-navigation/native';
+import styleGuide from '~/constants/styleGuide';
 import {
   getSHELFLIFE_DATA,
   checkSHELFLIFE,
@@ -36,7 +37,7 @@ export default () => {
   };
 
   const defaultData = [
-    {name: '1일전', color: '#f4aaab', items: []},
+    {name: '1일전', color: styleGuide.palette.secondary, items: []},
     {name: '1주전', color: '#ccc', items: []},
     {name: '2주전', color: '#ccc', items: []},
     {name: '1달전', color: '#ccc', items: []},
@@ -206,7 +207,7 @@ export default () => {
         {
           titleWord: '1일전',
           backgroundColor: 'white',
-          textColor: '#f4aaab',
+          textColor: styleGuide.palette.secondary,
           radius: 60,
           totalQTY: dayCount ?? 0,
           doneQTY: dayDone,
