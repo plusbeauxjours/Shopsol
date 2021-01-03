@@ -125,6 +125,7 @@ export default ({
   explainModal,
   loading,
   startDate,
+  EMPLOYEE_LIST,
 }) => {
   return (
     <BackGround>
@@ -203,7 +204,26 @@ export default ({
               </PayBox>
             )}
           </Section>
-          {TOTAL_PAYMENT_WORKING_EMP && (
+          {console.log('EMPLOYEE_LIST', EMPLOYEE_LIST)}
+          {console.log('TOTAL_PAYMENT_WORKING_EMP', TOTAL_PAYMENT_WORKING_EMP)}
+          {loading ? (
+            <Section>
+              <EmployeeListBox>
+                {EMPLOYEE_LIST?.workinglist?.map((data) => (
+                  <PaymentInfoScreenCard
+                    key={data.MEMBER_SEQ}
+                    name={data.EMP_NAME}
+                    isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                    image={data.images[0].IMAGE}
+                    data={data}
+                    STORE={STORE}
+                    STORE_SEQ={STORE_SEQ}
+                    STOREPAY_SHOW={STOREPAY_SHOW}
+                  />
+                ))}
+              </EmployeeListBox>
+            </Section>
+          ) : (
             <Section>
               <EmployeeListBox>
                 {TOTAL_PAYMENT_WORKING_EMP?.emps?.map((data) => (

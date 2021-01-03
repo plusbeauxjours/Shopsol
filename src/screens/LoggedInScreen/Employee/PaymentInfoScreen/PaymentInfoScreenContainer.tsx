@@ -7,11 +7,14 @@ import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {getTOTAL_PAYMENT_WORKING_EMP} from '~/redux/paymentSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
+import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
+import api from '~/constants/LoggedInApi';
 
 export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE} = useSelector((state: any) => state.userReducer);
+  const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
   const {TOTAL_PAYMENT_WORKING_EMP} = useSelector(
     (state: any) => state.paymentReducer,
   );
@@ -116,6 +119,10 @@ export default () => {
   const fetchData = async () => {
     try {
       await setLoading(true);
+      const {data: empData} = await api.getEmpLists(STORE_SEQ);
+      if (empData.message == 'SUCCESS') {
+        dispatch(setEMPLOYEE_LIST(empData));
+      }
       await dispatch(getTOTAL_PAYMENT_WORKING_EMP());
     } catch (e) {
       console.log(e);
@@ -152,6 +159,7 @@ export default () => {
       explainModal={explainModal}
       loading={loading}
       startDate={startDate}
+      EMPLOYEE_LIST={EMPLOYEE_LIST}
     />
   );
 };
