@@ -15,7 +15,7 @@ const BigText = styled.Text`
 `;
 const Text = styled.Text`
   color: #000;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const View = styled.View`

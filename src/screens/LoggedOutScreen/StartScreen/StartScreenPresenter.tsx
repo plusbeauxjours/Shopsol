@@ -32,7 +32,7 @@ const BarButton = styled(Ripple)`
 
 const Text = styled.Text`
   color: ${styleGuide.palette.greyColor}
-  font-size: ${styleGuide.fontSize.middle};;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const UnderLineText = styled(Text)`
@@ -41,7 +41,7 @@ const UnderLineText = styled(Text)`
 
 const WhiteText = styled.Text`
   color: white;
-  font-size: ${styleGuide.fontSize.large};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Footer = styled.View`

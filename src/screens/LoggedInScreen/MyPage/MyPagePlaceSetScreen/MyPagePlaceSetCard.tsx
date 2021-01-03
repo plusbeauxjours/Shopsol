@@ -6,6 +6,7 @@ import {
 import styled from 'styled-components/native';
 
 import {LocationIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Container = styled.TouchableOpacity`
   margin-top: 20px;
@@ -23,8 +24,8 @@ const Container = styled.TouchableOpacity`
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
   margin-bottom: ${hp('1.5%')}px;
 `;
 
@@ -35,7 +36,7 @@ const AddressBox = styled.View`
 `;
 
 const AddressText = styled.Text`
-  font-size: 13px;
+  font-size: ${styleGuide.fontSize.middle}px;
   color: grey;
 `;
 

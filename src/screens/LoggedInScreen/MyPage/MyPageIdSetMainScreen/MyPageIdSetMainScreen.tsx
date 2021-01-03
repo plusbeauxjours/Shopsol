@@ -40,7 +40,7 @@ const Card = styled.TouchableOpacity`
 `;
 
 const CardText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: #212121;
 `;
 
@@ -48,7 +48,7 @@ export default () => {
   const navigation = useNavigation();
   const ArrowIcon = () => (
     <Arrow>
-      <ForwardIcon size={22} />
+      <ForwardIcon />
     </Arrow>
   );
   return (

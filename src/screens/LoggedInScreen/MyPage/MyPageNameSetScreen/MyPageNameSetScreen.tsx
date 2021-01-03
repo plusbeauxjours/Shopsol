@@ -24,22 +24,22 @@ const Container = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
   margin-bottom: 10px;
 `;
 
 const TextInput = styled.TextInput`
   padding: 5px 0;
   margin-left: 5px;
-  font-size: 15px;
+  font-size: 14px;
   color: black;
 `;
 
 const GreyText = styled.Text<IsError>`
-  font-size: 12px;
-  color: ${(props) => (props.isError ? 'red' : '#aaa')};
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${(props) => (props.isError ? 'red' : styleGuide.palette.greyColor)};
   margin-top: 5px;
 `;
 
@@ -98,7 +98,7 @@ export default () => {
           <TitleText>이름</TitleText>
           <TextInput
             placeholder={'변경하실 이름을 입력해주세요.'}
-            selectionColor={'#999'}
+            selectionColor={styleGuide.palette.greyColor}
             placeholderTextColor={'#CCCCCC'}
             onChangeText={(text) => {
               setNAME(text);

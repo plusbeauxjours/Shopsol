@@ -35,8 +35,8 @@ const VerifyText = styled.Text`
 `;
 
 const GreyText = styled.Text<IsError>`
-  font-size: 12px;
-  color: ${(props) => (props.isError ? 'red' : '#aaa')};
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${(props) => (props.isError ? 'red' : styleGuide.palette.greyColor)};
   margin-top: 5px;
 `;
 
@@ -51,7 +51,7 @@ const RequestButton = styled.TouchableOpacity`
 
 const NameText = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const WhiteSpace = styled.View`
@@ -71,14 +71,14 @@ const TextinputCase = styled.View`
 
 const TextInput = styled.TextInput`
   flex: 1;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: black;
   padding-left: 5px;
 `;
 
 const TimeText = styled.Text`
-  font-size: 12px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: #ff3d3d;
   align-self: flex-start;
   margin-bottom: 5px;
@@ -147,7 +147,7 @@ export default ({
                 <TextInput
                   placeholder={'휴대폰번호를 입력해주세요'}
                   placeholderTextColor={'#E5E5E5'}
-                  selectionColor={'#999'}
+                  selectionColor={styleGuide.palette.greyColor}
                   onChangeText={(text) => {
                     onChangeMobileNum(text);
                   }}
@@ -170,7 +170,7 @@ export default ({
                 <TextInput
                   placeholder={'인증번호를 입력해주세요'}
                   placeholderTextColor={'#E5E5E5'}
-                  selectionColor={'#999'}
+                  selectionColor={styleGuide.palette.greyColor}
                   onChangeText={(text) => {
                     onChangeVerifyCode(text);
                   }}
@@ -203,7 +203,7 @@ export default ({
                     <TextInput
                       placeholder={'영문, 숫자 조합 6자 이상'}
                       placeholderTextColor={'#E5E5E5'}
-                      selectionColor={'#999'}
+                      selectionColor={styleGuide.palette.greyColor}
                       onFocus={() => {
                         setPassword('');
                         setPasswordCheck('');
@@ -241,7 +241,7 @@ export default ({
                     <TextInput
                       placeholder={'새 비밀번호 확인'}
                       placeholderTextColor={'#E5E5E5'}
-                      selectionColor={'#999'}
+                      selectionColor={styleGuide.palette.greyColor}
                       onChangeText={(text) => passwordCheckerFn(text, true)}
                       value={passwordCheck}
                       secureTextEntry={isPasswordCheckSeen ? false : true}

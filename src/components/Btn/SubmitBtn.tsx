@@ -25,7 +25,7 @@ const NoSubmitButton = styled(SubmitButton)`
 `;
 
 const WhiteText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
 `;
 

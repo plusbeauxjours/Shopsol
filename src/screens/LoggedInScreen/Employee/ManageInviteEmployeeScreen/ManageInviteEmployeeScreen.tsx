@@ -48,27 +48,27 @@ const EmployeeListBox = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyText = styled.Text`
   text-align: center;
-  color: #aaa;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
 const NumberText = styled.Text`
   color: ${styleGuide.palette.primary};
   font-size: 18px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 export default () => {

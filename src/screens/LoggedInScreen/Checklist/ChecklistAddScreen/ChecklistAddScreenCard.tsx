@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {CloseCircleIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Container = styled.View`
   justify-content: center;
@@ -17,7 +18,7 @@ const CloseIconContainer = styled.View`
   width: 26px;
   height: 26px;
   border-radius: 13px;
-  background-color: #aaa;
+  background-color: ${styleGuide.palette.greyColor};
   border-width: 2px;
   border-color: white;
   z-index: 30;

@@ -7,6 +7,7 @@ import * as Hangul from 'hangul-js';
 import MonthlyDashBoardScreenPresenter from './MonthlyDashBoardScreenPresenter';
 import api from '~/constants/LoggedInApi';
 import {setCALENDAR_DATA} from '~/redux/calendarSlice';
+import styleGuide from '~/constants/styleGuide';
 
 export default () => {
   const scrollRef = createRef(0);
@@ -170,8 +171,8 @@ export default () => {
           EMP_NAME: i.EMP_NAME,
           IS_MANAGER: i.IS_MANAGER,
           name: i.EMP_NAME,
-          legendFontColor: '#7F7F7F',
-          legendFontSize: 12,
+          legendFontColor: styleGuide.palette.greyColor,
+          legendfontSize: styleGuide.fontSize.middle,
           TOTAL_WORKING: 0,
           TOTAL_WORKING_DAY: 0,
           TOTAL_VACATION_TIME: 0,

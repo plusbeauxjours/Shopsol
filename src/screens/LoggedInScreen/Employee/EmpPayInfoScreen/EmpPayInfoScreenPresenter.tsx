@@ -38,8 +38,8 @@ const TopArea = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const NameBox = styled.View`
@@ -54,9 +54,9 @@ const Row = styled.View`
 `;
 
 const EmployeeText = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   height: 15px;
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const DateArrow = styled.TouchableOpacity`
@@ -78,14 +78,14 @@ const DateTextArea = styled.View`
 `;
 
 const DateBoxText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const DateText = styled.Text`
-  color: #7f7f7f;
-  font-size: 12px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const DateBox = styled(Row)`
@@ -93,14 +93,14 @@ const DateBox = styled(Row)`
 `;
 
 const BoxTitleText = styled.Text`
-  font-weight: bold;
-  font-size: 12px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  font-size: ${styleGuide.fontSize.middle}px;
   color: ${styleGuide.palette.primary};
 `;
 
 const DetailRowText = styled.Text`
-  font-size: 15px;
-  color: #999;
+  font-size: 14px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const MainPayBoxText = styled.Text`
@@ -256,7 +256,11 @@ export default ({
         </DateArrow>
         <DateTextArea>
           <DateBoxText>{moment(date).format('YYYY년 M월')}</DateBoxText>
-          <DateBoxText style={{fontSize: 12, fontWeight: '300'}}>
+          <DateBoxText
+            style={{
+              fontSize: styleGuide.fontSize.middle,
+              fontWeight: styleGuide.fontWeight.normal,
+            }}>
             ({moment(date).format('M월 D일')}
             &nbsp;~&nbsp;
             {moment(date)

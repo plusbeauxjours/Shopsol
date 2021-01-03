@@ -27,8 +27,8 @@ const EmptyBox = styled.View`
 `;
 
 const EmptyText = styled.Text`
-  color: #999;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const TextBox = styled.View`

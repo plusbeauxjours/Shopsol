@@ -9,6 +9,7 @@ import FastImage from 'react-native-fast-image';
 import Ripple from 'react-native-material-ripple';
 
 import {NewBoxIcon, PinIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IsFavorite {
   isFavorite: boolean;
@@ -55,7 +56,7 @@ const NewBadge = styled.View`
 `;
 
 const NotiTitleText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   font-weight: 500;
   margin-bottom: 5px;
 `;
@@ -74,17 +75,17 @@ const PinTouchable = styled.TouchableOpacity<IsFavorite>`
 `;
 
 const InfoText = styled.Text`
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: #c0c0c0;
 `;
 
 const GreyText = styled.Text`
-  font-size: 12px;
-  color: #aaa;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const WhiteText = styled.Text`
-  font-size: 11px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: white;
 `;
 
@@ -203,7 +204,10 @@ export default ({
       <PinTouchable
         isFavorite={data.favorite === '1'}
         onPress={() => confirmModal(data.NOTICE_SEQ)}>
-        <PinIcon size={18} color={data.favorite == '1' ? 'yellow' : '#aaa'} />
+        <PinIcon
+          size={18}
+          color={data.favorite == '1' ? 'yellow' : styleGuide.palette.greyColor}
+        />
       </PinTouchable>
     </View>
   );

@@ -21,9 +21,9 @@ const Container = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Row = styled.View`
@@ -44,7 +44,7 @@ const TypeCheckCase = styled.View`
 
 const TypeText = styled.Text`
   margin-left: 5px;
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const View = styled.View``;

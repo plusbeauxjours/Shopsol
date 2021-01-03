@@ -12,7 +12,7 @@ const BigText = styled.Text`
 const Text = styled.Text`
   text-align: center;
   color: #000;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const View = styled.View`
@@ -62,7 +62,12 @@ export default ({
           {MEMBER_NAME}님, {STORE_NAME}점에&nbsp;
           {actionTYPE}을 진행 할 수 없습니다.
         </BigText>
-        <BigText style={{color: 'red', fontWeight: 'bold', marginBottom: 5}}>
+        <BigText
+          style={{
+            color: 'red',
+            fontWeight: styleGuide.fontWeight.bold,
+            marginBottom: 5,
+          }}>
           {errorMessage}
         </BigText>
         <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>

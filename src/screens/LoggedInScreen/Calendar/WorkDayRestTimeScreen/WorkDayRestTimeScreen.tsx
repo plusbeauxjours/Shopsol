@@ -39,11 +39,11 @@ const WhiteSpace = styled.View`
 `;
 
 const BigText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const TextInput = styled.TextInput`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.primary};
   margin: 0 5px;
   width: 30px;
@@ -59,7 +59,7 @@ const TextReadOnly = styled(BigText)`
 
 const Bold = styled.Text`
   margin-left: 10px;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 export default ({route: {params}}) => {
@@ -145,7 +145,7 @@ export default ({route: {params}}) => {
             <TextInput
               placeholder={'0'}
               placeholderTextColor={'#E5E5E5'}
-              selectionColor={'#999'}
+              selectionColor={styleGuide.palette.greyColor}
               onChangeText={(text) => setRestTime(text)}
               maxLength={3}
               value={restTime}

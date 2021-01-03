@@ -41,21 +41,21 @@ const Row = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const NumberText = styled.Text`
   color: ${styleGuide.palette.primary};
   font-size: 18px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -63,7 +63,7 @@ const EmployeeListBox = styled.View<IEmployeeListBox>`
   width: 100%;
   align-items: center;
   border-radius: 20px;
-  border-color: #${styleGuide.palette.borderColor};
+  border-color: ${styleGuide.palette.borderColor};
   background-color: white;
 `;
 

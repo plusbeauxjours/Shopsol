@@ -36,15 +36,15 @@ const Container = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -88,9 +88,9 @@ const TextInputContainer = styled.View`
 `;
 
 const GreyText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const BorderBox = styled.View`
@@ -105,8 +105,8 @@ const BorderBox = styled.View`
 `;
 
 const GreySmallText = styled.Text`
-  font-size: 12px;
-  color: #999;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
   text-align: left;
 `;
 
@@ -116,7 +116,7 @@ const CloseIconContainer = styled.View`
   width: 26px;
   height: 26px;
   border-radius: 13px;
-  background-color: #aaa;
+  background-color: ${styleGuide.palette.greyColor};
   border-width: 2px;
   border-color: white;
   z-index: 30;
@@ -134,7 +134,7 @@ const Row = styled.View`
 `;
 
 const CameraPictureCloseButtonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #ffffff;
 `;
 
@@ -171,7 +171,7 @@ const HalfBotton = styled.TouchableOpacity`
 `;
 
 const HalfBottonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const CameraLastPictureContainer = styled.View`
@@ -196,7 +196,7 @@ const DatePickerRoundBtn = styled(Ripple)`
   height: 60px;
   border-width: 0.5px;
   border-radius: 30px;
-  border-color: #888;
+  border-color: ${styleGuide.palette.greyColor};
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -215,9 +215,9 @@ const DatePickerRoundView = styled.View`
 `;
 
 const DatePickerText = styled.Text`
-  font-weight: 200;
-  font-size: 16px;
-  color: #888;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
 
@@ -295,7 +295,7 @@ export default ({
                       <GreySmallText
                         style={{
                           color: styleGuide.palette.secondary,
-                          fontSize: 10,
+                          fontSize: styleGuide.fontSize.small,
                         }}>
                         사진촬영
                       </GreySmallText>
@@ -309,7 +309,7 @@ export default ({
                 <GreyText>성명</GreyText>
                 <TextInput
                   placeholder={'성명'}
-                  placeholderTextColor={'#999'}
+                  placeholderTextColor={styleGuide.palette.greyColor}
                   onChangeText={(text) => {
                     setNAME(text);
                   }}
@@ -323,7 +323,7 @@ export default ({
                 <GreyText>회차</GreyText>
                 <TextInput
                   placeholder={'회차'}
-                  placeholderTextColor={'#999'}
+                  placeholderTextColor={styleGuide.palette.greyColor}
                   onChangeText={(text) => {
                     setRESULT_COUNT(text);
                   }}

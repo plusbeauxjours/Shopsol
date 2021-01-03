@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
-
 import FastImage from 'react-native-fast-image';
+
 import {ForwardIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IText {
   color: string;
@@ -27,16 +28,16 @@ const NameBox = styled.View`
 const NameText = styled.Text`
   margin-right: 10px;
   color: #707070;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const DateText = styled.Text`
   color: #707070;
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const InfoText = styled(DateText)<IText>`
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
   margin-top: 5px;
   color: ${(props) => props.color};
 `;

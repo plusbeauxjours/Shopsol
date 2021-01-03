@@ -84,7 +84,7 @@ const RowTouchable = styled.TouchableOpacity<IsSelected>`
   align-items: center;
   margin-bottom: 10px;
   border-width: 0.7px;
-  border-radius: 15px;
+  border-radius: 14px;
   border-color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
@@ -104,7 +104,7 @@ const ModalCheckEmpList = styled.View`
 `;
 
 const Bold = styled.Text`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const TimePickBox = styled.View`
@@ -120,7 +120,7 @@ const ChecktimeButton = styled.TouchableOpacity`
 
 const ChecktimeButtonText = styled.Text`
   color: ${styleGuide.palette.primary};
-  font-weight: 400;
+  font-weight: ${styleGuide.fontWeight.normal};
 `;
 
 const WhiteSpace = styled.View`
@@ -130,13 +130,13 @@ const WhiteSpace = styled.View`
 const RenderWorkDayTouchable = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
-  margin-left: 15px;
+  margin-left: 14px;
   z-index: 2;
 `;
 
 const IncentiveText = styled.Text`
   margin-left: 10;
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const EmptySpace = styled.View`
@@ -154,12 +154,12 @@ const TimeRowSpaceTouchable = styled(TimeRowTouchable)`
 
 const SideText = styled.Text`
   margin-left: 10px;
-  font-size: 15px;
+  font-size: 14px;
   color: #212121;
 `;
 
 const TimePickBoxTimeText = styled.Text<IsSelected>`
-  font-size: 17px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${(props) =>
     props.isSelected ? styleGuide.palette.primary : '#cccccc'};
 `;
@@ -177,7 +177,7 @@ const ModalPopupText = styled.Text`
 `;
 
 const ModalPopup = styled.View`
-  padding: 15px;
+  padding: 14px;
   border-radius: 10px;
   elevation: 6;
   shadow-color: grey;
@@ -225,22 +225,22 @@ const DatePickerRoundView = styled.View`
 `;
 
 const DatePickerText = styled.Text`
-  font-weight: 200;
-  font-size: 16px;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -249,8 +249,8 @@ const ListTouchable = styled.TouchableWithoutFeedback`
 `;
 
 const DateBoxText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.greyColor};
 `;
 

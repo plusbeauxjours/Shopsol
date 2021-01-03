@@ -46,9 +46,9 @@ const RowSpace = styled(Row)`
 `;
 
 const SectionText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Section = styled.View`
@@ -136,7 +136,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   width: 30px;
   height: 30px;
   right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 15)}px;
+  top: ${(props) => (isIphoneX() ? 35 : 25)}px;
 `;
 
 const Line = styled.View`
@@ -308,7 +308,9 @@ export default ({
                 style={{
                   maxWidth: wp('100') - 160,
                   color: EMP_NAME ? '#000' : styleGuide.palette.primary,
-                  fontWeight: EMP_NAME ? 'normal' : 'bold',
+                  fontWeight: EMP_NAME
+                    ? styleGuide.fontWeight.normal
+                    : styleGuide.fontWeight.bold,
                 }}>
                 {EMP_NAME ?? '체크전'}
               </Text>
@@ -319,7 +321,9 @@ export default ({
               <Text
                 style={{
                   color: CHECK_TIME ? '#000' : styleGuide.palette.primary,
-                  fontWeight: CHECK_TIME ? 'normal' : 'bold',
+                  fontWeight: CHECK_TIME
+                    ? styleGuide.fontWeight.normal
+                    : styleGuide.fontWeight.bold,
                 }}>
                 {CHECK_TIME ? moment(CHECK_TIME).format('HH:mm') : '체크전'}
               </Text>
@@ -337,8 +341,20 @@ export default ({
                   </ChecklistItem>
                 ) : (
                   <CheckBoxIconContainer>
-                    <Text style={{fontSize: 12, color: '#000'}}>정상</Text>
-                    <Text style={{fontSize: 12, color: '#B91C1B'}}>이상</Text>
+                    <Text
+                      style={{
+                        fontSize: styleGuide.fontSize.middle,
+                        color: '#000',
+                      }}>
+                      정상
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: styleGuide.fontSize.middle,
+                        color: '#B91C1B',
+                      }}>
+                      이상
+                    </Text>
                   </CheckBoxIconContainer>
                 )}
               </ChecklistTitle>

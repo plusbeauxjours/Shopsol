@@ -51,9 +51,9 @@ const Section = styled.View`
 `;
 
 const SectionText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const TextInput = styled.TextInput``;
@@ -99,7 +99,7 @@ const GreyText = styled(Text)`
 `;
 
 const CameraPictureCloseButtonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #ffffff;
 `;
 
@@ -136,7 +136,7 @@ const HalfBotton = styled.TouchableOpacity`
 `;
 
 const HalfBottonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const CameraLastPictureContainer = styled.View`
@@ -166,7 +166,7 @@ const CloseIconContainer = styled.View`
   width: 26px;
   height: 26px;
   border-radius: 13px;
-  background-color: #aaa;
+  background-color: ${styleGuide.palette.greyColor};
   border-width: 2px;
   border-color: white;
   z-index: 30;
@@ -257,7 +257,9 @@ export default ({
                   style={{
                     maxWidth: wp('100') - 160,
                     color: NAME ? '#000' : styleGuide.palette.primary,
-                    fontWeight: NAME ? 'normal' : 'bold',
+                    fontWeight: NAME
+                      ? styleGuide.fontWeight.normal
+                      : styleGuide.fontWeight.bold,
                   }}>
                   {NAME ? NAME.split('@').join(' / ') : EMP_NAME ?? '체크전'}
                 </Text>
@@ -268,7 +270,9 @@ export default ({
                 <Text
                   style={{
                     color: CHECK_TIME ? '#000' : styleGuide.palette.primary,
-                    fontWeight: CHECK_TIME ? 'normal' : 'bold',
+                    fontWeight: CHECK_TIME
+                      ? styleGuide.fontWeight.normal
+                      : styleGuide.fontWeight.bold,
                   }}>
                   {CHECK_TIME ? moment(CHECK_TIME).format('HH:mm') : '체크전'}
                 </Text>
@@ -287,14 +291,14 @@ export default ({
                     <CheckBoxIconContainer>
                       <Text
                         style={{
-                          fontSize: 12,
+                          fontSize: styleGuide.fontSize.middle,
                           color: scan == '0' ? '#CCCCCC' : '#000',
                         }}>
                         정상
                       </Text>
                       <Text
                         style={{
-                          fontSize: 12,
+                          fontSize: styleGuide.fontSize.middle,
                           color: scan == '0' ? '#CCCCCC' : '#B91C1B',
                         }}>
                         이상
@@ -394,7 +398,11 @@ export default ({
                         }}>
                         <BorderBox>
                           <CameraIcon size={25} color={'#ccc'} />
-                          <Text style={{color: '#bbb', fontSize: 10}}>
+                          <Text
+                            style={{
+                              color: '#bbb',
+                              fontSize: styleGuide.fontSize.small,
+                            }}>
                             사진촬영
                           </Text>
                         </BorderBox>
@@ -402,7 +410,11 @@ export default ({
                       <Touchable onPress={() => launchImageLibraryFn()}>
                         <BorderBox>
                           <PictureIcon size={25} color={'#ccc'} />
-                          <Text style={{color: '#bbb', fontSize: 10}}>
+                          <Text
+                            style={{
+                              color: '#bbb',
+                              fontSize: styleGuide.fontSize.small,
+                            }}>
                             보관함
                           </Text>
                         </BorderBox>

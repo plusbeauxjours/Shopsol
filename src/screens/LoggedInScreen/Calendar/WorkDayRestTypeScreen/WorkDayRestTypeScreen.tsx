@@ -57,13 +57,13 @@ const TextWrapper = styled(RowSpace)`
 
 const MidText = styled.Text`
   flex: 1;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   margin: 0 5px;
   text-align: right;
 `;
 
 const BigText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   margin-bottom: 10px;
 `;
 
@@ -75,7 +75,7 @@ const ContentsBoxLine = styled.View`
 `;
 
 const ButtonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const LeftButton = styled.TouchableOpacity`
@@ -194,8 +194,8 @@ export default ({route: {params}}) => {
           <BigText>
             <Text
               style={{
-                fontWeight: 'bold',
-                fontSize: 16,
+                fontWeight: styleGuide.fontWeight.bold,
+                fontSize: styleGuide.fontSize.large,
               }}>
               {NAME}
             </Text>
@@ -209,13 +209,17 @@ export default ({route: {params}}) => {
         </Section>
         <BoxContainer>
           <LeftButton onPress={() => registerFn('1')}>
-            <ButtonText style={{fontSize: 16, color: 'white'}}>
+            <ButtonText
+              style={{fontSize: styleGuide.fontSize.large, color: 'white'}}>
               유급휴무 적용
             </ButtonText>
           </LeftButton>
           <RightButton onPress={() => registerFn('0')}>
             <ButtonText
-              style={{fontSize: 16, color: styleGuide.palette.primary}}>
+              style={{
+                fontSize: styleGuide.fontSize.large,
+                color: styleGuide.palette.primary,
+              }}>
               무급휴무 적용
             </ButtonText>
           </RightButton>

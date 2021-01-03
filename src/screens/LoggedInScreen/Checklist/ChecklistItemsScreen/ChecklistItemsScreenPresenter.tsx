@@ -28,7 +28,7 @@ interface IsEmpName {
 }
 const CalendarText = styled.Text`
   margin: 2px 0 2px 10px;
-  font-size: 11px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: #333;
 `;
 
@@ -90,9 +90,9 @@ const DateTextArea = styled.View`
 `;
 
 const DateText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Container = styled.View`
@@ -138,8 +138,8 @@ const CalendarTitleText2 = styled.Text`
 `;
 
 const EmptyText = styled.Text`
-  color: #999;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const EmptyBox = styled.View`
@@ -184,7 +184,7 @@ const ChecklistModalBox = styled.View`
 
 const ChecklistTitleText = styled.Text`
   margin: 10px 0;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const ChecklistIconContainer = styled.View<IsEmpName>`
@@ -199,14 +199,14 @@ const ChecklistIconContainer = styled.View<IsEmpName>`
 const ChecklistTypeText1 = styled.Text`
   align-self: flex-start;
   color: ${styleGuide.palette.primary};
-  font-size: 11px;
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const ChecklistTypeText2 = styled.Text`
   flex: 1;
   padding-left: 10px;
   color: #7e7c7c;
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const AddButtonContainer = styled.View`
@@ -384,7 +384,11 @@ export default ({
               </DateToday>
               <DateTextArea>
                 <DateText>{moment(date).format('YYYY년 M월 D일')}</DateText>
-                <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                <DateText
+                  style={{
+                    fontSize: styleGuide.fontSize.middle,
+                    fontWeight: styleGuide.fontWeight.normal,
+                  }}>
                   {utils.renderWeekDay(moment(date).format('d'))}
                 </DateText>
               </DateTextArea>

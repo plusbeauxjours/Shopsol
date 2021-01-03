@@ -1,14 +1,12 @@
 import React, {useRef} from 'react';
 import styled from 'styled-components/native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import {RNCamera} from 'react-native-camera';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
+import BarcodeMask from 'react-native-barcode-mask';
 import moment from 'moment';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
@@ -60,15 +58,15 @@ const Center = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -88,8 +86,8 @@ const Row = styled.View`
 `;
 
 const GreyText = styled.Text`
-  font-size: 12px;
-  color: #aaa;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const TextInput = styled.TextInput`
@@ -160,7 +158,7 @@ const CameraLastPictureContainer = styled.View`
 `;
 
 const CameraPictureCloseButtonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #ffffff;
 `;
 
@@ -197,7 +195,7 @@ const HalfBotton = styled.TouchableOpacity`
 `;
 
 const HalfBottonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const CloseIconContainer = styled.TouchableOpacity`
@@ -206,14 +204,14 @@ const CloseIconContainer = styled.TouchableOpacity`
   width: 30px;
   height: 30px;
   right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 15)}px;
+  top: ${(props) => (isIphoneX() ? 35 : 25)}px;
 `;
 
 const IconContainer = styled.View`
   width: 18px;
   height: 18px;
   border-radius: 9px;
-  background-color: #aaa;
+  background-color: ${styleGuide.palette.greyColor};
   border-width: 2px;
   border-color: white;
   z-index: 30;
@@ -241,7 +239,7 @@ const DatePickerRoundBtn = styled(Ripple)`
   height: 60px;
   border-width: 0.5px;
   border-radius: 30px;
-  border-color: #888;
+  border-color: ${styleGuide.palette.greyColor};
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -260,10 +258,39 @@ const DatePickerRoundView = styled.View`
 `;
 
 const DatePickerText = styled.Text`
-  font-weight: 200;
-  font-size: 16px;
-  color: #888;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
   text-align: center;
+`;
+
+const ModalFooter = styled.View`
+  width: ${wp('100%')}px;
+  align-items: center;
+`;
+
+const ModalFooterText = styled.Text`
+  text-align: center;
+  color: ${styleGuide.palette.greyColor};
+  font-size: 18px;
+  margin-bottom: 20px;
+`;
+
+const Footer = styled.TouchableOpacity`
+  width: ${wp('100%')}px;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: ${styleGuide.palette.primary};
+`;
+
+const FooterText = styled.Text`
+  color: #ffffff;
+  font-size: 14px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 `;
 
 export default ({
@@ -293,8 +320,12 @@ export default ({
   alertModal,
   shelfLifeDateSet,
   setShelfLifeDateSet,
+  barCodeCameraModalOpen,
+  setBarCodeCameraModalOpen,
+  handleBarCodeScanned,
 }) => {
   const cameraRef = useRef(null);
+
   return (
     <BackGround>
       <ScrollView
@@ -340,27 +371,32 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
-                    {/* <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
+                  {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
+                  <Touchable
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
-                      <GreyText style={{fontSize: 10}}>사진촬영</GreyText>
+                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                        사진촬영
+                      </GreyText>
                     </BorderBox>
                   </Touchable>
-                  <Touchable onPress={() => launchImageLibraryFn()}>
-                    {/* <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
+                  {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
+                  <Touchable
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
-                      <GreyText style={{fontSize: 10}}>보관함</GreyText>
+                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                        보관함
+                      </GreyText>
                     </BorderBox>
                   </Touchable>
-                  <Touchable
-                    onPress={() => alertModal('바코드 서비스 준비중입니다.')}>
+                  <Touchable onPress={() => setBarCodeCameraModalOpen(true)}>
                     <BorderBox>
                       <BarCodeIcon size={20} color={'#ccc'} />
-                      <GreyText style={{fontSize: 10}}>바코드</GreyText>
+                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                        바코드
+                      </GreyText>
                     </BorderBox>
                   </Touchable>
                 </Column>
@@ -373,11 +409,12 @@ export default ({
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeName(text)}
+                    onFocus={() => setShelfLifeName('')}
                     value={shelfLifeName}
                     maxLength={15}
                     style={{
-                      fontSize: 16,
-                      fontWeight: 'bold',
+                      fontSize: styleGuide.fontSize.large,
+                      fontWeight: styleGuide.fontWeight.bold,
                       height: 5,
                       margin: -10,
                       borderWidth: 0,
@@ -389,7 +426,7 @@ export default ({
                       <GreyText
                         style={{
                           color: '#CCC',
-                          fontSize: 16,
+                          fontSize: styleGuide.fontSize.large,
                           marginRight: 10,
                         }}>
                         기한
@@ -408,6 +445,7 @@ export default ({
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeMemo(text)}
+                    onFocus={() => setShelfLifeMemo('')}
                     value={shelfLifeMemo}
                     multiline={true}
                     style={{
@@ -536,6 +574,36 @@ export default ({
           )}
         </Modal>
         <Modal
+          isVisible={barCodeCameraModalOpen}
+          onBackdropPress={() => setBarCodeCameraModalOpen(false)}
+          onRequestClose={() => setBarCodeCameraModalOpen(false)}
+          style={{margin: 0}}
+          avoidKeyboard={true}>
+          <RNCamera
+            ref={cameraRef}
+            style={{flex: 1}}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            autoFocus={RNCamera.Constants.AutoFocus.on}
+            captureAudio={false}
+            onFacesDetected={() => {}}
+            onFocusChanged={() => {}}
+            onZoomChanged={() => {}}
+            onBarCodeRead={({data}) => handleBarCodeScanned(data)}>
+            <BarcodeMask
+              width={300}
+              height={100}
+              outerMaskOpacity={0.8}
+              edgeColor={styleGuide.palette.tertiary}
+              edgeBorderWidth={2}
+              showAnimatedLine={false}
+            />
+            <Footer onPress={() => setBarCodeCameraModalOpen(false)}>
+              <FooterText>닫기</FooterText>
+            </Footer>
+          </RNCamera>
+        </Modal>
+        <Modal
           onRequestClose={() => {
             setSelectedIndex(0);
             setIsImageViewVisible(false);
@@ -547,7 +615,7 @@ export default ({
           isVisible={isImageViewVisible}
           style={{
             margin: 0,
-            justifyContent: 'flex-end',
+            justifyContent: 'center',
             width: '100%',
             height: '100%',
           }}>
@@ -559,7 +627,7 @@ export default ({
             <CloseCircleOutlineIcon size={33} color={'white'} />
           </CloseIconContainer>
           <FastImage
-            style={{width: '100%', height: '100%'}}
+            style={{width: wp('100%'), height: wp('100%')}}
             source={{
               uri: list[selectedIndex]?.shelfLifeIMAGE,
               headers: {Authorization: 'someAuthToken'},

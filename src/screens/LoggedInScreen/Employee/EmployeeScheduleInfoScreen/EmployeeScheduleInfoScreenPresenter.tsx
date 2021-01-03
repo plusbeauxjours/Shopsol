@@ -44,7 +44,7 @@ const Container = styled.View`
 const RenderDayListContainer = styled.View``;
 
 const WhiteText = styled.Text`
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
   color: white;
 `;
 const Section = styled.View`
@@ -66,13 +66,13 @@ const EmployeeBox = styled.View`
 const NameText = styled.Text`
   margin-right: 10px;
   color: ${styleGuide.palette.greyColor};
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   margin-bottom: 5px;
 `;
 
 const DateText = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const Row = styled.View`
@@ -91,7 +91,7 @@ const SmallLine = styled.View`
   width: ${wp('50%')}px;
   height: 0.5px;
   margin: 10px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
 `;
 
 const WorkTypeAndSalaryBox = styled.View`
@@ -103,7 +103,7 @@ const WorkTypeAndSalaryBox = styled.View`
 
 const WorkTypeAndSalaryInfoBox = styled.View`
   align-items: flex-end;
-  border-color: #${styleGuide.palette.borderColor};
+  border-color: ${styleGuide.palette.borderColor};
   border-top-width: 1px;
   border-bottom-width: 1px;
   padding: 10px 20px;
@@ -111,7 +111,7 @@ const WorkTypeAndSalaryInfoBox = styled.View`
 `;
 
 const WorkTypeAndSalaryBoxTitle = styled.Text`
-  font-size: 17px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.primary};
 `;
 
@@ -130,8 +130,8 @@ const WorkScheduleBox = styled.TouchableOpacity`
 `;
 
 const GreyText = styled.Text`
-  font-size: 15px;
-  color: #${styleGuide.palette.borderColor};
+  font-size: 14px;
+  color: ${styleGuide.palette.borderColor};
 `;
 
 const FixedGreyText = styled(GreyText)`
@@ -156,7 +156,7 @@ const FixTypeDayChangeButton = styled.TouchableOpacity`
 `;
 
 const FixTypeDayChangeButtonText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const RenderDayRow = styled.View`
@@ -189,7 +189,7 @@ const RenderDayTime = styled.View`
 `;
 
 const RenderDayTimeText = styled.Text<IsSelected>`
-  font-size: 15px;
+  font-size: 14px;
   color: ${(props) => (props.substract && props.isSelected ? '#000' : '#ddd')};
 `;
 
@@ -200,7 +200,7 @@ const RenderDuration = styled.View`
 `;
 
 const RenderDurationText = styled.Text<IsSelected>`
-  font-size: 15px;
+  font-size: 14px;
   color: ${(props) => (props.isSelected ? '#000' : '#ddd')};
 `;
 
@@ -228,13 +228,16 @@ const TimeListRow = styled(Row)`
 `;
 
 const TimeListBoxText = styled.Text<IsSelected>`
-  font-weight: ${(props) => (props.isSelected ? '600' : '300')};
+  font-weight: ${(props) =>
+    props.isSelected
+      ? styleGuide.fontWeight.bold
+      : styleGuide.fontWeight.normal};
   color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
 const TimeListBold = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  font-size: 14px;
   margin-left: 15px;
   margin: 0 20px;
 `;
@@ -242,7 +245,7 @@ const TimeListBold = styled.Text`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   background-color: green;
   height: 1px;
 `;
@@ -495,7 +498,7 @@ export default ({
               </WorkTypeAndSalaryBox>
               <GreyLine />
               <WorkTypeAndSalaryInfoBox>
-                <GreyText style={{fontSize: 12}}>
+                <GreyText style={{fontSize: styleGuide.fontSize.middle}}>
                   {getPeriod(CALCULATE_DAY)}
                 </GreyText>
                 <SmallLine />

@@ -88,7 +88,7 @@ const RequestBorderButton = styled.TouchableOpacity`
 `;
 
 const RequestText = styled.Text`
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
   color: white;
 `;
 
@@ -106,14 +106,14 @@ const TextInput = styled.TextInput`
   margin-left: 5px;
   color: black;
   height: 24px;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   margin-top: 10px;
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -143,21 +143,21 @@ const TypeContainer = styled.TouchableOpacity`
 
 const TypeText = styled.Text`
   margin-left: 5px;
-  font-size: 15px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: ${styleGuide.fontWeight.normal};
 `;
 
 const GreyText = styled.Text<IsError>`
-  font-size: 12px;
-  color: ${(props) => (props.isError ? 'red' : '#aaa')};
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${(props) => (props.isError ? 'red' : styleGuide.palette.greyColor)};
   margin-top: 5px;
   margin-left: 5px;
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const TypeCheckCase = styled.View`
@@ -182,7 +182,7 @@ const ModalList = styled.TouchableOpacity`
 `;
 
 const ModalText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const ModalConfirmArea = styled.View`
@@ -207,21 +207,21 @@ const ModalConfirmText = styled.Text<IColor>`
 `;
 
 const ModalTitle = styled.Text`
-  font-size: 17px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.primary};
   padding: 0 20px;
   margin-top: 20px;
 `;
 
 const ModalInfoText = styled.Text`
-  font-size: 13px;
+  font-size: ${styleGuide.fontSize.middle}px;
   padding: 0 20px;
   margin-top: 5px;
 `;
 
 const ModalCalendar = styled.View`
   background-color: white;
-  border-color: #${styleGuide.palette.borderColor};
+  border-color: ${styleGuide.palette.borderColor};
   border-width: 1px;
   margin: 20px 0;
 `;
@@ -235,7 +235,7 @@ const SubmitBtnContainer = styled.TouchableOpacity`
 `;
 
 const SubmitBtnText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: white;
   margin-left: 10px;
   padding-top: 5px;
@@ -252,8 +252,8 @@ const DeleteBtn = styled.TouchableOpacity`
 `;
 
 const DeleteBtnText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: #ff3d3d;
   text-decoration-line: underline;
 `;

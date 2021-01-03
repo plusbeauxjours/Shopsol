@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 
 import {HelpIcon, SettingIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Container = styled.View`
   flex-direction: row;
@@ -15,9 +16,9 @@ const Touchable = styled.TouchableOpacity`
 `;
 
 const Text = styled.Text`
-  font-size: 11px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: white;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 export default () => {

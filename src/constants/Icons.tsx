@@ -26,7 +26,7 @@ export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
         ? 'md-chevron-forward-outline'
         : 'ios-chevron-forward-outline'
     }
-    size={size ?? 14}
+    size={size ?? 16}
     color={color ?? styleGuide.palette.primary}
   />
 );
@@ -36,7 +36,7 @@ export const ForwardArrowIcon: React.FC<IProps> = ({size, color}) => (
     <Ionicons
       name={'arrow-forward-sharp'}
       size={size ?? 12}
-      color={color ?? '#999'}
+      color={color ?? styleGuide.palette.greyColor}
     />
   </ForwardArrowIconContainer>
 );
@@ -143,7 +143,7 @@ export const HelpCircleIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'help-circle'}
     size={size ?? 22}
-    color={color ?? '#aaa'}
+    color={color ?? styleGuide.palette.greyColor}
     style={{marginLeft: 5}}
   />
 );
@@ -190,7 +190,7 @@ export const CloseCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'close-circle-outline'}
     size={size ?? 22}
-    color={color ?? '#aaa'}
+    color={color ?? styleGuide.palette.greyColor}
   />
 );
 

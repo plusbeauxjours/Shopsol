@@ -69,9 +69,9 @@ const DateTextArea = styled.View`
 `;
 
 const DateText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Touchable = styled.TouchableOpacity`
@@ -90,14 +90,14 @@ const Line = styled.View`
   height: 1px;
   width: ${wp('80%')};
   margin-bottom: 10px;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
 `;
 
 const EmployeeListBox = styled.View`
   width: 100%;
   align-items: center;
   border-radius: 20px;
-  border-color: #${styleGuide.palette.borderColor};
+  border-color: ${styleGuide.palette.borderColor};
   background-color: white;
 `;
 
@@ -110,8 +110,8 @@ const Pay = styled.View`
 `;
 
 const BoxTitleText3 = styled.Text`
-  font-size: 15px;
-  color: #999999;
+  font-size: 14px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 export default ({
@@ -140,7 +140,11 @@ export default ({
               </DateArrow>
               <DateTextArea>
                 <DateText>{moment(startDate).format('YYYY년 M월')}</DateText>
-                <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                <DateText
+                  style={{
+                    fontSize: styleGuide.fontSize.middle,
+                    fontWeight: styleGuide.fontWeight.normal,
+                  }}>
                   ({moment(startDate).format('M월 D일')}
                   &nbsp;~&nbsp;
                   {moment(startDate)

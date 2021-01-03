@@ -61,7 +61,7 @@ const Section = styled.View`
 `;
 
 const Bold = styled.Text`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const CommentTextInputContainer = styled.View`
@@ -107,11 +107,11 @@ const MemoText = styled.Text`
 
 const MemoContainer = styled.View`
   border-bottom-width: 1px;
-  border-color: #aaa;
+  border-color: ${styleGuide.palette.greyColor};
 `;
 
 const CommentTitleText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: ${styleGuide.palette.primary};
 `;
 
@@ -155,7 +155,7 @@ const Footer = styled.View`
 
 const FooterText = styled.Text`
   text-align: center;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   font-size: 18px;
   margin-bottom: 20px;
 `;
@@ -166,7 +166,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   width: 30px;
   height: 30px;
   right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 15)}px;
+  top: ${(props) => (isIphoneX() ? 35 : 25)}px;
 `;
 
 const RowTouchable = styled.TouchableOpacity`
@@ -367,7 +367,10 @@ export default ({
                             setComment(item.CONTENTS);
                             setSelectedCOM_SEQ(item.COM_SEQ);
                           }}>
-                          <SettingIcon color={'#aaa'} size={22} />
+                          <SettingIcon
+                            color={styleGuide.palette.greyColor}
+                            size={22}
+                          />
                         </RowTouchable>
                         <RowTouchable
                           style={{backgroundColor: '#D93F12'}}
@@ -410,8 +413,8 @@ export default ({
                               }}>
                               <Text
                                 style={{
-                                  fontWeight: 'bold',
-                                  color: '#aaa',
+                                  fontWeight: styleGuide.fontWeight.bold,
+                                  color: styleGuide.palette.greyColor,
                                 }}>
                                 {item.EMP_NAME} [{item.IS_MANAGER}
                                 ]&nbsp;&nbsp;
@@ -422,7 +425,8 @@ export default ({
                               style={{
                                 justifyContent: 'flex-start',
                               }}>
-                              <Text style={{color: '#aaa'}}>
+                              <Text
+                                style={{color: styleGuide.palette.greyColor}}>
                                 {moment(item.CREATE_TIME).format('YYYY.MM.DD')}
                               </Text>
                             </Row>

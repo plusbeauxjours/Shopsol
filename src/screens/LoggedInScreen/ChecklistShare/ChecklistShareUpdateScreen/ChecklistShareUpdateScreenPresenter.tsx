@@ -67,7 +67,7 @@ const DeleteButton = styled.TouchableOpacity`
 `;
 
 const CameraPictureCloseButtonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #ffffff;
 `;
 
@@ -104,7 +104,7 @@ const HalfBotton = styled.TouchableOpacity`
 `;
 
 const HalfBottonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const CameraLastPictureContainer = styled.View`
@@ -113,7 +113,7 @@ const CameraLastPictureContainer = styled.View`
 `;
 
 const DateText = styled.Text`
-  font-size: 17px;
+  font-size: ${styleGuide.fontSize.large}px;
   margin-left: 5px;
   margin-top: 10px;
 `;
@@ -122,7 +122,7 @@ const CloseIconContainer = styled.View`
   width: 26px;
   height: 26px;
   border-radius: 13px;
-  background-color: #aaa;
+  background-color: ${styleGuide.palette.greyColor};
   border-width: 2px;
   border-color: white;
   z-index: 30;
@@ -229,8 +229,8 @@ export default ({
                     value={title}
                     maxLength={15}
                     style={{
-                      fontSize: 16,
-                      fontWeight: 'bold',
+                      fontSize: styleGuide.fontSize.large,
+                      fontWeight: styleGuide.fontWeight.bold,
                       height: 5,
                       borderWidth: 0,
                       width: 180,
@@ -275,13 +275,17 @@ export default ({
                     <Touchable onPress={() => setIsCameraModalVisible(true)}>
                       <BorderBox>
                         <CameraIcon size={25} color={'#ccc'} />
-                        <GreyText style={{fontSize: 10}}>사진촬영</GreyText>
+                        <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                          사진촬영
+                        </GreyText>
                       </BorderBox>
                     </Touchable>
                     <Touchable onPress={() => launchImageLibraryFn()}>
                       <BorderBox>
                         <PictureIcon size={25} color={'#ccc'} />
-                        <GreyText style={{fontSize: 10}}>보관함</GreyText>
+                        <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                          보관함
+                        </GreyText>
                       </BorderBox>
                     </Touchable>
                   </Column>
@@ -342,8 +346,8 @@ export default ({
               }}>
               <Text
                 style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
+                  fontSize: styleGuide.fontSize.large,
+                  fontWeight: styleGuide.fontWeight.bold,
                   color: '#FF3D3D',
                   textDecorationLine: 'underline',
                 }}>

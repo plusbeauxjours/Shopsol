@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {CalendarIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Touchable = styled.TouchableOpacity`
   margin-right: 15px;
@@ -12,8 +13,8 @@ const Touchable = styled.TouchableOpacity`
 
 const Text = styled.Text`
   color: white;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.small}px;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 export default () => {

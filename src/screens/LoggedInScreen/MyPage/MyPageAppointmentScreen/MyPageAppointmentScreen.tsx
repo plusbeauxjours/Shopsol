@@ -38,12 +38,12 @@ const ButtonAfter = styled.TouchableOpacity`
 
 const Text = styled.Text`
   color: #707070;
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const WhiteText = styled.Text`
   color: white;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Card = styled.TouchableOpacity`
@@ -54,7 +54,7 @@ const Card = styled.TouchableOpacity`
 `;
 
 const CardText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: #212121;
 `;
 
@@ -98,7 +98,7 @@ export default () => {
   );
   const ArrowIcon = () => (
     <Arrow>
-      <ForwardIcon size={16} color={styleGuide.palette.primary} />
+      <ForwardIcon color={styleGuide.palette.primary} />
     </Arrow>
   );
   return (

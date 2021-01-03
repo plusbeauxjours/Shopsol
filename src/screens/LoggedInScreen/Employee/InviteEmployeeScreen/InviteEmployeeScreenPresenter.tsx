@@ -38,15 +38,15 @@ const Section = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -54,13 +54,13 @@ const TextInput = styled.TextInput`
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   text-align: center;
   width: ${wp('100%') - 80}px;
   background-color: rgba(30, 30, 30, 0.6);
   color: white;
   height: 60px;
-  border-color: #999;
+  border-color: ${styleGuide.palette.greyColor};
   border-width: 1px;
   border-radius: 30px;
   padding: 20px;
@@ -74,8 +74,8 @@ const Refer = styled.View`
 `;
 
 const ReferText = styled.Text`
-  font-size: 12px;
-  color: #999;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Row = styled.TouchableOpacity`
@@ -87,7 +87,7 @@ const RoundBtn = styled(Ripple)`
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-color: #999;
+  border-color: ${styleGuide.palette.greyColor};
   border-width: 1px;
   border-radius: 30px;
   width: ${wp('100%') - 80}px;
@@ -136,7 +136,7 @@ const SubmitButton = styled(Ripple)<IIsBefore>`
 `;
 
 const WhiteText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
 `;
 
@@ -160,7 +160,9 @@ const ModalPopup = styled.View`
   shadow-offset: 3px 3px;
   shadow-opacity: 0.5;
   shadow-radius: 3px;
-  background-color: ${utils.isAndroid ? '#888' : 'rgba(0,0,0,0.7)'};
+  background-color: ${utils.isAndroid
+    ? styleGuide.palette.greyColor
+    : 'rgba(0,0,0,0.7)'};
 `;
 
 const SpaceRow = styled.View`
@@ -181,7 +183,7 @@ const Button = styled(Ripple)`
 `;
 
 const ModalWhiteText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
 `;
 
@@ -191,7 +193,7 @@ const WhiteSpace = styled.View`
 
 const HelpText = styled.Text`
   width: 100%;
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: white;
   margin-bottom: 20px;
   text-align: left;
@@ -250,7 +252,10 @@ export default ({
                 rippleSize={400}
                 rippleOpacity={0.45}
                 onPress={() => getContactsFn()}>
-                <Text style={{fontSize: 14, color: '#999'}}>연락처로 추가</Text>
+                <Text
+                  style={{fontSize: 14, color: styleGuide.palette.greyColor}}>
+                  연락처로 추가
+                </Text>
               </Button>
               <Button
                 rippleContainerBorderRadius={25}
@@ -265,7 +270,10 @@ export default ({
                     setPhone(null);
                   }, 400)
                 }>
-                <Text style={{fontSize: 14, color: '#999'}}>직접 입력</Text>
+                <Text
+                  style={{fontSize: 14, color: styleGuide.palette.greyColor}}>
+                  직접 입력
+                </Text>
               </Button>
             </SpaceRow>
           </Section>
@@ -315,7 +323,7 @@ export default ({
         <TextInput
           placeholder={'홍길동'}
           selectionColor={'white'}
-          placeholderTextColor={'#777'}
+          placeholderTextColor={styleGuide.palette.greyColor}
           onChangeText={(text) => setName(text)}
           value={name}
           maxLength={6}
@@ -328,7 +336,7 @@ export default ({
         <TextInput
           placeholder={'01012345678'}
           selectionColor={'white'}
-          placeholderTextColor={'#777'}
+          placeholderTextColor={styleGuide.palette.greyColor}
           onChangeText={(text) => setPhone(text)}
           value={phone}
           maxLength={11}
@@ -366,7 +374,7 @@ export default ({
           <SearchBox>
             <SearchInput
               placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-              placeholderTextColor={'#999'}
+              placeholderTextColor={styleGuide.palette.greyColor}
               onChangeText={(text) => searchName(text)}
               value={search}
             />

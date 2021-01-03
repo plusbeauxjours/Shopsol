@@ -40,7 +40,7 @@ const RedText = styled.Text`
 `;
 
 const WhiteText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
 `;
 const WhiteSpace = styled.View`
@@ -73,7 +73,7 @@ const SalarySystemSettingButton = styled.TouchableOpacity`
 
 const SalarySystemSettingText = styled.Text`
   color: white;
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const SalarySystemText = styled.Text`

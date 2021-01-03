@@ -22,7 +22,7 @@ const Card = styled.TouchableOpacity`
 `;
 
 const Text = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Container = styled.View`
@@ -100,10 +100,10 @@ export default ({route: {params}}) => {
               })
             }>
             <Text>
-              <CalendarTimesIcon color={'#999'} />
+              <CalendarTimesIcon color={styleGuide.palette.greyColor} />
               &nbsp;&nbsp;휴무 설정
             </Text>
-            <ForwardIcon size={24} color={styleGuide.palette.primary} />
+            <ForwardIcon color={styleGuide.palette.primary} />
           </Card>
           <Card
             onPress={() =>
@@ -113,10 +113,10 @@ export default ({route: {params}}) => {
               })
             }>
             <Text>
-              <TimerIcon color={'#999'} />
+              <TimerIcon color={styleGuide.palette.greyColor} />
               &nbsp;&nbsp;휴게시간 설정
             </Text>
-            <ForwardIcon size={24} color={styleGuide.palette.primary} />
+            <ForwardIcon color={styleGuide.palette.primary} />
           </Card>
           {addWork == 'addWork' && (
             <Card
@@ -124,7 +124,7 @@ export default ({route: {params}}) => {
                 confirmModal('', `추가일정을 삭제합니다`, '취소', '삭제')
               }>
               <Text>&nbsp;&nbsp;추가일정 삭제</Text>
-              <ForwardIcon size={24} color={styleGuide.palette.primary} />
+              <ForwardIcon color={styleGuide.palette.primary} />
             </Card>
           )}
         </Section>

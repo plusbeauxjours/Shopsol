@@ -49,7 +49,7 @@ const RenderWorkDayTouchable = styled.TouchableOpacity`
 `;
 
 const RenderDayTimeText = styled.Text<IsSelected>`
-  font-size: 15px;
+  font-size: 14px;
   color: ${(props) => (props.substract && props.isSelected ? '#000' : '#ddd')};
 `;
 
@@ -60,7 +60,7 @@ const RenderDuration = styled.View`
 `;
 
 const RenderDurationText = styled.Text<IsSelected>`
-  font-size: 15px;
+  font-size: 14px;
   color: ${(props) => (props.isSelected ? '#000' : '#ddd')};
 `;
 

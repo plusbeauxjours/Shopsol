@@ -35,12 +35,12 @@ const NoSubmitButton = styled(SubmitButton)`
 `;
 
 const NoSubmitButtonText = styled.Text<IIsWhiteBack>`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${(props) => (props.isWhiteBack ? '#cccccc' : 'white')};
 `;
 
 const SubmitButtonText = styled.Text<IIsWhiteBack>`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${(props) =>
     props.isWhiteBack ? styleGuide.palette.primary : 'white'};
 `;

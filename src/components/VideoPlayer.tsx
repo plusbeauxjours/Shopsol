@@ -15,6 +15,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import {PlayerControls} from './PlayerControls';
 import {ProgressBar} from './ProgressBar';
+import Loader from '~/components/Loader';
 import {
   PortraitIcon,
   LandscapeIcon,

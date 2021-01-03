@@ -13,9 +13,9 @@ interface IWeekend {
 }
 
 const GreyText = styled.Text`
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
   position: absolute;
-  color: #aaa;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const EmptyView = styled.View`
@@ -31,7 +31,7 @@ const Row = styled.View`
   align-items: center;
   justify-content: center;
   border-top-width: 1px;
-  border-color: #aaa;
+  border-color: ${styleGuide.palette.greyColor};
 `;
 
 const KnobIconContainer = styled.View`
@@ -44,7 +44,7 @@ const KnobIconContainer = styled.View`
 `;
 
 const Bold = styled.Text<IWeekend>`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
   padding: 0 15px;
   color: ${(props) =>
     props.weekend == '토'

@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import FastImage from 'react-native-fast-image';
-
-import {ForwardIcon, PhoneIcon} from '~/constants/Icons';
-import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
+
+import {ForwardIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Touchable = styled.TouchableOpacity`
   padding: 0 20px;
@@ -25,18 +26,18 @@ const NameBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const DateText = styled.Text`
   color: #707070;
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const PayText = styled(DateText)`
   height: 15px;
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const Row = styled.View`

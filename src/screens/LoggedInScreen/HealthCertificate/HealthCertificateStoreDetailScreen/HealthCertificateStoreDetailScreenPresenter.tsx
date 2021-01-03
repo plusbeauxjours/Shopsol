@@ -53,7 +53,7 @@ const ContentLabelWrapper = styled.View`
 const ContentLabelText = styled.Text``;
 
 const ContentDataText = styled.Text`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Touchable = styled.TouchableOpacity``;
@@ -101,9 +101,9 @@ const DateTextArea = styled.View`
 `;
 
 const DateText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const ContentWrapper = styled.View`
@@ -130,7 +130,7 @@ const SaveButton = styled(ModifyButton)`
 
 const RegDate = styled.Text`
   color: #9b9b9b;
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const Row = styled.View`
@@ -152,7 +152,7 @@ const Footer = styled.View`
 
 const FooterText = styled.Text`
   text-align: center;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   font-size: 18px;
   margin-bottom: 20px;
 `;
@@ -163,7 +163,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   width: 30px;
   height: 30px;
   right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 15)}px;
+  top: ${(props) => (isIphoneX() ? 35 : 25)}px;
 `;
 
 export default ({
@@ -342,7 +342,10 @@ export default ({
                     IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                   });
                 }}>
-                <Text style={{fontSize: 16, color: 'white'}}>수정하기</Text>
+                <Text
+                  style={{fontSize: styleGuide.fontSize.large, color: 'white'}}>
+                  수정하기
+                </Text>
               </ModifyButton>
               <SaveButton
                 onPress={() => {
@@ -354,7 +357,11 @@ export default ({
                     IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                   });
                 }}>
-                <Text style={{fontSize: 16, color: styleGuide.palette.primary}}>
+                <Text
+                  style={{
+                    fontSize: styleGuide.fontSize.large,
+                    color: styleGuide.palette.primary,
+                  }}>
                   갱신하기
                 </Text>
               </SaveButton>

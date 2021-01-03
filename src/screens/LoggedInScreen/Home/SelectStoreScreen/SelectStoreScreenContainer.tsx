@@ -4,17 +4,14 @@ import SelectStoreScreenPresenter from './SelectStoreScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 import {NativeModules} from 'react-native';
 
-import {setSplashVisible} from '~/redux/splashSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {getSTORELIST_DATA} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
-import utils from '~/constants/utils';
 
 export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
-  const {STORE_NAME} = useSelector((state: any) => state.storeReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
   const {STORE, STORELIST_DATA} = useSelector(
     (state: any) => state.userReducer,

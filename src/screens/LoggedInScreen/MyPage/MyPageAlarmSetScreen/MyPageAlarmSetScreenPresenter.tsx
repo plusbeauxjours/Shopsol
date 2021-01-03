@@ -16,7 +16,7 @@ const Box = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: #212121;
 `;
 const Switch = styled.Switch``;

@@ -34,8 +34,8 @@ const Row = styled.View`
 `;
 
 const CheckpointText = styled.Text`
-  font-size: 17px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   margin-bottom: 20px;
 `;
 
@@ -51,13 +51,13 @@ const CheckpointBox = styled.View`
 `;
 
 const ChecktimeText = styled.Text`
-  font-size: 13px;
+  font-size: ${styleGuide.fontSize.middle}px;
   color: ${styleGuide.palette.primary};
 `;
 
 const CalendarText = styled.Text`
   margin: 0 5px;
-  font-size: 11px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: #333;
 `;
 
@@ -197,7 +197,7 @@ export default ({key, date, data}) => {
         )}
       </ContentBox>
       <ArrowBox>
-        <ForwardIcon size={22} />
+        <ForwardIcon />
       </ArrowBox>
     </Touchable>
   );

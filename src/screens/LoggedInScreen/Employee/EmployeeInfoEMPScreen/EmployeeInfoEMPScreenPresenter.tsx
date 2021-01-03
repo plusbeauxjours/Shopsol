@@ -51,17 +51,17 @@ const EmployeeBox = styled.View`
 const NameText = styled.Text`
   margin-right: 10px;
   color: ${styleGuide.palette.greyColor};
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const DateText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.greyColor};
 `;
 
 const InfoText = styled.Text`
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
   height: 15px;
   color: ${styleGuide.palette.greyColor};
 `;
@@ -76,7 +76,7 @@ const SmallLine = styled.View`
   width: ${wp('50%')}px;
   height: 0.5px;
   margin: 10px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
 `;
 
 const WorkTypeAndSalaryInfoBox = styled.View`
@@ -98,7 +98,7 @@ const DateBox = styled.TouchableOpacity`
 `;
 
 const GreyText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -108,7 +108,7 @@ const FixedGreyText = styled(GreyText)`
 `;
 
 const FixTypeDayChangeButtonText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const RenderDayRow = styled.View`
@@ -141,7 +141,7 @@ const RenderDayTime = styled.View`
 `;
 
 const RenderDayTimeText = styled.Text<IsSelected>`
-  font-size: 15px;
+  font-size: 14px;
   color: ${(props) => (props.substract && props.isSelected ? '#000' : '#ddd')};
 `;
 
@@ -152,7 +152,7 @@ const RenderDuration = styled.View`
 `;
 
 const RenderDurationText = styled.Text<IsSelected>`
-  font-size: 15px;
+  font-size: 14px;
   color: ${(props) => (props.isSelected ? '#000' : '#ddd')};
 `;
 
@@ -181,9 +181,9 @@ const TimeListRow = styled(Row)`
 `;
 
 const DateBoxText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const TimeListBoxText = styled.Text<IsSelected>`
@@ -194,14 +194,14 @@ const TimeListBoxText = styled.Text<IsSelected>`
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const DateTextArea = styled.View`
@@ -476,7 +476,11 @@ export default ({
                 </DateBox>
                 <DateTextArea>
                   <DateText>{moment(date).format('YYYY년 M월')}</DateText>
-                  <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                  <DateText
+                    style={{
+                      fontSize: styleGuide.fontSize.middle,
+                      fontWeight: styleGuide.fontWeight.normal,
+                    }}>
                     {moment(date).format('M월 D일')}&nbsp;~&nbsp;
                     {moment(date)
                       .add(1, 'month')

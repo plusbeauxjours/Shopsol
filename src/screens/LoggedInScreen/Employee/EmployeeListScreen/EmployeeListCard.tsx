@@ -3,9 +3,10 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
 import FastImage from 'react-native-fast-image';
+import moment from 'moment';
 
 import {ForwardIcon, PhoneIcon} from '~/constants/Icons';
-import moment from 'moment';
+import styleGuide from '~/constants/styleGuide';
 
 const Touchable = styled.TouchableOpacity`
   align-items: center;
@@ -25,16 +26,16 @@ const NameBox = styled.View`
 const NameText = styled.Text`
   margin-right: 10px;
   color: #707070;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const DateText = styled.Text`
   color: #707070;
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const InfoText = styled(DateText)`
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
   height: 15px;
 `;
 

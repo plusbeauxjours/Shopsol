@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
+import styleGuide from '~/constants/styleGuide';
+
 const BoxContainer = styled.View`
   position: absolute;
   top: 0;
@@ -19,8 +21,8 @@ const TextBox = styled.View`
 `;
 const Box = styled.View``;
 const Text = styled.Text`
-  font-size: 10px;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.small}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 export default ({minY, maxY}) => {

@@ -28,7 +28,7 @@ const EmployeeBox = styled.View`
 `;
 
 const AdmitText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.primary};
 `;
 
@@ -51,8 +51,8 @@ const ButtonBox = styled.View`
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Row = styled.View`

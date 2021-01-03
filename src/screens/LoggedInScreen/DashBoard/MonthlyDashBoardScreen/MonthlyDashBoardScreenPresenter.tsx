@@ -40,7 +40,7 @@ const Text = styled.Text`
 `;
 
 const SmallText = styled.Text`
-  font-size: 9px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -97,9 +97,9 @@ const CardGreyLine = styled.View`
 
 const TitleText = styled.Text`
   align-self: flex-start;
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
   margin-top: 20px;
   margin-left: 20px;
 `;
@@ -116,13 +116,13 @@ const DodnutTextContainer = styled.View`
 const PercentageText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
   font-size: 25px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const PercentageSubText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
-  font-size: 12px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const EmpCard = styled.View`
@@ -144,7 +144,7 @@ const EmpCardRow = styled.View`
 `;
 
 const Bold = styled.Text`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Column = styled.View`
@@ -160,15 +160,15 @@ const DonutColumn = styled(Column)`
 `;
 
 const DonutColumnTitle = styled.Text`
-  border-color: ${styleGuide.palette.greyColor};
+  color: ${styleGuide.palette.greyColor};
   font-size: 18px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
   margin: 3px 0;
 `;
 
 const DonutColumnText = styled(DonutColumnTitle)`
-  font-size: 12px;
-  font-weight: 400;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.normal};
 `;
 
 const EmpConatainer = styled.View`
@@ -269,8 +269,8 @@ const DateSection = styled.View`
 `;
 
 const DateText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -374,7 +374,11 @@ export default ({
                   </Bold>
                 )}
                 {i.TOTAL_VACATION_TIME > 0 && (
-                  <Bold style={{color: '#7F7F7F', fontSize: 10}}>
+                  <Bold
+                    style={{
+                      color: styleGuide.palette.greyColor,
+                      fontSize: styleGuide.fontSize.small,
+                    }}>
                     &nbsp;(
                     {Math.trunc(
                       moment.duration(i.TOTAL_VACATION_TIME).asHours(),
@@ -470,7 +474,11 @@ export default ({
                   <DateText>
                     {moment(monthStartDate).format('YYYY년 M월')}
                   </DateText>
-                  <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                  <DateText
+                    style={{
+                      fontSize: styleGuide.fontSize.middle,
+                      fontWeight: styleGuide.fontWeight.normal,
+                    }}>
                     ({moment(monthStartDate).format('M월 D일')}
                     &nbsp;~&nbsp;
                     {moment(monthEndDate).format('M월 D일')})
@@ -610,7 +618,7 @@ export default ({
                 <SearchInputContainer>
                   <SearchInput
                     placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-                    placeholderTextColor={'#999'}
+                    placeholderTextColor={styleGuide.palette.greyColor}
                     onChangeText={(text) => searchName(text)}
                     value={search}
                   />

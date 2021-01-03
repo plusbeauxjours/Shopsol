@@ -30,22 +30,22 @@ const Section = styled.View`
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 const GreySmallText = styled.Text`
-  color: #aaa;
-  font-size: 13px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.middle}px;
   margin-top: 5px;
 `;
 const GreyText = styled.Text`
-  color: #aaa;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Bold = styled.Text`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
   margin-left: 5px;
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const Container = styled.View`

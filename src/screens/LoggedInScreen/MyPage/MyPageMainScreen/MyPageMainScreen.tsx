@@ -47,21 +47,21 @@ const Row = styled.View`
 
 const DateText = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const InfoText = styled(DateText)`
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const NameText = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const BoxTitle = styled.Text`
-  font-weight: bold;
-  font-size: 15px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  font-size: 14px;
   color: ${styleGuide.palette.greyColor};
   margin-left: 30px;
 `;
@@ -79,7 +79,7 @@ const Card = styled.TouchableOpacity`
 `;
 
 const CardText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -116,7 +116,7 @@ export default () => {
 
   const ArrowIcon = () => (
     <Arrow>
-      <ForwardIcon size={22} />
+      <ForwardIcon />
     </Arrow>
   );
 

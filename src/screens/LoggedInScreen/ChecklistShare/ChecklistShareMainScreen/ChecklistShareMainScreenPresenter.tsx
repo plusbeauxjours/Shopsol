@@ -60,9 +60,9 @@ const NewCntViewContainer = styled.View`
 `;
 
 const NewCntViewText = styled.Text`
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: white;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const DateArrowLeft = styled.TouchableOpacity`
@@ -108,9 +108,9 @@ const DateTextArea = styled.View`
 `;
 
 const DateText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const CalendarTitle = styled.View`
@@ -208,8 +208,8 @@ const Column = styled.View`
 `;
 
 const EmptyText = styled.Text`
-  color: #999;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 export default ({
@@ -277,7 +277,11 @@ export default ({
           </DateToday>
           <DateTextArea>
             <DateText>{moment(date).format('YYYY년 M월 D일')}</DateText>
-            <DateText style={{fontSize: 12, fontWeight: '300'}}>
+            <DateText
+              style={{
+                fontSize: styleGuide.fontSize.middle,
+                fontWeight: styleGuide.fontWeight.normal,
+              }}>
               {utils.renderWeekDay(moment(date).format('d'))}
             </DateText>
           </DateTextArea>

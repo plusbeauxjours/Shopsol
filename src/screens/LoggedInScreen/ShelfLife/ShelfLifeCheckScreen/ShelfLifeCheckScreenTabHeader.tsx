@@ -36,8 +36,8 @@ const LineTextContainer = styled.View`
 `;
 
 const LineText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: white;
 `;
 
@@ -113,7 +113,11 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
             <Tab
               key={index}
               index={index}
-              color={index === 0 ? styleGuide.palette.primary : '#7f7f7f'}
+              color={
+                index === 0
+                  ? styleGuide.palette.primary
+                  : styleGuide.palette.greyColor
+              }
               gotoCategory={gotoCategory}
               {...tab}
             />

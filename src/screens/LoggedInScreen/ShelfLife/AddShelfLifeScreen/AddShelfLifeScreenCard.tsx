@@ -3,7 +3,8 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Ripple from 'react-native-material-ripple';
-import {CloseCircleIcon} from '../../../../constants/Icons';
+import {CloseCircleIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Text = styled.Text`
   color: #333;
@@ -15,7 +16,7 @@ const Row = styled.View`
 `;
 
 const Bold = styled(Text)`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const TextContainer = styled.View`
@@ -34,8 +35,8 @@ const Name = styled.View`
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Line = styled.View`
@@ -73,15 +74,15 @@ const BorderBox = styled.View`
 `;
 
 const GreyText = styled.Text`
-  font-size: 12px;
-  color: #aaa;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const CloseIconContainer = styled.View`
   width: 26px;
   height: 26px;
   border-radius: 13px;
-  background-color: #aaa;
+  background-color: ${styleGuide.palette.greyColor};
   border-width: 2px;
   border-color: white;
   z-index: 30;

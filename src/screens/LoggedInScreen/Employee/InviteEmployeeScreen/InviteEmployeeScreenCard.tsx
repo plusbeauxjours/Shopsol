@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {AddCircleIcon, RemoveCircleIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Row = styled.View`
   padding: 5px;
@@ -15,8 +16,8 @@ const Name = styled.View`
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Phone = styled(Name)`
@@ -25,7 +26,7 @@ const Phone = styled(Name)`
 
 const PhoneText = styled.Text`
   font-size: 14px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const IconContainer = styled.View`

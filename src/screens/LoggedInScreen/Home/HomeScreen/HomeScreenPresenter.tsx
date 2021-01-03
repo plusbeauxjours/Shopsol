@@ -88,7 +88,7 @@ const NewCnt = styled.View`
 
 const NewCntText = styled.Text`
   color: white;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const MenuBox = styled.View`
@@ -153,18 +153,18 @@ const MenuTitleArea = styled.View`
   margin-top: 20px;
   border-radius: 30px;
   padding: 10px 20px;
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${styleGuide.palette.tertiary};
 `;
 
 const MenuTitle = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Bold = styled(MenuTitle)`
   color: white;
-  font-weight: 600;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const ShowPictureModalTouchable = styled.TouchableOpacity`
@@ -189,7 +189,7 @@ const GoWork = styled.TouchableOpacity`
 
 const WorkText = styled.Text`
   color: #ffffff;
-  font-size: 15px;
+  font-size: 14px;
   margin-top: 15px;
   margin-bottom: 15px;
 `;
@@ -232,9 +232,9 @@ const Box = styled.TouchableOpacity<IBox>`
 `;
 
 const BoxText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const BoxContainer = styled.View`
@@ -291,8 +291,8 @@ const SpaceRow = styled.View`
 
 const MarkerText = styled.Text`
   color: white;
-  font-size: 10px;
-  font-weight: 600;
+  font-size: ${styleGuide.fontSize.small}px;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 export default ({
@@ -331,6 +331,8 @@ export default ({
   errorMessage,
   GENDER,
   loading,
+  isWorkingMode,
+  setIsWorkingMode,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({selection, paging, source, count = 0}) => (
@@ -372,7 +374,7 @@ export default ({
           ) : (
             <>
               <MarkerText>출퇴근 허용거리: </MarkerText>
-              <MarkerText style={{fontWeight: '600'}}>
+              <MarkerText style={{fontWeight: styleGuide.fontWeight.bold}}>
                 {Number(STORE_DATA.resultdata.JULI) < 1000
                   ? Number(STORE_DATA.resultdata.JULI) + 'm'
                   : Number(STORE_DATA.resultdata.JULI) / 1000 + 'km'}
@@ -383,7 +385,7 @@ export default ({
         {STORE_DATA.resultdata.LATE_FLAG === '1' && (
           <SpaceRow>
             <MarkerText>지각 허용시간:</MarkerText>
-            <MarkerText style={{fontWeight: '600'}}>
+            <MarkerText style={{fontWeight: styleGuide.fontWeight.bold}}>
               {STORE_DATA.resultdata.LATE_TIME}분
             </MarkerText>
           </SpaceRow>
@@ -391,7 +393,7 @@ export default ({
         {STORE_DATA.resultdata.EARLY_FLAG === '1' && (
           <SpaceRow>
             <MarkerText>조퇴 허용시간:</MarkerText>
-            <MarkerText style={{fontWeight: '600'}}>
+            <MarkerText style={{fontWeight: styleGuide.fontWeight.bold}}>
               {STORE_DATA.resultdata.EARLY_TIME}분
             </MarkerText>
           </SpaceRow>
@@ -472,7 +474,7 @@ export default ({
               <Text
                 style={{
                   color: 'white',
-                  fontWeight: 'bold',
+                  fontWeight: styleGuide.fontWeight.bold,
                   fontSize: 18,
                 }}>
                 {STORE_NAME}
@@ -483,14 +485,14 @@ export default ({
                 <Text
                   style={{
                     color: 'white',
-                    fontSize: 15,
+                    fontSize: 14,
                     alignSelf: 'flex-end',
                   }}>
                   <WhiteText>{TOTAL_COUNT}</WhiteText>명 중&nbsp;
                   <WhiteText>{WORKING_COUNT}</WhiteText>명 근무중
                 </Text>
               ) : (
-                <Text style={{color: 'white', fontSize: 15}}>
+                <Text style={{color: 'white', fontSize: 14}}>
                   합류된 직원이 없습니다 직원을 초대하세요
                 </Text>
               )}
@@ -505,7 +507,7 @@ export default ({
                   });
                 }}>
                 <WhiteText>사업장전환</WhiteText>
-                <ForwardIcon size={18} color={'white'} />
+                <ForwardIcon color={'white'} />
               </StoreUpdateBtn>
               {STORE === '1' && (
                 <StoreUpdateBtn
@@ -513,7 +515,7 @@ export default ({
                     navigation.navigate('UpdateStoreScreen');
                   }}>
                   <WhiteText>사업장정보</WhiteText>
-                  <ForwardIcon size={18} color={'white'} />
+                  <ForwardIcon color={'white'} />
                 </StoreUpdateBtn>
               )}
             </Row>
@@ -526,6 +528,9 @@ export default ({
                 <BoxContainer>
                   <Box
                     onPress={() => {
+                      setIsWorkingMode(false);
+                      setSucessModalOpen(false);
+                      setFailModalOpen(false);
                       setQrCameraModalOpen(true);
                       setWorkingTYPE('QR');
                     }}
@@ -873,32 +878,100 @@ export default ({
       </ScrollView>
       <Modal
         isVisible={qrCameraModalOpen}
-        onBackdropPress={() => setQrCameraModalOpen(false)}
-        onRequestClose={() => setQrCameraModalOpen(false)}
-        style={{margin: 0}}
-        avoidKeyboard={true}>
-        <QRCodeScanner
-          topViewStyle={{height: 0, flex: 0}}
-          reactivate={true}
-          reactivateTimeout={1500}
-          cameraStyle={{width: wp('100%'), height: hp('100%')}}
-          onRead={handleBarCodeScanned}
-          flashMode={RNCamera.Constants.FlashMode.off}
-          androidCameraPermissionOptions={{
-            title: '카메라 권한 설정',
-            message:
-              '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-            buttonPositive: '확인',
-            buttonNegative: '취소',
-          }}
-          permissionDialogTitle={''}
-          permissionDialogMessage={''}
-          bottomContent={
-            <GoWork onPress={() => setQrCameraModalOpen(false)}>
-              <WorkText>닫기</WorkText>
-            </GoWork>
-          }
-        />
+        onBackdropPress={() => {
+          setQrCameraModalOpen(false);
+          setSucessModalOpen(false);
+          setFailModalOpen(false);
+          setIsWorkingMode(false);
+        }}
+        onRequestClose={() => {
+          setQrCameraModalOpen(false);
+          setSucessModalOpen(false);
+          setFailModalOpen(false);
+          setIsWorkingMode(false);
+        }}
+        avoidKeyboard={true}
+        style={{
+          margin: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        {loading ? (
+          <LottieView
+            style={{width: 200, height: 200}}
+            source={require('../../../../assets/animations/loader.json')}
+            loop
+            autoPlay
+          />
+        ) : sucessModalOpen ? (
+          <GoWorkingSuccessAnimation
+            GENDER={GENDER}
+            STORE_NAME={STORE_NAME}
+            MEMBER_NAME={MEMBER_NAME}
+            setSucessModalOpen={setSucessModalOpen}
+            actionTYPE={actionTYPE}
+          />
+        ) : failModalOpen ? (
+          <GoWorkingFailAnimation
+            STORE_NAME={STORE_NAME}
+            MEMBER_NAME={MEMBER_NAME}
+            setFailModalOpen={setFailModalOpen}
+            actionTYPE={actionTYPE}
+            errorMessage={errorMessage}
+          />
+        ) : isWorkingMode ? (
+          <BoxContainer>
+            <Box
+              style={{
+                width: (wp('100%') - 60) / 2,
+                height: (wp('100%') - 60) / 2,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              }}
+              onPress={() => goWorkFn(workingTYPE)}>
+              <BoxText style={{fontSize: 30}}>출근</BoxText>
+            </Box>
+            <Box
+              style={{
+                width: (wp('100%') - 60) / 2,
+                height: (wp('100%') - 60) / 2,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              }}
+              onPress={() => leaveWorkFn(workingTYPE)}>
+              <BoxText style={{fontSize: 30}}>퇴근</BoxText>
+            </Box>
+          </BoxContainer>
+        ) : (
+          <QRCodeScanner
+            topViewStyle={{height: 0, flex: 0}}
+            reactivate={true}
+            reactivateTimeout={1500}
+            cameraStyle={{width: wp('100%'), height: hp('100%')}}
+            onRead={handleBarCodeScanned}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            androidCameraPermissionOptions={{
+              title: '카메라 권한 설정',
+              message:
+                '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
+              buttonPositive: '확인',
+              buttonNegative: '취소',
+            }}
+            permissionDialogTitle={''}
+            permissionDialogMessage={''}
+            bottomContent={
+              <GoWork
+                onPress={() => {
+                  setQrCameraModalOpen(false);
+                  setSucessModalOpen(false);
+                  setFailModalOpen(false);
+                  setIsWorkingMode(false);
+                }}>
+                <WorkText>닫기</WorkText>
+              </GoWork>
+            }
+          />
+        )}
       </Modal>
 
       <Modal
@@ -959,7 +1032,6 @@ export default ({
           </BoxContainer>
         )}
       </Modal>
-
       <Modal
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}

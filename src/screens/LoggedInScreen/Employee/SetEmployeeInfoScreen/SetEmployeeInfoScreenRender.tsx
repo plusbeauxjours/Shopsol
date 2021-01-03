@@ -24,8 +24,8 @@ const TextInputContainer = styled.View<IsBefore>`
 `;
 
 const TextInput = styled.TextInput`
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.primary};
 `;
 
@@ -42,8 +42,8 @@ const Box = styled.TouchableOpacity<IsBefore>`
 `;
 
 const BoxText = styled.Text<IsBefore>`
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${(props) =>
     props.isBefore ? styleGuide.palette.primary : '#CCCCCC'};
 `;
@@ -87,7 +87,7 @@ export const RenderProbationData2 = ({
           <TextInput
             onChangeText={(text) => setPercentDirectInput(text)}
             value={percentDirectInput}
-            selectionColor={'#999'}
+            selectionColor={styleGuide.palette.greyColor}
             placeholder={'직접 입력'}
             placeholderTextColor={'#CCCCCC'}
             keyboardType={'number-pad'}
@@ -156,7 +156,7 @@ export const RenderPayYearData = ({
           <TextInput
             onChangeText={(text) => setPayYearDirectInput(text)}
             value={payYearDirectInput}
-            selectionColor={'#999'}
+            selectionColor={styleGuide.palette.greyColor}
             placeholder={'직접 입력'}
             placeholderTextColor={'#CCCCCC'}
             keyboardType={'number-pad'}

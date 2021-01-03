@@ -41,8 +41,8 @@ const TotalContainer = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const PointsContainer = styled.View`

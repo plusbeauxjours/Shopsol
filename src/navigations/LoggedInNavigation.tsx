@@ -78,7 +78,7 @@ import BackBtn from '../components/Header/BackBtn';
 import HomeBtn from '../components/Header/HomeBtn';
 import CalendarInfoHeader from '../components/Header/CalendarInfoHeader';
 
-import styleGuide from './styleGuide';
+import styleGuide from '~/constants/styleGuide';
 
 const LoggedInNavigation = createStackNavigator();
 export default () => {

@@ -217,4 +217,6 @@ export default {
   checkOcr: (data: any) => callApi('post', '/auth/checkocr/', data),
   updateOcr: (data: any) => callApi('post', '/auth/updateocr/', data),
   saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data),
+  getBarCode: (codenumber: string) =>
+    callApi('get', `/auth/getBarCode/?codenumber=${codenumber}`),
 };

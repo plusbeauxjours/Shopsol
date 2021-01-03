@@ -11,8 +11,8 @@ import FastImage from 'react-native-fast-image';
 import api from '~/constants/LoggedInApi';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {toggleVACATION} from '~/redux/calendarSlice';
-import {EllipseIcon} from '~/constants/Icons';
-import {ForwardArrowIcon} from '../../../../constants/Icons';
+import {ForwardArrowIcon, EllipseIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Row = styled.View`
   flex-direction: row;
@@ -21,21 +21,21 @@ const Row = styled.View`
 
 const Text = styled.Text`
   margin-left: 5px;
-  font-weight: 200;
-  font-size: 10px;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const NameText = styled.Text`
-  font-size: 16px;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
   margin-right: 10px;
   margin-bottom: 5px;
   margin-left: 5px;
 `;
 
 const DateText = styled.Text`
-  color: #7f7f7f;
-  font-size: 12px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const RowSpace = styled(Row)`
@@ -55,14 +55,14 @@ const SelectBoxTouchable = styled.TouchableOpacity`
   width: ${wp('100%') / 3 - 20}px;
   border-width: 1px;
   border-radius: 10px;
-  border-color: #999;
+  border-color: ${styleGuide.palette.greyColor};
   justify-content: center;
   align-items: center;
 `;
 
 const BoxText = styled.Text`
-  color: #999;
-  font-size: 12px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const Container = styled.View`
@@ -86,15 +86,15 @@ const WorkTime = styled.View`
 `;
 
 const WorkTitleText = styled.Text`
-  color: #999;
-  font-size: 10px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.small}px;
   margin-left: 5px;
   width: 60px;
 `;
 
 const WorkTimeText = styled.Text`
-  color: #999;
-  font-size: 10px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const CntArea = styled.View`

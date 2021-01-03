@@ -7,6 +7,7 @@ import {
 import Ripple from 'react-native-material-ripple';
 
 import {ForwardIcon, LogoutIcon, PersonCircleIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IIsStore {
   isStore?: boolean;
@@ -17,7 +18,7 @@ const EmployeeBox = styled.View`
   align-items: center;
 `;
 const EmployeeText = styled.Text`
-  font-size: 13px;
+  font-size: ${styleGuide.fontSize.middle}px;
   color: grey;
 `;
 
@@ -44,13 +45,14 @@ const Touchable = styled(Ripple)<IIsStore>`
 `;
 
 const NameText = styled.Text`
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
   margin-bottom: 15px;
 `;
 
 const ArrowBox = styled.View`
-  width: ${wp('20%')}px;
+  position: absolute;
+  right: 10px;
   align-items: center;
   justify-content: center;
 `;
@@ -67,7 +69,7 @@ const AddressBox = styled.View`
   margin-bottom: 5px;
 `;
 const AddressText = styled.Text`
-  font-size: 13px;
+  font-size: ${styleGuide.fontSize.middle}px;
   color: grey;
 `;
 
@@ -137,7 +139,7 @@ export default ({
         )}
       </ContentBox>
       <ArrowBox>
-        <ForwardIcon size={20} />
+        <ForwardIcon />
       </ArrowBox>
     </Touchable>
   );

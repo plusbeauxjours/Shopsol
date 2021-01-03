@@ -74,7 +74,7 @@ const Line = styled.View`
 `;
 
 const TextInput = styled.TextInput`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   margin-left: 5px;
   text-align: center;
   margin-right: 5px;
@@ -85,7 +85,7 @@ const TextInput = styled.TextInput`
 `;
 
 const TextInputText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   margin-left: 5px;
   text-align: center;
   margin-right: 5px;
@@ -99,11 +99,11 @@ const RedText = styled.Text`
 
 const GreyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 13px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const Bold = styled.Text`
-  font-weight: 600;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const BoxTitle = styled.View`
@@ -114,8 +114,8 @@ const BoxTitle = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -131,7 +131,7 @@ const BigText = styled.Text`
 `;
 
 const WhiteText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
 `;
 const NameText = styled(WhiteText)`
@@ -180,7 +180,7 @@ const ModalContainer = styled.View`
 `;
 
 const ModalBox = styled.View`
-  border-color: #${styleGuide.palette.borderColor};
+  border-color: ${styleGuide.palette.borderColor};
   border-width: 1px;
   margin: 20px 0;
 `;
@@ -227,9 +227,9 @@ const DateBox = styled.TouchableOpacity`
 `;
 
 const DateBoxText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
-  color: #999;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const DatePickerContainer = styled.View`
@@ -268,8 +268,8 @@ const DatePickerRoundView = styled.View`
 `;
 
 const DatePickerText = styled.Text`
-  font-weight: 200;
-  font-size: 16px;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
@@ -284,7 +284,7 @@ const TopArea = styled.View`
 const EmployeeCardText = styled.Text`
   color: ${styleGuide.palette.greyColor};
   height: 15px;
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const EmployeeCardContainer = styled.View`
@@ -305,7 +305,7 @@ const NameBox = styled.View`
 
 const DateText = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const ListTouchable = styled.TouchableWithoutFeedback`
@@ -352,7 +352,7 @@ const SystemSettingButton = styled.TouchableOpacity`
 
 const SystemSettingText = styled.Text`
   color: white;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const TextInputLine = styled.View<IIsBefore>`
@@ -530,7 +530,7 @@ export default ({
             <EmployeeCard />
             <ListTouchable onPress={() => setClick1(!click1)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: '600'}}>
+                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
                   <RedText>(필수) </RedText>
                   출퇴근정보
                 </DateBoxText>
@@ -626,7 +626,7 @@ export default ({
 
             <ListTouchable onPress={() => setClick2(!click2)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: '600'}}>
+                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
                   <RedText>(필수) </RedText>
                   급여정보
                 </DateBoxText>
@@ -1290,13 +1290,16 @@ export default ({
                   }
                   setIsSalaryModalVisible2(false);
                 }}>
-                <Text style={{fontSize: 16, color: 'white'}}>확인</Text>
+                <Text
+                  style={{fontSize: styleGuide.fontSize.large, color: 'white'}}>
+                  확인
+                </Text>
               </ModalBarButton>
             </Modal>
 
             <ListTouchable onPress={() => setClick4(!click4)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: '600'}}>
+                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
                   (선택) 연차
                 </DateBoxText>
                 <Chevron {...{transition: click4Transition}} />
@@ -1403,7 +1406,7 @@ export default ({
 
             <ListTouchable onPress={() => setClick5(!click5)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: '600'}}>
+                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
                   (선택) 직책 / 권한 , 급여보기
                 </DateBoxText>
                 <Chevron {...{transition: click5Transition}} />

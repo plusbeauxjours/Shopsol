@@ -56,22 +56,22 @@ const Card = styled(Ripple)<ICard>`
 const CardGreyLine = styled.View`
   width: 180px;
   height: 1px;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   margin: 10px 0 10px 0;
 `;
 
 const TitleText = styled.Text<IColor>`
   align-self: flex-start;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${(props) => props.color};
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
   margin-left: 20px;
 `;
 
 const PercentageText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
   font-size: 25px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Footer = styled.View`
@@ -80,11 +80,11 @@ const Footer = styled.View`
 
 const SmallText = styled.Text<IColor>`
   color: ${(props) => props.color};
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const SmallBold = styled(SmallText)<IColor>`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const DodnutTextContainer = styled.View`
@@ -111,8 +111,8 @@ const LineTextContainer = styled.View<IColor>`
 `;
 
 const LineText = styled.Text<IColor>`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${(props) => props.color ?? 'white'};
 `;
 
@@ -191,8 +191,8 @@ const Column = styled.View`
 `;
 
 const EmptyText = styled.Text`
-  color: #999;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 export default ({
@@ -333,7 +333,7 @@ export default ({
               <SearchInputContainer>
                 <SearchInput
                   placeholder="물품 검색"
-                  placeholderTextColor={'#999'}
+                  placeholderTextColor={styleGuide.palette.greyColor}
                   onChangeText={(text) => setSearch(text)}
                   value={search}
                 />

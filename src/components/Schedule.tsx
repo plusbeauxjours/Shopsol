@@ -97,8 +97,8 @@ const BackView = styled.View<ITouchable>`
 `;
 
 const Bold = styled.Text`
-  font-size: 12px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: white;
 `;
 
@@ -133,9 +133,11 @@ const TextBox = styled.View`
 
 const Text = styled.Text<IText>`
   width: 30px;
-  font-size: 10px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: ${(props) =>
-    props.index == 0 || props.index == 10 ? '#ccc' : '#7f7f7f'};
+    props.index == 0 || props.index == 10
+      ? '#ccc'
+      : styleGuide.palette.greyColor};
   text-align: center;
   margin-bottom: 5px;
 `;

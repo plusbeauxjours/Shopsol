@@ -38,7 +38,7 @@ const Title = styled.View`
 const TitleText = styled.Text`
   font-size: 20px;
   color: #404040;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Check = styled.TouchableOpacity`
@@ -50,7 +50,7 @@ const Check = styled.TouchableOpacity`
 `;
 
 const CheckText = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: #404040;
   margin-left: 10px;
 `;
@@ -66,9 +66,9 @@ const SubmitBtn = styled(Ripple)<IIsConfirm>`
 `;
 
 const SubmitBtnText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
-  font-weight: 400;
+  font-weight: ${styleGuide.fontWeight.normal};
 `;
 
 interface IIsConfirm {

@@ -10,7 +10,7 @@ import FastImage from 'react-native-fast-image';
 
 import InputLine from '~/components/InputLine';
 import RoundBtn from '~/components/Btn/RoundBtn';
-import FcmContainer from '~/components/FcmContainer';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.View`
   flex: 1;
@@ -32,7 +32,7 @@ const Touchable = styled.TouchableOpacity``;
 
 const TextInput = styled.TextInput`
   width: 100%;
-  font-size: 17px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: black;
   margin-left: 5px;
   margin-top: 10px;
@@ -40,13 +40,13 @@ const TextInput = styled.TextInput`
 
 const UnderLineText = styled.Text`
   text-decoration-line: underline;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const GreyText = styled.Text`
   font-size: 18px;
   color: #212121;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const WhiteSpace = styled.View`
@@ -102,7 +102,7 @@ export default ({
               <GreyText>ID</GreyText>
               <TextInput
                 placeholder={'휴대폰번호'}
-                placeholderTextColor={'#999'}
+                placeholderTextColor={styleGuide.palette.greyColor}
                 onChangeText={(text) => onChangeMobileNum(text)}
                 value={mobileNo}
                 keyboardType={'number-pad'}
@@ -116,7 +116,7 @@ export default ({
               <GreyText>Password</GreyText>
               <TextInput
                 placeholder={'영문, 숫자 조합 6자 이상'}
-                placeholderTextColor={'#999'}
+                placeholderTextColor={styleGuide.palette.greyColor}
                 onChangeText={(text) => setPassword(text)}
                 value={password}
                 secureTextEntry={true}

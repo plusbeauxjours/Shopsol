@@ -7,6 +7,7 @@ import api from '~/constants/LoggedInApi';
 import {setHelpCategory} from '~/redux/helpSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import {ForwardIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.View`
   flex: 1;
@@ -24,11 +25,11 @@ const Row = styled.View`
 `;
 
 const KakaoText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const AdviceText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const WhiteSpace = styled.View`
@@ -86,7 +87,7 @@ export default () => {
             />
             <KakaoText>카카오톡 문의</KakaoText>
           </Row>
-          <ForwardIcon size={22} color={'#000'} />
+          <ForwardIcon color={'black'} />
         </KakaoBox>
         {helpCategory?.map((data: any, index) => (
           <AdviceBox
@@ -95,7 +96,7 @@ export default () => {
               Linking.openURL(data?.URL);
             }}>
             <AdviceText>{data?.TITLE}</AdviceText>
-            <ForwardIcon size={22} color={'#bbb'} />
+            <ForwardIcon color={styleGuide.palette.greyColor} />
           </AdviceBox>
         ))}
         <WhiteSpace />

@@ -37,12 +37,12 @@ const BackGround = styled.SafeAreaView`
 
 const View = styled.View``;
 const Text = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const SmallText = styled.Text`
-  font-size: 9px;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.small}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Container = styled.View`
@@ -72,7 +72,7 @@ const SmallTextRound = styled.View`
   align-items: center;
   border-radius: 15px;
   border-width: 0.5px;
-  border-color: #7f7f7f;
+  border-color: ${styleGuide.palette.greyColor};
   padding: 5px;
   margin-right: 5px;
   margin-top: 5px;
@@ -92,15 +92,15 @@ const Card = styled(Ripple)<ICard>`
 const CardGreyLine = styled.View`
   width: 180px;
   height: 1px;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   margin: 10px 0 10px 0;
 `;
 
 const TitleText = styled.Text`
   align-self: flex-start;
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
   margin-top: 20px;
   margin-left: 20px;
 `;
@@ -117,13 +117,13 @@ const DodnutTextContainer = styled.View`
 const PercentageText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
   font-size: 25px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const PercentageSubText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
-  font-size: 12px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const EmpCard = styled.View`
@@ -139,13 +139,13 @@ const EmpCardRow = styled.View`
   align-items: center;
   width: ${wp('100%') - 80}px;
   border-bottom-width: 1px;
-  border-bottom-color: #${styleGuide.palette.borderColor};
+  border-bottom-color: ${styleGuide.palette.borderColor};
   padding-bottom: 10px;
   margin-bottom: 20px;
 `;
 
 const Bold = styled.Text`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Column = styled.View`
@@ -161,15 +161,15 @@ const DonutColumn = styled(Column)`
 `;
 
 const DonutColumnTitle = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
   font-size: 18px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
   margin: 3px 0;
 `;
 
 const DonutColumnText = styled(DonutColumnTitle)`
-  font-size: 12px;
-  font-weight: 400;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.normal};
 `;
 
 const EmpConatainer = styled.View`
@@ -271,9 +271,9 @@ const DateSection = styled.View`
 `;
 
 const DateText = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const SearchInputContainer = styled.View`
@@ -375,7 +375,11 @@ export default ({
                   </Bold>
                 )}
                 {i.TOTAL_VACATION_TIME > 0 && (
-                  <Bold style={{color: '#7F7F7F', fontSize: 10}}>
+                  <Bold
+                    style={{
+                      color: styleGuide.palette.greyColor,
+                      fontSize: styleGuide.fontSize.small,
+                    }}>
                     &nbsp;(
                     {Math.trunc(
                       moment.duration(i.TOTAL_VACATION_TIME).asHours(),
@@ -471,7 +475,11 @@ export default ({
                   <DateText>
                     {moment(weekStartDate).format('YYYY년 M월')}
                   </DateText>
-                  <DateText style={{fontSize: 12, fontWeight: '300'}}>
+                  <DateText
+                    style={{
+                      fontSize: styleGuide.fontSize.middle,
+                      fontWeight: styleGuide.fontWeight.normal,
+                    }}>
                     ({moment(weekStartDate).format('M월 D일')}
                     &nbsp;~&nbsp;
                     {moment(weekEndDate).format('M월 D일')})
@@ -611,7 +619,7 @@ export default ({
                 <SearchInputContainer>
                   <SearchInput
                     placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-                    placeholderTextColor={'#999'}
+                    placeholderTextColor={styleGuide.palette.greyColor}
                     onChangeText={(text) => searchName(text)}
                     value={search}
                   />

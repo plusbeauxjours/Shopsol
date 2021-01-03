@@ -45,6 +45,7 @@ export default ({route: {params}}) => {
   const [checklistCount, setChecklistCount] = useState<number>(0);
   const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
   const [qrCameraModalOpen, setQrCameraModalOpen] = useState<boolean>(false);
+  const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
   const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
 
   const [sucessModalOpen, setSucessModalOpen] = useState<boolean>(false);
@@ -190,15 +191,14 @@ export default ({route: {params}}) => {
   };
 
   // QR 스캔
-  const handleBarCodeScanned = ({bounds}) => {
-    if (isNaN(bounds.data)) {
-      alertModal('', '정확한 사업장 QR코드가 아닙니다');
-    }
-    if (STORE_SEQ != bounds.data) {
-      alertModal('', '정확한 사업장 QR코드가 아닙니다');
-    } else {
-      setWorkingModalOpen(true);
+  const handleBarCodeScanned = ({data}) => {
+    if (isNaN(data) || STORE_SEQ != data) {
       setQrCameraModalOpen(false);
+      setTimeout(() => {
+        alertModal('', '정확한 사업장 QR코드가 아닙니다');
+      }, 500);
+    } else {
+      setIsWorkingMode(true);
     }
   };
 
@@ -386,6 +386,8 @@ export default ({route: {params}}) => {
       errorMessage={errorMessage}
       GENDER={GENDER}
       loading={loading}
+      isWorkingMode={isWorkingMode}
+      setIsWorkingMode={setIsWorkingMode}
     />
   );
 };

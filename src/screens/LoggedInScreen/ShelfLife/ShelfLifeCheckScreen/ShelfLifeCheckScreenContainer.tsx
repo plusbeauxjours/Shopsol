@@ -218,7 +218,7 @@ export default () => {
         {
           titleWord: '1주전',
           backgroundColor: 'white',
-          textColor: '#999',
+          textColor: styleGuide.palette.greyColor,
           radius: 50,
           totalQTY: weekCount ?? 0,
           doneQTY: weekDone,
@@ -229,7 +229,7 @@ export default () => {
         {
           titleWord: '2주전',
           backgroundColor: 'white',
-          textColor: '#999',
+          textColor: styleGuide.palette.greyColor,
           radius: 40,
           totalQTY: weeksCount ?? 0,
           doneQTY: weeksDone,
@@ -240,7 +240,7 @@ export default () => {
         {
           titleWord: '1달전',
           backgroundColor: 'white',
-          textColor: '#999',
+          textColor: styleGuide.palette.greyColor,
           radius: 30,
           totalQTY: monthCount ?? 0,
           doneQTY: monthDone ?? 0,

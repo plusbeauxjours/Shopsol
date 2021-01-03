@@ -60,7 +60,7 @@ const RowTitle = styled(Row)`
 const TextInput = styled.TextInput`
   width: 100%;
   flex-wrap: wrap;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   border-bottom-width: 1px;
   border-color: #e5e5e5;
   padding: 0;
@@ -68,15 +68,15 @@ const TextInput = styled.TextInput`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -89,19 +89,19 @@ const ChecktimeButton = styled.TouchableOpacity`
 
 const ChecktimeButtonText = styled.Text`
   color: ${styleGuide.palette.primary};
-  font-weight: 400;
+  font-weight: ${styleGuide.fontWeight.normal};
 `;
 
 const SubTitleText = styled.Text`
   margin-left: 5px;
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const SubText = styled.Text`
   margin-top: 5px;
   margin-left: 25px;
-  font-size: 12px;
-  color: #aaa;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const DeleteButton = styled.TouchableOpacity`
@@ -112,8 +112,8 @@ const DeleteButton = styled.TouchableOpacity`
 `;
 
 const DeleteButtonText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: #ff3d3d;
   text-decoration-line: underline;
 `;
@@ -129,7 +129,7 @@ const ModalCheckEmpList = styled.View`
 `;
 
 const Bold = styled.Text`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const ChecklistItem = styled.View`
@@ -176,12 +176,14 @@ const ModalPopup = styled.View`
   shadow-offset: 3px 3px;
   shadow-opacity: 0.5;
   shadow-radius: 3px;
-  background-color: ${utils.isAndroid ? '#888' : 'rgba(0,0,0,0.7)'};
+  background-color: ${utils.isAndroid
+    ? styleGuide.palette.greyColor
+    : 'rgba(0,0,0,0.7)'};
 `;
 
 const GreyText = styled.Text<IsError>`
-  font-size: 12px;
-  color: ${(props) => (props.isError ? 'red' : '#aaa')};
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${(props) => (props.isError ? 'red' : styleGuide.palette.greyColor)};
   width: ${wp('100%') - 140}px;
   flex-wrap: wrap;
 `;
@@ -203,7 +205,7 @@ const DatePickerRoundBtn = styled(Ripple)`
   height: 60px;
   border-width: 0.5px;
   border-radius: 30px;
-  border-color: #888;
+  border-color: ${styleGuide.palette.greyColor};
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -222,9 +224,9 @@ const DatePickerRoundView = styled.View`
 `;
 
 const DatePickerText = styled.Text`
-  font-weight: 200;
-  font-size: 16px;
-  color: #888;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
 
@@ -273,7 +275,7 @@ export default ({
             <WhiteSpace style={{height: 10}} />
             <TextInput
               placeholder={'ex. 주방'}
-              selectionColor={'#999'}
+              selectionColor={styleGuide.palette.greyColor}
               placeholderTextColor={'#E5E5E5'}
               onChangeText={(text) => setTITLE(text)}
               value={TITLE}
@@ -287,7 +289,7 @@ export default ({
             <WhiteSpace style={{height: 10}} />
             <TextInput
               placeholder={'ex. 가스벨브 잠그기'}
-              selectionColor={'#999'}
+              selectionColor={styleGuide.palette.greyColor}
               placeholderTextColor={'#E5E5E5'}
               onChangeText={(text) => setChecklistInput(text)}
               value={checklistInput}

@@ -53,7 +53,7 @@ const RequestButton = styled.TouchableOpacity`
 
 const NameText = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const WhiteSpace = styled.View`
@@ -73,13 +73,13 @@ const TextinputCase = styled.View`
 
 const TextInput = styled.TextInput`
   flex: 1;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: black;
 `;
 
 const TimeText = styled.Text`
-  font-size: 12px;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: #ff3d3d;
   align-self: flex-start;
   margin-bottom: 5px;
@@ -102,12 +102,12 @@ const VerifyButton = styled.TouchableOpacity<IIsBefore>`
 
 const WhiteText = styled.Text`
   color: white;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Text = styled.Text`
   color: ${styleGuide.palette.greyColor};
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 const ButtonAfter = styled.TouchableOpacity`
@@ -130,7 +130,7 @@ const PolicyText = styled.Text<IPolicyCheck>`
   color: ${(props) =>
     props.policyCheck ? 'black' : styleGuide.palette.greyColor};
   font-size: 20px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyText = styled.Text`
@@ -139,7 +139,7 @@ const GreyText = styled.Text`
 `;
 
 const BoxText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const UnderlineText = styled(PolicyText)`
@@ -152,7 +152,8 @@ const IconContainer = styled.View<IPolicyCheck>`
   border-radius: 15px;
   border-width: 2px;
   margin-right: 10px;
-  border-color: ${(props) => (props.policyCheck ? '#ef5356' : '#aaa')};
+  border-color: ${(props) =>
+    props.policyCheck ? '#ef5356' : styleGuide.palette.greyColor};
   align-items: center;
   justify-content: center;
 `;
@@ -239,7 +240,7 @@ export default ({
             <IconContainer policyCheck={policyCheck}>
               <CheckMarkIcon
                 size={20}
-                color={policyCheck ? '#ef5356' : '#aaa'}
+                color={policyCheck ? '#ef5356' : styleGuide.palette.greyColor}
               />
             </IconContainer>
             <PolicyText policyCheck={policyCheck}>
@@ -260,7 +261,7 @@ export default ({
                     <TextInput
                       placeholder={'휴대폰번호를 입력해주세요'}
                       placeholderTextColor={'#CCCCCC'}
-                      selectionColor={'#999'}
+                      selectionColor={styleGuide.palette.greyColor}
                       onChangeText={(text) => {
                         onChangeMobileNum(text);
                       }}
@@ -283,7 +284,7 @@ export default ({
                     <TextInput
                       placeholder={'인증번호를 입력해주세요'}
                       placeholderTextColor={'#CCCCCC'}
-                      selectionColor={'#999'}
+                      selectionColor={styleGuide.palette.greyColor}
                       onChangeText={(text) => {
                         onChangeVerifyNum(text);
                       }}

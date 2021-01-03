@@ -55,8 +55,8 @@ const Row = styled.View`
 `;
 
 const GreyText = styled.Text`
-  font-size: 12px;
-  color: #aaa;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const TextInput = styled.TextInput<ITextInput>`
@@ -121,7 +121,7 @@ const CameraLastPictureContainer = styled.View`
 `;
 
 const CameraPictureCloseButtonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #ffffff;
 `;
 
@@ -158,7 +158,7 @@ const HalfBotton = styled.TouchableOpacity`
 `;
 
 const HalfBottonText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const DeleteButton = styled.TouchableOpacity`
@@ -171,7 +171,7 @@ const IconContainer = styled.View`
   width: 18px;
   height: 18px;
   border-radius: 9px;
-  background-color: #aaa;
+  background-color: ${styleGuide.palette.greyColor};
   border-width: 2px;
   border-color: white;
   z-index: 30;
@@ -199,7 +199,7 @@ const DatePickerRoundBtn = styled(Ripple)`
   height: 60px;
   border-width: 0.5px;
   border-radius: 30px;
-  border-color: #888;
+  border-color: ${styleGuide.palette.greyColor};
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -218,9 +218,9 @@ const DatePickerRoundView = styled.View`
 `;
 
 const DatePickerText = styled.Text`
-  font-weight: 200;
-  font-size: 16px;
-  color: #888;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
 
@@ -279,7 +279,9 @@ export default ({
                     onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
-                      <GreyText style={{fontSize: 10}}>사진촬영</GreyText>
+                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                        사진촬영
+                      </GreyText>
                     </BorderBox>
                   </Touchable>
                   {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
@@ -287,14 +289,18 @@ export default ({
                     onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
-                      <GreyText style={{fontSize: 10}}>보관함</GreyText>
+                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                        보관함
+                      </GreyText>
                     </BorderBox>
                   </Touchable>
                   <Touchable
                     onPress={() => alertModal('바코드 서비스 준비중입니다.')}>
                     <BorderBox>
                       <BarCodeIcon size={20} color={'#ccc'} />
-                      <GreyText style={{fontSize: 10}}>바코드</GreyText>
+                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
+                        바코드
+                      </GreyText>
                     </BorderBox>
                   </Touchable>
                 </Column>
@@ -310,8 +316,8 @@ export default ({
                     value={shelfLifeName}
                     maxLength={15}
                     style={{
-                      fontSize: 16,
-                      fontWeight: 'bold',
+                      fontSize: styleGuide.fontSize.large,
+                      fontWeight: styleGuide.fontWeight.bold,
                       height: 5,
                       margin: -10,
                       borderWidth: 0,
@@ -360,8 +366,8 @@ export default ({
             }>
             <Text
               style={{
-                fontSize: 16,
-                fontWeight: 'bold',
+                fontSize: styleGuide.fontSize.large,
+                fontWeight: styleGuide.fontWeight.bold,
                 color: '#FF3D3D',
                 textDecorationLine: 'underline',
               }}>

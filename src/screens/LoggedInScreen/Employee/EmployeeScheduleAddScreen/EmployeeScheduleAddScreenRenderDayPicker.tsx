@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
 
+import styleGuide from '~/constants/styleGuide';
+
 interface IColor {
   color: string;
   backgroundColor?: string;
@@ -17,9 +19,9 @@ const RenderDayPickerTouchable = styled.TouchableOpacity<IColor>`
 `;
 
 const RenderDayPickerText = styled.Text<IColor>`
-  font-size: 15px;
+  font-size: 14px;
   color: ${(props) => props.color};
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 export default ({

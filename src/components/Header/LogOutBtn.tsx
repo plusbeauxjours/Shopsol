@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {userLogout} from '~/redux/userSlice';
 import {LogoutIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 const Touchable = styled.TouchableOpacity`
   margin-right: 10px;
@@ -12,9 +13,9 @@ const Touchable = styled.TouchableOpacity`
 
 const Text = styled.Text`
   margin-top: 2px;
-  font-size: 11px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: white;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 export default () => {

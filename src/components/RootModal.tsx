@@ -44,7 +44,7 @@ const Title = styled.Text`
 `;
 
 const Content = styled.Text`
-  font-size: 15px;
+  font-size: 14px;
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -90,7 +90,7 @@ const BarBtn = styled(Ripple)`
   background-color: ${styleGuide.palette.primary};
 `;
 const WhiteText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: white;
 `;
 
@@ -147,7 +147,7 @@ export default ({alert}) => {
             <WithHelpBtn
               color={styleGuide.palette.primary}
               onPress={() => onPressExplain()}
-              rippleColor={'##d6cbcc'}
+              rippleColor={'#d6cbcc'}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.1}>

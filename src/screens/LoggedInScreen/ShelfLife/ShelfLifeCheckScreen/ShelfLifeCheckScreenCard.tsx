@@ -23,7 +23,7 @@ const Row = styled.View`
 `;
 
 const Bold = styled(Text)`
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const TextContainer = styled.View`
@@ -44,8 +44,8 @@ const Name = styled.View`
 
 const NameText = styled.Text<IsChecked>`
   color: ${(props) => (props.isChecked ? '#ccc' : '#333')};
-  color: #7f7f7f;
-  font-size: 16px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const Line = styled.View`
@@ -114,8 +114,8 @@ const BorderBox = styled.View`
 `;
 
 const GreyText = styled.Text`
-  font-size: 12px;
-  color: #aaa;
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 export default ({name, item, confirmModal, cancelModal, fetchData}) => {

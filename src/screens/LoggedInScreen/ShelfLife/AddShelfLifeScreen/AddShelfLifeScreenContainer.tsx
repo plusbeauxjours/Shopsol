@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
@@ -26,6 +26,11 @@ export default ({route: {params}}) => {
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
   );
+  const [barCodeCameraModalOpen, setBarCodeCameraModalOpen] = useState<boolean>(
+    false,
+  );
+  const [codenumber, setCodenumber] = useState<string>('');
+  const [hasScanned, setHasScanned] = useState<boolean>(false);
 
   const alertModal = (text, okCallback = () => {}) => {
     const params = {
@@ -144,6 +149,45 @@ export default ({route: {params}}) => {
     );
   };
 
+  const handleBarCodeScanned = async (codenumber) => {
+    setBarCodeCameraModalOpen(false);
+    if (!codenumber) {
+      setTimeout(() => {
+        alertModal('바코드를 읽을 수 없습니다.');
+      }, 100);
+    } else {
+      setCodenumber(codenumber);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        dispatch(setSplashVisible(true));
+        if (codenumber !== '') {
+          const {data} = await api.getBarCode(codenumber);
+          console.log(data);
+          if (data.resultdata?.length > 0) {
+            dispatch(setSplashVisible(false));
+            setShelfLifeName(data.resultdata[0].NAME);
+            setShelfLifeMemo(data.resultdata[0].BRAND);
+            setCameraPictureLast(data.resultdata[0].IMG);
+          } else {
+            dispatch(setSplashVisible(false));
+            setTimeout(() => {
+              alertModal('등록된 데이터가 없습니다.');
+            }, 100);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setCodenumber('');
+        dispatch(setSplashVisible(false));
+      }
+    })();
+  }, [codenumber]);
+
   return (
     <AddShelfLifeScreenPresenter
       addFn={addFn}
@@ -172,6 +216,9 @@ export default ({route: {params}}) => {
       alertModal={alertModal}
       shelfLifeDateSet={shelfLifeDateSet}
       setShelfLifeDateSet={setShelfLifeDateSet}
+      barCodeCameraModalOpen={barCodeCameraModalOpen}
+      setBarCodeCameraModalOpen={setBarCodeCameraModalOpen}
+      handleBarCodeScanned={handleBarCodeScanned}
     />
   );
 };

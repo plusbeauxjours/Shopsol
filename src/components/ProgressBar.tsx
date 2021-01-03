@@ -16,14 +16,14 @@ const TimeSlider = styled.View`
 
 const TimeLeft = styled.Text`
   flex: 1;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #ffffff;
   padding-left: 10px;
 `;
 
 const TimeRight = styled.Text`
   flex: 1;
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #ffffff;
   text-align: right;
   padding-right: 10px;

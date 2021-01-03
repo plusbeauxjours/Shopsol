@@ -96,13 +96,13 @@ const SmallTextRound = styled.View`
 `;
 
 const SmallText = styled.Text`
-  font-size: 9px;
+  font-size: ${styleGuide.fontSize.small}px;
   color: ${styleGuide.palette.greyColor};
 `;
 
 const TopText = styled.Text<IColumn>`
   font-size: 14px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: white;
 `;
 
@@ -138,8 +138,8 @@ const VacationTop = styled.View<IColumn>`
 `;
 
 const VacationTopText = styled(TopText)<IColumn>`
-  font-size: 12px;
-  font-weight: 200;
+  font-size: ${styleGuide.fontSize.middle}px;
+  font-weight: ${styleGuide.fontWeight.normal};
   color: ${(props) =>
     props.isSelected
       ? styleGuide.palette.greyColor

@@ -24,25 +24,25 @@ const Container = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const Text = styled.Text<IText>`
   margin-left: 5px;
-  font-size: 12px;
+  font-size: ${styleGuide.fontSize.middle}px;
   color: ${(props) => (props.isSubmited ? '#7e7c7c' : '#CE0505')};
 `;
 
 const FooterText = styled(Text)`
   margin-top: 5px;
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const GreyText = styled(Text)`
   color: #7e7c7c;
-  font-size: 13px;
+  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const Section = styled.TouchableOpacity`
@@ -138,7 +138,7 @@ export default ({
                             marginTop: 5,
                             color: 'red',
                           }
-                        : {marginTop: 5, color: '#aaa'}
+                        : {marginTop: 5, color: styleGuide.palette.greyColor}
                     }>
                     검진일시: {HEALTH_DDAY} (갱신 D{dday <= 0 ? '+' : '-'}
                     {Math.abs(Math.floor(dday))})

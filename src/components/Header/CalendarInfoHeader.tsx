@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import HomeBtn from './HomeBtn';
-import AddClendarInfoBtn from './AddClendarInfoBtn';
+import AddCalendarInfoBtn from './AddCalendarInfoBtn';
 
 const Container = styled.View`
   flex-direction: row;
@@ -10,7 +10,7 @@ const Container = styled.View`
 
 export default () => (
   <Container>
-    <AddClendarInfoBtn />
+    <AddCalendarInfoBtn />
     <HomeBtn />
   </Container>
 );

@@ -53,29 +53,29 @@ const RowTitle = styled(Row)`
 const TimePickBox = styled.View`
   margin-top: 20px;
   padding: 20px;
-  border-color: #${styleGuide.palette.borderColor};
+  border-color: ${styleGuide.palette.borderColor};
   border-top-width: 1px;
   justify-content: space-around;
   height: 110px;
 `;
 
 const NameText = styled.Text`
-  font-size: 16px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: #333;
   margin-bottom: 5px;
   margin-left: 5px;
 `;
 
 const TitleText = styled.Text`
-  font-size: 16px;
-  color: #999;
-  font-weight: bold;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
-  background-color: #${styleGuide.palette.borderColor};
+  background-color: ${styleGuide.palette.borderColor};
   height: 1px;
 `;
 
@@ -115,15 +115,15 @@ const WorkTime = styled.View`
 `;
 
 const WorkTitleText = styled.Text`
-  color: #999;
-  font-size: 10px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.small}px;
   margin-left: 5px;
   width: 60px;
 `;
 
 const WorkTimeText = styled.Text`
-  color: #999;
-  font-size: 10px;
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.small}px;
 `;
 
 const CntArea = styled.View`
@@ -144,12 +144,12 @@ const RowSpaceTouchable = styled(RowTouchable)`
 
 const SideText = styled.Text`
   margin-left: 10px;
-  font-size: 15px;
+  font-size: 14px;
   color: #212121;
 `;
 
 const TimePickBoxTimeText = styled.Text`
-  font-size: 17px;
+  font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.primary};
 `;
 
@@ -170,7 +170,7 @@ const DatePickerRoundBtn = styled(Ripple)`
   height: 60px;
   border-width: 0.5px;
   border-radius: 30px;
-  border-color: #888;
+  border-color: ${styleGuide.palette.greyColor};
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -189,9 +189,9 @@ const DatePickerRoundView = styled.View`
 `;
 
 const DatePickerText = styled.Text`
-  font-weight: 200;
-  font-size: 16px;
-  color: #888;
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
   text-align: center;
 `;
 

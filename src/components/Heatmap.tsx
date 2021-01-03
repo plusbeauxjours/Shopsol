@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import moment from 'moment';
 
 import {PlayCircleOutlineIcon, StopCircleOutlineIcon} from '~/constants/Icons';
+import styleGuide from '~/constants/styleGuide';
 
 interface IActive {
   activeDays: any;
@@ -21,7 +22,7 @@ const ToucahbleMargin = (wp('100%') - ToucahbleSize * 7 - 60) / 8;
 
 const HeatmapText = styled.Text<IActive>`
   font-size: 14px;
-  font-weight: bold;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${(props) =>
     props.isSelected
       ? 'white'
@@ -31,7 +32,7 @@ const HeatmapText = styled.Text<IActive>`
 `;
 
 const Text = styled.Text`
-  color: #7f7f7f;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Touchable = styled(RNBounceable)<IActive>`
@@ -54,7 +55,7 @@ const Touchable = styled(RNBounceable)<IActive>`
       ? 'transparent'
       : props.activeDays?.indexOf(props.index) > -1
       ? 'transparent'
-      : '#aaa'};
+      : styleGuide.palette.greyColor};
   border-radius: 14px;
   width: ${ToucahbleSize}px;
   height: ${ToucahbleSize}px;
@@ -103,14 +104,14 @@ const IconContainer = styled.View`
 const SmallTextRound = styled.View`
   border-radius: 15px;
   border-width: 0.5px;
-  border-color: #7f7f7f;
+  border-color: ${styleGuide.palette.greyColor};
   padding: 5px;
   margin-right: 5px;
 `;
 
 const SmallText = styled.Text`
-  font-size: 9px;
-  color: #7f7f7f;
+  font-size: ${styleGuide.fontSize.small}px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const WhiteSpace = styled.View<IRow>`
@@ -153,7 +154,7 @@ export default ({data, toDay}) => {
                 isSelected={index == selectedIndex}
                 onPress={() => setSelectedIndex(index)}>
                 <HeatmapText
-                  style={{fontSize: 12}}
+                  style={{fontSize: styleGuide.fontSize.middle}}
                   activeDays={activeDays}
                   index={index}
                   isSelected={index == selectedIndex}>
