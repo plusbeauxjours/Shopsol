@@ -101,7 +101,7 @@ const TextInput = styled.TextInput`
 const VerticalLine = styled.View`
   width: 0.6px;
   left: 30px;
-  background-color: #ddd;
+  background-color: ${styleGuide.palette.lightGreyColor};
   position: absolute;
   height: 100%;
   top: 0;

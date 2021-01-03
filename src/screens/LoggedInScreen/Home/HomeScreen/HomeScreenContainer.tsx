@@ -7,7 +7,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {openSettings} from 'react-native-permissions';
+import {openSettings, PERMISSIONS, request} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
@@ -327,7 +327,7 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
-    // if (utils.isAndroid()) {
+    // if (utils.isAndroid) {
     //   STORE === '1'
     //     ? SharedStorage.set(
     //         JSON.stringify({

@@ -167,7 +167,7 @@ const WhiteText = styled.Text`
 const IconContainer = styled.TouchableOpacity`
   position: absolute;
   right: -15px;
-  top: ${(props) => (isIphoneX() ? -15 : -45)}px;
+  top: ${(props) => (isIphoneX() ? -15 : -35)}px;
 `;
 
 const WhiteBigText = styled(WhiteText)`

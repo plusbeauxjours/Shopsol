@@ -15,12 +15,15 @@ const Row = styled.View`
   align-items: flex-start;
 `;
 
-const Bold = styled(Text)`
-  font-weight: ${styleGuide.fontWeight.bold};
-`;
-
 const TextContainer = styled.View`
   margin-top: 10px;
+`;
+
+const WhiteBox = styled.View`
+  background-color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
 `;
 
 const Touchable = styled.TouchableOpacity`
@@ -96,23 +99,25 @@ const CloseIconContainer = styled.View`
 export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
   return (
     <Row style={{marginTop: 10, marginBottom: 10}}>
-      <Touchable onPress={onPress} disabled={!IMAGE}>
-        {IMAGE ? (
-          <FastImage
-            style={{width: 60, height: 60, borderRadius: 10}}
-            source={{
-              uri: IMAGE,
-              headers: {Authorization: 'someAuthToken'},
-              priority: FastImage.priority.low,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        ) : (
-          <BorderBox style={{zIndex: 10}}>
-            <GreyText>사진 미등록</GreyText>
-          </BorderBox>
-        )}
-      </Touchable>
+      <WhiteBox>
+        <Touchable onPress={onPress} disabled={!IMAGE}>
+          {IMAGE ? (
+            <FastImage
+              style={{width: 60, height: 60, borderRadius: 10}}
+              source={{
+                uri: IMAGE,
+                headers: {Authorization: 'someAuthToken'},
+                priority: FastImage.priority.low,
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          ) : (
+            <BorderBox style={{zIndex: 10}}>
+              <GreyText>사진 미등록</GreyText>
+            </BorderBox>
+          )}
+        </Touchable>
+      </WhiteBox>
       <WhiteItem
         onPress={() => deleteBuffer(NAME, DATE)}
         rippleColor={'#666'}

@@ -76,7 +76,7 @@ export default () => {
       setLoading(false);
       dispatch(setAlertVisible(false));
     }
-    // if (utils.isAndroid()) {
+    // if (utils.isAndroid) {
     //   if (STORE_NAME == '') {
     //     SharedStorage.set(
     //       JSON.stringify({

@@ -125,7 +125,7 @@ export default ({children, onNotificationOpened}: Props): JSX.Element => {
           {
             text: '확인',
             onPress: () => {
-              utils.isAndroid()
+              utils.isAndroid
                 ? openSettings()
                 : Linking.openURL('app-settings:');
             },

@@ -7,7 +7,8 @@ const styleGuide = {
         secondary: "#f4aaab",
         tertiary: "#6bc5db",
         borderColor: "#f2f2f2",
-        greyColor: "#7c7c7c"
+        greyColor: "#7c7c7c",
+        lightGreyColor: '#d0d0d0'
     },
     fontSize: {
         large: 16,

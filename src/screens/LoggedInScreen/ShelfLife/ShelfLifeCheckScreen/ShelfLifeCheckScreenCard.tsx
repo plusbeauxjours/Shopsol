@@ -118,36 +118,45 @@ const GreyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
 `;
 
+const GreyBox = styled.View`
+  background-color: ${styleGuide.palette.backgroundPrimary};
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+`;
+
 export default ({name, item, confirmModal, cancelModal, fetchData}) => {
   const navigation = useNavigation();
   if (item.checkType === '0') {
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
-        <Touchable
-          onPress={() =>
-            confirmModal(name, item.shelfLife_SEQ, item.shelfLifeDate)
-          }>
-          {item.images?.length > 0 ? (
-            <FastImage
-              style={{width: 60, height: 60, borderRadius: 10}}
-              source={{
-                uri: 'http://133.186.210.223/uploads/' + item.images[0],
-                headers: {Authorization: 'someAuthToken'},
-                priority: FastImage.priority.low,
-              }}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          ) : (
-            <BorderBox style={{zIndex: 10}}>
-              <GreyText>사진 미등록</GreyText>
-            </BorderBox>
-          )}
-          <IconBorder>
-            <IconContainer isChecked={true}>
-              <CheckMarkIcon size={12} color={'white'} />
-            </IconContainer>
-          </IconBorder>
-        </Touchable>
+        <GreyBox>
+          <Touchable
+            onPress={() =>
+              confirmModal(name, item.shelfLife_SEQ, item.shelfLifeDate)
+            }>
+            {item.images?.length > 0 ? (
+              <FastImage
+                style={{width: 60, height: 60, borderRadius: 10}}
+                source={{
+                  uri: 'http://133.186.210.223/uploads/' + item.images[0],
+                  headers: {Authorization: 'someAuthToken'},
+                  priority: FastImage.priority.low,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            ) : (
+              <BorderBox style={{zIndex: 10}}>
+                <GreyText>사진 미등록</GreyText>
+              </BorderBox>
+            )}
+            <IconBorder>
+              <IconContainer isChecked={true}>
+                <CheckMarkIcon size={12} color={'white'} />
+              </IconContainer>
+            </IconBorder>
+          </Touchable>
+        </GreyBox>
         <WhiteItem
           onPress={() =>
             setTimeout(() => {
@@ -185,28 +194,30 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
   } else {
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
-        <Touchable onPress={() => cancelModal(name, item.shelfLife_SEQ)}>
-          {item.images?.length > 0 ? (
-            <FastImage
-              style={{width: 60, height: 60, borderRadius: 10}}
-              source={{
-                uri: 'http://133.186.210.223/uploads/' + item.images[0],
-                headers: {Authorization: 'someAuthToken'},
-                priority: FastImage.priority.low,
-              }}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          ) : (
-            <BorderBox style={{zIndex: 10}}>
-              <GreyText>사진 미등록</GreyText>
-            </BorderBox>
-          )}
-          <IconBorder>
-            <IconContainer isChecked={false}>
-              <CheckMarkIcon size={12} color={'yellow'} />
-            </IconContainer>
-          </IconBorder>
-        </Touchable>
+        <GreyBox>
+          <Touchable onPress={() => cancelModal(name, item.shelfLife_SEQ)}>
+            {item.images?.length > 0 ? (
+              <FastImage
+                style={{width: 60, height: 60, borderRadius: 10}}
+                source={{
+                  uri: 'http://133.186.210.223/uploads/' + item.images[0],
+                  headers: {Authorization: 'someAuthToken'},
+                  priority: FastImage.priority.low,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            ) : (
+              <BorderBox style={{zIndex: 10}}>
+                <GreyText>사진 미등록</GreyText>
+              </BorderBox>
+            )}
+            <IconBorder>
+              <IconContainer isChecked={false}>
+                <CheckMarkIcon size={12} color={'yellow'} />
+              </IconContainer>
+            </IconBorder>
+          </Touchable>
+        </GreyBox>
         <Item onPress={() => {}} disabled={true}>
           <Name>
             <NameText isChecked={true}>{item.shelfLifeName}</NameText>

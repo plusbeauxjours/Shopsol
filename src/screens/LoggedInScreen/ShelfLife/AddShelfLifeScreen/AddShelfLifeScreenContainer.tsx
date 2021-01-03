@@ -165,7 +165,8 @@ export default ({route: {params}}) => {
       try {
         dispatch(setSplashVisible(true));
         if (codenumber !== '') {
-          const {data} = await api.getBarCode(codenumber);
+          // const {data} = await api.getBarCode(codenumber);
+          const {data} = await api.getBarCode('8801858011116');
           console.log(data);
           if (data.resultdata?.length > 0) {
             dispatch(setSplashVisible(false));

@@ -25,11 +25,13 @@ const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
 `;
+
 const View = styled.View``;
 const Container = styled.View`
   width: 100%;
   padding: 20px;
   align-items: center;
+  padding-bottom: 80px;
 `;
 
 const Row = styled.View`
@@ -119,10 +121,11 @@ const LineText = styled.Text<IColor>`
 const VerticalLine = styled.View`
   width: 0.6px;
   left: 30px;
-  background-color: #ddd;
+  background-color: ${styleGuide.palette.lightGreyColor};
   position: absolute;
   height: 100%;
   top: 140px;
+  z-index: -1;
 `;
 
 const AddButtonContainer = styled.View`
@@ -142,7 +145,7 @@ const AddButton = styled.TouchableOpacity`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${styleGuide.palette.tertiary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
