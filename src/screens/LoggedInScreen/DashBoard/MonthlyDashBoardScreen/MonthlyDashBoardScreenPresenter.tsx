@@ -477,7 +477,7 @@ export default ({
                   <DateText
                     style={{
                       fontSize: styleGuide.fontSize.middle,
-                      fontWeight: styleGuide.fontWeight.normal,
+                      fontWeight: '300',
                     }}>
                     ({moment(monthStartDate).format('M월 D일')}
                     &nbsp;~&nbsp;

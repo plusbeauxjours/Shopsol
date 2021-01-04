@@ -230,7 +230,7 @@ export default ({
                     maxLength={15}
                     style={{
                       fontSize: styleGuide.fontSize.large,
-                      fontWeight: styleGuide.fontWeight.bold,
+                      fontWeight: '600',
                       height: 5,
                       borderWidth: 0,
                       width: 180,
@@ -347,7 +347,7 @@ export default ({
               <Text
                 style={{
                   fontSize: styleGuide.fontSize.large,
-                  fontWeight: styleGuide.fontWeight.bold,
+                  fontWeight: '600',
                   color: '#FF3D3D',
                   textDecorationLine: 'underline',
                 }}>

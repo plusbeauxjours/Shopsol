@@ -144,7 +144,7 @@ export default ({
                 <DateText
                   style={{
                     fontSize: styleGuide.fontSize.middle,
-                    fontWeight: styleGuide.fontWeight.normal,
+                    fontWeight: '300',
                   }}>
                   ({moment(startDate).format('M월 D일')}
                   &nbsp;~&nbsp;
@@ -204,8 +204,6 @@ export default ({
               </PayBox>
             )}
           </Section>
-          {console.log('EMPLOYEE_LIST', EMPLOYEE_LIST)}
-          {console.log('TOTAL_PAYMENT_WORKING_EMP', TOTAL_PAYMENT_WORKING_EMP)}
           {loading ? (
             <Section>
               <EmployeeListBox>

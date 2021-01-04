@@ -514,7 +514,7 @@ export default ({
                         style={{
                           marginLeft: 5,
                           color: styleGuide.palette.primary,
-                          fontWeight: styleGuide.fontWeight.bold,
+                          fontWeight: '600',
                         }}>
                         전화걸기
                       </InfoText>
@@ -559,7 +559,7 @@ export default ({
                   <DateText
                     style={{
                       fontSize: styleGuide.fontSize.middle,
-                      fontWeight: styleGuide.fontWeight.normal,
+                      fontWeight: '300',
                     }}>
                     {moment(date).format('M월 D일')}&nbsp;~&nbsp;
                     {moment(date)

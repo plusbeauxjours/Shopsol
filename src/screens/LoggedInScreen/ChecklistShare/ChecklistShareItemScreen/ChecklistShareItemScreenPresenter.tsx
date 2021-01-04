@@ -418,7 +418,7 @@ export default ({
                                 }}>
                                 <Text
                                   style={{
-                                    fontWeight: styleGuide.fontWeight.bold,
+                                    fontWeight: '600',
                                     color: styleGuide.palette.greyColor,
                                   }}>
                                   {item.EMP_NAME} [{item.IS_MANAGER}

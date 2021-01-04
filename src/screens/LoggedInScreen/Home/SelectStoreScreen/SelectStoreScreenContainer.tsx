@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeModules} from 'react-native';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {getSTORELIST_DATA} from '~/redux/userSlice';
+import {getSTORELIST_DATA, resetCUSTOM_MENU_STORE} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
 
 export default () => {
@@ -88,6 +88,7 @@ export default () => {
     //     );
     //   }
     // }
+    // dispatch(resetCUSTOM_MENU_STORE());
   }, []);
 
   return (

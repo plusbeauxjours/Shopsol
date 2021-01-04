@@ -19,6 +19,22 @@ const ForwardArrowIconContainer = styled.View`
   margin: 0 5px;
 `;
 
+export const EyeOnIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons
+    name={utils.isAndroid ? 'md-eye' : 'ios-eye'}
+    size={size ?? 24}
+    color={color ?? styleGuide.palette.greyColor}
+  />
+);
+
+export const EyeOffIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons
+    name={utils.isAndroid ? 'md-eye-off' : 'ios-eye-off'}
+    size={size ?? 24}
+    color={color ?? styleGuide.palette.greyColor}
+  />
+);
+
 export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={
@@ -85,7 +101,7 @@ export const HomeIcon: React.FC<IProps> = ({size, color}) => (
 
 export const CloseIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={'close-sharp'}
+    name={'close'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
   />
@@ -199,7 +215,11 @@ export const EllipseIcon: React.FC<IProps> = ({size, color}) => (
 );
 
 export const HelpIcon: React.FC<IProps> = ({size, color}) => (
-  <Ionicons name={'help'} size={size ?? 24} color={color ?? 'white'} />
+  <MaterialCommunityIcons
+    name={'help'}
+    size={size ?? 24}
+    color={color ?? 'white'}
+  />
 );
 
 export const SettingIcon: React.FC<IProps> = ({size, color}) => (

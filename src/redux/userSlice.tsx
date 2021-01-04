@@ -19,8 +19,69 @@ const userSlice = createSlice({
     DEVICE_MODEL: '',
     DEVICE_PLATFORM: '',
     DEVICE_SYSTEM_VERSION: '',
+    CUSTOM_MENU_STORE: {},
+    CUSTOM_MENU_EMP: {},
   },
   reducers: {
+    resetCUSTOM_MENU(state) {
+      return {
+        ...state,
+        CUSTOM_MENU_STORE: {},
+        CUSTOM_MENU_EMP: {},
+      };
+    },
+    addCUSTOM_MENU_STORE(state, action) {
+      const {
+        payload: {STORE_SEQ, CUSTOM_MENU_STORE},
+      } = action;
+      const item = state.CUSTOM_MENU_STORE[STORE_SEQ];
+      if (item) {
+        item.push(CUSTOM_MENU_STORE);
+      } else {
+        return {
+          ...state,
+          CUSTOM_MENU_STORE: {
+            ...state.CUSTOM_MENU_STORE,
+            [STORE_SEQ]: [CUSTOM_MENU_STORE],
+          },
+        };
+      }
+    },
+    removeCUSTOM_MENU_STORE(state, action) {
+      const {
+        payload: {STORE_SEQ, CUSTOM_MENU_STORE},
+      } = action;
+      const item = state.CUSTOM_MENU_STORE[STORE_SEQ];
+      if (item) {
+        state.CUSTOM_MENU_STORE[STORE_SEQ] = CUSTOM_MENU_STORE;
+      }
+    },
+    addCUSTOM_MENU_EMP(state, action) {
+      const {
+        payload: {STORE_SEQ, CUSTOM_MENU_EMP},
+      } = action;
+      const item = state.CUSTOM_MENU_EMP[STORE_SEQ];
+      if (item) {
+        item.push(CUSTOM_MENU_EMP);
+      } else {
+        return {
+          ...state,
+          CUSTOM_MENU_EMP: {
+            ...state.CUSTOM_MENU_EMP,
+            [STORE_SEQ]: [CUSTOM_MENU_EMP],
+          },
+        };
+      }
+    },
+    removeCUSTOM_MENU_EMP(state, action) {
+      const {
+        payload: {STORE_SEQ, CUSTOM_MENU_EMP},
+      } = action;
+      const item = state.CUSTOM_MENU_EMP[STORE_SEQ];
+      if (item) {
+        state.CUSTOM_MENU_EMP[STORE_SEQ] = CUSTOM_MENU_EMP;
+      }
+    },
     setMEMBER_NAME(state, action) {
       const {payload: MEMBER_NAME} = action;
       return {
@@ -76,6 +137,8 @@ const userSlice = createSlice({
         STORE: '',
         MOBILE_NO: '',
         STORELIST_DATA: [],
+        CUSTOM_MENU_STORE: {},
+        CUSTOM_MENU_EMP: {},
       };
     },
     setDEVICE_PLATFORM(state, action) {
@@ -115,6 +178,11 @@ export const {
   setLOGOUT,
   setDEVICE_PLATFORM,
   setDEVICE_INFO,
+  resetCUSTOM_MENU_STORE,
+  addCUSTOM_MENU_STORE,
+  removeCUSTOM_MENU_STORE,
+  addCUSTOM_MENU_EMP,
+  removeCUSTOM_MENU_EMP,
 } = userSlice.actions;
 
 export const userLogin = () => async (dispatch) => {
@@ -132,10 +200,7 @@ export const userLogout = () => async (dispatch) => {
 
 export const getSTORELIST_DATA = () => async (dispatch, getState) => {
   const {
-    userReducer: {STORE, MEMBER_SEQ},
-  } = getState();
-  const {
-    userReducer: {STORELIST_DATA},
+    userReducer: {STORE, MEMBER_SEQ, STORELIST_DATA},
   } = getState();
   if (!STORELIST_DATA || STORELIST_DATA?.length === 0) {
     dispatch(setSplashVisible(true));

@@ -79,7 +79,7 @@ export default ({key, day, yoil, base, night, over, holi, late, total}) => {
         <DateText
           style={{
             fontSize: styleGuide.fontSize.middle,
-            fontWeight: styleGuide.fontWeight.normal,
+            fontWeight: '300',
           }}>
           {yoil}요일
         </DateText>

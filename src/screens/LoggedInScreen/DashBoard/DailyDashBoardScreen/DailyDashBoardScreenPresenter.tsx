@@ -113,6 +113,13 @@ const EmpCard = styled.View`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+`;
+
+const EmpCardRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: ${wp('100%') - 80}px;
   border-bottom-width: 1px;
   border-bottom-color: ${styleGuide.palette.borderColor};
   padding-bottom: 10px;
@@ -161,13 +168,6 @@ const WhiteSpace = styled.View`
 const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const EmpCardRow = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100px;
 `;
 
 const SmallText = styled.Text`
@@ -547,7 +547,7 @@ export default ({
                   <DateText
                     style={{
                       fontSize: styleGuide.fontSize.middle,
-                      fontWeight: styleGuide.fontWeight.normal,
+                      fontWeight: '300',
                     }}>
                     {utils.renderWeekDay(moment(toDay).format('d'))}
                   </DateText>

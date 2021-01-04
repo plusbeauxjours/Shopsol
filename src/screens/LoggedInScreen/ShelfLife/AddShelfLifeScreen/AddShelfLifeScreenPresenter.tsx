@@ -414,7 +414,7 @@ export default ({
                     maxLength={15}
                     style={{
                       fontSize: styleGuide.fontSize.large,
-                      fontWeight: styleGuide.fontWeight.bold,
+                      fontWeight: '600',
                       height: 5,
                       margin: -10,
                       borderWidth: 0,

@@ -14,6 +14,12 @@ import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import {setSTORE_DATA, setEMP_SEQ} from '~/redux/storeSlice';
+import {
+  addCUSTOM_MENU_STORE,
+  addCUSTOM_MENU_EMP,
+  removeCUSTOM_MENU_STORE,
+  removeCUSTOM_MENU_EMP,
+} from '~/redux/userSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
@@ -30,9 +36,14 @@ export default ({route: {params}}) => {
     GPS,
   } = params;
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
-  const {MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM, GENDER} = useSelector(
-    (state: any) => state.userReducer,
-  );
+  const {
+    MEMBER_SEQ,
+    MEMBER_NAME,
+    DEVICE_PLATFORM,
+    GENDER,
+    CUSTOM_MENU_STORE,
+    CUSTOM_MENU_EMP,
+  } = useSelector((state: any) => state.userReducer);
   const {NOTICE_COUNT} = useSelector(
     (state: any) => state.checklistshareReducer,
   );
@@ -53,6 +64,229 @@ export default ({route: {params}}) => {
   const [actionTYPE, setActionTYPE] = useState<string>('출근');
   const [workingTYPE, setWorkingTYPE] = useState<string>('QR');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [editMode, setEditMode] = useState<boolean>(false);
+
+  const storeKeepersStoreMenu = [
+    {
+      selection: '사업장현황',
+      paging: 'DashBoardScreen',
+      count: null,
+      source: require(`../../../../assets/main/Invite.png`),
+    },
+    {
+      selection: '직원초대',
+      paging: 'InviteEmployeeScreen',
+      count: null,
+      source: require(`../../../../assets/main/Invite.png`),
+    },
+    {
+      selection: '직원목록',
+      paging: 'EmployeeListScreen',
+      count: null,
+      source: require(`../../../../assets/main/EmployeeList.png`),
+    },
+    {
+      selection: '직원합류승인',
+      paging: 'ManageInviteEmployeeScreen',
+      count: invitedEmpCount,
+      source: require(`../../../../assets/main/ManageInviteEmployee.png`),
+    },
+    {
+      selection: '캘린더',
+      paging: 'CalendarInfoScreen',
+      count: null,
+      source:
+        STORE_DATA?.CalendarEdit == 1
+          ? require('../../../../assets/main/CalendarInfo.png')
+          : require('../../../../assets/main/CalendarInfoEmp.png'),
+    },
+    {
+      selection: '급여정보',
+      paging: 'PaymentInfoScreen',
+      count: null,
+      source: require(`../../../../assets/main/PaymentInfo.png`),
+    },
+    {
+      selection: 'QR보기',
+      paging: 'qrViewScreen',
+      count: null,
+      source: require(`../../../../assets/main/qrView.png`),
+    },
+  ];
+
+  const storeKeepersEMPMenu = [
+    {
+      selection: '체크리스트',
+      paging: 'ChecklistItemsScreen',
+      count: checklistCount,
+      source: require(`../../../../assets/main/ChecklistItems.png`),
+    },
+    {
+      selection: '업무일지',
+      paging: 'ChecklistShareMainScreen',
+      count: NOTICE_COUNT,
+      source: require(`../../../../assets/main/ChecklistShareMain.png`),
+    },
+    {
+      selection: '유통기한',
+      paging: 'ShelfLifeCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+    },
+    {
+      selection: '조기경보',
+      paging: 'HealthCertificateTypeScreen',
+      count: null,
+      source: require(`../../../../assets/main/HealthCertificateType.png`),
+    },
+  ];
+
+  const managersStoreMenu = [
+    {
+      selection: '사업장현황',
+      paging: 'DashBoardScreen',
+      count: null,
+      source: require(`../../../../assets/main/Invite.png`),
+    },
+    {
+      selection: '직원초대',
+      paging: 'InviteEmployeeScreen',
+      count: null,
+      source: require(`../../../../assets/main/Invite.png`),
+    },
+    {
+      selection: '직원목록',
+      paging: 'EmployeeListScreen',
+      count: null,
+      source: require(`../../../../assets/main/EmployeeList.png`),
+    },
+    {
+      selection: '직원정보',
+      paging: 'EmployeeInfoEMPScreen',
+      count: null,
+      source: require(`../../../../assets/main/EmployeeInfoEmp.png`),
+    },
+    {
+      selection: '직원합류승인',
+      paging: 'ManageInviteEmployeeScreen',
+      count: invitedEmpCount,
+      source: require(`../../../../assets/main/ManageInviteEmployee.png`),
+    },
+    {
+      selection: '캘린더',
+      paging: 'CalendarInfoScreen',
+      count: null,
+      source:
+        STORE_DATA?.CalendarEdit == 1
+          ? require(`../../../../assets/main/CalendarInfo.png`)
+          : require(`../../../../assets/main/CalendarInfoEmp.png`),
+    },
+    {
+      selection: '급여정보',
+      paging: 'PaymentInfoScreen',
+      count: null,
+      source: require(`../../../../assets/main/PaymentInfo.png`),
+    },
+    {
+      selection: '급여정보',
+      paging: 'EmpPayInfoScreen',
+      count: null,
+      source: require(`../../../../assets/main/PaymentInfo.png`),
+    },
+    {
+      selection: 'QR보기',
+      paging: 'qrViewScreen',
+      count: null,
+      source: require(`../../../../assets/main/qrView.png`),
+    },
+  ];
+
+  const managersEMPMenu = [
+    {
+      selection: '체크리스트',
+      paging: 'ChecklistItemsScreen',
+      count: checklistCount,
+      source: require(`../../../../assets/main/ChecklistItems.png`),
+    },
+    {
+      selection: '업무일지',
+      paging: 'ChecklistShareMainScreen',
+      count: NOTICE_COUNT,
+      source: require(`../../../../assets/main/ChecklistShareMain.png`),
+    },
+    {
+      selection: '유통기한',
+      paging: 'ShelfLifeCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+    },
+    {
+      selection: '조기경보',
+      paging: 'HealthCertificateTypeScreen',
+      count: null,
+      source: require(`../../../../assets/main/HealthCertificateType.png`),
+    },
+  ];
+  const employeesMenu = [
+    {
+      selection: '캘린더',
+      paging: 'CalendarInfoScreen',
+      count: null,
+      source:
+        STORE_DATA?.CalendarEdit == 1
+          ? require(`../../../../assets/main/CalendarInfo.png`)
+          : require(`../../../../assets/main/CalendarInfoEmp.png`),
+    },
+    {
+      selection: '직원정보',
+      paging: 'EmployeeInfoEMPScreen',
+      count: null,
+      source: require(`../../../../assets/main/EmployeeInfoEmp.png`),
+    },
+    {
+      selection: '급여정보',
+      paging: 'EmpPayInfoScreen',
+      count: null,
+      source: require(`../../../../assets/main/PaymentInfo.png`),
+    },
+    {
+      selection: '체크리스트',
+      paging: 'ChecklistItemsScreen',
+      count: checklistCount,
+      source: require(`../../../../assets/main/ChecklistItems.png`),
+    },
+    {
+      selection: '업무일지',
+      paging: 'ChecklistShareMainScreen',
+      count: NOTICE_COUNT,
+      source: require(`../../../../assets/main/ChecklistShareMain.png`),
+    },
+    {
+      selection: '유통기한',
+      paging: 'ShelfLifeCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+    },
+    {
+      selection: '조기경보',
+      paging: 'HealthCertificateTypeScreen',
+      count: null,
+      source: require(`../../../../assets/main/HealthCertificateType.png`),
+    },
+  ];
+
+  const addCUSTOM_MENU_STORE_Fn = (CUSTOM_MENU_STORE) => {
+    dispatch(addCUSTOM_MENU_STORE({STORE_SEQ, CUSTOM_MENU_STORE}));
+  };
+  const addCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
+    dispatch(addCUSTOM_MENU_EMP({STORE_SEQ, CUSTOM_MENU_EMP}));
+  };
+  const removeCUSTOM_MENU_STORE_Fn = (CUSTOM_MENU_STORE) => {
+    dispatch(removeCUSTOM_MENU_STORE({STORE_SEQ, CUSTOM_MENU_STORE}));
+  };
+  const removeCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
+    dispatch(removeCUSTOM_MENU_EMP({STORE_SEQ, CUSTOM_MENU_EMP}));
+  };
 
   const alertModal = (title, text, okCallback = () => {}) => {
     const params = {
@@ -108,10 +342,10 @@ export default ({route: {params}}) => {
       setLoading(true);
       const {data} = await api.attendanceWork({
         STORE_ID: STORE_SEQ,
-        // LAT: lat,
-        // LONG: long,
-        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
@@ -158,10 +392,10 @@ export default ({route: {params}}) => {
       setLoading(true);
       const {data} = await api.attendanceOffWork({
         STORE_ID: STORE_SEQ,
-        // LAT: lat,
-        // LONG: long,
-        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
@@ -306,10 +540,10 @@ export default ({route: {params}}) => {
   const getDistance = () => {
     const prevLatInRad = toRad(Number(STORE_DATA.resultdata.LAT));
     const prevLongInRad = toRad(Number(STORE_DATA.resultdata.LONG));
-    // const latInRad = lat;
-    // const longInRad = long;
-    const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
-    const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
+    const latInRad = lat;
+    const longInRad = long;
+    // const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
+    // const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
 
     return (
       6377830.272 *
@@ -354,6 +588,7 @@ export default ({route: {params}}) => {
       STORE_DATA={STORE_DATA}
       MEMBER_NAME={MEMBER_NAME}
       STORE={STORE}
+      STORE_SEQ={STORE_SEQ}
       STORE_NAME={STORE_NAME}
       TOTAL_COUNT={TOTAL_COUNT}
       WORKING_COUNT={WORKING_COUNT}
@@ -388,6 +623,19 @@ export default ({route: {params}}) => {
       loading={loading}
       isWorkingMode={isWorkingMode}
       setIsWorkingMode={setIsWorkingMode}
+      editMode={editMode}
+      setEditMode={setEditMode}
+      storeKeepersStoreMenu={storeKeepersStoreMenu}
+      storeKeepersEMPMenu={storeKeepersEMPMenu}
+      managersStoreMenu={managersStoreMenu}
+      managersEMPMenu={managersEMPMenu}
+      employeesMenu={employeesMenu}
+      CUSTOM_MENU_STORE={CUSTOM_MENU_STORE}
+      CUSTOM_MENU_EMP={CUSTOM_MENU_EMP}
+      addCUSTOM_MENU_STORE_Fn={addCUSTOM_MENU_STORE_Fn}
+      addCUSTOM_MENU_EMP_Fn={addCUSTOM_MENU_EMP_Fn}
+      removeCUSTOM_MENU_STORE_Fn={removeCUSTOM_MENU_STORE_Fn}
+      removeCUSTOM_MENU_EMP_Fn={removeCUSTOM_MENU_EMP_Fn}
     />
   );
 };

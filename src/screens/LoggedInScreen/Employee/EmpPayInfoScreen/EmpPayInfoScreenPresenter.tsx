@@ -259,7 +259,7 @@ export default ({
           <DateBoxText
             style={{
               fontSize: styleGuide.fontSize.middle,
-              fontWeight: styleGuide.fontWeight.normal,
+              fontWeight: '300',
             }}>
             ({moment(date).format('M월 D일')}
             &nbsp;~&nbsp;

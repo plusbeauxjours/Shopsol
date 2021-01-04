@@ -129,7 +129,7 @@ export default ({route: {params}}) => {
         maxHeight: 1200,
       },
       (response) => {
-        setCameraPictureLast(response.uri);
+        !response.didCancel && setCameraPictureLast(response.uri);
       },
     );
   };

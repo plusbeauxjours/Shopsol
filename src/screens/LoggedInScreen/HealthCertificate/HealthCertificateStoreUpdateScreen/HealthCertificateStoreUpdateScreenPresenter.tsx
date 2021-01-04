@@ -464,7 +464,7 @@ export default ({
               <Text
                 style={{
                   fontSize: styleGuide.fontSize.large,
-                  fontWeight: styleGuide.fontWeight.bold,
+                  fontWeight: '600',
                   color: '#FF3D3D',
                   textDecorationLine: 'underline',
                 }}>

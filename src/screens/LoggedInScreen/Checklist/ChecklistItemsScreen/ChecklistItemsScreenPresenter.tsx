@@ -387,7 +387,7 @@ export default ({
                 <DateText
                   style={{
                     fontSize: styleGuide.fontSize.middle,
-                    fontWeight: styleGuide.fontWeight.normal,
+                    fontWeight: '300',
                   }}>
                   {utils.renderWeekDay(moment(date).format('d'))}
                 </DateText>

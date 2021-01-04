@@ -194,7 +194,7 @@ export default ({route: {params}}) => {
           <BigText>
             <Text
               style={{
-                fontWeight: styleGuide.fontWeight.bold,
+                fontWeight: '600',
                 fontSize: styleGuide.fontSize.large,
               }}>
               {NAME}

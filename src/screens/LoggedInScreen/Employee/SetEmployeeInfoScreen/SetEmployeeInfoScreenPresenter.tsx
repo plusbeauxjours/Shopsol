@@ -530,7 +530,7 @@ export default ({
             <EmployeeCard />
             <ListTouchable onPress={() => setClick1(!click1)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
+                <DateBoxText style={{fontWeight: '600'}}>
                   <RedText>(필수) </RedText>
                   출퇴근정보
                 </DateBoxText>
@@ -626,7 +626,7 @@ export default ({
 
             <ListTouchable onPress={() => setClick2(!click2)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
+                <DateBoxText style={{fontWeight: '600'}}>
                   <RedText>(필수) </RedText>
                   급여정보
                 </DateBoxText>
@@ -1299,7 +1299,7 @@ export default ({
 
             <ListTouchable onPress={() => setClick4(!click4)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
+                <DateBoxText style={{fontWeight: '600'}}>
                   (선택) 연차
                 </DateBoxText>
                 <Chevron {...{transition: click4Transition}} />
@@ -1406,7 +1406,7 @@ export default ({
 
             <ListTouchable onPress={() => setClick5(!click5)}>
               <ListContainer as={Animated.View}>
-                <DateBoxText style={{fontWeight: styleGuide.fontWeight.bold}}>
+                <DateBoxText style={{fontWeight: '600'}}>
                   (선택) 직책 / 권한 , 급여보기
                 </DateBoxText>
                 <Chevron {...{transition: click5Transition}} />

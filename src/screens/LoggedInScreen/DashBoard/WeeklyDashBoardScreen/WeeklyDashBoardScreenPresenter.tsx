@@ -478,7 +478,7 @@ export default ({
                   <DateText
                     style={{
                       fontSize: styleGuide.fontSize.middle,
-                      fontWeight: styleGuide.fontWeight.normal,
+                      fontWeight: '300',
                     }}>
                     ({moment(weekStartDate).format('M월 D일')}
                     &nbsp;~&nbsp;
@@ -761,7 +761,7 @@ export default ({
                           ? `금주 ${moment().isoWeekday()}일간 조퇴률`
                           : `조퇴률`}
                       </TitleText>
-
+                      <CardGreyLine />
                       <DonutCard
                         percentage={Math.ceil(
                           (totalEARLY_COUNT / totalSUB_WORKING_EMP) * 100,

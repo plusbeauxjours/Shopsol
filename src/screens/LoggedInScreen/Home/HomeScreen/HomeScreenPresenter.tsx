@@ -13,7 +13,7 @@ import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
 import MapView, {PROVIDER_GOOGLE, Marker, Circle} from 'react-native-maps';
 
-import {ForwardIcon, HelpIcon, SettingIcon} from '~/constants/Icons';
+import {HelpIcon, SettingIcon, EyeOffIcon, CloseIcon} from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 import utils from '~/constants/utils';
@@ -55,19 +55,12 @@ const IconContainer = styled.TouchableOpacity`
   height: 40px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 30px;
-`;
-
-const MyPage = styled.View`
-  flex-direction: row;
-  margin-right: 10px;
-  margin-top: 20px;
-  align-items: flex-end;
-  justify-content: flex-end;
+  background-color: ${styleGuide.palette.tertiary}
+  border-radius: 20px;
 `;
 
 const MenuCnt = styled(Ripple)`
+  z-index: 10;
   width: ${(wp('100%') - 20) / 3}px;
   height: ${wp('40%')}px;
   justify-content: center;
@@ -84,6 +77,12 @@ const NewCnt = styled.View`
   justify-content: center;
   border-radius: 20px;
   background-color: red;
+`;
+
+const EyeIconContainer = styled(NewCnt)`
+  background-color: white;
+  border-color: ${styleGuide.palette.tertiary};
+  border-width: 0.7px;
 `;
 
 const NewCntText = styled.Text`
@@ -108,6 +107,7 @@ const Column = styled.View`
 `;
 
 const StoreName = styled.View`
+  margin-top: 70px;
   padding: 0 ${wp('5%')}px;
   justify-content: center;
   align-items: flex-start;
@@ -135,7 +135,9 @@ const StoreUpdate = styled.View`
 const StoreUpdateBtn = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  padding: ${hp('0.5%')}px 15px ${hp('0.5%')}px 20px;
+  justify-content: center;
+  width: 80px
+  height: 35px;
   border-width: 1px;
   border-color: white;
   border-radius: 20px;
@@ -299,6 +301,7 @@ export default ({
   STORE_DATA,
   MEMBER_NAME,
   STORE,
+  STORE_SEQ,
   STORE_NAME,
   TOTAL_COUNT,
   WORKING_COUNT,
@@ -333,9 +336,29 @@ export default ({
   loading,
   isWorkingMode,
   setIsWorkingMode,
+  editMode,
+  setEditMode,
+  storeKeepersStoreMenu,
+  storeKeepersEMPMenu,
+  managersStoreMenu,
+  managersEMPMenu,
+  employeesMenu,
+  CUSTOM_MENU_STORE,
+  CUSTOM_MENU_EMP,
+  addCUSTOM_MENU_STORE_Fn,
+  addCUSTOM_MENU_EMP_Fn,
+  removeCUSTOM_MENU_STORE_Fn,
+  removeCUSTOM_MENU_EMP_Fn,
 }) => {
   const navigation = useNavigation();
-  const MenuCntContainer = ({selection, paging, source, count = 0}) => (
+  const MenuCntContainer = ({
+    type,
+    index,
+    selection,
+    paging,
+    source,
+    count = 0,
+  }) => (
     <MenuCnt
       rippleColor={'white'}
       rippleDuration={300}
@@ -345,19 +368,56 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
-        selection == 'QR보기'
+        editMode && type == 'store'
+          ? addCUSTOM_MENU_STORE_Fn(index)
+          : editMode && type == 'emp'
+          ? addCUSTOM_MENU_EMP_Fn(index)
+          : selection == 'QR보기'
           ? setShowPictureModal(true)
           : navigation.navigate(`${paging}`);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
         count !== 0 &&
         count && (
-          <NewCnt style={{zIndex: 5}}>
+          <NewCnt style={{zIndex: 15}}>
             <NewCntText>{count < 10 ? count : '9+'}</NewCntText>
           </NewCnt>
         )}
       <FastImage
         style={{width: '100%', height: '100%'}}
+        source={source}
+        resizeMode={FastImage.resizeMode.contain}
+      />
+    </MenuCnt>
+  );
+
+  const HiddenMenuCntContainer = ({type, index, selection, paging, source}) => (
+    <MenuCnt
+      rippleColor={'white'}
+      rippleDuration={300}
+      rippleSize={200}
+      rippleContainerBorderRadius={0}
+      rippleOpacity={0.9}
+      style={{zIndex: 4}}
+      activeOpacity={0.3}
+      onPress={() => {
+        editMode && type == 'store'
+          ? removeCUSTOM_MENU_STORE_Fn(
+              CUSTOM_MENU_STORE[STORE_SEQ]?.filter((i) => i !== index),
+            )
+          : editMode && type == 'emp'
+          ? removeCUSTOM_MENU_EMP_Fn(
+              CUSTOM_MENU_EMP[STORE_SEQ]?.filter((i) => i !== index),
+            )
+          : selection == 'QR보기'
+          ? setShowPictureModal(true)
+          : navigation.navigate(`${paging}`);
+      }}>
+      <EyeIconContainer style={{zIndex: 5}}>
+        <EyeOffIcon color={styleGuide.palette.tertiary} />
+      </EyeIconContainer>
+      <FastImage
+        style={{width: '100%', height: '100%', opacity: 0.3}}
         source={source}
         resizeMode={FastImage.resizeMode.contain}
       />
@@ -374,7 +434,7 @@ export default ({
           ) : (
             <>
               <MarkerText>출퇴근 허용거리: </MarkerText>
-              <MarkerText style={{fontWeight: styleGuide.fontWeight.bold}}>
+              <MarkerText style={{fontWeight: '600'}}>
                 {Number(STORE_DATA.resultdata.JULI) < 1000
                   ? Number(STORE_DATA.resultdata.JULI) + 'm'
                   : Number(STORE_DATA.resultdata.JULI) / 1000 + 'km'}
@@ -385,7 +445,7 @@ export default ({
         {STORE_DATA.resultdata.LATE_FLAG === '1' && (
           <SpaceRow>
             <MarkerText>지각 허용시간:</MarkerText>
-            <MarkerText style={{fontWeight: styleGuide.fontWeight.bold}}>
+            <MarkerText style={{fontWeight: '600'}}>
               {STORE_DATA.resultdata.LATE_TIME}분
             </MarkerText>
           </SpaceRow>
@@ -393,7 +453,7 @@ export default ({
         {STORE_DATA.resultdata.EARLY_FLAG === '1' && (
           <SpaceRow>
             <MarkerText>조퇴 허용시간:</MarkerText>
-            <MarkerText style={{fontWeight: styleGuide.fontWeight.bold}}>
+            <MarkerText style={{fontWeight: '600'}}>
               {STORE_DATA.resultdata.EARLY_TIME}분
             </MarkerText>
           </SpaceRow>
@@ -446,22 +506,6 @@ export default ({
           style={{width: wp('100%'), height: hp('30%')}}
           source={require('../../../../assets/main/mainTopBg.png')}
           resizeMode={FastImage.resizeMode.cover}>
-          <MyPage>
-            {STORE === '1' && (
-              <IconContainer
-                onPress={() => {
-                  navigation.navigate('HelpModalScreen');
-                }}>
-                <HelpIcon />
-              </IconContainer>
-            )}
-            <IconContainer
-              onPress={() => {
-                navigation.navigate('MyPageMainScreen');
-              }}>
-              <SettingIcon />
-            </IconContainer>
-          </MyPage>
           <StoreName>
             <StoreText>안녕하세요.</StoreText>
             <Row>
@@ -474,7 +518,7 @@ export default ({
               <Text
                 style={{
                   color: 'white',
-                  fontWeight: styleGuide.fontWeight.bold,
+                  fontWeight: '600',
                   fontSize: 18,
                 }}>
                 {STORE_NAME}
@@ -506,18 +550,22 @@ export default ({
                     routes: [{name: 'SelectStoreScreen'}],
                   });
                 }}>
-                <WhiteText>사업장전환</WhiteText>
-                <ForwardIcon color={'white'} />
+                <WhiteText>사업장 전환</WhiteText>
               </StoreUpdateBtn>
               {STORE === '1' && (
                 <StoreUpdateBtn
                   onPress={() => {
                     navigation.navigate('UpdateStoreScreen');
                   }}>
-                  <WhiteText>사업장정보</WhiteText>
-                  <ForwardIcon color={'white'} />
+                  <WhiteText>사업장 정보</WhiteText>
                 </StoreUpdateBtn>
               )}
+              <StoreUpdateBtn
+                onPress={() => {
+                  navigation.navigate('MyPageMainScreen');
+                }}>
+                <WhiteText>마이 페이지</WhiteText>
+              </StoreUpdateBtn>
             </Row>
           </StoreUpdate>
         </FastImage>
@@ -568,10 +616,10 @@ export default ({
                 style={{width: wp('100%') - 40, height: 300}}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={{
-                  // latitude: lat,
-                  // longitude: long,
-                  latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                  longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                  latitude: lat,
+                  longitude: long,
+                  // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                  // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   latitudeDelta: 0.005,
                   longitudeDelta: 0.005,
                 }}>
@@ -604,10 +652,10 @@ export default ({
                     setWorkingModalOpen(true)
                   }
                   coordinate={{
-                    // latitude: lat,
-                    // longitude: long,
-                    latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                    longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                    latitude: lat,
+                    longitude: long,
+                    // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                    // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   }}>
                   <UserMarker
                     distance={
@@ -630,237 +678,558 @@ export default ({
           )}
           {STORE == '1' ? ( // 점장 ============================
             <>
-              <MenuTitleArea style={{zIndex: 3}}>
-                <MenuTitle>더욱 쉬워진,</MenuTitle>
-                <Bold> 직원관리</Bold>
-              </MenuTitleArea>
+              <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                <MenuTitleArea style={{zIndex: 3}}>
+                  <MenuTitle>더욱 쉬워진,</MenuTitle>
+                  <Bold> 직원관리</Bold>
+                </MenuTitleArea>
+                <Row>
+                  <IconContainer
+                    onPress={() => {
+                      navigation.navigate('HelpModalScreen');
+                    }}>
+                    <HelpIcon size={22} />
+                  </IconContainer>
+                  <IconContainer onPress={() => setEditMode(!editMode)}>
+                    {editMode ? (
+                      <CloseIcon size={24} color={'white'} />
+                    ) : (
+                      <SettingIcon size={20} color={'white'} />
+                    )}
+                  </IconContainer>
+                </Row>
+              </SpaceRow>
               <Container>
-                <MenuCntContainer
-                  selection={'사업장현황'}
-                  paging={'DashBoardScreen'}
-                  source={require(`../../../../assets/main/Invite.png`)}
-                />
-                <MenuCntContainer
-                  selection={'직원초대'}
-                  paging={'InviteEmployeeScreen'}
-                  source={require(`../../../../assets/main/Invite.png`)}
-                />
-                {TOTAL_COUNT !== 0 && (
-                  <MenuCntContainer
-                    selection={'직원목록'}
-                    paging={'EmployeeListScreen'}
-                    source={require(`../../../../assets/main/EmployeeList.png`)}
-                  />
-                )}
-                <MenuCntContainer
-                  selection={'직원합류승인'}
-                  paging={'ManageInviteEmployeeScreen'}
-                  count={invitedEmpCount}
-                  source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
-                />
-                {TOTAL_COUNT !== 0 && (
-                  <MenuCntContainer
-                    selection={'캘린더'}
-                    paging={'CalendarInfoScreen'}
-                    source={
-                      STORE_DATA?.CalendarEdit == 1
-                        ? require('../../../../assets/main/CalendarInfo.png')
-                        : require('../../../../assets/main/CalendarInfoEmp.png')
+                {storeKeepersStoreMenu?.map((menu, index) => {
+                  if (
+                    CUSTOM_MENU_STORE &&
+                    !CUSTOM_MENU_STORE[STORE_SEQ]?.includes(index)
+                  ) {
+                    if (
+                      menu.paging == 'EmployeeListScreen' ||
+                      menu.paging == 'CalendarInfoScreen' ||
+                      menu.paging == 'PaymentInfoScreen' ||
+                      menu.paging == 'qrViewScreen'
+                    ) {
+                      if (TOTAL_COUNT !== 0) {
+                        return (
+                          <MenuCntContainer
+                            key={index}
+                            type={'store'}
+                            index={index}
+                            selection={menu.selection}
+                            paging={menu.paging}
+                            count={menu.count}
+                            source={menu.source}
+                          />
+                        );
+                      }
+                    } else if (
+                      menu.paging == 'DashBoardScreen' ||
+                      menu.paging == 'InviteEmployeeScreen' ||
+                      menu.paging == 'ManageInviteEmployeeScreen'
+                    ) {
+                      return (
+                        <MenuCntContainer
+                          key={index}
+                          type={'store'}
+                          index={index}
+                          selection={menu.selection}
+                          paging={menu.paging}
+                          count={menu.count}
+                          source={menu.source}
+                        />
+                      );
+                    } else {
+                      return null;
                     }
-                  />
-                )}
-                {TOTAL_COUNT !== 0 && (
-                  <MenuCntContainer
-                    selection={'급여정보'}
-                    paging={'PaymentInfoScreen'}
-                    source={require(`../../../../assets/main/PaymentInfo.png`)}
-                  />
-                )}
-                {TOTAL_COUNT !== 0 && (
-                  <MenuCntContainer
-                    selection={'QR보기'}
-                    paging={'qrViewScreen'}
-                    source={require(`../../../../assets/main/qrView.png`)}
-                  />
-                )}
+                  }
+                })}
+                {editMode &&
+                  storeKeepersStoreMenu?.map((menu, index) => {
+                    if (
+                      CUSTOM_MENU_STORE &&
+                      CUSTOM_MENU_STORE[STORE_SEQ]?.includes(index)
+                    ) {
+                      if (
+                        menu.paging == 'EmployeeListScreen' ||
+                        menu.paging == 'CalendarInfoScreen' ||
+                        menu.paging == 'PaymentInfoScreen' ||
+                        menu.paging == 'qrViewScreen'
+                      ) {
+                        if (TOTAL_COUNT !== 0) {
+                          return (
+                            <HiddenMenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              source={menu.source}
+                            />
+                          );
+                        }
+                      } else if (
+                        menu.paging == 'DashBoardScreen' ||
+                        menu.paging == 'InviteEmployeeScreen' ||
+                        menu.paging == 'ManageInviteEmployeeScreen'
+                      ) {
+                        return (
+                          <HiddenMenuCntContainer
+                            key={index}
+                            type={'store'}
+                            index={index}
+                            selection={menu.selection}
+                            paging={menu.paging}
+                            source={menu.source}
+                          />
+                        );
+                      } else {
+                        return null;
+                      }
+                    }
+                  })}
               </Container>
               <MenuTitleArea style={{zIndex: 3}}>
                 <MenuTitle>정확한,</MenuTitle>
                 <Bold> 업무관리</Bold>
               </MenuTitleArea>
               <Container>
-                <MenuCntContainer
-                  selection={'체크리스트'}
-                  paging={'ChecklistItemsScreen'}
-                  count={checklistCount}
-                  source={require(`../../../../assets/main/ChecklistItems.png`)}
-                />
-                <MenuCntContainer
-                  selection={'업무일지'}
-                  paging={'ChecklistShareMainScreen'}
-                  count={NOTICE_COUNT}
-                  source={require(`../../../../assets/main/ChecklistShareMain.png`)}
-                />
-                <MenuCntContainer
-                  selection={'유통기한'}
-                  paging={'ShelfLifeCheckScreen'}
-                  source={require(`../../../../assets/main/shelfLifeCheck.png`)}
-                />
-                <MenuCntContainer
-                  selection={'조기경보'}
-                  paging={'HealthCertificateTypeScreen'}
-                  source={require(`../../../../assets/main/HealthCertificateType.png`)}
-                />
+                {storeKeepersEMPMenu.map((menu, index) => {
+                  if (
+                    CUSTOM_MENU_EMP &&
+                    !CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
+                  ) {
+                    return (
+                      <MenuCntContainer
+                        key={index}
+                        index={index}
+                        type={'emp'}
+                        selection={menu.selection}
+                        paging={menu.paging}
+                        count={menu.count}
+                        source={menu.source}
+                      />
+                    );
+                  }
+                })}
+                {editMode &&
+                  storeKeepersEMPMenu.map((menu, index) => {
+                    if (
+                      CUSTOM_MENU_EMP &&
+                      CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
+                    ) {
+                      return (
+                        <HiddenMenuCntContainer
+                          key={index}
+                          index={index}
+                          type={'emp'}
+                          selection={menu.selection}
+                          paging={menu.paging}
+                          source={menu.source}
+                        />
+                      );
+                    }
+                  })}
               </Container>
             </>
           ) : (
             <>
               {STORE_DATA?.IS_MANAGER == '1' ? ( // 매니저 ============================
                 <>
-                  <MenuTitleArea style={{zIndex: 3}}>
-                    <MenuTitle>더욱 쉬워진,</MenuTitle>
-                    <Bold> 직원관리</Bold>
-                  </MenuTitleArea>
+                  <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                    <MenuTitleArea style={{zIndex: 3}}>
+                      <MenuTitle>더욱 쉬워진,</MenuTitle>
+                      <Bold> 직원관리</Bold>
+                    </MenuTitleArea>
+                    <Row>
+                      <IconContainer onPress={() => setEditMode(!editMode)}>
+                        {editMode ? (
+                          <CloseIcon size={24} color={'white'} />
+                        ) : (
+                          <SettingIcon size={20} color={'white'} />
+                        )}
+                      </IconContainer>
+                    </Row>
+                  </SpaceRow>
                   <Container>
-                    <MenuCntContainer
-                      selection={'직원초대'}
-                      paging={'InviteEmployeeScreen'}
-                      source={require(`../../../../assets/main/Invite.png`)}
-                    />
-                    {TOTAL_COUNT !== 0 &&
-                      (STORE_DATA?.OTHERPAY_SHOW == 1 ? (
-                        <MenuCntContainer
-                          selection={'직원목록'}
-                          paging={'EmployeeListScreen'}
-                          source={require(`../../../../assets/main/EmployeeList.png`)}
-                        />
-                      ) : (
-                        <MenuCntContainer
-                          selection={'직원정보'}
-                          paging={'EmployeeInfoEMPScreen'}
-                          source={require(`../../../../assets/main/EmployeeInfoEmp.png`)}
-                        />
-                      ))}
-                    <MenuCntContainer
-                      selection={'직원합류승인'}
-                      paging={'ManageInviteEmployeeScreen'}
-                      count={invitedEmpCount}
-                      source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
-                    />
-                    {TOTAL_COUNT !== 0 && STORE_DATA?.CalendarEdit == '1' && (
-                      <MenuCntContainer
-                        selection={'캘린더'}
-                        paging={'CalendarInfoScreen'}
-                        source={
-                          STORE_DATA?.CalendarEdit == 1
-                            ? require(`../../../../assets/main/CalendarInfo.png`)
-                            : require(`../../../../assets/main/CalendarInfoEmp.png`)
+                    {managersStoreMenu?.map((menu, index) => {
+                      if (
+                        CUSTOM_MENU_STORE &&
+                        !CUSTOM_MENU_STORE[STORE_SEQ]?.includes(index)
+                      ) {
+                        if (
+                          menu.paging == 'EmployeeListScreen' &&
+                          TOTAL_COUNT !== 0 &&
+                          STORE_DATA?.OTHERPAY_SHOW == 1
+                        ) {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        } else if (
+                          menu.paging == 'EmployeeInfoEMPScreen' &&
+                          TOTAL_COUNT !== 0 &&
+                          STORE_DATA?.OTHERPAY_SHOW !== 1
+                        ) {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        } else if (
+                          menu.paging == 'CalendarInfoScreen' &&
+                          TOTAL_COUNT !== 0 &&
+                          STORE_DATA?.CalendarEdit == '1'
+                        ) {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        } else if (
+                          menu.paging == 'PaymentInfoScreen' &&
+                          TOTAL_COUNT !== 0 &&
+                          STORE_DATA?.STOREPAY_SHOW == '1'
+                        ) {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        } else if (
+                          menu.paging == 'EmpPayInfoScreen' &&
+                          TOTAL_COUNT !== 0 &&
+                          STORE_DATA?.STOREPAY_SHOW !== '1' &&
+                          STORE_DATA?.PAY_SHOW == 1
+                        ) {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        } else if (menu.paging == 'qrViewScreen') {
+                          if (TOTAL_COUNT !== 0) {
+                            return (
+                              <MenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          }
+                        } else if (
+                          menu.paging == 'DashBoardScreen' ||
+                          menu.paging == 'InviteEmployeeScreen' ||
+                          menu.paging == 'ManageInviteEmployeeScreen'
+                        ) {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        } else {
+                          return null;
                         }
-                      />
-                    )}
-                    {TOTAL_COUNT !== 0 && STORE_DATA?.STOREPAY_SHOW == '1' ? (
-                      <MenuCntContainer
-                        selection={'급여정보'}
-                        paging={'PaymentInfoScreen'}
-                        source={require(`../../../../assets/main/PaymentInfo.png`)}
-                      />
-                    ) : (
-                      STORE_DATA?.PAY_SHOW == 1 && (
-                        <MenuCntContainer
-                          selection={'급여정보'}
-                          paging={'EmpPayInfoScreen'}
-                          source={require(`../../../../assets/main/PaymentInfo.png`)}
-                        />
-                      )
-                    )}
-                    {TOTAL_COUNT !== 0 && (
-                      <MenuCntContainer
-                        selection={'QR보기'}
-                        paging={'qrViewScreen'}
-                        source={require(`../../../../assets/main/qrView.png`)}
-                      />
-                    )}
+                      }
+                    })}
+                    {editMode &&
+                      managersStoreMenu?.map((menu, index) => {
+                        if (
+                          CUSTOM_MENU_STORE &&
+                          CUSTOM_MENU_STORE[STORE_SEQ]?.includes(index)
+                        ) {
+                          if (
+                            menu.paging == 'EmployeeListScreen' &&
+                            TOTAL_COUNT !== 0 &&
+                            STORE_DATA?.OTHERPAY_SHOW == 1
+                          ) {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else if (
+                            menu.paging == 'EmployeeInfoEMPScreen' &&
+                            TOTAL_COUNT !== 0 &&
+                            STORE_DATA?.OTHERPAY_SHOW !== 1
+                          ) {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else if (
+                            menu.paging == 'CalendarInfoScreen' &&
+                            TOTAL_COUNT !== 0 &&
+                            STORE_DATA?.CalendarEdit == '1'
+                          ) {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else if (
+                            menu.paging == 'PaymentInfoScreen' &&
+                            TOTAL_COUNT !== 0 &&
+                            STORE_DATA?.STOREPAY_SHOW == '1'
+                          ) {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else if (
+                            menu.paging == 'EmpPayInfoScreen' &&
+                            TOTAL_COUNT !== 0 &&
+                            STORE_DATA?.STOREPAY_SHOW !== '1' &&
+                            STORE_DATA?.PAY_SHOW == 1
+                          ) {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else if (menu.paging == 'qrViewScreen') {
+                            if (TOTAL_COUNT !== 0) {
+                              return (
+                                <HiddenMenuCntContainer
+                                  key={index}
+                                  type={'store'}
+                                  index={index}
+                                  selection={menu.selection}
+                                  paging={menu.paging}
+                                  count={menu.count}
+                                  source={menu.source}
+                                />
+                              );
+                            }
+                          } else if (
+                            menu.paging == 'DashBoardScreen' ||
+                            menu.paging == 'InviteEmployeeScreen' ||
+                            menu.paging == 'ManageInviteEmployeeScreen'
+                          ) {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else {
+                            return null;
+                          }
+                        }
+                      })}
                   </Container>
                   <MenuTitleArea style={{zIndex: 3}}>
                     <MenuTitle>정확한,</MenuTitle>
                     <Bold> 업무관리</Bold>
                   </MenuTitleArea>
                   <Container>
-                    <MenuCntContainer
-                      selection={'체크리스트'}
-                      paging={'ChecklistItemsScreen'}
-                      count={checklistCount}
-                      source={require(`../../../../assets/main/ChecklistItems.png`)}
-                    />
-                    <MenuCntContainer
-                      selection={'업무일지'}
-                      paging={'ChecklistShareMainScreen'}
-                      count={NOTICE_COUNT}
-                      source={require(`../../../../assets/main/ChecklistShareMain.png`)}
-                    />
-                    <MenuCntContainer
-                      selection={'유통기한'}
-                      paging={'ShelfLifeCheckScreen'}
-                      source={require(`../../../../assets/main/shelfLifeCheck.png`)}
-                    />
-                    <MenuCntContainer
-                      selection={'조기경보'}
-                      paging={'HealthCertificateTypeScreen'}
-                      source={require(`../../../../assets/main/HealthCertificateType.png`)}
-                    />
+                    {managersEMPMenu.map((menu, index) => {
+                      if (
+                        CUSTOM_MENU_EMP &&
+                        !CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
+                      ) {
+                        return (
+                          <MenuCntContainer
+                            key={index}
+                            index={index}
+                            type={'emp'}
+                            selection={menu.selection}
+                            paging={menu.paging}
+                            count={menu.count}
+                            source={menu.source}
+                          />
+                        );
+                      }
+                    })}
+                    {editMode &&
+                      managersEMPMenu.map((menu, index) => {
+                        if (
+                          CUSTOM_MENU_EMP &&
+                          CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
+                        ) {
+                          return (
+                            <HiddenMenuCntContainer
+                              key={index}
+                              index={index}
+                              type={'emp'}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              source={menu.source}
+                            />
+                          );
+                        }
+                      })}
                   </Container>
                 </>
               ) : (
                 // 스태프 ============================
                 <>
-                  <MenuTitleArea style={{zIndex: 3}}>
-                    <MenuTitle>더욱 쉬워진,</MenuTitle>
-                    <Bold> 일터관리</Bold>
-                  </MenuTitleArea>
+                  <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                    <MenuTitleArea style={{zIndex: 3}}>
+                      <MenuTitle>더욱 쉬워진,</MenuTitle>
+                      <Bold> 일터관리</Bold>
+                    </MenuTitleArea>
+                    <Row>
+                      <IconContainer onPress={() => setEditMode(!editMode)}>
+                        {editMode ? (
+                          <CloseIcon size={24} color={'white'} />
+                        ) : (
+                          <SettingIcon size={20} color={'white'} />
+                        )}
+                      </IconContainer>
+                    </Row>
+                  </SpaceRow>
                   <Container>
-                    <MenuCntContainer
-                      selection={'캘린더'}
-                      paging={'CalendarInfoScreen'}
-                      source={
-                        STORE_DATA?.CalendarEdit == 1
-                          ? require(`../../../../assets/main/CalendarInfo.png`)
-                          : require(`../../../../assets/main/CalendarInfoEmp.png`)
+                    {employeesMenu.map((menu, index) => {
+                      if (
+                        CUSTOM_MENU_EMP &&
+                        !CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
+                      ) {
+                        if (
+                          menu.paging == 'EmpPayInfoScreen' &&
+                          STORE_DATA?.PAY_SHOW == 1
+                        ) {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              type={'store'}
+                              index={index}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        } else {
+                          return (
+                            <MenuCntContainer
+                              key={index}
+                              index={index}
+                              type={'emp'}
+                              selection={menu.selection}
+                              paging={menu.paging}
+                              count={menu.count}
+                              source={menu.source}
+                            />
+                          );
+                        }
                       }
-                    />
-                    <MenuCntContainer
-                      selection={'직원정보'}
-                      paging={'EmployeeInfoEMPScreen'}
-                      source={require(`../../../../assets/main/EmployeeInfoEmp.png`)}
-                    />
-                    {STORE_DATA?.PAY_SHOW == 1 && (
-                      <MenuCntContainer
-                        selection={'급여정보'}
-                        paging={'EmpPayInfoScreen'}
-                        source={require(`../../../../assets/main/PaymentInfo.png`)}
-                      />
-                    )}
-                    <MenuCntContainer
-                      selection={'체크리스트'}
-                      paging={'ChecklistItemsScreen'}
-                      count={checklistCount}
-                      source={require(`../../../../assets/main/ChecklistItems.png`)}
-                    />
-                    <MenuCntContainer
-                      selection={'업무일지'}
-                      paging={'ChecklistShareMainScreen'}
-                      count={NOTICE_COUNT}
-                      source={require(`../../../../assets/main/ChecklistShareMain.png`)}
-                    />
-                    <MenuCntContainer
-                      selection={'유통기한'}
-                      paging={'ShelfLifeCheckScreen'}
-                      source={require(`../../../../assets/main/shelfLifeCheck.png`)}
-                    />
-                    <MenuCntContainer
-                      selection={'조기경보'}
-                      paging={'HealthCertificateTypeScreen'}
-                      source={require(`../../../../assets/main/HealthCertificateType.png`)}
-                    />
+                    })}
+                    {editMode &&
+                      employeesMenu.map((menu, index) => {
+                        if (
+                          CUSTOM_MENU_EMP &&
+                          CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
+                        ) {
+                          if (
+                            menu.paging == 'EmpPayInfoScreen' &&
+                            STORE_DATA?.PAY_SHOW == 1
+                          ) {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                type={'store'}
+                                index={index}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else {
+                            return (
+                              <HiddenMenuCntContainer
+                                key={index}
+                                index={index}
+                                type={'emp'}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          }
+                        }
+                      })}
                   </Container>
                 </>
               )}

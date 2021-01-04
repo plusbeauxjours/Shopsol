@@ -65,7 +65,7 @@ export default ({
         <BigText
           style={{
             color: 'red',
-            fontWeight: styleGuide.fontWeight.bold,
+            fontWeight: '600',
             marginBottom: 5,
           }}>
           {errorMessage}

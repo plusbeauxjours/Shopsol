@@ -37,7 +37,7 @@ const ButtonAfter = styled.TouchableOpacity`
 `;
 
 const Text = styled.Text`
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
   font-size: 14px;
 `;
 
@@ -55,7 +55,7 @@ const Card = styled.TouchableOpacity`
 
 const CardText = styled.Text`
   font-size: 14px;
-  color: #212121;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const Arrow = styled.View`

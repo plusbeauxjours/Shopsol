@@ -27,11 +27,6 @@ const Section = styled.View`
   background-color: white;
 `;
 
-const Arrow = styled.View`
-  color: #5887f9;
-  font-size: 20px;
-`;
-
 const Card = styled.TouchableOpacity`
   padding: ${hp('2%')}px 20px;
   flex-direction: row;
@@ -41,16 +36,12 @@ const Card = styled.TouchableOpacity`
 
 const CardText = styled.Text`
   font-size: 14px;
-  color: #212121;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 export default () => {
   const navigation = useNavigation();
-  const ArrowIcon = () => (
-    <Arrow>
-      <ForwardIcon />
-    </Arrow>
-  );
+
   return (
     <BackGround>
       <Container>
@@ -60,28 +51,28 @@ export default () => {
               navigation.navigate('MyPageNameSetScreen');
             }}>
             <CardText>이름 변경</CardText>
-            <ArrowIcon />
+            <ForwardIcon />
           </Card>
           <Card
             onPress={() => {
               navigation.navigate('MyPagePositionSetScreen');
             }}>
             <CardText>점장 - 직원 전환</CardText>
-            <ArrowIcon />
+            <ForwardIcon />
           </Card>
           <Card
             onPress={() => {
               navigation.navigate('MyPagePasswordSetScreen');
             }}>
             <CardText>비밀번호 재설정</CardText>
-            <ArrowIcon />
+            <ForwardIcon />
           </Card>
           <Card
             onPress={() => {
               navigation.navigate('MyPageDeleteSetScreen');
             }}>
             <CardText>회원 탈퇴</CardText>
-            <ArrowIcon />
+            <ForwardIcon />
           </Card>
         </Section>
       </Container>
