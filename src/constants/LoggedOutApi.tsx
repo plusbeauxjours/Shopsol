@@ -36,7 +36,7 @@ export default {
   logIn: (data: any) => oldApi('post', '/Auth/signin2/', data),
   signUp: (data: any) => oldApi('post', '/Auth/signup3/', data),
   findPwd: (data: any) => oldApi('post', '/Member/changepwd3/', data),
-  getSMS: (data: any) => oldApi('post', '/Auth/get_appSMS/', data),
+  getSMS: (data: any) => oldApi('post', '/Auth/get_appSMS', data),
   checkSMS: (data: any) => oldApi('post', '/Auth/checkSMS/', data),
   checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
 };

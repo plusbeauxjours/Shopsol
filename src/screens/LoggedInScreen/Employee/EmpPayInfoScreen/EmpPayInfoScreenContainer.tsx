@@ -11,50 +11,24 @@ import moment from 'moment';
 export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {
-    EMP_SEQ = null,
-    STOREPAY_SHOW = null,
-    MEMBER_NAME = null,
-    IS_MANAGER = null,
-    EMP_PAY_TYPE = null,
-    PAY = null,
-    image = null,
-    START = null,
-    END = null,
-  } = params;
 
   const {
     STORE_SEQ,
-    EMP_SEQ: EMP_SEQ_state,
-    IS_MANAGER: IS_MANAGER_state,
+    EMP_SEQ,
+    IS_MANAGER,
     STORE_DATA: {
-      resultdata: {
-        STOREPAY_SHOW: STOREPAY_SHOW_state = null,
-        CALCULATE_DAY = null,
-      } = {},
+      resultdata: {STOREPAY_SHOW = null, CALCULATE_DAY = null} = {},
     } = {},
   } = useSelector((state: any) => state.storeReducer);
-  const {MEMBER_NAME: MEMBER_NAME_state} = useSelector(
-    (state: any) => state.userReducer,
-  );
+  const {MEMBER_NAME} = useSelector((state: any) => state.userReducer);
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
 
-  let CALCULATE_MONTH_temp =
-    Number(moment().format('D')) < Number(CALCULATE_DAY)
-      ? moment().subtract(1, 'months').format('MM')
-      : moment().format('MM');
   let CALCULATE_DAY_temp =
     Number(CALCULATE_DAY) < 10 ? '0' + CALCULATE_DAY : CALCULATE_DAY;
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [date, setDate] = useState<any>(
-    moment(
-      `${
-        moment().year() + '-' + CALCULATE_MONTH_temp + '-' + CALCULATE_DAY_temp
-      }`,
-    ).format('YYYY-MM-DD'),
-  );
+  const [date, setDate] = useState<any>(moment().format(`YYYY-MM-DD`));
   const [boxButton, setBoxButton] = useState<boolean>(false);
   const [boxButton2, setBoxButton2] = useState<boolean>(false);
   const [isCardShowed, setIsCardShowed] = useState<boolean>(false);
@@ -64,6 +38,10 @@ export default ({route: {params}}) => {
   const [click4, setClick4] = useState<boolean>(false);
   const [click5, setClick5] = useState<boolean>(false);
   const [maindata, setMaindata] = useState<any>({});
+
+  const [image, setImage] = useState<string>(null);
+  const [START, setSTART] = useState<string>(null);
+  const [END, setEND] = useState<string>(null);
 
   const alertModal = (text) => {
     const params = {
@@ -111,7 +89,7 @@ export default ({route: {params}}) => {
         setDate(moment(date).add(1, 'month'));
         const {data} = await api.monthLists(
           STORE_SEQ,
-          EMP_SEQ || EMP_SEQ_state,
+          params?.EMP_SEQ || EMP_SEQ,
           moment(date).add(1, 'month').format('YYYY'),
           moment(date).add(1, 'month').format('MM'),
         );
@@ -134,7 +112,7 @@ export default ({route: {params}}) => {
       setDate(moment(date).subtract(1, 'month'));
       const {data} = await api.monthLists(
         STORE_SEQ,
-        EMP_SEQ || EMP_SEQ_state,
+        params?.EMP_SEQ || EMP_SEQ,
         moment(date).subtract(1, 'month').format('YYYY'),
         moment(date).subtract(1, 'month').format('MM'),
       );
@@ -150,10 +128,18 @@ export default ({route: {params}}) => {
 
   const fetchData = async () => {
     try {
+      const {data} = await api.getEmp(params?.EMP_SEQ || EMP_SEQ);
+      setImage(data?.result.images[0].IMAGE);
+      setSTART(data?.result.START);
+      setEND(data?.result.END);
+    } catch (e) {
+      console.log(e);
+    }
+    try {
       dispatch(setSplashVisible(true));
       const {data} = await api.monthLists(
         STORE_SEQ,
-        EMP_SEQ || EMP_SEQ_state,
+        params?.EMP_SEQ || EMP_SEQ,
         moment(date).format('YYYY'),
         moment(date).format('MM'),
       );
@@ -171,17 +157,17 @@ export default ({route: {params}}) => {
   // 보라색 테두리의 수정 버튼
   const gotoSetInfo = () => {
     navigation.navigate('SetEmployeeInfoScreen', {
-      EMP_NAME: MEMBER_NAME || MEMBER_NAME_state,
+      EMP_NAME: params?.MEMBER_NAME || MEMBER_NAME,
       STORE_SEQ: STORE_SEQ,
-      EMP_SEQ: EMP_SEQ || EMP_SEQ_state,
+      EMP_SEQ: params?.EMP_SEQ || EMP_SEQ,
       from: 'EmployeeInfoScreen',
       onRefresh: fetchData,
-      IMAGE: image,
-      IS_MANAGER: IS_MANAGER || IS_MANAGER_state,
-      EMP_PAY_TYPE,
-      START,
-      END,
-      PAY,
+      IMAGE: params?.image,
+      IS_MANAGER: params?.IS_MANAGER || IS_MANAGER,
+      EMP_PAY_TYPE: params?.EMP_PAY_TYPE || maindata?.PAY_TYPE,
+      PAY: params?.PAY || maindata?.PAY,
+      START: params?.START || START,
+      END: params?.END || END,
     });
   };
 
@@ -191,15 +177,15 @@ export default ({route: {params}}) => {
 
   return (
     <EmpPayInfoScreenPresenter
-      MEMBER_NAME={MEMBER_NAME || MEMBER_NAME_state}
+      MEMBER_NAME={params?.MEMBER_NAME || MEMBER_NAME}
       maindata={maindata}
       PAY_TYPE={maindata.PAY_TYPE}
       backpay={backpay}
       replaceAll={replaceAll}
       nextpay={nextpay}
       STORE={STORE}
-      STOREPAY_SHOW={STOREPAY_SHOW || STOREPAY_SHOW_state}
-      IS_MANAGER={IS_MANAGER || IS_MANAGER_state}
+      STOREPAY_SHOW={params?.STOREPAY_SHOW || STOREPAY_SHOW}
+      IS_MANAGER={params?.IS_MANAGER || IS_MANAGER}
       boxButton={boxButton}
       setBoxButton={setBoxButton}
       boxButton2={boxButton2}
@@ -214,11 +200,11 @@ export default ({route: {params}}) => {
       setClick2={setClick2}
       setClick3={setClick3}
       onPressFooter={onPressFooter}
-      EMP_PAY_TYPE={EMP_PAY_TYPE}
-      PAY={PAY}
-      image={image}
-      START={START}
-      END={END}
+      EMP_PAY_TYPE={params?.EMP_PAY_TYPE || maindata?.PAY_TYPE}
+      PAY={params?.PAY || maindata?.PAY}
+      image={params?.image || image}
+      START={params?.START || START}
+      END={params?.END || END}
       gotoSetInfo={gotoSetInfo}
       visible={visible}
       loading={loading}

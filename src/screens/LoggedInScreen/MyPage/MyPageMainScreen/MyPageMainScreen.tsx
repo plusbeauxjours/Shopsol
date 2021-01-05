@@ -86,7 +86,7 @@ const CardText = styled.Text`
 export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {STORE, MEMBER_NAME, GENDER, MOBILE_NO} = useSelector(
+  const {STORE, MEMBER_NAME, MOBILE_NO, AVATAR} = useSelector(
     (state: any) => state.userReducer,
   );
 
@@ -129,7 +129,7 @@ export default () => {
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 30}}
                 source={{
-                  uri: utils.avatarUrl(GENDER),
+                  uri: `http://133.186.210.223/uploads/${AVATAR}`,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}

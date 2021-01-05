@@ -18,7 +18,7 @@ interface IsFavorite {
 const View = styled.View`
   flex-direction: row;
   align-items: flex-start;
-  width: ${wp('100%')}px
+  width: ${wp('100%')}px;
   padding: 0 20px;
 `;
 
@@ -76,7 +76,7 @@ const PinTouchable = styled.TouchableOpacity<IsFavorite>`
 
 const InfoText = styled.Text`
   font-size: ${styleGuide.fontSize.small}px;
-  color: #c0c0c0;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const GreyText = styled.Text`
@@ -172,7 +172,12 @@ export default ({
             </Row>
             <AddressBox>
               <InfoText>
-                {moment(data.CREATE_TIME).format('YYYY.MM.DD HH:mm')}
+                {moment(data?.ADDDATE || data?.CREATE_TIME).format(
+                  'YYYY.MM.DD HH:mm',
+                )}
+              </InfoText>
+              <InfoText style={{color: 'black'}}>
+                &nbsp;-&nbsp;{decodeURI(data?.EMP_NAME)}
               </InfoText>
             </AddressBox>
           </ContentBox>

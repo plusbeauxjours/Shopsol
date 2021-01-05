@@ -261,13 +261,9 @@ export default ({
               fontSize: styleGuide.fontSize.middle,
               fontWeight: '300',
             }}>
-            ({moment(date).format('M월 D일')}
+            ({moment(maindata?.START_DAY).format('M월 D일')}
             &nbsp;~&nbsp;
-            {moment(date)
-              .add(1, 'months')
-              .subtract(1, 'days')
-              .format('M월 D일')}
-            )
+            {moment(maindata?.END_DAY).format('M월 D일')})
           </DateBoxText>
         </DateTextArea>
         <DateArrow style={{marginRight: 5}} onPress={() => fetchData()}>
@@ -358,22 +354,24 @@ export default ({
               </DateText>
             </Row>
             <EmployeeText>
-              {EMP_PAY_TYPE === '0' && '시급'}
-              {EMP_PAY_TYPE === '1' && '일급'}
-              {EMP_PAY_TYPE === '2' && '월급'}&nbsp;
-              {PAY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+              {EMP_PAY_TYPE && EMP_PAY_TYPE === '0' && '시급'}
+              {EMP_PAY_TYPE && EMP_PAY_TYPE === '1' && '일급'}
+              {EMP_PAY_TYPE && EMP_PAY_TYPE === '2' && '월급'}&nbsp;
+              {PAY?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
             </EmployeeText>
             <EmployeeText>
               근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)
             </EmployeeText>
             <EmployeeText>
-              {moment(START).format('YYYY.MM.DD')} ~&nbsp;
+              {moment(START).format('YYYY.MM.DD')}&nbsp;~&nbsp;
               {END ? moment(END).format('YYYY.MM.DD') : '계속'}
             </EmployeeText>
           </NameBox>
-          <NavigationButton onPress={() => gotoSetInfo()}>
-            <BoxTitleText>정보수정</BoxTitleText>
-          </NavigationButton>
+          {STORE == '1' && (
+            <NavigationButton onPress={() => gotoSetInfo()}>
+              <BoxTitleText>정보수정</BoxTitleText>
+            </NavigationButton>
+          )}
         </EmployeeCardContainer>
       </TopArea>
     );
@@ -436,9 +434,13 @@ export default ({
 
             <ListTouchable
               onPress={() => setBoxButton2(!boxButton2)}
-              disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
+              disabled={!(STORE == '1' || STOREPAY_SHOW == '1')}>
               <ListContainer as={Animated.View}>
-                <DateBoxText>근로자 수령액</DateBoxText>
+                {STORE == '1' || STOREPAY_SHOW == '1' ? (
+                  <DateBoxText>근로자 수령액(월급)</DateBoxText>
+                ) : (
+                  <DateBoxText>수령액(월급)</DateBoxText>
+                )}
                 <MainPayBoxText>
                   {emptotal ? `${numberComma(emptotal)} 원` : '0 원'}
                 </MainPayBoxText>
@@ -505,6 +507,7 @@ export default ({
             <BorderFooter
               onPress={() => setBoxButton2(!boxButton2)}
               activeOpacity={1}
+              disabled={!(STORE == '1' || STOREPAY_SHOW == '1')}
             />
           </Container>
         </ScrollView>
@@ -580,9 +583,13 @@ export default ({
 
             <ListTouchable
               onPress={() => setBoxButton2(!boxButton2)}
-              disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
+              disabled={!(STORE == '1' || STOREPAY_SHOW == '1')}>
               <ListContainer as={Animated.View}>
-                <DateBoxText>근로자 수령액</DateBoxText>
+                {STORE == '1' || STOREPAY_SHOW == '1' ? (
+                  <DateBoxText>근로자 수령액(시급)</DateBoxText>
+                ) : (
+                  <DateBoxText>수령액(시급)</DateBoxText>
+                )}
                 <MainPayBoxText>
                   {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
                 </MainPayBoxText>
@@ -655,6 +662,7 @@ export default ({
             <BorderFooter
               onPress={() => setBoxButton2(!boxButton2)}
               activeOpacity={1}
+              disabled={!(STORE == '1' || STOREPAY_SHOW == '1')}
             />
             <ListTouchable onPress={() => onPressFooter('click4')}>
               <ListContainer style={{paddingBottom: 0}} as={Animated.View}>
@@ -754,9 +762,13 @@ export default ({
             )}
             <ListTouchable
               onPress={() => setBoxButton2(!boxButton2)}
-              disabled={STORE != '1' && STOREPAY_SHOW != '1'}>
+              disabled={!(STORE == '1' || STOREPAY_SHOW == '1')}>
               <ListContainer as={Animated.View}>
-                <DateBoxText>근로자 수령액</DateBoxText>
+                {STORE == '1' || STOREPAY_SHOW == '1' ? (
+                  <DateBoxText>근로자 수령액(일급)</DateBoxText>
+                ) : (
+                  <DateBoxText>수령액(일급)</DateBoxText>
+                )}
                 <MainPayBoxText>
                   {realemptotal ? `${numberComma(realemptotal)} 원` : '0 원'}
                 </MainPayBoxText>
@@ -814,6 +826,7 @@ export default ({
             <BorderFooter
               onPress={() => setBoxButton2(!boxButton2)}
               activeOpacity={1}
+              disabled={!(STORE == '1' || STOREPAY_SHOW == '1')}
             />
 
             <ListTouchable onPress={() => onPressFooter('click5')}>

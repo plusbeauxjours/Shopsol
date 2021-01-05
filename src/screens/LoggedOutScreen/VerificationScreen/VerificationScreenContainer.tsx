@@ -112,10 +112,7 @@ export default () => {
     if (!regExp_ctn.test(mobileNo)) {
       return alertModal('올바른 휴대폰번호 11자리를 입력해주세요.');
     }
-    setHasCheckedVerifyCode(true);
-    setIsCountDownStarted(true);
-    setHasCheckTimeOut(false);
-    startCountDown();
+
     try {
       const registered = await SmsRetriever?.startSmsRetriever();
       if (registered) {
@@ -125,9 +122,15 @@ export default () => {
       }
       const {data} = await api.getSMS({
         PHONENUMBER: mobileNo,
+        SIGNUP: '1',
       });
-      if (data.message == 'SUCCESS') {
-        alertModal('인증번호를 발송하였습니다.');
+      if (data.message == 'ALREADY_SUCCESS') {
+        alertModal('이미 가입한 휴대폰번호입니다.');
+      } else {
+        setHasCheckedVerifyCode(true);
+        setIsCountDownStarted(true);
+        setHasCheckTimeOut(false);
+        startCountDown();
       }
     } catch (e) {
       console.log(e);

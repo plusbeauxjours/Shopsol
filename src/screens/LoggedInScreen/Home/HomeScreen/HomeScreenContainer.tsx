@@ -37,6 +37,7 @@ export default ({route: {params}}) => {
   } = params;
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
   const {
+    AVATAR,
     MEMBER_SEQ,
     MEMBER_NAME,
     DEVICE_PLATFORM,
@@ -636,6 +637,7 @@ export default ({route: {params}}) => {
       addCUSTOM_MENU_EMP_Fn={addCUSTOM_MENU_EMP_Fn}
       removeCUSTOM_MENU_STORE_Fn={removeCUSTOM_MENU_STORE_Fn}
       removeCUSTOM_MENU_EMP_Fn={removeCUSTOM_MENU_EMP_Fn}
+      AVATAR={AVATAR}
     />
   );
 };

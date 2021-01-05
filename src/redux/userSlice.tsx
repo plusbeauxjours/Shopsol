@@ -12,6 +12,7 @@ const userSlice = createSlice({
     GENDER: '',
     STORE: '',
     TYPE: '',
+    AVATAR: '',
     MOBILE_NO: '',
     VERSION: '',
     STORELIST_DATA: [],
@@ -119,6 +120,7 @@ const userSlice = createSlice({
         MEMBER_NAME: userInfo.NAME,
         STORE: userInfo.STORE,
         TYPE: userInfo.TYPE,
+        AVATAR: userInfo.images[0].IMAGE,
         MOBILE_NO: userInfo.MobileNo,
       };
     },

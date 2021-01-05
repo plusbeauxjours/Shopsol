@@ -576,11 +576,11 @@ export default ({
                       <RadioBtnOffIcon size={22} />
                     )}
                     <Row>
-                      <Text style={{marginLeft: 5}}>퇴사일 없음</Text>
+                      <Text style={{marginLeft: 5}}>퇴사일 미정</Text>
                       <Touchable
                         onPress={() => {
                           explainModal(
-                            '정해진 근무종료일이 없다면 [퇴사일 없음]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
+                            '정해진 근무종료일이 없다면 [퇴사일 미정]으로 선택해주세요.\n\n* 직원이 퇴사하였을 경우 [직원정보]에서 퇴사일을 설정하면 사업장에서 직원이 더 이상 표시되지 않습니다.',
                           );
                         }}>
                         <HelpCircleIcon />

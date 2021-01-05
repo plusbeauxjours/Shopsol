@@ -21,7 +21,7 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
   const scrollRef = createRef(0);
 
-  const {STORE, MEMBER_SEQ, MEMBER_NAME} = useSelector(
+  const {MEMBER_SEQ, MEMBER_NAME} = useSelector(
     (state: any) => state.userReducer,
   );
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
@@ -64,7 +64,7 @@ export default ({route: {params}}) => {
         formData.append('CONTENTS', content);
         formData.append('ADDDATE', moment(date).format('YYYY-MM-DD'));
         formData.append('STORE_SEQ', STORE_SEQ);
-        formData.append('STORE', STORE);
+        formData.append('STORE', params.TITLE == '지시사항' ? '1' : '0');
         formData.append('EMP_NAME', MEMBER_NAME);
         formData.append('MEMBER_SEQ', MEMBER_SEQ);
         for (let i = 0; i < cameraPictureList.length; i++) {
@@ -117,7 +117,7 @@ export default ({route: {params}}) => {
           TITLE: title,
           CONTENTS: content,
           STORE_SEQ,
-          STORE,
+          STORE: params.TITLE == '지시사항' ? '1' : '0',
           EMP_NAME: MEMBER_NAME,
           MEMBER_SEQ,
           ADDDATE: moment(date).format('YYYY-MM-DD'),

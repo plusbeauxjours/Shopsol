@@ -349,6 +349,7 @@ export default ({
   addCUSTOM_MENU_EMP_Fn,
   removeCUSTOM_MENU_STORE_Fn,
   removeCUSTOM_MENU_EMP_Fn,
+  AVATAR,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -470,7 +471,7 @@ export default ({
           <FastImage
             style={{width: 40, height: 40, borderRadius: 20, marginRight: 10}}
             source={{
-              uri: utils.avatarUrl(GENDER),
+              uri: `http://133.186.210.223/uploads/${AVATAR}`,
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.low,
             }}
@@ -1276,7 +1277,7 @@ export default ({
           />
         ) : sucessModalOpen ? (
           <GoWorkingSuccessAnimation
-            GENDER={GENDER}
+            AVATAR={AVATAR}
             STORE_NAME={STORE_NAME}
             MEMBER_NAME={MEMBER_NAME}
             setSucessModalOpen={setSucessModalOpen}

@@ -81,9 +81,9 @@ export default ({route: {params}}) => {
 
   ///// STEP 4 /////
   const [click4, setClick4] = useState<boolean>(false);
-  const [totalVacation, setTotalVacation] = useState<string>('');
-  const [useVacation, setUseVacation] = useState<string>('');
-  const [remainderVacation, setRemainderVacation] = useState<string>('');
+  const [totalVacation, setTotalVacation] = useState<string>('0');
+  const [useVacation, setUseVacation] = useState<string>('0');
+  const [remainderVacation, setRemainderVacation] = useState<string>('0');
   const [annual_START, setAnnual_START] = useState<string>(
     moment().format('YYYY'),
   );

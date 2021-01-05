@@ -226,7 +226,7 @@ export default ({
   setTimeListIndex,
   setTimeList,
   getNumberToday,
-  GENDER,
+  AVATAR,
   date,
   setDate,
   PAY,
@@ -237,11 +237,8 @@ export default ({
     if (timeTable && timeTable.length !== 0) {
       return (
         <RenderDayListContainer>
-          {originalDayList?.map((originalDay) => (
-            <RenderDayListItem
-              key={originalDay.day}
-              originalDay={originalDay}
-            />
+          {originalDayList?.map((originalDay, index) => (
+            <RenderDayListItem key={index} originalDay={originalDay} />
           ))}
         </RenderDayListContainer>
       );
@@ -426,7 +423,7 @@ export default ({
                 <FastImage
                   style={{width: 60, height: 60, borderRadius: 30}}
                   source={{
-                    uri: utils.avatarUrl(GENDER),
+                    uri: `http://133.186.210.223/uploads/${AVATAR}`,
                     headers: {Authorization: 'someAuthToken'},
                     priority: FastImage.priority.low,
                   }}

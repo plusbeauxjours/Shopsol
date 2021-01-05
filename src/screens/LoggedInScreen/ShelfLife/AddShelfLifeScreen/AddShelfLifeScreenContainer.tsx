@@ -30,7 +30,6 @@ export default ({route: {params}}) => {
     false,
   );
   const [codenumber, setCodenumber] = useState<string>('');
-  const [hasScanned, setHasScanned] = useState<boolean>(false);
 
   const alertModal = (text, okCallback = () => {}) => {
     const params = {
@@ -165,9 +164,7 @@ export default ({route: {params}}) => {
       try {
         dispatch(setSplashVisible(true));
         if (codenumber !== '') {
-          // const {data} = await api.getBarCode(codenumber);
-          const {data} = await api.getBarCode('8801858011116');
-          console.log(data);
+          const {data} = await api.getBarCode(codenumber);
           if (data.resultdata?.length > 0) {
             dispatch(setSplashVisible(false));
             setShelfLifeName(data.resultdata[0].NAME);

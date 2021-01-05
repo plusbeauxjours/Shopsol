@@ -401,7 +401,7 @@ export default ({
                             <FastImage
                               style={{width: 50, height: 50, borderRadius: 25}}
                               source={{
-                                uri: utils.avatarUrl(GENDER),
+                                uri: `http://133.186.210.223/uploads/${item.IMAGE}`,
                                 headers: {Authorization: 'someAuthToken'},
                                 priority: FastImage.priority.low,
                               }}

@@ -47,7 +47,7 @@ const TextBox = styled.View`
 `;
 
 export default ({
-  GENDER,
+  AVATAR,
   STORE_NAME,
   MEMBER_NAME,
   setSucessModalOpen,
@@ -64,7 +64,7 @@ export default ({
           top: 60,
           zIndex: 15,
         }}
-        source={{uri: utils.avatarUrl(GENDER)}}
+        source={{uri: `http://133.186.210.223/uploads/${AVATAR}`}}
         resizeMode={FastImage.resizeMode.contain}
       />
       <LottieView
