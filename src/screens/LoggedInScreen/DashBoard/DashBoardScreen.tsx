@@ -9,7 +9,6 @@ import {
   setCALENDAR_DATA,
   setCALENDAR_DATA_STORE_SEQ,
 } from '~/redux/calendarSlice';
-import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import DailyDashBoardScreen from './DailyDashBoardScreen';
 import WeeklyDashBoardScreen from './WeeklyDashBoardScreen';
 import MonthlyDashBoardScreen from './MonthlyDashBoardScreen';
@@ -41,10 +40,6 @@ export default () => {
         CALENDAR_DATA_STORE_SEQ != STORE_SEQ ||
         !CALENDAR_DATA[moment().format('YYYY-MM-DD')]
       ) {
-        const {data: empData} = await api.getEmpLists(STORE_SEQ);
-        if (empData.message == 'SUCCESS') {
-          dispatch(setEMPLOYEE_LIST(empData));
-        }
         const {data: scheduleData} = await api.getAllSchedules(
           STORE_SEQ,
           moment().format('YYYY'),
@@ -110,6 +105,7 @@ export default () => {
             setCALENDAR_DATA({
               CALENDAR_DATA: buffer,
               date: moment().add(1, 'month').format('YYYY-MM-DD'),
+              STORE_SEQ,
             }),
           );
         }

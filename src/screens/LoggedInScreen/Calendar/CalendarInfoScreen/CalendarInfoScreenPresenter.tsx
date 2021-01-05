@@ -58,10 +58,10 @@ export default ({
   STORE,
   STORE_SEQ,
   CALENDAR_EDIT,
-  onDayPressFn,
   onChangeMonth,
   markedDates,
   CALENDAR_DATA,
+  loading,
 }) => {
   const rowHasChanged = (r1, r2) => r1 !== r2;
   const renderKnob = () => (
@@ -70,41 +70,43 @@ export default ({
     </KnobIconContainer>
   );
 
-  const renderItem = (data, index) => (
-    <CalendarInfoScreenCard
-      index={index}
-      data={data}
-      STORE={STORE}
-      SCH_ID={data.SCH_ID}
-      MEMBER_SEQ={data.MEMBER_SEQ}
-      VACATION={data.VACATION}
-      TYPE={data.TYPE}
-      STORE_SEQ={STORE_SEQ}
-      NAME={data.NAME}
-      date={data.WORKDATE}
-      IMAGE={data.IMAGE}
-      ICON={data.ICON}
-      nowork={data.nowork}
-      workoff={data.workoff}
-      working={data.working}
-      alear={data.alear}
-      jigark={data.jigark}
-      CHANGE_START={data.CHANGE_START}
-      CHANGE_END={data.CHANGE_END}
-      ATTENDANCE_TIME={data.ATTENDANCE_TIME}
-      START={data.START}
-      WORK_OFF_TIME={data.WORK_OFF_TIME}
-      END={data.END}
-      UPDATED_START={data.UPDATED_START}
-      UPDATED_END={data.UPDATED_END}
-      START_TIME={data.START_TIME}
-      END_TIME={data.END_TIME}
-      REST_TIME={data.REST_TIME}
-      AUTOWORKOFF={data.AUTOWORKOFF}
-      IS_MANAGER={data.IS_MANAGER}
-      CALENDAR_EDIT={CALENDAR_EDIT}
-    />
-  );
+  const renderItem = (data, index) => {
+    return (
+      <CalendarInfoScreenCard
+        index={index}
+        data={data}
+        STORE={STORE}
+        SCH_ID={data.SCH_ID}
+        MEMBER_SEQ={data.MEMBER_SEQ}
+        VACATION={data.VACATION}
+        TYPE={data.TYPE}
+        STORE_SEQ={STORE_SEQ}
+        NAME={data.NAME}
+        date={data.WORKDATE}
+        IMAGE={data.IMAGE}
+        ICON={data.ICON}
+        nowork={data.nowork}
+        workoff={data.workoff}
+        working={data.working}
+        alear={data.alear}
+        jigark={data.jigark}
+        CHANGE_START={data.CHANGE_START}
+        CHANGE_END={data.CHANGE_END}
+        ATTENDANCE_TIME={data.ATTENDANCE_TIME}
+        START={data.START}
+        WORK_OFF_TIME={data.WORK_OFF_TIME}
+        END={data.END}
+        UPDATED_START={data.UPDATED_START}
+        UPDATED_END={data.UPDATED_END}
+        START_TIME={data.START_TIME}
+        END_TIME={data.END_TIME}
+        REST_TIME={data.REST_TIME}
+        AUTOWORKOFF={data.AUTOWORKOFF}
+        IS_MANAGER={data.IS_MANAGER}
+        CALENDAR_EDIT={CALENDAR_EDIT}
+      />
+    );
+  };
 
   const renderEmptyDate = () => (
     <EmptyView>
@@ -137,6 +139,7 @@ export default ({
       />
     </EmptyView>
   );
+
   return (
     <Agenda
       items={CALENDAR_DATA}
@@ -215,7 +218,6 @@ export default ({
         }
       }}
       rowHasChanged={rowHasChanged}
-      onDayPress={(date) => onDayPressFn(date)}
       loadItemsForMonth={(date) => onChangeMonth(date)}
       markingType={'multi-dot'}
     />

@@ -8,6 +8,7 @@ import {
   setCALENDAR_DATA_STORE_SEQ,
 } from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default () => {
   const vacation = {
@@ -21,12 +22,16 @@ export default () => {
   const dispatch = useDispatch();
 
   const {STORE} = useSelector((state: any) => state.userReducer);
-  const {CALENDAR_DATA} = useSelector((state: any) => state.calendarReducer);
-  const {STORE_SEQ, EMP_SEQ, STORE_DATA: {CalendarEdit} = {}} = useSelector(
-    (state: any) => state.storeReducer,
+  const {CALENDAR_DATA_STORE_SEQ, CALENDAR_DATA} = useSelector(
+    (state: any) => state.calendarReducer,
   );
-
+  const {
+    STORE_SEQ,
+    EMP_SEQ,
+    STORE_DATA: {CalendarEdit = null} = {},
+  } = useSelector((state: any) => state.storeReducer);
   const [markedDates, setMarkedDates] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // INIT으로 받은 데이터를 가공
   const setMarkFn = (data) => {
@@ -107,6 +112,7 @@ export default () => {
 
   const fetchData = async (date) => {
     try {
+      dispatch(setSplashVisible(true));
       dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       const {data} = await api.getAllSchedules(
         STORE_SEQ,
@@ -134,32 +140,29 @@ export default () => {
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
+      dispatch(setSplashVisible(false));
     }
   };
 
-  // 캘린더에서 일이 바뀔 때
-  const onDayPressFn = (date) => {
-    fetchData(date.dateString);
-  };
-
   // 캘린더에서 달이 바뀔 때
-  const onChangeMonth = async (date) => {
-    fetchData(date.dateString);
+  const onChangeMonth = (date) => {
+    if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
+      setLoading(true);
+      fetchData(date.dateString);
+    }
   };
-
-  // useEffect(() => {
-  //   fetchData(moment().format('YYYY-MM-DD'));
-  // }, []);
 
   return (
     <CalendarInfoScreenPresenter
       STORE={STORE}
       STORE_SEQ={STORE_SEQ}
       CALENDAR_EDIT={CalendarEdit}
-      onDayPressFn={onDayPressFn}
       onChangeMonth={onChangeMonth}
       markedDates={markedDates}
       CALENDAR_DATA={CALENDAR_DATA}
+      loading={loading}
     />
   );
 };

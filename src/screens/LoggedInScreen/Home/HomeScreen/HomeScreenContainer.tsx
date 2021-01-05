@@ -23,6 +23,7 @@ import {
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
+import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -66,6 +67,11 @@ export default ({route: {params}}) => {
   const [workingTYPE, setWorkingTYPE] = useState<string>('QR');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [initLoading, setInitLoading] = useState<boolean>(
+    STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ && STORE == '0'
+      ? true
+      : false,
+  );
 
   const storeKeepersStoreMenu = [
     {
@@ -440,9 +446,11 @@ export default ({route: {params}}) => {
   const fetchData = async () => {
     setWorkingModalOpen(false);
     try {
-      if (!STORE_DATA) {
-        dispatch(setSplashVisible(true));
+      const {data: empData} = await api.getEmpLists(STORE_SEQ);
+      if (empData.message == 'SUCCESS') {
+        dispatch(setEMPLOYEE_LIST(empData));
       }
+
       const {data} = await api.getStoreInfo({
         STORE,
         MEMBER_SEQ,
@@ -459,7 +467,7 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      setInitLoading(false);
     }
   };
 
@@ -638,6 +646,7 @@ export default ({route: {params}}) => {
       removeCUSTOM_MENU_STORE_Fn={removeCUSTOM_MENU_STORE_Fn}
       removeCUSTOM_MENU_EMP_Fn={removeCUSTOM_MENU_EMP_Fn}
       AVATAR={AVATAR}
+      initLoading={initLoading}
     />
   );
 };

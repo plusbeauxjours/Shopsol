@@ -24,9 +24,6 @@ export default ({route: {params}}) => {
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
 
-  let CALCULATE_DAY_temp =
-    Number(CALCULATE_DAY) < 10 ? '0' + CALCULATE_DAY : CALCULATE_DAY;
-
   const [loading, setLoading] = useState<boolean>(true);
   const [date, setDate] = useState<any>(moment().format(`YYYY-MM-DD`));
   const [boxButton, setBoxButton] = useState<boolean>(false);

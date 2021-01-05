@@ -9,18 +9,17 @@ const calendarSlice = createSlice({
     CALENDAR_DATA: {},
   },
   reducers: {
-    setLOADING(state, action) {
-      const {payload: LOADING} = action;
-      return {
-        ...state,
-        LOADING,
-      };
-    },
     setCALENDAR_DATA_STORE_SEQ(state, action) {
       const {payload: CALENDAR_DATA_STORE_SEQ} = action;
       return {
         ...state,
         CALENDAR_DATA_STORE_SEQ,
+      };
+    },
+    resetCALENDAR_DATA(state) {
+      return {
+        ...state,
+        CALENDAR_DATA: {},
       };
     },
     setCALENDAR_DATA(state, action) {
@@ -119,8 +118,8 @@ const calendarSlice = createSlice({
 });
 
 export const {
-  setLOADING,
   setCALENDAR_DATA_STORE_SEQ,
+  resetCALENDAR_DATA,
   setCALENDAR_DATA,
   toggleVACATION,
   updateREST_TIME,

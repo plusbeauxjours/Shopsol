@@ -23,7 +23,6 @@ export default () => {
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
   } = useSelector((state: any) => state.storeReducer);
-
   const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
   const [TIME_EMP_LIST, setTIME_EMP_LIST] = useState<any>([]);

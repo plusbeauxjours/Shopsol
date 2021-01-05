@@ -5,8 +5,12 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeModules} from 'react-native';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {getSTORELIST_DATA, resetCUSTOM_MENU_STORE} from '~/redux/userSlice';
+import {getSTORELIST_DATA} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
+import {
+  resetCALENDAR_DATA,
+  setCALENDAR_DATA_STORE_SEQ,
+} from '~/redux/calendarSlice';
 
 export default () => {
   const dispatch = useDispatch();
@@ -69,6 +73,8 @@ export default () => {
 
   useEffect(() => {
     try {
+      dispatch(setCALENDAR_DATA_STORE_SEQ(''));
+      dispatch(resetCALENDAR_DATA());
       dispatch(getSTORELIST_DATA());
     } catch (e) {
       console.log(e);

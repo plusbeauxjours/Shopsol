@@ -132,14 +132,13 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
           <Touchable
-            onPress={() =>
-              confirmModal(name, item.shelfLife_SEQ, item.shelfLifeDate)
-            }>
-            {item.images?.length > 0 ? (
+            onLongPress={() => console.log('imagemodal')}
+            disabled={!item.IMG_LIST}>
+            {item.IMG_LIST?.length > 0 ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.images[0],
+                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST[0],
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
@@ -159,6 +158,9 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
         </GreyBox>
         <WhiteItem
           onPress={() =>
+            confirmModal(name, item.shelfLife_SEQ, item.shelfLifeDate)
+          }
+          onLongPress={() =>
             setTimeout(() => {
               navigation.navigate('ShelfLifeUpdateScreen', {
                 name,
@@ -195,12 +197,14 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
-          <Touchable onPress={() => cancelModal(name, item.shelfLife_SEQ)}>
-            {item.images?.length > 0 ? (
+          <Touchable
+            onPress={() => console.log('imagemodal')}
+            disabled={!item.IMG_LIST}>
+            {item.IMG_LIST?.length > 0 ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.images[0],
+                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST[0],
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
@@ -218,7 +222,10 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
             </IconBorder>
           </Touchable>
         </GreyBox>
-        <Item onPress={() => {}} disabled={true}>
+        <Item
+          onPress={() => cancelModal(name, item.shelfLife_SEQ)}
+          onLongPress={() => {}}
+          disabled={true}>
           <Name>
             <NameText isChecked={true}>{item.shelfLifeName}</NameText>
             <DateText isChecked={true}>
