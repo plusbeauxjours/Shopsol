@@ -15,6 +15,7 @@ import {
   HelpCircleIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import FastImage from 'react-native-fast-image';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -112,6 +113,22 @@ const Pay = styled.View`
 const BoxTitleText3 = styled.Text`
   font-size: 14px;
   color: ${styleGuide.palette.greyColor};
+`;
+
+const GreyText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
+  position: absolute;
+  color: ${styleGuide.palette.greyColor};
+`;
+
+const EmptyView = styled.View`
+  width: ${wp('100%') - 40}px;
+  margin-top: 20px;
+  border-radius: 20px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
 `;
 
 export default ({
@@ -221,6 +238,32 @@ export default ({
                 ))}
               </EmployeeListBox>
             </Section>
+          ) : TOTAL_PAYMENT_WORKING_EMP?.emps?.length == 0 ? (
+            <EmptyView>
+              <FastImage
+                style={{
+                  width: 220,
+                  height: 55,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: 90,
+                }}
+                source={require('../../../../assets/images/emptyBalloons.png')}
+                resizeMode={FastImage.resizeMode.cover}>
+                <GreyText>근무 직원이 없습니다.</GreyText>
+              </FastImage>
+              <FastImage
+                style={{
+                  width: 100,
+                  height: 63,
+                  marginTop: 3,
+                  bottom: 0,
+                  marginLeft: 170,
+                }}
+                source={require('../../../../assets/images/emptyIcon.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </EmptyView>
           ) : (
             <Section>
               <EmployeeListBox>

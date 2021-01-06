@@ -237,7 +237,7 @@ export default ({
                     }}
                   />
                   <DateText>
-                    {moment(CREATE_TIME).format('YYYY년 MM월 DD일')}
+                    {moment(CREATE_TIME).format('YYYY년 M월 D일')}
                   </DateText>
                 </Name>
                 <Line />

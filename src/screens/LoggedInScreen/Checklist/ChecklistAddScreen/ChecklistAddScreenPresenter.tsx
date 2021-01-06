@@ -333,13 +333,12 @@ export default ({
           </Section>
           <Section>
             <RowTitle>
-              {console.log('customChecktime', customChecktime)}
               <TitleText>체크예정시간</TitleText>
               {!isNoCheckedtime && (
                 <ChecktimeButton onPress={() => setIsCustomModalVisible(true)}>
                   <ChecktimeButtonText>
                     {customChecktimeSet
-                      ? moment(customChecktime).format('HH:mm')
+                      ? moment(customChecktime).format('kk:mm')
                       : '선택'}
                   </ChecktimeButtonText>
                 </ChecktimeButton>
@@ -347,11 +346,7 @@ export default ({
             </RowTitle>
             <GreyLine />
             <SmallWhiteSpace />
-            <Touchable
-              onPress={() => {
-                setIsNoCheckedtime(!isNoCheckedtime);
-                setCustomChecktime(moment());
-              }}>
+            <Touchable onPress={() => setIsNoCheckedtime(!isNoCheckedtime)}>
               <Row>
                 {isNoCheckedtime ? (
                   <RadioBtnOnIcon size={22} />
@@ -440,7 +435,10 @@ export default ({
             onPress={() => submitFn()}
             isRegisted={
               (TITLE?.length < 16 && LIST?.length !== 0 && isNoCheckedtime) ||
-              customChecktime
+              (TITLE?.length < 16 &&
+                LIST?.length !== 0 &&
+                !isNoCheckedtime &&
+                customChecktimeSet)
             }
           />
         </Container>

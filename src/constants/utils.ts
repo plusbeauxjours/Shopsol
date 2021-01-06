@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 
 export default {
     isAndroid: () => Platform.OS === "android",
-    appVersion: '2.0.7',
+    appVersion: '1.2.7',
     miniPay: "8590",
     calculateDay: 23,
     renderWeekDay: (weekDay) => {

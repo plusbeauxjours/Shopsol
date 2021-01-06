@@ -68,30 +68,23 @@ export default () => {
     }
   };
   const nextpay = async () => {
-    if (
-      Number(moment(startDate).add(1, 'month').format('YYYYMMDD')) <=
-      Number(moment().format('YYYYMMDD'))
-    ) {
-      try {
-        await setStartDate(
-          moment(startDate).add(1, 'month').format('YYYY-MM-DD'),
-        );
-        await setLoading(true);
-        await dispatch(
-          getTOTAL_PAYMENT_WORKING_EMP(
-            moment(startDate).add(1, 'month').format('YYYY'),
-            moment(startDate).add(1, 'month').format('MM'),
-          ),
-        );
-      } catch (e) {
-        console.log(e);
-        alertModal('통신이 원활하지 않습니다.');
-        navigation.goBack();
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      alertModal('최신데이터 입니다.');
+    try {
+      await setStartDate(
+        moment(startDate).add(1, 'month').format('YYYY-MM-DD'),
+      );
+      await setLoading(true);
+      await dispatch(
+        getTOTAL_PAYMENT_WORKING_EMP(
+          moment(startDate).add(1, 'month').format('YYYY'),
+          moment(startDate).add(1, 'month').format('MM'),
+        ),
+      );
+    } catch (e) {
+      console.log(e);
+      alertModal('통신이 원활하지 않습니다.');
+      navigation.goBack();
+    } finally {
+      setLoading(false);
     }
   };
 

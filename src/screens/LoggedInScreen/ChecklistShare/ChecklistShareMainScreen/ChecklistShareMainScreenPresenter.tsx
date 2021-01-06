@@ -10,6 +10,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
+import LottieView from 'lottie-react-native';
 
 import utils from '~/constants/utils';
 import {
@@ -234,6 +235,7 @@ export default ({
   isCalendarModalVisible,
   setIsCalendarModalVisible,
   gotoChecklistShareItem,
+  loading,
 }) => {
   const Tab = createMaterialTopTabNavigator();
 
@@ -318,8 +320,18 @@ export default ({
         }>
         <Container>
           <DateController location={'firstRoute'} />
-          {CHECKLIST_SHARE_DATA1?.basic?.length == 0 &&
-          CHECKLIST_SHARE_DATA1?.favorite?.length == 0 ? (
+          {loading ? (
+            <LottieView
+              style={{
+                width: 160,
+                height: 160,
+              }}
+              source={require('../../../../assets/animations/dashBoardLoader.json')}
+              loop
+              autoPlay
+            />
+          ) : CHECKLIST_SHARE_DATA1?.basic?.length == 0 &&
+            CHECKLIST_SHARE_DATA1?.favorite?.length == 0 ? (
             <EmptyList TITLE={'지시사항'} />
           ) : (
             <>
@@ -375,8 +387,18 @@ export default ({
         }>
         <Container>
           <DateController location={'secondRoute'} />
-          {CHECKLIST_SHARE_DATA2?.basic?.length == 0 &&
-          CHECKLIST_SHARE_DATA2?.favorite?.length == 0 ? (
+          {loading ? (
+            <LottieView
+              style={{
+                width: 160,
+                height: 160,
+              }}
+              source={require('../../../../assets/animations/dashBoardLoader.json')}
+              loop
+              autoPlay
+            />
+          ) : CHECKLIST_SHARE_DATA2?.basic?.length == 0 &&
+            CHECKLIST_SHARE_DATA2?.favorite?.length == 0 ? (
             <EmptyList TITLE={'특이사항'} />
           ) : (
             <>

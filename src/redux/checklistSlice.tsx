@@ -1,7 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import moment from 'moment';
 import api from '../constants/LoggedInApi';
-import {setSplashVisible} from './splashSlice';
 
 const checklistSlice = createSlice({
   name: 'checklist',

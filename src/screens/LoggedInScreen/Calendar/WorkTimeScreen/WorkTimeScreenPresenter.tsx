@@ -216,6 +216,12 @@ const MainItemContainer = styled.TouchableOpacity<IsFirst>`
   height: ${(props) => (props.isFirst ? 60 : 40)}px;
 `;
 
+const ForwardArrowIconContainer = styled.View`
+  justify-content: center;
+  align-items: flex-end;
+  height: 10px;
+`;
+
 export default ({
   startTime,
   endTime,
@@ -299,7 +305,11 @@ export default ({
                   {(ATTENDANCE_TIME || START)?.substring(0, 5)}&nbsp;~&nbsp;
                   {isNextDay1 && '익일 '}
                   {(WORK_OFF_TIME || END)?.substring(0, 5)}
-                  {CHANGE_START && CHANGE_END && <ForwardArrowIcon />}
+                  {CHANGE_START && CHANGE_END && (
+                    <ForwardArrowIconContainer>
+                      <ForwardArrowIcon />
+                    </ForwardArrowIconContainer>
+                  )}
                   {CHANGE_START && CHANGE_START?.substring(0, 5)}
                   {CHANGE_START && CHANGE_END && ' ~ '}
                   {isNextDay2 && '익일 '}
@@ -338,7 +348,9 @@ export default ({
                   ? END_TIME?.substring(0, 5)
                   : '미퇴근'}
               </WorkTimeText>
-              <ForwardArrowIcon />
+              <ForwardArrowIconContainer>
+                <ForwardArrowIcon />
+              </ForwardArrowIconContainer>
               <WorkTimeText>
                 {!UPDATED_START ? '미출근' : UPDATED_START.substring(0, 5)}
                 &nbsp;~&nbsp;

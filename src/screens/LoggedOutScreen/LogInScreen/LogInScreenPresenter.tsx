@@ -138,7 +138,7 @@ export default ({
           <WhiteSpace />
           <Space>
             <Touchable onPress={() => gotoFind()}>
-              <UnderLineText>비밀번호 찾기기</UnderLineText>
+              <UnderLineText>비밀번호 찾기</UnderLineText>
             </Touchable>
           </Space>
         </Container>

@@ -5,6 +5,7 @@ import {setSplashVisible} from './splashSlice';
 const checklistshareSlice = createSlice({
   name: 'checklistshare',
   initialState: {
+    CHECKLIST_SHARE_STORE_SEQ: '',
     CHECKLIST_SHARE_DATA1: null,
     NEW_CNT1: 0,
     CHECKLIST_SHARE_DATA2: null,
@@ -15,6 +16,13 @@ const checklistshareSlice = createSlice({
     NOTICE_COUNT: 0,
   },
   reducers: {
+    setCHECKLIST_SHARE_STORE_SEQ(state, action) {
+      const {payload: CHECKLIST_SHARE_STORE_SEQ} = action;
+      return {
+        ...state,
+        CHECKLIST_SHARE_STORE_SEQ,
+      };
+    },
     setNOTICE_COUNT(state, action) {
       const {payload: NOTICE_COUNT} = action;
       return {
@@ -192,6 +200,7 @@ const checklistshareSlice = createSlice({
 });
 
 export const {
+  setCHECKLIST_SHARE_STORE_SEQ,
   setNOTICE_COUNT,
   setCHECKLIST_SHARE_DATA1,
   setCHECKLIST_SHARE_DATA2,

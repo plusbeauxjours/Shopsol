@@ -6,6 +6,9 @@ import firebase from 'react-native-firebase';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {
+  setCHECKLIST_SHARE_STORE_SEQ,
+  setCHECKLIST_SHARE_DATA1,
+  setCHECKLIST_SHARE_DATA2,
   getCHECKLIST_SHARE_DATA1,
   getCHECKLIST_SHARE_DATA2,
   setCHECKLIST_SHARE_MARKED,
@@ -22,6 +25,7 @@ export default () => {
     (state: any) => state.storeReducer,
   );
   const {
+    CHECKLIST_SHARE_STORE_SEQ,
     CHECKLIST_SHARE_DATA1,
     NEW_CNT1,
     CHECKLIST_SHARE_DATA2,
@@ -35,6 +39,7 @@ export default () => {
   const [isCalendarModalVisible, setIsCalendarModalVisible] = useState<boolean>(
     false,
   );
+  const [loading, setLoading] = useState<boolean>(true);
 
   const alertModal = (text) => {
     const params = {
@@ -178,18 +183,44 @@ export default () => {
     }
   };
 
-  const fetchData = (location, date) => {
-    if (location === 'firstRoute') {
-      dispatch(getCHECKLIST_SHARE_DATA1(date));
-    } else if (location === 'secondRoute') {
-      dispatch(getCHECKLIST_SHARE_DATA2(date));
-    } else {
-      dispatch(getCHECKLIST_SHARE_DATA1(date));
-      dispatch(getCHECKLIST_SHARE_DATA2(date));
+  const fetchData = async (location, date) => {
+    try {
+      if (STORE_SEQ !== CHECKLIST_SHARE_STORE_SEQ) {
+        if (location === 'firstRoute') {
+          const {data} = await api.getNotice(STORE_SEQ, date, '1', MEMBER_SEQ);
+          dispatch(setCHECKLIST_SHARE_STORE_SEQ(STORE_SEQ));
+          dispatch(setCHECKLIST_SHARE_DATA1(data));
+        } else if (location === 'secondRoute') {
+          const {data} = await api.getNotice(STORE_SEQ, date, '0', MEMBER_SEQ);
+          dispatch(setCHECKLIST_SHARE_STORE_SEQ(STORE_SEQ));
+          dispatch(setCHECKLIST_SHARE_DATA2(data));
+        } else {
+          const {data: dataA} = await api.getNotice(
+            STORE_SEQ,
+            date,
+            '1',
+            MEMBER_SEQ,
+          );
+          dispatch(setCHECKLIST_SHARE_STORE_SEQ(STORE_SEQ));
+          dispatch(setCHECKLIST_SHARE_DATA1(dataA));
+          const {data: dataB} = await api.getNotice(
+            STORE_SEQ,
+            date,
+            '0',
+            MEMBER_SEQ,
+          );
+          dispatch(setCHECKLIST_SHARE_STORE_SEQ(STORE_SEQ));
+          dispatch(setCHECKLIST_SHARE_DATA2(dataB));
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const Init = (page) => {
+  const init = (page) => {
     markingFn(moment().format('YYYY'), moment().format('M'));
     fetchData('', moment().format('YYYY-M-DD'));
     setIndex(page ? Number(page) : 0);
@@ -204,7 +235,7 @@ export default () => {
   };
 
   useEffect(() => {
-    Init(index);
+    init(index);
     dispatch(setSplashVisible(false));
     firebase.analytics().setCurrentScreen('업무일지');
   }, []);
@@ -232,6 +263,7 @@ export default () => {
       isCalendarModalVisible={isCalendarModalVisible}
       setIsCalendarModalVisible={setIsCalendarModalVisible}
       gotoChecklistShareItem={gotoChecklistShareItem}
+      loading={loading}
     />
   );
 };

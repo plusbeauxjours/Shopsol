@@ -68,9 +68,7 @@ export default ({route: {params}}) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initLoading, setInitLoading] = useState<boolean>(
-    STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ && STORE == '0'
-      ? true
-      : false,
+    STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
 
   const storeKeepersStoreMenu = [

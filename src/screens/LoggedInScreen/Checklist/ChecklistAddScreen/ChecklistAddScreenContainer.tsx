@@ -41,9 +41,11 @@ export default ({route: {params}}) => {
     PHOTO_CHECK == '1' ? true : false,
   );
   const [customChecktime, setCustomChecktime] = useState<any>(
-    CHECK_TIME ? moment(CHECK_TIME) : moment(),
+    CHECK_TIME?.length > 0 ? moment(CHECK_TIME, 'kk:mm') : moment(),
   );
-  const [customChecktimeSet, setCustomChecktimeSet] = useState<boolean>(false);
+  const [customChecktimeSet, setCustomChecktimeSet] = useState<boolean>(
+    CHECK_TIME?.length > 0 ? true : false,
+  );
   const [isCustomModalVisible, setIsCustomModalVisible] = useState<boolean>(
     false,
   ); // 시간/분 입력 모달 활성화 여부
@@ -170,6 +172,7 @@ export default ({route: {params}}) => {
           if (data.message === 'SUCCESS') {
             navigation.goBack();
             alertModal('체크리스트가 추가되었습니다.');
+            dispatch(getCHECKLIST_DATA(DATE));
           } else if (data.message === 'ALREADY_SUCCESS') {
             alertModal(data.result);
           } else {
@@ -221,6 +224,7 @@ export default ({route: {params}}) => {
             alertModal(
               `체크리스트가 ${sign == 'close' ? '삭제' : '수정'}되었습니다.`,
             );
+            dispatch(getCHECKLIST_DATA(DATE));
           } else {
             alertModal('연결에 실패하였습니다.');
           }

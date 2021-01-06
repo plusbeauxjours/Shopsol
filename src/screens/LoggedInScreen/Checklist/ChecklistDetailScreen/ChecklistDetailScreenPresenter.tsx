@@ -320,10 +320,8 @@ export default ({
               <SectionText>확인시간</SectionText>
               <Text
                 style={{
-                  color: CHECK_TIME ? '#000' : styleGuide.palette.primary,
-                  fontWeight: CHECK_TIME
-                    ? styleGuide.fontWeight.normal
-                    : styleGuide.fontWeight.bold,
+                  color: CHECK_TIME ? '#000' : '#e85356',
+                  fontWeight: CHECK_TIME ? '300' : '600',
                 }}>
                 {CHECK_TIME ? moment(CHECK_TIME).format('HH:mm') : '체크전'}
               </Text>

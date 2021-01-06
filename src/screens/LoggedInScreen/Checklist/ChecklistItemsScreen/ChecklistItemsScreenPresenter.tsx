@@ -18,11 +18,11 @@ import {
 import moment from 'moment';
 import ChecklistItemsScreenCard from './ChecklistItemsScreenCard';
 import FastImage from 'react-native-fast-image';
+import LottieView from 'lottie-react-native';
 
 import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
-import LottieView from 'lottie-react-native';
 
 interface IsEmpName {
   isEmpName: string;

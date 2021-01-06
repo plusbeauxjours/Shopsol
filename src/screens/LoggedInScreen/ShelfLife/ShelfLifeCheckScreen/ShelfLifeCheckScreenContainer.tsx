@@ -48,9 +48,11 @@ export default () => {
     color,
     anchor: 20,
   }));
-  const {EMP_SEQ} = useSelector((state: any) => state.storeReducer);
+  const {EMP_SEQ, STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const {STORE, MEMBER_NAME} = useSelector((state: any) => state.userReducer);
-  const {SHELFLIFE_DATA} = useSelector((state: any) => state.shelflifeReducer);
+  const {SHELFLIFE_DATA_STORE_SEQ, SHELFLIFE_DATA} = useSelector(
+    (state: any) => state.shelflifeReducer,
+  );
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
@@ -146,11 +148,6 @@ export default () => {
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    dispatch(setSHELFLIFE_DATA([]));
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     try {
@@ -282,7 +279,6 @@ export default () => {
   const onScroll = onScrollEvent({y});
 
   useEffect(() => {
-    dispatch(setSHELFLIFE_DATA([]));
     fetchData();
   }, []);
 
