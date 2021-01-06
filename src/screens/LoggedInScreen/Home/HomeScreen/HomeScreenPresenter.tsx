@@ -34,6 +34,7 @@ interface IBox {
 
 const BackGround = styled.View`
   flex: 1;
+  background-color: white;
 `;
 
 const ScrollView = styled.ScrollView``;

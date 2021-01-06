@@ -117,7 +117,7 @@ export default ({
               <FastImage
                 style={{
                   width: 377,
-                  height: 450,
+                  height: 535,
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginTop: 50,
@@ -143,7 +143,7 @@ export default ({
               <FastImage
                 style={{
                   width: 377,
-                  height: 450,
+                  height: 535,
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginTop: 50,

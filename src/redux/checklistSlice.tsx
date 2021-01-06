@@ -6,10 +6,18 @@ import {setSplashVisible} from './splashSlice';
 const checklistSlice = createSlice({
   name: 'checklist',
   initialState: {
+    CHECKLIST_STORE_SEQ: '',
     CHECKLIST_DATA: [],
     CHECKLIST_MARKED: {},
   },
   reducers: {
+    setCHECKLIST_STORE_SEQ(state, action) {
+      const {payload: CHECKLIST_STORE_SEQ} = action;
+      return {
+        ...state,
+        CHECKLIST_STORE_SEQ,
+      };
+    },
     setCHECKLIST_DATA(state, action) {
       const {payload: CHECKLIST_DATA} = action;
       return {
@@ -27,7 +35,11 @@ const checklistSlice = createSlice({
   },
 });
 
-export const {setCHECKLIST_DATA, setCHECKLIST_MARKED} = checklistSlice.actions;
+export const {
+  setCHECKLIST_STORE_SEQ,
+  setCHECKLIST_DATA,
+  setCHECKLIST_MARKED,
+} = checklistSlice.actions;
 
 export const getCHECKLIST_DATA = (
   date = moment().format('YYYY-MM-DD'),
@@ -36,15 +48,13 @@ export const getCHECKLIST_DATA = (
     storeReducer: {STORE_SEQ},
   } = getState();
   try {
-    dispatch(setSplashVisible(true));
     const {data} = await api.getChecklist(STORE_SEQ, date);
     if (data.message === 'SUCCESS') {
+      dispatch(setCHECKLIST_STORE_SEQ(STORE_SEQ));
       dispatch(setCHECKLIST_DATA(data.result));
     }
   } catch (e) {
     console.log(e);
-  } finally {
-    dispatch(setSplashVisible(false));
   }
 };
 

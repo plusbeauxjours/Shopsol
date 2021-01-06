@@ -97,9 +97,9 @@ export default ({
   explainModal,
   onRefresh,
   dday,
+  loading,
 }) => {
   const navigation = useNavigation();
-
   if (STORE == '0') {
     return (
       <BackGround>
@@ -119,7 +119,11 @@ export default ({
               <TypeTitle>
                 <TitleText>보건증</TitleText>
               </TypeTitle>
-              {HEALTH_CERTIFICATE_APPLY == 0 ? (
+              {loading ? (
+                <IconContainer>
+                  <Text>&nbsp;</Text>
+                </IconContainer>
+              ) : HEALTH_CERTIFICATE_APPLY == 0 ? (
                 <IconContainer>
                   <Text isSubmited={false}> 미등록</Text>
                 </IconContainer>
@@ -191,27 +195,33 @@ export default ({
                     </Touchable>
                   </Row>
                 </TypeTitle>
-                <IconContainer
-                  style={{
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                  }}>
-                  <Text isSubmited={true}>위생교육증 등록완료</Text>
-                  <Text
-                    style={
-                      dday <= 0
-                        ? {
-                            textDecorationLine: 'underline',
-                            marginTop: 5,
-                            color: 'red',
-                          }
-                        : {marginTop: 5, color: '#7e7c7c'}
-                    }>
-                    교육일시: {moment(EDUCATION_DATA).format('YYYY.MM.DD')}
-                    &nbsp;(갱신 D{dday <= 0 ? '+' : '-'}
-                    {Math.abs(Math.floor(dday))})
-                  </Text>
-                </IconContainer>
+                {loading ? (
+                  <IconContainer>
+                    <Text>&nbsp;</Text>
+                  </IconContainer>
+                ) : (
+                  <IconContainer
+                    style={{
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                    }}>
+                    <Text isSubmited={true}>위생교육증 등록완료</Text>
+                    <Text
+                      style={
+                        dday <= 0
+                          ? {
+                              textDecorationLine: 'underline',
+                              marginTop: 5,
+                              color: 'red',
+                            }
+                          : {marginTop: 5, color: '#7e7c7c'}
+                      }>
+                      교육일시: {moment(EDUCATION_DATA).format('YYYY.MM.DD')}
+                      &nbsp;(갱신 D{dday <= 0 ? '+' : '-'}
+                      {Math.abs(Math.floor(dday))})
+                    </Text>
+                  </IconContainer>
+                )}
                 <ForwardIconContainer>
                   <ForwardIcon />
                 </ForwardIconContainer>
@@ -237,14 +247,19 @@ export default ({
                     </Touchable>
                   </Row>
                 </TypeTitle>
-
-                <IconContainer>
-                  <Text
-                    style={{textDecorationLine: 'underline'}}
-                    isSubmited={false}>
-                    위생교육증 미등록
-                  </Text>
-                </IconContainer>
+                {loading ? (
+                  <IconContainer>
+                    <Text>&nbsp;</Text>
+                  </IconContainer>
+                ) : (
+                  <IconContainer>
+                    <Text
+                      style={{textDecorationLine: 'underline'}}
+                      isSubmited={false}>
+                      위생교육증 미등록
+                    </Text>
+                  </IconContainer>
+                )}
                 <ForwardIconContainer>
                   <ForwardIcon />
                 </ForwardIconContainer>
@@ -268,7 +283,11 @@ export default ({
                   </Touchable>
                 </Row>
               </TypeTitle>
-              {HEALTH_CERTIFICATE_APPLY == 0 ? (
+              {loading ? (
+                <IconContainer>
+                  <Text>&nbsp;</Text>
+                </IconContainer>
+              ) : HEALTH_CERTIFICATE_APPLY == 0 ? (
                 <IconContainer>
                   <Text isSubmited={false}>미등록</Text>
                 </IconContainer>

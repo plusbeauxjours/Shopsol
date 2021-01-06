@@ -22,10 +22,16 @@ import FastImage from 'react-native-fast-image';
 import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
+import LottieView from 'lottie-react-native';
 
 interface IsEmpName {
   isEmpName: string;
 }
+
+interface IsEmpty {
+  isEmpty: boolean;
+}
+
 const CalendarText = styled.Text`
   margin: 2px 0 2px 10px;
   font-size: ${styleGuide.fontSize.small}px;
@@ -101,11 +107,11 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Section = styled.View`
+const Section = styled.View<IsEmpty>`
   width: 100%;
   border-radius: 20px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: ${(props) => (props.isEmpty ? 0 : 20)}px;
   background-color: white;
 `;
 
@@ -250,6 +256,7 @@ export default ({
   selectCheckListFn,
   checkdataFn,
   fetchData,
+  loading,
 }) => {
   const yesterday = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
   const tomorrow = moment(date).add(1, 'days').format('YYYY-MM-DD');
@@ -367,7 +374,7 @@ export default ({
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <Container>
-          <Section>
+          <Section isEmpty={CHECKLIST_DATA?.length == 0}>
             <Date>
               <DateArrowLeft
                 onPress={() => {
@@ -413,58 +420,74 @@ export default ({
               </DateArrowRight>
             </Date>
           </Section>
-          {CHECKLIST_DATA?.length == 0 ? (
-            STORE == '1' ? (
-              <EmptyBox>
-                <FastImage
-                  style={{
-                    width: 377,
-                    height: 450,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 50,
-                  }}
-                  source={require('../../../../assets/images/emptyImg.png')}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-                <TextBox>
-                  <Column>
-                    <EmptyText>체크리스트를 등록해주세요.</EmptyText>
-                  </Column>
-                </TextBox>
-              </EmptyBox>
-            ) : (
-              <EmptyBox>
-                <FastImage
-                  style={{
-                    width: 377,
-                    height: 450,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 50,
-                  }}
-                  source={require('../../../../assets/images/emptyImg.png')}
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-                <TextBox>
-                  <Column>
-                    <EmptyText>등록된 체크리스트가 없습니다.</EmptyText>
-                  </Column>
-                </TextBox>
-              </EmptyBox>
-            )
+          {loading ? (
+            <EmptyBox>
+              <LottieView
+                style={{
+                  width: 160,
+                  height: 160,
+                }}
+                source={require('../../../../assets/animations/dashBoardLoader.json')}
+                loop
+                autoPlay
+              />
+            </EmptyBox>
           ) : (
             <>
-              {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '1').map(
-                (data, index) => {
-                  return (
-                    <ChecklistItemsScreenCard
-                      key={index}
-                      date={date}
-                      data={data}
+              {CHECKLIST_DATA?.length == 0 ? (
+                STORE == '1' ? (
+                  <EmptyBox>
+                    <FastImage
+                      style={{
+                        width: 377,
+                        height: 535,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: 50,
+                      }}
+                      source={require('../../../../assets/images/emptyImg.png')}
+                      resizeMode={FastImage.resizeMode.cover}
                     />
-                  );
-                },
+                    <TextBox>
+                      <Column>
+                        <EmptyText>체크리스트를 등록해주세요.</EmptyText>
+                      </Column>
+                    </TextBox>
+                  </EmptyBox>
+                ) : (
+                  <EmptyBox>
+                    <FastImage
+                      style={{
+                        width: 377,
+                        height: 535,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: 50,
+                      }}
+                      source={require('../../../../assets/images/emptyImg.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <TextBox>
+                      <Column>
+                        <EmptyText>등록된 체크리스트가 없습니다.</EmptyText>
+                      </Column>
+                    </TextBox>
+                  </EmptyBox>
+                )
+              ) : (
+                <>
+                  {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '1').map(
+                    (data, index) => {
+                      return (
+                        <ChecklistItemsScreenCard
+                          key={index}
+                          date={date}
+                          data={data}
+                        />
+                      );
+                    },
+                  )}
+                </>
               )}
             </>
           )}

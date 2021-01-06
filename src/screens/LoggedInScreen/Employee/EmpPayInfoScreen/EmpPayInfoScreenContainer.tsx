@@ -124,6 +124,7 @@ export default ({route: {params}}) => {
   };
 
   const fetchData = async () => {
+    dispatch(setSplashVisible(true));
     try {
       const {data} = await api.getEmp(params?.EMP_SEQ || EMP_SEQ);
       setImage(data?.result.images[0].IMAGE);
@@ -133,7 +134,6 @@ export default ({route: {params}}) => {
       console.log(e);
     }
     try {
-      dispatch(setSplashVisible(true));
       const {data} = await api.monthLists(
         STORE_SEQ,
         params?.EMP_SEQ || EMP_SEQ,

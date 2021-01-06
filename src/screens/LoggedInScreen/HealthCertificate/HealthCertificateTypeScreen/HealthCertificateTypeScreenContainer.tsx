@@ -5,15 +5,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {getHEALTH_CERTIFICATE_DATA} from '~/redux/healthSlice';
+import api from '~/constants/LoggedInApi';
+import {
+  setHEALTH_CERTIFICATE_DATA,
+  getHEALTH_CERTIFICATE_DATA,
+} from '~/redux/healthSlice';
 
 export default () => {
   const dispatch = useDispatch();
-  const {STORE} = useSelector((state: any) => state.userReducer);
+  const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
+  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const {HEALTH_CERTIFICATE_DATA} = useSelector(
     (state: any) => state.healthReducer,
   );
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const explainModal = (title, text) => {
     const params = {
@@ -41,8 +47,19 @@ export default () => {
     'days',
   );
 
+  const init = async () => {
+    try {
+      const {data} = await api.getCertificate({STORE_SEQ, MEMBER_SEQ, STORE});
+      dispatch(setHEALTH_CERTIFICATE_DATA(data));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    dispatch(getHEALTH_CERTIFICATE_DATA());
+    init();
   }, []);
 
   return (
@@ -61,6 +78,7 @@ export default () => {
       explainModal={explainModal}
       onRefresh={onRefresh}
       dday={dday}
+      loading={loading}
     />
   );
 };

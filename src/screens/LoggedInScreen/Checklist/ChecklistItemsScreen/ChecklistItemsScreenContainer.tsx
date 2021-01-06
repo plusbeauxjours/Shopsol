@@ -48,6 +48,7 @@ export default () => {
   const [staticmarkedDates, setStaticmarkedDates] = useState<any>({});
   const [lat, setLat] = useState<string>('0');
   const [long, setLong] = useState<string>('0');
+  const [loading, setLoading] = useState<boolean>(true);
 
   const onRefresh = () => {
     try {
@@ -148,6 +149,8 @@ export default () => {
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -257,6 +260,7 @@ export default () => {
       selectCheckListFn={selectCheckListFn}
       checkdataFn={checkdataFn}
       fetchData={fetchData}
+      loading={loading}
     />
   );
 };
