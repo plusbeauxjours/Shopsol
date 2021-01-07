@@ -20,6 +20,7 @@ export default () => {
   const {STORE, STORELIST_DATA} = useSelector(
     (state: any) => state.userReducer,
   );
+  const {MANAGER_CALLED} = useSelector((state: any) => state.storeReducer);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 

@@ -54,10 +54,6 @@ const NumberText = styled.Text`
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
-const WhiteSpace = styled.View`
-  height: 30px;
-`;
-
 const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 10px 0 20px 0;
@@ -80,6 +76,7 @@ export default ({
   adviceModal,
   employeeNowOn,
   employeeNowOff,
+  MANAGER_CALLED,
 }) => {
   return (
     <BackGround>
@@ -104,7 +101,7 @@ export default ({
                   <EmployeeListCard
                     key={index}
                     EMP_NAME={data?.EMP_NAME}
-                    IS_MANAGER={data?.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                    IS_MANAGER={data?.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
                     image={
                       data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
                     }
@@ -142,7 +139,7 @@ export default ({
                 <EmployeeListCard
                   key={index}
                   EMP_NAME={data?.EMP_NAME}
-                  IS_MANAGER={data?.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                  IS_MANAGER={data?.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
                   image={
                     data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
                   }

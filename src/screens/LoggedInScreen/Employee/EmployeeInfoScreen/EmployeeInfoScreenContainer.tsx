@@ -26,6 +26,7 @@ export default ({route: {params}}) => {
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
   const {data: {EMP_SEQ = null, images = []} = {}} = params;
   const [isFreeWorkingType, setIsFreeWorkingType] = useState<boolean>(true); // true: 자율출퇴근 직원, false: 일정이 있는 직원
@@ -416,6 +417,7 @@ export default ({route: {params}}) => {
       gotoSetInfo={gotoSetInfo}
       mobileNo={params?.data.MobileNo}
       IMAGE={images[0].IMAGE}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

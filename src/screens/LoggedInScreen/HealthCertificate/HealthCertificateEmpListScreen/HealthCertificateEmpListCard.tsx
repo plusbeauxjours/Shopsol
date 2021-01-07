@@ -58,6 +58,7 @@ export default ({
   data,
   gotoHealthCertificateEmpDetail,
   gotoHealthCertificateEmpForm,
+  MANAGER_CALLED,
 }) => {
   const dday = moment(data?.PUSH_DAY).diff(moment(), 'days');
   if (data.RESULT_DATE) {
@@ -76,7 +77,7 @@ export default ({
           <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
             <NameText>{data?.NAME}</NameText>
             <DateText>
-              [{data?.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+              [{data?.IS_MANAGER == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}]
             </DateText>
           </Row>
           {data?.RESULT_DATE ? (
@@ -124,7 +125,7 @@ export default ({
           <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
             <NameText>{data?.NAME}</NameText>
             <DateText>
-              [{data?.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+              [{data?.IS_MANAGER == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}]
             </DateText>
           </Row>
           {data?.RESULT_DATE ? (

@@ -38,17 +38,17 @@ export default ({route: {params}}) => {
 
   const [startTime, setStartTime] = useState<any>(
     UPDATED_START
-      ? moment(UPDATED_START?.substring(0, 5), 'HH:mm')
+      ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
       : ATTENDANCE_TIME
-      ? moment(ATTENDANCE_TIME?.substring(0, 5), 'HH:mm')
-      : moment(START?.substring(0, 5), 'HH:mm'),
+      ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
+      : moment(START?.substring(0, 5), 'kk:mm'),
   );
   const [endTime, setEndTime] = useState<any>(
     UPDATED_END
-      ? moment(UPDATED_END?.substring(0, 5), 'HH:mm')
+      ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
       : WORK_OFF_TIME
-      ? moment(WORK_OFF_TIME?.substring(0, 5), 'HH:mm')
-      : moment(END?.substring(0, 5), 'HH:mm'),
+      ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
+      : moment(END?.substring(0, 5), 'kk:mm'),
   );
   const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
   const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
@@ -78,7 +78,7 @@ export default ({route: {params}}) => {
     if (
       !noStart &&
       !noEnd &&
-      moment(startTime).format('HH:mm') == moment(endTime).format('HH:mm')
+      moment(startTime).format('kk:mm') == moment(endTime).format('kk:mm')
     ) {
       return alertModal('출퇴근 시간을 다르게 입력해주세요.');
     } else if (!SCH_ID) {
@@ -91,16 +91,16 @@ export default ({route: {params}}) => {
             EMP_ID,
             START_TIME,
             END_TIME,
-            UPDATED_START: noStart ? null : moment(startTime).format('HH:mm'),
-            UPDATED_END: noEnd ? null : moment(endTime).format('HH:mm'),
+            UPDATED_START: noStart ? null : moment(startTime).format('kk:mm'),
+            UPDATED_END: noEnd ? null : moment(endTime).format('kk:mm'),
           }),
         );
         await api.createSchedule({
           STORE_ID: STORE_SEQ,
           EMP_ID,
           EMP_NAME: NAME,
-          START: noStart ? '-1' : moment(startTime).format('HH:mm'),
-          END: noEnd ? '-1' : moment(endTime).format('HH:mm'),
+          START: noStart ? '-1' : moment(startTime).format('kk:mm'),
+          END: noEnd ? '-1' : moment(endTime).format('kk:mm'),
           DATE: date,
           TYPE: '0',
           SCHEDULETYPE: '0',
@@ -119,15 +119,15 @@ export default ({route: {params}}) => {
             EMP_ID,
             START_TIME,
             END_TIME,
-            UPDATED_START: noStart ? null : moment(startTime).format('HH:mm'),
-            UPDATED_END: noEnd ? null : moment(endTime).format('HH:mm'),
+            UPDATED_START: noStart ? null : moment(startTime).format('kk:mm'),
+            UPDATED_END: noEnd ? null : moment(endTime).format('kk:mm'),
           }),
         );
         await api.updateSchedule({
           SCH_ID,
           EMP_ID,
-          START: noStart ? '-1' : moment(startTime).format('HH:mm'),
-          END: noEnd ? '-1' : moment(endTime).format('HH:mm'),
+          START: noStart ? '-1' : moment(startTime).format('kk:mm'),
+          END: noEnd ? '-1' : moment(endTime).format('kk:mm'),
           TYPE: '0',
           STATUS: '0',
           STYPE: '',
@@ -143,22 +143,22 @@ export default ({route: {params}}) => {
       setNoStart(false);
       setStartTime(
         ATTENDANCE_TIME
-          ? moment(ATTENDANCE_TIME?.substring(0, 5), 'HH:mm')
+          ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
           : CHANGE_START
-          ? moment(CHANGE_START?.substring(0, 5), 'HH:mm')
+          ? moment(CHANGE_START?.substring(0, 5), 'kk:mm')
           : START
-          ? moment(START?.substring(0, 5), 'HH:mm')
+          ? moment(START?.substring(0, 5), 'kk:mm')
           : moment(),
       );
     } else if (type == 'end') {
       setNoEnd(false);
       setEndTime(
         WORK_OFF_TIME
-          ? moment(WORK_OFF_TIME?.substring(0, 5), 'HH:mm')
+          ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
           : CHANGE_END
-          ? moment(CHANGE_END?.substring(0, 5), 'HH:mm')
+          ? moment(CHANGE_END?.substring(0, 5), 'kk:mm')
           : END
-          ? moment(END?.substring(0, 5), 'HH:mm')
+          ? moment(END?.substring(0, 5), 'kk:mm')
           : moment(),
       );
     } else if (type == 'deleteStart') {

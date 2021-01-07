@@ -63,7 +63,7 @@ export default () => {
   };
 
   const onVerifyCode = async () => {
-    if (verifyCode == '369369') {
+    if (verifyCode.length != 6) {
       clearInterval(timer);
       setIsVerified(true);
       setIsCountDownStarted(false);
@@ -126,7 +126,8 @@ export default () => {
       });
       if (data.message == 'ALREADY_SUCCESS') {
         alertModal('이미 가입한 휴대폰번호입니다.');
-      } else {
+      } else if (data.message == 'SUCCESS') {
+        alertModal('인증번호를 발송하였습니다.');
         setHasCheckedVerifyCode(true);
         setIsCountDownStarted(true);
         setHasCheckTimeOut(false);

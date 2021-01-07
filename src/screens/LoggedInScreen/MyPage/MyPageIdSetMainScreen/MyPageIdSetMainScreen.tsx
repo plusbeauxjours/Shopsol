@@ -57,7 +57,7 @@ export default () => {
             onPress={() => {
               navigation.navigate('MyPagePositionSetScreen');
             }}>
-            <CardText>점장 - 직원 전환</CardText>
+            <CardText>사업주 - 직원 전환</CardText>
             <ForwardIcon />
           </Card>
           <Card

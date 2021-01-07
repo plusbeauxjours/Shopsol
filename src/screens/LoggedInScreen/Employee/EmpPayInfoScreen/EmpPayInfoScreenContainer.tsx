@@ -19,6 +19,7 @@ export default ({route: {params}}) => {
     STORE_DATA: {
       resultdata: {STOREPAY_SHOW = null, CALCULATE_DAY = null} = {},
     } = {},
+    MANAGER_CALLED
   } = useSelector((state: any) => state.storeReducer);
   const {MEMBER_NAME} = useSelector((state: any) => state.userReducer);
   const {STORE} = useSelector((state: any) => state.userReducer);
@@ -206,6 +207,7 @@ export default ({route: {params}}) => {
       visible={visible}
       loading={loading}
       date={date}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

@@ -744,9 +744,6 @@ export default ({
                   NAME?.length < 11 &&
                   ADDR1 !== '' &&
                   ADDR2 !== '' &&
-                  timeCheck == true &&
-                  EARLYtimeCheck == true &&
-                  dayCheck == true &&
                   storeCategoryType !== '분류 선택'
                 }
               />

@@ -199,7 +199,7 @@ export default ({
           value[selection] = true;
           setPositionTypeCheck(value);
           alertModal(
-            '정확한 가입 유형을 선택하셨나요?\n점장: 사업주(점장)\n직원: 매니저 또는 스태프',
+            '정확한 가입 유형을 선택하셨나요?\n사업주: 사업주\n직원: 매니저(관리자) 또는 직원',
           );
         }}>
         <Row>
@@ -274,7 +274,7 @@ export default ({
               <NameText>생일</NameText>
               <Touchable onPress={() => setIsBirthDateVisible(true)}>
                 <TextinputCase>
-                  {!birthDateSet ? (
+                  {birthDateSet ? (
                     <TextId>{moment(birthDate).format('YYYY.MM.DD')}</TextId>
                   ) : (
                     <GreyText
@@ -291,7 +291,7 @@ export default ({
             <Case>
               <NameText>가입유형</NameText>
               <TypeCheckCase>
-                <View>{positionType(1, '점장')}</View>
+                <View>{positionType(1, '사업주')}</View>
                 <View>{positionType(0, '직원')}</View>
               </TypeCheckCase>
             </Case>
@@ -341,6 +341,7 @@ export default ({
                   secureTextEntry={isPasswordSeen ? false : true}
                   autoCapitalize="none"
                   autoCorrect={false}
+                  keyboardType={'email-address'}
                 />
                 <CheckPasswordBtn
                   onPress={() => setIsPasswordSeen(!isPasswordSeen)}
@@ -376,6 +377,7 @@ export default ({
                   onFocus={() => {}}
                   autoCapitalize="none"
                   autoCorrect={false}
+                  keyboardType={'email-address'}
                 />
                 <CheckPasswordBtn
                   onPress={() => setIsPasswordCheckSeen(!isPasswordCheckSeen)}
@@ -399,7 +401,7 @@ export default ({
             onPress={() =>
               confirmModal(
                 '정확한 가입유형을 선택하셨나요?',
-                '점장: 사업주(점장)\n직원: 매니저 또는 스태프',
+                '사업주: 사업주\n직원: 매니저(관리자) 또는 직원',
               )
             }
             isRegisted={

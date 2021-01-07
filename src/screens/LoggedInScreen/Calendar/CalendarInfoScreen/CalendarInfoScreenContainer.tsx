@@ -29,6 +29,7 @@ export default () => {
     STORE_SEQ,
     EMP_SEQ,
     STORE_DATA: {CalendarEdit = null} = {},
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
   const [markedDates, setMarkedDates] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -146,6 +147,10 @@ export default () => {
     }
   };
 
+  const onDayPressFn = (date) => {
+    fetchData(date.dateString);
+  };
+
   // 캘린더에서 달이 바뀔 때
   const onChangeMonth = (date) => {
     if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
@@ -160,9 +165,12 @@ export default () => {
       STORE_SEQ={STORE_SEQ}
       CALENDAR_EDIT={CalendarEdit}
       onChangeMonth={onChangeMonth}
+      onDayPressFn={onDayPressFn}
       markedDates={markedDates}
       CALENDAR_DATA={CALENDAR_DATA}
       loading={loading}
+      fetchData={fetchData}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

@@ -464,6 +464,7 @@ export default ({
   PAY,
   mobileNo,
   CALCULATE_DAY,
+  MANAGER_CALLED,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const click1Transition = useTransition(click1);
@@ -489,7 +490,7 @@ export default ({
               <NameText style={{marginRight: 10}}>{name}</NameText>
               {IS_MANAGER && (
                 <DateText>
-                  {IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
+                  {IS_MANAGER === '1' ? `[${MANAGER_CALLED}]` : '[직원]'}
                 </DateText>
               )}
             </Row>
@@ -1425,21 +1426,23 @@ export default ({
                 <SelectArea style={{paddingHorizontal: 50}}>
                   <PositionType
                     selection={0}
-                    text={'스태프'}
+                    text={'직원'}
                     positionCheck={positionCheck}
                     setPositionCheck={setPositionCheck}
                     authorityCheck={authorityCheck}
                     setAuthorityCheck={setAuthorityCheck}
                     explainModal={explainModal}
+                    MANAGER_CALLED={MANAGER_CALLED}
                   />
                   <PositionType
                     selection={1}
-                    text={'매니저'}
+                    text={MANAGER_CALLED}
                     positionCheck={positionCheck}
                     setPositionCheck={setPositionCheck}
                     authorityCheck={authorityCheck}
                     setAuthorityCheck={setAuthorityCheck}
                     explainModal={explainModal}
+                    MANAGER_CALLED={MANAGER_CALLED}
                   />
                 </SelectArea>
               </InputCase>
@@ -1468,7 +1471,7 @@ export default ({
                     <Line />
                     <Authority
                       selection={1}
-                      text={'[매니저] 직원급여/일정 수정 가능'}
+                      text={`[${MANAGER_CALLED}] 직원급여/일정 수정 가능`}
                       authorityCheck={authorityCheck}
                       setAuthorityCheck={setAuthorityCheck}
                       alertModal={alertModal}
@@ -1477,7 +1480,7 @@ export default ({
                     <WhiteSpace />
                     <Authority
                       selection={2}
-                      text={'[매니저] 직원 캘린더 수정 가능'}
+                      text={`[${MANAGER_CALLED}] 직원 캘린더 수정 가능`}
                       authorityCheck={authorityCheck}
                       setAuthorityCheck={setAuthorityCheck}
                       alertModal={alertModal}
@@ -1486,7 +1489,7 @@ export default ({
                     <WhiteSpace />
                     <Authority
                       selection={3}
-                      text={'[매니저] 타 직원 출퇴근 알람 받기'}
+                      text={`[${MANAGER_CALLED}] 타 직원 출퇴근 알람 받기`}
                       authorityCheck={authorityCheck}
                       setAuthorityCheck={setAuthorityCheck}
                       alertModal={alertModal}

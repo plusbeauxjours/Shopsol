@@ -236,6 +236,7 @@ export default ({
   setIsCalendarModalVisible,
   gotoChecklistShareItem,
   loading,
+  MANAGER_CALLED,
 }) => {
   const Tab = createMaterialTopTabNavigator();
 
@@ -457,7 +458,9 @@ export default ({
           <TextBox>
             <Column>
               <EmptyText>특이사항을 등록해주세요.</EmptyText>
-              <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
+              <EmptyText>
+                직원이 점포 운영현황을 사업주에게 전달합니다.
+              </EmptyText>
             </Column>
           </TextBox>
         </EmptyBox>
@@ -478,7 +481,7 @@ export default ({
             <Column>
               <EmptyText>지시사항이 없습니다.</EmptyText>
               <EmptyText>
-                점장 및 매니저가 직원들에게 전달하는 내용입니다.
+                사업주 및 {MANAGER_CALLED}가 직원들에게 전달하는 내용입니다.
               </EmptyText>
             </Column>
           </TextBox>
@@ -499,7 +502,9 @@ export default ({
           <TextBox>
             <Column>
               <EmptyText>특이사항이 없습니다.</EmptyText>
-              <EmptyText>직원이 점포 운영현황을 점장에게 전달합니다.</EmptyText>
+              <EmptyText>
+                직원이 점포 운영현황을 사업주에게 전달합니다.
+              </EmptyText>
             </Column>
           </TextBox>
         </EmptyBox>
@@ -520,7 +525,7 @@ export default ({
             <Column>
               <EmptyText>지시사항을 등록해주세요.</EmptyText>
               <EmptyText>
-                점장 및 매니저가 직원들에게 전달하는 내용입니다.
+                사업주 및 {MANAGER_CALLED}가 직원들에게 전달하는 내용입니다.
               </EmptyText>
             </Column>
           </TextBox>

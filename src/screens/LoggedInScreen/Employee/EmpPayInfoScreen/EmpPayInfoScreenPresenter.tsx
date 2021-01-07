@@ -222,6 +222,7 @@ export default ({
   visible,
   loading,
   date,
+  MANAGER_CALLED,
 }) => {
   const boxButtonTransition = useTransition(boxButton);
   const boxButton2Transition = useTransition(boxButton2);
@@ -247,7 +248,7 @@ export default ({
       </SubItemContainer>
     );
   };
-
+  console.log('IS_MANAGER', IS_MANAGER);
   const TopAreaContainer = () => (
     <TopArea>
       <DateBox>
@@ -349,9 +350,7 @@ export default ({
           <NameBox>
             <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
               <NameText>{MEMBER_NAME}</NameText>
-              <DateText>
-                {IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
-              </DateText>
+              <DateText>[{IS_MANAGER}]</DateText>
             </Row>
             <EmployeeText>
               {EMP_PAY_TYPE && EMP_PAY_TYPE === '0' && '시급'}

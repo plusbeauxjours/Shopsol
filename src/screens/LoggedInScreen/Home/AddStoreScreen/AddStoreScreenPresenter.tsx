@@ -723,11 +723,12 @@ export default ({
               NAME?.length < 11 &&
               ADDR1 !== '' &&
               ADDR2 !== '' &&
-              categoryCheck == true &&
-              timeCheck == true &&
-              EARLYtimeCheck == true &&
-              dayCheck == true &&
-              storeCategoryType !== '분류 선택'
+              storeCategoryType !== '분류 선택' && //사업장분류
+              categoryCheck == true && //사업장분류
+              distanceCheck == true && //출퇴근 허용거리
+              timeCheck == true && //지각 허용시간
+              EARLYtimeCheck == true && //조퇴 허용시간
+              dayCheck == true //급여정산일
             }
           />
         </Container>

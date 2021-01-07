@@ -72,6 +72,7 @@ export default () => {
   const dispatch = useDispatch();
 
   const {HEALTH_EMP_LIST} = useSelector((state: any) => state.healthReducer);
+  const {MANAGER_CALLED} = useSelector((state: any) => state.storeReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -167,6 +168,7 @@ export default () => {
                       gotoHealthCertificateEmpForm={
                         gotoHealthCertificateEmpForm
                       }
+                      MANAGER_CALLED={MANAGER_CALLED}
                     />
                   </EmployeeListBox>
                 ),

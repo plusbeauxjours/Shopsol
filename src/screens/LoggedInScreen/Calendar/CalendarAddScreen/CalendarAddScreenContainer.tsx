@@ -15,8 +15,9 @@ export default () => {
   const {STORE_SEQ, STORE_NAME} = useSelector(
     (state: any) => state.storeReducer,
   );
+  const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
 
-  const [emplist, setEmplist] = useState<any>([]);
+  const [emplist, setEmplist] = useState<any>(EMPLOYEE_LIST?.workinglist);
   const [choiceEmp, setChoiceEmp] = useState<any>([]);
   const [startTime, setStartTime] = useState<any>(moment());
   const [endTime, setEndTime] = useState<any>(moment());
@@ -64,7 +65,7 @@ export default () => {
   const addEmpFn = (data) => {
     let buffer = JSON.parse(JSON.stringify(choiceEmp));
     for (let i = 0; i < buffer.length; i++) {
-      if (data.NAME == buffer[i].NAME) {
+      if (data.EMP_NAME == buffer[i].EMP_NAME) {
         return;
       }
     }
@@ -101,7 +102,7 @@ export default () => {
     for (var i = 0; i < choiceEmp.length; i++) {
       newChoiceEmp.push({
         EMP_SEQ: choiceEmp[i].EMP_SEQ,
-        EMP_NAME: choiceEmp[i].NAME,
+        EMP_NAME: choiceEmp[i].EMP_NAME,
       });
     }
     if (incentiveChecked === 0) {
@@ -217,22 +218,6 @@ export default () => {
       setTimeSelected(null);
     }
   };
-
-  const fetchData = async () => {
-    try {
-      const {data} = await api.getEmployeeList({STORE_SEQ});
-      if (data.message === 'SUCCESS') {
-        setEmplist(data.result);
-      }
-    } catch (e) {
-      console.log(e);
-      alertModal('통신이 원활하지 않습니다.');
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <CalendarAddScreenPresenter

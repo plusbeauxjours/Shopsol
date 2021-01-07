@@ -24,6 +24,7 @@ export default () => {
       STOREPAY_SHOW = null,
       resultdata: {CALCULATE_DAY = null} = {},
     } = {},
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
 
   let CALCULATE_MONTH_temp =
@@ -153,6 +154,7 @@ export default () => {
       loading={loading}
       startDate={startDate}
       EMPLOYEE_LIST={EMPLOYEE_LIST}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

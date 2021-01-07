@@ -22,6 +22,7 @@ export default () => {
     STORE_SEQ,
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
   const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
@@ -401,6 +402,7 @@ export default () => {
       prevDay={prevDay}
       nextDay={nextDay}
       setSearch={setSearch}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

@@ -30,6 +30,7 @@ export default () => {
   const {
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
+    MANAGER_CALLED
   } = useSelector((state: any) => state.storeReducer);
   const {EMPLOYEE_INFO_DATA} = useSelector(
     (state: any) => state.employeeReducer,
@@ -307,6 +308,7 @@ export default () => {
       PAY={PAY}
       PAY_TYPE={PAY_TYPE}
       calculateFn={calculateFn}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

@@ -355,6 +355,7 @@ export default ({
   prevDay,
   nextDay,
   setSearch,
+  MANAGER_CALLED,
 }) => {
   const EmpCardComponent = ({i, index}) => (
     <EmpCardContainer
@@ -395,7 +396,7 @@ export default ({
         />
         <EmpCardRow style={{marginBottom: 0}}>
           <Bold>
-            {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+            {i.EMP_NAME} [{i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
           </Bold>
         </EmpCardRow>
       </EmpCard>
@@ -774,7 +775,10 @@ export default ({
                               <Column>
                                 <Bold>
                                   {i.EMP_NAME} [
-                                  {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                                  {i.IS_MANAGER == '1'
+                                    ? MANAGER_CALLED
+                                    : '직원'}
+                                  ]
                                 </Bold>
                               </Column>
                             </EmpCard>
@@ -847,7 +851,10 @@ export default ({
                               <Column>
                                 <Bold>
                                   {i.EMP_NAME} [
-                                  {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                                  {i.IS_MANAGER == '1'
+                                    ? MANAGER_CALLED
+                                    : '직원'}
+                                  ]
                                 </Bold>
                               </Column>
                             </EmpCard>
@@ -920,7 +927,10 @@ export default ({
                               <Column>
                                 <Bold>
                                   {i.EMP_NAME} [
-                                  {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                                  {i.IS_MANAGER == '1'
+                                    ? MANAGER_CALLED
+                                    : '직원'}
+                                  ]
                                 </Bold>
                               </Column>
                             </EmpCard>
@@ -983,7 +993,10 @@ export default ({
                               <Column>
                                 <Bold>
                                   {i.EMP_NAME} [
-                                  {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                                  {i.IS_MANAGER == '1'
+                                    ? MANAGER_CALLED
+                                    : '직원'}
+                                  ]
                                 </Bold>
                                 <Text style={{marginTop: 5}}>
                                   {i.REST_TIME}분
@@ -1060,7 +1073,10 @@ export default ({
                               <Column>
                                 <Bold>
                                   {i.EMP_NAME} [
-                                  {i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                                  {i.IS_MANAGER == '1'
+                                    ? MANAGER_CALLED
+                                    : '직원'}
+                                  ]
                                 </Bold>
                               </Column>
                             </EmpCard>
@@ -1109,7 +1125,8 @@ export default ({
                   />
                   <Column>
                     <Bold>
-                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                      {i.EMP_NAME} [
+                      {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
                     </Bold>
                     {i.EARLY == 1 ? (
                       <Row>
@@ -1162,7 +1179,8 @@ export default ({
                   />
                   <Column>
                     <Bold>
-                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                      {i.EMP_NAME} [
+                      {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
                     </Bold>
                     {i.LATE == 1 ? (
                       <Row>
@@ -1215,7 +1233,8 @@ export default ({
                   />
                   <Column>
                     <Bold>
-                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                      {i.EMP_NAME} [
+                      {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
                     </Bold>
                     {i.NOWORK == 1 ? (
                       <Row>
@@ -1268,7 +1287,8 @@ export default ({
                   />
                   <Column>
                     <Bold>
-                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                      {i.EMP_NAME} [
+                      {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
                     </Bold>
                     {i.REST_TIME != '0' ? (
                       <Row>
@@ -1321,7 +1341,8 @@ export default ({
                   />
                   <Column>
                     <Bold>
-                      {i.EMP_NAME} [{i.IS_MANAGER == '1' ? '매니저' : '스태프'}]
+                      {i.EMP_NAME} [
+                      {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
                     </Bold>
                     {i.VACATION ? (
                       <Row>

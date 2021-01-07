@@ -138,7 +138,7 @@ export default () => {
               <NameBox>
                 <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
                   <NameText>{MEMBER_NAME}&nbsp;</NameText>
-                  <DateText>{STORE == 1 ? '[점장]' : '[직원]'}</DateText>
+                  <DateText>{STORE == 1 ? '[사업주]' : '[직원]'}</DateText>
                 </Row>
                 <InfoText>{MOBILE_NO}</InfoText>
               </NameBox>

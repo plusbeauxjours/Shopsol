@@ -28,14 +28,7 @@ const Text = styled.Text`
 const NameText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.greyColor};
-  margin-right: 10px;
   margin-bottom: 5px;
-  margin-left: 5px;
-`;
-
-const DateText = styled.Text`
-  color: ${styleGuide.palette.greyColor};
-  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const RowSpace = styled(Row)`
@@ -147,6 +140,7 @@ export default ({
   AUTOWORKOFF,
   IS_MANAGER,
   CALENDAR_EDIT,
+  MANAGER_CALLED,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -251,10 +245,10 @@ export default ({
           <CntArea>
             <RowSpace>
               <Row>
-                <NameText>{NAME}</NameText>
-                <DateText>
-                  {IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
-                </DateText>
+                <NameText style={{marginLeft: 5}}>{NAME}&nbsp;</NameText>
+                <NameText style={{fontSize: 12}}>
+                  {IS_MANAGER === '1' ? `[${MANAGER_CALLED}]` : '[직원]'}
+                </NameText>
               </Row>
               <Row>
                 {VACATION == '1' && (
@@ -350,11 +344,11 @@ export default ({
             )}
             {!VACATION && (
               <>
-                {(START_TIME?.substring(0, 5) ==
+                {START_TIME?.substring(0, 5) ==
                   UPDATED_START?.substring(0, 5) &&
-                  END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
-                (!START_TIME && !END_TIME) ||
-                (!UPDATED_START && !UPDATED_END) ? (
+                END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5) &&
+                !UPDATED_START &&
+                !UPDATED_END ? (
                   <WorkTime>
                     <WorkTitleText>출퇴근시간 </WorkTitleText>
                     <WorkTimeText>

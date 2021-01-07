@@ -50,15 +50,6 @@ const RowTitle = styled(Row)`
   height: 30px;
 `;
 
-const TimePickBox = styled.View`
-  margin-top: 20px;
-  padding: 20px;
-  border-color: ${styleGuide.palette.borderColor};
-  border-top-width: 1px;
-  justify-content: space-around;
-  height: 110px;
-`;
-
 const NameText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   color: #333;
@@ -95,16 +86,17 @@ const NormalBox = styled.TouchableOpacity<IsSelected>`
   height: 50px;
   margin: 0 5px;
   border-radius: 10px;
-  border-width: ${(props) => (props.isSelected ? 0 : 1)}px;
-  border-color: ${(props) => (props.isSelected ? 'transparent' : '#dedede')};
-  background-color: ${(props) =>
-    props.isSelected ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isSelected ? 2 : 1)}px;
+  border-color: ${(props) =>
+    props.isSelected ? styleGuide.palette.primary : '#dedede'};
+  background-color: transparent;
   align-items: center;
   justify-content: center;
 `;
 
 const NormalText = styled.Text<IsSelected>`
-  color: ${(props) => (props.isSelected ? 'white' : '#dedede')};
+  color: ${(props) =>
+    props.isSelected ? styleGuide.palette.primary : '#dedede'};
   font-size: 14px;
 `;
 
@@ -284,10 +276,10 @@ export default ({
               </WorkTimeText>
             </WorkTime>
           )}
-          {(START_TIME?.substring(0, 5) == UPDATED_START?.substring(0, 5) &&
-            END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
-          (!START_TIME && !END_TIME) ||
-          (!UPDATED_START && !UPDATED_END) ? (
+          {START_TIME?.substring(0, 5) == UPDATED_START?.substring(0, 5) &&
+          END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5) &&
+          !UPDATED_START &&
+          !UPDATED_END ? (
             <WorkTime>
               <WorkTitleText>출퇴근시간 </WorkTitleText>
               <WorkTimeText>
@@ -350,7 +342,7 @@ export default ({
         onPress={() => setIsStartTimeModalVisible(true)}>
         <SideText>출근시간</SideText>
         <TimePickBoxTimeText>
-          {noStart ? '미출근' : moment(startTime).format('HH:mm')}
+          {noStart ? '미출근' : moment(startTime).format('kk:mm')}
         </TimePickBoxTimeText>
       </RowSpaceTouchable>
       <WhiteSpace />
@@ -359,7 +351,7 @@ export default ({
         onPress={() => setIsEndTimeModalVisible(true)}>
         <SideText>퇴근시간</SideText>
         <TimePickBoxTimeText>
-          {noEnd ? '미출근' : moment(endTime).format('HH:mm')}
+          {noEnd ? '미출근' : moment(endTime).format('kk:mm')}
         </TimePickBoxTimeText>
       </RowSpaceTouchable>
       <WhiteSpace />
@@ -369,12 +361,20 @@ export default ({
           onPress={() => nomalTimeFn('start')}
           isSelected={!noStart}>
           <NormalText isSelected={!noStart}>정상출근</NormalText>
+          <NormalText
+            style={{marginTop: 5, fontSize: 10}}
+            isSelected={!noStart}>
+            ({moment(startTime).format('kk:mm')})
+          </NormalText>
         </NormalBox>
         <NormalBox
           disabled={!noEnd}
           onPress={() => nomalTimeFn('end')}
           isSelected={!noEnd}>
           <NormalText isSelected={!noEnd}>정상퇴근</NormalText>
+          <NormalText style={{marginTop: 5, fontSize: 10}} isSelected={!noEnd}>
+            ({moment(endTime).format('kk:mm')})
+          </NormalText>
         </NormalBox>
         <NormalBox
           disabled={noStart}

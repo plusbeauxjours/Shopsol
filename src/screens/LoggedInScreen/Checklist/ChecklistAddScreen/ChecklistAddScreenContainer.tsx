@@ -121,18 +121,6 @@ export default ({route: {params}}) => {
     }, 1000);
   };
 
-  const fetchData = async () => {
-    try {
-      const {data} = await api.getEmployeeList({STORE_SEQ});
-      if (data.message === 'SUCCESS') {
-        setEmplist(data.result);
-      }
-    } catch (e) {
-      console.log(e);
-      alertModal('통신이 원활하지 않습니다.');
-    }
-  };
-
   // 체크리스트 추가하기
   const submitFn = async (sign) => {
     let buffer = JSON.parse(JSON.stringify(choiceEmp));
@@ -282,7 +270,6 @@ export default ({route: {params}}) => {
           )?.images[0].IMAGE,
         });
       }
-
       setChoiceEmp(buffer);
     }
   };

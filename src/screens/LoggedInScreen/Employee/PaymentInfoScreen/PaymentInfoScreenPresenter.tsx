@@ -143,6 +143,7 @@ export default ({
   loading,
   startDate,
   EMPLOYEE_LIST,
+  MANAGER_CALLED
 }) => {
   return (
     <BackGround>
@@ -203,19 +204,19 @@ export default ({
                     </Touchable>
                   </Row>
                   <BoxTitleText3>
-                    {TOTAL_PAYMENT_WORKING_EMP?.STACKEDPAY}
+                    {TOTAL_PAYMENT_WORKING_EMP?.STACKEDPAY}&nbsp;원
                   </BoxTitleText3>
                 </Pay>
                 <Pay>
                   <BoxTitleText3>누적급여</BoxTitleText3>
                   <BoxTitleText3>
-                    {TOTAL_PAYMENT_WORKING_EMP?.TOTALPAY}
+                    {TOTAL_PAYMENT_WORKING_EMP?.TOTALPAY}&nbsp;원
                   </BoxTitleText3>
                 </Pay>
                 <Pay>
                   <BoxTitleText3>주휴수당</BoxTitleText3>
                   <BoxTitleText3>
-                    {TOTAL_PAYMENT_WORKING_EMP?.WEEKPAY}
+                    {TOTAL_PAYMENT_WORKING_EMP?.WEEKPAY}&nbsp;원
                   </BoxTitleText3>
                 </Pay>
               </PayBox>
@@ -228,7 +229,7 @@ export default ({
                   <PaymentInfoScreenCard
                     key={data.MEMBER_SEQ}
                     name={data.EMP_NAME}
-                    isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                    isManager={data.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
                     image={data.images[0].IMAGE}
                     data={data}
                     STORE={STORE}
@@ -271,7 +272,7 @@ export default ({
                   <PaymentInfoScreenCard
                     key={data.MEMBER_SEQ}
                     name={data.EMP_NAME}
-                    isManager={data.IS_MANAGER == 0 ? '스태프' : '매니저'}
+                    isManager={data.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
                     image={data.IMAGE}
                     data={data}
                     STORE={STORE}

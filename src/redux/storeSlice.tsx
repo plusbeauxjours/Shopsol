@@ -7,6 +7,7 @@ const storeSlice = createSlice({
     STORE_NAME: '',
     EMP_SEQ: '',
     STORE_DATA: {},
+    MANAGER_CALLED: '',
   },
   reducers: {
     setEMP_SEQ(state, action) {
@@ -18,8 +19,11 @@ const storeSlice = createSlice({
     },
     setSTORE_DATA(state, action) {
       const {payload: STORE_DATA} = action;
+      console.log(STORE_DATA?.resultdata.CATEGORY);
       return {
         ...state,
+        MANAGER_CALLED:
+          STORE_DATA?.resultdata.CATEGORY == '일반회사' ? '관리자' : '매니저',
         STORE_DATA,
       };
     },
@@ -68,6 +72,7 @@ const storeSlice = createSlice({
       state.STORE_DATA.resultdata.other = other;
       state.STORE_DATA.resultdata.LAT = LAT;
       state.STORE_DATA.resultdata.LONG = LONG;
+      state.MANAGER_CALLED = CATEGORY == '일반회사' ? '관리자' : '매니저';
     },
     closeSTORE_DATA(state) {
       return {
@@ -76,6 +81,7 @@ const storeSlice = createSlice({
         STORE_NAME: '',
         EMP_SEQ: '',
         STORE_DATA: {},
+        MANAGER_CALLED: '',
       };
     },
     removeSTORE_NAME(state) {

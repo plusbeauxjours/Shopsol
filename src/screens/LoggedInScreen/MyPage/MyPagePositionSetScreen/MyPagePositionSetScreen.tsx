@@ -125,7 +125,7 @@ export default () => {
           <Row style={{justifyContent: 'space-between', alignItems: 'center'}}>
             <TitleText>가입유형</TitleText>
             <TypeCheckCase>
-              <View>{positionType(1, '점장')}</View>
+              <View>{positionType(1, '사업주')}</View>
               <View>{positionType(0, '직원')}</View>
             </TypeCheckCase>
           </Row>

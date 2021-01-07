@@ -21,9 +21,11 @@ export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
-  const {STORE_SEQ, STORE_DATA: {IS_MANAGER = null} = {}} = useSelector(
-    (state: any) => state.storeReducer,
-  );
+  const {
+    STORE_SEQ,
+    STORE_DATA: {IS_MANAGER = null} = {},
+    MANAGER_CALLED,
+  } = useSelector((state: any) => state.storeReducer);
   const {
     CHECKLIST_SHARE_STORE_SEQ,
     CHECKLIST_SHARE_DATA1,
@@ -71,7 +73,9 @@ export default () => {
     let TYPE;
     type == 'fix' ? (TYPE = '고정은') : (TYPE = '고정해제는');
     if (STORE == '0' && IS_MANAGER == 0) {
-      return alertModal(`상단${TYPE} 점장 또는 매니저만 가능합니다`);
+      return alertModal(
+        `상단${TYPE} 사업주 또는 ${MANAGER_CALLED}만 가능합니다`,
+      );
     }
     if (type == 'fix') {
       return confirmModal(
@@ -264,6 +268,7 @@ export default () => {
       setIsCalendarModalVisible={setIsCalendarModalVisible}
       gotoChecklistShareItem={gotoChecklistShareItem}
       loading={loading}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

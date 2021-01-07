@@ -14,6 +14,7 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
   const {
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
+    MANAGER_CALLED
   } = useSelector((state: any) => state.storeReducer);
 
   const {
@@ -128,7 +129,7 @@ export default ({route: {params}}) => {
   const [positionCheck, setPositionCheck] = useState<[boolean, boolean]>([
     true,
     false,
-  ]); //  [직원, 점장]
+  ]); //  [직원, 사업주]
   const [authorityCheck, setAuthorityCheck] = useState<
     [boolean, boolean, boolean, boolean, boolean]
   >([false, false, false, false, false]); //  [선택 시 본인급여 확인 가능, [매니저] 타 직원급여 확인 및 수정 가능, [매니저] 직원 일정 수정 가능, [매니저] 타 직원 출퇴근 알람 받기]
@@ -588,6 +589,7 @@ export default ({route: {params}}) => {
       PAY={PAY}
       mobileNo={mobileNo}
       CALCULATE_DAY={CALCULATE_DAY}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

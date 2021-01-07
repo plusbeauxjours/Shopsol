@@ -289,7 +289,7 @@ export default () => {
           component={ChecklistDetailScreen}
           options={{
             headerTitle: '체크리스트 체크상세',
-            title: '체크리스트 상세 (점장)',
+            title: '체크리스트 상세 (사업주)',
           }}
         />
         {/* 업무일지======================================================== */}
@@ -410,7 +410,7 @@ export default () => {
           component={EmployeeInfoScreen}
           options={{
             headerTitle: '직원 정보',
-            title: '직원 정보 (점장)',
+            title: '직원 정보 (사업주)',
           }}
         />
         <LoggedInNavigation.Screen

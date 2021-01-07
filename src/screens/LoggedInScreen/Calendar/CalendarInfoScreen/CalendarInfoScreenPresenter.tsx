@@ -59,9 +59,12 @@ export default ({
   STORE_SEQ,
   CALENDAR_EDIT,
   onChangeMonth,
+  onDayPressFn,
   markedDates,
   CALENDAR_DATA,
   loading,
+  fetchData,
+  MANAGER_CALLED,
 }) => {
   const rowHasChanged = (r1, r2) => r1 !== r2;
   const renderKnob = () => (
@@ -104,6 +107,7 @@ export default ({
         AUTOWORKOFF={data.AUTOWORKOFF}
         IS_MANAGER={data.IS_MANAGER}
         CALENDAR_EDIT={CALENDAR_EDIT}
+        MANAGER_CALLED={MANAGER_CALLED}
       />
     );
   };
@@ -159,6 +163,7 @@ export default ({
       }}
       refreshControl={null}
       refreshing={false}
+      onRefresh={() => fetchData()}
       monthFormat={'yyyy년 M월'}
       renderDay={(day, item) => {
         if (day !== undefined) {
@@ -218,6 +223,7 @@ export default ({
         }
       }}
       rowHasChanged={rowHasChanged}
+      onDayPress={(date) => onDayPressFn(date)}
       loadItemsForMonth={(date) => onChangeMonth(date)}
       markingType={'multi-dot'}
     />

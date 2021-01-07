@@ -21,6 +21,7 @@ export default () => {
     STORE_SEQ,
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
 
@@ -622,6 +623,7 @@ export default () => {
       prevMonth={prevMonth}
       nextMonth={nextMonth}
       setSearch={setSearch}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

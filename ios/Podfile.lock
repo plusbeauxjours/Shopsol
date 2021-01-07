@@ -134,6 +134,10 @@ PODS:
   - nanopb/encode (2.30906.0)
   - Permission-Camera (2.2.0):
     - RNPermissions
+  - Permission-Contacts (2.2.0):
+    - RNPermissions
+  - Permission-Notifications (2.2.0):
+    - RNPermissions
   - PromisesObjC (1.2.11)
   - RCTRequired (0.63.3)
   - RCTTypeSafety (0.63.3):
@@ -476,6 +480,8 @@ DEPENDENCIES:
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
+  - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts.podspec`)
+  - Permission-Notifications (from `../node_modules/react-native-permissions/ios/Notifications.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -581,6 +587,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/lottie-react-native"
   Permission-Camera:
     :path: "../node_modules/react-native-permissions/ios/Camera.podspec"
+  Permission-Contacts:
+    :path: "../node_modules/react-native-permissions/ios/Contacts.podspec"
+  Permission-Notifications:
+    :path: "../node_modules/react-native-permissions/ios/Notifications.podspec"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -715,6 +725,8 @@ SPEC CHECKSUMS:
   lottie-react-native: 1fb4ce21d6ad37dab8343eaff8719df76035bd93
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   Permission-Camera: 9ff12884205fb282b4a22b9e8c358ba53cee7567
+  Permission-Contacts: 2c9a8932f30582ed175551b7baa8d0344837c53b
+  Permission-Notifications: 572d4e94121e57dbecc71a0933abd8ed61108e92
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   RCTRequired: 48884c74035a0b5b76dbb7a998bd93bcfc5f2047
   RCTTypeSafety: edf4b618033c2f1c5b7bc3d90d8e085ed95ba2ab
@@ -773,6 +785,6 @@ SPEC CHECKSUMS:
   TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
 
-PODFILE CHECKSUM: d6d6e74bc5bc4c30a046bf4a85f6066772ac581e
+PODFILE CHECKSUM: 82901966f6b81149a29f32558063408236d490d0
 
 COCOAPODS: 1.10.0

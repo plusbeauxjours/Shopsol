@@ -232,6 +232,7 @@ export default ({
   PAY,
   PAY_TYPE,
   calculateFn,
+  MANAGER_CALLED,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -435,8 +436,8 @@ export default ({
                     <NameText>{EMPLOYEE_INFO_DATA?.EMP_NAME}</NameText>
                     <DateText>
                       {EMPLOYEE_INFO_DATA?.IS_MANAGER === '1'
-                        ? '[매니저]'
-                        : '[스태프]'}
+                        ? `[${MANAGER_CALLED}]`
+                        : '[직원]'}
                     </DateText>
                   </Row>
                   <InfoText>

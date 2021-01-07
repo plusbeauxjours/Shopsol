@@ -25,7 +25,9 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {STORE} = useSelector((state: any) => state.userReducer);
-  const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
+  const {STORE_DATA, MANAGER_CALLED} = useSelector(
+    (state: any) => state.storeReducer,
+  );
   const {PAY = null, PAY_TYPE = null, EMP_SEQ = null} = params;
   const [isFreeWorkingType, setIsFreeWorkingType] = useState<boolean>(
     params.isFreeWorkingType,
@@ -447,6 +449,7 @@ export default ({route: {params}}) => {
       alertModal={alertModal}
       joinModal={joinModal}
       IMAGE={params?.IMAGE}
+      MANAGER_CALLED={MANAGER_CALLED}
     />
   );
 };

@@ -301,6 +301,7 @@ export default ({
   getNumberToday,
   gotoSetInfo,
   mobileNo,
+  MANAGER_CALLED,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -504,7 +505,9 @@ export default ({
                       style={{justifyContent: 'flex-start', marginBottom: 5}}>
                       <NameText>{data?.EMP_NAME}</NameText>
                       <DateText>
-                        {data?.IS_MANAGER === '1' ? '[매니저]' : '[스태프]'}
+                        {data?.IS_MANAGER === '1'
+                          ? `[${MANAGER_CALLED}]`
+                          : '[직원]'}
                       </DateText>
                     </Row>
                     <Row style={{justifyContent: 'flex-start'}}>

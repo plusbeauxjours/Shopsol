@@ -105,7 +105,7 @@ export default ({
             employee={data.emplist}
             STORE={STORE}
             TYPE={data.TYPE}
-            MANAGER={data.IS_MANAGER == 1 ? '[매니저]' : '[스태프]'}
+            MANAGER={data.IS_MANAGER == 1 ? '[매니저]' : '[직원]'}
             workinglist={data.workinglist}
             gotoHomeScreen={gotoHomeScreen}
           />
@@ -155,7 +155,7 @@ export default ({
                 <Column>
                   <EmptyText>합류된 사업장이 없습니다!</EmptyText>
                   <EmptyText>
-                    점장 또는 매니저가 직원을 초대할 수 있습니다.
+                    사업주 또는 매니저(관리자)가 직원을 초대할 수 있습니다.
                   </EmptyText>
                   <EmptyText>
                     초대 후 재로그인하여 직원이 사업장을 확인하게 되면

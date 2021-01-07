@@ -344,7 +344,10 @@ export default ({
             contentContainerStyle={{marginTop: 10}}>
             {choiceEmp?.map((data, index) => (
               <Touchable key={index} onPress={() => deleteEmpFn(data.MobileNo)}>
-                <CalendarAddScreenCard name={data.NAME} image={data.IMAGE} />
+                <CalendarAddScreenCard
+                  name={data.EMP_NAME}
+                  image={data.images[0]?.IMAGE}
+                />
               </Touchable>
             ))}
           </ScrollView>
@@ -549,7 +552,7 @@ export default ({
                 addEmpFn(data);
               }}>
               <ModalCheckEmpList>
-                <Bold>{data.NAME}</Bold>
+                <Bold>{data.EMP_NAME}</Bold>
                 <Text>{data.MobileNo}</Text>
                 <AddCircleIcon size={20} />
               </ModalCheckEmpList>

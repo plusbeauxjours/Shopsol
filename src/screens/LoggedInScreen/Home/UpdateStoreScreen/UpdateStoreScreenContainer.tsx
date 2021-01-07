@@ -185,7 +185,7 @@ export default ({route: {params}}) => {
       dispatch(closeSTORE_DATA());
       dispatch(getSTORELIST_DATA());
     } else {
-      alertModal('수정이 완료됐습니다.');
+      alertModal('수정 하였습니다.');
       dispatch(
         updateSTORE({
           NAME,
@@ -210,6 +210,8 @@ export default ({route: {params}}) => {
     let CLOSE_FLAGProps = CLOSE_FLAG == false ? '0' : '1';
     if (sign == 'close') {
       CLOSE_FLAGProps = '1';
+    } else {
+      CLOSE_FLAGProps = '0';
     }
     try {
       const {data} = await api.updateStore({
@@ -232,6 +234,7 @@ export default ({route: {params}}) => {
         other: storeCategoryTypeEtc,
       });
       if (data.message !== 'SUCCESS') {
+        navigation.navigate('UpdateStoreScreen');
         alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {

@@ -686,7 +686,7 @@ export default ({
               </MapView>
             </>
           )}
-          {STORE == '1' ? ( // 점장 ============================
+          {STORE == '1' ? ( // 사업주 ============================
             <>
               <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                 <MenuTitleArea style={{zIndex: 3}}>
@@ -845,7 +845,7 @@ export default ({
             </>
           ) : (
             <>
-              {STORE_DATA?.IS_MANAGER == '1' ? ( // 매니저 ============================
+              {STORE_DATA?.IS_MANAGER == '1' ? (
                 <>
                   <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                     <MenuTitleArea style={{zIndex: 3}}>
@@ -1168,7 +1168,7 @@ export default ({
                   )}
                 </>
               ) : (
-                // 스태프 ============================
+                // 직원 ============================
                 <>
                   <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                     <MenuTitleArea style={{zIndex: 3}}>
