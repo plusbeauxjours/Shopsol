@@ -49,7 +49,6 @@ const EmployeeBox = styled.View`
 `;
 
 const NameText = styled.Text`
-  margin-right: 10px;
   color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
 `;
@@ -433,12 +432,12 @@ export default ({
 
                 <NameBox>
                   <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
-                    <NameText>{EMPLOYEE_INFO_DATA?.EMP_NAME}</NameText>
-                    <DateText>
+                    <NameText>{EMPLOYEE_INFO_DATA?.EMP_NAME}&nbsp;</NameText>
+                    <NameText style={{fontSize: 12}}>
                       {EMPLOYEE_INFO_DATA?.IS_MANAGER === '1'
                         ? `[${MANAGER_CALLED}]`
                         : '[직원]'}
-                    </DateText>
+                    </NameText>
                   </Row>
                   <InfoText>
                     근무기간&nbsp;(

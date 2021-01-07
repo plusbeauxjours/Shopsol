@@ -25,12 +25,12 @@ const NameBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const DateText = styled.Text`
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.middle}px;
 `;
 

@@ -63,7 +63,6 @@ const EmployeeBox = styled.View`
 `;
 
 const NameText = styled.Text`
-  margin-right: 10px;
   color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
 `;
@@ -503,12 +502,12 @@ export default ({
                   <Touchable onPress={() => Linking.openURL(`tel:${mobileNo}`)}>
                     <Row
                       style={{justifyContent: 'flex-start', marginBottom: 5}}>
-                      <NameText>{data?.EMP_NAME}</NameText>
-                      <DateText>
+                      <NameText>{data?.EMP_NAME}&nbsp;</NameText>
+                      <NameText style={{fontSize: 10}}>
                         {data?.IS_MANAGER === '1'
                           ? `[${MANAGER_CALLED}]`
                           : '[직원]'}
-                      </DateText>
+                      </NameText>
                     </Row>
                     <Row style={{justifyContent: 'flex-start'}}>
                       <PhoneIcon color={styleGuide.palette.greyColor} />

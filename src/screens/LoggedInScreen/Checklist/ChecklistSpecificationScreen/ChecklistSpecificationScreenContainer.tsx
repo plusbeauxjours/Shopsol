@@ -37,7 +37,6 @@ export default ({route: {params}}) => {
     } = {},
     scan,
   } = params;
-  console.log(params);
   // FROM MODAL EDITABLE
   // {
   //   "scan": "1"

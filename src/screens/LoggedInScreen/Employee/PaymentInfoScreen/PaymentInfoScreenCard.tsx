@@ -31,7 +31,7 @@ const NameText = styled.Text`
 `;
 
 const DateText = styled.Text`
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.middle}px;
 `;
 
@@ -55,6 +55,7 @@ export default ({
   key,
   name,
   isManager,
+  MANAGER_CALLED,
   image,
   data,
   STORE,
@@ -91,7 +92,9 @@ export default ({
       <NameBox>
         <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
           <NameText>{name}</NameText>
-          <DateText>[{isManager}]</DateText>
+          <DateText>
+            {isManager == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}
+          </DateText>
         </Row>
         <PayText>
           {data?.PAY_TYPE === '0' && '시급'}

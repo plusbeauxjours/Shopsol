@@ -9,17 +9,12 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {openSettings, PERMISSIONS, request} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {setSplashVisible} from '~/redux/splashSlice';
 import {setSTORE_DATA, setEMP_SEQ} from '~/redux/storeSlice';
-import {
-  addCUSTOM_MENU_STORE,
-  addCUSTOM_MENU_EMP,
-  removeCUSTOM_MENU_STORE,
-  removeCUSTOM_MENU_EMP,
-} from '~/redux/userSlice';
+import {addCUSTOM_MENU_EMP, removeCUSTOM_MENU_EMP} from '~/redux/userSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
@@ -27,6 +22,7 @@ import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
   const {
     STORE_SEQ,
@@ -71,54 +67,6 @@ export default ({route: {params}}) => {
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
 
-  const storeKeepersStoreMenu = [
-    {
-      selection: '사업장현황',
-      paging: 'DashBoardScreen',
-      count: null,
-      source: require(`../../../../assets/main/Invite.png`),
-    },
-    {
-      selection: '직원초대',
-      paging: 'InviteEmployeeScreen',
-      count: null,
-      source: require(`../../../../assets/main/Invite.png`),
-    },
-    {
-      selection: '직원목록',
-      paging: 'EmployeeListScreen',
-      count: null,
-      source: require(`../../../../assets/main/EmployeeList.png`),
-    },
-    {
-      selection: '직원합류승인',
-      paging: 'ManageInviteEmployeeScreen',
-      count: invitedEmpCount,
-      source: require(`../../../../assets/main/ManageInviteEmployee.png`),
-    },
-    {
-      selection: '캘린더',
-      paging: 'CalendarInfoScreen',
-      count: null,
-      source:
-        STORE_DATA?.CalendarEdit == 1
-          ? require('../../../../assets/main/CalendarInfo.png')
-          : require('../../../../assets/main/CalendarInfoEmp.png'),
-    },
-    {
-      selection: '급여정보',
-      paging: 'PaymentInfoScreen',
-      count: null,
-      source: require(`../../../../assets/main/PaymentInfo.png`),
-    },
-    {
-      selection: 'QR보기',
-      paging: 'qrViewScreen',
-      count: null,
-      source: require(`../../../../assets/main/qrView.png`),
-    },
-  ];
-
   const storeKeepersEMPMenu = [
     {
       selection: '체크리스트',
@@ -143,66 +91,6 @@ export default ({route: {params}}) => {
       paging: 'HealthCertificateTypeScreen',
       count: null,
       source: require(`../../../../assets/main/HealthCertificateType.png`),
-    },
-  ];
-
-  const managersStoreMenu = [
-    {
-      selection: '사업장현황',
-      paging: 'DashBoardScreen',
-      count: null,
-      source: require(`../../../../assets/main/Invite.png`),
-    },
-    {
-      selection: '직원초대',
-      paging: 'InviteEmployeeScreen',
-      count: null,
-      source: require(`../../../../assets/main/Invite.png`),
-    },
-    {
-      selection: '직원목록',
-      paging: 'EmployeeListScreen',
-      count: null,
-      source: require(`../../../../assets/main/EmployeeList.png`),
-    },
-    {
-      selection: '직원정보',
-      paging: 'EmployeeInfoEMPScreen',
-      count: null,
-      source: require(`../../../../assets/main/EmployeeInfoEmp.png`),
-    },
-    {
-      selection: '직원합류승인',
-      paging: 'ManageInviteEmployeeScreen',
-      count: invitedEmpCount,
-      source: require(`../../../../assets/main/ManageInviteEmployee.png`),
-    },
-    {
-      selection: '캘린더',
-      paging: 'CalendarInfoScreen',
-      count: null,
-      source:
-        STORE_DATA?.CalendarEdit == 1
-          ? require(`../../../../assets/main/CalendarInfo.png`)
-          : require(`../../../../assets/main/CalendarInfoEmp.png`),
-    },
-    {
-      selection: '급여정보',
-      paging: 'PaymentInfoScreen',
-      count: null,
-      source: require(`../../../../assets/main/PaymentInfo.png`),
-    },
-    {
-      selection: '급여정보',
-      paging: 'EmpPayInfoScreen',
-      count: null,
-      source: require(`../../../../assets/main/PaymentInfo.png`),
-    },
-    {
-      selection: 'QR보기',
-      paging: 'qrViewScreen',
-      count: null,
-      source: require(`../../../../assets/main/qrView.png`),
     },
   ];
 
@@ -232,6 +120,7 @@ export default ({route: {params}}) => {
       source: require(`../../../../assets/main/HealthCertificateType.png`),
     },
   ];
+
   const employeesMenu = [
     {
       selection: '캘린더',
@@ -280,15 +169,10 @@ export default ({route: {params}}) => {
     },
   ];
 
-  const addCUSTOM_MENU_STORE_Fn = (CUSTOM_MENU_STORE) => {
-    dispatch(addCUSTOM_MENU_STORE({STORE_SEQ, CUSTOM_MENU_STORE}));
-  };
   const addCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
     dispatch(addCUSTOM_MENU_EMP({STORE_SEQ, CUSTOM_MENU_EMP}));
   };
-  const removeCUSTOM_MENU_STORE_Fn = (CUSTOM_MENU_STORE) => {
-    dispatch(removeCUSTOM_MENU_STORE({STORE_SEQ, CUSTOM_MENU_STORE}));
-  };
+
   const removeCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
     dispatch(removeCUSTOM_MENU_EMP({STORE_SEQ, CUSTOM_MENU_EMP}));
   };
@@ -563,6 +447,11 @@ export default ({route: {params}}) => {
     );
   };
 
+  const gotoScreen = (paging) => {
+    navigation.navigate(`${paging}`);
+    setEditMode(false);
+  };
+
   const toRad = (angle) => {
     return (angle * Math.PI) / 180;
   };
@@ -632,19 +521,16 @@ export default ({route: {params}}) => {
       setIsWorkingMode={setIsWorkingMode}
       editMode={editMode}
       setEditMode={setEditMode}
-      storeKeepersStoreMenu={storeKeepersStoreMenu}
       storeKeepersEMPMenu={storeKeepersEMPMenu}
-      managersStoreMenu={managersStoreMenu}
       managersEMPMenu={managersEMPMenu}
       employeesMenu={employeesMenu}
       CUSTOM_MENU_STORE={CUSTOM_MENU_STORE}
       CUSTOM_MENU_EMP={CUSTOM_MENU_EMP}
-      addCUSTOM_MENU_STORE_Fn={addCUSTOM_MENU_STORE_Fn}
       addCUSTOM_MENU_EMP_Fn={addCUSTOM_MENU_EMP_Fn}
-      removeCUSTOM_MENU_STORE_Fn={removeCUSTOM_MENU_STORE_Fn}
       removeCUSTOM_MENU_EMP_Fn={removeCUSTOM_MENU_EMP_Fn}
       AVATAR={AVATAR}
       initLoading={initLoading}
+      gotoScreen={gotoScreen}
     />
   );
 };

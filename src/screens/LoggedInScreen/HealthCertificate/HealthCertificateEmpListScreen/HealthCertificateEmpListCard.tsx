@@ -27,12 +27,12 @@ const NameBox = styled.View`
 
 const NameText = styled.Text`
   margin-right: 10px;
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
 `;
 
 const DateText = styled.Text`
-  color: #707070;
+  color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.middle}px;
 `;
 
@@ -77,7 +77,7 @@ export default ({
           <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
             <NameText>{data?.NAME}</NameText>
             <DateText>
-              [{data?.IS_MANAGER == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}]
+              {data?.IS_MANAGER == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}
             </DateText>
           </Row>
           {data?.RESULT_DATE ? (
@@ -125,7 +125,7 @@ export default ({
           <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
             <NameText>{data?.NAME}</NameText>
             <DateText>
-              [{data?.IS_MANAGER == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}]
+              {data?.IS_MANAGER == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}
             </DateText>
           </Row>
           {data?.RESULT_DATE ? (

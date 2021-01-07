@@ -414,7 +414,6 @@ export default ({
               <SubText>미선택시 전 직원이 체크할 수 있습니다.</SubText>
             </Touchable>
             <WhiteSpace />
-            {console.log('choiceEmp', choiceEmp)}
             {isCheckedEmpChoise && (
               <ScrollView horizontal={true}>
                 {choiceEmp?.map((data, index) => (

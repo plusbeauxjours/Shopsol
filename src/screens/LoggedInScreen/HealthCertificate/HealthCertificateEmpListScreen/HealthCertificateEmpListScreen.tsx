@@ -96,6 +96,7 @@ export default () => {
       NAME,
       EMP_SEQ,
       RESULT_COUNT,
+      MANAGER_CALLED,
     });
   };
 
@@ -137,6 +138,7 @@ export default () => {
                       gotoHealthCertificateEmpDetail
                     }
                     gotoHealthCertificateEmpForm={gotoHealthCertificateEmpForm}
+                    MANAGER_CALLED={MANAGER_CALLED}
                   />
                 ))}
             </EmployeeListBox>

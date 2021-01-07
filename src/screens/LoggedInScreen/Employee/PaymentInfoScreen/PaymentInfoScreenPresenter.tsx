@@ -143,7 +143,7 @@ export default ({
   loading,
   startDate,
   EMPLOYEE_LIST,
-  MANAGER_CALLED
+  MANAGER_CALLED,
 }) => {
   return (
     <BackGround>
@@ -229,7 +229,8 @@ export default ({
                   <PaymentInfoScreenCard
                     key={data.MEMBER_SEQ}
                     name={data.EMP_NAME}
-                    isManager={data.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
+                    isManager={data.IS_MANAGER}
+                    MANAGER_CALLED={MANAGER_CALLED}
                     image={data.images[0].IMAGE}
                     data={data}
                     STORE={STORE}
@@ -272,7 +273,8 @@ export default ({
                   <PaymentInfoScreenCard
                     key={data.MEMBER_SEQ}
                     name={data.EMP_NAME}
-                    isManager={data.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
+                    isManager={data.IS_MANAGER}
+                    MANAGER_CALLED={MANAGER_CALLED}
                     image={data.IMAGE}
                     data={data}
                     STORE={STORE}
