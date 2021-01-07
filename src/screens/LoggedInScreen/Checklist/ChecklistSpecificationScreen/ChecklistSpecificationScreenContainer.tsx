@@ -37,7 +37,7 @@ export default ({route: {params}}) => {
     } = {},
     scan,
   } = params;
-
+  console.log(params);
   // FROM MODAL EDITABLE
   // {
   //   "scan": "1"
@@ -240,7 +240,7 @@ export default ({route: {params}}) => {
         const {data} = await api.setCheckListImg2(formData);
         if (data.result === 'SUCCESS') {
           alertModal('체크가 완료되었습니다.');
-          dispatch(getCHECKLIST_DATA(params?.data.CHECK_DAT));
+          dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
         }
       } catch (e) {
         alertModal('연결에 실패하였습니다.');
@@ -252,7 +252,6 @@ export default ({route: {params}}) => {
       }
     } else {
       try {
-        dispatch(getCHECKLIST_DATA(params?.data.CHECK_DAT));
         navigation.goBack();
         alertModal('체크가 완료되었습니다.');
         const {data} = await api.setCheckList2({
@@ -266,7 +265,7 @@ export default ({route: {params}}) => {
         });
         if (data.result === 'SUCCESS') {
           alertModal('체크가 완료되었습니다.');
-          dispatch(getCHECKLIST_DATA(params?.data.CHECK_DAT));
+          dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
         }
       } catch (e) {
         console.log(e);

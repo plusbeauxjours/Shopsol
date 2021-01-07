@@ -82,7 +82,7 @@ export default {
       `/Store/ChecklistAll?STORE=${storeID}&YEAR=${YEAR}&MONTH=${MONTH}`,
     ),
   checkRegister: (data: any) => oldApi('post', '/Store/CheckRegister/', data),
-  getEmployeeList: (data: any) => oldApi('post', '/Employee/getEmpList/', data),
+
   checkUpdate: (data: any) => oldApi('post', '/Store/CheckUpdate/', data),
   getAllCheckSchedules: (data: any) =>
     callApi('post', '/auth/getAllCheckSchedules/', data),
@@ -169,6 +169,7 @@ export default {
   cancelJoin: (data: any) => callApi('post', '/auth/canceljoin', data),
   rejectJoin: (data: any) => oldApi('post', '/Employee/reject_join/', data),
   sendOneEmp: (data: any) => oldApi('post', '/Auth/sendOneEmp', data),
+  getEmployeeList: (data: any) => oldApi('post', '/Employee/getEmpList/', data),
   getEmpLists: (STORE_SEQ: string) =>
     oldApi('get', `/Store/get_emp_lists?STORE_SEQ=${STORE_SEQ}`),
   toggleCalendar: (data: any) =>

@@ -25,6 +25,7 @@ export default ({route: {params}}) => {
     EMP_SEQ = null,
   } = params;
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
+  const {EMPLOYEE_LIST} = useSelector((state: any) => state.employeeReducer);
 
   const [choiceEmp, setChoiceEmp] = useState<any>([]);
   const [isCheckedEmpChoise, setIsCheckedEmpChoise] = useState<boolean>(
@@ -260,14 +261,25 @@ export default ({route: {params}}) => {
 
   const initialize = () => {
     if (NAME && EMP_SEQ) {
-      let buffer = [];
-      let empNameArr = NAME.split('@');
-      let empSeqArr = EMP_SEQ.split('@');
-      for (let i = 0; i < empNameArr.length; i++) {
+      const buffer = [];
+      const empSeqArr = EMP_SEQ.split('@');
+      for (let i = 0; i < empSeqArr.length; i++) {
+        console.log(
+          empSeqArr[i],
+          typeof empSeqArr[i],
+          empSeqArr[i].length,
+          EMPLOYEE_LIST?.workinglist.find((j) => j.EMP_SEQ == empSeqArr[i]),
+        );
         buffer.push({
-          NAME: empNameArr[i],
-          EMP_SEQ: empSeqArr[i],
-          IMAGE: '',
+          NAME: EMPLOYEE_LIST?.workinglist.find(
+            (j) => j.EMP_SEQ == empSeqArr[i],
+          )?.EMP_NAME,
+          EMP_SEQ: EMPLOYEE_LIST?.workinglist.find(
+            (j) => j.EMP_SEQ == empSeqArr[i],
+          )?.EMP_SEQ,
+          IMAGE: EMPLOYEE_LIST?.workinglist.find(
+            (j) => j.EMP_SEQ == empSeqArr[i],
+          )?.images[0].IMAGE,
         });
       }
 
@@ -277,7 +289,6 @@ export default ({route: {params}}) => {
 
   useEffect(() => {
     initialize();
-    fetchData();
   }, []);
 
   return (
