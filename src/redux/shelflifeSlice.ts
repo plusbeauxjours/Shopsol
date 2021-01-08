@@ -6,17 +6,10 @@ import { setSplashVisible } from '~/redux/splashSlice';
 const shelflifetSlice = createSlice({
   name: 'shelflife',
   initialState: {
-    SHELFLIFE_DATA_STORE_SEQ: '',
     SHELFLIFE_DATA: [],
   },
   reducers: {
-    setSHELFLIFE_DATA_STORE_SEQ(state, action) {
-      const { payload: SHELFLIFE_DATA_STORE_SEQ } = action;
-      return {
-        ...state,
-        SHELFLIFE_DATA_STORE_SEQ,
-      };
-    },
+
     setSHELFLIFE_DATA(state, action) {
       const { payload: SHELFLIFE_DATA } = action;
       return {
@@ -91,7 +84,6 @@ const shelflifetSlice = createSlice({
 });
 
 export const {
-  setSHELFLIFE_DATA_STORE_SEQ,
   setSHELFLIFE_DATA,
   checkSHELFLIFE,
   cancelSHELFLIFE,
@@ -115,7 +107,6 @@ export const getSHELFLIFE_DATA = (
       MONTH,
       DAY,
     });
-    dispatch(setSHELFLIFE_DATA_STORE_SEQ(STORE_SEQ))
     return data.resultdata;
   } catch (e) {
     console.log(e);

@@ -447,8 +447,8 @@ export default ({
         <EmptyBox>
           <FastImage
             style={{
-              width: 377,
-              height: 535,
+              width: 300,
+              height: 425,
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -469,8 +469,8 @@ export default ({
         <EmptyBox>
           <FastImage
             style={{
-              width: 377,
-              height: 535,
+              width: 300,
+              height: 425,
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -491,8 +491,8 @@ export default ({
         <EmptyBox>
           <FastImage
             style={{
-              width: 377,
-              height: 535,
+              width: 300,
+              height: 425,
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -513,8 +513,8 @@ export default ({
         <EmptyBox>
           <FastImage
             style={{
-              width: 377,
-              height: 535,
+              width: 300,
+              height: 425,
               justifyContent: 'center',
               alignItems: 'center',
             }}

@@ -980,3 +980,12 @@ export const resultdata = {
     workinglist: 2,
   },
 ];
+
+[
+  {
+    shelfLifeDATE: '2021-01-14',
+    shelfLifeIMAGE: null,
+    shelfLifeMEMO: 'C',
+    shelfLifeNAME: 'D',
+  },
+];

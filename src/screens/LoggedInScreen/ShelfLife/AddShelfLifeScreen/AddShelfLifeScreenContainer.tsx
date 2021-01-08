@@ -9,10 +9,15 @@ import api from '~/constants/LoggedInApi';
 import * as ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import {setSplashVisible} from '~/redux/splashSlice';
+import utils from '~/constants/utils';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const shelfLifeDataImgTempList = [];
+  const shelfLifeDataTempList = [];
+
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const [shelfLifeName, setShelfLifeName] = useState<string>('');
   const [shelfLifeDate, setShelfLifeDate] = useState<any>(moment());
@@ -60,10 +65,11 @@ export default ({route: {params}}) => {
         setIsDateModalVisible(true),
       );
     }
+
     for (let i = 0; i < list.length; i++) {
       if (
-        shelfLifeName == list[i].NAME &&
-        moment(shelfLifeDate).format('YYYY-MM-DD') == list[i].DATE
+        shelfLifeName == list[i].shelfLifeNAME &&
+        moment(shelfLifeDate).format('YYYY-MM-DD') == list[i].shelfLifeDATE
       ) {
         return alertModal('같은 일자에 동일한 상품이 작성되어 있습니다.');
       }
@@ -93,24 +99,81 @@ export default ({route: {params}}) => {
     }, 200);
   };
 
+  const setShelfLifeDataImgList = (i) => {
+    const formData: any = new FormData();
+    formData.append('shelfLifeDATE', i.shelfLifeDATE);
+    formData.append('shelfLifeMEMO', i.shelfLifeMEMO);
+    formData.append('shelfLifeNAME', i.shelfLifeNAME);
+    const fileInfoArr = i.shelfLifeIMAGE.split('/');
+    const fileInfo = fileInfoArr[fileInfoArr.length - 1];
+    const extensionIndex = fileInfo.indexOf('.');
+    let fileName = fileInfo;
+    let fileType = '';
+    if (extensionIndex > -1) {
+      fileName = fileInfo;
+      fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
+      if (fileType === 'image/jpg') {
+        fileType = 'image/jpeg';
+      }
+    }
+    formData.append('shelfLifeIMAGE', {
+      uri: utils.isAndroid
+        ? i.shelfLifeIMAGE
+        : i.shelfLifeIMAGE.replace('file://', ''),
+      name: fileName,
+      type: fileType,
+    });
+    shelfLifeDataImgTempList.push(formData);
+  };
+
   const submitFn = async () => {
     if (list.length == 0) {
       return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
     }
-    try {
-      const {data} = await api.setShelfLifeData({STORE_SEQ, LIST: list});
-      await params?.fetchData();
-      dispatch(setSplashVisible(true));
-      navigation.goBack();
-      if (data.result == '0') {
-        alertModal('연결에 실패하였습니다.');
-      } else {
-        alertModal('등록이 완료되었습니다.');
+    list.map((i) =>
+      i.shelfLifeIMAGE
+        ? setShelfLifeDataImgList(i)
+        : shelfLifeDataTempList.push(i),
+    );
+    dispatch(setSplashVisible(true));
+    navigation.goBack();
+    if (shelfLifeDataImgTempList.length > 0) {
+      try {
+        const {data} = await api.setShelfLifeDataImg({
+          STORE_SEQ,
+          LIST: shelfLifeDataImgTempList,
+        });
+        await params?.fetchData();
+        if (data.result == '0') {
+          alertModal('연결에 실패하였습니다.');
+        } else {
+          alertModal('등록이 완료되었습니다.');
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        dispatch(setSplashVisible(false));
       }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      dispatch(setSplashVisible(false));
+    }
+    if (shelfLifeDataTempList.length > 0) {
+      try {
+        const {data} = await api.setShelfLifeData({
+          STORE_SEQ,
+          LIST: shelfLifeDataTempList,
+        });
+        await params?.fetchData();
+        dispatch(setSplashVisible(true));
+        navigation.goBack();
+        if (data.result == '0') {
+          alertModal('연결에 실패하였습니다.');
+        } else {
+          alertModal('등록이 완료되었습니다.');
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        dispatch(setSplashVisible(false));
+      }
     }
   };
 

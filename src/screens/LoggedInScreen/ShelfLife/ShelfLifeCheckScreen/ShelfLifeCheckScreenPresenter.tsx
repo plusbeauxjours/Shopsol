@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {RefreshControl, FlatList, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -9,8 +9,11 @@ import FastImage from 'react-native-fast-image';
 import DonutCard from '~/components/DonutCard';
 import ShelfLifeCheckScreenCard from './ShelfLifeCheckScreenCard';
 import ShelfLifeCheckScreenHeader from './ShelfLifeCheckScreenHeader';
-import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
+import {AddIcon, CloseCircleOutlineIcon, BarCodeIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import {RNCamera} from 'react-native-camera';
+import Modal from 'react-native-modal';
+import BarcodeMask from 'react-native-barcode-mask';
 
 interface IColor {
   color: string;
@@ -40,6 +43,7 @@ const Row = styled.View`
 `;
 
 const SpaceRow = styled(Row)`
+  margin-right: 10px;
   min-width: 60px;
   justify-content: space-between;
 `;
@@ -74,10 +78,6 @@ const PercentageText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
   font-size: 25px;
   font-weight: ${styleGuide.fontWeight.bold};
-`;
-
-const Footer = styled.View`
-  margin-right: 10px;
 `;
 
 const SmallText = styled.Text<IColor>`
@@ -153,19 +153,35 @@ const AddButton = styled.TouchableOpacity`
 const SearchInput = styled.TextInput`
   border-width: 2px;
   border-color: ${styleGuide.palette.secondary};
-  width: ${wp('100%') - 40}px;
+  width: ${wp('100%') - 90}px;
   background-color: white;
   border-radius: 30px;
   padding-left: 20px;
   align-items: center;
   height: 40px;
   justify-content: center;
+  margin-left: 50px;
 `;
 
 const SearchInputContainer = styled.View`
   flex-direction: row;
   align-items: center;
   margin-bottom: 20px;
+`;
+
+const BarcodeIconConatiner = styled.TouchableOpacity`
+  position: absolute;
+  left: 0px;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+  border-width: 2px;
+  border-color: ${styleGuide.palette.secondary};
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: white;
 `;
 
 const CloseIconContainer = styled.TouchableOpacity`
@@ -198,6 +214,23 @@ const EmptyText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
 `;
 
+const Footer = styled.TouchableOpacity`
+  width: ${wp('100%')}px;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: ${styleGuide.palette.primary};
+`;
+
+const FooterText = styled.Text`
+  color: #ffffff;
+  font-size: 14px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
+
 export default ({
   onRefresh,
   confirmModal,
@@ -217,7 +250,13 @@ export default ({
   fetchData,
   search,
   setSearch,
+  codenumber,
+  barCodeCameraModalOpen,
+  setBarCodeCameraModalOpen,
+  handleBarCodeScanned,
 }) => {
+  const cameraRef = useRef(null);
+
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
     if (
       SHELFLIFE_DATA[0]?.items.length == 0 &&
@@ -231,8 +270,8 @@ export default ({
             <EmptyBox>
               <FastImage
                 style={{
-                  width: 377,
-                  height: 535,
+                  width: 300,
+                  height: 425,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
@@ -297,26 +336,24 @@ export default ({
                     <TitleText color={item.textColor}>
                       {item.titleWord}
                     </TitleText>
-                    <Footer>
-                      <SpaceRow>
-                        <SmallText color={item.textColor}>전체 수량</SmallText>
-                        <SmallText color={item.textColor}>
-                          <SmallBold color={item.textColor}>
-                            {item.totalQTY}
-                          </SmallBold>
-                          &nbsp;개
-                        </SmallText>
-                      </SpaceRow>
-                      <SpaceRow>
-                        <SmallText color={item.textColor}>처리 수량</SmallText>
-                        <SmallText color={item.textColor}>
-                          <SmallBold color={item.textColor}>
-                            {item.doneQTY}
-                          </SmallBold>
-                          &nbsp;개
-                        </SmallText>
-                      </SpaceRow>
-                    </Footer>
+                    <SpaceRow>
+                      <SmallText color={item.textColor}>전체 수량</SmallText>
+                      <SmallText color={item.textColor}>
+                        <SmallBold color={item.textColor}>
+                          {item.totalQTY}
+                        </SmallBold>
+                        &nbsp;개
+                      </SmallText>
+                    </SpaceRow>
+                    <SpaceRow>
+                      <SmallText color={item.textColor}>처리 수량</SmallText>
+                      <SmallText color={item.textColor}>
+                        <SmallBold color={item.textColor}>
+                          {item.doneQTY}
+                        </SmallBold>
+                        &nbsp;개
+                      </SmallText>
+                    </SpaceRow>
                   </Row>
                   <CardGreyLine />
                   <DonutCard
@@ -333,20 +370,29 @@ export default ({
               )}
             />
             <Container>
-              <SearchInputContainer>
-                <SearchInput
-                  placeholder="물품 검색"
-                  placeholderTextColor={styleGuide.palette.greyColor}
-                  onChangeText={(text) => setSearch(text)}
-                  value={search}
-                />
-                <CloseIconContainer onPress={() => setSearch('')}>
-                  <CloseCircleOutlineIcon
-                    color={styleGuide.palette.secondary}
-                    size={24}
+              <Row>
+                <SearchInputContainer>
+                  <BarcodeIconConatiner
+                    onPress={() => {
+                      setCodenumber('');
+                      setBarCodeCameraModalOpen(true);
+                    }}>
+                    <BarCodeIcon size={20} />
+                  </BarcodeIconConatiner>
+                  <SearchInput
+                    placeholder="물품 검색"
+                    placeholderTextColor={styleGuide.palette.greyColor}
+                    onChangeText={(text) => setSearch(text)}
+                    value={search}
                   />
-                </CloseIconContainer>
-              </SearchInputContainer>
+                  <CloseIconContainer onPress={() => setSearch('')}>
+                    <CloseCircleOutlineIcon
+                      color={styleGuide.palette.secondary}
+                      size={24}
+                    />
+                  </CloseIconContainer>
+                </SearchInputContainer>
+              </Row>
               {SHELFLIFE_DATA?.map(({name, color, items}, index) => (
                 <View
                   key={index}
@@ -356,7 +402,41 @@ export default ({
                     },
                   }) => index !== 0 && onMeasurement(index, {name, anchor})}>
                   <VerticalLine />
-                  {search.length > 0
+                  {codenumber.length > 0
+                    ? items
+                        ?.filter((i) => i.shelfLifeBarcode == codenumber)
+                        .map((item, index) => {
+                          return index == 0 ? (
+                            <React.Fragment key={index}>
+                              <LineTextContainer
+                                as={Animated.View}
+                                style={{opacity: opacity(tabs[index].anchor)}}
+                                color={color}>
+                                <LineText color={color}>{name}</LineText>
+                              </LineTextContainer>
+                              <View key={index}>
+                                <ShelfLifeCheckScreenCard
+                                  name={name}
+                                  item={item}
+                                  confirmModal={confirmModal}
+                                  cancelModal={cancelModal}
+                                  fetchData={fetchData}
+                                />
+                              </View>
+                            </React.Fragment>
+                          ) : (
+                            <View key={index}>
+                              <ShelfLifeCheckScreenCard
+                                name={name}
+                                item={item}
+                                confirmModal={confirmModal}
+                                cancelModal={cancelModal}
+                                fetchData={fetchData}
+                              />
+                            </View>
+                          );
+                        })
+                    : search.length > 0
                     ? items
                         ?.filter(
                           (i) =>
@@ -446,6 +526,36 @@ export default ({
               <AddIcon />
             </AddButton>
           </AddButtonContainer>
+          <Modal
+            isVisible={barCodeCameraModalOpen}
+            onBackdropPress={() => setBarCodeCameraModalOpen(false)}
+            onRequestClose={() => setBarCodeCameraModalOpen(false)}
+            style={{margin: 0}}
+            avoidKeyboard={true}>
+            <RNCamera
+              ref={cameraRef}
+              style={{flex: 1}}
+              type={RNCamera.Constants.Type.back}
+              flashMode={RNCamera.Constants.FlashMode.off}
+              autoFocus={RNCamera.Constants.AutoFocus.on}
+              captureAudio={false}
+              onFacesDetected={() => {}}
+              onFocusChanged={() => {}}
+              onZoomChanged={() => {}}
+              onBarCodeRead={({data}) => handleBarCodeScanned(data)}>
+              <BarcodeMask
+                width={300}
+                height={100}
+                outerMaskOpacity={0.8}
+                edgeColor={styleGuide.palette.tertiary}
+                edgeBorderWidth={2}
+                showAnimatedLine={false}
+              />
+              <Footer onPress={() => setBarCodeCameraModalOpen(false)}>
+                <FooterText>닫기</FooterText>
+              </Footer>
+            </RNCamera>
+          </Modal>
         </BackGround>
       );
     }

@@ -71,7 +71,7 @@ export default {
     callApi('post', '/auth/deleteshelfLifeData/', data),
   setShelfLifeData: (data: any) =>
     callApi('post', '/auth/setshelfLifeData/', data),
-  setshelfLifeDataImg: (data: any) =>
+  setShelfLifeDataImg: (data: any) =>
     callApi('post', '/auth/setshelfLifeDataImg/', data),
   checkChecklist: (data: any) => oldApi('post', '/StoreAuth/checklist', data),
   getChecklist: (STORE: string, DATE: string) =>

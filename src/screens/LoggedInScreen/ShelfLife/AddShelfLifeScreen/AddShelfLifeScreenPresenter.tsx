@@ -264,18 +264,6 @@ const DatePickerText = styled.Text`
   text-align: center;
 `;
 
-const ModalFooter = styled.View`
-  width: ${wp('100%')}px;
-  align-items: center;
-`;
-
-const ModalFooterText = styled.Text`
-  text-align: center;
-  color: ${styleGuide.palette.greyColor};
-  font-size: 18px;
-  margin-bottom: 20px;
-`;
-
 const Footer = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   height: 60px;
@@ -371,9 +359,9 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
-                  <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
+                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                    {/* <Touchable
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -381,9 +369,9 @@ export default ({
                       </GreyText>
                     </BorderBox>
                   </Touchable>
-                  {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
-                  <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
+                  <Touchable onPress={() => launchImageLibraryFn()}>
+                    {/* <Touchable
+                     onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>

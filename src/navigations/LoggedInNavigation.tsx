@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {createStackNavigator} from '@react-navigation/stack';
+import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
 
 // 직원관리 ========================================================
 import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
@@ -79,6 +79,7 @@ import HomeBtn from '../components/Header/HomeBtn';
 import CalendarInfoHeader from '../components/Header/CalendarInfoHeader';
 
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const LoggedInNavigation = createStackNavigator();
 export default () => {
@@ -87,8 +88,11 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SelectStoreScreen'}
+        // initialRouteName={'SelectStoreScreen'}
+        initialRouteName={'ShelfLifeCheckScreen'}
         screenOptions={{
+          ...TransitionPresets.SlideFromRightIOS,
+          animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
             backgroundColor: styleGuide.palette.primary,
             borderColor: 'white',

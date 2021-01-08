@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {NativeModules} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
 
 import StartScreen from '../screens/LoggedOutScreen/StartScreen';
 import LogInScreen from '../screens/LoggedOutScreen/LogInScreen';
@@ -12,6 +12,7 @@ import {useSelector} from 'react-redux';
 import RootModal from '../components/RootModal';
 
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const LoggedOutNavigation = createStackNavigator();
 
@@ -35,6 +36,8 @@ export default () => {
       <LoggedOutNavigation.Navigator
         headerMode={'screen'}
         screenOptions={{
+          ...TransitionPresets.SlideFromRightIOS,
+          animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
             backgroundColor: styleGuide.palette.primary,
             borderColor: 'white',

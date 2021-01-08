@@ -48,17 +48,19 @@ export default () => {
     color,
     anchor: 20,
   }));
-  const {EMP_SEQ, STORE_SEQ} = useSelector((state: any) => state.storeReducer);
+  const {EMP_SEQ} = useSelector((state: any) => state.storeReducer);
   const {STORE, MEMBER_NAME} = useSelector((state: any) => state.userReducer);
-  const {SHELFLIFE_DATA_STORE_SEQ, SHELFLIFE_DATA} = useSelector(
-    (state: any) => state.shelflifeReducer,
-  );
+  const {SHELFLIFE_DATA} = useSelector((state: any) => state.shelflifeReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
   const [tabs, setTabs] = useState<any>(defaultTabs);
   const [ready, setReady] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
+  const [barCodeCameraModalOpen, setBarCodeCameraModalOpen] = useState<boolean>(
+    false,
+  );
+  const [codenumber, setCodenumber] = useState<string>('');
 
   const confirmModal = (name, shelfLife_SEQ) => {
     const params = {
@@ -152,6 +154,7 @@ export default () => {
   const fetchData = async () => {
     try {
       const data = await dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
+      console.log('SHELFLIFE_DATA', data);
       const day = moment();
       const dayDuration = moment().add(2, 'days');
       const weekDuration = moment().add(7, 'days').add(1, 'days');
@@ -278,6 +281,17 @@ export default () => {
 
   const onScroll = onScrollEvent({y});
 
+  const handleBarCodeScanned = async (codenumber) => {
+    setBarCodeCameraModalOpen(false);
+    if (!codenumber) {
+      setTimeout(() => {
+        alertModal('바코드를 읽을 수 없습니다.');
+      }, 100);
+    } else {
+      setCodenumber(codenumber);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -302,6 +316,10 @@ export default () => {
       fetchData={fetchData}
       search={search}
       setSearch={setSearch}
+      codenumber={codenumber}
+      barCodeCameraModalOpen={barCodeCameraModalOpen}
+      setBarCodeCameraModalOpen={setBarCodeCameraModalOpen}
+      handleBarCodeScanned={handleBarCodeScanned}
     />
   );
 };
