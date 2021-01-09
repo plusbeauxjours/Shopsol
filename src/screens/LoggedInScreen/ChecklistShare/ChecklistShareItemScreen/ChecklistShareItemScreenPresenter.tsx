@@ -292,7 +292,7 @@ export default ({
       <BackGround>
         <KeyboardAvoidingView
           behavior={utils.isAndroid() ? 'height' : 'padding'}
-          keyboardVerticalOffset={65}
+          keyboardVerticalOffset={utils.isAndroid() ? 75 : 145}
           enabled
           style={{flexGrow: 1}}>
           <ScrollView

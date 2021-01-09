@@ -301,6 +301,10 @@ export default ({
   gotoSetInfo,
   mobileNo,
   MANAGER_CALLED,
+  START,
+  END,
+  EMP_PAY_TYPE,
+  EMP_PAY,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -523,14 +527,12 @@ export default ({
                     </Row>
                   </Touchable>
                   <InfoText>
-                    근무기간&nbsp;({moment().diff(moment(data?.START), 'month')}
+                    근무기간&nbsp;({moment().diff(moment(START), 'month')}
                     개월)
                   </InfoText>
                   <InfoText>
-                    {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
-                    {data?.END
-                      ? moment(data?.END).format('YYYY.MM.DD')
-                      : '계속'}
+                    {moment(START).format('YYYY.MM.DD')} ~&nbsp;
+                    {END ? moment(END).format('YYYY.MM.DD') : '계속'}
                   </InfoText>
                 </NameBox>
                 <NavigationButton onPress={() => gotoSetInfo(data, IMAGE)}>

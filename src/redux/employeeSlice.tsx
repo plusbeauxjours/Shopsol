@@ -25,6 +25,18 @@ const employeeSlice = createSlice({
         EMPLOYEE_LIST,
       };
     },
+    updateEMPLOYEE_LIST(state, action) {
+      const {
+        payload: {EMP_SEQ, START, END, PAY, PAY_TYPE},
+      } = action;
+      const emp = state.EMPLOYEE_LIST.workinglist.find(
+        (i) => i.EMP_SEQ == EMP_SEQ,
+      );
+      emp.START = START;
+      emp.END = END;
+      emp.PAY = PAY;
+      emp.PAY_TYPE = PAY_TYPE;
+    },
     setRESPONSE_EMPLOYEE(state, action) {
       const {payload: RESPONSE_EMPLOYEE} = action;
       return {...state, RESPONSE_EMPLOYEE};
@@ -48,6 +60,7 @@ const employeeSlice = createSlice({
 export const {
   setEMPLOYEE_INFO_DATA,
   setEMPLOYEE_LIST,
+  updateEMPLOYEE_LIST,
   setRESPONSE_EMPLOYEE,
   setNO_RESPONSE_EMPLOYEE,
   removeRESPONSE_EMPLOYEE,

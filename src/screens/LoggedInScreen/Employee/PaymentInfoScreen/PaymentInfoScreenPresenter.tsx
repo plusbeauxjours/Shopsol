@@ -222,25 +222,7 @@ export default ({
               </PayBox>
             )}
           </Section>
-          {loading ? (
-            <Section>
-              <EmployeeListBox>
-                {EMPLOYEE_LIST?.workinglist?.map((data) => (
-                  <PaymentInfoScreenCard
-                    key={data.MEMBER_SEQ}
-                    name={data.EMP_NAME}
-                    isManager={data.IS_MANAGER}
-                    MANAGER_CALLED={MANAGER_CALLED}
-                    image={data.images[0].IMAGE}
-                    data={data}
-                    STORE={STORE}
-                    STORE_SEQ={STORE_SEQ}
-                    STOREPAY_SHOW={STOREPAY_SHOW}
-                  />
-                ))}
-              </EmployeeListBox>
-            </Section>
-          ) : TOTAL_PAYMENT_WORKING_EMP?.emps?.length == 0 ? (
+          {TOTAL_PAYMENT_WORKING_EMP?.emps?.length == 0 ? (
             <EmptyView>
               <FastImage
                 style={{
@@ -269,13 +251,13 @@ export default ({
           ) : (
             <Section>
               <EmployeeListBox>
-                {TOTAL_PAYMENT_WORKING_EMP?.emps?.map((data) => (
+                {EMPLOYEE_LIST?.workinglist?.map((data) => (
                   <PaymentInfoScreenCard
                     key={data.MEMBER_SEQ}
                     name={data.EMP_NAME}
                     isManager={data.IS_MANAGER}
                     MANAGER_CALLED={MANAGER_CALLED}
-                    image={data.IMAGE}
+                    image={data.images[0].IMAGE}
                     data={data}
                     STORE={STORE}
                     STORE_SEQ={STORE_SEQ}

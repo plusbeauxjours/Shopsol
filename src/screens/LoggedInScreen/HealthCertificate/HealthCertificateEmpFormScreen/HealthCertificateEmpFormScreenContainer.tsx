@@ -25,7 +25,6 @@ export default ({route: {params}}) => {
   );
   const [dateModalVisible, setDateModalVisible] = useState<boolean>(false);
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(moment()); // 교육일시 / 검진일
-  const [EDUCATION_DATE_SET, setEDUCATION_DATE_SET] = useState<boolean>(false);
   const [NAME, setNAME] = useState<string>(params?.NAME || ''); // 교육이수자성명 / 성명
   const [RESULT_COUNT, setRESULT_COUNT] = useState<any>(
     params?.RESULT_COUNT || null,
@@ -187,8 +186,6 @@ export default ({route: {params}}) => {
       setCameraPictureLast={setCameraPictureLast}
       takePictureFn={takePictureFn}
       RESULT_DATE={params?.RESULT_DATE}
-      EDUCATION_DATE_SET={EDUCATION_DATE_SET}
-      setEDUCATION_DATE_SET={setEDUCATION_DATE_SET}
     />
   );
 };

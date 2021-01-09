@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import CalendarAddScreenPresenter from './CalendarAddScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -8,7 +8,7 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import api from '~/constants/LoggedInApi';
 
-export default () => {
+export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -135,9 +135,12 @@ export default () => {
           STORE_NAME,
           STORE_ID: STORE_SEQ,
         });
-        if (data.message === 'SUCCESS') {
+        if (data.message === 'ALREADY_SUCCESS') {
+          alertModal('일정이 이미 등록되어 있습니다.');
+        } else if (data.message === 'SUCCESS') {
           navigation.navigate('CalendarInfoScreen');
-          alertModal('일정을 추가하였습니다.');
+          alertModal('추가일정을 등록하였습니다.');
+          params?.fetchData();
         }
       } catch (e) {
         console.log(e);

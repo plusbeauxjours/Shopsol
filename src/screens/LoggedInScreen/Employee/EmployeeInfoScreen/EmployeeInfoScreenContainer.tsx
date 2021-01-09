@@ -28,7 +28,21 @@ export default ({route: {params}}) => {
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
     MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
+
+  const {EMPLOYEE_LIST: {workinglist = []} = {}} = useSelector(
+    (state: any) => state.employeeReducer,
+  );
+
   const {data: {EMP_SEQ = null, images = []} = {}} = params;
+
+  const user = workinglist.find((i) => (i.EMP_SEQ = EMP_SEQ));
+  console.log('EMP_SEQ', EMP_SEQ);
+  console.log('user', user);
+  const START = user?.START;
+  const END = user?.END;
+  const EMP_PAY_TYPE = user?.PAY_TYPE;
+  const EMP_PAY = user?.PAY;
+
   const [isFreeWorkingType, setIsFreeWorkingType] = useState<boolean>(true); // true: 자율출퇴근 직원, false: 일정이 있는 직원
   const [timeTableIndex, setTimeTableIndex] = useState<any>(null); // 저장된 시간 목록 중 선택된 항목의 인덱스
   const [timeTable, setTimeTable] = useState<any>([]); // timeList를 근무 시작일 / 근무 종료일 별로 저장한 배열
@@ -418,6 +432,10 @@ export default ({route: {params}}) => {
       mobileNo={params?.data.MobileNo}
       IMAGE={images[0].IMAGE}
       MANAGER_CALLED={MANAGER_CALLED}
+      START={START}
+      END={END}
+      EMP_PAY_TYPE={EMP_PAY_TYPE}
+      EMP_PAY={EMP_PAY}
     />
   );
 };

@@ -4,9 +4,10 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-import {DownIcon} from '~/constants/Icons';
+import {DownIcon, AddIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import CalendarInfoScreenCard from './CalendarInfoScreenCard';
+import {useNavigation} from '@react-navigation/native';
 
 interface IWeekend {
   weekend: string;
@@ -54,6 +55,28 @@ const Bold = styled.Text<IWeekend>`
       : 'black'};
 `;
 
+const AddButtonContainer = styled.View`
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const AddButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${styleGuide.palette.tertiary};
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
 export default ({
   STORE,
   STORE_SEQ,
@@ -66,6 +89,7 @@ export default ({
   fetchData,
   MANAGER_CALLED,
 }) => {
+  const navigation = useNavigation();
   const rowHasChanged = (r1, r2) => r1 !== r2;
   const renderKnob = () => (
     <KnobIconContainer>
@@ -145,63 +169,46 @@ export default ({
   );
 
   return (
-    <Agenda
-      items={CALENDAR_DATA}
-      renderItem={renderItem}
-      renderEmptyDate={renderEmptyDate}
-      renderKnob={renderKnob}
-      markedDates={markedDates}
-      theme={{
-        agendaTodayColor: styleGuide.palette.primary,
-        selectedDayBackgroundColor: '#ddd',
-        todayTextColor: styleGuide.palette.primary,
-        'stylesheet.agenda.list': {
-          container: {
-            flexDirection: 'column',
+    <>
+      <Agenda
+        items={CALENDAR_DATA}
+        renderItem={renderItem}
+        renderEmptyDate={renderEmptyDate}
+        renderKnob={renderKnob}
+        markedDates={markedDates}
+        theme={{
+          agendaTodayColor: styleGuide.palette.primary,
+          selectedDayBackgroundColor: '#ddd',
+          todayTextColor: styleGuide.palette.primary,
+          'stylesheet.agenda.list': {
+            container: {
+              flexDirection: 'column',
+            },
           },
-        },
-      }}
-      refreshControl={null}
-      refreshing={false}
-      onRefresh={() => fetchData()}
-      monthFormat={'yyyy년 M월'}
-      renderDay={(day, item) => {
-        if (day !== undefined) {
-          let DAY = '0';
-          if (new Date(day.timestamp).getDay().toString() == '0') {
-            DAY = '일';
-          } else if (new Date(day.timestamp).getDay().toString() == '1') {
-            DAY = '월';
-          } else if (new Date(day.timestamp).getDay().toString() == '2') {
-            DAY = '화';
-          } else if (new Date(day.timestamp).getDay().toString() == '3') {
-            DAY = '수';
-          } else if (new Date(day.timestamp).getDay().toString() == '4') {
-            DAY = '목';
-          } else if (new Date(day.timestamp).getDay().toString() == '5') {
-            DAY = '금';
-          } else {
-            DAY = '토';
-          }
-          if (item !== undefined) {
-            return (
-              <Row>
-                <Bold
-                  weekend={day.toString()}
-                  style={{
-                    color:
-                      DAY == '토'
-                        ? '#87ceeb'
-                        : DAY == '일'
-                        ? styleGuide.palette.primary
-                        : 'black',
-                  }}>
-                  {day.month}월 {day.day}일 {DAY}요일
-                </Bold>
-              </Row>
-            );
-          } else {
-            if (day !== undefined) {
+        }}
+        refreshControl={null}
+        refreshing={false}
+        onRefresh={() => fetchData()}
+        monthFormat={'yyyy년 M월'}
+        renderDay={(day, item) => {
+          if (day !== undefined) {
+            let DAY = '0';
+            if (new Date(day.timestamp).getDay().toString() == '0') {
+              DAY = '일';
+            } else if (new Date(day.timestamp).getDay().toString() == '1') {
+              DAY = '월';
+            } else if (new Date(day.timestamp).getDay().toString() == '2') {
+              DAY = '화';
+            } else if (new Date(day.timestamp).getDay().toString() == '3') {
+              DAY = '수';
+            } else if (new Date(day.timestamp).getDay().toString() == '4') {
+              DAY = '목';
+            } else if (new Date(day.timestamp).getDay().toString() == '5') {
+              DAY = '금';
+            } else {
+              DAY = '토';
+            }
+            if (item !== undefined) {
               return (
                 <Row>
                   <Bold
@@ -218,14 +225,39 @@ export default ({
                   </Bold>
                 </Row>
               );
+            } else {
+              if (day !== undefined) {
+                return (
+                  <Row>
+                    <Bold
+                      weekend={day.toString()}
+                      style={{
+                        color:
+                          DAY == '토'
+                            ? '#87ceeb'
+                            : DAY == '일'
+                            ? styleGuide.palette.primary
+                            : 'black',
+                      }}>
+                      {day.month}월 {day.day}일 {DAY}요일
+                    </Bold>
+                  </Row>
+                );
+              }
             }
           }
-        }
-      }}
-      rowHasChanged={rowHasChanged}
-      onDayPress={(date) => onDayPressFn(date)}
-      loadItemsForMonth={(date) => onChangeMonth(date)}
-      markingType={'multi-dot'}
-    />
+        }}
+        rowHasChanged={rowHasChanged}
+        onDayPress={(date) => onDayPressFn(date)}
+        loadItemsForMonth={(date) => onChangeMonth(date)}
+        markingType={'multi-dot'}
+      />
+      <AddButtonContainer>
+        <AddButton
+          onPress={() => navigation.navigate('CalendarAddScreen', {fetchData})}>
+          <AddIcon />
+        </AddButton>
+      </AddButtonContainer>
+    </>
   );
 };

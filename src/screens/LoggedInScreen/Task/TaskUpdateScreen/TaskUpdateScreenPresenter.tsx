@@ -1,28 +1,26 @@
 import React, {useRef} from 'react';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import {RNCamera} from 'react-native-camera';
+import FastImage from 'react-native-fast-image';
+import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
-import BarcodeMask from 'react-native-barcode-mask';
-import moment from 'moment';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import AddShelfLifeScreenCard from './AddShelfLifeScreenCard';
-import RoundBtn from '~/components/Btn/RoundBtn';
+import {PictureIcon, CameraIcon} from '~/constants/Icons';
+import {CloseCircleIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
-import {CloseCircleOutlineIcon} from '~/constants/Icons';
-import {
-  HelpCircleIcon,
-  CloseCircleIcon,
-  CameraIcon,
-  PictureIcon,
-  BarCodeIcon,
-} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+
+interface ITextInput {
+  isBefore: boolean;
+}
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -30,15 +28,7 @@ const BackGround = styled.SafeAreaView`
 `;
 
 const ScrollView = styled.ScrollView``;
-
-const View = styled.View`
-  position: absolute;
-  left: 20px;
-  width: 60px;
-  height: 100%;
-  padding-top: 80px;
-  top: 90px;
-`;
+const Text = styled.Text``;
 
 const Container = styled.View`
   padding: 20px;
@@ -53,31 +43,10 @@ const Section = styled.View`
   background-color: white;
 `;
 
-const Center = styled.View`
-  align-items: center;
-`;
-
-const TitleText = styled.Text`
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
-  font-weight: ${styleGuide.fontWeight.bold};
-`;
-
-const GreyLine = styled.View`
-  width: ${wp('100%') - 80}px;
-  margin: 20px 0;
-  background-color: ${styleGuide.palette.borderColor};
-  height: 1px;
-`;
-
 const TextContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-`;
-
-const ListContasiner = styled(TextContainer)`
-  justify-content: space-between;
 `;
 
 const Row = styled.View`
@@ -90,21 +59,15 @@ const GreyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
 `;
 
-const TextInput = styled.TextInput`
+const TextInput = styled.TextInput<ITextInput>`
+  border-color: ${(props) =>
+    props.isBefore ? '#ddd' : styleGuide.palette.primary};
   justify-content: center;
   align-items: center;
   padding: 10px;
+  border-width: 1px;
   width: ${wp('50%')}px;
   min-height: 40px;
-`;
-
-const VerticalLine = styled.View`
-  width: 0.6px;
-  left: 30px;
-  background-color: ${styleGuide.palette.lightGreyColor};
-  position: absolute;
-  height: 100%;
-  top: 0;
 `;
 
 const Name = styled.View`
@@ -198,13 +161,10 @@ const HalfBottonText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
 `;
 
-const CloseIconContainer = styled.TouchableOpacity`
-  z-index: 5;
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  right: 20px;
-  top: ${(props) => (isIphoneX() ? 35 : 25)}px;
+const DeleteButton = styled.TouchableOpacity`
+  margin: 50px 0;
+  justify-content: center;
+  align-items: center;
 `;
 
 const IconContainer = styled.View`
@@ -245,18 +205,6 @@ const DatePickerRoundBtn = styled(Ripple)`
   align-items: center;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
 const DatePickerText = styled.Text`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
@@ -264,56 +212,26 @@ const DatePickerText = styled.Text`
   text-align: center;
 `;
 
-const Footer = styled.TouchableOpacity`
-  width: ${wp('100%')}px;
-  height: 60px;
-  position: absolute;
-  bottom: 0;
-  justify-content: center;
-  align-items: center;
-  background-color: ${styleGuide.palette.primary};
-`;
-
-const FooterText = styled.Text`
-  color: #ffffff;
-  font-size: 14px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-`;
-
 export default ({
-  addFn,
-  explainModal,
-  deleteBuffer,
-  submitFn,
-  list,
-  shelfLifeName,
-  setShelfLifeName,
-  shelfLifeMemo,
-  setShelfLifeMemo,
-  shelfLifeDate,
-  setShelfLifeDate,
-  isDateModalVisible,
-  setIsDateModalVisible,
+  deleteModal,
   cameraPictureLast,
   setCameraPictureLast,
-  takePictureFn,
   isCameraModalVisible,
   setIsCameraModalVisible,
+  taskName,
+  setTaskName,
+  taskDate,
+  setTaskDate,
+  taskMemo,
+  setTaskMemo,
+  takePictureFn,
   launchImageLibraryFn,
-  isImageViewVisible,
-  setIsImageViewVisible,
-  selectedIndex,
-  setSelectedIndex,
+  setIsDateModalVisible,
+  isDateModalVisible,
+  submit,
   alertModal,
-  shelfLifeDateSet,
-  setShelfLifeDateSet,
-  barCodeCameraModalOpen,
-  setBarCodeCameraModalOpen,
-  handleBarCodeScanned,
 }) => {
   const cameraRef = useRef(null);
-
   return (
     <BackGround>
       <ScrollView
@@ -322,24 +240,7 @@ export default ({
         showsVerticalScrollIndicator={false}>
         <Container>
           <Section>
-            <TextContainer>
-              <Touchable
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  explainModal(
-                    '',
-                    '상품을 등록하시면 직원이 출근 시 유통기한 도래 상품을 알려드립니다.\n\nEx)금일(6/23) 유통기한 경과 상품이 있습니다. (치토스 외 4개)\n유통기한 캘린더를 통해 상품을 확인해주시고, 진열대에서 철수해주세요.',
-                  );
-                }}>
-                <TitleText>상품정보</TitleText>
-                <HelpCircleIcon />
-              </Touchable>
-            </TextContainer>
-            <GreyLine />
-            <Row style={{marginTop: 10, marginBottom: 20}}>
+            <Row>
               {cameraPictureLast ? (
                 <Touchable
                   onPress={() => setCameraPictureLast(null)}
@@ -359,9 +260,9 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
-                    {/* <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
+                  {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
+                  <Touchable
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -369,9 +270,9 @@ export default ({
                       </GreyText>
                     </BorderBox>
                   </Touchable>
-                  <Touchable onPress={() => launchImageLibraryFn()}>
-                    {/* <Touchable
-                     onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
+                  {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
+                  <Touchable
+                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -379,26 +280,17 @@ export default ({
                       </GreyText>
                     </BorderBox>
                   </Touchable>
-                  <Touchable onPress={() => setBarCodeCameraModalOpen(true)}>
-                    <BorderBox>
-                      <BarCodeIcon size={20} color={'#ccc'} />
-                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
-                        바코드
-                      </GreyText>
-                    </BorderBox>
-                  </Touchable>
                 </Column>
               )}
-
               <WhiteItem style={{justifyContent: 'flex-start'}}>
                 <Name>
                   <TextInput
+                    isBefore={taskName == ''}
                     placeholder="상품명"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
-                    onChangeText={(text) => setShelfLifeName(text)}
-                    onFocus={() => setShelfLifeName('')}
-                    value={shelfLifeName}
+                    onChangeText={(text) => setTaskName(text)}
+                    value={taskName}
                     maxLength={15}
                     style={{
                       fontSize: styleGuide.fontSize.large,
@@ -410,31 +302,18 @@ export default ({
                     }}
                   />
                   <Touchable onPress={() => setIsDateModalVisible(true)}>
-                    {!shelfLifeDateSet ? (
-                      <GreyText
-                        style={{
-                          color: '#CCC',
-                          fontSize: styleGuide.fontSize.large,
-                          marginRight: 10,
-                        }}>
-                        기한
-                      </GreyText>
-                    ) : (
-                      <DateText>
-                        {moment(shelfLifeDate).format('YYYY.MM.DD')}
-                      </DateText>
-                    )}
+                    <DateText>{moment(taskDate).format('YYYY.MM.DD')}</DateText>
                   </Touchable>
                 </Name>
                 <Line />
                 <TextContainer>
                   <TextInput
+                    isBefore={taskMemo == ''}
                     placeholder="메모 입력"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
-                    onChangeText={(text) => setShelfLifeMemo(text)}
-                    onFocus={() => setShelfLifeMemo('')}
-                    value={shelfLifeMemo}
+                    onChangeText={(text) => setTaskMemo(text)}
+                    value={taskMemo}
                     multiline={true}
                     style={{
                       textAlignVertical: 'top',
@@ -450,48 +329,26 @@ export default ({
                 </TextContainer>
               </WhiteItem>
             </Row>
-            <Center>
-              <RoundBtn
-                isInSection={true}
-                text={'목록에 추가하기'}
-                onPress={() => addFn()}
-                isRegisted={true}
-              />
-            </Center>
-          </Section>
-          <Section>
-            <ListContasiner>
-              <TitleText>상품목록</TitleText>
-              <TitleText>{list.length}&nbsp;&nbsp;</TitleText>
-            </ListContasiner>
-            {list && list.length !== 0 && <GreyLine />}
-            {list.length > 1 && (
-              <View>
-                <VerticalLine />
-              </View>
-            )}
-            {list &&
-              list.length !== 0 &&
-              list.map((data, index) => (
-                <AddShelfLifeScreenCard
-                  key={index}
-                  deleteBuffer={deleteBuffer}
-                  onPress={() => {
-                    setIsImageViewVisible(true);
-                    setSelectedIndex(index);
-                  }}
-                  IMAGE={data.shelfLifeIMAGE}
-                  NAME={data.shelfLifeNAME}
-                  DATE={data.shelfLifeDATE}
-                  MEMO={data.shelfLifeMEMO}
-                />
-              ))}
           </Section>
           <SubmitBtn
-            text={'상품 등록완료'}
-            isRegisted={list && list.length !== 0}
-            onPress={() => submitFn()}
+            text={'수정완료'}
+            onPress={() => submit()}
+            isRegisted={true}
           />
+          <DeleteButton
+            onPress={() =>
+              deleteModal('', '등록하신 상품을 삭제하시겠습니까?')
+            }>
+            <Text
+              style={{
+                fontSize: styleGuide.fontSize.large,
+                fontWeight: '600',
+                color: '#FF3D3D',
+                textDecorationLine: 'underline',
+              }}>
+              삭제하기
+            </Text>
+          </DeleteButton>
         </Container>
         <Modal
           isVisible={isCameraModalVisible}
@@ -561,69 +418,6 @@ export default ({
             </RNCamera>
           )}
         </Modal>
-        <Modal
-          isVisible={barCodeCameraModalOpen}
-          onBackdropPress={() => setBarCodeCameraModalOpen(false)}
-          onRequestClose={() => setBarCodeCameraModalOpen(false)}
-          style={{margin: 0}}
-          avoidKeyboard={true}>
-          <RNCamera
-            ref={cameraRef}
-            style={{flex: 1}}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            autoFocus={RNCamera.Constants.AutoFocus.on}
-            captureAudio={false}
-            onFacesDetected={() => {}}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
-            onBarCodeRead={({data}) => handleBarCodeScanned(data)}>
-            <BarcodeMask
-              width={300}
-              height={100}
-              outerMaskOpacity={0.8}
-              edgeColor={styleGuide.palette.tertiary}
-              edgeBorderWidth={2}
-              showAnimatedLine={false}
-            />
-            <Footer onPress={() => setBarCodeCameraModalOpen(false)}>
-              <FooterText>닫기</FooterText>
-            </Footer>
-          </RNCamera>
-        </Modal>
-        <Modal
-          onRequestClose={() => {
-            setSelectedIndex(0);
-            setIsImageViewVisible(false);
-          }}
-          onBackdropPress={() => {
-            setSelectedIndex(0);
-            setIsImageViewVisible(false);
-          }}
-          isVisible={isImageViewVisible}
-          style={{
-            margin: 0,
-            justifyContent: 'center',
-            width: '100%',
-            height: '100%',
-          }}>
-          <CloseIconContainer
-            onPress={() => {
-              setSelectedIndex(0);
-              setIsImageViewVisible(false);
-            }}>
-            <CloseCircleOutlineIcon size={33} color={'white'} />
-          </CloseIconContainer>
-          <FastImage
-            style={{width: wp('100%'), height: wp('100%')}}
-            source={{
-              uri: list[selectedIndex]?.shelfLifeIMAGE,
-              headers: {Authorization: 'someAuthToken'},
-              priority: FastImage.priority.low,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        </Modal>
       </ScrollView>
       <Modal
         onRequestClose={() => setIsDateModalVisible(false)}
@@ -640,20 +434,16 @@ export default ({
           <DatePicker
             style={{width: utils.isAndroid() ? 200 : 230}}
             locale="ko"
-            date={moment(shelfLifeDate).toDate()}
+            date={moment(taskDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"
             minimumDate={moment().toDate()}
-            onDateChange={(date) => {
-              setShelfLifeDateSet(true);
-              setShelfLifeDate(moment(date).format('YYYY-MM-DD'));
-            }}
+            onDateChange={(date) =>
+              setTaskDate(moment(date).format('YYYY-MM-DD'))
+            }
           />
           <DatePickerRoundBtn
-            onPress={() => {
-              setIsDateModalVisible(false);
-              setShelfLifeDateSet(true);
-            }}
+            onPress={() => setIsDateModalVisible(false)}
             rippleColor={'#666'}
             rippleDuration={600}
             rippleSize={1200}

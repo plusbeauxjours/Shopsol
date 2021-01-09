@@ -15,6 +15,11 @@ import ShelfLifeCheckScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLifeC
 import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLifeUpdateScreen';
 import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLifeScreen';
 
+// 유통기한========================================================
+import TaskCheckScreen from '../screens/LoggedInScreen/Task/TaskCheckScreen';
+import TaskUpdateScreen from '../screens/LoggedInScreen/Task/TaskUpdateScreen';
+import AddTaskScreen from '../screens/LoggedInScreen/Task/AddTaskScreen';
+
 // 직원관리========================================================
 import InviteEmployeeScreen from '../screens/LoggedInScreen/Employee/InviteEmployeeScreen';
 import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Employee/ManageInviteEmployeeScreen';
@@ -76,7 +81,7 @@ import LogOutBtn from '../components/Header/LogOutBtn';
 import RootModal from '../components/RootModal';
 import BackBtn from '../components/Header/BackBtn';
 import HomeBtn from '../components/Header/HomeBtn';
-import CalendarInfoHeader from '../components/Header/CalendarInfoHeader';
+import ConfirmBackBtn from '../components/Header/ConfirmBackBtn';
 
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
@@ -88,8 +93,7 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        // initialRouteName={'SelectStoreScreen'}
-        initialRouteName={'ShelfLifeCheckScreen'}
+        initialRouteName={'SelectStoreScreen'}
         screenOptions={{
           ...TransitionPresets.SlideFromRightIOS,
           animationEnabled: utils.isAndroid() ? false : true,
@@ -263,6 +267,31 @@ export default () => {
             title: '유통기한 등록',
           }}
         />
+        {/* 업무캘린더======================================================== */}
+        <LoggedInNavigation.Screen
+          name="TaskCheckScreen"
+          component={TaskCheckScreen}
+          options={{
+            headerTitle: '유통기한 체크',
+            title: '유통기한 목록',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="TaskUpdateScreen"
+          component={TaskUpdateScreen}
+          options={{
+            headerTitle: '유통기한 체크 수정',
+            title: '유통기한 수정',
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="AddTaskScreen"
+          component={AddTaskScreen}
+          options={{
+            headerTitle: '유통기한 체크 등록',
+            title: '유통기한 등록',
+          }}
+        />
         {/* 체크리스트======================================================== */}
         <LoggedInNavigation.Screen
           name="ChecklistAddScreen"
@@ -333,7 +362,6 @@ export default () => {
           options={{
             headerTitle: '일정관리',
             title: '일정관리 목록',
-            headerRight: () => <CalendarInfoHeader />,
           }}
         />
         <LoggedInNavigation.Screen
@@ -445,6 +473,7 @@ export default () => {
           name="SetEmployeeInfoScreen"
           component={SetEmployeeInfoScreen}
           options={{
+            headerLeft: () => <ConfirmBackBtn />,
             headerTitle: '직원정보 입력',
             title: '직원 정보등록 & 정보수정',
           }}

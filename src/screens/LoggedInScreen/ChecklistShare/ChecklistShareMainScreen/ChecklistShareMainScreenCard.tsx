@@ -172,9 +172,9 @@ export default ({
             </Row>
             <AddressBox>
               <InfoText>
-                {moment(data?.ADDDATE || data?.CREATE_TIME).format(
-                  'YYYY.MM.DD HH:mm',
-                )}
+                {data?.ADDDATE
+                  ? moment(data?.ADDDATE).format('YYYY.MM.DD')
+                  : moment(data?.CREATE_TIME).format('YYYY.MM.DD kk:mm')}
               </InfoText>
               <InfoText style={{color: 'black'}}>
                 &nbsp;-&nbsp;{decodeURI(data?.EMP_NAME)}

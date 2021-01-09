@@ -9,7 +9,7 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {openSettings, PERMISSIONS, request} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -87,6 +87,12 @@ export default ({route: {params}}) => {
       source: require(`../../../../assets/main/shelfLifeCheck.png`),
     },
     {
+      selection: '업무캘린더',
+      paging: 'TaskCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+    },
+    {
       selection: '조기경보',
       paging: 'HealthCertificateTypeScreen',
       count: null,
@@ -110,6 +116,12 @@ export default ({route: {params}}) => {
     {
       selection: '유통기한',
       paging: 'ShelfLifeCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+    },
+    {
+      selection: '업무캘린더',
+      paging: 'TaskCheckScreen',
       count: null,
       source: require(`../../../../assets/main/shelfLifeCheck.png`),
     },
@@ -162,6 +174,12 @@ export default ({route: {params}}) => {
       source: require(`../../../../assets/main/shelfLifeCheck.png`),
     },
     {
+      selection: '업무캘린더',
+      paging: 'TaskCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+    },
+    {
       selection: '조기경보',
       paging: 'HealthCertificateTypeScreen',
       count: null,
@@ -195,7 +213,7 @@ export default ({route: {params}}) => {
         appinfoversion: utils.appVersion,
         Dplatform: DEVICE_PLATFORM,
       });
-      if (data.RESULT_CODE == '1') {
+      if (data.result == '1') {
         alertModal(
           '[ 업데이트 알림 ]',
           '새로운 버전이 출시되었습니다. 업데이트를 진행해주세요.\n\n* 이동 후 업데이트 버튼이 없는 경우에는 앱스토어 종료 후 다시 실행해 주세요.',
@@ -531,6 +549,7 @@ export default ({route: {params}}) => {
       AVATAR={AVATAR}
       initLoading={initLoading}
       gotoScreen={gotoScreen}
+      alertModal={alertModal}
     />
   );
 };

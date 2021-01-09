@@ -34,8 +34,8 @@ export default ({route: {params}}) => {
   const [distance, setDistance] = useState<string>('-1');
   const [days, setDays] = useState<any>(new Array(30));
   const [sizeTypeCheck, setSizeTypeCheck] = useState<[boolean, boolean]>([
-    false,
     true,
+    false,
   ]); //1: 5인 이상, 0: 5인 미만
   const [commuteTypeCheck, setCommuteTypeCheck] = useState<[boolean, boolean]>([
     true,

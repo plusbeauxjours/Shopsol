@@ -1,8 +1,5 @@
 import React, {useRef} from 'react';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {View} from 'react-native';
 import Modal from 'react-native-modal';
@@ -132,18 +129,6 @@ const DatePickerRoundBtn = styled(Ripple)`
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
-const DatePickerRoundView = styled.View`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: #ddd;
   bottom: 20px;
   padding: 20px;
   align-items: center;
@@ -475,24 +460,18 @@ export default ({
               setBirthDate(moment(date).format('YYYY-MM-DD'));
             }}
           />
-          {birthDateSet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsBirthDateVisible(false);
-                setBirthDateSet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => {
+              setIsBirthDateVisible(false);
+              setBirthDateSet(true);
+            }}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
     </BackGround>

@@ -157,17 +157,15 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           </Touchable>
         </GreyBox>
         <WhiteItem
-          onPress={() =>
-            confirmModal(name, item.shelfLife_SEQ, item.shelfLifeDate)
-          }
+          onPress={() => confirmModal(name, item.task_SEQ, item.taskDate)}
           onLongPress={() =>
             setTimeout(() => {
-              navigation.navigate('ShelfLifeUpdateScreen', {
+              navigation.navigate('TaskUpdateScreen', {
                 name,
-                shelfLife_SEQ: item.shelfLife_SEQ,
-                shelfLifeName: item.shelfLifeName,
-                shelfLifeDate: item.shelfLifeDate,
-                shelfLifeMemo: item.shelfLifeMemo,
+                task_SEQ: item.task_SEQ,
+                taskName: item.taskName,
+                taskDate: item.taskDate,
+                taskMemo: item.taskMemo,
                 fetchData,
               });
             }, 100)
@@ -178,16 +176,16 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           rippleContainerBorderRadius={10}
           rippleOpacity={0.1}>
           <Name>
-            <NameText>{item.shelfLifeName}</NameText>
+            <NameText>{item.taskName}</NameText>
             <DateText>
-              {item.shelfLifeDate.slice(0, 4)}.{item.shelfLifeDate.slice(5, 7)}.
-              {item.shelfLifeDate.slice(8, 10)}
+              {item.taskDate.slice(0, 4)}.{item.taskDate.slice(5, 7)}.
+              {item.taskDate.slice(8, 10)}
             </DateText>
           </Name>
-          {item.shelfLifeMemo.length !== 0 && <Line />}
-          {item.shelfLifeMemo.length !== 0 && (
+          {item.taskMemo.length !== 0 && <Line />}
+          {item.taskMemo.length !== 0 && (
             <TextContainer>
-              <Text>{item.shelfLifeMemo}</Text>
+              <Text>{item.taskMemo}</Text>
             </TextContainer>
           )}
         </WhiteItem>
@@ -223,7 +221,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           </Touchable>
         </GreyBox>
         <Item
-          onPress={() => cancelModal(name, item.shelfLife_SEQ)}
+          onPress={() => cancelModal(name, item.task_SEQ)}
           onLongPress={() => {}}
           rippleColor={'#999'}
           rippleDuration={600}
@@ -231,16 +229,16 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           rippleContainerBorderRadius={10}
           rippleOpacity={0.1}>
           <Name>
-            <NameText isChecked={true}>{item.shelfLifeName}</NameText>
+            <NameText isChecked={true}>{item.taskName}</NameText>
             <DateText isChecked={true}>
-              {item.shelfLifeDate.slice(0, 4)}.{item.shelfLifeDate.slice(5, 7)}.
-              {item.shelfLifeDate.slice(8, 10)}
+              {item.taskDate.slice(0, 4)}.{item.taskDate.slice(5, 7)}.
+              {item.taskDate.slice(8, 10)}
             </DateText>
           </Name>
           <Line />
-          {item.shelfLifeMemo.length !== 0 && (
+          {item.taskMemo.length !== 0 && (
             <TextContainer>
-              <Text isChecked={true}>{item.shelfLifeMemo}</Text>
+              <Text isChecked={true}>{item.taskMemo}</Text>
             </TextContainer>
           )}
           <TextContainer>

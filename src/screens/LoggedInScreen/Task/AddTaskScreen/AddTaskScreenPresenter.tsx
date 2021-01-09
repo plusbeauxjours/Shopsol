@@ -6,12 +6,11 @@ import Modal from 'react-native-modal';
 import {RNCamera} from 'react-native-camera';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
-import BarcodeMask from 'react-native-barcode-mask';
 import moment from 'moment';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import AddShelfLifeScreenCard from './AddShelfLifeScreenCard';
+import AddTaskScreenCard from './AddTaskScreenCard';
 import RoundBtn from '~/components/Btn/RoundBtn';
 import utils from '~/constants/utils';
 import {CloseCircleOutlineIcon} from '~/constants/Icons';
@@ -20,7 +19,6 @@ import {
   CloseCircleIcon,
   CameraIcon,
   PictureIcon,
-  BarCodeIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
@@ -287,12 +285,12 @@ export default ({
   deleteBuffer,
   submitFn,
   list,
-  shelfLifeName,
-  setShelfLifeName,
-  shelfLifeMemo,
-  setShelfLifeMemo,
-  shelfLifeDate,
-  setShelfLifeDate,
+  taskName,
+  setTaskName,
+  taskMemo,
+  setTaskMemo,
+  taskDate,
+  setTaskDate,
   isDateModalVisible,
   setIsDateModalVisible,
   cameraPictureLast,
@@ -306,11 +304,8 @@ export default ({
   selectedIndex,
   setSelectedIndex,
   alertModal,
-  shelfLifeDateSet,
-  setShelfLifeDateSet,
-  barCodeCameraModalOpen,
-  setBarCodeCameraModalOpen,
-  handleBarCodeScanned,
+  taskDateSet,
+  setTaskDateSet,
 }) => {
   const cameraRef = useRef(null);
 
@@ -379,14 +374,6 @@ export default ({
                       </GreyText>
                     </BorderBox>
                   </Touchable>
-                  <Touchable onPress={() => setBarCodeCameraModalOpen(true)}>
-                    <BorderBox>
-                      <BarCodeIcon size={20} color={'#ccc'} />
-                      <GreyText style={{fontSize: styleGuide.fontSize.small}}>
-                        바코드
-                      </GreyText>
-                    </BorderBox>
-                  </Touchable>
                 </Column>
               )}
 
@@ -396,9 +383,9 @@ export default ({
                     placeholder="상품명"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
-                    onChangeText={(text) => setShelfLifeName(text)}
-                    onFocus={() => setShelfLifeName('')}
-                    value={shelfLifeName}
+                    onChangeText={(text) => setTaskName(text)}
+                    onFocus={() => setTaskName('')}
+                    value={taskName}
                     maxLength={15}
                     style={{
                       fontSize: styleGuide.fontSize.large,
@@ -410,7 +397,7 @@ export default ({
                     }}
                   />
                   <Touchable onPress={() => setIsDateModalVisible(true)}>
-                    {!shelfLifeDateSet ? (
+                    {!taskDateSet ? (
                       <GreyText
                         style={{
                           color: '#CCC',
@@ -421,7 +408,7 @@ export default ({
                       </GreyText>
                     ) : (
                       <DateText>
-                        {moment(shelfLifeDate).format('YYYY.MM.DD')}
+                        {moment(taskDate).format('YYYY.MM.DD')}
                       </DateText>
                     )}
                   </Touchable>
@@ -432,9 +419,9 @@ export default ({
                     placeholder="메모 입력"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
-                    onChangeText={(text) => setShelfLifeMemo(text)}
-                    onFocus={() => setShelfLifeMemo('')}
-                    value={shelfLifeMemo}
+                    onChangeText={(text) => setTaskMemo(text)}
+                    onFocus={() => setTaskMemo('')}
+                    value={taskMemo}
                     multiline={true}
                     style={{
                       textAlignVertical: 'top',
@@ -473,17 +460,17 @@ export default ({
             {list &&
               list.length !== 0 &&
               list.map((data, index) => (
-                <AddShelfLifeScreenCard
+                <AddTaskScreenCard
                   key={index}
                   deleteBuffer={deleteBuffer}
                   onPress={() => {
                     setIsImageViewVisible(true);
                     setSelectedIndex(index);
                   }}
-                  IMAGE={data.shelfLifeIMAGE}
-                  NAME={data.shelfLifeNAME}
-                  DATE={data.shelfLifeDATE}
-                  MEMO={data.shelfLifeMEMO}
+                  IMAGE={data.taskIMAGE}
+                  NAME={data.taskNAME}
+                  DATE={data.taskDATE}
+                  MEMO={data.taskMEMO}
                 />
               ))}
           </Section>
@@ -562,36 +549,6 @@ export default ({
           )}
         </Modal>
         <Modal
-          isVisible={barCodeCameraModalOpen}
-          onBackdropPress={() => setBarCodeCameraModalOpen(false)}
-          onRequestClose={() => setBarCodeCameraModalOpen(false)}
-          style={{margin: 0}}
-          avoidKeyboard={true}>
-          <RNCamera
-            ref={cameraRef}
-            style={{flex: 1}}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            autoFocus={RNCamera.Constants.AutoFocus.on}
-            captureAudio={false}
-            onFacesDetected={() => {}}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
-            onBarCodeRead={({data}) => handleBarCodeScanned(data)}>
-            <BarcodeMask
-              width={300}
-              height={100}
-              outerMaskOpacity={0.8}
-              edgeColor={styleGuide.palette.tertiary}
-              edgeBorderWidth={2}
-              showAnimatedLine={false}
-            />
-            <Footer onPress={() => setBarCodeCameraModalOpen(false)}>
-              <FooterText>닫기</FooterText>
-            </Footer>
-          </RNCamera>
-        </Modal>
-        <Modal
           onRequestClose={() => {
             setSelectedIndex(0);
             setIsImageViewVisible(false);
@@ -617,7 +574,7 @@ export default ({
           <FastImage
             style={{width: wp('100%'), height: wp('100%')}}
             source={{
-              uri: list[selectedIndex]?.shelfLifeIMAGE,
+              uri: list[selectedIndex]?.taskIMAGE,
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.low,
             }}
@@ -640,19 +597,19 @@ export default ({
           <DatePicker
             style={{width: utils.isAndroid() ? 200 : 230}}
             locale="ko"
-            date={moment(shelfLifeDate).toDate()}
+            date={moment(taskDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"
             minimumDate={moment().toDate()}
             onDateChange={(date) => {
-              setShelfLifeDateSet(true);
-              setShelfLifeDate(moment(date).format('YYYY-MM-DD'));
+              setTaskDateSet(true);
+              setTaskDate(moment(date).format('YYYY-MM-DD'));
             }}
           />
           <DatePickerRoundBtn
             onPress={() => {
               setIsDateModalVisible(false);
-              setShelfLifeDateSet(true);
+              setTaskDateSet(true);
             }}
             rippleColor={'#666'}
             rippleDuration={600}

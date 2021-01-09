@@ -189,12 +189,18 @@ export default () => {
 
   const fetchData = async (location, date) => {
     try {
-      if (STORE_SEQ !== CHECKLIST_SHARE_STORE_SEQ) {
-        if (location === 'firstRoute') {
+      if (
+        STORE_SEQ !== CHECKLIST_SHARE_STORE_SEQ ||
+        location == 'firstRoute' ||
+        location == 'secondRoute' ||
+        location == ''
+      ) {
+        setLoading(true);
+        if (location == 'firstRoute') {
           const {data} = await api.getNotice(STORE_SEQ, date, '1', MEMBER_SEQ);
           dispatch(setCHECKLIST_SHARE_STORE_SEQ(STORE_SEQ));
           dispatch(setCHECKLIST_SHARE_DATA1(data));
-        } else if (location === 'secondRoute') {
+        } else if (location == 'secondRoute') {
           const {data} = await api.getNotice(STORE_SEQ, date, '0', MEMBER_SEQ);
           dispatch(setCHECKLIST_SHARE_STORE_SEQ(STORE_SEQ));
           dispatch(setCHECKLIST_SHARE_DATA2(data));

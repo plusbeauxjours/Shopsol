@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createRef} from 'react';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -6,15 +6,18 @@ import {useNavigation} from '@react-navigation/native';
 import {setAlertVisible, setAlertInfo} from '~/redux/alertSlice';
 import SetEmployeeInfoScreenPresenter from './SetEmployeeInfoScreenPresenter';
 import {setSplashVisible} from '~/redux/splashSlice';
+import {updateEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import api from '~/constants/LoggedInApi';
 import utils from '~/constants/utils';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const scrollRef = createRef(0);
+
   const {
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
-    MANAGER_CALLED
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
 
   const {
@@ -54,9 +57,9 @@ export default ({route: {params}}) => {
   ///// STEP 1 /////
   const [click1, setClick1] = useState<boolean>(false);
   const [startDay, setStartDay] = useState<any>(moment());
-  const [startDaySet, setStartDaySet] = useState<boolean>(false);
+  const [startDaySet, setStartDaySet] = useState<boolean>(START ? true : false);
   const [endDay, setEndDay] = useState<any>(moment());
-  const [endDaySet, setEndDaySet] = useState<boolean>(false);
+  const [endDaySet, setEndDaySet] = useState<boolean>(END ? true : false);
   const [endDayCheck, setEndDayCheck] = useState<boolean>(true);
 
   ///// STEP 2 /////
@@ -90,7 +93,7 @@ export default ({route: {params}}) => {
   );
 
   ///// 수습 /////
-  const [probation, setProbation] = useState<boolean>(false);
+  const [probation, setProbation] = useState<boolean>(true);
   const [probationPeriod, setProbationPeriod] = useState<any>(moment());
   const [probationPeriodSet, setProbationPeriodSet] = useState<boolean>(false);
   const [probationPercent, setProbationPercent] = useState<string>('');
@@ -195,6 +198,13 @@ export default ({route: {params}}) => {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
+  const openAccordion = (section) => {
+    setClick1(section == 'click1' ? true : false);
+    setClick2(section == 'click2' ? true : false);
+    setClick4(section == 'click4' ? true : false);
+    setClick5(section == 'click5' ? true : false);
+  };
+
   const submitFn = async () => {
     let payChecked = payCheck.indexOf(true);
     let positionChecked = positionCheck.indexOf(true);
@@ -209,126 +219,156 @@ export default ({route: {params}}) => {
     } else {
       deductionTypeChecked = 0; // 0: 없음(default)
     }
-    //~~~~~~~~~~~~~~~~~~~~
-    // STEP 1 에러 체크
-    //~~~~~~~~~~~~~~~~~~~~
+
     if (!startDaySet) {
-      return alertModal('입사일을 입력해주세요.');
-    } else if (!endDaySet && endDayCheck === false) {
-      return alertModal('퇴사일을 입력해주세요');
-    }
-    //~~~~~~~~~~~~~~~~~~~~
-    // STEP 2 에러 체크
-    //~~~~~~~~~~~~~~~~~~~~
-    if (payChecked === -1) {
-      return alertModal('급여유형을 선택해주세요.');
+      alertModal('입사일을 입력해주세요.');
+      openAccordion('click1');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    } else if (!endDaySet && !endDayCheck) {
+      alertModal('퇴사일을 입력해주세요');
+      openAccordion('click1');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    } else if (probation && !probationPeriodSet) {
+      openAccordion('click2');
+      alertModal('수습종료일을 입력해주세요');
+    } else if (payChecked === -1) {
+      alertModal('급여유형을 선택해주세요.');
+      openAccordion('click2');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
     } else if (payChecked !== 2 && pay === '') {
-      return alertModal('급여를 입력해주세요.');
+      alertModal('급여를 입력해주세요.');
+      openAccordion('click2');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
     } else if (payChecked === 2) {
       if (pay === '') {
-        return alertModal('기본급을 입력해주세요.');
+        alertModal('기본급을 입력해주세요.');
       } else if (pay2 === '') {
-        return alertModal('식대금액을 입력해주세요.');
+        alertModal('식대금액을 입력해주세요.');
       } else if (pay3 === '') {
-        return alertModal('자가운전금액을 입력해주세요.');
+        alertModal('자가운전금액을 입력해주세요.');
       } else if (pay4 === '') {
-        return alertModal('상여금액을 입력해주세요.');
+        alertModal('상여금액을 입력해주세요.');
       } else if (pay5 === '') {
-        return alertModal('성과급금액을 입력해주세요.');
+        alertModal('성과급금액을 입력해주세요.');
       }
-    }
-    if ((probation && probationPeriod == '') || undefined) {
-      return alertModal('수습기간의 종료일을 설정해주세요.');
-    }
-    if ((probation && probationPercent == '') || undefined) {
-      return alertModal('수습기간의 급여비율을 설정해주세요.');
-    }
-    if (salarySystemCheck[1] === true && weekTypeChecked == -1) {
-      return alertModal('주휴수당 계산 방법 선택을 체크해주세요.');
-    }
-    if (salarySystemCheck[2] === true && restTypeChecked == -1) {
-      return alertModal('휴게시간 계산 방법 선택을 체크해주세요.');
-    }
-    if (deductionTypeChecked === -1) {
-      return alertModal('급여정보 입력\n공제유형을 선택해주세요.');
-    }
-    if (payDay === '') {
-      return alertModal('급여정보 입력\n적용 시작 년,월을 입력해주세요.');
-    }
-    if (positionChecked === -1) {
-      return alertModal('직책/권한 설정\n직원의 직책을 선택해주세요.');
-    }
-    try {
-      dispatch(setSplashVisible(true));
-      const {data} = await api.updateEmp({
-        FIRST: MODIFYCOUNT,
-        START_TYPE,
-        STORE_SEQ,
-        EMP_SEQ,
-        // ↓ STEP 1
-        START: moment(startDay).format('YYYY-MM-DD'),
-        END: endDayCheck === true ? null : moment(endDay).format('YYYY-MM-DD'),
-        // ↓ STEP 2
-        PAY_TYPE: payChecked,
-        MEALS: payCheck[2] === true ? pay2 : '0',
-        SELF_DRIVING: payCheck[2] === true ? pay3 : '0',
-        BONUS: payCheck[2] === true ? pay4 : '0',
-        INCENTIVE: payCheck[2] === true ? pay5 : '0',
-        PAY: pay,
-        PAY_START: payDay,
-        // ↓ STEP 3
-        THREE_ALLOWANCE: salarySystemCheck[0] === true ? '1' : '0',
-        WEEKEND_ALLOWANCE: salarySystemCheck[1] === true ? '1' : '0',
-        WeekType: weekTypeChecked,
-        WeekTime: weekTime || '0',
-        REST_ALLOWANCE: salarySystemCheck[2] === true ? '1' : '0',
-        RestType: restTypeChecked,
-        RestTime: restTime || '0',
-        Week_START: payDay,
-        insurance: deductionTypeChecked,
-        insurance_START: payDay,
-        // ↓ STEP 4
-        USE_Annual: useVacation || '0',
-        RemainderAnnual: remainderVacation || '0',
-        Annual: totalVacation || '0',
-        Annual_START: annual_START,
-        // 수습
-        probation: probation ? '1' : '0',
-        probationDATE: probationPeriod,
-        probationPercent: probationPercent,
-        health: insuranceCheck[1] ? '1' : '0',
-        pension: insuranceCheck[0] ? '1' : '0',
-        employment: insuranceCheck[2] ? '1' : '0',
-        accident: insuranceCheck[3] ? '1' : '0',
-        // ↓ STEP 5
-        IS_MANAGER: positionChecked !== -1 ? positionChecked : '0',
-        PAY_SHOW: authorityCheck[0] === true ? '1' : '0',
-        OTHERPAY_SHOW: authorityCheck[1] === true ? '1' : '0',
-        CalendarEdit: authorityCheck[2] === true ? '1' : '0',
-        PUSH: authorityCheck[3] === true ? '1' : '0',
-        STOREPAY_SHOW: authorityCheck[4] === true ? '1' : '0',
-      });
+      openAccordion('click2');
+    } else if (probation && !probationPeriodSet) {
+      alertModal('수습기간의 종료일을 설정해주세요.');
+      openAccordion('click2');
+    } else if (probation && probationPercent == '') {
+      alertModal('수습기간의 급여비율을 설정해주세요.');
+      openAccordion('click2');
+    } else if (salarySystemCheck[1] === true && weekTypeChecked == -1) {
+      alertModal('주휴수당 계산 방법 선택을 체크해주세요.');
+      openAccordion('click2');
+    } else if (salarySystemCheck[2] === true && restTypeChecked == -1) {
+      alertModal('휴게시간 계산 방법 선택을 체크해주세요.');
+      openAccordion('click2');
+    } else if (deductionTypeChecked === -1) {
+      alertModal('급여정보 입력\n공제유형을 선택해주세요.');
+      openAccordion('click2');
+    } else if (payDay === '') {
+      alertModal('급여정보 입력\n적용 시작 년,월을 입력해주세요.');
+      openAccordion('click2');
+    } else if (positionChecked === -1) {
+      alertModal('직책/권한 설정\n직원의 직책을 선택해주세요.');
+      openAccordion('click5');
+    } else {
+      dispatch(
+        updateEMPLOYEE_LIST({
+          EMP_SEQ,
+          START: moment(startDay).format('YYYY-MM-DD'),
+          END:
+            endDayCheck === true ? null : moment(endDay).format('YYYY-MM-DD'),
+          PAY: pay,
+          PAY_TYPE: payChecked,
+        }),
+      );
+      try {
+        dispatch(setSplashVisible(true));
+        const {data} = await api.updateEmp({
+          FIRST: MODIFYCOUNT,
+          START_TYPE,
+          STORE_SEQ,
+          EMP_SEQ,
+          // ↓ STEP 1
+          START: moment(startDay).format('YYYY-MM-DD'),
+          END:
+            endDayCheck === true ? null : moment(endDay).format('YYYY-MM-DD'),
+          // ↓ STEP 2
+          PAY_TYPE: payChecked,
+          MEALS: payCheck[2] === true ? pay2 : '0',
+          SELF_DRIVING: payCheck[2] === true ? pay3 : '0',
+          BONUS: payCheck[2] === true ? pay4 : '0',
+          INCENTIVE: payCheck[2] === true ? pay5 : '0',
+          PAY: pay,
+          PAY_START: payDay,
+          // ↓ STEP 3
+          THREE_ALLOWANCE: salarySystemCheck[0] === true ? '1' : '0',
+          WEEKEND_ALLOWANCE: salarySystemCheck[1] === true ? '1' : '0',
+          WeekType: weekTypeChecked,
+          WeekTime: weekTime || '0',
+          REST_ALLOWANCE: salarySystemCheck[2] === true ? '1' : '0',
+          RestType: restTypeChecked,
+          RestTime: restTime || '0',
+          Week_START: payDay,
+          insurance: deductionTypeChecked,
+          insurance_START: payDay,
+          // ↓ STEP 4
+          USE_Annual: useVacation || '0',
+          RemainderAnnual: remainderVacation || '0',
+          Annual: totalVacation || '0',
+          Annual_START: annual_START,
+          // 수습
+          probation: probation ? '1' : '0',
+          probationDATE: probationPeriod,
+          probationPercent: probationPercent,
+          health: insuranceCheck[1] ? '1' : '0',
+          pension: insuranceCheck[0] ? '1' : '0',
+          employment: insuranceCheck[2] ? '1' : '0',
+          accident: insuranceCheck[3] ? '1' : '0',
+          // ↓ STEP 5
+          IS_MANAGER: positionChecked !== -1 ? positionChecked : '0',
+          PAY_SHOW: authorityCheck[0] === true ? '1' : '0',
+          OTHERPAY_SHOW: authorityCheck[1] === true ? '1' : '0',
+          CalendarEdit: authorityCheck[2] === true ? '1' : '0',
+          PUSH: authorityCheck[3] === true ? '1' : '0',
+          STOREPAY_SHOW: authorityCheck[4] === true ? '1' : '0',
+        });
 
-      if (data.message === 'SUCCESS') {
-        if (from === 'ManageInviteEmployeeScreen') {
-          navigation.navigate('EmployeeScheduleMainScreen', {
-            CALCULATE_DAY: utils.calculateDay,
-            EMP_SEQ,
-            PAY_TYPE: payChecked,
-            PAY: pay,
-            IMAGE,
-          });
-        } else {
-          alertModal('직원정보가 수정되었습니다.');
-          navigation.goBack();
+        if (data.message === 'SUCCESS') {
+          if (from === 'ManageInviteEmployeeScreen') {
+            navigation.navigate('EmployeeScheduleMainScreen', {
+              CALCULATE_DAY: utils.calculateDay,
+              EMP_SEQ,
+              PAY_TYPE: payChecked,
+              PAY: pay,
+              IMAGE,
+            });
+          } else {
+            alertModal('직원정보가 수정되었습니다.');
+            navigation.goBack();
+          }
         }
+      } catch (e) {
+        alertModal('통신이 원활하지 않습니다.');
+        console.log(e);
+      } finally {
+        onRefresh();
+        dispatch(setSplashVisible(false));
       }
-    } catch (e) {
-      alertModal('통신이 원활하지 않습니다.');
-      console.log(e);
-    } finally {
-      onRefresh();
-      dispatch(setSplashVisible(false));
     }
   };
 
@@ -486,6 +526,27 @@ export default ({route: {params}}) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (moment(endDay) < moment(startDay)) {
+      setEndDay(moment(startDay).add(1, 'days').toDate());
+    }
+    if (moment(probationPeriod) < moment(startDay)) {
+      setProbationPeriod(moment(startDay).add(1, 'days').toDate());
+    }
+  }, [startDay]);
+
+  useEffect(() => {
+    if (moment(endDay) < moment(probationPeriod)) {
+      setEndDay(moment(startDay).add(1, 'days').toDate());
+    }
+  }, [endDay]);
+
+  useEffect(() => {
+    if (moment(endDay) < moment(probationPeriod)) {
+      setEndDay(moment(probationPeriod).subtract(1, 'days').toDate());
+    }
+  }, [probationPeriod]);
+
   return (
     <SetEmployeeInfoScreenPresenter
       submitFn={submitFn}
@@ -590,6 +651,7 @@ export default ({route: {params}}) => {
       mobileNo={mobileNo}
       CALCULATE_DAY={CALCULATE_DAY}
       MANAGER_CALLED={MANAGER_CALLED}
+      scrollRef={scrollRef}
     />
   );
 };

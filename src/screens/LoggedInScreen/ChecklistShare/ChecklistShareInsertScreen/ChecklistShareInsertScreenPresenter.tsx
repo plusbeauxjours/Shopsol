@@ -248,8 +248,6 @@ export default ({
   cameraPictureList,
   selectPicture,
   scrollRef,
-  dateSet,
-  setDateSet,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -473,29 +471,21 @@ export default ({
             date={moment(date).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            onDateChange={(date) => {
-              setDateSet(true);
-              setDate(moment(date).format('YYYY-MM-DD'));
-            }}
+            onDateChange={(date) => 
+              setDate(moment(date).format('YYYY-MM-DD'))
+            }
           />
-          {dateSet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsDateModalVisible(false);
-                setDateSet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => {
+              setIsDateModalVisible(false);
+            }}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
     </>

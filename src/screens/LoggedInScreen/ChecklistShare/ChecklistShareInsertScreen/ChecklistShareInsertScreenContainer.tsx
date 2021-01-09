@@ -34,7 +34,6 @@ export default ({route: {params}}) => {
   const [content, setContent] = useState<string>('');
   const [date, setDate] = useState<any>(moment(params?.date));
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
-  const [dateSet, setDateSet] = useState<boolean>(false);
 
   const alertModal = (text) => {
     const params = {
@@ -220,8 +219,6 @@ export default ({route: {params}}) => {
       cameraPictureList={cameraPictureList}
       selectPicture={selectPicture}
       scrollRef={scrollRef}
-      dateSet={dateSet}
-      setDateSet={setDateSet}
     />
   );
 };

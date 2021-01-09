@@ -2,8 +2,8 @@ import {Platform} from 'react-native';
 
 export default {
   isAndroid: () => Platform.OS === 'android',
-  appVersion: '1.2.7',
-  miniPay: '8590',
+  appVersion: '2.1.2',
+  miniPay: '8,720',
   calculateDay: 23,
   renderWeekDay: (weekDay) => {
     switch (weekDay) {

@@ -243,10 +243,6 @@ export default ({
   setStartTimeSet,
   endTimeSet,
   setEndTimeSet,
-  startDateSet,
-  setStartDateSet,
-  setEndDateSet,
-  endDateSet,
 }) => {
   const RenderWorkDayList = () => (
     <WorkTypeCheckSection>
@@ -543,29 +539,19 @@ export default ({
             date={moment(startDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            onDateChange={(date) => {
-              setStartDateSet(true);
-              setStartDate(moment(date).format('YYYY-MM-DD'));
-            }}
+            onDateChange={(date) =>
+              setStartDate(moment(date).format('YYYY-MM-DD'))
+            }
           />
-          {startDateSet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsStartDayModalVisible(false);
-                setStartDateSet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => setIsStartDayModalVisible(false)}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
       <Modal
@@ -586,29 +572,19 @@ export default ({
             date={moment(endDate).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            onDateChange={(date) => {
-              setEndDateSet(true);
-              setEndDate(moment(date).format('YYYY-MM-DD'));
-            }}
+            onDateChange={(date) =>
+              setEndDate(moment(date).format('YYYY-MM-DD'))
+            }
           />
-          {endDateSet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsEndDayModalVisible(false);
-                setEndDateSet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => setIsEndDayModalVisible(false)}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
     </BackGround>

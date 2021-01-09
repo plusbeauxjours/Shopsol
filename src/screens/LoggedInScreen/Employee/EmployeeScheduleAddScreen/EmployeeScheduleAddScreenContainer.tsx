@@ -36,8 +36,6 @@ export default ({route: {params}}) => {
   const [endDate, setEndDate] = useState<any>(
     moment(params?.endDate) || moment(),
   ); // 근무 종료일
-  const [startDateSet, setStartDateSet] = useState<boolean>(false);
-  const [endDateSet, setEndDateSet] = useState<boolean>(false);
 
   const [startTime, setStartTime] = useState<any>(moment());
   const [endTime, setEndTime] = useState<any>(moment());
@@ -49,7 +47,7 @@ export default ({route: {params}}) => {
   const [dayList, setDayList] = useState<any>([]); // 일요일 ~ 토요일까지 화면에 보여질 요일 배열
   const [calendarModalType, setCalendarModalType] = useState<string>(null); // 캘린더 모달 종류 (start: 근무 시작일, end: 근무 종료일)
   const [checkNoEndDate, setCheckNoEndDate] = useState<boolean>(
-    params?.endDateSet ? false : true,
+    params?.endDate ? false : true,
   ); // 일정 종료일 없음 체크
   const [deleteList, setDeleteList] = useState<any>([]); // 삭제 대상 목록
   const [isStartDayModalVisible, setIsStartDayModalVisible] = useState<boolean>(
@@ -177,53 +175,51 @@ export default ({route: {params}}) => {
 
   // 추가 완료 & 수정 완료
   const submitFn = async () => {
-    if (!checkNoEndDate && !endDateSet) {
-      return alertModal('일정 기간을 입력해주세요');
-    } else {
-      try {
-        dispatch(setSplashVisible(true));
-        const params = {
-          EMP_SEQ,
-          START: moment(startDate).format('YYYY-MM-DD'),
-          END: endDateSet ? moment(endDate).format('YYYY-MM-DD') : null,
-          empSchedules: [],
-        };
-        for (const time of timeList) {
-          for (const day of time.dayList) {
-            if (day.isChecked) {
-              params.empSchedules.push({
-                EMP_SCH_SEQ: -1,
-                JE_SEQ: -1,
-                EMP_SEQ,
-                DAY: day.day,
-                ATTENDANCE_TIME: time.startTime,
-                WORK_OFF_TIME: time.endTime,
-                USE_FLAG: 1,
-                START: moment(startDate).format('YYYY-MM-DD'),
-                END: endDateSet ? moment(endDate).format('YYYY-MM-DD') : null,
-              });
-            }
+    try {
+      dispatch(setSplashVisible(true));
+      const params = {
+        EMP_SEQ,
+        START: moment(startDate).format('YYYY-MM-DD'),
+        END: !checkNoEndDate ? moment(endDate).format('YYYY-MM-DD') : null,
+        empSchedules: [],
+      };
+      for (const time of timeList) {
+        for (const day of time.dayList) {
+          if (day.isChecked) {
+            params.empSchedules.push({
+              EMP_SCH_SEQ: -1,
+              JE_SEQ: -1,
+              EMP_SEQ,
+              DAY: day.day,
+              ATTENDANCE_TIME: time.startTime,
+              WORK_OFF_TIME: time.endTime,
+              USE_FLAG: 1,
+              START: moment(startDate).format('YYYY-MM-DD'),
+              END: !checkNoEndDate
+                ? moment(endDate).format('YYYY-MM-DD')
+                : null,
+            });
           }
         }
-        if (isUpdateMode) {
-          const {data} = await api.updateEmpSchedule({DEL: deleteList});
-          if (data.message !== 'SUCCESS') {
-            alertModal(data.result);
-          }
-        }
-        const {data} = await api.insertEmpSchedule(params);
-        if (data.message === 'SUCCESS') {
-          alertModal('일정이 ' + TYPE + '되었습니다.');
-        } else {
+      }
+      if (isUpdateMode) {
+        const {data} = await api.updateEmpSchedule({DEL: deleteList});
+        if (data.message !== 'SUCCESS') {
           alertModal(data.result);
         }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        fetchData();
-        navigation.goBack();
-        dispatch(setSplashVisible(false));
       }
+      const {data} = await api.insertEmpSchedule(params);
+      if (data.message === 'SUCCESS') {
+        alertModal('일정이 ' + TYPE + '되었습니다.');
+      } else {
+        alertModal(data.result);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      fetchData();
+      navigation.goBack();
+      dispatch(setSplashVisible(false));
     }
   };
 
@@ -263,7 +259,7 @@ export default ({route: {params}}) => {
       setDeleteList(deleteListed);
       setCalendarModalType('start');
       selectDateFn({dateString: moment(startDate).format('YYYY-MM-DD')});
-      if (endDateSet) {
+      if (!checkNoEndDate) {
         setCalendarModalType('end');
         selectDateFn({dateString: moment(endDate).format('YYYY-MM-DD')});
       }
@@ -321,10 +317,6 @@ export default ({route: {params}}) => {
       setStartTimeSet={setStartTimeSet}
       endTimeSet={endTimeSet}
       setEndTimeSet={setEndTimeSet}
-      startDateSet={startDateSet}
-      setStartDateSet={setStartDateSet}
-      setEndDateSet={setEndDateSet}
-      endDateSet={endDateSet}
     />
   );
 };

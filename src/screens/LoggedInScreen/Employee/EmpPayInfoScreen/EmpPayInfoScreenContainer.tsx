@@ -19,11 +19,21 @@ export default ({route: {params}}) => {
     STORE_DATA: {
       resultdata: {STOREPAY_SHOW = null, CALCULATE_DAY = null} = {},
     } = {},
-    MANAGER_CALLED
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
   const {MEMBER_NAME} = useSelector((state: any) => state.userReducer);
   const {STORE} = useSelector((state: any) => state.userReducer);
   const {visible} = useSelector((state: any) => state.splashReducer);
+
+  const {EMPLOYEE_LIST: {workinglist = []} = {}} = useSelector(
+    (state: any) => state.employeeReducer,
+  );
+
+  const user = workinglist.find((i) => (i.EMP_SEQ = EMP_SEQ));
+  const START_store = user?.START;
+  const END_store = user?.END;
+  const PAY_TYPE_store = user?.PAY_TYPE;
+  const PAY_store = user?.PAY;
 
   const [loading, setLoading] = useState<boolean>(true);
   const [date, setDate] = useState<any>(moment().format(`YYYY-MM-DD`));
@@ -198,11 +208,11 @@ export default ({route: {params}}) => {
       setClick2={setClick2}
       setClick3={setClick3}
       onPressFooter={onPressFooter}
-      EMP_PAY_TYPE={params?.EMP_PAY_TYPE || maindata?.PAY_TYPE}
-      PAY={params?.PAY || maindata?.PAY}
+      EMP_PAY_TYPE={PAY_TYPE_store || maindata?.PAY_TYPE}
+      PAY={PAY_store || maindata?.PAY}
       image={params?.image || image}
-      START={params?.START || START}
-      END={params?.END || END}
+      START={START_store || START}
+      END={END_store || END}
       gotoSetInfo={gotoSetInfo}
       visible={visible}
       loading={loading}

@@ -205,18 +205,6 @@ const DatePickerRoundBtn = styled(Ripple)`
   align-items: center;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
 const DatePickerText = styled.Text`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
@@ -242,8 +230,6 @@ export default ({
   isDateModalVisible,
   submit,
   alertModal,
-  shelfLifeDateSet,
-  setShelfLifeDateSet,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -463,29 +449,19 @@ export default ({
             mode={'date'}
             androidVariant="iosClone"
             minimumDate={moment().toDate()}
-            onDateChange={(date) => {
-              setShelfLifeDateSet(true);
-              setShelfLifeDate(moment(date).format('YYYY-MM-DD'));
-            }}
+            onDateChange={(date) =>
+              setShelfLifeDate(moment(date).format('YYYY-MM-DD'))
+            }
           />
-          {shelfLifeDateSet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsDateModalVisible(false);
-                setShelfLifeDateSet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => setIsDateModalVisible(false)}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
     </BackGround>

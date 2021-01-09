@@ -24,7 +24,6 @@ import {
   Authority,
 } from './SetEmployeeInfoScreenComponents';
 import {HelpCircleIcon} from '~/constants/Icons';
-import InputLine from '~/components/InputLine';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import {
@@ -50,7 +49,6 @@ const BackGround = styled.SafeAreaView`
   background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
-const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
 const Touchable = styled.TouchableOpacity`
   flex-direction: row;
@@ -78,7 +76,7 @@ const TextInput = styled.TextInput`
   margin-left: 5px;
   text-align: center;
   margin-right: 5px;
-  width: 125px;
+  width: 128px;
   text-align: right;
   padding: 0;
   height: 18px;
@@ -117,12 +115,6 @@ const TitleText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.greyColor};
-`;
-
-const DateTouchable = styled.TouchableOpacity`
-  justify-content: flex-end;
-  padding-bottom: 5px;
-  height: 35px;
 `;
 
 const BigText = styled.Text`
@@ -255,18 +247,6 @@ const DatePickerRoundBtn = styled(Ripple)`
   align-items: center;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
 const DatePickerText = styled.Text`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
@@ -338,28 +318,23 @@ const BorderFooter = styled.TouchableOpacity`
   overflow: hidden;
 `;
 
-const SystemSettingButton = styled.TouchableOpacity`
-  position: absolute;
-  right: 0;
-  width: 50px;
-  height: 20px;
-  right: 20px;
-  border-radius: 20px;
-  background-color: ${styleGuide.palette.primary};
+const InputCaseRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity`
+  padding: 7px 14px;
   align-items: center;
   justify-content: center;
+  border-color: ${styleGuide.palette.primary};
+  border-width: 1px;
+  border-radius: 20px;
 `;
 
-const SystemSettingText = styled.Text`
-  color: white;
-  font-size: ${styleGuide.fontSize.large}px;
-`;
-
-const TextInputLine = styled.View<IIsBefore>`
-  width: ${wp('100%') - 120}px;
-  height: 0.7px;
-  background-color: ${(props) =>
-    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
+const RequestBorderText = styled.Text`
+  color: ${styleGuide.palette.primary};
 `;
 
 export default ({
@@ -465,6 +440,7 @@ export default ({
   mobileNo,
   CALCULATE_DAY,
   MANAGER_CALLED,
+  scrollRef,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const click1Transition = useTransition(click1);
@@ -522,7 +498,8 @@ export default ({
 
   return (
     <BackGround>
-      <ScrollView
+      <Animated.ScrollView
+        ref={scrollRef}
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}>
@@ -548,27 +525,35 @@ export default ({
                 ),
               }}>
               <InputCase isFirst={true}>
-                <Row>
-                  <Text>입사일</Text>
-                  <Touchable
-                    onPress={() => {
-                      explainModal(
-                        '직원의 출퇴근관리가 시작되는 날입니다.\n\n기존 직원은 앱 설치 당일로 설정하시길 권장드립니다.\n신규 직원일 경우에는 근로계약서 상 근무시작일로 입력해 주세요.',
-                      );
-                    }}>
-                    <HelpCircleIcon />
-                  </Touchable>
-                </Row>
-                <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
-                  <Text>{moment(startDay).format('YYYY년 M월 D일')}</Text>
-                </DateTouchable>
-                <InputLine isBefore={false} />
+                <InputCaseRow>
+                  <Row>
+                    <Text>입사일</Text>
+                    <Touchable
+                      onPress={() => {
+                        explainModal(
+                          '직원의 출퇴근관리가 시작되는 날입니다.\n\n기존 직원은 앱 설치 당일로 설정하시길 권장드립니다.\n신규 직원일 경우에는 근로계약서 상 근무시작일로 입력해 주세요.',
+                        );
+                      }}>
+                      <HelpCircleIcon />
+                    </Touchable>
+                  </Row>
+                  <RequestBorderButton
+                    onPress={() => setIsStartDayModalVisible(true)}>
+                    <RequestBorderText>
+                      {startDaySet
+                        ? moment(startDay).format('YYYY년 M월 D일')
+                        : '입사일 설정'}
+                    </RequestBorderText>
+                  </RequestBorderButton>
+                </InputCaseRow>
               </InputCase>
               <InputCase height={160}>
                 <Touchable
                   onPress={() => {
                     setEndDayCheck(!endDayCheck);
-                    setEndDay(moment());
+                    startDay
+                      ? setEndDay(moment(startDay).add(1, 'days').toDate())
+                      : setEndDay(moment().add(1, 'days').toDate());
                   }}>
                   <SideBox>
                     {endDayCheck ? (
@@ -597,24 +582,19 @@ export default ({
                         style={{
                           width: wp('100%') - 80,
                           paddingHorizontal: 20,
+                          justifyContent: 'space-between',
+                          alignItems: 'baseline',
                         }}>
                         <Text>퇴사일</Text>
+                        <RequestBorderButton
+                          onPress={() => setIsEndDayModalVisible(true)}>
+                          <RequestBorderText>
+                            {endDaySet
+                              ? moment(endDay).format('YYYY년 M월 D일')
+                              : '퇴사일 설정'}
+                          </RequestBorderText>
+                        </RequestBorderButton>
                       </Row>
-                      <DateTouchable
-                        style={{
-                          paddingHorizontal: 20,
-                          alignItems: 'flex-start',
-                          width: wp('100%') - 80,
-                        }}
-                        onPress={() => setIsEndDayModalVisible(true)}
-                        disabled={endDayCheck}>
-                        <Text>
-                          {!endDayCheck
-                            ? moment(endDay).format('YYYY년 M월 D일')
-                            : ''}
-                        </Text>
-                      </DateTouchable>
-                      <TextInputLine isBefore={endDayCheck} />
                     </ColumnPayBox>
                   </>
                 )}
@@ -642,7 +622,7 @@ export default ({
                   0,
                   410 +
                     (payCheck[0] ? 85 : 0) +
-                    (probation ? 255 : 0) +
+                    (payCheck[0] && probation ? 255 : 0) +
                     (deductionTypeCheck.indexOf(true) == 0 ? 480 : 260),
                 ),
               }}>
@@ -708,7 +688,7 @@ export default ({
                         alignSelf: 'center',
                         top: 160,
                       }}>
-                      2020년 최저 시급은 {utils.miniPay}원 입니다.
+                      2021년 최저 시급은 {utils.miniPay}원 입니다.
                     </GreyText>
                   </>
                 )}
@@ -954,32 +934,40 @@ export default ({
                           style={{
                             width: wp('100%') - 80,
                             paddingHorizontal: 20,
+                            justifyContent: 'space-between',
+                            alignItems: 'baseline',
                           }}>
-                          <Text>수습종료일</Text>
-                          <Touchable
-                            onPress={() =>
-                              explainModal(
-                                "급여계산 : 입력하신 '입사일'부터 '수습종료일'까지의 기간동안 '급여비율'에 따라 일할계산 됩니다.",
-                              )
-                            }>
-                            <HelpCircleIcon />
-                          </Touchable>
+                          <Row>
+                            <Text>수습종료일</Text>
+                            <Touchable
+                              onPress={() =>
+                                explainModal(
+                                  "급여계산 : 입력하신 '입사일'부터 '수습종료일'까지의 기간동안 '급여비율'에 따라 일할계산 됩니다.",
+                                )
+                              }>
+                              <HelpCircleIcon />
+                            </Touchable>
+                          </Row>
+                          <RequestBorderButton
+                            onPress={() => {
+                              setIsProbationPeriodModalVisible(true);
+                              startDay
+                                ? setProbationPeriod(
+                                    moment(startDay).add(1, 'days').toDate(),
+                                  )
+                                : setProbationPeriod(
+                                    moment().add(1, 'days').toDate(),
+                                  );
+                            }}>
+                            <RequestBorderText>
+                              {probationPeriodSet
+                                ? moment(probationPeriod).format(
+                                    'YYYY년 M월 D일',
+                                  )
+                                : '수습종료일 설정'}
+                            </RequestBorderText>
+                          </RequestBorderButton>
                         </Row>
-                        <DateTouchable
-                          style={{
-                            paddingHorizontal: 20,
-                            alignItems: 'flex-start',
-                            width: wp('100%') - 80,
-                          }}
-                          onPress={() => setIsProbationPeriodModalVisible(true)}
-                          disabled={!probation}>
-                          <Text>
-                            {probation
-                              ? moment(probationPeriod).format('YYYY년 M월 D일')
-                              : ''}
-                          </Text>
-                        </DateTouchable>
-                        <TextInputLine isBefore={!probation} />
                         <WhiteSpace />
                         <Row
                           style={{
@@ -988,16 +976,16 @@ export default ({
                             justifyContent: 'space-between',
                           }}>
                           <Text>수습기간 급여비율</Text>
-                          <SystemSettingButton
+                          <RequestBorderButton
                             onPress={() =>
                               setIsProbationPercentModalVisible(true)
                             }>
-                            <SystemSettingText>
+                            <RequestBorderText>
                               {probationPercent
                                 ? `${probationPercent}%`
                                 : '설정'}
-                            </SystemSettingText>
-                          </SystemSettingButton>
+                            </RequestBorderText>
+                          </RequestBorderButton>
                         </Row>
                         <WhiteSpace />
                         <GreyText style={{marginTop: 10, textAlign: 'center'}}>
@@ -1525,7 +1513,7 @@ export default ({
             />
           </Container>
         </TouchableWithoutFeedback>
-      </ScrollView>
+      </Animated.ScrollView>
       <Modal
         onRequestClose={() => setIsStartDayModalVisible(false)}
         onBackdropPress={() => setIsStartDayModalVisible(false)}
@@ -1549,24 +1537,18 @@ export default ({
               setStartDay(moment(date).format('YYYY-MM-DD'));
             }}
           />
-          {startDaySet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsStartDayModalVisible(false);
-                setStartDaySet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => {
+              setIsStartDayModalVisible(false);
+              setStartDaySet(true);
+            }}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
       <Modal
@@ -1593,25 +1575,19 @@ export default ({
               setEndDay(moment(date).format('YYYY-MM-DD'));
             }}
           />
-          {endDaySet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsEndDayModalVisible(false);
-                setEndDayCheck(false);
-                setEndDaySet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => {
+              setIsEndDayModalVisible(false);
+              setEndDayCheck(false);
+              setEndDaySet(true);
+            }}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
       <Modal
@@ -1633,29 +1609,24 @@ export default ({
             mode={'date'}
             androidVariant="iosClone"
             minimumDate={moment(startDay).add(1, 'days').toDate()}
+            maximumDate={moment(endDay).toDate()}
             onDateChange={(date) => {
               setProbationPeriodSet(true);
               setProbationPeriod(moment(date).format('YYYY-MM-DD'));
             }}
           />
-          {probationPeriodSet ? (
-            <DatePickerRoundBtn
-              onPress={() => {
-                setIsProbationPeriodModalVisible(false);
-                setProbationPeriodSet(true);
-              }}
-              rippleColor={'#666'}
-              rippleDuration={600}
-              rippleSize={1200}
-              rippleContainerBorderRadius={30}
-              rippleOpacity={0.1}>
-              <DatePickerText>확인</DatePickerText>
-            </DatePickerRoundBtn>
-          ) : (
-            <DatePickerRoundView>
-              <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
-            </DatePickerRoundView>
-          )}
+          <DatePickerRoundBtn
+            onPress={() => {
+              setIsProbationPeriodModalVisible(false);
+              setProbationPeriodSet(true);
+            }}
+            rippleColor={'#666'}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
     </BackGround>

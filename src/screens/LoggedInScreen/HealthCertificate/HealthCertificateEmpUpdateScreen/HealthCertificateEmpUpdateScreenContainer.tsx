@@ -31,7 +31,6 @@ export default ({route: {params}}) => {
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(
     moment(params?.EDUCATION_DATE) || moment(),
   ); // 교육일시 / 검진일
-  const [EDUCATION_DATE_SET, setEDUCATION_DATE_SET] = useState<boolean>(false);
   const [NAME, setNAME] = useState<string>(params?.NAME || ''); // 교육이수자성명 / 성명
   const [RESULT_COUNT, setRESULT_COUNT] = useState<any>(
     params?.RESULT_COUNT || null,
@@ -228,8 +227,6 @@ export default ({route: {params}}) => {
       setRESULT_COUNT={setRESULT_COUNT}
       EDUCATION_DATE={EDUCATION_DATE}
       setEDUCATION_DATE={setEDUCATION_DATE}
-      EDUCATION_DATE_SET={EDUCATION_DATE_SET}
-      setEDUCATION_DATE_SET={setEDUCATION_DATE_SET}
     />
   );
 };

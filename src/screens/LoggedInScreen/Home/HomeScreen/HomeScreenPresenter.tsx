@@ -336,6 +336,7 @@ export default ({
   AVATAR,
   initLoading,
   gotoScreen,
+  alertModal,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -355,7 +356,9 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
-        editMode && type == 'emp'
+        selection == '업무캘린더'
+          ? alertModal('', '업무캘린더 서비스 준비 중 입니다.')
+          : editMode && type == 'emp'
           ? addCUSTOM_MENU_EMP_Fn(index)
           : selection == 'QR보기'
           ? setShowPictureModal(true)

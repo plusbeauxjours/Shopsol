@@ -1,0 +1,2 @@
+import TaskUpdateScreenContainer from "./TaskUpdateScreenContainer"
+export default TaskUpdateScreenContainer

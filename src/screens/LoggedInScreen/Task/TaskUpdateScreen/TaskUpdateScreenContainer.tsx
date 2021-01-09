@@ -7,25 +7,16 @@ import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
-import {
-  updateSHELFLIFE_DATA,
-  removeSHELFLIFE_DATA,
-} from '~/redux/shelflifeSlice';
-import ShelfLifeUpdateScreenPresenter from './ShelfLifeUpdateScreenPresenter';
+import {updateTASK_DATA, removeTASK_DATA} from '~/redux/taskSlice';
+import TaskUpdateScreenPresenter from './TaskUpdateScreenPresenter';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const shelfLife_SEQ = params?.shelfLife_SEQ || '';
-  const [shelfLifeName, setShelfLifeName] = useState<string>(
-    params?.shelfLifeName || '',
-  );
-  const [shelfLifeMemo, setShelfLifeMemo] = useState<string>(
-    params?.shelfLifeMemo || '',
-  );
-  const [shelfLifeDate, setShelfLifeDate] = useState<any>(
-    moment(params?.shelfLifeDate),
-  );
+  const task_SEQ = params?.task_SEQ || '';
+  const [taskName, setTaskName] = useState<string>(params?.taskName || '');
+  const [taskMemo, setTaskMemo] = useState<string>(params?.taskMemo || '');
+  const [taskDate, setTaskDate] = useState<any>(moment(params?.taskDate));
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
@@ -47,7 +38,7 @@ export default ({route: {params}}) => {
       title: title,
       content: text,
       okCallback: () => {
-        deleteShelfLife();
+        deleteTask();
       },
       okButtonText: '삭제',
       cancelButtonText: '취소',
@@ -57,38 +48,38 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
-  const deleteShelfLife = async () => {
+  const deleteTask = async () => {
     try {
       alertModal('상품을 삭제하였습니다.');
       navigation.goBack();
-      dispatch(removeSHELFLIFE_DATA({name: params?.name, shelfLife_SEQ}));
-      await api.deleteShelfLifeData({shelfLife_SEQ});
+      dispatch(removeTASK_DATA({name: params?.name, task_SEQ}));
+      await api.deleteTaskData({task_SEQ});
     } catch (e) {
       console.log(e);
     }
   };
 
   const submit = async () => {
-    if (shelfLifeName == '') {
+    if (taskName == '') {
       alertModal('수정할 상품명을 입력해주세요.');
     }
     try {
       navigation.goBack();
       alertModal('수정이 완료되었습니다.');
       dispatch(
-        updateSHELFLIFE_DATA({
+        updateTASK_DATA({
           name: params?.name,
-          shelfLife_SEQ,
-          shelfLifeName,
-          shelfLifeDate: moment(shelfLifeDate).format('YYYY-MM-DD'),
-          shelfLifeMemo,
+          task_SEQ,
+          taskName,
+          taskDate: moment(taskDate).format('YYYY-MM-DD'),
+          taskMemo,
         }),
       );
-      const {data} = await api.updateShelfLifeData({
-        shelfLife_SEQ,
-        shelfLifeNAME: shelfLifeName,
-        shelfLifeDATE: moment(shelfLifeDate).format('YYYY-MM-DD'),
-        shelfLifeMEMO: shelfLifeMemo,
+      const {data} = await api.updateTaskData({
+        task_SEQ,
+        taskNAME: taskName,
+        taskDATE: moment(taskDate).format('YYYY-MM-DD'),
+        taskMEMO: taskMemo,
       });
       await params?.fetchData();
       if (data.result == '0') {
@@ -134,18 +125,18 @@ export default ({route: {params}}) => {
   };
 
   return (
-    <ShelfLifeUpdateScreenPresenter
+    <TaskUpdateScreenPresenter
       deleteModal={deleteModal}
       cameraPictureLast={cameraPictureLast}
       setCameraPictureLast={setCameraPictureLast}
       isCameraModalVisible={isCameraModalVisible}
       setIsCameraModalVisible={setIsCameraModalVisible}
-      shelfLifeName={shelfLifeName}
-      setShelfLifeName={setShelfLifeName}
-      shelfLifeDate={shelfLifeDate}
-      setShelfLifeDate={setShelfLifeDate}
-      shelfLifeMemo={shelfLifeMemo}
-      setShelfLifeMemo={setShelfLifeMemo}
+      taskName={taskName}
+      setTaskName={setTaskName}
+      taskDate={taskDate}
+      setTaskDate={setTaskDate}
+      taskMemo={taskMemo}
+      setTaskMemo={setTaskMemo}
       takePictureFn={takePictureFn}
       launchImageLibraryFn={launchImageLibraryFn}
       isDateModalVisible={isDateModalVisible}

@@ -29,7 +29,6 @@ export default ({route: {params}}) => {
   const [businesstype, setBusinesstype] = useState<string>(''); // 영업의종류
   const [position, setPosition] = useState<string>(''); // 직책
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(moment()); // 교육일시 / 검진일
-  const [EDUCATION_DATE_SET, setEDUCATION_DATE_SET] = useState<boolean>(false);
   const [EDUCATION_TYPE, setEDUCATION_TYPE] = useState<'online' | 'offline'>(
     'online',
   ); // 교육구분
@@ -235,8 +234,6 @@ export default ({route: {params}}) => {
       takePictureFn={takePictureFn}
       checkOrcFn={checkOrcFn}
       EDUCATION_DATEprops={params?.EDUCATION_DATEprops}
-      EDUCATION_DATE_SET={EDUCATION_DATE_SET}
-      setEDUCATION_DATE_SET={setEDUCATION_DATE_SET}
     />
   );
 };
