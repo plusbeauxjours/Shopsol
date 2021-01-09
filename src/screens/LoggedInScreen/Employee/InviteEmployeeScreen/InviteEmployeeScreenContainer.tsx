@@ -167,7 +167,7 @@ export default () => {
 
   const getContactsFn = () => {
     try {
-      if (utils.isAndroid) {
+      if (utils.isAndroid()) {
         requestPermissionsAndroid();
       } else {
         requestPermissionsIOS();

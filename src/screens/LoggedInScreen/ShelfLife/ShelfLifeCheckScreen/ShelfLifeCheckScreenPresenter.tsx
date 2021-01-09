@@ -213,8 +213,9 @@ const EmptyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
 `;
+const Footer = styled.View``;
 
-const Footer = styled.TouchableOpacity`
+const ModalFooter = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   height: 60px;
   position: absolute;
@@ -224,7 +225,7 @@ const Footer = styled.TouchableOpacity`
   background-color: ${styleGuide.palette.primary};
 `;
 
-const FooterText = styled.Text`
+const ModalFooterText = styled.Text`
   color: #ffffff;
   font-size: 14px;
   margin-top: 15px;
@@ -336,24 +337,26 @@ export default ({
                     <TitleText color={item.textColor}>
                       {item.titleWord}
                     </TitleText>
-                    <SpaceRow>
-                      <SmallText color={item.textColor}>전체 수량</SmallText>
-                      <SmallText color={item.textColor}>
-                        <SmallBold color={item.textColor}>
-                          {item.totalQTY}
-                        </SmallBold>
-                        &nbsp;개
-                      </SmallText>
-                    </SpaceRow>
-                    <SpaceRow>
-                      <SmallText color={item.textColor}>처리 수량</SmallText>
-                      <SmallText color={item.textColor}>
-                        <SmallBold color={item.textColor}>
-                          {item.doneQTY}
-                        </SmallBold>
-                        &nbsp;개
-                      </SmallText>
-                    </SpaceRow>
+                    <Footer>
+                      <SpaceRow>
+                        <SmallText color={item.textColor}>전체 수량</SmallText>
+                        <SmallText color={item.textColor}>
+                          <SmallBold color={item.textColor}>
+                            {item.totalQTY}
+                          </SmallBold>
+                          &nbsp;개
+                        </SmallText>
+                      </SpaceRow>
+                      <SpaceRow>
+                        <SmallText color={item.textColor}>처리 수량</SmallText>
+                        <SmallText color={item.textColor}>
+                          <SmallBold color={item.textColor}>
+                            {item.doneQTY}
+                          </SmallBold>
+                          &nbsp;개
+                        </SmallText>
+                      </SpaceRow>
+                    </Footer>
                   </Row>
                   <CardGreyLine />
                   <DonutCard
@@ -551,9 +554,9 @@ export default ({
                 edgeBorderWidth={2}
                 showAnimatedLine={false}
               />
-              <Footer onPress={() => setBarCodeCameraModalOpen(false)}>
-                <FooterText>닫기</FooterText>
-              </Footer>
+              <ModalFooter onPress={() => setBarCodeCameraModalOpen(false)}>
+                <ModalFooterText>닫기</ModalFooterText>
+              </ModalFooter>
             </RNCamera>
           </Modal>
         </BackGround>

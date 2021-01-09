@@ -289,6 +289,21 @@ const CloseIconContainer = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+const GreyText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
+  position: absolute;
+  color: ${styleGuide.palette.greyColor};
+`;
+
+const EmptyView = styled.View`
+  width: ${wp('100%') - 40}px;
+  border-radius: 20px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+`;
+
 export default ({
   EMP_LIST,
   totalEARLY_COUNT,
@@ -492,9 +507,34 @@ export default ({
               </Date>
             </DateSection>
             {totalWORKING_DAY == 0 ||
+            totalWORKING_COUNT == 0 ||
             totalWORKING_EMP == 0 ||
             EMP_LIST.length == 0 ? (
-              <Text>근무 직원이 없습니다. </Text>
+              <EmptyView>
+                <FastImage
+                  style={{
+                    width: 220,
+                    height: 55,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginRight: 90,
+                  }}
+                  source={require('../../../../assets/images/emptyBalloons.png')}
+                  resizeMode={FastImage.resizeMode.cover}>
+                  <GreyText>근무 직원이 없습니다.</GreyText>
+                </FastImage>
+                <FastImage
+                  style={{
+                    width: 100,
+                    height: 63,
+                    marginTop: 3,
+                    bottom: 0,
+                    marginLeft: 170,
+                  }}
+                  source={require('../../../../assets/images/emptyIcon.png')}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </EmptyView>
             ) : (
               <>
                 <Section
@@ -650,6 +690,7 @@ export default ({
             )}
           </Container>
           {totalWORKING_DAY != 0 &&
+            totalWORKING_COUNT != 0 &&
             totalWORKING_EMP != 0 &&
             EMP_LIST.length != 0 && (
               <ScrollView

@@ -21,7 +21,7 @@ const ForwardArrowIconContainer = styled.View`
 
 export const EyeOnIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid ? 'md-eye' : 'ios-eye'}
+    name={utils.isAndroid() ? 'md-eye' : 'ios-eye'}
     size={size ?? 24}
     color={color ?? styleGuide.palette.greyColor}
   />
@@ -29,7 +29,7 @@ export const EyeOnIcon: React.FC<IProps> = ({size, color}) => (
 
 export const EyeOffIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid ? 'md-eye-off' : 'ios-eye-off'}
+    name={utils.isAndroid() ? 'md-eye-off' : 'ios-eye-off'}
     size={size ?? 24}
     color={color ?? styleGuide.palette.greyColor}
   />
@@ -38,7 +38,7 @@ export const EyeOffIcon: React.FC<IProps> = ({size, color}) => (
 export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={
-      utils.isAndroid
+      utils.isAndroid()
         ? 'md-chevron-forward-outline'
         : 'ios-chevron-forward-outline'
     }
@@ -76,7 +76,7 @@ export const StopCircleOutlineIcon: React.FC<IProps> = ({size, color}) => (
 export const BackIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={
-      utils.isAndroid ? 'md-chevron-back-outline' : 'ios-chevron-back-outline'
+      utils.isAndroid() ? 'md-chevron-back-outline' : 'ios-chevron-back-outline'
     }
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
@@ -85,7 +85,7 @@ export const BackIcon: React.FC<IProps> = ({size, color}) => (
 
 export const CartIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid ? 'md-cart-outline' : 'ios-cart-outline'}
+    name={utils.isAndroid() ? 'md-cart-outline' : 'ios-cart-outline'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
   />
@@ -93,7 +93,7 @@ export const CartIcon: React.FC<IProps> = ({size, color}) => (
 
 export const HomeIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid ? 'md-home-outline' : 'ios-home-outline'}
+    name={utils.isAndroid() ? 'md-home-outline' : 'ios-home-outline'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
   />
@@ -109,7 +109,7 @@ export const CloseIcon: React.FC<IProps> = ({size, color}) => (
 
 export const LocationIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid ? 'md-location' : 'ios-location'}
+    name={utils.isAndroid() ? 'md-location' : 'ios-location'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
   />
@@ -133,7 +133,7 @@ export const CheckBoxIcon: React.FC<IProps> = ({size, color}) => (
 
 export const CheckMarkIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid ? 'md-checkmark' : 'ios-checkmark;'}
+    name={utils.isAndroid() ? 'md-checkmark' : 'ios-checkmark;'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
   />
@@ -175,7 +175,9 @@ export const AddCircleIcon: React.FC<IProps> = ({size, color}) => (
 export const PersonCircleIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={
-      utils.isAndroid ? 'md-person-circle-outline' : 'ios-person-circle-outline'
+      utils.isAndroid()
+        ? 'md-person-circle-outline'
+        : 'ios-person-circle-outline'
     }
     size={size ?? 17}
     color={color ?? styleGuide.palette.primary}
@@ -240,7 +242,7 @@ export const QrCodeIcon: React.FC<IProps> = ({size, color}) => (
 
 export const CalendarIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid ? 'md-calendar-outline' : 'ios-calendar-outline'}
+    name={utils.isAndroid() ? 'md-calendar-outline' : 'ios-calendar-outline'}
     size={size ?? 20}
     color={color ?? 'white'}
   />
