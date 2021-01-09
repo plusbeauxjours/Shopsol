@@ -224,8 +224,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
         </GreyBox>
         <Item
           onPress={() => cancelModal(name, item.shelfLife_SEQ)}
-          onLongPress={() => {}}
-          disabled={true}>
+          onLongPress={() => {}}>
           <Name>
             <NameText isChecked={true}>{item.shelfLifeName}</NameText>
             <DateText isChecked={true}>

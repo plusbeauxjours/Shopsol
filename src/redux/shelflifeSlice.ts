@@ -100,7 +100,6 @@ export const getSHELFLIFE_DATA = (
     storeReducer: { STORE_SEQ },
   } = getState();
   try {
-    dispatch(setSplashVisible(true));
     const { data } = await api.getShelfLifeData({
       STORE_SEQ,
       YEAR,
@@ -110,8 +109,6 @@ export const getSHELFLIFE_DATA = (
     return data.resultdata;
   } catch (e) {
     console.log(e);
-  } finally {
-    dispatch(setSplashVisible(false));
   }
 };
 

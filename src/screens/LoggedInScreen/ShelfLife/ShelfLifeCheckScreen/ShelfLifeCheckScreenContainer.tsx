@@ -61,6 +61,12 @@ export default () => {
     false,
   );
   const [codenumber, setCodenumber] = useState<string>('');
+  const [isUpdateToastVisible, setIsUpdateToastVisible] = useState<boolean>(
+    false,
+  );
+  const [isCancelToastVisible, setIsCancelToastVisible] = useState<boolean>(
+    false,
+  );
 
   const confirmModal = (name, shelfLife_SEQ) => {
     const params = {
@@ -98,6 +104,22 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
+  const cancelToastFn = () => {
+    clearTimeout();
+    setIsCancelToastVisible(true);
+    setTimeout(() => {
+      setIsCancelToastVisible(false);
+    }, 1000);
+  };
+
+  const updateToastFn = () => {
+    clearTimeout();
+    setIsUpdateToastVisible(true);
+    setTimeout(() => {
+      setIsUpdateToastVisible(false);
+    }, 1000);
+  };
+
   const onRefresh = async () => {
     try {
       setRefreshing(true);
@@ -112,7 +134,7 @@ export default () => {
 
   const cancelShelfLife = async (name, shelfLife_SEQ) => {
     try {
-      alertModal('상품의 처리완료를 취소하였습니다.');
+      cancelToastFn();
       dispatch(cancelSHELFLIFE({name, shelfLife_SEQ}));
       const {data} = await api.cancelShelfLifeData({shelfLife_SEQ});
       if (data.resultmsg !== '1') {
@@ -127,7 +149,7 @@ export default () => {
 
   const updateShelfLife = async (name, shelfLife_SEQ) => {
     try {
-      alertModal('상품의 폐기 또는 처리 완료 하였습니다.');
+      updateToastFn();
       dispatch(
         checkSHELFLIFE({
           name,
@@ -154,7 +176,6 @@ export default () => {
   const fetchData = async () => {
     try {
       const data = await dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
-      console.log('SHELFLIFE_DATA', data);
       const day = moment();
       const dayDuration = moment().add(2, 'days');
       const weekDuration = moment().add(7, 'days').add(1, 'days');
@@ -288,6 +309,7 @@ export default () => {
         alertModal('바코드를 읽을 수 없습니다.');
       }, 100);
     } else {
+      console.log(codenumber);
       setCodenumber(codenumber);
     }
   };
@@ -317,6 +339,9 @@ export default () => {
       search={search}
       setSearch={setSearch}
       codenumber={codenumber}
+      setCodenumber={setCodenumber}
+      isCancelToastVisible={isCancelToastVisible}
+      isUpdateToastVisible={isUpdateToastVisible}
       barCodeCameraModalOpen={barCodeCameraModalOpen}
       setBarCodeCameraModalOpen={setBarCodeCameraModalOpen}
       handleBarCodeScanned={handleBarCodeScanned}

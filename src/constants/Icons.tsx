@@ -133,7 +133,7 @@ export const CheckBoxIcon: React.FC<IProps> = ({size, color}) => (
 
 export const CheckMarkIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={utils.isAndroid() ? 'md-checkmark' : 'ios-checkmark;'}
+    name={utils.isAndroid() ? 'md-checkmark' : 'ios-checkmark'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
   />

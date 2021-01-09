@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {ActivityIndicator} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 
 import PaymentInfoScreenCard from './PaymentInfoScreenCard';
@@ -15,7 +16,6 @@ import {
   HelpCircleIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
-import FastImage from 'react-native-fast-image';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;

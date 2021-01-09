@@ -5,15 +5,17 @@ import Animated from 'react-native-reanimated';
 import Ripple from 'react-native-material-ripple';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
+import {RNCamera} from 'react-native-camera';
+import Modal from 'react-native-modal';
+import BarcodeMask from 'react-native-barcode-mask';
+import LottieView from 'lottie-react-native';
 
 import DonutCard from '~/components/DonutCard';
 import ShelfLifeCheckScreenCard from './ShelfLifeCheckScreenCard';
 import ShelfLifeCheckScreenHeader from './ShelfLifeCheckScreenHeader';
 import {AddIcon, CloseCircleOutlineIcon, BarCodeIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
-import {RNCamera} from 'react-native-camera';
-import Modal from 'react-native-modal';
-import BarcodeMask from 'react-native-barcode-mask';
+import utils from '~/constants/utils';
 
 interface IColor {
   color: string;
@@ -232,6 +234,46 @@ const ModalFooterText = styled.Text`
   margin-bottom: 15px;
 `;
 
+const GreyText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
+  position: absolute;
+  color: ${styleGuide.palette.greyColor};
+`;
+
+const EmptyView = styled.View`
+  width: ${wp('100%') - 40}px;
+  border-radius: 20px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+`;
+
+const ModalPopupArea = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100px;
+  align-items: center;
+`;
+
+const ModalPopupText = styled.Text`
+  color: white;
+`;
+
+const ModalPopup = styled.View`
+  padding: 14px;
+  border-radius: 10px;
+  elevation: 6;
+  shadow-color: grey;
+  shadow-offset: 3px 3px;
+  shadow-opacity: 0.5;
+  shadow-radius: 3px;
+  background-color: ${utils.isAndroid
+    ? styleGuide.palette.greyColor
+    : 'rgba(0,0,0,0.7)'};
+`;
+
 export default ({
   onRefresh,
   confirmModal,
@@ -252,6 +294,9 @@ export default ({
   search,
   setSearch,
   codenumber,
+  setCodenumber,
+  isCancelToastVisible,
+  isUpdateToastVisible,
   barCodeCameraModalOpen,
   setBarCodeCameraModalOpen,
   handleBarCodeScanned,
@@ -377,6 +422,7 @@ export default ({
                 <SearchInputContainer>
                   <BarcodeIconConatiner
                     onPress={() => {
+                      setSearch('');
                       setCodenumber('');
                       setBarCodeCameraModalOpen(true);
                     }}>
@@ -405,8 +451,36 @@ export default ({
                     },
                   }) => index !== 0 && onMeasurement(index, {name, anchor})}>
                   <VerticalLine />
-                  {codenumber.length > 0
-                    ? items
+                  {codenumber.length > 0 ? (
+                    items?.filter((i) => i.shelfLifeBarcode == codenumber)
+                      .length == 0 ? (
+                      <EmptyView>
+                        <FastImage
+                          style={{
+                            width: 220,
+                            height: 55,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: 90,
+                          }}
+                          source={require('../../../../assets/images/emptyBalloons.png')}
+                          resizeMode={FastImage.resizeMode.cover}>
+                          <GreyText>근무 직원이 없습니다.</GreyText>
+                        </FastImage>
+                        <FastImage
+                          style={{
+                            width: 100,
+                            height: 63,
+                            marginTop: 3,
+                            bottom: 0,
+                            marginLeft: 170,
+                          }}
+                          source={require('../../../../assets/images/emptyIcon.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </EmptyView>
+                    ) : (
+                      items
                         ?.filter((i) => i.shelfLifeBarcode == codenumber)
                         .map((item, index) => {
                           return index == 0 ? (
@@ -439,49 +513,19 @@ export default ({
                             </View>
                           );
                         })
-                    : search.length > 0
-                    ? items
-                        ?.filter(
-                          (i) =>
-                            i.shelfLifeName
-                              .toLowerCase()
-                              .includes(search.toLowerCase()) ||
-                            i.shelfLifeMemo
-                              .toLowerCase()
-                              .includes(search.toLowerCase()),
-                        )
-                        .map((item, index) => {
-                          return index == 0 ? (
-                            <React.Fragment key={index}>
-                              <LineTextContainer
-                                as={Animated.View}
-                                style={{opacity: opacity(tabs[index].anchor)}}
-                                color={color}>
-                                <LineText color={color}>{name}</LineText>
-                              </LineTextContainer>
-                              <View key={index}>
-                                <ShelfLifeCheckScreenCard
-                                  name={name}
-                                  item={item}
-                                  confirmModal={confirmModal}
-                                  cancelModal={cancelModal}
-                                  fetchData={fetchData}
-                                />
-                              </View>
-                            </React.Fragment>
-                          ) : (
-                            <View key={index}>
-                              <ShelfLifeCheckScreenCard
-                                name={name}
-                                item={item}
-                                confirmModal={confirmModal}
-                                cancelModal={cancelModal}
-                                fetchData={fetchData}
-                              />
-                            </View>
-                          );
-                        })
-                    : items?.map((item, index) => {
+                    )
+                  ) : search.length > 0 ? (
+                    items
+                      ?.filter(
+                        (i) =>
+                          i.shelfLifeName
+                            .toLowerCase()
+                            .includes(search.toLowerCase()) ||
+                          i.shelfLifeMemo
+                            .toLowerCase()
+                            .includes(search.toLowerCase()),
+                      )
+                      .map((item, index) => {
                         return index == 0 ? (
                           <React.Fragment key={index}>
                             <LineTextContainer
@@ -511,7 +555,40 @@ export default ({
                             />
                           </View>
                         );
-                      })}
+                      })
+                  ) : (
+                    items?.map((item, index) => {
+                      return index == 0 ? (
+                        <React.Fragment key={index}>
+                          <LineTextContainer
+                            as={Animated.View}
+                            style={{opacity: opacity(tabs[index].anchor)}}
+                            color={color}>
+                            <LineText color={color}>{name}</LineText>
+                          </LineTextContainer>
+                          <View key={index}>
+                            <ShelfLifeCheckScreenCard
+                              name={name}
+                              item={item}
+                              confirmModal={confirmModal}
+                              cancelModal={cancelModal}
+                              fetchData={fetchData}
+                            />
+                          </View>
+                        </React.Fragment>
+                      ) : (
+                        <View key={index}>
+                          <ShelfLifeCheckScreenCard
+                            name={name}
+                            item={item}
+                            confirmModal={confirmModal}
+                            cancelModal={cancelModal}
+                            fetchData={fetchData}
+                          />
+                        </View>
+                      );
+                    })
+                  )}
                 </View>
               ))}
             </Container>
@@ -559,10 +636,41 @@ export default ({
               </ModalFooter>
             </RNCamera>
           </Modal>
+          {isCancelToastVisible && (
+            <ModalPopupArea>
+              <ModalPopup>
+                <ModalPopupText>
+                  상품의 처리완료를 취소하였습니다.
+                </ModalPopupText>
+              </ModalPopup>
+            </ModalPopupArea>
+          )}
+          {isUpdateToastVisible && (
+            <ModalPopupArea>
+              <ModalPopup>
+                <ModalPopupText>
+                  상품의 폐기 또는 처리를 완료하였습니다.
+                </ModalPopupText>
+              </ModalPopup>
+            </ModalPopupArea>
+          )}
         </BackGround>
       );
     }
   } else {
-    return null;
+    return (
+      <Container style={{justifyContent: 'center'}}>
+        <LottieView
+          style={{
+            marginTop: 20,
+            width: 160,
+            height: 160,
+          }}
+          source={require('../../../../assets/animations/dashBoardLoader.json')}
+          loop
+          autoPlay
+        />
+      </Container>
+    );
   }
 };
