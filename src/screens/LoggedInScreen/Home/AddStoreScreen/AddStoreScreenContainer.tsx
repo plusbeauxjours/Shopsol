@@ -148,7 +148,7 @@ export default ({route: {params}}) => {
     } else if (storeCategoryType == '기타' && storeCategoryTypeEtc == '') {
       dispatch(setSplashVisible(false));
       alertModal('기타 사업장분류를 입력해주세요.');
-    } else if (commuteTypeCheck[1] && distanceCheck == false) {
+    } else if (commuteTypeCheck[1] && !distanceCheck) {
       dispatch(setSplashVisible(false));
       alertModal('출퇴근 허용거리를 선택해주세요.');
     } else {

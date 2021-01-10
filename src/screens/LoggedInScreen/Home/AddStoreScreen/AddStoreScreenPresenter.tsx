@@ -21,9 +21,6 @@ interface IIsPerple {
 interface IColor {
   color: string;
 }
-interface IIsBefore {
-  isBefore?: boolean;
-}
 
 interface IsError {
   isError?: boolean;
@@ -79,7 +76,6 @@ const RequestButton = styled.TouchableOpacity`
 `;
 
 const RequestText = styled.Text`
-  font-size: ${styleGuide.fontSize.middle}px;
   color: white;
 `;
 
@@ -143,8 +139,6 @@ const TitleText = styled.Text`
   color: ${styleGuide.palette.greyColor};
   font-weight: ${styleGuide.fontWeight.bold};
 `;
-
-const Touchable = styled.TouchableOpacity``;
 
 const TypeCheckCase = styled.View`
   width: 100%;
@@ -468,7 +462,9 @@ export default ({
               </RowTouchable>
               <RequestBorderButton onPress={() => setModalVisible4(true)}>
                 <RequestBorderText>
-                  {distance == '-1'
+                  {!distanceCheck
+                    ? '허용거리 설정'
+                    : distance == '-1'
                     ? '거리 제한 없음'
                     : Number(distance) < 1000
                     ? distance + 'm'
@@ -489,7 +485,9 @@ export default ({
                 <HelpCircleIcon />
               </RowTouchable>
               <RequestBorderButton onPress={() => setModalVisible2(true)}>
-                <RequestBorderText>{LATE_TIME}분</RequestBorderText>
+                <RequestBorderText>
+                  {timeCheck ? `${LATE_TIME}분` : '허용시간 설정'}
+                </RequestBorderText>
               </RequestBorderButton>
             </InputCaseRow>
             <WhiteSpace />
@@ -505,7 +503,9 @@ export default ({
                 <HelpCircleIcon />
               </RowTouchable>
               <RequestBorderButton onPress={() => setModalVisible1(true)}>
-                <RequestBorderText>{EARLY_TIME}분</RequestBorderText>
+                <RequestBorderText>
+                  {EARLYtimeCheck ? `${EARLY_TIME}분` : '허용시간 설정'}
+                </RequestBorderText>
               </RequestBorderButton>
             </InputCaseRow>
           </Section>
@@ -558,7 +558,11 @@ export default ({
                   setDays(value);
                 }}>
                 <RequestBorderText>
-                  {CALCULATE_DAY == 1 ? '말일' : `${CALCULATE_DAY - 1}일`}
+                  {!dayCheck
+                    ? '정산일 설정'
+                    : CALCULATE_DAY == 1
+                    ? '말일'
+                    : `${CALCULATE_DAY - 1}일`}
                 </RequestBorderText>
               </RequestBorderButton>
             </InputCaseRow>

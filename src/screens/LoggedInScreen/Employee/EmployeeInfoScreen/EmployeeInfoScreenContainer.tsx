@@ -36,8 +36,6 @@ export default ({route: {params}}) => {
   const {data: {EMP_SEQ = null, images = []} = {}} = params;
 
   const user = workinglist.find((i) => (i.EMP_SEQ = EMP_SEQ));
-  console.log('EMP_SEQ', EMP_SEQ);
-  console.log('user', user);
   const START = user?.START;
   const END = user?.END;
   const EMP_PAY_TYPE = user?.PAY_TYPE;

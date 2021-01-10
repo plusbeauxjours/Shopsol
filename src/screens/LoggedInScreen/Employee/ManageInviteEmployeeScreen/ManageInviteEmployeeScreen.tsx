@@ -39,12 +39,14 @@ const Row = styled.TouchableOpacity`
   flex-direction: row;
 `;
 
-const SpaceRow = styled(Row)`
+const SpaceRow = styled.View`
+  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
 `;
 
 const EmployeeListBox = styled.View`
-  align-items: center;
+  align-items: center;SpaceRow
 `;
 
 const TitleText = styled.Text`
