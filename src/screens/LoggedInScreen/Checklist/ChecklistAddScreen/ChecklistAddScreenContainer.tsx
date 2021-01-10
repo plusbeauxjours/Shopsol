@@ -146,7 +146,7 @@ export default ({route: {params}}) => {
     }
     if (!CHECK_SEQ) {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         if (buffer.length != 0) {
           const {data} = await api.checkRegister({
             LIST: newlist,
@@ -190,11 +190,11 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     } else {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         if (buffer.length !== 0) {
           const {data} = await api.checkUpdate({
             CLOSE_FLAG: sign == 'close' ? '1' : '0',
@@ -242,7 +242,7 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };

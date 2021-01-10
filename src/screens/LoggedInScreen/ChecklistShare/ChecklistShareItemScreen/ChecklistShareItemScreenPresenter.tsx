@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
+import {useHeaderHeight} from '@react-navigation/stack';
 import {FlatList} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
@@ -259,7 +260,7 @@ export default ({
   openRow,
 }) => {
   const navigation = useNavigation();
-
+  const headerHeight = useHeaderHeight();
   const renderImage = (item, index) => (
     <Touchable
       onPress={() => {
@@ -290,197 +291,195 @@ export default ({
   return (
     <>
       <BackGround>
-        <KeyboardAvoidingView
-          behavior={utils.isAndroid() ? 'height' : 'padding'}
-          keyboardVerticalOffset={utils.isAndroid() ? 75 : 145}
-          enabled
-          style={{flexGrow: 1}}>
-          <ScrollView
-            keyboardShouldPersistTaps={'handled'}
-            keyboardDismissMode="on-drag"
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{alignItems: 'center'}}>
-            <Container>
-              <Section>
-                <Row style={{justifyContent: 'space-between'}}>
-                  <Column style={{marginLeft: 0}}>
-                    <Bold style={{fontSize: 18}}>{NOTI_TITLE}</Bold>
-                    <Bold style={{color: '#C8C8C8'}}>{EMP_NAME}</Bold>
-                  </Column>
-                  <Column style={{alignItems: 'flex-end'}}>
-                    <Bold style={{color: '#C8C8C8'}}>
-                      {moment(CREATE_TIME).format('YYYY.MM.DD')}
-                    </Bold>
-                    <Bold style={{color: '#C8C8C8'}}>
-                      {moment(CREATE_TIME).format('HH:mm')}
-                    </Bold>
-                  </Column>
-                </Row>
-                <Line />
-                <Text>{CONTENTS}</Text>
-                {imgarr?.length > 0 && (
-                  <FlatList
-                    horizontal
-                    keyExtractor={(_, index) => index.toString()}
-                    style={{
-                      marginTop: 40,
-                      flexDirection: 'row',
-                    }}
-                    contentContainerStyle={{justifyContent: 'center'}}
-                    showsHorizontalScrollIndicator={false}
-                    data={imgarr}
-                    renderItem={({item, index}) => renderImage(item, index)}
-                  />
-                )}
-              </Section>
-
-              <Section>
-                <MemoContainer>
-                  <CommentTitleText>댓글달기</CommentTitleText>
-                  <MemoBox
-                    onPress={() => {
-                      setIsEditMode(false);
-                      setCommentInputBox(true);
-                    }}>
-                    <MemoText>댓글을 입력하세요...</MemoText>
-                  </MemoBox>
-                </MemoContainer>
-                {loading ? (
-                  <CommentBox isLast={true}>
-                    <ActivityIndicator size="small" />
-                  </CommentBox>
-                ) : (
-                  <SwipeListView
-                    useFlatList={true}
-                    closeOnRowOpen={true}
-                    closeOnRowBeginSwipe={true}
-                    data={CHECKLIST_SHARE_COMMENTS}
-                    previewOpenValue={100}
-                    renderItem={({item, index}, rowMap) => (
-                      <SwipeRow
-                        key={index}
-                        rightOpenValue={-100}
-                        disableLeftSwipe={item.MEMBER_SEQ != ME && STORE == '0'}
-                        disableRightSwipe={true}>
-                        <BackBtn>
-                          <RowTouchable
-                            style={{backgroundColor: 'white'}}
-                            onPress={() => {
-                              rowMap[index].closeRow();
-                              setIsEditMode(true);
-                              setCommentInputBox(true);
-                              setComment(item.CONTENTS);
-                              setSelectedCOM_SEQ(item.COM_SEQ);
-                            }}>
-                            <SettingIcon
-                              color={styleGuide.palette.greyColor}
-                              size={22}
-                            />
-                          </RowTouchable>
-                          <RowTouchable
-                            style={{backgroundColor: '#D93F12'}}
-                            onPress={() => {
-                              rowMap[index].closeRow();
-                              deleteFn(item.COM_SEQ);
-                            }}>
-                            <DeleteIcon color={'white'} />
-                          </RowTouchable>
-                        </BackBtn>
-                        <CommentBox
-                          key={index}
-                          isLast={CHECKLIST_SHARE_COMMENTS?.length - 1 == index}
-                          onPress={() => {
-                            openRow(rowMap[index]);
-                          }}
-                          rippleColor={'#666'}
-                          rippleDuration={1500}
-                          rippleSize={1700}
-                          rippleContainerBorderRadius={0}
-                          rippleOpacity={0.1}>
-                          <Row style={{alignItems: 'flex-start'}}>
-                            <FastImage
-                              style={{width: 50, height: 50, borderRadius: 25}}
-                              source={{
-                                uri: `http://133.186.210.223/uploads/${item.IMAGE}`,
-                                headers: {Authorization: 'someAuthToken'},
-                                priority: FastImage.priority.low,
-                              }}
-                              resizeMode={FastImage.resizeMode.cover}
-                            />
-                            <Column>
-                              <Text
-                                ellipsizeMode={'tail'}
-                                numberOfLines={100}
-                                style={{
-                                  width: wp('100%') - 180,
-                                  flexWrap: 'wrap',
-                                  marginBottom: 5,
-                                }}>
-                                <Text
-                                  style={{
-                                    fontWeight: '600',
-                                    color: styleGuide.palette.greyColor,
-                                  }}>
-                                  {item.EMP_NAME} [{item.IS_MANAGER}
-                                  ]&nbsp;&nbsp;
-                                </Text>
-                                {item.CONTENTS}
-                              </Text>
-                              <Row
-                                style={{
-                                  justifyContent: 'flex-start',
-                                }}>
-                                <Text
-                                  style={{color: styleGuide.palette.greyColor}}>
-                                  {moment(item.CREATE_TIME).format(
-                                    'YYYY.MM.DD',
-                                  )}
-                                </Text>
-                              </Row>
-                            </Column>
-                            {(item.MEMBER_SEQ == ME || STORE == '1') && (
-                              <CommentIconContainer>
-                                <LottieView
-                                  speed={0.25}
-                                  style={{
-                                    width: 30,
-                                    height: 120,
-                                  }}
-                                  source={require('../../../../assets/animations/menuArrow.json')}
-                                  loop
-                                  autoPlay
-                                />
-                              </CommentIconContainer>
-                            )}
-                          </Row>
-                        </CommentBox>
-                      </SwipeRow>
-                    )}
-                    keyExtractor={(item, index) => index.toString()}
-                  />
-                )}
-              </Section>
-              {ME == MEMBER_SEQ && (
-                <SubmitBtn
-                  text={`${TITLE} 수정하기`}
-                  onPress={() =>
-                    navigation.navigate('ChecklistShareUpdateScreen', {
-                      TITLE,
-                      ADDDATE: CREATE_TIME,
-                      IMG_LIST,
-                      NOTICE_SEQ,
-                      CONTENTS,
-                      NOTI_TITLE,
-                      isFavorite,
-                      CREATE_TIME,
-                    })
-                  }
-                  isRegisted={true}
+        <ScrollView
+          keyboardShouldPersistTaps={'handled'}
+          keyboardDismissMode="on-drag"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{alignItems: 'center'}}>
+          <Container>
+            <Section>
+              <Row style={{justifyContent: 'space-between'}}>
+                <Column style={{marginLeft: 0}}>
+                  <Bold style={{fontSize: 18}}>{NOTI_TITLE}</Bold>
+                  <Bold style={{color: '#C8C8C8'}}>{EMP_NAME}</Bold>
+                </Column>
+                <Column style={{alignItems: 'flex-end'}}>
+                  <Bold style={{color: '#C8C8C8'}}>
+                    {moment(CREATE_TIME).format('YYYY.MM.DD')}
+                  </Bold>
+                  <Bold style={{color: '#C8C8C8'}}>
+                    {moment(CREATE_TIME).format('HH:mm')}
+                  </Bold>
+                </Column>
+              </Row>
+              <Line />
+              <Text>{CONTENTS}</Text>
+              {imgarr?.length > 0 && (
+                <FlatList
+                  horizontal
+                  keyExtractor={(_, index) => index.toString()}
+                  style={{
+                    marginTop: 40,
+                    flexDirection: 'row',
+                  }}
+                  contentContainerStyle={{justifyContent: 'center'}}
+                  showsHorizontalScrollIndicator={false}
+                  data={imgarr}
+                  renderItem={({item, index}) => renderImage(item, index)}
                 />
               )}
-            </Container>
-          </ScrollView>
-          {commentInputBox && (
+            </Section>
+
+            <Section>
+              <MemoContainer>
+                <CommentTitleText>댓글달기</CommentTitleText>
+                <MemoBox
+                  onPress={() => {
+                    setIsEditMode(false);
+                    setCommentInputBox(true);
+                  }}>
+                  <MemoText>댓글을 입력하세요...</MemoText>
+                </MemoBox>
+              </MemoContainer>
+              {loading ? (
+                <CommentBox isLast={true}>
+                  <ActivityIndicator size="small" />
+                </CommentBox>
+              ) : (
+                <SwipeListView
+                  useFlatList={true}
+                  closeOnRowOpen={true}
+                  closeOnRowBeginSwipe={true}
+                  data={CHECKLIST_SHARE_COMMENTS}
+                  previewOpenValue={100}
+                  renderItem={({item, index}, rowMap) => (
+                    <SwipeRow
+                      key={index}
+                      rightOpenValue={-100}
+                      disableLeftSwipe={item.MEMBER_SEQ != ME && STORE == '0'}
+                      disableRightSwipe={true}>
+                      <BackBtn>
+                        <RowTouchable
+                          style={{backgroundColor: 'white'}}
+                          onPress={() => {
+                            rowMap[index].closeRow();
+                            setIsEditMode(true);
+                            setCommentInputBox(true);
+                            setComment(item.CONTENTS);
+                            setSelectedCOM_SEQ(item.COM_SEQ);
+                          }}>
+                          <SettingIcon
+                            color={styleGuide.palette.greyColor}
+                            size={22}
+                          />
+                        </RowTouchable>
+                        <RowTouchable
+                          style={{backgroundColor: '#D93F12'}}
+                          onPress={() => {
+                            rowMap[index].closeRow();
+                            deleteFn(item.COM_SEQ);
+                          }}>
+                          <DeleteIcon color={'white'} />
+                        </RowTouchable>
+                      </BackBtn>
+                      <CommentBox
+                        key={index}
+                        isLast={CHECKLIST_SHARE_COMMENTS?.length - 1 == index}
+                        onPress={() => {
+                          openRow(rowMap[index]);
+                        }}
+                        rippleColor={'#666'}
+                        rippleDuration={1500}
+                        rippleSize={1700}
+                        rippleContainerBorderRadius={0}
+                        rippleOpacity={0.1}>
+                        <Row style={{alignItems: 'flex-start'}}>
+                          <FastImage
+                            style={{width: 50, height: 50, borderRadius: 25}}
+                            source={{
+                              uri: `http://133.186.210.223/uploads/${item.IMAGE}`,
+                              headers: {Authorization: 'someAuthToken'},
+                              priority: FastImage.priority.low,
+                            }}
+                            resizeMode={FastImage.resizeMode.cover}
+                          />
+                          <Column>
+                            <Text
+                              ellipsizeMode={'tail'}
+                              numberOfLines={100}
+                              style={{
+                                width: wp('100%') - 180,
+                                flexWrap: 'wrap',
+                                marginBottom: 5,
+                              }}>
+                              <Text
+                                style={{
+                                  fontWeight: '600',
+                                  color: styleGuide.palette.greyColor,
+                                }}>
+                                {item.EMP_NAME} [{item.IS_MANAGER}
+                                ]&nbsp;&nbsp;
+                              </Text>
+                              {item.CONTENTS}
+                            </Text>
+                            <Row
+                              style={{
+                                justifyContent: 'flex-start',
+                              }}>
+                              <Text
+                                style={{color: styleGuide.palette.greyColor}}>
+                                {moment(item.CREATE_TIME).format('YYYY.MM.DD')}
+                              </Text>
+                            </Row>
+                          </Column>
+                          {(item.MEMBER_SEQ == ME || STORE == '1') && (
+                            <CommentIconContainer>
+                              <LottieView
+                                speed={0.25}
+                                style={{
+                                  width: 30,
+                                  height: 120,
+                                }}
+                                source={require('../../../../assets/animations/menuArrow.json')}
+                                loop
+                                autoPlay
+                              />
+                            </CommentIconContainer>
+                          )}
+                        </Row>
+                      </CommentBox>
+                    </SwipeRow>
+                  )}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+              )}
+            </Section>
+            {ME == MEMBER_SEQ && (
+              <SubmitBtn
+                text={`${TITLE} 수정하기`}
+                onPress={() =>
+                  navigation.navigate('ChecklistShareUpdateScreen', {
+                    TITLE,
+                    ADDDATE: CREATE_TIME,
+                    IMG_LIST,
+                    NOTICE_SEQ,
+                    CONTENTS,
+                    NOTI_TITLE,
+                    isFavorite,
+                    CREATE_TIME,
+                  })
+                }
+                isRegisted={true}
+              />
+            )}
+          </Container>
+        </ScrollView>
+        {commentInputBox && (
+          <KeyboardAvoidingView
+            behavior={utils.isAndroid() ? 'height' : 'padding'}
+            keyboardVerticalOffset={utils.isAndroid() ? 0 : headerHeight}
+            enabled
+            style={{flexGrow: 1}}>
             <CommentTextInputContainer>
               <TextInput
                 autoFocus={true}
@@ -490,7 +489,6 @@ export default ({
                 placeholder={'댓글을 입력하세요.'}
                 placeholderTextColor={'#CCCCCC'}
                 onBlur={() => {
-                  setComment('');
                   setCommentInputBox(false);
                 }}
                 multiline={true}
@@ -502,8 +500,8 @@ export default ({
                 </ForwardIconContainer>
               </ForwardIconTouchable>
             </CommentTextInputContainer>
-          )}
-        </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+        )}
       </BackGround>
       {(isAddedToastVisible ||
         isUpdatedToastVisible ||

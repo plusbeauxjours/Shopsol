@@ -246,7 +246,7 @@ export default () => {
 
   useEffect(() => {
     init(index);
-    dispatch(setSplashVisible(false));
+    dispatch(setSplashVisible({visible: false}));
     firebase.analytics().setCurrentScreen('업무일지');
   }, []);
 

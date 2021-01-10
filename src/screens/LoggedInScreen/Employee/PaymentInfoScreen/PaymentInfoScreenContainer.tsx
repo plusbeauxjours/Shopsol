@@ -133,7 +133,7 @@ export default () => {
           }`,
         ).format('YYYY-MM-DD'),
       );
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

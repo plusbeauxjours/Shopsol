@@ -421,7 +421,7 @@ export default ({
             </Date>
           </Section>
           {loading ? (
-            <EmptyBox>
+            <>
               <LottieView
                 style={{
                   width: 160,
@@ -431,7 +431,9 @@ export default ({
                 loop
                 autoPlay
               />
-            </EmptyBox>
+              <EmptyText>체크리스트 정보를 불러오는 중입니다. </EmptyText>
+              <EmptyText>잠시만 기다려주세요.</EmptyText>
+            </>
           ) : (
             <>
               {CHECKLIST_DATA?.length == 0 ? (

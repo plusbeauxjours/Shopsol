@@ -122,7 +122,7 @@ export default ({route: {params}}) => {
 
   const registerFn = async (TYPE) => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const {data} = await api.createScheduleVacation2({
         EMP_SEQ: EMP_ID,
         STORE_ID: STORE_SEQ,
@@ -146,13 +146,14 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 
   const initialize = async () => {
     const YEAR = moment().format('YYYY');
     const {data} = await api.getEmpAnnual(EMP_ID, YEAR);
+    console.log(data);
     if (Array.isArray(data.message) && data.message.length > 0) {
       const annual = data.message[0];
       if (annual?.ANNUAL && annual?.USE_ANNUAL) {

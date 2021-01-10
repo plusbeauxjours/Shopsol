@@ -176,7 +176,7 @@ export default ({route: {params}}) => {
   // 추가 완료 & 수정 완료
   const submitFn = async () => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const params = {
         EMP_SEQ,
         START: moment(startDate).format('YYYY-MM-DD'),
@@ -219,7 +219,7 @@ export default ({route: {params}}) => {
     } finally {
       fetchData();
       navigation.goBack();
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

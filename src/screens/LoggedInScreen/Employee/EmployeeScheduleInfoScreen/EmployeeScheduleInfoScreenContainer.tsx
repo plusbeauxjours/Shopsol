@@ -402,7 +402,7 @@ export default ({route: {params}}) => {
 
   const fetchData = async () => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const {data} = await api.getEmp(EMP_SEQ);
       if (data.message === 'SUCCESS') {
         setData(data.result);
@@ -410,10 +410,10 @@ export default ({route: {params}}) => {
       }
     } catch (e) {
       console.log(e);
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('통신이 원활하지 않습니다.');
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

@@ -659,10 +659,9 @@ export default ({
     }
   } else {
     return (
-      <Container style={{justifyContent: 'center'}}>
+      <Container style={{paddingBottom: 0}}>
         <LottieView
           style={{
-            marginTop: 20,
             width: 160,
             height: 160,
           }}
@@ -670,6 +669,8 @@ export default ({
           loop
           autoPlay
         />
+        <EmptyText>유통기한 정보를 불러오는 중입니다. </EmptyText>
+        <EmptyText>잠시만 기다려주세요.</EmptyText>
       </Container>
     );
   }

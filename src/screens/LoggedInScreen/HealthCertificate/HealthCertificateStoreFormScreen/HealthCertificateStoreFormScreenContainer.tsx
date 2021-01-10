@@ -101,7 +101,7 @@ export default ({route: {params}}) => {
       return alertModal('교육구분을 선택해주세요.');
     }
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const formData: any = new FormData();
       formData.append('businesstype', businesstype);
       formData.append('position', position);
@@ -145,13 +145,13 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 
   const checkOrcFn = async () => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const formData: any = new FormData();
       formData.append('MEMBER_SEQ', MEMBER_SEQ);
 
@@ -204,7 +204,7 @@ export default ({route: {params}}) => {
         '인식 실패\n\n촬영 시 라인에 맞춰 정면에서 찍어주세요.\n\n* 인식이 불안정한 경우 직접입력하여 진행해 주세요.',
       );
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

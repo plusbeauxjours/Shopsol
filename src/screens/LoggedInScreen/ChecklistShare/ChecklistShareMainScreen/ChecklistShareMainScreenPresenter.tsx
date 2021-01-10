@@ -322,15 +322,19 @@ export default ({
         <Container>
           <DateController location={'firstRoute'} />
           {loading ? (
-            <LottieView
-              style={{
-                width: 160,
-                height: 160,
-              }}
-              source={require('../../../../assets/animations/dashBoardLoader.json')}
-              loop
-              autoPlay
-            />
+            <>
+              <LottieView
+                style={{
+                  width: 160,
+                  height: 160,
+                }}
+                source={require('../../../../assets/animations/dashBoardLoader.json')}
+                loop
+                autoPlay
+              />
+              <EmptyText>지시사항 정보를 불러오는 중입니다. </EmptyText>
+              <EmptyText>잠시만 기다려주세요.</EmptyText>
+            </>
           ) : CHECKLIST_SHARE_DATA1?.basic?.length == 0 &&
             CHECKLIST_SHARE_DATA1?.favorite?.length == 0 ? (
             <EmptyList TITLE={'지시사항'} />
@@ -389,15 +393,19 @@ export default ({
         <Container>
           <DateController location={'secondRoute'} />
           {loading ? (
-            <LottieView
-              style={{
-                width: 160,
-                height: 160,
-              }}
-              source={require('../../../../assets/animations/dashBoardLoader.json')}
-              loop
-              autoPlay
-            />
+            <>
+              <LottieView
+                style={{
+                  width: 160,
+                  height: 160,
+                }}
+                source={require('../../../../assets/animations/dashBoardLoader.json')}
+                loop
+                autoPlay
+              />
+              <EmptyText>특이사항 정보를 불러오는 중입니다. </EmptyText>
+              <EmptyText>잠시만 기다려주세요.</EmptyText>
+            </>
           ) : CHECKLIST_SHARE_DATA2?.basic?.length == 0 &&
             CHECKLIST_SHARE_DATA2?.favorite?.length == 0 ? (
             <EmptyList TITLE={'특이사항'} />

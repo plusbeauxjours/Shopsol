@@ -203,7 +203,7 @@ export default ({route: {params}}) => {
 
     if (Number(PHOTO_CHECK || 0) === 1) {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         const formData: any = new FormData();
 
         formData.append('LIST', JSON.stringify(newList));
@@ -243,11 +243,11 @@ export default ({route: {params}}) => {
         }
       } catch (e) {
         alertModal('연결에 실패하였습니다.');
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
         console.log(e);
       } finally {
         navigation.goBack();
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     } else {
       try {

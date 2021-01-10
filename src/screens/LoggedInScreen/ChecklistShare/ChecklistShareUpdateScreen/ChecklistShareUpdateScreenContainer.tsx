@@ -133,7 +133,7 @@ export default ({route: {params}}) => {
             alertModal('연결에 실패하였습니다.');
           }
         } else {
-          dispatch(setSplashVisible(true));
+          dispatch(setSplashVisible({visible: true}));
           for (let i = 0; i < cameraPictureList.length; i++) {
             const cameraPicture = cameraPictureList[i];
             const fileInfoArr = cameraPicture.uri.split('/');
@@ -160,7 +160,7 @@ export default ({route: {params}}) => {
           if (data.result === 'SUCCESS') {
             navigation.pop(2);
             alertModal(`${params?.TITLE}이 수정되었습니다.`);
-            dispatch(setSplashVisible(false));
+            dispatch(setSplashVisible({visible: false}));
             if (params?.ADDDATE) {
               if (params.TITLE === '지시사항') {
                 dispatch(getCHECKLIST_SHARE_DATA1(params?.ADDDATE));
@@ -170,7 +170,7 @@ export default ({route: {params}}) => {
             }
           } else {
             alertModal('연결에 실패하였습니다.');
-            dispatch(setSplashVisible(false));
+            dispatch(setSplashVisible({visible: false}));
           }
         }
       } catch (e) {

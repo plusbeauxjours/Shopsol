@@ -167,7 +167,7 @@ export const getSTORELIST_DATA = () => async (dispatch, getState) => {
     userReducer: {STORE, MEMBER_SEQ, STORELIST_DATA},
   } = getState();
   if (!STORELIST_DATA || STORELIST_DATA?.length === 0) {
-    dispatch(setSplashVisible(true));
+    dispatch(setSplashVisible({visible: true}));
   }
   try {
     const {data} = await api.storeList(STORE, MEMBER_SEQ);
@@ -177,7 +177,7 @@ export const getSTORELIST_DATA = () => async (dispatch, getState) => {
   } catch (e) {
     console.log(e);
   } finally {
-    dispatch(setSplashVisible(false));
+    dispatch(setSplashVisible({visible: false}));
   }
 };
 

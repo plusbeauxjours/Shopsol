@@ -46,7 +46,7 @@ export default () => {
       alertModal('휴대폰번호 또는 비밀번호가 입력되지 않았습니다.');
     }
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const {data} = await api.logIn({
         MobileNo: mobileNo,
         PASSWORD: password,
@@ -89,7 +89,7 @@ export default () => {
       console.log(e);
       alertModal('서버 접속이 원할하지 않습니다.');
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

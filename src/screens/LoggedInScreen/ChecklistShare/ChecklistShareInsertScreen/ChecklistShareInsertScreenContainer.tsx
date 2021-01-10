@@ -57,7 +57,7 @@ export default ({route: {params}}) => {
   const registerFn = async () => {
     if (cameraPictureList?.length > 0) {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         const formData: any = new FormData();
         formData.append('TITLE', title);
         formData.append('CONTENTS', content);
@@ -107,11 +107,11 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     } else {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         const {data} = await api.setNotice({
           TITLE: title,
           CONTENTS: content,
@@ -139,7 +139,7 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };

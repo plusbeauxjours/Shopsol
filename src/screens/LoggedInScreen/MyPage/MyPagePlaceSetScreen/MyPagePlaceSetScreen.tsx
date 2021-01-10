@@ -49,7 +49,7 @@ export default () => {
     if (STORE == 1) {
       try {
         if (!CLOSED_STORE_DATA) {
-          dispatch(setSplashVisible(true));
+          dispatch(setSplashVisible({visible: true}));
         }
         const {data} = await api.closeList(MEMBER_SEQ);
         if (data.message === 'SUCCESS') {
@@ -58,12 +58,12 @@ export default () => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     } else {
       try {
         if (!CLOSED_STORE_DATA) {
-          dispatch(setSplashVisible(true));
+          dispatch(setSplashVisible({visible: true}));
         }
         const {data} = await api.endList(MEMBER_SEQ);
         if (data.message === 'SUCCESS') {
@@ -72,7 +72,7 @@ export default () => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };

@@ -42,7 +42,7 @@ export default () => {
   const fetchData = async () => {
     try {
       if (!EMPLOYEE_LIST) {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
       }
       const {data} = await api.getEmpLists(STORE_SEQ);
       if (data.message == 'SUCCESS') {
@@ -51,7 +51,7 @@ export default () => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

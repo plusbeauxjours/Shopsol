@@ -70,7 +70,7 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
-    dispatch(setSplashVisible(false));
+    dispatch(setSplashVisible({visible: false}));
     dispatch(setDEVICE_PLATFORM(Platform.OS));
     checkVersion();
   }, []);

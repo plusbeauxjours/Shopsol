@@ -677,11 +677,6 @@ export default ({
               </SpaceRow>
               <Container>
                 <MenuCntContainer
-                  selection={'사업장현황'}
-                  paging={'DashBoardScreen'}
-                  source={require(`../../../../assets/main/Invite.png`)}
-                />
-                <MenuCntContainer
                   selection={'직원초대'}
                   paging={'InviteEmployeeScreen'}
                   source={require(`../../../../assets/main/Invite.png`)}
@@ -724,6 +719,11 @@ export default ({
                     source={require(`../../../../assets/main/qrView.png`)}
                   />
                 )}
+                <MenuCntContainer
+                  selection={'사업장현황'}
+                  paging={'DashBoardScreen'}
+                  source={require(`../../../../assets/main/Invite.png`)}
+                />
               </Container>
               <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                 <MenuTitleArea style={{zIndex: 3}}>
@@ -861,6 +861,11 @@ export default ({
                             source={require(`../../../../assets/main/qrView.png`)}
                           />
                         )}
+                        <MenuCntContainer
+                          selection={'사업장현황'}
+                          paging={'DashBoardScreen'}
+                          source={require(`../../../../assets/main/Invite.png`)}
+                        />
                       </Container>
                       <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                         <MenuTitleArea style={{zIndex: 3}}>

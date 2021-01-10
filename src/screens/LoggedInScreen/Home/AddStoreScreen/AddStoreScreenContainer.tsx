@@ -125,35 +125,35 @@ export default ({route: {params}}) => {
   // 등록하기버튼
   const submit = async () => {
     if (NAME == '') {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('점포명을 입력해주세요.');
     } else if (ADDR1 == '') {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('기본주소를 입력해주세요.');
     } else if (ADDR2 == '') {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('상세주소를 입력해주세요.');
     } else if (timeCheck == false) {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('지각허용시간을 선택해주세요.');
     } else if (EARLYtimeCheck == false) {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('조퇴허용시간을 선택해주세요.');
     } else if (dayCheck == false) {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('급여정산일을 선택해주세요.');
     } else if (storeCategoryType == '분류 선택') {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('사업장분류를 선택해주세요.');
     } else if (storeCategoryType == '기타' && storeCategoryTypeEtc == '') {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('기타 사업장분류를 입력해주세요.');
     } else if (commuteTypeCheck[1] && !distanceCheck) {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('출퇴근 허용거리를 선택해주세요.');
     } else {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         const {data} = await api.addStore({
           NAME,
           ADDR1,
@@ -182,7 +182,7 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };

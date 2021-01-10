@@ -66,13 +66,13 @@ export default ({route: {params}}) => {
     }
     if (positionTypeCheck[1] == true && joinRoute == '가입경로') {
       alertModal('가입경로를 입력해주세요.');
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       return;
     } else {
       if (joinRoute == '기타') {
         if (otherJoinRoute == '') {
           alertModal('기타 가입경로를 입력해주세요.');
-          dispatch(setSplashVisible(false));
+          dispatch(setSplashVisible({visible: false}));
           return;
         }
       }
@@ -87,7 +87,7 @@ export default ({route: {params}}) => {
       return alertModal('444같은 문자를 4번 이상 사용하실 수 없습니다.');
     }
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const {data} = await api.signUp({
         NAME: name,
         BIRTHDATE: moment(birthDate).format('YYYY-MM-DD'),
@@ -115,7 +115,7 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

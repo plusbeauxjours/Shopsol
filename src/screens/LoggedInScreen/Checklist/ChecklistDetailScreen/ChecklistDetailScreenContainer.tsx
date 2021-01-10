@@ -29,7 +29,7 @@ export default ({route: {params}}) => {
 
   const fetchData = async () => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const {data} = await api.getAllCheckSchedules({
         CHECK_SEQ,
         DATE,
@@ -110,7 +110,7 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

@@ -123,7 +123,7 @@ export default ({route: {params}}) => {
         }
       });
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         const {data} = await api.createNewSchedule({
           EMPS: newChoiceEmp,
           DATE: newMarkedDates,
@@ -146,7 +146,7 @@ export default ({route: {params}}) => {
         console.log(e);
         alertModal('통신이 원활하지 않습니다.');
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };

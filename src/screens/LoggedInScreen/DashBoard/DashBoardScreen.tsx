@@ -33,7 +33,7 @@ export default () => {
 
   const fetchSchedulesData = async () => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       if (
         !CALENDAR_DATA_STORE_SEQ ||
@@ -114,7 +114,7 @@ export default () => {
       console.log(e);
     } finally {
       setLoading(false);
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

@@ -124,7 +124,7 @@ export default () => {
       buffer2.unshift(buffer[i].NAME);
     }
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const {data} = await api.sendEmp2({
         STORE_SEQ,
         LIST: buffer2,
@@ -140,7 +140,7 @@ export default () => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 
@@ -150,7 +150,7 @@ export default () => {
   };
 
   const onPress = (data) => {
-    dispatch(setSplashVisible(true));
+    dispatch(setSplashVisible({visible: true}));
     try {
       choiseFn(
         data.recordID,
@@ -160,7 +160,7 @@ export default () => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       setSearch(null);
     }
   };

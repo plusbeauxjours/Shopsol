@@ -127,7 +127,7 @@ export default ({route: {params}}) => {
     list.map((i) =>
       i.taskIMAGE ? setTaskDataImgList(i) : taskDataTempList.push(i),
     );
-    dispatch(setSplashVisible(true));
+    dispatch(setSplashVisible({visible: true}));
     navigation.goBack();
     if (taskDataImgTempList.length > 0) {
       try {
@@ -144,7 +144,7 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
     if (taskDataTempList.length > 0) {
@@ -162,7 +162,7 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };

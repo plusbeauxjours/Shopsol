@@ -30,7 +30,7 @@ export default () => {
   const {
     EMP_SEQ,
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
-    MANAGER_CALLED
+    MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
   const {EMPLOYEE_INFO_DATA} = useSelector(
     (state: any) => state.employeeReducer,
@@ -259,7 +259,7 @@ export default () => {
   const fetchData = async () => {
     try {
       if (!EMPLOYEE_INFO_DATA) {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
       }
       const {data} = await api.getEmp(EMP_SEQ);
       if (data.message === 'SUCCESS') {
@@ -274,10 +274,10 @@ export default () => {
       }
     } catch (e) {
       console.log(e);
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       alertModal('통신이 원활하지 않습니다.2');
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

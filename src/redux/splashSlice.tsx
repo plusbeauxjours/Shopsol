@@ -4,13 +4,17 @@ const splashSlice = createSlice({
   name: 'alert',
   initialState: {
     visible: false,
+    text: '',
   },
   reducers: {
     setSplashVisible(state, action) {
-      const {payload: visible} = action;
+      const {
+        payload: {visible, text = ''},
+      } = action;
       return {
         ...state,
         visible,
+        text,
       };
     },
   },

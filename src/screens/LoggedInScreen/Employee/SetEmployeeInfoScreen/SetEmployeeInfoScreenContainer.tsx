@@ -297,7 +297,7 @@ export default ({route: {params}}) => {
         }),
       );
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         const {data} = await api.updateEmp({
           FIRST: MODIFYCOUNT,
           START_TYPE,
@@ -367,7 +367,7 @@ export default ({route: {params}}) => {
         console.log(e);
       } finally {
         onRefresh();
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };

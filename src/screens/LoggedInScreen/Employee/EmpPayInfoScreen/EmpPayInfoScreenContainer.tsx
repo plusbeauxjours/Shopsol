@@ -93,7 +93,7 @@ export default ({route: {params}}) => {
       Number(moment().format('YYYYMMDD'))
     ) {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         setDate(moment(date).add(1, 'month'));
         const {data} = await api.monthLists(
           STORE_SEQ,
@@ -107,7 +107,7 @@ export default ({route: {params}}) => {
         alertModal('통신이 원활하지 않습니다.');
         navigation.goBack();
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     } else {
       alertModal('최신데이터 입니다.');
@@ -116,7 +116,7 @@ export default ({route: {params}}) => {
 
   const backpay = async () => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       setDate(moment(date).subtract(1, 'month'));
       const {data} = await api.monthLists(
         STORE_SEQ,
@@ -130,12 +130,12 @@ export default ({route: {params}}) => {
       alertModal('통신이 원활하지 않습니다.');
       navigation.goBack();
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 
   const fetchData = async () => {
-    dispatch(setSplashVisible(true));
+    dispatch(setSplashVisible({visible: true}));
     try {
       const {data} = await api.getEmp(params?.EMP_SEQ || EMP_SEQ);
       setImage(data?.result.images[0].IMAGE);
@@ -157,7 +157,7 @@ export default ({route: {params}}) => {
       alertModal('통신이 원활하지 않습니다.');
       navigation.goBack();
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
       setLoading(false);
     }
   };

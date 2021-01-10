@@ -135,7 +135,7 @@ export default ({route: {params}}) => {
         ? setShelfLifeDataImgList(i)
         : shelfLifeDataTempList.push(i),
     );
-    dispatch(setSplashVisible(true));
+    dispatch(setSplashVisible({visible: true}));
     navigation.goBack();
     if (shelfLifeDataImgTempList.length > 0) {
       try {
@@ -152,7 +152,7 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
     if (shelfLifeDataTempList.length > 0) {
@@ -170,7 +170,7 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };
@@ -223,16 +223,16 @@ export default ({route: {params}}) => {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setSplashVisible(true));
+        dispatch(setSplashVisible({visible: true}));
         if (codenumber !== '') {
           const {data} = await api.getBarCode(codenumber);
           if (data.resultdata?.length > 0) {
-            dispatch(setSplashVisible(false));
+            dispatch(setSplashVisible({visible: false}));
             setShelfLifeName(data.resultdata[0].NAME);
             setShelfLifeMemo(data.resultdata[0].BRAND);
             setCameraPictureLast(data.resultdata[0].IMG);
           } else {
-            dispatch(setSplashVisible(false));
+            dispatch(setSplashVisible({visible: false}));
             setTimeout(() => {
               alertModal('등록된 데이터가 없습니다.');
             }, 100);
@@ -242,7 +242,7 @@ export default ({route: {params}}) => {
         console.log(e);
       } finally {
         setCodenumber('');
-        dispatch(setSplashVisible(false));
+        dispatch(setSplashVisible({visible: false}));
       }
     })();
   }, [codenumber]);

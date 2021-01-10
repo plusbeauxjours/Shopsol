@@ -99,7 +99,7 @@ export default ({
   // 미열람 직원에게 초대메시지 보내기
   const sendFn = async (PHONE) => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true}));
       const {data} = await api.sendOneEmp({STORE_SEQ, PHONE});
       if (data.message === 'SUCCESS') {
         setIsSent(true);
@@ -108,7 +108,7 @@ export default ({
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 

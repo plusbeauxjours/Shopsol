@@ -113,7 +113,7 @@ export default () => {
 
   const fetchData = async (date) => {
     try {
-      dispatch(setSplashVisible(true));
+      dispatch(setSplashVisible({visible: true, text: '캘린더'}));
       dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       const {data} = await api.getAllSchedules(
         STORE_SEQ,
@@ -143,7 +143,7 @@ export default () => {
       console.log(e);
     } finally {
       setLoading(false);
-      dispatch(setSplashVisible(false));
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 
