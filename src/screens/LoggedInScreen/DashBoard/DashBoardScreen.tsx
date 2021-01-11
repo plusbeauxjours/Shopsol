@@ -33,7 +33,7 @@ export default () => {
 
   const fetchSchedulesData = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '사업장현황'}));
       dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       if (
         !CALENDAR_DATA_STORE_SEQ ||

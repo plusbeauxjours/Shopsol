@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
@@ -8,10 +8,10 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import LinearGradient from 'react-native-linear-gradient';
 import MapView, {PROVIDER_GOOGLE, Marker, Circle} from 'react-native-maps';
+import BarcodeMask from 'react-native-barcode-mask';
 
 import {HelpIcon, SettingIcon, EyeOffIcon, CloseIcon} from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
@@ -169,6 +169,7 @@ const Bold = styled(MenuTitle)`
 `;
 
 const ShowPictureModalTouchable = styled.TouchableOpacity`
+  margin: 0 20px;
   align-items: center;
   justify-content: center;
 `;
@@ -285,6 +286,23 @@ const MarkerText = styled.Text`
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
+const Footer = styled.TouchableOpacity`
+  width: ${wp('100%')}px;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: ${styleGuide.palette.primary};
+`;
+
+const FooterText = styled.Text`
+  color: #ffffff;
+  font-size: 14px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
+
 export default ({
   STORE_DATA,
   MEMBER_NAME,
@@ -293,15 +311,18 @@ export default ({
   STORE_NAME,
   TOTAL_COUNT,
   WORKING_COUNT,
-  qrCameraModalOpen,
-  setQrCameraModalOpen,
+  qrCameraModalOpen1,
+  setQrCameraModalOpen1,
+  qrCameraModalOpen2,
+  setQrCameraModalOpen2,
   workingModalOpen,
   setWorkingModalOpen,
   setShowPictureModal,
   showPictureModal,
   goWorkFn,
   leaveWorkFn,
-  handleBarCodeScanned,
+  handleBarCodeScanned1,
+  handleBarCodeScanned2,
   invitedEmpCount,
   checklistCount,
   NOTICE_COUNT,
@@ -329,18 +350,18 @@ export default ({
   storeKeepersEMPMenu,
   managersEMPMenu,
   employeesMenu,
-  CUSTOM_MENU_STORE,
   CUSTOM_MENU_EMP,
   addCUSTOM_MENU_EMP_Fn,
   removeCUSTOM_MENU_EMP_Fn,
   AVATAR,
   initLoading,
   gotoScreen,
-  alertModal,
-  qrCheckModal,
-  setQrCheckModal,
+  setCodenumber,
+  qrCameraMode,
+  setQrCameraMode,
 }) => {
   const navigation = useNavigation();
+
   const MenuCntContainer = ({
     index = 0,
     type = 'store',
@@ -363,7 +384,7 @@ export default ({
           : selection == 'QR보기'
           ? setShowPictureModal(true)
           : selection == 'QR등록하기'
-          ? setQrCheckModal(true)
+          ? setQrCameraModalOpen2(true)
           : gotoScreen(`${paging}`);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
@@ -398,6 +419,8 @@ export default ({
             )
           : selection == 'QR보기'
           ? setShowPictureModal(true)
+          : selection == 'QR등록하기'
+          ? setQrCameraModalOpen2(true)
           : gotoScreen(`${paging}`);
       }}>
       <EyeIconContainer style={{zIndex: 5}}>
@@ -566,7 +589,7 @@ export default ({
                       setIsWorkingMode(false);
                       setSucessModalOpen(false);
                       setFailModalOpen(false);
-                      setQrCameraModalOpen(true);
+                      setQrCameraModalOpen1(true);
                       setWorkingTYPE('QR');
                     }}
                     hasGPS={GPS !== '0'}>
@@ -577,7 +600,7 @@ export default ({
                 <BoxContainer>
                   <Box
                     onPress={() => {
-                      setQrCameraModalOpen(true);
+                      setQrCameraModalOpen1(true);
                       setWorkingTYPE('QR');
                     }}
                     hasGPS={GPS !== '0'}>
@@ -863,13 +886,27 @@ export default ({
                             />
                           )
                         )}
-                        {TOTAL_COUNT !== 0 && (
-                          <MenuCntContainer
-                            selection={'QR보기'}
-                            paging={'qrViewScreen'}
-                            source={require(`../../../../assets/main/qrView.png`)}
-                          />
-                        )}
+
+                        <MenuCntContainer
+                          selection={'QR보기'}
+                          paging={'qrViewScreen'}
+                          source={require(`../../../../assets/main/qrView.png`)}
+                        />
+
+                        {/* {TOTAL_COUNT !== 0 &&
+                          (STORE_DATA.resultdata.QR_num ? (
+                            <MenuCntContainer
+                              selection={'QR보기'}
+                              paging={'qrViewScreen'}
+                              source={require(`../../../../assets/main/qrView.png`)}
+                            />
+                          ) : (
+                            <MenuCntContainer
+                              selection={'QR등록하기'}
+                              paging={'qrRegisterScreen'}
+                              source={require(`../../../../assets/main/qrRegister.png`)}
+                            />
+                          ))} */}
                         <MenuCntContainer
                           selection={'사업장현황'}
                           paging={'DashBoardScreen'}
@@ -1049,15 +1086,15 @@ export default ({
         </MenuBox>
       </ScrollView>
       <Modal
-        isVisible={qrCameraModalOpen}
+        isVisible={qrCameraModalOpen1}
         onBackdropPress={() => {
-          setQrCameraModalOpen(false);
+          setQrCameraModalOpen1(false);
           setSucessModalOpen(false);
           setFailModalOpen(false);
           setIsWorkingMode(false);
         }}
         onRequestClose={() => {
-          setQrCameraModalOpen(false);
+          setQrCameraModalOpen1(false);
           setSucessModalOpen(false);
           setFailModalOpen(false);
           setIsWorkingMode(false);
@@ -1065,10 +1102,6 @@ export default ({
         avoidKeyboard={true}
         style={{
           margin: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
         }}>
         {loading ? (
           <LottieView
@@ -1115,132 +1148,90 @@ export default ({
             </Box>
           </BoxContainer>
         ) : (
-          <QRCodeScanner
-            topViewStyle={{height: 0, flex: 0}}
-            reactivate={true}
-            reactivateTimeout={1500}
-            cameraStyle={{width: wp('100%'), height: hp('100%')}}
-            onRead={handleBarCodeScanned}
+          <RNCamera
+            style={{flex: 1, alignItems: 'center'}}
+            type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.off}
+            autoFocus={RNCamera.Constants.AutoFocus.on}
+            captureAudio={false}
+            onFacesDetected={() => {}}
+            onFocusChanged={() => {}}
+            onZoomChanged={() => {}}
+            onBarCodeRead={({data}) => handleBarCodeScanned1(data)}
             androidCameraPermissionOptions={{
               title: '카메라 권한 설정',
               message:
                 '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
               buttonPositive: '확인',
               buttonNegative: '취소',
-            }}
-            permissionDialogTitle={''}
-            permissionDialogMessage={''}
-            bottomContent={
-              <GoWork
-                onPress={() => {
-                  setQrCameraModalOpen(false);
-                  setSucessModalOpen(false);
-                  setFailModalOpen(false);
-                  setIsWorkingMode(false);
-                }}>
-                <WorkText>닫기</WorkText>
-              </GoWork>
-            }
-          />
+            }}>
+            <BarcodeMask
+              width={300}
+              height={300}
+              outerMaskOpacity={0.8}
+              edgeColor={styleGuide.palette.tertiary}
+              edgeBorderWidth={2}
+              showAnimatedLine={false}
+            />
+            <Footer
+              onPress={() => {
+                setQrCameraModalOpen1(false);
+                setSucessModalOpen(false);
+                setFailModalOpen(false);
+                setIsWorkingMode(false);
+              }}>
+              <FooterText>닫기</FooterText>
+            </Footer>
+          </RNCamera>
         )}
       </Modal>
       <Modal
-        isVisible={qrCameraModalOpen}
+        isVisible={qrCameraModalOpen2}
         onBackdropPress={() => {
-          setQrCameraModalOpen(false);
-          setSucessModalOpen(false);
-          setFailModalOpen(false);
-          setIsWorkingMode(false);
+          setQrCameraModalOpen2(false);
+          setCodenumber('');
         }}
         onRequestClose={() => {
-          setQrCameraModalOpen(false);
-          setSucessModalOpen(false);
-          setFailModalOpen(false);
-          setIsWorkingMode(false);
+          setQrCameraModalOpen2(false);
+          setCodenumber('');
         }}
         avoidKeyboard={true}
         style={{
           margin: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
         }}>
-        {loading ? (
-          <LottieView
-            style={{width: 200, height: 200}}
-            source={require('../../../../assets/animations/loader.json')}
-            loop
-            autoPlay
+        <RNCamera
+          style={{flex: 1, alignItems: 'center'}}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.off}
+          autoFocus={RNCamera.Constants.AutoFocus.on}
+          captureAudio={false}
+          onFacesDetected={() => {}}
+          onFocusChanged={() => {}}
+          onZoomChanged={() => {}}
+          onBarCodeRead={({data}) => handleBarCodeScanned2(data)}
+          androidCameraPermissionOptions={{
+            title: '카메라 권한 설정',
+            message:
+              '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
+            buttonPositive: '확인',
+            buttonNegative: '취소',
+          }}>
+          <BarcodeMask
+            width={300}
+            height={300}
+            outerMaskOpacity={0.8}
+            edgeColor={styleGuide.palette.tertiary}
+            edgeBorderWidth={2}
+            showAnimatedLine={false}
           />
-        ) : sucessModalOpen ? (
-          <GoWorkingSuccessAnimation
-            AVATAR={AVATAR}
-            STORE_NAME={STORE_NAME}
-            MEMBER_NAME={MEMBER_NAME}
-            setSucessModalOpen={setSucessModalOpen}
-            actionTYPE={actionTYPE}
-          />
-        ) : failModalOpen ? (
-          <GoWorkingFailAnimation
-            STORE_NAME={STORE_NAME}
-            MEMBER_NAME={MEMBER_NAME}
-            setFailModalOpen={setFailModalOpen}
-            actionTYPE={actionTYPE}
-            errorMessage={errorMessage}
-          />
-        ) : isWorkingMode ? (
-          <BoxContainer>
-            <Box
-              style={{
-                width: (wp('100%') - 60) / 2,
-                height: (wp('100%') - 60) / 2,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              }}
-              onPress={() => goWorkFn(workingTYPE)}>
-              <BoxText style={{fontSize: 30}}>출근</BoxText>
-            </Box>
-            <Box
-              style={{
-                width: (wp('100%') - 60) / 2,
-                height: (wp('100%') - 60) / 2,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              }}
-              onPress={() => leaveWorkFn(workingTYPE)}>
-              <BoxText style={{fontSize: 30}}>퇴근</BoxText>
-            </Box>
-          </BoxContainer>
-        ) : (
-          <QRCodeScanner
-            topViewStyle={{height: 0, flex: 0}}
-            reactivate={true}
-            reactivateTimeout={1500}
-            cameraStyle={{width: wp('100%'), height: hp('100%')}}
-            onRead={handleBarCodeScanned}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            androidCameraPermissionOptions={{
-              title: '카메라 권한 설정',
-              message:
-                '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-              buttonPositive: '확인',
-              buttonNegative: '취소',
-            }}
-            permissionDialogTitle={''}
-            permissionDialogMessage={''}
-            bottomContent={
-              <GoWork
-                onPress={() => {
-                  setQrCameraModalOpen(false);
-                  setSucessModalOpen(false);
-                  setFailModalOpen(false);
-                  setIsWorkingMode(false);
-                }}>
-                <WorkText>닫기</WorkText>
-              </GoWork>
-            }
-          />
-        )}
+          <Footer
+            onPress={() => {
+              setQrCameraModalOpen2(false);
+              setCodenumber('');
+            }}>
+            <FooterText>닫기</FooterText>
+          </Footer>
+        </RNCamera>
       </Modal>
 
       <Modal
@@ -1305,21 +1296,71 @@ export default ({
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
         isVisible={showPictureModal}
-        style={{position: 'relative', marginVertical: 20}}
-        onBackdropPress={() => setShowPictureModal(false)}
-        onRequestClose={() => setShowPictureModal(false)}>
-        <ShowPictureModalTouchable
-          onPress={() => {
-            setShowPictureModal(false);
-          }}>
-          <ShowPictureModalImage>
-            <FastImage
-              style={{width: '100%', height: '100%'}}
-              source={{uri: 'http://133.186.210.223/' + QR}}
-              resizeMode={FastImage.resizeMode.contain}
+        style={{margin: 0}}
+        onBackdropPress={() => {
+          setShowPictureModal(false);
+          setQrCameraMode(false);
+        }}
+        onRequestClose={() => {
+          setShowPictureModal(false);
+          setQrCameraMode(false);
+        }}>
+        {qrCameraMode ? (
+          <RNCamera
+            style={{flex: 1, alignItems: 'center'}}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            autoFocus={RNCamera.Constants.AutoFocus.on}
+            captureAudio={false}
+            onFacesDetected={() => {}}
+            onFocusChanged={() => {}}
+            onZoomChanged={() => {}}
+            onBarCodeRead={({data}) => handleBarCodeScanned2(data)}
+            androidCameraPermissionOptions={{
+              title: '카메라 권한 설정',
+              message:
+                '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
+              buttonPositive: '확인',
+              buttonNegative: '취소',
+            }}>
+            <BarcodeMask
+              width={300}
+              height={300}
+              outerMaskOpacity={0.8}
+              edgeColor={styleGuide.palette.tertiary}
+              edgeBorderWidth={2}
+              showAnimatedLine={false}
             />
-          </ShowPictureModalImage>
-        </ShowPictureModalTouchable>
+            <Footer
+              onPress={() => {
+                setShowPictureModal(false);
+                setQrCameraMode(false);
+                setCodenumber('');
+              }}>
+              <FooterText>닫기</FooterText>
+            </Footer>
+          </RNCamera>
+        ) : (
+          <ShowPictureModalTouchable
+            onPress={() => {
+              setShowPictureModal(false);
+            }}>
+            <ShowPictureModalImage>
+              <FastImage
+                style={{width: '100%', height: '100%'}}
+                source={{uri: 'http://133.186.210.223/' + QR}}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            </ShowPictureModalImage>
+            <StoreUpdateBtn
+              style={{width: 110, alignSelf: 'flex-end', marginTop: 20}}
+              onPress={() => {
+                setQrCameraMode(true);
+              }}>
+              <WhiteText>QR코드 재등록</WhiteText>
+            </StoreUpdateBtn>
+          </ShowPictureModalTouchable>
+        )}
       </Modal>
     </BackGround>
   );

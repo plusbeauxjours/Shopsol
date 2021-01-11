@@ -40,7 +40,6 @@ export default ({route: {params}}) => {
     MEMBER_NAME,
     DEVICE_PLATFORM,
     GENDER,
-    CUSTOM_MENU_STORE,
     CUSTOM_MENU_EMP,
   } = useSelector((state: any) => state.userReducer);
   const {NOTICE_COUNT} = useSelector(
@@ -54,10 +53,12 @@ export default ({route: {params}}) => {
   const [invitedEmpCount, setInvitedEmpCount] = useState<number>(0);
   const [checklistCount, setChecklistCount] = useState<number>(0);
   const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
-  const [qrCameraModalOpen, setQrCameraModalOpen] = useState<boolean>(false);
+  const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
+  const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
   const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
-
+  const [codenumber, setCodenumber] = useState<string>('');
+  const [qrCameraMode, setQrCameraMode] = useState<string>(false);
   const [sucessModalOpen, setSucessModalOpen] = useState<boolean>(false);
   const [failModalOpen, setFailModalOpen] = useState<boolean>(false);
   const [actionTYPE, setActionTYPE] = useState<string>('출근');
@@ -67,7 +68,6 @@ export default ({route: {params}}) => {
   const [initLoading, setInitLoading] = useState<boolean>(
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
-  const [qrCheckModal, setQrCheckModal] = useState<boolean>(false);
 
   const storeKeepersEMPMenu = [
     {
@@ -333,15 +333,25 @@ export default ({route: {params}}) => {
     }
   };
 
-  // QR 스캔
-  const handleBarCodeScanned = ({data}) => {
-    if (isNaN(data) || STORE_SEQ != data) {
-      setQrCameraModalOpen(false);
+  // 출퇴근QR 스캔
+  const handleBarCodeScanned1 = (codenumber) => {
+    if (isNaN(codenumber) || STORE_SEQ != codenumber) {
+      setQrCameraModalOpen1(false);
       setTimeout(() => {
         alertModal('', '정확한 사업장 QR코드가 아닙니다');
       }, 500);
     } else {
       setIsWorkingMode(true);
+    }
+  };
+
+  // 사업장QR 스캔
+  const handleBarCodeScanned2 = (codenumber) => {
+    if (isNaN(codenumber)) {
+      setQrCameraModalOpen2(false);
+      setTimeout(() => {
+        alertModal('', `코드 넘버 ${codenumber}입니다.\n서비스 준비중입니다.`);
+      }, 500);
     }
   };
 
@@ -514,13 +524,16 @@ export default ({route: {params}}) => {
       setWorkingModalOpen={setWorkingModalOpen}
       goWorkFn={goWorkFn}
       leaveWorkFn={leaveWorkFn}
-      handleBarCodeScanned={handleBarCodeScanned}
+      handleBarCodeScanned1={handleBarCodeScanned1}
+      handleBarCodeScanned2={handleBarCodeScanned2}
       invitedEmpCount={invitedEmpCount}
       checklistCount={checklistCount}
       NOTICE_COUNT={NOTICE_COUNT}
       QR={QR}
-      qrCameraModalOpen={qrCameraModalOpen}
-      setQrCameraModalOpen={setQrCameraModalOpen}
+      qrCameraModalOpen1={qrCameraModalOpen1}
+      setQrCameraModalOpen1={setQrCameraModalOpen1}
+      qrCameraModalOpen2={qrCameraModalOpen2}
+      setQrCameraModalOpen2={setQrCameraModalOpen2}
       isGpsVisible={isGpsVisible}
       setIsGpsVisible={setIsGpsVisible}
       lat={lat}
@@ -544,16 +557,15 @@ export default ({route: {params}}) => {
       storeKeepersEMPMenu={storeKeepersEMPMenu}
       managersEMPMenu={managersEMPMenu}
       employeesMenu={employeesMenu}
-      CUSTOM_MENU_STORE={CUSTOM_MENU_STORE}
       CUSTOM_MENU_EMP={CUSTOM_MENU_EMP}
       addCUSTOM_MENU_EMP_Fn={addCUSTOM_MENU_EMP_Fn}
       removeCUSTOM_MENU_EMP_Fn={removeCUSTOM_MENU_EMP_Fn}
       AVATAR={AVATAR}
       initLoading={initLoading}
       gotoScreen={gotoScreen}
-      alertModal={alertModal}
-      qrCheckModal={qrCheckModal}
-      setQrCheckModal={setQrCheckModal}
+      setCodenumber={setCodenumber}
+      qrCameraMode={qrCameraMode}
+      setQrCameraMode={setQrCameraMode}
     />
   );
 };
