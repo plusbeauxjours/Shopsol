@@ -17,6 +17,8 @@ import moment from 'moment';
 import {BackIcon, ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import styleGuide from '~/constants/styleGuide';
+import {PhoneIcon} from '../../../../constants/Icons';
+import {Linking} from 'react-native';
 
 interface IsSelected {
   isSelected: boolean;
@@ -31,7 +33,8 @@ const BackGround = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView``;
 
-const Touchable = styled.TouchableOpacity`
+const Touchable = styled.TouchableOpacity``;
+const TouchableRow = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;
@@ -47,17 +50,21 @@ const WhiteText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   color: white;
 `;
+
 const Section = styled.View`
   width: 100%;
-  margin-bottom: 20px;
   border-radius: 20px;
-  padding: 20px 0;
+  margin-bottom: 20px;
+  padding: 20px;
   background-color: white;
 `;
 
-const NameBox = styled.View``;
+const NameBox = styled.View`
+  margin-left: 10px;
+`;
+
 const EmployeeBox = styled.View`
-  padding: 0 20px;
+  width: ${wp('100%') - 80}px;
   align-items: center;
   flex-direction: row;
   background-color: white;
@@ -71,13 +78,21 @@ const NameText = styled.Text`
 `;
 
 const DateText = styled.Text`
+  font-size: ${styleGuide.fontSize.large}px;
+  font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.greyColor};
-  font-size: ${styleGuide.fontSize.middle}px;
 `;
 
 const Row = styled.View`
   flex-direction: row;
+  justify-content: center;
   align-items: center;
+`;
+
+const InfoText = styled.Text`
+  font-size: ${styleGuide.fontSize.small}px;
+  height: 15px;
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const RowSpace = styled.View`
@@ -103,9 +118,6 @@ const WorkTypeAndSalaryBox = styled.View`
 
 const WorkTypeAndSalaryInfoBox = styled.View`
   align-items: flex-end;
-  border-color: ${styleGuide.palette.borderColor};
-  border-top-width: 1px;
-  border-bottom-width: 1px;
   padding: 10px 20px;
   margin: 10px 0;
 `;
@@ -131,7 +143,7 @@ const WorkScheduleBox = styled.TouchableOpacity`
 
 const GreyText = styled.Text`
   font-size: 14px;
-  color: ${styleGuide.palette.borderColor};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const FixedGreyText = styled(GreyText)`
@@ -246,8 +258,32 @@ const GreyLine = styled.View`
   width: ${wp('100%') - 80}px;
   margin: 20px 0;
   background-color: ${styleGuide.palette.borderColor};
-  background-color: green;
   height: 1px;
+`;
+
+const TitleText = styled.Text`
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
+  font-weight: ${styleGuide.fontWeight.bold};
+`;
+
+const DateBox = styled.TouchableOpacity`
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: ${styleGuide.palette.borderColor};
+`;
+
+const DateTextArea = styled.View`
+  flex: 1;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default ({
@@ -278,6 +314,7 @@ export default ({
   joinModal,
   IMAGE,
   MANAGER_CALLED,
+  mobileNo,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -464,12 +501,7 @@ export default ({
             <Section>
               <EmployeeBox>
                 <FastImage
-                  style={{
-                    width: 60,
-                    height: 60,
-                    borderRadius: 30,
-                    marginRight: 10,
-                  }}
+                  style={{width: 60, height: 60, borderRadius: 30}}
                   source={{
                     uri: `http://133.186.210.223/uploads/${IMAGE}`,
                     headers: {Authorization: 'someAuthToken'},
@@ -478,38 +510,78 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <NameBox>
-                  <Row>
-                    <NameText>{data.EMP_NAME}</NameText>
-                    <DateText>
-                      {data.IS_MANAGER === '1'
-                        ? `[${MANAGER_CALLED}]`
-                        : '[직원]'}
-                    </DateText>
-                  </Row>
-                  <Row>
-                    <DateText>근무기간&nbsp;</DateText>
-                    <DateText>
-                      {data.START} ~ {data.END ? data.END : '계속'}
-                    </DateText>
-                  </Row>
+                  <Touchable onPress={() => Linking.openURL(`tel:${mobileNo}`)}>
+                    <Row
+                      style={{justifyContent: 'flex-start', marginBottom: 5}}>
+                      <NameText>{data?.EMP_NAME}&nbsp;</NameText>
+                      <NameText style={{fontSize: 10}}>
+                        {data?.IS_MANAGER === '1'
+                          ? `[${MANAGER_CALLED}]`
+                          : '[직원]'}
+                      </NameText>
+                    </Row>
+                    <Row style={{justifyContent: 'flex-start'}}>
+                      <PhoneIcon color={styleGuide.palette.greyColor} />
+                      <InfoText style={{marginLeft: 5}}>{mobileNo}</InfoText>
+                      <InfoText
+                        style={{
+                          marginLeft: 5,
+                          color: styleGuide.palette.primary,
+                          fontWeight: '600',
+                        }}>
+                        전화걸기
+                      </InfoText>
+                    </Row>
+                  </Touchable>
+                  <InfoText>
+                    근무기간&nbsp;({moment().diff(moment(data.START), 'month')}
+                    개월)
+                  </InfoText>
+                  <InfoText>
+                    {moment(data.START).format('YYYY.MM.DD')} ~&nbsp;
+                    {data?.END
+                      ? moment(data?.END).format('YYYY.MM.DD')
+                      : '계속'}
+                  </InfoText>
                 </NameBox>
               </EmployeeBox>
             </Section>
             <Section>
-              <WorkTypeAndSalaryBox>
-                <WorkTypeAndSalaryBoxTitle>급여</WorkTypeAndSalaryBoxTitle>
-              </WorkTypeAndSalaryBox>
+              <TitleText>급여</TitleText>
               <GreyLine />
+              <Row>
+                <DateBox
+                  style={{marginLeft: 0}}
+                  disabled={true}
+                  onPress={() => {}}>
+                  <BackIcon size={22} color={styleGuide.palette.borderColor} />
+                </DateBox>
+                <DateTextArea>
+                  <DateText>{moment().format('YYYY년 M월')}</DateText>
+                  <DateText
+                    style={{
+                      fontSize: styleGuide.fontSize.middle,
+                      fontWeight: '300',
+                    }}>
+                    {getPeriod(CALCULATE_DAY)}
+                  </DateText>
+                </DateTextArea>
+                <DateBox disabled={true} onPress={() => {}}>
+                  <ForwardIcon
+                    size={22}
+                    color={styleGuide.palette.borderColor}
+                  />
+                </DateBox>
+              </Row>
               <WorkTypeAndSalaryInfoBox>
-                <GreyText style={{fontSize: styleGuide.fontSize.middle}}>
-                  {getPeriod(CALCULATE_DAY)}
-                </GreyText>
                 <SmallLine />
                 <Row>
                   <FixedGreyText style={{marginRight: 50}}>
-                    {PAY_TYPE === '0' && '시급'}
-                    {PAY_TYPE === '1' && '일급'}
-                    {PAY_TYPE === '2' && '월급'}
+                    {PAY_TYPE == '0'
+                      ? '시급'
+                      : PAY_TYPE == '1'
+                      ? '일급'
+                      : '월급'}
                   </FixedGreyText>
                   <GreyText style={{marginRight: 20}}>
                     {numberComma(PAY)}
@@ -518,27 +590,29 @@ export default ({
                 </Row>
               </WorkTypeAndSalaryInfoBox>
             </Section>
+
             <Section>
-              <WorkTypeAndSalaryBox>
-                <RowSpace>
-                  <Touchable
+              <RowSpace>
+                <Row>
+                  <TitleText>근무일정</TitleText>
+                  <TouchableRow
                     onPress={() => {
                       if (isFreeWorkingType) {
                         explainModal(
+                          '',
                           '일정근무로 설정하면 정확한 급여계산이 가능합니다.\n\n일정관련하여 다양한 케이스별 설정이 가능합니다.\n자세한 설명은 [도움말 전체보기]에서 확인하세요.\n\nEx.) 직원 스케쥴 변경, 주단위 일정입력 등',
                         );
                       } else {
                         explainModal(
+                          '',
                           '자율출퇴근으로 설정하면 등록된 근무일정이 없어도 직원이 출/퇴근을 기록할 수 있습니다.\n- 급여계산 목적 보다는 직원 출퇴근 시간관리로 사용하기를 권장합니다.\n\n일정관련하여 다양한 케이스별 설정이 가능합니다.\n자세한 설명은 [도움말 전체보기]에서 확인하세요.\n\nEx.) 직원 스케쥴 변경, 주단위 일정입력 등',
                         );
                       }
                     }}>
-                    <WorkTypeAndSalaryBoxTitle>
-                      근무일정
-                    </WorkTypeAndSalaryBoxTitle>
                     <HelpCircleIcon />
-                  </Touchable>
-                  <GreyLine />
+                  </TouchableRow>
+                </Row>
+                <Row>
                   <WorkScheduleBox onPress={() => toggleWorkScheduleFn()}>
                     {isFreeWorkingType ? (
                       <WhiteText>일정출퇴근으로 전환하기</WhiteText>
@@ -546,42 +620,47 @@ export default ({
                       <WhiteText>자율출퇴근으로 전환하기</WhiteText>
                     )}
                   </WorkScheduleBox>
-                </RowSpace>
-              </WorkTypeAndSalaryBox>
+                </Row>
+              </RowSpace>
               {isFreeWorkingType && (
-                <FixTypeDayChangeBox>
-                  <FixTypeDayChangeButton
-                    style={{
-                      borderColor: styleGuide.palette.greyColor,
-                      width: '100%',
-                    }}
-                    disabled={true}>
-                    <FixTypeDayChangeButtonText
-                      style={{color: styleGuide.palette.greyColor}}>
-                      자율출퇴근 근무 중
-                    </FixTypeDayChangeButtonText>
-                  </FixTypeDayChangeButton>
-                </FixTypeDayChangeBox>
-              )}
-              <Row>
-                {!isFreeWorkingType &&
-                  timeTable.length == 0 && ( // 자율출퇴근★
-                    <FixTypeDayChangeBox>
-                      <FixTypeDayChangeButton
-                        style={{
-                          borderColor: styleGuide.palette.greyColor,
-                          width: '100%',
-                        }}
-                        onPress={() => registerScheduleFn()}>
-                        <FixTypeDayChangeButtonText
-                          style={{color: styleGuide.palette.greyColor}}>
-                          일정 추가
-                        </FixTypeDayChangeButtonText>
-                      </FixTypeDayChangeButton>
-                    </FixTypeDayChangeBox>
-                  )}
-                {!isFreeWorkingType && timeTable.length > 0 && (
+                <>
+                  <GreyLine />
                   <FixTypeDayChangeBox>
+                    <FixTypeDayChangeButton
+                      style={{
+                        borderColor: styleGuide.palette.greyColor,
+                        width: '100%',
+                      }}
+                      disabled={true}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
+                        자율출퇴근 근무 중
+                      </FixTypeDayChangeButtonText>
+                    </FixTypeDayChangeButton>
+                  </FixTypeDayChangeBox>
+                </>
+              )}
+              {!isFreeWorkingType &&
+                timeTable.length == 0 && ( // 자율출퇴근★
+                  <>
+                    <GreyLine />
+                    <FixTypeDayChangeButton
+                      style={{
+                        borderColor: styleGuide.palette.greyColor,
+                        width: '100%',
+                      }}
+                      onPress={() => registerScheduleFn()}>
+                      <FixTypeDayChangeButtonText
+                        style={{color: styleGuide.palette.greyColor}}>
+                        일정 추가
+                      </FixTypeDayChangeButtonText>
+                    </FixTypeDayChangeButton>
+                  </>
+                )}
+              {!isFreeWorkingType && timeTable.length > 0 && (
+                <>
+                  <GreyLine />
+                  <RowSpace>
                     <FixTypeDayChangeButton
                       style={{borderColor: styleGuide.palette.greyColor}}
                       onPress={() => registerScheduleFn()}>
@@ -605,20 +684,22 @@ export default ({
                         삭제
                       </FixTypeDayChangeButtonText>
                     </FixTypeDayChangeButton>
-                  </FixTypeDayChangeBox>
-                )}
-              </Row>
+                  </RowSpace>
+                </>
+              )}
               {!isFreeWorkingType && (
-                <WorkTypeCheckSection>
+                <>
+                  <GreyLine />
                   <RenderScheduleList />
                   <RenderDayList />
-                </WorkTypeCheckSection>
+                </>
               )}
             </Section>
+
             <SubmitBtn
               text={'합류 완료'}
               onPress={() => {
-                if (!isFreeWorkingType && !timeTable) {
+                if (!isFreeWorkingType && timeTable.length == 0) {
                   alertModal(
                     '일정을 추가한 후에 직원 합류를 완료해주세요.\n정해진 일정없이 출퇴근을 진행하시려면 자율출퇴근으로 전환하기 버튼을 눌러주세요.',
                   );
@@ -626,7 +707,7 @@ export default ({
                   joinModal('직원이 합류되었습니다.');
                 }
               }}
-              isRegisted={isFreeWorkingType || timeTable}
+              isRegisted={isFreeWorkingType || timeTable.length != 0}
             />
           </Container>
         </TouchableWithoutFeedback>

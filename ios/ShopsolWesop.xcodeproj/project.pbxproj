@@ -14,7 +14,7 @@
 		3EBFDF1B440A05226B843B88 /* libPods-ShopsolWesop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 174C695B74DF8BB94D3CB5F0 /* libPods-ShopsolWesop.a */; };
 		5BB0AC562535648ED148433A /* libPods-ShopsolWesop-ShopsolWesopTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E765980F126384C006C44FDA /* libPods-ShopsolWesop-ShopsolWesopTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		BE82A63C254E6F150029892A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE82A63B254E6F140029892A /* GoogleService-Info.plist */; };
+		BE28A54225AB9B1100825871 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE82A63B254E6F140029892A /* GoogleService-Info.plist */; };
 		BEE82371253B211D00AB2E6D /* ShopsolWesop.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE82370253B211D00AB2E6D /* ShopsolWesop.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +49,7 @@
 		7FC789AD0CB0060E4899190F /* Pods-ShopsolWesop-ShopsolWesopTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopsolWesop-ShopsolWesopTests.release.xcconfig"; path = "Target Support Files/Pods-ShopsolWesop-ShopsolWesopTests/Pods-ShopsolWesop-ShopsolWesopTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ShopsolWesop/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		890A231A69A4B775BFE7D9A1 /* Pods-ShopsolWesop-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopsolWesop-tvOS.release.xcconfig"; path = "Target Support Files/Pods-ShopsolWesop-tvOS/Pods-ShopsolWesop-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		BE28A27225AB65B400825871 /* ShopsolWesop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ShopsolWesop.entitlements; path = ShopsolWesop/ShopsolWesop.entitlements; sourceTree = "<group>"; };
 		BE82A63B254E6F140029892A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BEE8236F253B211C00AB2E6D /* ShopsolWesop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShopsolWesop-Bridging-Header.h"; sourceTree = "<group>"; };
 		BEE82370253B211D00AB2E6D /* ShopsolWesop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopsolWesop.swift; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		13B07FAE1A68108700A75B9A /* ShopsolWesop */ = {
 			isa = PBXGroup;
 			children = (
+				BE28A27225AB65B400825871 /* ShopsolWesop.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -265,9 +267,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE28A54225AB9B1100825871 /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				BE82A63C254E6F150029892A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +548,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 138;
+				CODE_SIGN_ENTITLEMENTS = ShopsolWesop/ShopsolWesop.entitlements;
+				CURRENT_PROJECT_VERSION = 139;
 				DEVELOPMENT_TEAM = S89HZPJ64Y;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ShopsolWesop/Info.plist;
@@ -572,7 +575,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 138;
+				CODE_SIGN_ENTITLEMENTS = ShopsolWesop/ShopsolWesop.entitlements;
+				CURRENT_PROJECT_VERSION = 139;
 				DEVELOPMENT_TEAM = S89HZPJ64Y;
 				INFOPLIST_FILE = ShopsolWesop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

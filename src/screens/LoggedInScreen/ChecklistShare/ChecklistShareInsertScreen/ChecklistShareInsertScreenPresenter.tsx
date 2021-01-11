@@ -435,7 +435,7 @@ export default ({
                 androidCameraPermissionOptions={{
                   title: '카메라 권한 설정',
                   message:
-                    '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "퇴근해씨유" 앱의 권한 허용을 해야 합니다.',
+                    '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
                   buttonPositive: '확인',
                   buttonNegative: '취소',
                 }}>
@@ -471,9 +471,7 @@ export default ({
             date={moment(date).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            onDateChange={(date) => 
-              setDate(moment(date).format('YYYY-MM-DD'))
-            }
+            onDateChange={(date) => setDate(moment(date).format('YYYY-MM-DD'))}
           />
           <DatePickerRoundBtn
             onPress={() => {

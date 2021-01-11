@@ -68,7 +68,7 @@ export default () => {
     const params = {
       alertType: 'confirm',
       title: '',
-      content: '상품의 유통기한 만료로 폐기 또는 처리 완료 체크합니다',
+      content: '업무처리를 완료합니다',
       cancelButtonText: '취소',
       okButtonText: '확인',
       okCallback: () => updateTask(name, task_SEQ),
@@ -81,7 +81,7 @@ export default () => {
     const params = {
       alertType: 'confirm',
       title: '',
-      content: '상품 처리완료를 취소합니다',
+      content: '업무처리 완료를 취소합니다',
       cancelButtonText: '취소',
       okButtonText: '확인',
       okCallback: () => cancelTask(name, task_SEQ),

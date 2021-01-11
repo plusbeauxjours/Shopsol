@@ -164,6 +164,7 @@ export default ({route: {params}}) => {
               PAY,
               PAY_TYPE,
               IMAGE: params?.IMAGE,
+              mobileNo: params?.mobileNo,
             });
           }}
           isRegisted={true}

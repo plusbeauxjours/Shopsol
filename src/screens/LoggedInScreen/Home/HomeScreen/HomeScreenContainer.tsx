@@ -19,6 +19,7 @@ import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
 import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
+import moment from 'moment';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ export default ({route: {params}}) => {
   const [initLoading, setInitLoading] = useState<boolean>(
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
+  const [qrCheckModal, setQrCheckModal] = useState<boolean>(false);
 
   const storeKeepersEMPMenu = [
     {
@@ -350,7 +352,7 @@ export default ({route: {params}}) => {
       if (empData.message == 'SUCCESS') {
         dispatch(setEMPLOYEE_LIST(empData));
       }
-
+      console.log(moment().diff(moment('2021-01-03'), 'days'));
       const {data} = await api.getStoreInfo({
         STORE,
         MEMBER_SEQ,
@@ -550,6 +552,8 @@ export default ({route: {params}}) => {
       initLoading={initLoading}
       gotoScreen={gotoScreen}
       alertModal={alertModal}
+      qrCheckModal={qrCheckModal}
+      setQrCheckModal={setQrCheckModal}
     />
   );
 };

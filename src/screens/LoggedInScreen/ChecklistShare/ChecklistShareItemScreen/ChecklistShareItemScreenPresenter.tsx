@@ -69,7 +69,7 @@ const CommentTextInputContainer = styled.View`
   padding-right: 20px;
   padding-left: 10px;
   border-width: 1px;
-  margin: 3px;
+  padding: 10px;
   margin-top: 0;
   border-radius: 20px;
   border-color: ${styleGuide.palette.primary};
@@ -486,7 +486,7 @@ export default ({
                 returnKeyType="next"
                 onChangeText={(text) => setComment(text)}
                 value={comment}
-                placeholder={'댓글을 입력하세요.'}
+                placeholder={'댓글을 입력하세요..'}
                 placeholderTextColor={'#CCCCCC'}
                 onBlur={() => {
                   setCommentInputBox(false);

@@ -172,8 +172,8 @@ android {
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 65
-        versionName "1.2.9"
+        versionCode 66
+        versionName "1.2.10"
     }
     splits {
         abi {
@@ -284,6 +284,6 @@ project.ext.vectoricons = [
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
-apply plugin: 'com.google.gms.google-services'
+apply plugin: "com.google.gms.google-services"
 
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"

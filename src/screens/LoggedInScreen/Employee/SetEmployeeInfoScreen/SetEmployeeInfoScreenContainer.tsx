@@ -234,11 +234,13 @@ export default ({route: {params}}) => {
         y: 0,
         animated: true,
       });
-    } else if (probation && !probationPeriodSet) {
-      openAccordion('click2');
+    } else if (payChecked == 0 && probation && !probationPeriodSet) {
       alertModal('수습종료일을 입력해주세요');
+      console.log('수습종료일을 입력해주세요');
+      openAccordion('click2');
     } else if (payChecked === -1) {
       alertModal('급여유형을 선택해주세요.');
+      console.log('급여유형을 선택해주세요.');
       openAccordion('click2');
       scrollRef.current?.getNode()?.scrollTo({
         y: 0,
@@ -246,41 +248,45 @@ export default ({route: {params}}) => {
       });
     } else if (payChecked !== 2 && pay === '') {
       alertModal('급여를 입력해주세요.');
+      console.log('급여를 입력해주세요.');
       openAccordion('click2');
       scrollRef.current?.getNode()?.scrollTo({
         y: 0,
         animated: true,
       });
-    } else if (payChecked === 2) {
-      if (pay === '') {
-        alertModal('기본급을 입력해주세요.');
-      } else if (pay2 === '') {
-        alertModal('식대금액을 입력해주세요.');
-      } else if (pay3 === '') {
-        alertModal('자가운전금액을 입력해주세요.');
-      } else if (pay4 === '') {
-        alertModal('상여금액을 입력해주세요.');
-      } else if (pay5 === '') {
-        alertModal('성과급금액을 입력해주세요.');
-      }
-      openAccordion('click2');
-    } else if (probation && !probationPeriodSet) {
+    } else if (payChecked === 2 && pay === '') {
+      alertModal('기본급을 입력해주세요.');
+    } else if (payChecked === 2 && pay2 === '') {
+      alertModal('식대금액을 입력해주세요.');
+    } else if (payChecked === 2 && pay3 === '') {
+      alertModal('자가운전금액을 입력해주세요.');
+    } else if (payChecked === 2 && pay4 === '') {
+      alertModal('상여금액을 입력해주세요.');
+    } else if (payChecked === 2 && pay5 === '') {
+      alertModal('성과급금액을 입력해주세요.');
+    } else if (payChecked == 0 && probation && !probationPeriodSet) {
       alertModal('수습기간의 종료일을 설정해주세요.');
+      console.log('수습기간의 종료일을 설정해주세요.');
       openAccordion('click2');
-    } else if (probation && probationPercent == '') {
+    } else if (payChecked == 0 && probation && probationPercent == '') {
       alertModal('수습기간의 급여비율을 설정해주세요.');
+      console.log('수습기간의 급여비율을 설정해주세요.');
       openAccordion('click2');
     } else if (salarySystemCheck[1] === true && weekTypeChecked == -1) {
       alertModal('주휴수당 계산 방법 선택을 체크해주세요.');
+      console.log('주휴수당 계산 방법 선택을 체크해주세요.');
       openAccordion('click2');
     } else if (salarySystemCheck[2] === true && restTypeChecked == -1) {
       alertModal('휴게시간 계산 방법 선택을 체크해주세요.');
+      console.log('휴게시간 계산 방법 선택을 체크해주세요.');
       openAccordion('click2');
     } else if (deductionTypeChecked === -1) {
       alertModal('급여정보 입력\n공제유형을 선택해주세요.');
+      console.log('급여정보 입력\n공제유형을 선택해주세요.');
       openAccordion('click2');
     } else if (payDay === '') {
       alertModal('급여정보 입력\n적용 시작 년,월을 입력해주세요.');
+      console.log('급여정보 입력\n적용 시작 년,월을 입력해주세요.');
       openAccordion('click2');
     } else if (positionChecked === -1) {
       alertModal('직책/권한 설정\n직원의 직책을 선택해주세요.');
@@ -351,11 +357,12 @@ export default ({route: {params}}) => {
         if (data.message === 'SUCCESS') {
           if (from === 'ManageInviteEmployeeScreen') {
             navigation.navigate('EmployeeScheduleMainScreen', {
-              CALCULATE_DAY: utils.calculateDay,
+              CALCULATE_DAY,
               EMP_SEQ,
               PAY_TYPE: payChecked,
               PAY: pay,
               IMAGE,
+              mobileNo,
             });
           } else {
             alertModal('직원정보가 수정되었습니다.');

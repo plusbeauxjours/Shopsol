@@ -54,7 +54,7 @@ export default ({route: {params}}) => {
 
   const addFn = () => {
     if (taskName == '') {
-      return alertModal('상품명을 입력해주세요.');
+      return alertModal('업무명을 입력해주세요.');
     }
     if (!taskDateSet) {
       return alertModal('기한을 입력해주세요.', () =>
@@ -67,7 +67,7 @@ export default ({route: {params}}) => {
         taskName == list[i].taskNAME &&
         moment(taskDate).format('YYYY-MM-DD') == list[i].taskDATE
       ) {
-        return alertModal('같은 일자에 동일한 상품이 작성되어 있습니다.');
+        return alertModal('같은 일자에 동일한 업무가 작성되어 있습니다.');
       }
     }
     let buffer = list;
@@ -122,7 +122,7 @@ export default ({route: {params}}) => {
 
   const submitFn = async () => {
     if (list.length == 0) {
-      return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
+      return alertModal('등록하실 업무를 목록에 추가하신 후 등록을 해주세요.');
     }
     list.map((i) =>
       i.taskIMAGE ? setTaskDataImgList(i) : taskDataTempList.push(i),

@@ -73,18 +73,13 @@ export default {
     callApi('post', '/auth/setshelfLifeData/', data),
   setShelfLifeDataImg: (data: any) =>
     callApi('post', '/auth/setshelfLifeDataImg/', data),
-  getTaskData: (data: any) => callApi('post', '/auth/getshelfLifeData/', data),
-  checkTaskData: (data: any) =>
-    callApi('post', '/auth/checkShelfLifeData/', data),
-  cancelTaskData: (data: any) =>
-    callApi('post', '/auth/cancelShelfLifeData/', data),
-  updateTaskData: (data: any) =>
-    callApi('post', '/auth/updateshelfLifeData/', data),
-  deleteTaskData: (data: any) =>
-    callApi('post', '/auth/deleteshelfLifeData/', data),
-  setTaskData: (data: any) => callApi('post', '/auth/setshelfLifeData/', data),
-  setTaskDataImg: (data: any) =>
-    callApi('post', '/auth/setshelfLifeDataImg/', data),
+  getTaskData: (data: any) => callApi('post', '/auth/getTaskData/', data),
+  checkTaskData: (data: any) => callApi('post', '/auth/checkTaskData/', data),
+  cancelTaskData: (data: any) => callApi('post', '/auth/cancelTaskData/', data),
+  updateTaskData: (data: any) => callApi('post', '/auth/updateTaskData/', data),
+  deleteTaskData: (data: any) => callApi('post', '/auth/deleteTaskData/', data),
+  setTaskData: (data: any) => callApi('post', '/auth/setTaskData/', data),
+  setTaskDataImg: (data: any) => callApi('post', '/auth/setTaskDataImg/', data),
   checkChecklist: (data: any) => oldApi('post', '/StoreAuth/checklist', data),
   getChecklist: (STORE: string, DATE: string) =>
     oldApi('get', `/Store/Checklist?STORE=${STORE}&DATE=${DATE}`),

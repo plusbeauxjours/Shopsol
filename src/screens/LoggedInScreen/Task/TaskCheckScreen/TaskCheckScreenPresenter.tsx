@@ -270,7 +270,7 @@ export default ({
               />
               <TextBox>
                 <Column>
-                  <EmptyText>유통기한 정보를 등록해주세요.</EmptyText>
+                  <EmptyText>업무캘린더 정보를 등록해주세요.</EmptyText>
                 </Column>
               </TextBox>
             </EmptyBox>
@@ -378,6 +378,7 @@ export default ({
                   </CloseIconContainer>
                 </SearchInputContainer>
               </Row>
+              {console.log(TASK_DATA)}
               {TASK_DATA?.map(({name, color, items}, index) => (
                 <View
                   key={index}
@@ -480,18 +481,14 @@ export default ({
           {isCancelToastVisible && (
             <ModalPopupArea>
               <ModalPopup>
-                <ModalPopupText>
-                  상품의 처리완료를 취소하였습니다.
-                </ModalPopupText>
+                <ModalPopupText>업무처리 완료를 취소하였습니다.</ModalPopupText>
               </ModalPopup>
             </ModalPopupArea>
           )}
           {isUpdateToastVisible && (
             <ModalPopupArea>
               <ModalPopup>
-                <ModalPopupText>
-                  상품의 폐기 또는 처리를 완료하였습니다.
-                </ModalPopupText>
+                <ModalPopupText>업무처리를 완료하였습니다.</ModalPopupText>
               </ModalPopup>
             </ModalPopupArea>
           )}

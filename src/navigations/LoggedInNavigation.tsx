@@ -93,8 +93,8 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        // initialRouteName={'SelectStoreScreen'}
-        initialRouteName={'ChecklistShareMainScreen'}
+        initialRouteName={'SelectStoreScreen'}
+        // initialRouteName={'ChecklistShareMainScreen'}
         screenOptions={{
           ...TransitionPresets.SlideFromRightIOS,
           animationEnabled: utils.isAndroid() ? false : true,
@@ -273,24 +273,24 @@ export default () => {
           name="TaskCheckScreen"
           component={TaskCheckScreen}
           options={{
-            headerTitle: '유통기한 체크',
-            title: '유통기한 목록',
+            headerTitle: '업무캘린더 체크',
+            title: '업무캘린더 목록',
           }}
         />
         <LoggedInNavigation.Screen
           name="TaskUpdateScreen"
           component={TaskUpdateScreen}
           options={{
-            headerTitle: '유통기한 체크 수정',
-            title: '유통기한 수정',
+            headerTitle: '업무캘린더 체크 수정',
+            title: '업무캘린더 수정',
           }}
         />
         <LoggedInNavigation.Screen
           name="AddTaskScreen"
           component={AddTaskScreen}
           options={{
-            headerTitle: '유통기한 체크 등록',
-            title: '유통기한 등록',
+            headerTitle: '업무캘린더 체크 등록',
+            title: '업무캘린더 등록',
           }}
         />
         {/* 체크리스트======================================================== */}
@@ -492,7 +492,8 @@ export default () => {
           name="EmployeeScheduleInfoScreen"
           component={EmployeeScheduleInfoScreen}
           options={{
-            headerTitle: '직원 정보',
+            headerLeft: () => <ConfirmBackBtn />,
+            headerTitle: '직원정보 입력',
             title: '직원 근무일정 (최초 가입시)',
           }}
         />

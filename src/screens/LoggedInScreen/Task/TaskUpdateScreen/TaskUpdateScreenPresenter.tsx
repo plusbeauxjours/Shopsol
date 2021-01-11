@@ -286,7 +286,7 @@ export default ({
                 <Name>
                   <TextInput
                     isBefore={taskName == ''}
-                    placeholder="상품명"
+                    placeholder="업무명"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskName(text)}
@@ -337,7 +337,7 @@ export default ({
           />
           <DeleteButton
             onPress={() =>
-              deleteModal('', '등록하신 상품을 삭제하시겠습니까?')
+              deleteModal('', '등록하신 업무를 삭제하시겠습니까?')
             }>
             <Text
               style={{
@@ -402,7 +402,7 @@ export default ({
               androidCameraPermissionOptions={{
                 title: '카메라 권한 설정',
                 message:
-                  '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "퇴근해씨유" 앱의 권한 허용을 해야 합니다.',
+                  '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
                 buttonPositive: '확인',
                 buttonNegative: '취소',
               }}>

@@ -178,12 +178,12 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           <Name>
             <NameText>{item.taskName}</NameText>
             <DateText>
-              {item.taskDate.slice(0, 4)}.{item.taskDate.slice(5, 7)}.
-              {item.taskDate.slice(8, 10)}
+              {item.taskDate?.slice(0, 4)}.{item.taskDate?.slice(5, 7)}.
+              {item.taskDate?.slice(8, 10)}
             </DateText>
           </Name>
-          {item.taskMemo.length !== 0 && <Line />}
-          {item.taskMemo.length !== 0 && (
+          {item.taskMemo?.length !== 0 && <Line />}
+          {item.taskMemo?.length !== 0 && (
             <TextContainer>
               <Text>{item.taskMemo}</Text>
             </TextContainer>
@@ -231,12 +231,12 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           <Name>
             <NameText isChecked={true}>{item.taskName}</NameText>
             <DateText isChecked={true}>
-              {item.taskDate.slice(0, 4)}.{item.taskDate.slice(5, 7)}.
-              {item.taskDate.slice(8, 10)}
+              {item.taskDate?.slice(0, 4)}.{item.taskDate?.slice(5, 7)}.
+              {item.taskDate?.slice(8, 10)}
             </DateText>
           </Name>
           <Line />
-          {item.taskMemo.length !== 0 && (
+          {item.taskMemo?.length !== 0 && (
             <TextContainer>
               <Text isChecked={true}>{item.taskMemo}</Text>
             </TextContainer>

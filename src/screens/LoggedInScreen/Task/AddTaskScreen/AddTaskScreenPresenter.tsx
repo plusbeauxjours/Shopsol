@@ -326,10 +326,10 @@ export default ({
                 onPress={() => {
                   explainModal(
                     '',
-                    '상품을 등록하시면 직원이 출근 시 유통기한 도래 상품을 알려드립니다.\n\nEx)금일(6/23) 유통기한 경과 상품이 있습니다. (치토스 외 4개)\n유통기한 캘린더를 통해 상품을 확인해주시고, 진열대에서 철수해주세요.',
+                    '업무를 등록하시면 직원이 출근 시 해당업무 알려드립니다.',
                   );
                 }}>
-                <TitleText>상품정보</TitleText>
+                <TitleText>업무정보</TitleText>
                 <HelpCircleIcon />
               </Touchable>
             </TextContainer>
@@ -380,7 +380,7 @@ export default ({
               <WhiteItem style={{justifyContent: 'flex-start'}}>
                 <Name>
                   <TextInput
-                    placeholder="상품명"
+                    placeholder="업무명"
                     selectionColor="#6428AC"
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskName(text)}
@@ -448,7 +448,7 @@ export default ({
           </Section>
           <Section>
             <ListContasiner>
-              <TitleText>상품목록</TitleText>
+              <TitleText>업무목록</TitleText>
               <TitleText>{list.length}&nbsp;&nbsp;</TitleText>
             </ListContasiner>
             {list && list.length !== 0 && <GreyLine />}
@@ -475,7 +475,7 @@ export default ({
               ))}
           </Section>
           <SubmitBtn
-            text={'상품 등록완료'}
+            text={'업무 등록완료'}
             isRegisted={list && list.length !== 0}
             onPress={() => submitFn()}
           />
@@ -532,7 +532,7 @@ export default ({
               androidCameraPermissionOptions={{
                 title: '카메라 권한 설정',
                 message:
-                  '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "퇴근해씨유" 앱의 권한 허용을 해야 합니다.',
+                  '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
                 buttonPositive: '확인',
                 buttonNegative: '취소',
               }}>

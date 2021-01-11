@@ -135,36 +135,6 @@ export default ({route: {params}}) => {
     }
   };
 
-  // 급여란의 근무 일수 계산
-  const getPeriod = (CALCULATE_DAY) => {
-    let dayFrom = new Date();
-    let dayTo = new Date();
-    let dayFromMonth, dayToMonth, dayFromDay, dayToDay, NowYear;
-    NowYear = dayFrom.getFullYear();
-    dayFrom.setDate(CALCULATE_DAY); // 시작일 => 정산일로설정
-    dayTo.setDate(CALCULATE_DAY); // 종료일 => 정산일로 설정
-
-    dayTo.setMonth(dayTo.getMonth() + 1); // 종료월 => 정산일의 월 +1로 설정
-    dayTo.setDate(dayTo.getDate() - 1); // 종료일 => 종료일 -1로 설정
-
-    dayFromMonth = dayFrom.getMonth() + 1;
-    dayFromMonth =
-      dayFromMonth < 10 ? '0' + String(dayFromMonth) : String(dayFromMonth);
-
-    dayToMonth = dayTo.getMonth() + 1;
-    dayToMonth =
-      dayToMonth < 10 ? '0' + String(dayToMonth) : String(dayToMonth);
-
-    dayFromDay = dayFrom.getDate();
-    dayFromDay < 10 ? (dayFromDay = '0' + dayFromDay) : dayFromDay;
-    dayToDay = dayTo.getDate();
-    dayToDay < 10 ? (dayToDay = '0' + dayToDay) : dayToDay;
-
-    return `기간: ${NowYear}.${dayFromMonth}.${dayFromDay} ~ ${
-      dayToMonth == '01' ? NowYear + 1 : NowYear
-    }.${dayToMonth}.${dayToDay}`;
-  };
-
   const fetchSchedule = async (EMP_SEQ) => {
     try {
       const {data} = await api.getSchedules(
@@ -417,6 +387,33 @@ export default ({route: {params}}) => {
     }
   };
 
+  const getPeriod = (CALCULATE_DAY) => {
+    let dayFrom = new Date();
+    let dayTo = new Date();
+    let dayFromMonth, dayToMonth;
+
+    dayFrom.setDate(CALCULATE_DAY); // 시작일 => 정산일로설정
+    dayTo.setDate(CALCULATE_DAY); // 종료일 => 정산일로 설정
+
+    dayTo.setMonth(dayTo.getMonth() + 1); // 종료월 => 정산일의 월 +1로 설정
+    dayTo.setDate(dayTo.getDate() - 1); // 종료일 => 종료일 -1로 설정
+
+    dayFromMonth = dayFrom.getMonth() + 1;
+    dayFromMonth =
+      dayFromMonth < 10 ? '0' + String(dayFromMonth) : String(dayFromMonth);
+
+    dayToMonth = dayTo.getMonth() + 1;
+    dayToMonth =
+      dayToMonth < 10 ? '0' + String(dayToMonth) : String(dayToMonth);
+
+    dayFrom = dayFrom.getDate();
+    dayFrom < 10 ? (dayFrom = '0' + dayFrom) : dayFrom;
+    dayTo = dayTo.getDate();
+    dayTo < 10 ? (dayTo = '0' + dayTo) : dayTo;
+
+    return `${dayFromMonth}월 ${dayFrom}일 ~ ${dayToMonth}월 ${dayTo}일`;
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -450,6 +447,7 @@ export default ({route: {params}}) => {
       joinModal={joinModal}
       IMAGE={params?.IMAGE}
       MANAGER_CALLED={MANAGER_CALLED}
+      mobileNo={params?.mobileNo}
     />
   );
 };

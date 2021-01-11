@@ -50,7 +50,7 @@ export default ({route: {params}}) => {
 
   const deleteTask = async () => {
     try {
-      alertModal('상품을 삭제하였습니다.');
+      alertModal('업무를 삭제하였습니다.');
       navigation.goBack();
       dispatch(removeTASK_DATA({name: params?.name, task_SEQ}));
       await api.deleteTaskData({task_SEQ});
@@ -61,7 +61,7 @@ export default ({route: {params}}) => {
 
   const submit = async () => {
     if (taskName == '') {
-      alertModal('수정할 상품명을 입력해주세요.');
+      alertModal('수정할 업무명을 입력해주세요.');
     }
     try {
       navigation.goBack();
