@@ -15,7 +15,6 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const shelfLifeDataImgTempList = [];
   const shelfLifeDataTempList = [];
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
@@ -99,7 +98,7 @@ export default ({route: {params}}) => {
     }, 200);
   };
 
-  const setShelfLifeDataImgList = (i) => {
+  const submitShelfLifeDataImg = async (i) => {
     const formData: any = new FormData();
     formData.append('shelfLifeDATE', i.shelfLifeDATE);
     formData.append('shelfLifeMEMO', i.shelfLifeMEMO);
@@ -123,7 +122,22 @@ export default ({route: {params}}) => {
       name: fileName,
       type: fileType,
     });
-    shelfLifeDataImgTempList.push(formData);
+    try {
+      const {data} = await api.setShelfLifeDataImg({
+        STORE_SEQ,
+        LIST: formData,
+      });
+      await params?.fetchData();
+      if (data.result == '0') {
+        alertModal('연결에 실패하였습니다.');
+      } else {
+        alertModal('등록이 완료되었습니다.');
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      dispatch(setSplashVisible({visible: false}));
+    }
   };
 
   const submitFn = async () => {
@@ -132,29 +146,11 @@ export default ({route: {params}}) => {
     }
     list.map((i) =>
       i.shelfLifeIMAGE
-        ? setShelfLifeDataImgList(i)
+        ? submitShelfLifeDataImg(i)
         : shelfLifeDataTempList.push(i),
     );
     dispatch(setSplashVisible({visible: true}));
     navigation.goBack();
-    if (shelfLifeDataImgTempList.length > 0) {
-      try {
-        const {data} = await api.setShelfLifeDataImg({
-          STORE_SEQ,
-          LIST: shelfLifeDataImgTempList,
-        });
-        await params?.fetchData();
-        if (data.result == '0') {
-          alertModal('연결에 실패하였습니다.');
-        } else {
-          alertModal('등록이 완료되었습니다.');
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        dispatch(setSplashVisible({visible: false}));
-      }
-    }
     if (shelfLifeDataTempList.length > 0) {
       try {
         const {data} = await api.setShelfLifeData({

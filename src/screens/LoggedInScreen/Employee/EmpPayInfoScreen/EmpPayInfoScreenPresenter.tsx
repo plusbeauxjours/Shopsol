@@ -693,6 +693,7 @@ export default ({
                       holi={0}
                       late={data.miner_payment}
                       total={data.payment}
+                      rest_payment={data.rest_payment || 0}
                     />
                   );
                 })}

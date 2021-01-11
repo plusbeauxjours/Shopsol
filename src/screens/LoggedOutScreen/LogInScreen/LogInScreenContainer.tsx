@@ -36,7 +36,7 @@ export default () => {
       setMobileNo(text);
     }
   };
-
+  console.log(PUSH_TOKEN);
   const gotoFind = () => {
     navigation.navigate('FindPasswordScreen');
   };

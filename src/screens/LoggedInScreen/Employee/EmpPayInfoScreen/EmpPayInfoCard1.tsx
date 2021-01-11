@@ -61,7 +61,20 @@ const DateText = styled.Text`
   color: ${styleGuide.palette.greyColor};
 `;
 
-export default ({key, day, yoil, base, night, over, holi, late, total}) => {
+export default ({
+  key,
+  day,
+  yoil,
+  base,
+  night,
+  over,
+  holi,
+  late,
+  total,
+  rest_payment,
+}) => {
+  console.log(base, rest_payment);
+  console.log(base + rest_payment);
   const numberComma = (num) => {
     let result = num;
     if (isNaN(num)) {
@@ -86,7 +99,7 @@ export default ({key, day, yoil, base, night, over, holi, late, total}) => {
       </DateTextArea>
       <Box>
         <Title isRight={false}>기본급여</Title>
-        <Title isRight={true}>{numberComma(base)} 원</Title>
+        <Title isRight={true}>{numberComma(base + rest_payment)} 원</Title>
       </Box>
       <Box>
         <Text isRight={false}>야간근로 수당</Text>
@@ -99,6 +112,10 @@ export default ({key, day, yoil, base, night, over, holi, late, total}) => {
       <Box>
         <Text isRight={false}>휴일근로 수당</Text>
         <Text isRight={true}>{numberComma(holi)} 원</Text>
+      </Box>
+      <Box>
+        <Text isRight={false}>휴게시간 차감</Text>
+        <Text isRight={true}>(-){numberComma(rest_payment)} 원</Text>
       </Box>
       <Box>
         <Text isRight={false}>지각조퇴결근 차감</Text>
