@@ -886,14 +886,7 @@ export default ({
                             />
                           )
                         )}
-
-                        <MenuCntContainer
-                          selection={'QR보기'}
-                          paging={'qrViewScreen'}
-                          source={require(`../../../../assets/main/qrView.png`)}
-                        />
-
-                        {/* {TOTAL_COUNT !== 0 &&
+                        {TOTAL_COUNT !== 0 &&
                           (STORE_DATA.resultdata.QR_num ? (
                             <MenuCntContainer
                               selection={'QR보기'}
@@ -906,7 +899,7 @@ export default ({
                               paging={'qrRegisterScreen'}
                               source={require(`../../../../assets/main/qrRegister.png`)}
                             />
-                          ))} */}
+                          ))}
                         <MenuCntContainer
                           selection={'사업장현황'}
                           paging={'DashBoardScreen'}

@@ -10,6 +10,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {openSettings, PERMISSIONS, request} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -19,7 +20,6 @@ import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
 import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
-import moment from 'moment';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();

@@ -66,10 +66,11 @@ const Bold = styled.Text`
 `;
 
 const CommentTextInputContainer = styled.View`
+  padding: 10px;
   padding-right: 20px;
   padding-left: 10px;
   border-width: 1px;
-  padding: 10px;
+  margin: 3px;
   margin-top: 0;
   border-radius: 20px;
   border-color: ${styleGuide.palette.primary};
@@ -81,7 +82,6 @@ const TextInput = styled.TextInput`
   flex: 1;
   align-items: center;
   margin-left: 10px;
-  padding: 10px 0;
 `;
 
 const ForwardIconContainer = styled.View`
@@ -478,8 +478,7 @@ export default ({
           <KeyboardAvoidingView
             behavior={utils.isAndroid() ? 'height' : 'padding'}
             keyboardVerticalOffset={utils.isAndroid() ? 0 : headerHeight}
-            enabled
-            style={{flexGrow: 1}}>
+            enabled>
             <CommentTextInputContainer>
               <TextInput
                 autoFocus={true}

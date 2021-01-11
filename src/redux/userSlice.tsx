@@ -116,6 +116,7 @@ const userSlice = createSlice({
       };
     },
     setDEVICE_INFO(state, action) {
+      console.log('payload', action.payload);
       const {
         payload: {
           PUSH_TOKEN,

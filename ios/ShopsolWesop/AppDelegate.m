@@ -4,6 +4,7 @@
 
 #import <React/RCTBridge.h>
 #import <Firebase.h>
+#import "RNFirebaseNotifications.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 @import Firebase;
@@ -22,6 +23,7 @@
   [FIRApp configure];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
+    [RNFirebaseNotifications configure];
   }
     
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];

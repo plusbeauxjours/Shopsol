@@ -1,5 +1,9 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import firebase from 'react-native-firebase';
+import {Alert, Linking, Platform} from 'react-native';
+import {openSettings} from 'react-native-permissions';
+import DeviceInfo from 'react-native-device-info';
 
 import MyPageAlarmSetScreenPresenter from './MyPageAlarmSetScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -11,6 +15,8 @@ import {
   setScedulePUsh,
 } from '~/redux/userAlarmSlice';
 import api from '~/constants/LoggedInApi';
+import utils from '~/constants/utils';
+import {setDEVICE_INFO} from '~/redux/userSlice';
 
 export default () => {
   const dispatch = useDispatch();
@@ -76,9 +82,73 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
+  const getToken = async () => {
+    const PUSH_TOKEN = await firebase.messaging().getToken();
+    if (PUSH_TOKEN) {
+      await api.changeToken({
+        token: PUSH_TOKEN,
+        memberSEQ: MEMBER_SEQ,
+      });
+      dispatch(
+        setDEVICE_INFO({
+          PUSH_TOKEN,
+          DEVICE_MODEL: DeviceInfo.getModel(),
+          DEVICE_PLATFORM: Platform.OS,
+          DEVICE_SYSTEM_VERSION:
+            Platform.OS + ' ' + DeviceInfo.getSystemVersion(),
+        }),
+      );
+    }
+  };
+
+  const checkPermission = async () => {
+    const enabled = await firebase.messaging().hasPermission();
+    if (enabled) {
+      getToken();
+    } else {
+      requestPermission();
+    }
+  };
+
+  const requestPermission = async () => {
+    try {
+      await firebase.messaging().requestPermission();
+      getToken();
+    } catch (error) {
+      Alert.alert(
+        '푸쉬 알림 거절',
+        '푸시 알림을 받으려면 확인을 누른 뒤, 환경 설정에서 푸시를 켜주세요.',
+        [
+          {
+            text: '취소',
+            style: 'cancel',
+          },
+          {
+            text: '확인',
+            onPress: () => {
+              utils.isAndroid
+                ? openSettings()
+                : Linking.openURL('app-settings:');
+            },
+          },
+        ],
+      );
+    }
+  };
+
   useEffect(() => {
     fetch();
   }, []);
+
+  useEffect(
+    () => () => {
+      console.log('Before Leave');
+      if (All_PUSH) {
+        checkPermission();
+      }
+    },
+    [],
+  );
 
   return (
     <MyPageAlarmSetScreenPresenter

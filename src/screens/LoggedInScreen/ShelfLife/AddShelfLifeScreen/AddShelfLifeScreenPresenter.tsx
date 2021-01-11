@@ -245,18 +245,6 @@ const DatePickerRoundBtn = styled(Ripple)`
   align-items: center;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
 const DatePickerText = styled.Text`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;

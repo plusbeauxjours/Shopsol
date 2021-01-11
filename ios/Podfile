@@ -16,15 +16,14 @@ target 'ShopsolWesop' do
   pod 'Permission-Contacts', :path => "#{permissions_path}/Contacts.podspec"
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
   pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
   
   pod 'react-native-maps', path: '../node_modules/react-native-maps'
   pod 'react-native-google-maps', path: '../node_modules/react-native-maps' 
   pod 'GoogleMaps' 
   pod 'Google-Maps-iOS-Utils'
-  pod 'Firebase/Core'
-  pod 'Firebase/Analytics' 
+  pod 'Firebase/Core', '~> 6.13.0'
+  pod 'Firebase/Auth', '~> 6.13.0'
   pod 'Firebase/Messaging'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
