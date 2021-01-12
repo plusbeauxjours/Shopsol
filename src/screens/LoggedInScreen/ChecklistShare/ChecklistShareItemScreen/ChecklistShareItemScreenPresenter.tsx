@@ -21,6 +21,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import Loader from '~/components/Loader';
 import styleGuide from '~/constants/styleGuide';
+import {MenuIcon} from '../../../../constants/Icons';
 
 import {
   ForwardIcon,
@@ -434,16 +435,7 @@ export default ({
                           </Column>
                           {(item.MEMBER_SEQ == ME || STORE == '1') && (
                             <CommentIconContainer>
-                              <LottieView
-                                speed={0.25}
-                                style={{
-                                  width: 30,
-                                  height: 120,
-                                }}
-                                source={require('../../../../assets/animations/menuArrow.json')}
-                                loop
-                                autoPlay
-                              />
+                              <MenuIcon />
                             </CommentIconContainer>
                           )}
                         </Row>

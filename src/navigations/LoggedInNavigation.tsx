@@ -107,7 +107,6 @@ export default () => {
           headerTintColor: 'white',
           headerBackTitleVisible: false,
           headerBackImage: () => <BackBtn />,
-          headerRight: () => <HomeBtn />,
           headerLeftContainerStyle: {marginLeft: 10},
         }}>
         <LoggedInNavigation.Screen
@@ -126,6 +125,7 @@ export default () => {
           options={{
             headerTitle: '사업장 현황',
             title: '사업장 현황',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -241,6 +241,7 @@ export default () => {
           options={{
             headerTitle: '점포 수정',
             title: '사업장(점포) 수정',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         {/* 유통기한======================================================== */}
@@ -250,6 +251,7 @@ export default () => {
           options={{
             headerTitle: '유통기한 체크',
             title: '유통기한 목록',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -258,6 +260,7 @@ export default () => {
           options={{
             headerTitle: '유통기한 체크 수정',
             title: '유통기한 수정',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -266,6 +269,7 @@ export default () => {
           options={{
             headerTitle: '유통기한 체크 등록',
             title: '유통기한 등록',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         {/* 업무캘린더======================================================== */}
@@ -275,6 +279,7 @@ export default () => {
           options={{
             headerTitle: '업무캘린더 체크',
             title: '업무캘린더 목록',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -283,6 +288,7 @@ export default () => {
           options={{
             headerTitle: '업무캘린더 체크 수정',
             title: '업무캘린더 수정',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -291,6 +297,7 @@ export default () => {
           options={{
             headerTitle: '업무캘린더 체크 등록',
             title: '업무캘린더 등록',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         {/* 체크리스트======================================================== */}
@@ -300,6 +307,7 @@ export default () => {
           options={{
             headerTitle: '체크리스트 입력',
             title: '체크리스트 등록 & 수정',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -308,6 +316,7 @@ export default () => {
           options={{
             headerTitle: '체크리스트',
             title: '체크리스트 목록',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -316,6 +325,7 @@ export default () => {
           options={{
             headerTitle: '체크리스트 상세',
             title: '체크리스트 상세 (직원)',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -324,6 +334,7 @@ export default () => {
           options={{
             headerTitle: '체크리스트 체크상세',
             title: '체크리스트 상세 (사업주)',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         {/* 업무일지======================================================== */}
@@ -333,6 +344,7 @@ export default () => {
           options={{
             headerTitle: '업무일지',
             title: '업무일지 목록',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -340,6 +352,7 @@ export default () => {
           component={ChecklistShareItemScreen}
           options={({route: {params}}: any) => ({
             headerTitle: `${params?.TITLE} 상세`,
+            headerRight: () => <HomeBtn depth={2} />, /////
           })}
         />
         <LoggedInNavigation.Screen
@@ -347,6 +360,7 @@ export default () => {
           component={ChecklistShareInsertScreen}
           options={({route: {params}}: any) => ({
             headerTitle: `${params?.TITLE} 등록`,
+            headerRight: () => <HomeBtn depth={2} />, /////
           })}
         />
         <LoggedInNavigation.Screen
@@ -354,6 +368,7 @@ export default () => {
           component={ChecklistShareUpdateScreen}
           options={({route: {params}}: any) => ({
             headerTitle: `${params?.TITLE} 수정`,
+            headerRight: () => <HomeBtn depth={3} />, /////
           })}
         />
         {/* 캘린더======================================================== */}
@@ -363,6 +378,7 @@ export default () => {
           options={{
             headerTitle: '일정관리',
             title: '일정관리 목록',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -371,6 +387,7 @@ export default () => {
           options={{
             headerTitle: '일정추가',
             title: '일정관리 등록',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -379,6 +396,7 @@ export default () => {
           options={{
             headerTitle: '근무시간 수정하기',
             title: '일정관리 수정',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -387,6 +405,7 @@ export default () => {
           options={{
             headerTitle: '출퇴근시간 수정하기',
             title: '일정관리 출퇴근 수정',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -395,6 +414,7 @@ export default () => {
           options={{
             headerTitle: '휴무/휴게시간 설정',
             title: '일정관리 기타 설정',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -403,6 +423,7 @@ export default () => {
           options={{
             headerTitle: '휴무 설정',
             title: '일정관리 휴무 설정',
+            headerRight: () => <HomeBtn depth={3} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -411,6 +432,7 @@ export default () => {
           options={{
             headerTitle: '시간 설정',
             title: '일정관리 휴게시간 수정',
+            headerRight: () => <HomeBtn depth={3} />, /////
           }}
         />
         {/* 직원관리======================================================== */}
@@ -420,6 +442,7 @@ export default () => {
           options={{
             headerTitle: '직원 초대',
             title: '직원 초대',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -428,6 +451,7 @@ export default () => {
           options={{
             headerTitle: '직원 초대현황',
             title: '직원 초대현황',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -436,6 +460,7 @@ export default () => {
           options={{
             headerTitle: '직원 목록',
             title: '직원 목록',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -444,6 +469,7 @@ export default () => {
           options={{
             headerTitle: '직원 정보',
             title: '직원 정보 (사업주)',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -452,6 +478,7 @@ export default () => {
           options={{
             headerTitle: '직원 정보',
             title: '직원 정보 (직원)',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -460,6 +487,7 @@ export default () => {
           options={{
             headerTitle: '점포급여 정보',
             title: '사업장(점포) 급여정보',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -468,6 +496,7 @@ export default () => {
           options={{
             headerTitle: '직원급여 정보',
             title: '직원 급여정보',
+            headerRight: () => <HomeBtn depth={2} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -477,6 +506,9 @@ export default () => {
             headerLeft: () => <ConfirmBackBtn />,
             headerTitle: '직원정보 입력',
             title: '직원 정보등록 & 정보수정',
+            headerRight: () => (
+              <HomeBtn depth={3} from={'SetEmployeeInfoScreen'} /> /////
+            ),
           }}
         />
         <LoggedInNavigation.Screen
@@ -495,6 +527,7 @@ export default () => {
             headerLeft: () => <ConfirmBackBtn />,
             headerTitle: '직원정보 입력',
             title: '직원 근무일정 (최초 가입시)',
+            headerRight: () => null,
           }}
         />
         <LoggedInNavigation.Screen
@@ -503,6 +536,7 @@ export default () => {
           options={{
             headerTitle: '일정추가',
             title: '직원 급여유형 (최초 가입시)',
+            headerRight: () => null,
           }}
         />
         {/* 조기경보======================================================== */}
@@ -512,14 +546,7 @@ export default () => {
           options={{
             headerTitle: '조기경보시스템 타입 선택',
             title: '조기경보시스템 타입 선택',
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="HealthCertificateStoreFormScreen"
-          component={HealthCertificateStoreFormScreen}
-          options={{
-            headerTitle: '위생교육증 입력',
-            title: '조기경보시스템 업체 등록',
+            headerRight: () => <HomeBtn depth={1} />, /////
           }}
         />
         <LoggedInNavigation.Screen
@@ -528,14 +555,16 @@ export default () => {
           options={{
             headerTitle: '위생교육증 상세',
             title: '조기경보시스템 업체 상세',
+            headerRight: () => <HomeBtn depth={2} />,
           }}
         />
         <LoggedInNavigation.Screen
-          name="HealthCertificateEmpUpdateScreen"
-          component={HealthCertificateEmpUpdateScreen}
+          name="HealthCertificateStoreFormScreen"
+          component={HealthCertificateStoreFormScreen}
           options={{
-            headerTitle: '보건증 수정',
-            title: '조기경보시스템 직원 수정',
+            headerTitle: '위생교육증 입력',
+            title: '조기경보시스템 업체 등록',
+            headerRight: () => <HomeBtn depth={2} />,
           }}
         />
         <LoggedInNavigation.Screen
@@ -544,6 +573,7 @@ export default () => {
           options={{
             headerTitle: '위생교육증 수정',
             title: '조기경보시스템 업체 수정',
+            headerRight: () => <HomeBtn depth={3} />,
           }}
         />
         <LoggedInNavigation.Screen
@@ -552,6 +582,7 @@ export default () => {
           options={{
             headerTitle: '보건증 직원 목록',
             title: '조기경보시스템 직원 목록',
+            headerRight: () => <HomeBtn depth={2} />,
           }}
         />
         <LoggedInNavigation.Screen
@@ -560,6 +591,7 @@ export default () => {
           options={{
             headerTitle: '보건증 상세',
             title: '조기경보시스템 직원 상세',
+            headerRight: () => <HomeBtn depth={3} />,
           }}
         />
         <LoggedInNavigation.Screen
@@ -568,6 +600,16 @@ export default () => {
           options={{
             headerTitle: '보건증 입력',
             title: '조기경보시스템 직원 등록',
+            headerRight: () => <HomeBtn depth={3} />,
+          }}
+        />
+        <LoggedInNavigation.Screen
+          name="HealthCertificateEmpUpdateScreen"
+          component={HealthCertificateEmpUpdateScreen}
+          options={{
+            headerTitle: '보건증 수정',
+            title: '조기경보시스템 직원 수정',
+            headerRight: () => <HomeBtn depth={4} />,
           }}
         />
       </LoggedInNavigation.Navigator>

@@ -98,8 +98,13 @@ export default ({route: {params}}) => {
     }, 200);
   };
 
-  const submitShelfLifeDataImg = async (i) => {
+  const submitShelfLifeDataImg = async (i, shelfLifeSTORE_SEQ) => {
     const formData: any = new FormData();
+    const shelfLifeDATE: any = new FormData();
+    const shelfLifeMEMO: any = new FormData();
+    const shelfLifeNAME: any = new FormData();
+    const image: any = new FormData();
+    formData.append('STORE_SEQ', shelfLifeSTORE_SEQ);
     formData.append('shelfLifeDATE', i.shelfLifeDATE);
     formData.append('shelfLifeMEMO', i.shelfLifeMEMO);
     formData.append('shelfLifeNAME', i.shelfLifeNAME);
@@ -115,18 +120,28 @@ export default ({route: {params}}) => {
         fileType = 'image/jpeg';
       }
     }
-    formData.append('shelfLifeIMAGE', {
+    formData.append('image', {
       uri: utils.isAndroid
         ? i.shelfLifeIMAGE
         : i.shelfLifeIMAGE.replace('file://', ''),
       name: fileName,
       type: fileType,
     });
+    console.log(
+      'STORE_SEQ',
+      STORE_SEQ,
+      'shelfLifeDATE',
+      shelfLifeDATE,
+      'shelfLifeMEMO',
+      shelfLifeMEMO,
+      'shelfLifeNAME',
+      shelfLifeNAME,
+      'image',
+      image,
+    );
     try {
-      const {data} = await api.setShelfLifeDataImg({
-        STORE_SEQ,
-        LIST: formData,
-      });
+      const {data} = await api.setShelfLifeDataImg(formData);
+      console.log('setShelfLifeDataImg', data);
       await params?.fetchData();
       if (data.result == '0') {
         alertModal('연결에 실패하였습니다.');
@@ -146,7 +161,7 @@ export default ({route: {params}}) => {
     }
     list.map((i) =>
       i.shelfLifeIMAGE
-        ? submitShelfLifeDataImg(i)
+        ? submitShelfLifeDataImg(i, STORE_SEQ)
         : shelfLifeDataTempList.push(i),
     );
     dispatch(setSplashVisible({visible: true}));

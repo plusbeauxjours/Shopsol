@@ -135,7 +135,12 @@ export default ({route: {params}}) => {
   };
 
   const fetchData = async () => {
-    dispatch(setSplashVisible({visible: true}));
+    dispatch(
+      setSplashVisible({
+        visible: true,
+        text: `${params?.MEMBER_NAME || MEMBER_NAME}님의 급여`,
+      }),
+    );
     try {
       const {data} = await api.getEmp(params?.EMP_SEQ || EMP_SEQ);
       setImage(data?.result.images[0].IMAGE);

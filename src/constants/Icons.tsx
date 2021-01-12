@@ -35,6 +35,14 @@ export const EyeOffIcon: React.FC<IProps> = ({size, color}) => (
   />
 );
 
+export const MenuIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons
+    name={'menu'}
+    size={size ?? 24}
+    color={color ?? styleGuide.palette.greyColor}
+  />
+);
+
 export const ForwardIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={

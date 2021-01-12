@@ -115,7 +115,7 @@ export const getSTORE_HEALTH_EMP_LIST = () => async (dispatch, getState) => {
     if (!HEALTH_EMP_LIST) {
       dispatch(setSplashVisible({visible: true}));
     }
-    const {data} = await api.storeHealthEmpList(STORE_SEQ, STORE, MEMBER_SEQ);
+    const {data} = await api.storeHealthEmpList({STORE_SEQ, STORE, MEMBER_SEQ});
     if (data.message === 'SUCCESS') {
       dispatch(setHEALTH_EMP_LIST(data.result));
     }

@@ -233,7 +233,7 @@ export default ({
                       fontWeight: '600',
                       height: 5,
                       borderWidth: 0,
-                      width: 180,
+                      maxWidth: 160,
                     }}
                   />
                   <DateText>

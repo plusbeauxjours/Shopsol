@@ -441,8 +441,9 @@ export default ({
                   <EmptyBox>
                     <FastImage
                       style={{
-                        width: 300,
-                        height: 425,
+                        width: 201,
+                        marginVertical: 20,
+                        height: 284,
                         justifyContent: 'center',
                         alignItems: 'center',
                         marginTop: 50,
@@ -460,8 +461,9 @@ export default ({
                   <EmptyBox>
                     <FastImage
                       style={{
-                        width: 300,
-                        height: 425,
+                        width: 201,
+                        marginVertical: 20,
+                        height: 284,
                         justifyContent: 'center',
                         alignItems: 'center',
                         marginTop: 50,

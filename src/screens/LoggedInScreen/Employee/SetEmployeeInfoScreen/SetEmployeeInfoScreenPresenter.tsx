@@ -949,16 +949,9 @@ export default ({
                             </Touchable>
                           </Row>
                           <RequestBorderButton
-                            onPress={() => {
-                              setIsProbationPeriodModalVisible(true);
-                              startDay
-                                ? setProbationPeriod(
-                                    moment(startDay).add(1, 'days').toDate(),
-                                  )
-                                : setProbationPeriod(
-                                    moment().add(1, 'days').toDate(),
-                                  );
-                            }}>
+                            onPress={() =>
+                              setIsProbationPeriodModalVisible(true)
+                            }>
                             <RequestBorderText>
                               {probationPeriodSet
                                 ? moment(probationPeriod).format(
@@ -1532,6 +1525,7 @@ export default ({
             date={moment(startDay).toDate()}
             mode={'date'}
             androidVariant="iosClone"
+            maximumDate={endDay && moment(endDay).toDate()}
             onDateChange={(date) => {
               setStartDaySet(true);
               setStartDay(moment(date).format('YYYY-MM-DD'));
@@ -1569,7 +1563,7 @@ export default ({
             date={moment(endDay).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            minimumDate={moment(startDay).add(1, 'days').toDate()}
+            minimumDate={startDay && moment(startDay).add(1, 'days').toDate()}
             onDateChange={(date) => {
               setEndDaySet(true);
               setEndDay(moment(date).format('YYYY-MM-DD'));
@@ -1608,8 +1602,8 @@ export default ({
             date={moment(probationPeriod).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            minimumDate={moment(startDay).add(1, 'days').toDate()}
-            maximumDate={moment(endDay).toDate()}
+            minimumDate={startDay && moment(startDay).add(1, 'days').toDate()}
+            maximumDate={endDay && moment(endDay).toDate()}
             onDateChange={(date) => {
               setProbationPeriodSet(true);
               setProbationPeriod(moment(date).format('YYYY-MM-DD'));

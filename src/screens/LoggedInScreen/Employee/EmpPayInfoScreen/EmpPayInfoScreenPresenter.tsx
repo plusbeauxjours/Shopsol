@@ -230,7 +230,6 @@ export default ({
   const click1Transition = useTransition(click1);
   const click2Transition = useTransition(click2);
   const click3Transition = useTransition(click3);
-  console.log(maindata);
   const MainItem = ({isFirst = false, text, value}) => {
     return (
       <MainItemContainer isFirst={isFirst}>
@@ -677,7 +676,7 @@ export default ({
                 height: mix(
                   cardShowedTransition,
                   0,
-                  320 * maindata.CARDLIST?.length,
+                  320 * maindata.CARDLIST?.length || 0,
                 ),
               }}>
               <CardContainer>

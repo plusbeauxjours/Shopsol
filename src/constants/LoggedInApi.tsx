@@ -3,7 +3,10 @@ import axios from 'axios';
 const callApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type':
+      path == '/auth/setshelfLifeDataImg/'
+        ? 'multipart/form-data'
+        : 'application/json',
   };
   const baseUrl = 'http://shopsolapi.shop-sol.com:3003/api';
   const fullUrl = `${baseUrl}${path}`;
@@ -212,11 +215,8 @@ export default {
   updateOcr1: (data: any) => callApi('post', '/auth/updateocr1/', data),
   deleteCeoHealth: (data: any) =>
     callApi('post', '/auth/deleteCeoHealth/', data),
-  storeHealthEmpList: (STORE_SEQ: string, STORE: string, MEMBER_SEQ: string) =>
-    oldApi(
-      'get',
-      `/Store/store_health_emp_list?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`,
-    ),
+  storeHealthEmpList: (data: any) =>
+    callApi('post', '/auth/gethealthemplist', data),
   storeHealthEmpDetail: (EMP_SEQ: string) =>
     oldApi('get', `/Store/store_health_emp_detail?EMP_SEQ=${EMP_SEQ}&`),
   deleteStoreHealth: (data: any) =>
@@ -227,4 +227,5 @@ export default {
   changeToken: (data: any) => callApi('post', '/auth/changeToken/', data),
   getBarCode: (codenumber: string) =>
     callApi('get', `/auth/getBarCode/?codenumber=${codenumber}`),
+  insertQR: (data: any) => callApi('get', '/auth/insertQR/', data),
 };

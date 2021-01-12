@@ -73,8 +73,6 @@ export default ({
   total,
   rest_payment,
 }) => {
-  console.log(base, rest_payment);
-  console.log(base + rest_payment);
   const numberComma = (num) => {
     let result = num;
     if (isNaN(num)) {

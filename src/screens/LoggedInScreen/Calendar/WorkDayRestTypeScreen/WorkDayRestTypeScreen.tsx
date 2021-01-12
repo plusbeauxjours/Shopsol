@@ -11,6 +11,7 @@ import {toggleVACATION} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
 import styleGuide from '~/constants/styleGuide';
 import {setSplashVisible} from '~/redux/splashSlice';
+import FastImage from 'react-native-fast-image';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -34,7 +35,7 @@ const BoxContainer = styled.View`
 const Section = styled.View`
   width: 100%;
   border-radius: 20px;
-  padding: 40px 20px;
+  padding: 40px 20px 0 20px;
   align-items: center;
   background-color: white;
   margin-bottom: 20px;
@@ -97,6 +98,12 @@ const WhiteSpace = styled.View`
   height: 30px;
 `;
 
+const GreyText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
+  position: absolute;
+  color: ${styleGuide.palette.greyColor};
+`;
+
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -106,6 +113,7 @@ export default ({route: {params}}) => {
   } = params;
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [totalVacation, setTotalVacation] = useState<string>('0');
   const [useVacation, setUseVacation] = useState<string>('0');
   const [remainderVacation, setRemainderVacation] = useState<string>('0');
@@ -152,22 +160,30 @@ export default ({route: {params}}) => {
 
   const initialize = async () => {
     const YEAR = moment().format('YYYY');
-    const {data} = await api.getEmpAnnual(EMP_ID, YEAR);
-    console.log(data);
-    if (Array.isArray(data.message) && data.message.length > 0) {
-      const annual = data.message[0];
-      if (annual?.ANNUAL && annual?.USE_ANNUAL) {
-        setRemainderVacation(
-          (
-            Number(annual?.ANNUAL || 0) - Number(annual?.USE_ANNUAL || 0)
-          ).toString(),
-        );
-      }
+    try {
+      setLoading(true);
+      const {data} = await api.getEmpAnnual(EMP_ID, YEAR);
+      if (Array.isArray(data.message) && data.message.length > 0) {
+        const annual = data.message[0];
+        if (annual?.ANNUAL && annual?.USE_ANNUAL) {
+          setRemainderVacation(
+            (
+              Number(annual?.ANNUAL || 0) - Number(annual?.USE_ANNUAL || 0)
+            ).toString(),
+          );
+        }
 
-      annual?.ANNUAL && setTotalVacation(annual.ANNUAL);
-      annual?.USE_ANNUAL && setUseVacation(annual.USE_ANNUAL);
-    } else {
-      return;
+        annual?.ANNUAL && setTotalVacation(annual.ANNUAL);
+        annual?.USE_ANNUAL && setUseVacation(annual.USE_ANNUAL);
+      } else {
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -203,28 +219,79 @@ export default ({route: {params}}) => {
             직원의 휴무설정
           </BigText>
           <WhiteSpace />
-          <Vacation vacation={totalVacation} title={'총 연차'} />
-          <Vacation vacation={useVacation} title={'사용한 연차'} />
-          <ContentsBoxLine />
-          <Vacation vacation={remainderVacation} title={'남은 연차'} />
+          {loading ? (
+            <WhiteSpace style={{height: 130}} />
+          ) : totalVacation != '0' ? (
+            <>
+              <Vacation vacation={totalVacation} title={'총 연차'} />
+              <Vacation vacation={useVacation} title={'사용한 연차'} />
+              <ContentsBoxLine />
+              <Vacation vacation={remainderVacation} title={'남은 연차'} />
+              <WhiteSpace />
+            </>
+          ) : (
+            <>
+              <FastImage
+                style={{
+                  width: 242,
+                  height: 60,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: 90,
+                }}
+                source={require('../../../../assets/images/emptyBalloons.png')}
+                resizeMode={FastImage.resizeMode.cover}>
+                <GreyText>
+                  {NAME}의 {WORKDATE.slice(0, 4)}년 유급휴가일이 없습니다.
+                </GreyText>
+              </FastImage>
+              <FastImage
+                style={{
+                  width: 100,
+                  height: 63,
+                  marginTop: 3,
+                  bottom: 0,
+                  marginLeft: 170,
+                }}
+                source={require('../../../../assets/images/emptyIcon.png')}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </>
+          )}
         </Section>
-        <BoxContainer>
-          <LeftButton onPress={() => registerFn('1')}>
-            <ButtonText
-              style={{fontSize: styleGuide.fontSize.large, color: 'white'}}>
-              유급휴무 적용
-            </ButtonText>
-          </LeftButton>
-          <RightButton onPress={() => registerFn('0')}>
-            <ButtonText
-              style={{
-                fontSize: styleGuide.fontSize.large,
-                color: styleGuide.palette.primary,
-              }}>
-              무급휴무 적용
-            </ButtonText>
-          </RightButton>
-        </BoxContainer>
+        {loading ? null : totalVacation != '0' ? (
+          <BoxContainer>
+            <LeftButton onPress={() => registerFn('1')}>
+              <ButtonText
+                style={{fontSize: styleGuide.fontSize.large, color: 'white'}}>
+                유급휴무 적용
+              </ButtonText>
+            </LeftButton>
+            <RightButton onPress={() => registerFn('0')}>
+              <ButtonText
+                style={{
+                  fontSize: styleGuide.fontSize.large,
+                  color: styleGuide.palette.primary,
+                }}>
+                무급휴무 적용
+              </ButtonText>
+            </RightButton>
+          </BoxContainer>
+        ) : (
+          <BoxContainer>
+            <RightButton
+              style={{width: wp('100%') - 40}}
+              onPress={() => registerFn('0')}>
+              <ButtonText
+                style={{
+                  fontSize: styleGuide.fontSize.large,
+                  color: styleGuide.palette.primary,
+                }}>
+                무급휴무 적용
+              </ButtonText>
+            </RightButton>
+          </BoxContainer>
+        )}
       </Container>
     </BackGround>
   );

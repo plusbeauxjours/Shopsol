@@ -94,7 +94,8 @@ export default ({route: {params}}) => {
       dispatch(editCHECKLIST_SHARE_COMMENTS({selectedCOM_SEQ, comment}));
       updatedToastFn();
       const {data} = await api.editNoticeComment(selectedCOM_SEQ, comment);
-      if (data.message === 'SUCCESS') {
+      console.log(data);
+      if (data.message !== 'SUCCESS') {
         alertModal('연결에 실패하였습니다.');
       }
     } catch (e) {

@@ -234,22 +234,69 @@ export default ({route: {params}}) => {
         y: 0,
         animated: true,
       });
-    } else if (payChecked == 0 && probation && !probationPeriodSet) {
-      alertModal('수습종료일을 입력해주세요');
-      console.log('수습종료일을 입력해주세요');
-      openAccordion('click2');
     } else if (payChecked === -1) {
       alertModal('급여유형을 선택해주세요.');
-      console.log('급여유형을 선택해주세요.');
       openAccordion('click2');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    } else if (moment(endDay) < moment(startDay)) {
+      alertModal('퇴사일은 입사일보다 늦어야합니다.');
+      openAccordion('click1');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    } else if (moment(endDay) < moment(startDay)) {
+      alertModal('입사일은 퇴사일보다 빨라야합니다.');
+      openAccordion('click1');
       scrollRef.current?.getNode()?.scrollTo({
         y: 0,
         animated: true,
       });
     } else if (payChecked !== 2 && pay === '') {
       alertModal('급여를 입력해주세요.');
-      console.log('급여를 입력해주세요.');
       openAccordion('click2');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    } else if (payChecked == 0 && probation && !probationPeriodSet) {
+      alertModal('수습종료일을 입력해주세요');
+      openAccordion('click2');
+    } else if (
+      payChecked == 0 &&
+      probation &&
+      moment(startDay) > moment(probationPeriod)
+    ) {
+      alertModal('수습종료일은 입사일보다 늦어야합니다.');
+      openAccordion('click2');
+    } else if (
+      payChecked == 0 &&
+      probation &&
+      moment(endDay) < moment(probationPeriod)
+    ) {
+      alertModal('수습종료일은 퇴사일보다 빨라야합니다.');
+      openAccordion('click2');
+    } else if (
+      payChecked == 0 &&
+      probation &&
+      moment(probationPeriod) < moment(startDay)
+    ) {
+      alertModal('입사일은 수습종료일보다 빨라야합니다.');
+      openAccordion('click1');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    } else if (
+      payChecked == 0 &&
+      probation &&
+      moment(endDay) < moment(probationPeriod)
+    ) {
+      alertModal('퇴사일은 수습종료일보다 늦어야합니다.');
+      openAccordion('click1');
       scrollRef.current?.getNode()?.scrollTo({
         y: 0,
         animated: true,
@@ -266,27 +313,21 @@ export default ({route: {params}}) => {
       alertModal('성과급금액을 입력해주세요.');
     } else if (payChecked == 0 && probation && !probationPeriodSet) {
       alertModal('수습기간의 종료일을 설정해주세요.');
-      console.log('수습기간의 종료일을 설정해주세요.');
       openAccordion('click2');
     } else if (payChecked == 0 && probation && probationPercent == '') {
       alertModal('수습기간의 급여비율을 설정해주세요.');
-      console.log('수습기간의 급여비율을 설정해주세요.');
       openAccordion('click2');
     } else if (salarySystemCheck[1] === true && weekTypeChecked == -1) {
       alertModal('주휴수당 계산 방법 선택을 체크해주세요.');
-      console.log('주휴수당 계산 방법 선택을 체크해주세요.');
       openAccordion('click2');
     } else if (salarySystemCheck[2] === true && restTypeChecked == -1) {
       alertModal('휴게시간 계산 방법 선택을 체크해주세요.');
-      console.log('휴게시간 계산 방법 선택을 체크해주세요.');
       openAccordion('click2');
     } else if (deductionTypeChecked === -1) {
       alertModal('급여정보 입력\n공제유형을 선택해주세요.');
-      console.log('급여정보 입력\n공제유형을 선택해주세요.');
       openAccordion('click2');
     } else if (payDay === '') {
       alertModal('급여정보 입력\n적용 시작 년,월을 입력해주세요.');
-      console.log('급여정보 입력\n적용 시작 년,월을 입력해주세요.');
       openAccordion('click2');
     } else if (positionChecked === -1) {
       alertModal('직책/권한 설정\n직원의 직책을 선택해주세요.');
@@ -532,27 +573,6 @@ export default ({route: {params}}) => {
       navigation.setOptions({headerRight: () => null});
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (moment(endDay) < moment(startDay)) {
-      setEndDay(moment(startDay).add(1, 'days').toDate());
-    }
-    if (moment(probationPeriod) < moment(startDay)) {
-      setProbationPeriod(moment(startDay).add(1, 'days').toDate());
-    }
-  }, [startDay]);
-
-  useEffect(() => {
-    if (moment(endDay) < moment(probationPeriod)) {
-      setEndDay(moment(startDay).add(1, 'days').toDate());
-    }
-  }, [endDay]);
-
-  useEffect(() => {
-    if (moment(endDay) < moment(probationPeriod)) {
-      setEndDay(moment(probationPeriod).subtract(1, 'days').toDate());
-    }
-  }, [probationPeriod]);
 
   return (
     <SetEmployeeInfoScreenPresenter

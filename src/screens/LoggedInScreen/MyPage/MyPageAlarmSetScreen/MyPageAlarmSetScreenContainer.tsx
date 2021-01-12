@@ -87,7 +87,7 @@ export default () => {
     if (PUSH_TOKEN) {
       await api.changeToken({
         token: PUSH_TOKEN,
-        memberSEQ: MEMBER_SEQ,
+        MEMBER_SEQ,
       });
       dispatch(
         setDEVICE_INFO({
@@ -142,13 +142,18 @@ export default () => {
 
   useEffect(
     () => () => {
-      console.log('Before Leave');
       if (All_PUSH) {
-        checkPermission();
+        getToken();
       }
     },
     [],
   );
+
+  useEffect(() => {
+    if (All_PUSH) {
+      checkPermission();
+    }
+  }, [All_PUSH]);
 
   return (
     <MyPageAlarmSetScreenPresenter

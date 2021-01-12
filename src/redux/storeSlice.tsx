@@ -10,6 +10,10 @@ const storeSlice = createSlice({
     MANAGER_CALLED: '',
   },
   reducers: {
+    updateQR_Num(state, action) {
+      const {payload: QR_Num} = action;
+      state.STORE_DATA.resultdata.QR_Num = QR_Num;
+    },
     setEMP_SEQ(state, action) {
       const {payload: EMP_SEQ} = action;
       return {
@@ -93,6 +97,7 @@ const storeSlice = createSlice({
 });
 
 export const {
+  updateQR_Num,
   setEMP_SEQ,
   setSTORE_DATA,
   selectSTORE,

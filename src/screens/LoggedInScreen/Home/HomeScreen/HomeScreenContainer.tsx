@@ -14,7 +14,7 @@ import moment from 'moment';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {setSTORE_DATA, setEMP_SEQ} from '~/redux/storeSlice';
+import {updateQR_Num, setSTORE_DATA, setEMP_SEQ} from '~/redux/storeSlice';
 import {addCUSTOM_MENU_EMP, removeCUSTOM_MENU_EMP} from '~/redux/userSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
@@ -86,13 +86,13 @@ export default ({route: {params}}) => {
       selection: '유통기한',
       paging: 'ShelfLifeCheckScreen',
       count: null,
-      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+      source: require(`../../../../assets/main/ShelfLifeCheck.png`),
     },
     {
       selection: '업무캘린더',
       paging: 'TaskCheckScreen',
       count: null,
-      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+      source: require(`../../../../assets/main/TaskCalendar.png`),
     },
     {
       selection: '조기경보',
@@ -119,13 +119,13 @@ export default ({route: {params}}) => {
       selection: '유통기한',
       paging: 'ShelfLifeCheckScreen',
       count: null,
-      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+      source: require(`../../../../assets/main/ShelfLifeCheck.png`),
     },
     {
       selection: '업무캘린더',
       paging: 'TaskCheckScreen',
       count: null,
-      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+      source: require(`../../../../assets/main/TaskCalendar.png`),
     },
     {
       selection: '조기경보',
@@ -173,13 +173,13 @@ export default ({route: {params}}) => {
       selection: '유통기한',
       paging: 'ShelfLifeCheckScreen',
       count: null,
-      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+      source: require(`../../../../assets/main/ShelfLifeCheck.png`),
     },
     {
       selection: '업무캘린더',
       paging: 'TaskCheckScreen',
       count: null,
-      source: require(`../../../../assets/main/shelfLifeCheck.png`),
+      source: require(`../../../../assets/main/TaskCalendar.png`),
     },
     {
       selection: '조기경보',
@@ -335,7 +335,7 @@ export default ({route: {params}}) => {
 
   // 출퇴근QR 스캔
   const handleBarCodeScanned1 = (codenumber) => {
-    if (isNaN(codenumber) || STORE_SEQ != codenumber) {
+    if (!codenumber || STORE_SEQ != codenumber) {
       setQrCameraModalOpen1(false);
       setTimeout(() => {
         alertModal('', '정확한 사업장 QR코드가 아닙니다');
@@ -347,10 +347,15 @@ export default ({route: {params}}) => {
 
   // 사업장QR 스캔
   const handleBarCodeScanned2 = (codenumber) => {
-    if (isNaN(codenumber)) {
-      setQrCameraModalOpen2(false);
-      setTimeout(() => {
-        alertModal('', `코드 넘버 ${codenumber}입니다.\n서비스 준비중입니다.`);
+    setQrCameraModalOpen2(false);
+    if (codenumber) {
+      setTimeout(async () => {
+        const {data} = await api.insertQR({STORE_SEQ, QR_NUM: codenumber});
+        console.log('handleBarCodeScanned2', data, 'codenumber', codenumber);
+        dispatch(updateQR_Num(codenumber));
+        if (data.message !== 'SUCCESS') {
+          alertModal('', '연결에 실패하였습니다.');
+        }
       }, 500);
     }
   };
@@ -362,7 +367,6 @@ export default ({route: {params}}) => {
       if (empData.message == 'SUCCESS') {
         dispatch(setEMPLOYEE_LIST(empData));
       }
-      console.log(moment().diff(moment('2021-01-03'), 'days'));
       const {data} = await api.getStoreInfo({
         STORE,
         MEMBER_SEQ,

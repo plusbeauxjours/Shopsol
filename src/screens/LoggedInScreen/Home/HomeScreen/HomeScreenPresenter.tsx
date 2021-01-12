@@ -13,7 +13,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import MapView, {PROVIDER_GOOGLE, Marker, Circle} from 'react-native-maps';
 import BarcodeMask from 'react-native-barcode-mask';
 
-import {HelpIcon, SettingIcon, EyeOffIcon, CloseIcon} from '~/constants/Icons';
+import {
+  HelpIcon,
+  SettingIcon,
+  EyeOnIcon,
+  EyeOffIcon,
+  CloseIcon,
+} from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 import Ripple from 'react-native-material-ripple';
@@ -30,6 +36,10 @@ interface ITheme {
 
 interface IBox {
   hasGPS?: boolean;
+}
+
+interface IEye {
+  isEyeOn: boolean;
 }
 
 const BackGround = styled.View`
@@ -78,9 +88,12 @@ const NewCnt = styled.View`
   background-color: ${styleGuide.palette.tertiary}; ;
 `;
 
-const EyeIconContainer = styled(NewCnt)`
+const EyeIconContainer = styled(NewCnt)<IEye>`
   background-color: white;
-  border-color: ${styleGuide.palette.tertiary};
+  border-color: ${(props) =>
+    props.isEyeOn
+      ? styleGuide.palette.tertiary
+      : styleGuide.palette.lightGreyColor};
   border-width: 0.7px;
 `;
 
@@ -390,11 +403,17 @@ export default ({
       {(selection == '직원합류승인' || selection == '업무일지') &&
         !initLoading &&
         count !== 0 &&
+        !editMode &&
         count && (
           <NewCnt style={{zIndex: 15}}>
             <NewCntText>{count < 10 ? count : '9+'}</NewCntText>
           </NewCnt>
         )}
+      {editMode && type == 'emp' && (
+        <EyeIconContainer isEyeOn={true} style={{zIndex: 5}}>
+          <EyeOnIcon color={styleGuide.palette.tertiary} />
+        </EyeIconContainer>
+      )}
       <FastImage
         style={{width: '100%', height: '100%'}}
         source={source}
@@ -423,8 +442,8 @@ export default ({
           ? setQrCameraModalOpen2(true)
           : gotoScreen(`${paging}`);
       }}>
-      <EyeIconContainer style={{zIndex: 5}}>
-        <EyeOffIcon color={styleGuide.palette.tertiary} />
+      <EyeIconContainer isEyeOn={false} style={{zIndex: 5}}>
+        <EyeOffIcon color={styleGuide.palette.lightGreyColor} />
       </EyeIconContainer>
       <FastImage
         style={{width: '100%', height: '100%', opacity: 0.3}}
@@ -754,7 +773,7 @@ export default ({
                 <MenuCntContainer
                   selection={'사업장현황'}
                   paging={'DashBoardScreen'}
-                  source={require(`../../../../assets/main/Invite.png`)}
+                  source={require(`../../../../assets/main/DashBoard.png`)}
                 />
               </Container>
               <SpaceRow style={{width: '100%', alignItems: 'center'}}>
@@ -903,7 +922,7 @@ export default ({
                         <MenuCntContainer
                           selection={'사업장현황'}
                           paging={'DashBoardScreen'}
-                          source={require(`../../../../assets/main/Invite.png`)}
+                          source={require(`../../../../assets/main/DashBoard.png`)}
                         />
                       </Container>
                       <SpaceRow style={{width: '100%', alignItems: 'center'}}>

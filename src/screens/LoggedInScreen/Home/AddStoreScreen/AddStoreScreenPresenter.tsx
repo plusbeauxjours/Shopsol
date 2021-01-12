@@ -101,20 +101,18 @@ const GreyLine = styled.View`
 const CheckDay = styled.TouchableOpacity<IIsPerple>`
   width: 20%;
   height: 40px;
-  border-width: 1px;
+  border-width: 0.7px;
   border-color: ${(props) =>
-    props.isPerple
-      ? styleGuide.palette.primary
-      : styleGuide.palette.borderColor};
+    props.isPerple ? 'transparent' : styleGuide.palette.lightGreyColor};
+  background-color: ${(props) =>
+    props.isPerple ? styleGuide.palette.primary : 'transparent'}
   align-items: center;
   justify-content: center;
 `;
 
 const CheckDayText = styled.Text<IIsPerple>`
   color: ${(props) =>
-    props.isPerple
-      ? styleGuide.palette.primary
-      : styleGuide.palette.borderColor};
+    props.isPerple ? 'white' : styleGuide.palette.lightGreyColor};
 `;
 
 const TypeContainer = styled.TouchableOpacity`
@@ -302,7 +300,7 @@ export default ({
 
   const renderDayRow = (rowData, rowNum) => {
     return (
-      <Row>
+      <Row style={{marginHorizontal: 10}}>
         <RenderDayRowData rowData={rowData} rowNum={rowNum} />
       </Row>
     );
@@ -527,8 +525,8 @@ export default ({
               <SizeType selection={1} text={'5인 이상'} />
             </TypeCheckCase>
             <WhiteSpace />
-            <InputCaseRow>
-              <Column>
+            <Column>
+              <InputCaseRow>
                 <RowTouchable
                   onPress={() => {
                     explainModal(
@@ -539,33 +537,33 @@ export default ({
                   <Text>급여정산일</Text>
                   <HelpCircleIcon />
                 </RowTouchable>
-                <GreyText isError={false}>
-                  급여산정 기간 설정으로 급여지급일과 혼동하지 마세요
-                </GreyText>
-              </Column>
-              <RequestBorderButton
-                onPress={() => {
-                  let value = JSON.parse(JSON.stringify(days));
-                  value.fill(false);
-                  if (dayCheck) {
-                    if (CALCULATE_DAY == '1') {
-                      value[29] = true;
-                    } else {
-                      value[Number(CALCULATE_DAY) - 2] = true;
+                <RequestBorderButton
+                  onPress={() => {
+                    let value = JSON.parse(JSON.stringify(days));
+                    value.fill(false);
+                    if (dayCheck) {
+                      if (CALCULATE_DAY == '1') {
+                        value[29] = true;
+                      } else {
+                        value[Number(CALCULATE_DAY) - 2] = true;
+                      }
                     }
-                  }
-                  setModalVisible3(!modalVisible3);
-                  setDays(value);
-                }}>
-                <RequestBorderText>
-                  {!dayCheck
-                    ? '정산일 설정'
-                    : CALCULATE_DAY == 1
-                    ? '말일'
-                    : `${CALCULATE_DAY - 1}일`}
-                </RequestBorderText>
-              </RequestBorderButton>
-            </InputCaseRow>
+                    setModalVisible3(!modalVisible3);
+                    setDays(value);
+                  }}>
+                  <RequestBorderText>
+                    {!dayCheck
+                      ? '정산일 설정'
+                      : CALCULATE_DAY == 1
+                      ? '말일'
+                      : `${CALCULATE_DAY - 1}일`}
+                  </RequestBorderText>
+                </RequestBorderButton>
+              </InputCaseRow>
+              <GreyText isError={false}>
+                급여산정 기간 설정으로 급여지급일과 혼동하지 마세요
+              </GreyText>
+            </Column>
           </Section>
           <Modal
             isVisible={modalVisible1}
