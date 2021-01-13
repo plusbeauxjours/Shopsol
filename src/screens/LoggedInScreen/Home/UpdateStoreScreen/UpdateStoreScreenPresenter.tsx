@@ -546,8 +546,8 @@ export default ({
               <SizeType selection={1} text={'5인 이상'} />
             </TypeCheckCase>
             <WhiteSpace />
-            <InputCaseRow>
-              <Column>
+            <Column>
+              <InputCaseRow>
                 <RowTouchable
                   onPress={() => {
                     explainModal(
@@ -558,29 +558,30 @@ export default ({
                   <Text>급여정산일</Text>
                   <HelpCircleIcon />
                 </RowTouchable>
-                <GreyText isError={false}>
-                  급여산정 기간 설정이므로 급여지급일과 혼동하지 마세요
-                </GreyText>
-              </Column>
-              <RequestBorderButton
-                onPress={() => {
-                  let value = JSON.parse(JSON.stringify(days));
-                  value.fill(false);
-                  if (dayCheck) {
-                    if (CALCULATE_DAY == '1') {
-                      value[29] = true;
-                    } else {
-                      value[Number(CALCULATE_DAY) - 2] = true;
+
+                <RequestBorderButton
+                  onPress={() => {
+                    let value = JSON.parse(JSON.stringify(days));
+                    value.fill(false);
+                    if (dayCheck) {
+                      if (CALCULATE_DAY == '1') {
+                        value[29] = true;
+                      } else {
+                        value[Number(CALCULATE_DAY) - 2] = true;
+                      }
                     }
-                  }
-                  setModalVisible3(!modalVisible3);
-                  setDays(value);
-                }}>
-                <RequestBorderText>
-                  {CALCULATE_DAY == 1 ? '말일' : `${CALCULATE_DAY - 1}일`}
-                </RequestBorderText>
-              </RequestBorderButton>
-            </InputCaseRow>
+                    setModalVisible3(!modalVisible3);
+                    setDays(value);
+                  }}>
+                  <RequestBorderText>
+                    {CALCULATE_DAY == 1 ? '말일' : `${CALCULATE_DAY - 1}일`}
+                  </RequestBorderText>
+                </RequestBorderButton>
+              </InputCaseRow>
+              <GreyText isError={false}>
+                급여산정 기간 설정이므로 급여지급일과 혼동하지 마세요
+              </GreyText>
+            </Column>
           </Section>
           <Modal
             isVisible={modalVisible1}
