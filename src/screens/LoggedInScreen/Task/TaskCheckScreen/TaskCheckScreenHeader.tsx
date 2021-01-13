@@ -31,7 +31,7 @@ export default ({y, tabs, gotoCategory, ready}) => {
   const transition = withTimingTransition(toggle, {duration: 200});
   const {top: paddingTop} = insets;
   const opacity = transition;
-  useCode(() => block([set(toggle, greaterThan(y, 450))]), [toggle, y]);
+  useCode(() => block([set(toggle, greaterThan(y, 350))]), [toggle, y]);
   return (
     <HeaderContainer as={Animated.View} style={{paddingTop}}>
       <HeaderBackground as={Animated.View} style={{opacity}} />

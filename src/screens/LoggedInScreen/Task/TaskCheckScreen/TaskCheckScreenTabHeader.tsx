@@ -27,7 +27,7 @@ const LineTextContainer = styled.View`
   background-color: white;
   border-width: 1px;
   border-radius: 15px;
-  padding: 5px 15px;
+  padding: 5px 10px;
   height: 30px;
   justify-content: center;
   align-items: center;
@@ -48,10 +48,10 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
   const updateBackColor = (anchor = 20, nextAnchor = 5000, color) => {
     return interpolateColor(y, {
       inputRange: [
-        Number(anchor) + 325,
-        Number(anchor) + 375,
-        Number(anchor > nextAnchor ? anchor : nextAnchor) + 375,
-        Number(anchor > nextAnchor ? anchor : nextAnchor) + 425,
+        Number(anchor) + 250,
+        Number(anchor) + 260,
+        Number(anchor > nextAnchor ? anchor : nextAnchor) + 260,
+        Number(anchor > nextAnchor ? anchor : nextAnchor) + 270,
       ],
       outputRange: ['white', color, color, 'white'],
     });
@@ -63,10 +63,10 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
   ) => {
     return interpolateColor(y, {
       inputRange: [
-        Number(anchor) + 325,
-        Number(anchor) + 375,
-        Number(anchor > nextAnchor ? anchor : nextAnchor) + 375,
-        Number(anchor > nextAnchor ? anchor : nextAnchor) + 425,
+        Number(anchor) + 250,
+        Number(anchor) + 260,
+        Number(anchor > nextAnchor ? anchor : nextAnchor) + 260,
+        Number(anchor > nextAnchor ? anchor : nextAnchor) + 270,
       ],
       outputRange: [color, 'white', 'white', color],
     });
@@ -80,12 +80,12 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
           style={{
             borderColor: updateFrontColor(
               tabs[index].anchor,
-              index !== 3 ? tabs[index + 1].anchor : tabs[3].anchor * 100,
+              index !== 4 ? tabs[index + 1].anchor : tabs[4].anchor * 100,
               color,
             ),
             backgroundColor: updateBackColor(
               tabs[index].anchor,
-              index !== 3 ? tabs[index + 1].anchor : tabs[3].anchor * 100,
+              index !== 4 ? tabs[index + 1].anchor : tabs[4].anchor * 100,
               color,
             ),
           }}>
@@ -94,7 +94,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
             style={{
               color: updateFrontColor(
                 tabs[index].anchor,
-                index !== 3 ? tabs[index + 1].anchor : tabs[3].anchor * 100,
+                index !== 4 ? tabs[index + 1].anchor : tabs[4].anchor * 100,
                 color,
               ),
             }}>
@@ -108,14 +108,14 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
   const TabsContainer = ({tabs, gotoCategory}) => {
     return (
       <Row>
-        {tabs[1].anchor <= tabs[2].anchor <= tabs[3].anchor &&
+        {tabs[1].anchor <= tabs[3].anchor <= tabs[4].anchor &&
           tabs?.map((tab, index) => (
             <Tab
               key={index}
               index={index}
               color={
-                index === 0
-                  ? styleGuide.palette.primary
+                index === 0 || index === 1
+                  ? styleGuide.palette.secondary
                   : styleGuide.palette.greyColor
               }
               gotoCategory={gotoCategory}

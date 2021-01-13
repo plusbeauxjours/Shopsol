@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import {useHeaderHeight} from '@react-navigation/stack';
@@ -13,8 +13,7 @@ import {
 } from 'react-native-responsive-screen';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {SwipeRow, SwipeListView} from 'react-native-swipe-list-view';
-import {KeyboardAvoidingView, ActivityIndicator} from 'react-native';
-import LottieView from 'lottie-react-native';
+import {KeyboardAvoidingView, ActivityIndicator, Keyboard} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
@@ -26,7 +25,7 @@ import {MenuIcon} from '../../../../constants/Icons';
 import {
   ForwardIcon,
   DeleteIcon,
-  SettingIcon,
+  PencilIcon,
   CloseCircleOutlineIcon,
 } from '~/constants/Icons';
 
@@ -67,7 +66,6 @@ const Bold = styled.Text`
 `;
 
 const CommentTextInputContainer = styled.View`
-  padding: 10px;
   padding-right: 20px;
   padding-left: 10px;
   border-width: 1px;
@@ -196,7 +194,7 @@ const BackBtn = styled.View`
 `;
 
 const Line = styled.View`
-  margin: 10px 0;
+  margin-bottom: 10px;
   height: 0.7px;
   background-color: #ccc;
 `;
@@ -224,9 +222,15 @@ const ModalPopup = styled.View`
   background-color: rgba(0, 0, 0, 0.7);
 `;
 
+const InfoText = styled.Text`
+  font-size: ${styleGuide.fontSize.small}px;
+  color: ${styleGuide.palette.greyColor};
+`;
+
 export default ({
   NOTI_TITLE,
   CREATE_TIME,
+  UPDATEDATE,
   EMP_NAME,
   TITLE,
   CONTENTS,
@@ -241,7 +245,6 @@ export default ({
   comment,
   setComment,
   registFn,
-  deleteFn,
   editFn,
   IMG_LIST,
   NOTICE_SEQ,
@@ -259,7 +262,9 @@ export default ({
   isUpdatedToastVisible,
   isRemovedToastVisible,
   openRow,
+  confirmModal,
 }) => {
+  const textInputRef = useRef(null);
   const navigation = useNavigation();
   const headerHeight = useHeaderHeight();
   const renderImage = (item, index) => (
@@ -300,17 +305,14 @@ export default ({
           <Container>
             <Section>
               <Row style={{justifyContent: 'space-between'}}>
-                <Column style={{marginLeft: 0}}>
-                  <Bold style={{fontSize: 18}}>{NOTI_TITLE}</Bold>
-                  <Bold style={{color: '#C8C8C8'}}>{EMP_NAME}</Bold>
-                </Column>
+                <Bold style={{fontSize: 18}}>{NOTI_TITLE}</Bold>
                 <Column style={{alignItems: 'flex-end'}}>
-                  <Bold style={{color: '#C8C8C8'}}>
-                    {moment(CREATE_TIME).format('YYYY.MM.DD')}
-                  </Bold>
-                  <Bold style={{color: '#C8C8C8'}}>
-                    {moment(CREATE_TIME).format('HH:mm')}
-                  </Bold>
+                  <InfoText style={{color: 'black'}}>
+                    {decodeURI(EMP_NAME)}
+                  </InfoText>
+                  <InfoText>
+                    {moment(UPDATEDATE).format('YYYY.MM.DD kk:mm')}
+                  </InfoText>
                 </Column>
               </Row>
               <Line />
@@ -369,7 +371,7 @@ export default ({
                             setComment(item.CONTENTS);
                             setSelectedCOM_SEQ(item.COM_SEQ);
                           }}>
-                          <SettingIcon
+                          <PencilIcon
                             color={styleGuide.palette.greyColor}
                             size={22}
                           />
@@ -378,7 +380,7 @@ export default ({
                           style={{backgroundColor: '#D93F12'}}
                           onPress={() => {
                             rowMap[index].closeRow();
-                            deleteFn(item.COM_SEQ);
+                            confirmModal(item.COM_SEQ);
                           }}>
                           <DeleteIcon color={'white'} />
                         </RowTouchable>
@@ -452,7 +454,6 @@ export default ({
                 onPress={() =>
                   navigation.navigate('ChecklistShareUpdateScreen', {
                     TITLE,
-                    ADDDATE: CREATE_TIME,
                     IMG_LIST,
                     NOTICE_SEQ,
                     CONTENTS,
@@ -466,13 +467,14 @@ export default ({
             )}
           </Container>
         </ScrollView>
-        {commentInputBox && (
+        {commentInputBox ? (
           <KeyboardAvoidingView
             behavior={utils.isAndroid() ? 'height' : 'padding'}
             keyboardVerticalOffset={utils.isAndroid() ? 0 : headerHeight}
             enabled>
             <CommentTextInputContainer>
               <TextInput
+                ref={textInputRef}
                 autoFocus={true}
                 returnKeyType="next"
                 onChangeText={(text) => setComment(text)}
@@ -481,6 +483,7 @@ export default ({
                 placeholderTextColor={'#CCCCCC'}
                 onBlur={() => {
                   setCommentInputBox(false);
+                  Keyboard.dismiss();
                 }}
                 multiline={true}
               />
@@ -492,6 +495,29 @@ export default ({
               </ForwardIconTouchable>
             </CommentTextInputContainer>
           </KeyboardAvoidingView>
+        ) : (
+          <CommentTextInputContainer>
+            <TextInput
+              ref={textInputRef}
+              returnKeyType="next"
+              onChangeText={(text) => setComment(text)}
+              value={comment}
+              placeholder={'댓글을 입력하세요..'}
+              placeholderTextColor={'#CCCCCC'}
+              onFocus={() => setCommentInputBox(true)}
+              onBlur={() => {
+                setCommentInputBox(false);
+              }}
+              multiline={true}
+              style={{bottom: 0}}
+            />
+            <ForwardIconTouchable
+              onPress={() => (isEditMode ? editFn() : registFn())}>
+              <ForwardIconContainer>
+                <ForwardIcon color={'white'} />
+              </ForwardIconContainer>
+            </ForwardIconTouchable>
+          </CommentTextInputContainer>
         )}
       </BackGround>
       {(isAddedToastVisible ||

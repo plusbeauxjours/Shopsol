@@ -56,7 +56,7 @@ const Card = styled(Ripple)<ICard>`
   border-radius: 20px;
   background-color: ${(props) => props.color};
   margin-left: 20px;
-  margin-right: ${(props) => (props.index == 3 ? wp('100%') - 220 : 0)}px;
+  margin-right: ${(props) => (props.index == 4 ? wp('100%') - 220 : 0)}px;
 `;
 
 const CardGreyLine = styled.View`
@@ -104,7 +104,7 @@ const LineTextContainer = styled.View<IColor>`
   border-color: ${(props) => props.color ?? 'white'};
   border-width: 1px;
   border-radius: 15px;
-  padding: 5px 15px;
+  padding: 5px 10px;
   height: 30px;
   justify-content: center;
   align-items: center;
@@ -153,14 +153,13 @@ const AddButton = styled.TouchableOpacity`
 const SearchInput = styled.TextInput`
   border-width: 2px;
   border-color: ${styleGuide.palette.secondary};
-  width: ${wp('100%') - 90}px;
+  width: ${wp('100%') - 40}px;
   background-color: white;
   border-radius: 30px;
   padding-left: 20px;
   align-items: center;
   height: 40px;
   justify-content: center;
-  margin-left: 50px;
 `;
 
 const SearchInputContainer = styled.View`
@@ -252,7 +251,8 @@ export default ({
       TASK_DATA[0]?.items.length == 0 &&
       TASK_DATA[1]?.items.length == 0 &&
       TASK_DATA[2]?.items.length == 0 &&
-      TASK_DATA[3]?.items.length == 0
+      TASK_DATA[3]?.items.length == 0 &&
+      TASK_DATA[4]?.items.length == 0
     ) {
       return (
         <BackGround>
@@ -402,10 +402,7 @@ export default ({
                         .map((item, index) => {
                           return index == 0 ? (
                             <React.Fragment key={index}>
-                              <LineTextContainer
-                                as={Animated.View}
-                                style={{opacity: opacity(tabs[index].anchor)}}
-                                color={color}>
+                              <LineTextContainer color={color}>
                                 <LineText color={color}>{name}</LineText>
                               </LineTextContainer>
                               <View key={index}>
@@ -433,10 +430,7 @@ export default ({
                     : items?.map((item, index) => {
                         return index == 0 ? (
                           <React.Fragment key={index}>
-                            <LineTextContainer
-                              as={Animated.View}
-                              style={{opacity: opacity(tabs[index].anchor)}}
-                              color={color}>
+                            <LineTextContainer color={color}>
                               <LineText color={color}>{name}</LineText>
                             </LineTextContainer>
                             <View key={index}>
@@ -465,7 +459,7 @@ export default ({
               ))}
             </Container>
           </Animated.ScrollView>
-          {tabs[3]?.anchor !== 20 && (
+          {tabs[4]?.anchor !== 20 && (
             <TaskCheckScreenHeader
               y={y}
               tabs={tabs}

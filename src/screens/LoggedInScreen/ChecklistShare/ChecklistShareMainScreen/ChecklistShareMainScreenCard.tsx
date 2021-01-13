@@ -111,7 +111,6 @@ const AddressBox = styled.View`
   position: absolute;
   flex-direction: row;
   align-items: center;
-  bottom: 10px;
   margin-left: 5px;
 `;
 
@@ -170,11 +169,9 @@ export default ({
             <Row>
               <ContentText numberOfLines={2}>{data.CONTENTS}</ContentText>
             </Row>
-            <AddressBox>
+            <AddressBox style={{bottom: 5}}>
               <InfoText>
-                {data?.ADDDATE
-                  ? moment(data?.ADDDATE).format('YYYY.MM.DD')
-                  : moment(data?.CREATE_TIME).format('YYYY.MM.DD kk:mm')}
+                {moment(data?.UPDATEDATE).format('YYYY.MM.DD kk:mm')}
               </InfoText>
               <InfoText style={{color: 'black'}}>
                 &nbsp;-&nbsp;{decodeURI(data?.EMP_NAME)}

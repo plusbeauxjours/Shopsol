@@ -71,6 +71,7 @@ const TextInput = styled.TextInput<ITextInput>`
 `;
 
 const Name = styled.View`
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -90,7 +91,7 @@ const WhiteItem = styled.View`
 
 const DateText = styled.Text`
   color: #333;
-  right: ${(props) => (!utils.isAndroid() && !isIphoneX() ? 25 : 0)}px;
+  width: 75px;
 `;
 
 const BorderBox = styled.View`
@@ -301,13 +302,14 @@ export default ({
                     onChangeText={(text) => setShelfLifeName(text)}
                     value={shelfLifeName}
                     maxLength={15}
+                    multiline={true}
                     style={{
                       fontSize: styleGuide.fontSize.large,
                       fontWeight: '600',
                       height: 5,
                       margin: -10,
                       borderWidth: 0,
-                      width: 180,
+                      width: wp('100%') - 240,
                     }}
                   />
                   <Touchable onPress={() => setIsDateModalVisible(true)}>
@@ -344,7 +346,9 @@ export default ({
           <SubmitBtn
             text={'수정완료'}
             onPress={() => submit()}
-            isRegisted={true}
+            isRegisted={
+              shelfLifeName.length !== 0 && shelfLifeMemo.length !== 0
+            }
           />
           <DeleteButton
             onPress={() =>

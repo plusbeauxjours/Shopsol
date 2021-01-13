@@ -37,7 +37,7 @@ export const EyeOffIcon: React.FC<IProps> = ({size, color}) => (
 
 export const MenuIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
-    name={'menu'}
+    name={'ellipsis-vertical'}
     size={size ?? 24}
     color={color ?? styleGuide.palette.greyColor}
   />
@@ -320,6 +320,14 @@ export const PinIcon: React.FC<IProps> = ({size, color}) => (
     name={'pin'}
     size={size ?? 24}
     color={color ?? 'yellow'}
+  />
+);
+
+export const PencilIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons
+    name={'pencil'}
+    size={size ?? 28}
+    color={color ?? styleGuide.palette.primary}
   />
 );
 

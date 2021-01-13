@@ -58,7 +58,7 @@ const Card = styled(Ripple)<ICard>`
   border-radius: 20px;
   background-color: ${(props) => props.color};
   margin-left: 20px;
-  margin-right: ${(props) => (props.index == 3 ? wp('100%') - 220 : 0)}px;
+  margin-right: ${(props) => (props.index == 4 ? wp('100%') - 220 : 0)}px;
 `;
 
 const CardGreyLine = styled.View`
@@ -106,7 +106,7 @@ const LineTextContainer = styled.View<IColor>`
   border-color: ${(props) => props.color ?? 'white'};
   border-width: 1px;
   border-radius: 15px;
-  padding: 5px 15px;
+  padding: 5px 10px;
   height: 30px;
   justify-content: center;
   align-items: center;
@@ -308,7 +308,8 @@ export default ({
       SHELFLIFE_DATA[0]?.items.length == 0 &&
       SHELFLIFE_DATA[1]?.items.length == 0 &&
       SHELFLIFE_DATA[2]?.items.length == 0 &&
-      SHELFLIFE_DATA[3]?.items.length == 0
+      SHELFLIFE_DATA[3]?.items.length == 0 &&
+      SHELFLIFE_DATA[4]?.items.length == 0
     ) {
       return (
         <BackGround>
@@ -466,7 +467,9 @@ export default ({
                           }}
                           source={require('../../../../assets/images/emptyBalloons.png')}
                           resizeMode={FastImage.resizeMode.cover}>
-                          <GreyText>근무 직원이 없습니다.</GreyText>
+                          <GreyText>
+                            촬영한 바코드로 등록된 상품이 없습니다.
+                          </GreyText>
                         </FastImage>
                         <FastImage
                           style={{
@@ -486,10 +489,7 @@ export default ({
                         .map((item, index) => {
                           return index == 0 ? (
                             <React.Fragment key={index}>
-                              <LineTextContainer
-                                as={Animated.View}
-                                style={{opacity: opacity(tabs[index].anchor)}}
-                                color={color}>
+                              <LineTextContainer color={color}>
                                 <LineText color={color}>{name}</LineText>
                               </LineTextContainer>
                               <View key={index}>
@@ -529,10 +529,7 @@ export default ({
                       .map((item, index) => {
                         return index == 0 ? (
                           <React.Fragment key={index}>
-                            <LineTextContainer
-                              as={Animated.View}
-                              style={{opacity: opacity(tabs[index].anchor)}}
-                              color={color}>
+                            <LineTextContainer color={color}>
                               <LineText color={color}>{name}</LineText>
                             </LineTextContainer>
                             <View key={index}>
@@ -561,10 +558,7 @@ export default ({
                     items?.map((item, index) => {
                       return index == 0 ? (
                         <React.Fragment key={index}>
-                          <LineTextContainer
-                            as={Animated.View}
-                            style={{opacity: opacity(tabs[index].anchor)}}
-                            color={color}>
+                          <LineTextContainer color={color}>
                             <LineText color={color}>{name}</LineText>
                           </LineTextContainer>
                           <View key={index}>
@@ -594,7 +588,7 @@ export default ({
               ))}
             </Container>
           </Animated.ScrollView>
-          {tabs[3]?.anchor !== 20 && (
+          {tabs[4]?.anchor !== 20 && (
             <ShelfLifeCheckScreenHeader
               y={y}
               tabs={tabs}

@@ -71,6 +71,7 @@ const AddressBox = styled.View`
 const AddressText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   color: grey;
+  width: ${wp('100%') - 110}px;
 `;
 
 export default ({

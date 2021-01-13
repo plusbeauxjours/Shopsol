@@ -108,6 +108,7 @@ const VerticalLine = styled.View`
 `;
 
 const Name = styled.View`
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -127,7 +128,7 @@ const WhiteItem = styled.View`
 
 const DateText = styled.Text`
   color: #333;
-  right: ${(props) => (!utils.isAndroid() && !isIphoneX() ? 25 : 0)}px;
+  width: 75px;
 `;
 
 const BorderBox = styled.View`
@@ -388,13 +389,14 @@ export default ({
                     onFocus={() => setShelfLifeName('')}
                     value={shelfLifeName}
                     maxLength={15}
+                    multiline={true}
                     style={{
                       fontSize: styleGuide.fontSize.large,
                       fontWeight: '600',
                       height: 5,
                       margin: -10,
                       borderWidth: 0,
-                      width: 180,
+                      width: wp('100%') - 240,
                     }}
                   />
                   <Touchable onPress={() => setIsDateModalVisible(true)}>
@@ -403,7 +405,6 @@ export default ({
                         style={{
                           color: '#CCC',
                           fontSize: styleGuide.fontSize.large,
-                          marginRight: 10,
                         }}>
                         기한
                       </GreyText>

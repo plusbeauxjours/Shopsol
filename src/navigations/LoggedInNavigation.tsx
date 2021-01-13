@@ -94,7 +94,7 @@ export default () => {
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
         initialRouteName={'SelectStoreScreen'}
-        // initialRouteName={'ChecklistShareMainScreen'}
+        // initialRouteName={'ShelfLifeCheckScreen'}
         screenOptions={{
           ...TransitionPresets.SlideFromRightIOS,
           animationEnabled: utils.isAndroid() ? false : true,

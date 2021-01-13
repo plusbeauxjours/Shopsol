@@ -100,8 +100,12 @@ export default ({route: {params}}) => {
   const choiseEmpFn = (data) => {
     let buffer = JSON.parse(JSON.stringify(choiceEmp));
     for (let i = 0; i < buffer.length; i++) {
-      if (data.NAME == buffer[i].NAME) {
-        return;
+      if (data.EMP_SEQ == buffer[i].EMP_SEQ) {
+        return setEmplist(
+          emplist.filter((info) => {
+            return info.EMP_SEQ !== data.EMP_SEQ;
+          }),
+        );
       }
     }
     buffer.push(data);
@@ -249,16 +253,11 @@ export default ({route: {params}}) => {
 
   const initialize = () => {
     if (NAME && EMP_SEQ) {
-      const buffer = [];
+      const buffer1 = [];
+      const buffer2 = [];
       const empSeqArr = EMP_SEQ.split('@');
       for (let i = 0; i < empSeqArr.length; i++) {
-        console.log(
-          empSeqArr[i],
-          typeof empSeqArr[i],
-          empSeqArr[i].length,
-          EMPLOYEE_LIST?.workinglist.find((j) => j.EMP_SEQ == empSeqArr[i]),
-        );
-        buffer.push({
+        buffer1.push({
           NAME: EMPLOYEE_LIST?.workinglist.find(
             (j) => j.EMP_SEQ == empSeqArr[i],
           )?.EMP_NAME,
@@ -270,7 +269,25 @@ export default ({route: {params}}) => {
           )?.images[0].IMAGE,
         });
       }
-      setChoiceEmp(buffer);
+      for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
+        buffer2.push({
+          NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
+          EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
+          IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
+        });
+      }
+      setChoiceEmp(buffer1);
+      setEmplist(buffer2);
+    } else {
+      const buffer = [];
+      for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
+        buffer.push({
+          NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
+          EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
+          IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
+        });
+      }
+      setEmplist(buffer);
     }
   };
 

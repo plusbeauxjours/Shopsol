@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {resultdata} from '../assets/dummy';
 
 const storeSlice = createSlice({
   name: 'store',
@@ -12,7 +13,20 @@ const storeSlice = createSlice({
   reducers: {
     updateQR_Num(state, action) {
       const {payload: QR_Num} = action;
-      state.STORE_DATA.resultdata.QR_Num = QR_Num;
+      if (state.STORE_DATA.resultdata?.QR_Num) {
+        state.STORE_DATA.resultdata.QR_Num = QR_Num;
+      } else {
+        return {
+          ...state,
+          STORE_DATA: {
+            ...state.STORE_DATA,
+            resultdata: {
+              ...state.STORE_DATA.resultdata,
+              QR_Num,
+            },
+          },
+        };
+      }
     },
     setEMP_SEQ(state, action) {
       const {payload: EMP_SEQ} = action;

@@ -398,7 +398,7 @@ export default ({
             </Row>
             <InputLine isBefore={NAME === ''} />
             <GreyText isError={NAME?.length > 10}>
-              사업장명은 10자 이하로 입력해주세요.
+              사업장명은 10자 이하로 입력해 주세요.
             </GreyText>
             <WhiteSpace />
             <InputCaseRow style={{alignItems: 'flex-end'}}>
@@ -559,7 +559,7 @@ export default ({
                   <HelpCircleIcon />
                 </RowTouchable>
                 <GreyText isError={false}>
-                  급여산정 기간 설정으로 급여지급일과 혼동하지 마세요
+                  급여산정 기간 설정이므로 급여지급일과 혼동하지 마세요
                 </GreyText>
               </Column>
               <RequestBorderButton

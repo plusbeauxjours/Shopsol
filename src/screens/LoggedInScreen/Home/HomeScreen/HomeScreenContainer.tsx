@@ -32,6 +32,7 @@ export default ({route: {params}}) => {
     WORKING_COUNT,
     TOTAL_COUNT,
     GPS,
+    QR_Num,
   } = params;
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
   const {
@@ -58,7 +59,7 @@ export default ({route: {params}}) => {
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
   const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
   const [codenumber, setCodenumber] = useState<string>('');
-  const [qrCameraMode, setQrCameraMode] = useState<string>(false);
+  const [qrCameraMode, setQrCameraMode] = useState<boolean>(false);
   const [sucessModalOpen, setSucessModalOpen] = useState<boolean>(false);
   const [failModalOpen, setFailModalOpen] = useState<boolean>(false);
   const [actionTYPE, setActionTYPE] = useState<string>('출근');
@@ -570,6 +571,7 @@ export default ({route: {params}}) => {
       setCodenumber={setCodenumber}
       qrCameraMode={qrCameraMode}
       setQrCameraMode={setQrCameraMode}
+      QR_Num={QR_Num}
     />
   );
 };

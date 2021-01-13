@@ -35,11 +35,14 @@ const Touchable = styled.TouchableOpacity`
 const Name = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const NameText = styled.Text`
   color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
+  width: ${wp('100%') - 240}px;
+  flex-wrap: wrap;
 `;
 
 const Line = styled.View`

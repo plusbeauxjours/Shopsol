@@ -46,6 +46,23 @@ export default ({route: {params}}) => {
     false,
   );
 
+  const confirmModal = (selectedCOM_SEQ) => {
+    const params = {
+      alertType: 'confirm',
+      title: '',
+      content: '댓글을 삭제하시겠습니까?',
+      cancelButtonText: '취소',
+      okButtonText: '확인',
+      okCallback: () => {
+        setComment('');
+        deleteFn(selectedCOM_SEQ);
+        setIsEditMode(false);
+      },
+    };
+    dispatch(setAlertInfo(params));
+    dispatch(setAlertVisible(true));
+  };
+
   const alertModal = (text) => {
     const params = {
       alertType: 'alert',
@@ -231,6 +248,7 @@ export default ({route: {params}}) => {
     <ChecklistShareItemScreenPresenter
       NOTI_TITLE={item?.TITLE}
       CREATE_TIME={item?.CREATE_TIME}
+      UPDATEDATE={item?.UPDATEDATE}
       EMP_NAME={item?.EMP_NAME}
       TITLE={TITLE}
       CONTENTS={item?.CONTENTS}
@@ -245,7 +263,6 @@ export default ({route: {params}}) => {
       comment={comment}
       setComment={setComment}
       registFn={registFn}
-      deleteFn={deleteFn}
       editFn={editFn}
       IMG_LIST={item?.IMG_LIST}
       NOTICE_SEQ={NOTICE_SEQ}
@@ -263,6 +280,7 @@ export default ({route: {params}}) => {
       isUpdatedToastVisible={isUpdatedToastVisible}
       isRemovedToastVisible={isRemovedToastVisible}
       openRow={openRow}
+      confirmModal={confirmModal}
     />
   );
 };

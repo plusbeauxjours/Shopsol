@@ -185,7 +185,7 @@ export default ({route: {params}}) => {
       dispatch(closeSTORE_DATA());
       dispatch(getSTORELIST_DATA());
     } else {
-      alertModal('수정 하였습니다.');
+      alertModal('수정하였습니다.');
       dispatch(
         updateSTORE({
           NAME,

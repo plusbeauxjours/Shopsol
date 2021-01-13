@@ -63,6 +63,7 @@ export default () => {
         WORKING_COUNT: data.workinglist,
         TOTAL_COUNT: data.emplist,
         GPS: data.GPS,
+        QR_Num: data.QR_Num,
       });
     }
   };

@@ -372,6 +372,7 @@ export default ({
   setCodenumber,
   qrCameraMode,
   setQrCameraMode,
+  QR_Num,
 }) => {
   const navigation = useNavigation();
 
@@ -757,7 +758,7 @@ export default ({
                   />
                 )}
                 {TOTAL_COUNT !== 0 &&
-                  (STORE_DATA.resultdata.QR_num ? (
+                  (STORE_DATA.resultdata?.QR_Num || QR_Num ? (
                     <MenuCntContainer
                       selection={'QR보기'}
                       paging={'qrViewScreen'}
@@ -906,7 +907,7 @@ export default ({
                           )
                         )}
                         {TOTAL_COUNT !== 0 &&
-                          (STORE_DATA.resultdata.QR_num ? (
+                          (STORE_DATA.resultdata?.QR_Num || QR_Num ? (
                             <MenuCntContainer
                               selection={'QR보기'}
                               paging={'qrViewScreen'}
@@ -1114,6 +1115,7 @@ export default ({
         avoidKeyboard={true}
         style={{
           margin: 0,
+          alignItems: 'center',
         }}>
         {loading ? (
           <LottieView

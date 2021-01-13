@@ -100,14 +100,18 @@ export default ({route: {params}}) => {
 
   const submitShelfLifeDataImg = async (i, shelfLifeSTORE_SEQ) => {
     const formData: any = new FormData();
+
+    const STORE_SEQ: any = new FormData();
     const shelfLifeDATE: any = new FormData();
     const shelfLifeMEMO: any = new FormData();
     const shelfLifeNAME: any = new FormData();
     const image: any = new FormData();
-    formData.append('STORE_SEQ', shelfLifeSTORE_SEQ);
-    formData.append('shelfLifeDATE', i.shelfLifeDATE);
-    formData.append('shelfLifeMEMO', i.shelfLifeMEMO);
-    formData.append('shelfLifeNAME', i.shelfLifeNAME);
+
+    STORE_SEQ.append('STORE_SEQ', shelfLifeSTORE_SEQ);
+    shelfLifeDATE.append('shelfLifeDATE', i.shelfLifeDATE);
+    shelfLifeMEMO.append('shelfLifeMEMO', i.shelfLifeMEMO);
+    shelfLifeNAME.append('shelfLifeNAME', i.shelfLifeNAME);
+
     const fileInfoArr = i.shelfLifeIMAGE.split('/');
     const fileInfo = fileInfoArr[fileInfoArr.length - 1];
     const extensionIndex = fileInfo.indexOf('.');
@@ -120,7 +124,7 @@ export default ({route: {params}}) => {
         fileType = 'image/jpeg';
       }
     }
-    formData.append('image', {
+    image.append('image', {
       uri: utils.isAndroid
         ? i.shelfLifeIMAGE
         : i.shelfLifeIMAGE.replace('file://', ''),
@@ -140,7 +144,13 @@ export default ({route: {params}}) => {
       image,
     );
     try {
-      const {data} = await api.setShelfLifeDataImg(formData);
+      const {data} = await api.setShelfLifeDataImg({
+        STORE_SEQ,
+        shelfLifeDATE,
+        shelfLifeMEMO,
+        shelfLifeNAME,
+        image,
+      });
       console.log('setShelfLifeDataImg', data);
       await params?.fetchData();
       if (data.result == '0') {

@@ -37,6 +37,7 @@ export default () => {
   };
 
   const defaultData = [
+    {name: '당일', color: styleGuide.palette.secondary, items: []},
     {name: '1일전', color: styleGuide.palette.secondary, items: []},
     {name: '1주전', color: '#ccc', items: []},
     {name: '2주전', color: '#ccc', items: []},
@@ -177,59 +178,81 @@ export default () => {
     try {
       const data = await dispatch(getSHELFLIFE_DATA(YEAR, MONTH, DAY));
       const day = moment();
+      const ddayDuration = moment().add(1, 'days');
       const dayDuration = moment().add(2, 'days');
       const weekDuration = moment().add(7, 'days').add(1, 'days');
       const weeksDuration = moment().add(14, 'days').add(1, 'days');
       const monthDuration = moment().add(1, 'months').add(1, 'days');
       while (monthDuration.diff(day, 'days') > 0) {
-        if (dayDuration.diff(day, 'days') > 0) {
+        if (ddayDuration.diff(day, 'days') > 0) {
           data[day.format('YYYY-MM-DD')]?.length > 0 &&
             defaultData[0].items.push(...data[day.format('YYYY-MM-DD')]);
-        } else if (weekDuration.diff(day, 'days') > 0) {
+        } else if (dayDuration.diff(day, 'days') > 0) {
           data[day.format('YYYY-MM-DD')]?.length > 0 &&
             defaultData[1].items.push(...data[day.format('YYYY-MM-DD')]);
-        } else if (weeksDuration.diff(day, 'days') > 0) {
+        } else if (weekDuration.diff(day, 'days') > 0) {
           data[day.format('YYYY-MM-DD')]?.length > 0 &&
             defaultData[2].items.push(...data[day.format('YYYY-MM-DD')]);
-        } else {
+        } else if (weeksDuration.diff(day, 'days') > 0) {
           data[day.format('YYYY-MM-DD')]?.length > 0 &&
             defaultData[3].items.push(...data[day.format('YYYY-MM-DD')]);
+        } else {
+          data[day.format('YYYY-MM-DD')]?.length > 0 &&
+            defaultData[4].items.push(...data[day.format('YYYY-MM-DD')]);
         }
         day.add(1, 'days');
       }
       dispatch(setSHELFLIFE_DATA(defaultData));
 
-      const dayCount = defaultData[0].items.length;
-      const weekCount =
+      const ddayCount = defaultData[0].items.length;
+      const dayCount =
         defaultData[0].items.length + defaultData[1].items.length;
-      const weeksCount =
+      const weekCount =
         defaultData[0].items.length +
         defaultData[1].items.length +
         defaultData[2].items.length;
-      const monthCount =
+      const weeksCount =
         defaultData[0].items.length +
         defaultData[1].items.length +
         defaultData[2].items.length +
         defaultData[3].items.length;
+      const monthCount =
+        defaultData[0].items.length +
+        defaultData[1].items.length +
+        defaultData[2].items.length +
+        defaultData[3].items.length +
+        defaultData[4].items.length;
 
-      const dayDone = defaultData[0].items.filter((i) => i.checkType === '1')
+      const ddayDone = defaultData[0].items.filter((i) => i.checkType === '1')
         .length;
-      const weekDone =
+      const dayDone =
         defaultData[1].items.filter((i) => i.checkType === '1').length +
+        ddayDone;
+      const weekDone =
+        defaultData[2].items.filter((i) => i.checkType === '1').length +
         dayDone;
       const weeksDone =
-        defaultData[2].items.filter((i) => i.checkType === '1').length +
+        defaultData[3].items.filter((i) => i.checkType === '1').length +
         weekDone;
       const monthDone =
-        defaultData[3].items.filter((i) => i.checkType === '1').length +
+        defaultData[4].items.filter((i) => i.checkType === '1').length +
         weeksDone;
 
       setData([
         {
+          titleWord: '당일',
+          backgroundColor: 'white',
+          textColor: styleGuide.palette.secondary,
+          totalQTY: ddayCount ?? 0,
+          doneQTY: ddayDone,
+          percentage: isNaN(ddayDone / ddayCount)
+            ? 0
+            : Math.ceil((ddayDone / ddayCount) * 100),
+        },
+        {
           titleWord: '1일전',
           backgroundColor: 'white',
           textColor: styleGuide.palette.secondary,
-          radius: 60,
           totalQTY: dayCount ?? 0,
           doneQTY: dayDone,
           percentage: isNaN(dayDone / dayCount)
@@ -240,7 +263,6 @@ export default () => {
           titleWord: '1주전',
           backgroundColor: 'white',
           textColor: styleGuide.palette.greyColor,
-          radius: 50,
           totalQTY: weekCount ?? 0,
           doneQTY: weekDone,
           percentage: isNaN(weekDone / weekCount)
@@ -251,7 +273,6 @@ export default () => {
           titleWord: '2주전',
           backgroundColor: 'white',
           textColor: styleGuide.palette.greyColor,
-          radius: 40,
           totalQTY: weeksCount ?? 0,
           doneQTY: weeksDone,
           percentage: isNaN(weeksDone / weeksCount)
@@ -262,7 +283,6 @@ export default () => {
           titleWord: '1달전',
           backgroundColor: 'white',
           textColor: styleGuide.palette.greyColor,
-          radius: 30,
           totalQTY: monthCount ?? 0,
           doneQTY: monthDone ?? 0,
           percentage: isNaN(monthDone / monthCount)
@@ -283,7 +303,7 @@ export default () => {
     if (scrollRef.current) {
       setTimeout(() => {
         scrollRef.current?.getNode()?.scrollTo({
-          y: tabs[index].anchor + 350,
+          y: tabs[index].anchor + 270,
           animated: true,
         });
       }, 100);

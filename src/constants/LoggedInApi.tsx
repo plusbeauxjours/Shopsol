@@ -3,10 +3,11 @@ import axios from 'axios';
 const callApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
-    'Content-Type':
-      path == '/auth/setshelfLifeDataImg/'
-        ? 'multipart/form-data'
-        : 'application/json',
+    'Content-Type': 'application/json',
+    // 'Content-Type':
+    //   path == '/auth/setshelfLifeDataImg/'
+    //     ? 'multipart/form-data'
+    //     : 'application/json',
   };
   const baseUrl = 'http://shopsolapi.shop-sol.com:3003/api';
   const fullUrl = `${baseUrl}${path}`;
