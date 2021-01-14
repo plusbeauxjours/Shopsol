@@ -66,7 +66,11 @@ export default ({route: {params}}) => {
   };
 
   const gotoVerification = () => {
-    navigation.navigate('VerificationScreen');
+    //temp navigation.navigate('VerificationScreen');
+    navigation.navigate('SignupScreen', {
+      mobileNo: '01085201932',
+      verifyCode: '000293',
+    });
   };
 
   useEffect(() => {

@@ -329,7 +329,9 @@ export default ({
                     </TitleText>
                     <Footer>
                       <SpaceRow>
-                        <SmallText color={item.textColor}>전체 수량</SmallText>
+                        <SmallText color={item.textColor}>
+                          전체 업무량
+                        </SmallText>
                         <SmallText color={item.textColor}>
                           <SmallBold color={item.textColor}>
                             {item.totalQTY}
@@ -338,7 +340,9 @@ export default ({
                         </SmallText>
                       </SpaceRow>
                       <SpaceRow>
-                        <SmallText color={item.textColor}>처리 수량</SmallText>
+                        <SmallText color={item.textColor}>
+                          처리 업무량
+                        </SmallText>
                         <SmallText color={item.textColor}>
                           <SmallBold color={item.textColor}>
                             {item.doneQTY}
@@ -502,6 +506,8 @@ export default ({
           loop
           autoPlay
         />
+        <EmptyText>업무캘린더 정보를 불러오는 중입니다. </EmptyText>
+        <EmptyText>잠시만 기다려주세요.</EmptyText>
       </Container>
     );
   }

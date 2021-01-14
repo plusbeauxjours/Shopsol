@@ -120,20 +120,18 @@ const GreyLine = styled.View`
 const CheckDay = styled.TouchableOpacity<IIsPerple>`
   width: 20%;
   height: 40px;
-  border-width: 1px;
+  border-width: 0.7px;
   border-color: ${(props) =>
-    props.isPerple
-      ? styleGuide.palette.primary
-      : styleGuide.palette.borderColor};
+    props.isPerple ? 'transparent' : styleGuide.palette.lightGreyColor};
+  background-color: ${(props) =>
+    props.isPerple ? styleGuide.palette.primary : 'transparent'}
   align-items: center;
   justify-content: center;
 `;
 
 const CheckDayText = styled.Text<IIsPerple>`
   color: ${(props) =>
-    props.isPerple
-      ? styleGuide.palette.primary
-      : styleGuide.palette.borderColor};
+    props.isPerple ? 'white' : styleGuide.palette.lightGreyColor};
 `;
 
 const TypeContainer = styled.TouchableOpacity`
@@ -329,7 +327,7 @@ export default ({
 
   const renderDayRow = (rowData, rowNum) => {
     return (
-      <Row>
+      <Row style={{marginHorizontal: 10}}>
         <RenderDayRowData rowData={rowData} rowNum={rowNum} />
       </Row>
     );

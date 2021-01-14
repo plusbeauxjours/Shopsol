@@ -8,6 +8,7 @@ import Ripple from 'react-native-material-ripple';
 
 import {CheckMarkIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 interface IsChecked {
   isChecked?: boolean;
@@ -134,11 +135,11 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           <Touchable
             onLongPress={() => console.log('imagemodal')}
             disabled={!item.IMG_LIST}>
-            {item.IMG_LIST?.length > 0 ? (
+            {item.IMG_LIST ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST[0],
+                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
@@ -168,6 +169,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
                 shelfLifeName: item.shelfLifeName,
                 shelfLifeDate: item.shelfLifeDate,
                 shelfLifeMemo: item.shelfLifeMemo,
+                shelfLifeImage: item.IMG_LIST,
                 fetchData,
               });
             }, 100)
@@ -200,11 +202,11 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           <Touchable
             onPress={() => console.log('imagemodal')}
             disabled={!item.IMG_LIST}>
-            {item.IMG_LIST?.length > 0 ? (
+            {item.IMG_LIST ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST[0],
+                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}

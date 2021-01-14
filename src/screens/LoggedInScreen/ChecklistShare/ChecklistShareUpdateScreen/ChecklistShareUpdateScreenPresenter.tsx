@@ -244,7 +244,7 @@ export default ({
                 <TextContainer>
                   <TextInput
                     placeholder={'내용을 입력해주세요'}
-                    selectionColor="#6428AC"
+                    selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor={'#E5E5E5'}
                     onChangeText={(text) => {
                       setContent(text);

@@ -12,6 +12,8 @@ import {
   removeSHELFLIFE_DATA,
 } from '~/redux/shelflifeSlice';
 import ShelfLifeUpdateScreenPresenter from './ShelfLifeUpdateScreenPresenter';
+import utils from '~/constants/utils';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -26,11 +28,14 @@ export default ({route: {params}}) => {
   const [shelfLifeDate, setShelfLifeDate] = useState<any>(
     moment(params?.shelfLifeDate),
   );
+  const [cameraPictureLast, setCameraPictureLast] = useState<any>(
+    params?.shelfLifeImage || '',
+  );
+
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
   );
-  const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
 
   const alertModal = (text) => {
     const params = {
@@ -70,32 +75,87 @@ export default ({route: {params}}) => {
 
   const submit = async () => {
     if (shelfLifeName == '') {
-      alertModal('수정할 상품명을 입력해주세요.');
+      alertModal('업무명을 적어주세요.');
     }
-    try {
-      navigation.goBack();
-      alertModal('수정이 완료되었습니다.');
-      dispatch(
-        updateSHELFLIFE_DATA({
-          name: params?.name,
+    console.log('cameraPictureLast', cameraPictureLast);
+    if (cameraPictureLast?.length === 0) {
+      try {
+        navigation.goBack();
+        alertModal('수정이 완료되었습니다.');
+        dispatch(
+          updateSHELFLIFE_DATA({
+            name: params?.name,
+            shelfLife_SEQ,
+            shelfLifeName,
+            shelfLifeDate: moment(shelfLifeDate).format('YYYY-MM-DD'),
+            shelfLifeMemo,
+          }),
+        );
+        const {data} = await api.updateShelfLifeData({
           shelfLife_SEQ,
-          shelfLifeName,
-          shelfLifeDate: moment(shelfLifeDate).format('YYYY-MM-DD'),
-          shelfLifeMemo,
-        }),
-      );
-      const {data} = await api.updateShelfLifeData({
-        shelfLife_SEQ,
-        shelfLifeNAME: shelfLifeName,
-        shelfLifeDATE: moment(shelfLifeDate).format('YYYY-MM-DD'),
-        shelfLifeMEMO: shelfLifeMemo,
-      });
-      await params?.fetchData();
-      if (data.result == '0') {
-        alertModal('연결에 실패하였습니다.');
+          shelfLifeNAME: shelfLifeName,
+          shelfLifeDATE: moment(shelfLifeDate).format('YYYY-MM-DD'),
+          shelfLifeMEMO: shelfLifeMemo,
+        });
+        await params?.fetchData();
+        if (data.result == '0') {
+          alertModal('연결에 실패하였습니다.');
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
+    } else {
+      const formData: any = new FormData();
+      formData.append('shelfLife_SEQ', shelfLife_SEQ);
+      formData.append('shelfLifeNAME', shelfLifeName);
+      formData.append(
+        'shelfLifeDATE',
+        moment(shelfLifeDate).format('YYYY-MM-DD'),
+      );
+      formData.append('shelfLifeMEMO', shelfLifeMemo);
+
+      const fileInfoArr = cameraPictureLast.split('/');
+      const fileInfo = fileInfoArr[fileInfoArr.length - 1];
+      const extensionIndex = fileInfo.indexOf('.');
+      let fileName = fileInfo;
+      let fileType = '';
+      if (extensionIndex > -1) {
+        fileName = fileInfo;
+        fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
+        if (fileType === 'image/jpg') {
+          fileType = 'image/jpeg';
+        }
+      }
+      formData.append('image', {
+        uri: utils.isAndroid
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
+        name: fileName,
+        type: fileType,
+      });
+
+      try {
+        navigation.goBack();
+        alertModal('수정이 완료되었습니다.');
+        dispatch(
+          updateSHELFLIFE_DATA({
+            name: params?.name,
+            shelfLife_SEQ,
+            shelfLifeName,
+            shelfLifeDate: moment(shelfLifeDate).format('YYYY-MM-DD'),
+            shelfLifeMemo,
+          }),
+        );
+        const {data} = await api.updateShelfLifeDataImg(formData);
+        await params?.fetchData();
+        if (data.result == '0') {
+          alertModal('연결에 실패하였습니다.');
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        dispatch(setSplashVisible({visible: false}));
+      }
     }
   };
 

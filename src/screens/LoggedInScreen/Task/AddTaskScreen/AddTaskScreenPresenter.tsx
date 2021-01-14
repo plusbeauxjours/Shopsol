@@ -126,6 +126,7 @@ const WhiteItem = styled.View`
 
 const DateText = styled.Text`
   color: #333;
+  text-align: right;
   width: 75px;
 `;
 
@@ -244,40 +245,11 @@ const DatePickerRoundBtn = styled(Ripple)`
   align-items: center;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
 const DatePickerText = styled.Text`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.greyColor};
   text-align: center;
-`;
-
-const Footer = styled.TouchableOpacity`
-  width: ${wp('100%')}px;
-  height: 60px;
-  position: absolute;
-  bottom: 0;
-  justify-content: center;
-  align-items: center;
-  background-color: ${styleGuide.palette.primary};
-`;
-
-const FooterText = styled.Text`
-  color: #ffffff;
-  font-size: 14px;
-  margin-top: 15px;
-  margin-bottom: 15px;
 `;
 
 export default ({
@@ -382,10 +354,9 @@ export default ({
                 <Name>
                   <TextInput
                     placeholder="업무명"
-                    selectionColor="#6428AC"
+                    selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskName(text)}
-                    onFocus={() => setTaskName('')}
                     value={taskName}
                     maxLength={15}
                     multiline={true}
@@ -418,10 +389,9 @@ export default ({
                 <TextContainer>
                   <TextInput
                     placeholder="메모 입력"
-                    selectionColor="#6428AC"
+                    selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskMemo(text)}
-                    onFocus={() => setTaskMemo('')}
                     value={taskMemo}
                     multiline={true}
                     style={{

@@ -332,7 +332,7 @@ export default () => {
           name="ChecklistDetailScreen"
           component={ChecklistDetailScreen}
           options={{
-            headerTitle: '체크리스트 체크상세',
+            headerTitle: '체크리스트 상세',
             title: '체크리스트 상세 (사업주)',
             headerRight: () => <HomeBtn depth={2} />, /////
           }}

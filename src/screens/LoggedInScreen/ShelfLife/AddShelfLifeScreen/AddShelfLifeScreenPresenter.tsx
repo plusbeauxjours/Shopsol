@@ -128,6 +128,7 @@ const WhiteItem = styled.View`
 
 const DateText = styled.Text`
   color: #333;
+  text-align: right;
   width: 75px;
 `;
 
@@ -349,8 +350,6 @@ export default ({
               ) : (
                 <Column>
                   <Touchable onPress={() => setIsCameraModalVisible(true)}>
-                    {/* <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -359,8 +358,6 @@ export default ({
                     </BorderBox>
                   </Touchable>
                   <Touchable onPress={() => launchImageLibraryFn()}>
-                    {/* <Touchable
-                     onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -383,10 +380,9 @@ export default ({
                 <Name>
                   <TextInput
                     placeholder="상품명"
-                    selectionColor="#6428AC"
+                    selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeName(text)}
-                    onFocus={() => setShelfLifeName('')}
                     value={shelfLifeName}
                     maxLength={15}
                     multiline={true}
@@ -419,10 +415,9 @@ export default ({
                 <TextContainer>
                   <TextInput
                     placeholder="메모 입력"
-                    selectionColor="#6428AC"
+                    selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeMemo(text)}
-                    onFocus={() => setShelfLifeMemo('')}
                     value={shelfLifeMemo}
                     multiline={true}
                     style={{

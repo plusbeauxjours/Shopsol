@@ -139,9 +139,11 @@ export default ({
           </EmployeeBox>
         )}
       </ContentBox>
-      <ArrowBox>
-        <ForwardIcon />
-      </ArrowBox>
+      {STORE == '0' && data?.TYPE == '0' ? null : (
+        <ArrowBox>
+          <ForwardIcon />
+        </ArrowBox>
+      )}
     </Touchable>
   );
 };

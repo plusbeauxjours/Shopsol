@@ -69,6 +69,18 @@ export default ({route: {params}}) => {
   const [initLoading, setInitLoading] = useState<boolean>(
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  const onRefresh = async () => {
+    try {
+      setRefreshing(true);
+      await fetchData();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const storeKeepersEMPMenu = [
     {
@@ -509,7 +521,9 @@ export default ({route: {params}}) => {
     //         }),
     //       );
     // }
-    locationPermission();
+    if (STORE == '0') {
+      locationPermission();
+    }
     fetchData();
     checkVersion();
   }, []);
@@ -572,6 +586,8 @@ export default ({route: {params}}) => {
       qrCameraMode={qrCameraMode}
       setQrCameraMode={setQrCameraMode}
       QR_Num={QR_Num}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 };

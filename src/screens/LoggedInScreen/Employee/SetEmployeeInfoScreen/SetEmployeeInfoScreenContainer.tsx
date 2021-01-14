@@ -220,14 +220,7 @@ export default ({route: {params}}) => {
       deductionTypeChecked = 0; // 0: 없음(default)
     }
 
-    if (!startDaySet) {
-      alertModal('입사일을 입력해주세요.');
-      openAccordion('click1');
-      scrollRef.current?.getNode()?.scrollTo({
-        y: 0,
-        animated: true,
-      });
-    } else if (!endDaySet && !endDayCheck) {
+    if (!endDaySet && !endDayCheck) {
       alertModal('퇴사일을 입력해주세요');
       openAccordion('click1');
       scrollRef.current?.getNode()?.scrollTo({
@@ -273,6 +266,7 @@ export default ({route: {params}}) => {
       alertModal('수습종료일은 입사일보다 늦어야합니다.');
       openAccordion('click2');
     } else if (
+      !endDayCheck &&
       payChecked == 0 &&
       probation &&
       moment(endDay) < moment(probationPeriod)
@@ -291,6 +285,7 @@ export default ({route: {params}}) => {
         animated: true,
       });
     } else if (
+      !endDayCheck &&
       payChecked == 0 &&
       probation &&
       moment(endDay) < moment(probationPeriod)

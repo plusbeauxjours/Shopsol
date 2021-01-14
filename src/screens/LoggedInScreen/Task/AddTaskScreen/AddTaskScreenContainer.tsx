@@ -15,7 +15,6 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const taskDataImgTempList = [];
   const taskDataTempList = [];
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
@@ -95,11 +94,13 @@ export default ({route: {params}}) => {
     }, 200);
   };
 
-  const setTaskDataImgList = (i) => {
+  const taskDataImg = async (i, taskSTORE_SEQ) => {
     const formData: any = new FormData();
+    formData.append('STORE_SEQ', taskSTORE_SEQ);
     formData.append('taskDATE', i.taskDATE);
     formData.append('taskMEMO', i.taskMEMO);
     formData.append('taskNAME', i.taskNAME);
+
     const fileInfoArr = i.taskIMAGE.split('/');
     const fileInfo = fileInfoArr[fileInfoArr.length - 1];
     const extensionIndex = fileInfo.indexOf('.');
@@ -112,41 +113,36 @@ export default ({route: {params}}) => {
         fileType = 'image/jpeg';
       }
     }
-    formData.append('taskIMAGE', {
+    formData.append('image', {
       uri: utils.isAndroid ? i.taskIMAGE : i.taskIMAGE.replace('file://', ''),
       name: fileName,
       type: fileType,
     });
-    taskDataImgTempList.push(formData);
+
+    try {
+      const {data} = await api.setTaskDataImg(formData);
+      await params?.fetchData();
+      if (data.result == '0') {
+        alertModal('연결에 실패하였습니다.');
+      } else {
+        alertModal('등록이 완료되었습니다.');
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      dispatch(setSplashVisible({visible: false}));
+    }
   };
 
   const submitFn = async () => {
     if (list.length == 0) {
-      return alertModal('등록하실 업무를 목록에 추가하신 후 등록을 해주세요.');
+      return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
     }
     list.map((i) =>
-      i.taskIMAGE ? setTaskDataImgList(i) : taskDataTempList.push(i),
+      i.taskIMAGE ? taskDataImg(i, STORE_SEQ) : taskDataTempList.push(i),
     );
     dispatch(setSplashVisible({visible: true}));
     navigation.goBack();
-    if (taskDataImgTempList.length > 0) {
-      try {
-        const {data} = await api.setTaskDataImg({
-          STORE_SEQ,
-          LIST: taskDataImgTempList,
-        });
-        await params?.fetchData();
-        if (data.result == '0') {
-          alertModal('연결에 실패하였습니다.');
-        } else {
-          alertModal('등록이 완료되었습니다.');
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        dispatch(setSplashVisible({visible: false}));
-      }
-    }
     if (taskDataTempList.length > 0) {
       try {
         const {data} = await api.setTaskData({

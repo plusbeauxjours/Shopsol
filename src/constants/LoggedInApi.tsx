@@ -3,11 +3,11 @@ import axios from 'axios';
 const callApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
-    // 'Content-Type':
-    //   path == '/auth/setshelfLifeDataImg/'
-    //     ? 'multipart/form-data'
-    //     : 'application/json',
+    // 'Content-Type': 'application/json',
+    'Content-Type':
+      path == '/auth/setshelfLifeDataImg/' || path == '/auth/setTaskDataImg/'
+        ? 'multipart/form-data'
+        : 'application/json',
   };
   const baseUrl = 'http://shopsolapi.shop-sol.com:3003/api';
   const fullUrl = `${baseUrl}${path}`;
@@ -71,6 +71,8 @@ export default {
     callApi('post', '/auth/cancelShelfLifeData/', data),
   updateShelfLifeData: (data: any) =>
     callApi('post', '/auth/updateshelfLifeData/', data),
+  updateShelfLifeDataImg: (data: any) =>
+    callApi('post', '/auth/updateShelfLifeDataImg/', data),
   deleteShelfLifeData: (data: any) =>
     callApi('post', '/auth/deleteshelfLifeData/', data),
   setShelfLifeData: (data: any) =>

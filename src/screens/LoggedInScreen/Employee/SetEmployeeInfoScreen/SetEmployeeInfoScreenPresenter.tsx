@@ -542,7 +542,7 @@ export default ({
                     <RequestBorderText>
                       {startDaySet
                         ? moment(startDay).format('YYYY년 M월 D일')
-                        : '입사일 설정'}
+                        : moment().format('YYYY년 M월 D일')}
                     </RequestBorderText>
                   </RequestBorderButton>
                 </InputCaseRow>
@@ -949,9 +949,12 @@ export default ({
                             </Touchable>
                           </Row>
                           <RequestBorderButton
-                            onPress={() =>
-                              setIsProbationPeriodModalVisible(true)
-                            }>
+                            onPress={() => {
+                              setProbationPeriod(
+                                moment(startDay).add(1, 'days').toDate(),
+                              );
+                              setIsProbationPeriodModalVisible(true);
+                            }}>
                             <RequestBorderText>
                               {probationPeriodSet
                                 ? moment(probationPeriod).format(

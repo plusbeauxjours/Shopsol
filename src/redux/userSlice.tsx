@@ -167,10 +167,11 @@ export const getSTORELIST_DATA = () => async (dispatch, getState) => {
     userReducer: {STORE, MEMBER_SEQ, STORELIST_DATA},
   } = getState();
   if (!STORELIST_DATA || STORELIST_DATA?.length === 0) {
-    dispatch(setSplashVisible({visible: true}));
+    dispatch(setSplashVisible({visible: true, text: '로그인'}));
   }
   try {
     const {data} = await api.storeList(STORE, MEMBER_SEQ);
+    console.log(data);
     if (data.message === 'SUCCESS') {
       dispatch(setSTORELIST_DATA(data.result));
     }

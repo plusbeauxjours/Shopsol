@@ -3,7 +3,6 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {View} from 'react-native';
 import Modal from 'react-native-modal';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
@@ -220,7 +219,7 @@ export default ({
   };
   return (
     <BackGround>
-      <KeyboardAwareScrollView
+      <ScrollView
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}>
@@ -320,8 +319,14 @@ export default ({
                   onFocus={() => {
                     setPassword('');
                     setPasswordCheck('');
+                    setIsPasswordSeen(true);
                   }}
-                  onChangeText={(text) => passwordCheckerFn(text, false)}
+                  onChangeText={(text) => {
+                    if (password.length == 0) {
+                      setIsPasswordSeen(false);
+                    }
+                    passwordCheckerFn(text, false);
+                  }}
                   value={password}
                   secureTextEntry={isPasswordSeen ? false : true}
                   autoCapitalize="none"
@@ -356,10 +361,18 @@ export default ({
                   placeholder={'새 비밀번호 확인'}
                   placeholderTextColor={'#E5E5E5'}
                   selectionColor={styleGuide.palette.greyColor}
-                  onChangeText={(text) => passwordCheckerFn(text, true)}
+                  onChangeText={(text) => {
+                    if (passwordCheck.length == 0) {
+                      setIsPasswordCheckSeen(false);
+                    }
+                    passwordCheckerFn(text, true);
+                  }}
                   value={passwordCheck}
                   secureTextEntry={isPasswordCheckSeen ? false : true}
-                  onFocus={() => {}}
+                  onFocus={() => {
+                    setPasswordCheck('');
+                    setIsPasswordCheckSeen(true);
+                  }}
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType={'email-address'}
@@ -435,7 +448,7 @@ export default ({
             </ScrollView>
           </RBSheet>
         </Container>
-      </KeyboardAwareScrollView>
+      </ScrollView>
       <Modal
         onRequestClose={() => setIsBirthDateVisible(false)}
         onBackdropPress={() => setIsBirthDateVisible(false)}

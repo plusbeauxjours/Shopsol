@@ -31,7 +31,7 @@ export default ({route: {params}}) => {
 
   const [isBirthDateVisible, setIsBirthDateVisible] = useState<boolean>(false);
   const [passwordCheck, setPasswordCheck] = useState<any>('');
-  const [isPasswordSeen, setIsPasswordSeen] = useState<boolean>(false);
+  const [isPasswordSeen, setIsPasswordSeen] = useState<boolean>(true);
   const [isPasswordCheckSeen, setIsPasswordCheckSeen] = useState<boolean>(
     false,
   );

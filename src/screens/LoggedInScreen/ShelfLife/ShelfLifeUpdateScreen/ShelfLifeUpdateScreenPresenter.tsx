@@ -91,6 +91,7 @@ const WhiteItem = styled.View`
 
 const DateText = styled.Text`
   color: #333;
+  text-align: right;
   width: 75px;
 `;
 
@@ -244,15 +245,18 @@ export default ({
             <Row>
               {cameraPictureLast ? (
                 <Touchable
-                  onPress={() => setCameraPictureLast(null)}
+                  onPress={() => setCameraPictureLast('')}
                   disabled={!cameraPictureLast}>
                   <IconContainer>
                     <CloseCircleIcon size={12} />
                   </IconContainer>
+                  {console.log(cameraPictureLast)}
                   <FastImage
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
-                      uri: cameraPictureLast,
+                      uri: cameraPictureLast.includes('file')
+                        ? cameraPictureLast
+                        : 'http://133.186.210.223/uploads/' + cameraPictureLast,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -261,9 +265,7 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  {/* <Touchable onPress={() => setIsCameraModalVisible(true)}> */}
-                  <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
+                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -271,9 +273,7 @@ export default ({
                       </GreyText>
                     </BorderBox>
                   </Touchable>
-                  {/* <Touchable onPress={() => launchImageLibraryFn()}> */}
-                  <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}>
+                  <Touchable onPress={() => launchImageLibraryFn()}>
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -297,7 +297,7 @@ export default ({
                   <TextInput
                     isBefore={shelfLifeName == ''}
                     placeholder="상품명"
-                    selectionColor="#6428AC"
+                    selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeName(text)}
                     value={shelfLifeName}
@@ -323,7 +323,7 @@ export default ({
                   <TextInput
                     isBefore={shelfLifeMemo == ''}
                     placeholder="메모 입력"
-                    selectionColor="#6428AC"
+                    selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeMemo(text)}
                     value={shelfLifeMemo}
@@ -389,7 +389,7 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
-                  <HalfBotton onPress={() => setCameraPictureLast(null)}>
+                  <HalfBotton onPress={() => setCameraPictureLast('')}>
                     <HalfBottonText style={{color: styleGuide.palette.primary}}>
                       재촬영
                     </HalfBottonText>

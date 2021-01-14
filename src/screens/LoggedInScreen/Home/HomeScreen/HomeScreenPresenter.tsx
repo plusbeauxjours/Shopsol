@@ -1,8 +1,10 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
+import {RefreshControl} from 'react-native';
+import Ripple from 'react-native-material-ripple';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,7 +24,6 @@ import {
 } from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
-import Ripple from 'react-native-material-ripple';
 import styleGuide from '~/constants/styleGuide';
 
 interface IHasHeight {
@@ -192,23 +193,6 @@ const ShowPictureModalImage = styled.View`
   height: ${wp('90%')}px;
 `;
 
-const GoWork = styled.TouchableOpacity`
-  width: ${wp('100%')}px;
-  height: 60px;
-  position: absolute;
-  bottom: 0;
-  justify-content: center;
-  align-items: center;
-  background-color: ${styleGuide.palette.primary};
-`;
-
-const WorkText = styled.Text`
-  color: #ffffff;
-  font-size: 14px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-`;
-
 const WhiteSpace = styled.View`
   height: 20px;
 `;
@@ -221,7 +205,6 @@ const GrayLinearGradient = styled(LinearGradient)<IHasHeight>`
   right: 0;
   height: ${hp('30%')}px;
   background-color: gray;
-  height: ${hp('30%')}px};
 `;
 
 const Box = styled.TouchableOpacity<IBox>`
@@ -373,6 +356,8 @@ export default ({
   qrCameraMode,
   setQrCameraMode,
   QR_Num,
+  refreshing,
+  onRefresh,
 }) => {
   const navigation = useNavigation();
 
@@ -531,7 +516,20 @@ export default ({
 
   return (
     <BackGround>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <GrayLinearGradient
+        colors={['white', 'black']}
+        hasHeight={STORE == '1'}
+        style={{height: hp('60%')}}
+      />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            progressViewOffset={100}
+          />
+        }>
         <FastImage
           style={{width: wp('100%'), height: hp('30%')}}
           source={require('../../../../assets/main/mainTopBg.png')}
