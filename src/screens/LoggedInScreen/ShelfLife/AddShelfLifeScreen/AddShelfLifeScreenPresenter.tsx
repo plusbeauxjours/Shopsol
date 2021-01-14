@@ -384,6 +384,8 @@ export default ({
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeName(text)}
                     value={shelfLifeName}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     maxLength={15}
                     multiline={true}
                     style={{
@@ -419,6 +421,8 @@ export default ({
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeMemo(text)}
                     value={shelfLifeMemo}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     multiline={true}
                     style={{
                       textAlignVertical: 'top',

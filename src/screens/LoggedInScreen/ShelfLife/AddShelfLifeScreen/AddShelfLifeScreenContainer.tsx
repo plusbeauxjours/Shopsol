@@ -8,7 +8,7 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import * as ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import {setSplashVisible} from '~/redux/splashSlice';
+import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
 import utils from '~/constants/utils';
 
 export default ({route: {params}}) => {
@@ -16,6 +16,7 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const shelfLifeDataTempList = [];
+  let last = false;
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const [shelfLifeName, setShelfLifeName] = useState<string>('');
@@ -127,16 +128,12 @@ export default ({route: {params}}) => {
 
     try {
       const {data} = await api.setShelfLifeDataImg(formData);
-      await params?.fetchData();
+      console.log(data);
       if (data.result == '0') {
         alertModal('연결에 실패하였습니다.');
-      } else {
-        alertModal('등록이 완료되었습니다.');
       }
     } catch (e) {
       console.log(e);
-    } finally {
-      dispatch(setSplashVisible({visible: false}));
     }
   };
 
@@ -144,30 +141,35 @@ export default ({route: {params}}) => {
     if (list.length == 0) {
       return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
     }
-    list.map((i) =>
-      i.shelfLifeIMAGE
-        ? submitShelfLifeDataImg(i, STORE_SEQ)
-        : shelfLifeDataTempList.push(i),
-    );
-    dispatch(setSplashVisible({visible: true}));
-    navigation.goBack();
-    if (shelfLifeDataTempList.length > 0) {
-      try {
-        const {data} = await api.setShelfLifeData({
-          STORE_SEQ,
-          LIST: shelfLifeDataTempList,
-        });
-        await params?.fetchData();
-        if (data.result == '0') {
-          alertModal('연결에 실패하였습니다.');
-        } else {
-          alertModal('등록이 완료되었습니다.');
+    try {
+      dispatch(setLoadingVisible(true));
+      console.log(list.filter((i) => i.shelfLifeIMAGE));
+
+      list.map((i, index) => {
+        i.shelfLifeIMAGE
+          ? submitShelfLifeDataImg(i, STORE_SEQ)
+          : shelfLifeDataTempList.push(i);
+      });
+      navigation.goBack();
+      if (shelfLifeDataTempList.length > 0) {
+        try {
+          const {data} = await api.setShelfLifeData({
+            STORE_SEQ,
+            LIST: shelfLifeDataTempList,
+          });
+          if (data.result == '0') {
+            alertModal('연결에 실패하였습니다.');
+          }
+        } catch (e) {
+          console.log(e);
         }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        dispatch(setSplashVisible({visible: false}));
       }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      await params?.fetchData();
+      alertModal('등록이 완료되었습니다.');
+      dispatch(setLoadingVisible(false));
     }
   };
 
@@ -219,7 +221,7 @@ export default ({route: {params}}) => {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(setSplashVisible({visible: true, text: '유통기한'}));
         if (codenumber !== '') {
           const {data} = await api.getBarCode(codenumber);
           if (data.resultdata?.length > 0) {

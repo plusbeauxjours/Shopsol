@@ -8,7 +8,6 @@ import Ripple from 'react-native-material-ripple';
 
 import {CheckMarkIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 interface IsChecked {
   isChecked?: boolean;
@@ -133,8 +132,9 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
           <Touchable
-            onLongPress={() => console.log('imagemodal')}
-            disabled={!item.IMG_LIST}>
+            onPress={() =>
+              confirmModal(name, item.shelfLife_SEQ, item.IMG_LIST)
+            }>
             {item.IMG_LIST ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
@@ -159,9 +159,6 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
         </GreyBox>
         <WhiteItem
           onPress={() =>
-            confirmModal(name, item.shelfLife_SEQ, item.shelfLifeDate)
-          }
-          onLongPress={() =>
             setTimeout(() => {
               navigation.navigate('ShelfLifeUpdateScreen', {
                 name,
@@ -200,8 +197,9 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
           <Touchable
-            onPress={() => console.log('imagemodal')}
-            disabled={!item.IMG_LIST}>
+            onPress={() =>
+              cancelModal(name, item.shelfLife_SEQ, item.IMG_LIST)
+            }>
             {item.IMG_LIST ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
@@ -225,8 +223,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           </Touchable>
         </GreyBox>
         <Item
-          onPress={() => cancelModal(name, item.shelfLife_SEQ)}
-          onLongPress={() => {}}
+          onPress={() => {}}
           rippleColor={'#999'}
           rippleDuration={600}
           rippleSize={1700}

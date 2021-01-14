@@ -263,6 +263,7 @@ export default ({
   isRemovedToastVisible,
   openRow,
   confirmModal,
+  ADDDATE,
 }) => {
   const textInputRef = useRef(null);
   const navigation = useNavigation();
@@ -460,6 +461,7 @@ export default ({
                     NOTI_TITLE,
                     isFavorite,
                     CREATE_TIME,
+                    ADDDATE,
                   })
                 }
                 isRegisted={true}
@@ -479,6 +481,8 @@ export default ({
                 returnKeyType="next"
                 onChangeText={(text) => setComment(text)}
                 value={comment}
+                autoCapitalize="none"
+                autoCorrect={false}
                 placeholder={'댓글을 입력하세요..'}
                 placeholderTextColor={'#CCCCCC'}
                 onBlur={() => {
@@ -502,6 +506,8 @@ export default ({
               returnKeyType="next"
               onChangeText={(text) => setComment(text)}
               value={comment}
+              autoCapitalize="none"
+              autoCorrect={false}
               placeholder={'댓글을 입력하세요..'}
               placeholderTextColor={'#CCCCCC'}
               onFocus={() => setCommentInputBox(true)}

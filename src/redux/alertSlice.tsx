@@ -13,6 +13,7 @@ const alertSlice = createSlice({
     cancelCallback: () => {},
     warning: 'no',
     close: null,
+    image: null,
   },
   reducers: {
     setAlertVisible(state, action) {
@@ -35,6 +36,7 @@ const alertSlice = createSlice({
           cancelCallback,
           warning,
           close,
+          image,
         },
       } = action;
       return {
@@ -49,6 +51,7 @@ const alertSlice = createSlice({
         cancelCallback,
         warning,
         close,
+        image,
       };
     },
   },

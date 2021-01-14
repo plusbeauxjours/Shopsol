@@ -133,7 +133,12 @@ export default ({route: {params}}) => {
             alertModal('연결에 실패하였습니다.');
           }
         } else {
-          dispatch(setSplashVisible({visible: true}));
+          dispatch(
+            setSplashVisible({
+              visible: true,
+              fullText: `${params?.TITLE}이 수정중입니다.`,
+            }),
+          );
           for (let i = 0; i < cameraPictureList.length; i++) {
             const cameraPicture = cameraPictureList[i];
             const fileInfoArr = cameraPicture.uri.split('/');

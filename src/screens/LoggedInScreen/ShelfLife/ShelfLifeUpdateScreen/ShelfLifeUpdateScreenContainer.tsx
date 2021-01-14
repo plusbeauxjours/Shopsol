@@ -77,7 +77,6 @@ export default ({route: {params}}) => {
     if (shelfLifeName == '') {
       alertModal('업무명을 적어주세요.');
     }
-    console.log('cameraPictureLast', cameraPictureLast);
     if (cameraPictureLast?.length === 0) {
       try {
         navigation.goBack();
@@ -97,7 +96,6 @@ export default ({route: {params}}) => {
           shelfLifeDATE: moment(shelfLifeDate).format('YYYY-MM-DD'),
           shelfLifeMEMO: shelfLifeMemo,
         });
-        await params?.fetchData();
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
         }
@@ -137,6 +135,7 @@ export default ({route: {params}}) => {
       try {
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
+        await params?.fetchData();
         dispatch(
           updateSHELFLIFE_DATA({
             name: params?.name,
@@ -147,7 +146,6 @@ export default ({route: {params}}) => {
           }),
         );
         const {data} = await api.updateShelfLifeDataImg(formData);
-        await params?.fetchData();
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
         }

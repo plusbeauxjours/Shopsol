@@ -10,6 +10,9 @@ const Touchable = styled.TouchableOpacity`
   margin-right: 10px;
   align-items: center;
 `;
+const IconContainer = styled.View`
+  height: 25px;
+`;
 
 const Text = styled.Text`
   margin-top: 2px;
@@ -37,7 +40,9 @@ export default () => {
           dispatch(userLogout());
         }, 1000);
       }}>
-      <LogoutIcon size={24} color="white" />
+      <IconContainer>
+        <LogoutIcon size={24} color="white" />
+      </IconContainer>
       <Text>로그아웃</Text>
     </Touchable>
   );

@@ -281,6 +281,7 @@ export default ({route: {params}}) => {
       isRemovedToastVisible={isRemovedToastVisible}
       openRow={openRow}
       confirmModal={confirmModal}
+      ADDDATE={item?.ADDDATE}
     />
   );
 };

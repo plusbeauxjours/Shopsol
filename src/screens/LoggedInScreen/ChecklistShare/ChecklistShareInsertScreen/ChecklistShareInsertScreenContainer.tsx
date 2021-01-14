@@ -57,7 +57,12 @@ export default ({route: {params}}) => {
   const registerFn = async () => {
     if (cameraPictureList?.length > 0) {
       try {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(
+          setSplashVisible({
+            visible: true,
+            fullText: `${params?.TITLE}이 등록중입니다.`,
+          }),
+        );
         const formData: any = new FormData();
         formData.append('TITLE', title);
         formData.append('CONTENTS', content);

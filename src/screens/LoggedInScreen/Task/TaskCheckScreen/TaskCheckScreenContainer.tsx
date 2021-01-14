@@ -9,6 +9,7 @@ import TaskCheckScreenPresenter from './TaskCheckScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import styleGuide from '~/constants/styleGuide';
+import {setLoadingVisible} from '~/redux/splashSlice';
 import {
   getTASK_DATA,
   checkTASK,
@@ -23,7 +24,7 @@ export default () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
+  const {loading} = useSelector((state: any) => state.splashReducer);
   const scrollRef = createRef(0);
   const {interpolate, Extrapolate} = Animated;
   const y = useValue(0);
@@ -65,7 +66,7 @@ export default () => {
     false,
   );
 
-  const confirmModal = (name, task_SEQ) => {
+  const confirmModal = (name, task_SEQ, image) => {
     const params = {
       alertType: 'confirm',
       title: '',
@@ -73,12 +74,13 @@ export default () => {
       cancelButtonText: '취소',
       okButtonText: '확인',
       okCallback: () => updateTask(name, task_SEQ),
+      image,
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
   };
 
-  const cancelModal = (name, task_SEQ) => {
+  const cancelModal = (name, task_SEQ, image) => {
     const params = {
       alertType: 'confirm',
       title: '',
@@ -86,6 +88,7 @@ export default () => {
       cancelButtonText: '취소',
       okButtonText: '확인',
       okCallback: () => cancelTask(name, task_SEQ),
+      image,
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
@@ -319,6 +322,7 @@ export default () => {
   const onScroll = onScrollEvent({y});
 
   useEffect(() => {
+    dispatch(setLoadingVisible(false));
     fetchData();
   }, []);
 
@@ -344,6 +348,7 @@ export default () => {
       setSearch={setSearch}
       isCancelToastVisible={isCancelToastVisible}
       isUpdateToastVisible={isUpdateToastVisible}
+      loading={loading}
     />
   );
 };

@@ -15,6 +15,10 @@ const Touchable = styled.TouchableOpacity`
   align-items: center;
 `;
 
+const IconContainer = styled.View`
+  height: 25px;
+`;
+
 const Text = styled.Text`
   font-size: ${styleGuide.fontSize.small}px;
   color: white;
@@ -32,7 +36,9 @@ export default () => {
           onPress={() => {
             navigation.navigate('HelpModalScreen');
           }}>
-          <HelpIcon size={20} />
+          <IconContainer>
+            <HelpIcon size={20} />
+          </IconContainer>
           <Text>도움말</Text>
         </Touchable>
       )}
@@ -40,7 +46,9 @@ export default () => {
         onPress={() => {
           navigation.navigate('MyPageMainScreen');
         }}>
-        <SettingIcon size={20} color="white" />
+        <IconContainer>
+          <SettingIcon size={20} color="white" />
+        </IconContainer>
         <Text>설정</Text>
       </Touchable>
     </Container>

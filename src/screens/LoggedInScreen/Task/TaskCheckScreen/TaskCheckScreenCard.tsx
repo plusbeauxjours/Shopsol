@@ -132,13 +132,12 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
           <Touchable
-            onLongPress={() => console.log('imagemodal')}
-            disabled={!item.IMG_LIST}>
-            {item.IMG_LIST?.length > 0 ? (
+            onPress={() => confirmModal(name, item.task_SEQ, item.IMG_LIST)}>
+            {item.IMG_LIST ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST[0],
+                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
@@ -157,8 +156,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           </Touchable>
         </GreyBox>
         <WhiteItem
-          onPress={() => confirmModal(name, item.task_SEQ, item.taskDate)}
-          onLongPress={() =>
+          onPress={() =>
             setTimeout(() => {
               navigation.navigate('TaskUpdateScreen', {
                 name,
@@ -196,13 +194,12 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
           <Touchable
-            onPress={() => console.log('imagemodal')}
-            disabled={!item.IMG_LIST}>
-            {item.IMG_LIST?.length > 0 ? (
+            onPress={() => cancelModal(name, item.task_SEQ, item.IMG_LIST)}>
+            {item.IMG_LIST ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST[0],
+                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
@@ -221,8 +218,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
           </Touchable>
         </GreyBox>
         <Item
-          onPress={() => cancelModal(name, item.task_SEQ)}
-          onLongPress={() => {}}
+          onPress={() => {}}
           rippleColor={'#999'}
           rippleDuration={600}
           rippleSize={1700}

@@ -269,23 +269,27 @@ export default ({route: {params}}) => {
           )?.images[0].IMAGE,
         });
       }
-      for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
-        buffer2.push({
-          NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
-          EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
-          IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
-        });
+      if (EMPLOYEE_LIST) {
+        for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
+          buffer2.push({
+            NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
+            EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
+            IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
+          });
+        }
+        setChoiceEmp(buffer1);
+        setEmplist(buffer2);
       }
-      setChoiceEmp(buffer1);
-      setEmplist(buffer2);
     } else {
       const buffer = [];
-      for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
-        buffer.push({
-          NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
-          EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
-          IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
-        });
+      if (EMPLOYEE_LIST) {
+        for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
+          buffer.push({
+            NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
+            EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
+            IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
+          });
+        }
       }
       setEmplist(buffer);
     }

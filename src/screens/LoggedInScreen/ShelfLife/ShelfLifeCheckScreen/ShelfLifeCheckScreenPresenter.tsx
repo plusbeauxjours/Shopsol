@@ -26,6 +26,10 @@ interface ICard {
   index?: number;
 }
 
+interface ILoading {
+  loading?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -130,7 +134,7 @@ const VerticalLine = styled.View`
   z-index: -1;
 `;
 
-const AddButtonContainer = styled.View`
+const AddButtonContainer = styled.View<ILoading>`
   position: absolute;
   z-index: 2;
   right: 30px;
@@ -138,7 +142,7 @@ const AddButtonContainer = styled.View`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  background-color: white;
+  background-color: ${(props) => (props.loading ? 'transparent' : 'white')};
 `;
 
 const AddButton = styled.TouchableOpacity`
@@ -300,6 +304,7 @@ export default ({
   barCodeCameraModalOpen,
   setBarCodeCameraModalOpen,
   handleBarCodeScanned,
+  loading,
 }) => {
   const cameraRef = useRef(null);
 
@@ -596,10 +601,25 @@ export default ({
               ready={ready}
             />
           )}
-          <AddButtonContainer>
-            <AddButton onPress={() => gotoAdd()}>
-              <AddIcon />
-            </AddButton>
+          <AddButtonContainer loading={loading}>
+            {loading ? (
+              <LottieView
+                style={{
+                  position: 'absolute',
+                  right: -15,
+                  bottom: -15,
+                  width: 150,
+                  height: 150,
+                }}
+                source={require('../../../../assets/animations/loading.json')}
+                loop
+                autoPlay
+              />
+            ) : (
+              <AddButton onPress={() => gotoAdd()}>
+                <AddIcon />
+              </AddButton>
+            )}
           </AddButtonContainer>
           <Modal
             isVisible={barCodeCameraModalOpen}

@@ -1,5 +1,8 @@
 import React from 'react';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
 import Modal from 'react-native-modal';
@@ -8,6 +11,9 @@ import Ripple from 'react-native-material-ripple';
 
 import {setAlertVisible} from '../redux/alertSlice';
 import styleGuide from '~/constants/styleGuide';
+import FastImage from 'react-native-fast-image';
+import Loader from '~/components/Loader';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 interface IColor {
   color: string;
@@ -98,6 +104,12 @@ const Row = styled.View`
   flex-direction: row;
 `;
 
+const ImageContainer = styled.TouchableOpacity`
+  height: ${hp('100%') - 300}px;
+  justify-content: center;
+  z-index: 2;
+`;
+
 export default ({alert}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -123,12 +135,45 @@ export default ({alert}) => {
     dispatch(setAlertVisible(false));
     alert?.cancelCallback && alert.cancelCallback();
   };
+
   return (
     <Modal
       onRequestClose={() => dispatch(setAlertVisible(false))}
       onBackdropPress={() => dispatch(setAlertVisible(false))}
-      style={{margin: 0, justifyContent: 'flex-end'}}
+      style={{
+        width: '100%',
+        height: '100%',
+        margin: 0,
+        justifyContent: 'flex-end',
+      }}
       isVisible={alert.visible}>
+      {alert.image && (
+        <ImageViewer
+          imageUrls={[{url: 'http://133.186.210.223/uploads/' + alert.image}]}
+          onSwipeDown={() => dispatch(setAlertVisible(false))}
+          backgroundColor={'transparent'}
+          saveToLocalByLongPress={false}
+          enableSwipeDown
+          useNativeDriver
+          enablePreload
+          loadingRender={() => <Loader />}
+          renderIndicator={() => null}
+          renderImage={(props) => {
+            console.log('ll', props.source.uri);
+            return (
+              <FastImage
+                style={{width: '100%', height: '100%'}}
+                source={{
+                  uri: props.source.uri,
+                  headers: {Authorization: 'someAuthToken'},
+                  priority: FastImage.priority.low,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            );
+          }}
+        />
+      )}
       {alert.alertType == 'explain' ? (
         <WhiteBox>
           <BackGround>

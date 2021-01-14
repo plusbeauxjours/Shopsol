@@ -9,6 +9,7 @@ import ShelfLifeCheckScreenPresenter from './ShelfLifeCheckScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import styleGuide from '~/constants/styleGuide';
+import {setLoadingVisible} from '~/redux/splashSlice';
 import {
   getSHELFLIFE_DATA,
   checkSHELFLIFE,
@@ -23,7 +24,7 @@ export default () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
+  const {loading} = useSelector((state: any) => state.splashReducer);
   const scrollRef = createRef(0);
   const {interpolate, Extrapolate} = Animated;
   const y = useValue(0);
@@ -69,7 +70,7 @@ export default () => {
     false,
   );
 
-  const confirmModal = (name, shelfLife_SEQ) => {
+  const confirmModal = (name, shelfLife_SEQ, image) => {
     const params = {
       alertType: 'confirm',
       title: '',
@@ -77,12 +78,13 @@ export default () => {
       cancelButtonText: '취소',
       okButtonText: '확인',
       okCallback: () => updateShelfLife(name, shelfLife_SEQ),
+      image,
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
   };
 
-  const cancelModal = (name, shelfLife_SEQ) => {
+  const cancelModal = (name, shelfLife_SEQ, image) => {
     const params = {
       alertType: 'confirm',
       title: '',
@@ -90,6 +92,7 @@ export default () => {
       cancelButtonText: '취소',
       okButtonText: '확인',
       okCallback: () => cancelShelfLife(name, shelfLife_SEQ),
+      image,
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
@@ -335,6 +338,7 @@ export default () => {
   };
 
   useEffect(() => {
+    dispatch(setLoadingVisible(false));
     fetchData();
   }, []);
 
@@ -365,6 +369,7 @@ export default () => {
       barCodeCameraModalOpen={barCodeCameraModalOpen}
       setBarCodeCameraModalOpen={setBarCodeCameraModalOpen}
       handleBarCodeScanned={handleBarCodeScanned}
+      loading={loading}
     />
   );
 };

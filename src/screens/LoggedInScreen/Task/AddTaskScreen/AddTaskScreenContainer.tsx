@@ -8,7 +8,7 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import * as ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import {setSplashVisible} from '~/redux/splashSlice';
+import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
 import utils from '~/constants/utils';
 
 export default ({route: {params}}) => {
@@ -121,16 +121,11 @@ export default ({route: {params}}) => {
 
     try {
       const {data} = await api.setTaskDataImg(formData);
-      await params?.fetchData();
       if (data.result == '0') {
         alertModal('연결에 실패하였습니다.');
-      } else {
-        alertModal('등록이 완료되었습니다.');
       }
     } catch (e) {
       console.log(e);
-    } finally {
-      dispatch(setSplashVisible({visible: false}));
     }
   };
 
@@ -138,10 +133,10 @@ export default ({route: {params}}) => {
     if (list.length == 0) {
       return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
     }
+    dispatch(setLoadingVisible(true));
     list.map((i) =>
       i.taskIMAGE ? taskDataImg(i, STORE_SEQ) : taskDataTempList.push(i),
     );
-    dispatch(setSplashVisible({visible: true}));
     navigation.goBack();
     if (taskDataTempList.length > 0) {
       try {
@@ -149,16 +144,15 @@ export default ({route: {params}}) => {
           STORE_SEQ,
           LIST: taskDataTempList,
         });
-        await params?.fetchData();
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
-        } else {
-          alertModal('등록이 완료되었습니다.');
         }
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible({visible: false}));
+        await params?.fetchData();
+        alertModal('등록이 완료되었습니다.');
+        dispatch(setLoadingVisible(false));
       }
     }
   };

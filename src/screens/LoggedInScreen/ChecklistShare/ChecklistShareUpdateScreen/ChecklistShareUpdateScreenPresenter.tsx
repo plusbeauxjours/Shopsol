@@ -226,6 +226,8 @@ export default ({
                     onChangeText={(text) => {
                       setTitle(text);
                     }}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={title}
                     maxLength={15}
                     style={{
@@ -249,6 +251,8 @@ export default ({
                     onChangeText={(text) => {
                       setContent(text);
                     }}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={content}
                     multiline={true}
                     style={{

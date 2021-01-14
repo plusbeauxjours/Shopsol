@@ -61,8 +61,8 @@ const Container = styled.View`
 const IconContainer = styled.TouchableOpacity`
   margin-top: 20px;
   margin-right: 10px;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
   background-color: ${styleGuide.palette.tertiary};
@@ -715,7 +715,7 @@ export default ({
                   onPress={() => {
                     navigation.navigate('HelpModalScreen');
                   }}>
-                  <HelpIcon size={22} />
+                  <HelpIcon size={18} />
                 </IconContainer>
               </SpaceRow>
               <Container>
@@ -784,7 +784,7 @@ export default ({
                   {editMode ? (
                     <CloseIcon size={24} color={'white'} />
                   ) : (
-                    <SettingIcon size={20} color={'white'} />
+                    <SettingIcon size={18} color={'white'} />
                   )}
                 </IconContainer>
               </SpaceRow>

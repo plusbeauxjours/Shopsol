@@ -250,7 +250,6 @@ export default ({
                   <IconContainer>
                     <CloseCircleIcon size={12} />
                   </IconContainer>
-                  {console.log(cameraPictureLast)}
                   <FastImage
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
@@ -300,6 +299,8 @@ export default ({
                     selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeName(text)}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={shelfLifeName}
                     maxLength={15}
                     multiline={true}
@@ -326,6 +327,8 @@ export default ({
                     selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setShelfLifeMemo(text)}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={shelfLifeMemo}
                     multiline={true}
                     style={{

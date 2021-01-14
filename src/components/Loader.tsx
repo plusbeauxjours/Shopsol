@@ -15,7 +15,7 @@ const Text = styled.Text`
 `;
 
 export default () => {
-  const {text} = useSelector((state: any) => state.splashReducer);
+  const {text, fullText} = useSelector((state: any) => state.splashReducer);
   return (
     <Container>
       <LottieView
@@ -27,11 +27,18 @@ export default () => {
         loop
         autoPlay
       />
-      {text.length > 0 && (
+      {fullText ? (
         <>
-          <Text>{text} 정보를 불러오는 중입니다.</Text>
+          <Text>{fullText}</Text>
           <Text style={{bottom: 10}}> 잠시만 기다려주세요.</Text>
         </>
+      ) : (
+        text.length > 0 && (
+          <>
+            <Text>{text} 정보를 불러오는 중입니다.</Text>
+            <Text style={{bottom: 10}}> 잠시만 기다려주세요.</Text>
+          </>
+        )
       )}
     </Container>
   );
