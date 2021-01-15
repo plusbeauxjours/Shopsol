@@ -153,6 +153,7 @@ export default ({route: {params}}) => {
                 fileType = 'image/jpeg';
               }
             }
+
             formData.append('image', {
               uri: utils.isAndroid
                 ? cameraPicture.uri

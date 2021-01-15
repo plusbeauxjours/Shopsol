@@ -253,9 +253,7 @@ export default ({
                   <FastImage
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
-                      uri: cameraPictureLast.includes('file')
-                        ? cameraPictureLast
-                        : 'http://133.186.210.223/uploads/' + cameraPictureLast,
+                      uri: cameraPictureLast,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}

@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import api from '../constants/LoggedInApi';
 import moment from 'moment';
-import { setSplashVisible } from '~/redux/splashSlice';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 const shelflifetSlice = createSlice({
   name: 'shelflife',
@@ -9,9 +9,8 @@ const shelflifetSlice = createSlice({
     SHELFLIFE_DATA: [],
   },
   reducers: {
-
     setSHELFLIFE_DATA(state, action) {
-      const { payload: SHELFLIFE_DATA } = action;
+      const {payload: SHELFLIFE_DATA} = action;
       return {
         ...state,
         SHELFLIFE_DATA,
@@ -19,7 +18,7 @@ const shelflifetSlice = createSlice({
     },
     checkSHELFLIFE(state, action) {
       const {
-        payload: { name, shelfLife_SEQ, checkEmpName, checkTime },
+        payload: {name, shelfLife_SEQ, checkEmpName, checkTime},
       } = action;
       const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
         (i) => i.shelfLife_SEQ === shelfLife_SEQ,
@@ -32,7 +31,7 @@ const shelflifetSlice = createSlice({
     },
     cancelSHELFLIFE(state, action) {
       const {
-        payload: { name, shelfLife_SEQ },
+        payload: {name, shelfLife_SEQ},
       } = action;
       const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
         (i) => i.shelfLife_SEQ === shelfLife_SEQ,
@@ -49,6 +48,7 @@ const shelflifetSlice = createSlice({
           shelfLifeName,
           shelfLifeDate,
           shelfLifeMemo,
+          IMG_LIST,
         },
       } = action;
       const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
@@ -58,11 +58,12 @@ const shelflifetSlice = createSlice({
         item.shelfLifeName = shelfLifeName;
         item.shelfLifeDate = shelfLifeDate;
         item.shelfLifeMemo = shelfLifeMemo;
+        item.IMG_LIST = IMG_LIST;
       }
     },
     removeSHELFLIFE_DATA(state, action) {
       const {
-        payload: { name, shelfLife_SEQ },
+        payload: {name, shelfLife_SEQ},
       } = action;
       const items = state.SHELFLIFE_DATA.find(
         (i) => i.name === name,
@@ -97,10 +98,10 @@ export const getSHELFLIFE_DATA = (
   DAY: string = moment().format('DD'),
 ) => async (dispatch, getState) => {
   const {
-    storeReducer: { STORE_SEQ },
+    storeReducer: {STORE_SEQ},
   } = getState();
   try {
-    const { data } = await api.getShelfLifeData({
+    const {data} = await api.getShelfLifeData({
       STORE_SEQ,
       YEAR,
       MONTH,

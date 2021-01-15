@@ -125,7 +125,7 @@ const GreyBox = styled.View`
   border-radius: 10px;
 `;
 
-export default ({name, item, confirmModal, cancelModal, fetchData}) => {
+export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
   const navigation = useNavigation();
   if (item.checkType === '0') {
     return (
@@ -137,7 +137,11 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST,
+                  uri:
+                    item.IMG_LIST.includes('file://') ||
+                    item.IMG_LIST.includes('http://')
+                      ? item.IMG_LIST
+                      : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
@@ -165,7 +169,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
                 taskDate: item.taskDate,
                 taskMemo: item.taskMemo,
                 taskImage: item.IMG_LIST,
-                fetchData,
+                onRefresh,
               });
             }, 100)
           }
@@ -200,7 +204,11 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
-                  uri: 'http://133.186.210.223/uploads/' + item.IMG_LIST,
+                  uri:
+                    item.IMG_LIST.includes('file://') ||
+                    item.IMG_LIST.includes('http://')
+                      ? item.IMG_LIST
+                      : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}

@@ -10,7 +10,7 @@ import api from '~/constants/LoggedInApi';
 import {updateTASK_DATA, removeTASK_DATA} from '~/redux/taskSlice';
 import TaskUpdateScreenPresenter from './TaskUpdateScreenPresenter';
 import utils from '~/constants/utils';
-import {setSplashVisible} from '~/redux/splashSlice';
+import {setLoadingVisible} from '~/redux/splashSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -24,7 +24,9 @@ export default ({route: {params}}) => {
     false,
   );
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(
-    params?.taskImage || '',
+    params?.taskImage
+      ? `http://133.186.210.223/uploads/${params?.taskImage}`
+      : '',
   );
 
   const alertModal = (text) => {
@@ -69,6 +71,7 @@ export default ({route: {params}}) => {
     }
     if (cameraPictureLast?.length === 0) {
       try {
+        dispatch(setLoadingVisible(true));
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
         dispatch(
@@ -78,6 +81,7 @@ export default ({route: {params}}) => {
             taskName,
             taskDate: moment(taskDate).format('YYYY-MM-DD'),
             taskMemo,
+            IMG_LIST: null,
           }),
         );
         const {data} = await api.updateTaskData({
@@ -86,12 +90,14 @@ export default ({route: {params}}) => {
           taskDATE: moment(taskDate).format('YYYY-MM-DD'),
           taskMEMO: taskMemo,
         });
-        await params?.fetchData();
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
         }
       } catch (e) {
         console.log(e);
+      } finally {
+        await params?.onRefresh();
+        dispatch(setLoadingVisible(false));
       }
     } else {
       const formData: any = new FormData();
@@ -121,9 +127,9 @@ export default ({route: {params}}) => {
       });
 
       try {
+        dispatch(setLoadingVisible(true));
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
-        await params?.fetchData();
         dispatch(
           updateTASK_DATA({
             name: params?.name,
@@ -131,17 +137,18 @@ export default ({route: {params}}) => {
             taskName,
             taskDate: moment(taskDate).format('YYYY-MM-DD'),
             taskMemo,
+            IMG_LIST: cameraPictureLast,
           }),
         );
         const {data} = await api.updateTaskDataImg(formData);
-        console.log(data);
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
         }
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible({visible: false}));
+        await params?.onRefresh();
+        dispatch(setLoadingVisible(false));
       }
     }
   };

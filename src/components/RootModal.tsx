@@ -158,20 +158,17 @@ export default ({alert}) => {
           enablePreload
           loadingRender={() => <Loader />}
           renderIndicator={() => null}
-          renderImage={(props) => {
-            console.log('ll', props.source.uri);
-            return (
-              <FastImage
-                style={{width: '100%', height: '100%'}}
-                source={{
-                  uri: props.source.uri,
-                  headers: {Authorization: 'someAuthToken'},
-                  priority: FastImage.priority.low,
-                }}
-                resizeMode={FastImage.resizeMode.contain}
-              />
-            );
-          }}
+          renderImage={(props) => (
+            <FastImage
+              style={{width: '100%', height: '100%'}}
+              source={{
+                uri: props.source.uri,
+                headers: {Authorization: 'someAuthToken'},
+                priority: FastImage.priority.low,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
         />
       )}
       {alert.alertType == 'explain' ? (

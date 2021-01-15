@@ -41,7 +41,7 @@ const taskSlice = createSlice({
     },
     updateTASK_DATA(state, action) {
       const {
-        payload: {name, task_SEQ, taskName, taskDate, taskMemo},
+        payload: {name, task_SEQ, taskName, taskDate, taskMemo, IMG_LIST},
       } = action;
       const item = state.TASK_DATA.find((i) => i.name === name).items.find(
         (i) => i.task_SEQ === task_SEQ,
@@ -50,6 +50,7 @@ const taskSlice = createSlice({
         item.taskName = taskName;
         item.taskDate = taskDate;
         item.taskMemo = taskMemo;
+        item.IMG_LIST = IMG_LIST;
       }
     },
     removeTASK_DATA(state, action) {

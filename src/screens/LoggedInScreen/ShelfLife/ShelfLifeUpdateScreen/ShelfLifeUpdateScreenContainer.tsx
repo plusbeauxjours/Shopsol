@@ -13,7 +13,7 @@ import {
 } from '~/redux/shelflifeSlice';
 import ShelfLifeUpdateScreenPresenter from './ShelfLifeUpdateScreenPresenter';
 import utils from '~/constants/utils';
-import {setSplashVisible} from '~/redux/splashSlice';
+import {setLoadingVisible} from '~/redux/splashSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -29,7 +29,9 @@ export default ({route: {params}}) => {
     moment(params?.shelfLifeDate),
   );
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(
-    params?.shelfLifeImage || '',
+    params?.shelfLifeImage
+      ? `http://133.186.210.223/uploads/${params?.shelfLifeImage}`
+      : '',
   );
 
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
@@ -79,6 +81,7 @@ export default ({route: {params}}) => {
     }
     if (cameraPictureLast?.length === 0) {
       try {
+        dispatch(setLoadingVisible(true));
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
         dispatch(
@@ -88,6 +91,7 @@ export default ({route: {params}}) => {
             shelfLifeName,
             shelfLifeDate: moment(shelfLifeDate).format('YYYY-MM-DD'),
             shelfLifeMemo,
+            IMG_LIST: null,
           }),
         );
         const {data} = await api.updateShelfLifeData({
@@ -101,6 +105,9 @@ export default ({route: {params}}) => {
         }
       } catch (e) {
         console.log(e);
+      } finally {
+        await params?.onRefresh();
+        dispatch(setLoadingVisible(false));
       }
     } else {
       const formData: any = new FormData();
@@ -133,9 +140,9 @@ export default ({route: {params}}) => {
       });
 
       try {
+        dispatch(setLoadingVisible(true));
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
-        await params?.fetchData();
         dispatch(
           updateSHELFLIFE_DATA({
             name: params?.name,
@@ -143,6 +150,7 @@ export default ({route: {params}}) => {
             shelfLifeName,
             shelfLifeDate: moment(shelfLifeDate).format('YYYY-MM-DD'),
             shelfLifeMemo,
+            IMG_LIST: cameraPictureLast,
           }),
         );
         const {data} = await api.updateShelfLifeDataImg(formData);
@@ -152,7 +160,8 @@ export default ({route: {params}}) => {
       } catch (e) {
         console.log(e);
       } finally {
-        dispatch(setSplashVisible({visible: false}));
+        await params?.onRefresh();
+        dispatch(setLoadingVisible(false));
       }
     }
   };

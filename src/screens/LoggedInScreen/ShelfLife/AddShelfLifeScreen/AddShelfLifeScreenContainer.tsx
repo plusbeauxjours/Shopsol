@@ -143,8 +143,6 @@ export default ({route: {params}}) => {
     }
     try {
       dispatch(setLoadingVisible(true));
-      console.log(list.filter((i) => i.shelfLifeIMAGE));
-
       list.map((i, index) => {
         i.shelfLifeIMAGE
           ? submitShelfLifeDataImg(i, STORE_SEQ)

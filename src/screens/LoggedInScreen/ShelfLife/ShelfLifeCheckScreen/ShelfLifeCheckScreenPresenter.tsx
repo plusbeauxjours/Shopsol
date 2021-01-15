@@ -294,7 +294,6 @@ export default ({
   onMeasurement,
   ready,
   gotoAdd,
-  fetchData,
   search,
   setSearch,
   codenumber,
@@ -503,7 +502,7 @@ export default ({
                                   item={item}
                                   confirmModal={confirmModal}
                                   cancelModal={cancelModal}
-                                  fetchData={fetchData}
+                                  onRefresh={onRefresh}
                                 />
                               </View>
                             </React.Fragment>
@@ -514,7 +513,7 @@ export default ({
                                 item={item}
                                 confirmModal={confirmModal}
                                 cancelModal={cancelModal}
-                                fetchData={fetchData}
+                                onRefresh={onRefresh}
                               />
                             </View>
                           );
@@ -543,7 +542,7 @@ export default ({
                                 item={item}
                                 confirmModal={confirmModal}
                                 cancelModal={cancelModal}
-                                fetchData={fetchData}
+                                onRefresh={onRefresh}
                               />
                             </View>
                           </React.Fragment>
@@ -554,7 +553,7 @@ export default ({
                               item={item}
                               confirmModal={confirmModal}
                               cancelModal={cancelModal}
-                              fetchData={fetchData}
+                              onRefresh={onRefresh}
                             />
                           </View>
                         );
@@ -572,7 +571,7 @@ export default ({
                               item={item}
                               confirmModal={confirmModal}
                               cancelModal={cancelModal}
-                              fetchData={fetchData}
+                              onRefresh={onRefresh}
                             />
                           </View>
                         </React.Fragment>
@@ -583,7 +582,7 @@ export default ({
                             item={item}
                             confirmModal={confirmModal}
                             cancelModal={cancelModal}
-                            fetchData={fetchData}
+                            onRefresh={onRefresh}
                           />
                         </View>
                       );
