@@ -234,6 +234,7 @@ export default {
   saveOcr: (data: any) => callApi('post', '/auth/saveocr/', data),
   changeToken: (data: any) => callApi('post', '/auth/changeToken/', data),
   getBarCode: (codenumber: string) =>
-    callApi('get', `/auth/getBarCode/?codenumber=${codenumber}`),
-  insertQR: (data: any) => callApi('get', '/auth/insertQR/', data),
+    callApi('get', `/auth/getBarCode?codenumber=${codenumber}`),
+  insertQR: (STORE_SEQ: string, QR_NUM: any) =>
+    callApi('get', `/auth/insertQR?STORE_SEQ=${STORE_SEQ}&QR_NUM=${QR_NUM}`),
 };

@@ -352,7 +352,6 @@ export default ({
   AVATAR,
   initLoading,
   gotoScreen,
-  setCodenumber,
   qrCameraMode,
   setQrCameraMode,
   QR_Num,
@@ -756,7 +755,8 @@ export default ({
                   />
                 )}
                 {TOTAL_COUNT !== 0 &&
-                  (STORE_DATA.resultdata?.QR_Num || QR_Num ? (
+                  ((initLoading && QR_Num) ||
+                  (!initLoading && STORE_DATA.resultdata?.QR_Num) ? (
                     <MenuCntContainer
                       selection={'QR보기'}
                       paging={'qrViewScreen'}
@@ -906,7 +906,8 @@ export default ({
                           )
                         )}
                         {TOTAL_COUNT !== 0 &&
-                          (STORE_DATA.resultdata?.QR_Num || QR_Num ? (
+                          ((initLoading && QR_Num) ||
+                          (!initLoading && STORE_DATA.resultdata?.QR_Num) ? (
                             <MenuCntContainer
                               selection={'QR보기'}
                               paging={'qrViewScreen'}
@@ -1115,7 +1116,6 @@ export default ({
         avoidKeyboard={true}
         style={{
           margin: 0,
-          alignItems: 'center',
         }}>
         {loading ? (
           <LottieView
@@ -1171,14 +1171,7 @@ export default ({
             onFacesDetected={() => {}}
             onFocusChanged={() => {}}
             onZoomChanged={() => {}}
-            onBarCodeRead={({data}) => handleBarCodeScanned1(data)}
-            androidCameraPermissionOptions={{
-              title: '카메라 권한 설정',
-              message:
-                '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-              buttonPositive: '확인',
-              buttonNegative: '취소',
-            }}>
+            onBarCodeRead={({data}) => handleBarCodeScanned1(data)}>
             <BarcodeMask
               width={300}
               height={300}
@@ -1203,11 +1196,9 @@ export default ({
         isVisible={qrCameraModalOpen2}
         onBackdropPress={() => {
           setQrCameraModalOpen2(false);
-          setCodenumber('');
         }}
         onRequestClose={() => {
           setQrCameraModalOpen2(false);
-          setCodenumber('');
         }}
         avoidKeyboard={true}
         style={{
@@ -1241,7 +1232,6 @@ export default ({
           <Footer
             onPress={() => {
               setQrCameraModalOpen2(false);
-              setCodenumber('');
             }}>
             <FooterText>닫기</FooterText>
           </Footer>
@@ -1329,14 +1319,7 @@ export default ({
             onFacesDetected={() => {}}
             onFocusChanged={() => {}}
             onZoomChanged={() => {}}
-            onBarCodeRead={({data}) => handleBarCodeScanned2(data)}
-            androidCameraPermissionOptions={{
-              title: '카메라 권한 설정',
-              message:
-                '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-              buttonPositive: '확인',
-              buttonNegative: '취소',
-            }}>
+            onBarCodeRead={({data}) => handleBarCodeScanned2(data)}>
             <BarcodeMask
               width={300}
               height={300}
@@ -1349,7 +1332,6 @@ export default ({
               onPress={() => {
                 setShowPictureModal(false);
                 setQrCameraMode(false);
-                setCodenumber('');
               }}>
               <FooterText>닫기</FooterText>
             </Footer>

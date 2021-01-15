@@ -121,6 +121,7 @@ const DeleteButtonText = styled.Text`
 const ModalCheckEmpList = styled.View`
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
   padding: 25px 10px;
   width: ${wp('100%')}px;
   background-color: white;

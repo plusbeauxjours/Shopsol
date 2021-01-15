@@ -40,9 +40,9 @@ const Touchable = styled(RNBounceable)<IActive>`
   margin-right: ${ToucahbleMargin}px;
   background-color: ${(props) =>
     props.isSelected
-      ? 'rgba(232,83,86, 1)'
+      ? styleGuide.palette.primary
       : props.activeDays?.indexOf(props.index) > -1
-      ? 'rgba(232,83,86, 0.2)'
+      ? '#ebd0d1'
       : 'white'};
   border-width: ${(props) =>
     props.isSelected

@@ -351,7 +351,7 @@ export default ({
         onPress={() => setIsEndTimeModalVisible(true)}>
         <SideText>퇴근시간</SideText>
         <TimePickBoxTimeText>
-          {noEnd ? '미출근' : moment(endTime).format('kk:mm')}
+          {noEnd ? '미퇴근' : moment(endTime).format('kk:mm')}
         </TimePickBoxTimeText>
       </RowSpaceTouchable>
       <WhiteSpace />

@@ -43,7 +43,7 @@ const Column = styled.View`
   align-self: center;
   opacity: 0.06;
   width: 30px;
-  background-color:${styleGuide.palette.primary}
+  background-color: ${styleGuide.palette.primary};
   border-top-right-radius: 13px;
   border-top-left-radius: 13px;
 `;
@@ -55,7 +55,7 @@ const Top = styled.View<IColumn>`
   align-self: center;
   width: 30px;
   background-color: ${(props) =>
-    props.isSelected ? styleGuide.palette.primary : 'rgba(232, 83, 86, 0.2)'};
+    props.isSelected ? styleGuide.palette.primary : '#ebd0d1'};
   border-radius: 14px;
   justify-content: center;
   align-items: center;
@@ -127,11 +127,11 @@ const VacationTop = styled.View<IColumn>`
   align-self: center;
   width: 30px;
   background-color: ${(props) =>
-    props.isSelected ? styleGuide.palette.primary : 'rgba(232, 83, 86, 0.2)'};
+    props.isSelected ? styleGuide.palette.primary : '#ebd0d1'};
   border-radius: 14px;
   justify-content: center;
   align-items: center;
-  border-width: 0.5px;
+  border-width: 0.7px;
   background-color: white;
   border-color: ${(props) =>
     props.isSelected ? 'rgba(127, 127, 127, 0.6)' : 'rgba(127, 127, 127, 0.3)'};
@@ -176,26 +176,26 @@ export default ({data, toDay}) => {
                 </VacationContainer>
               );
             } else {
+              return (
+                <ColumnContainer
+                  key={index}
+                  index={index}
+                  isSelected={selectedIndex == index.toString()}
+                  onPress={() => setSelectedIndex(index.toString())}
+                  height={lerp(0, height, item / maxY)}
+                  bounceEffect={0.95}>
+                  <Column />
+                  <Top isSelected={selectedIndex == index.toString()}>
+                    <TopText isSelected={selectedIndex == index.toString()}>
+                      {moment(toDay)
+                        .startOf('isoWeek')
+                        .add(index, 'days')
+                        .format('D')}
+                    </TopText>
+                  </Top>
+                </ColumnContainer>
+              );
             }
-            return (
-              <ColumnContainer
-                key={index}
-                index={index}
-                isSelected={selectedIndex == index.toString()}
-                onPress={() => setSelectedIndex(index.toString())}
-                height={lerp(0, height, item / maxY)}
-                bounceEffect={0.95}>
-                <Column />
-                <Top isSelected={selectedIndex == index.toString()}>
-                  <TopText isSelected={selectedIndex == index.toString()}>
-                    {moment(toDay)
-                      .startOf('isoWeek')
-                      .add(index, 'days')
-                      .format('D')}
-                  </TopText>
-                </Top>
-              </ColumnContainer>
-            );
           })}
         </GraphBox>
         {['월', '화', '수', '목', '금', '토', '일'].map((day, index) => {

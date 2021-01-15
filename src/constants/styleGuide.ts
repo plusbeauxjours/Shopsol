@@ -6,6 +6,8 @@ const styleGuide = {
         primary: "#2c6868",
         secondary: "#ed7171",
         tertiary: "#499c9b",
+        headerColor: "#2c6868",
+        graphColor: "#ebd0d1",
         borderColor: "#f2f2f2",
         greyColor: "#7c7c7c",
         lightGreyColor: '#d0d0d0'

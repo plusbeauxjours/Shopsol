@@ -120,10 +120,6 @@ const EmpCardRow = styled.View`
   justify-content: space-between;
   align-items: center;
   width: ${wp('100%') - 80}px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${styleGuide.palette.borderColor};
-  padding-bottom: 10px;
-  margin-bottom: 20px;
 `;
 
 const Bold = styled.Text`
@@ -762,7 +758,7 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleText>지각률</TitleText>
+                  <TitleText>지각률 </TitleText>
                   <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}
@@ -836,7 +832,7 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleText>조퇴률</TitleText>
+                  <TitleText>조퇴률 </TitleText>
                   <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil(
@@ -912,7 +908,7 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleText>결근률</TitleText>
+                  <TitleText>결근률 </TitleText>
                   <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil(
@@ -988,10 +984,10 @@ export default ({
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
                   rippleOpacity={0.1}>
-                  <TitleText>평균 휴게시간</TitleText>
+                  <TitleText>평균&nbsp;휴게시간</TitleText>
                   <CardGreyLine />
                   <DonutCard
-                    percentage={totalREST_TIME / totlaWORKING_EMP}
+                    percentage={Math.ceil(totalREST_TIME / totlaWORKING_EMP)}
                     color={styleGuide.palette.primary}
                     max={60}
                   />
@@ -999,7 +995,7 @@ export default ({
                     <PercentageText
                       color={styleGuide.palette.primary}
                       style={{marginTop: 10}}>
-                      {totalREST_TIME / totlaWORKING_EMP}분
+                      {Math.ceil(totalREST_TIME / totlaWORKING_EMP)}분
                     </PercentageText>
                   </DodnutTextContainer>
                   <TitleText>휴게시간 상위직원</TitleText>

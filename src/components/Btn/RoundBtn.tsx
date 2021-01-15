@@ -60,7 +60,7 @@ export default ({
         isWhiteBack={isWhiteBack}
         onPressIn={onPressIn}
         onPress={onPress}
-        rippleColor={'#e39a9c'}
+        rippleColor={'#63c4c2'}
         rippleDuration={600}
         rippleSize={1200}
         rippleContainerBorderRadius={30}

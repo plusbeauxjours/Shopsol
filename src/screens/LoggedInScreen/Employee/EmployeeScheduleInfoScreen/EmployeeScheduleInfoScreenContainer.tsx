@@ -372,7 +372,7 @@ export default ({route: {params}}) => {
 
   const fetchData = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '일정'}));
       const {data} = await api.getEmp(EMP_SEQ);
       if (data.message === 'SUCCESS') {
         setData(data.result);

@@ -130,7 +130,12 @@ export default ({route: {params}}) => {
 
   const registerFn = async (TYPE) => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          fullText: `${NAME}님의 휴무를 적용하는 중입니다.`,
+        }),
+      );
       const {data} = await api.createScheduleVacation2({
         EMP_SEQ: EMP_ID,
         STORE_ID: STORE_SEQ,

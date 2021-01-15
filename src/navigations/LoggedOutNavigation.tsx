@@ -39,7 +39,7 @@ export default () => {
           ...TransitionPresets.SlideFromRightIOS,
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
-            backgroundColor: styleGuide.palette.primary,
+            backgroundColor: styleGuide.palette.headerColor,
             borderColor: 'white',
             borderWidth: 0,
           },

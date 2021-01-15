@@ -34,6 +34,7 @@ export default ({route: {params}}) => {
     GPS,
     QR_Num,
   } = params;
+  console.log('QR_Num', QR_Num);
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
   const {
     AVATAR,
@@ -58,7 +59,6 @@ export default ({route: {params}}) => {
   const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
   const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
-  const [codenumber, setCodenumber] = useState<string>('');
   const [qrCameraMode, setQrCameraMode] = useState<boolean>(false);
   const [sucessModalOpen, setSucessModalOpen] = useState<boolean>(false);
   const [failModalOpen, setFailModalOpen] = useState<boolean>(false);
@@ -359,17 +359,24 @@ export default ({route: {params}}) => {
   };
 
   // 사업장QR 스캔
-  const handleBarCodeScanned2 = (codenumber) => {
+  const handleBarCodeScanned2 = async (codenumber) => {
     setQrCameraModalOpen2(false);
     if (codenumber) {
-      setTimeout(async () => {
-        const {data} = await api.insertQR({STORE_SEQ, QR_NUM: codenumber});
-        console.log('handleBarCodeScanned2', data, 'codenumber', codenumber);
-        dispatch(updateQR_Num(codenumber));
+      try {
+        const {data} = await api.insertQR(STORE_SEQ, codenumber);
         if (data.message !== 'SUCCESS') {
           alertModal('', '연결에 실패하였습니다.');
+        } else {
+          alertModal('', 'QR코드를 등록하였습니다.');
+          dispatch(updateQR_Num(codenumber));
         }
-      }, 500);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setQrCameraModalOpen2(false);
+        setShowPictureModal(false);
+        setQrCameraMode(false);
+      }
     }
   };
 
@@ -582,7 +589,6 @@ export default ({route: {params}}) => {
       AVATAR={AVATAR}
       initLoading={initLoading}
       gotoScreen={gotoScreen}
-      setCodenumber={setCodenumber}
       qrCameraMode={qrCameraMode}
       setQrCameraMode={setQrCameraMode}
       QR_Num={QR_Num}

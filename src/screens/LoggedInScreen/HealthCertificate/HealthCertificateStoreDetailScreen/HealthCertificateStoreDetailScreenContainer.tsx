@@ -28,7 +28,7 @@ export default () => {
 
   const onRefresh = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '위생교육증'}));
       await fetchData();
     } catch (e) {
       console.log(e);
