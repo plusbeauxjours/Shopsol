@@ -11,7 +11,7 @@ import styleGuide from '~/constants/styleGuide';
 
 const BigText = styled.Text`
   color: #000;
-  font-size: 32px;
+  font-size: 24px;
 `;
 const Text = styled.Text`
   color: #000;
@@ -64,8 +64,12 @@ export default ({
           top: 60,
           zIndex: 15,
         }}
-        source={{uri: `http://133.186.210.223/uploads/${AVATAR}`}}
-        resizeMode={FastImage.resizeMode.contain}
+        source={{
+          uri: `http://133.186.210.223/uploads/${AVATAR}`,
+          headers: {Authorization: 'someAuthToken'},
+          priority: FastImage.priority.low,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
       />
       <LottieView
         style={{

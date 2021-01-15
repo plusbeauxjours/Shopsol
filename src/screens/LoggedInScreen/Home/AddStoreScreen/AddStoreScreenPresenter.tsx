@@ -5,6 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Animated from 'react-native-reanimated';
 
 import InputLine from '~/components/InputLine';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
@@ -278,6 +279,7 @@ export default ({
   categoryCheck,
   setStoreCategoryTypeEtc,
   storeCategoryTypeEtc,
+  scrollRef,
 }) => {
   const RenderDayRowData = ({rowData, rowNum}) => {
     let value = JSON.parse(JSON.stringify(days));
@@ -348,7 +350,8 @@ export default ({
 
   return (
     <BackGround>
-      <ScrollView
+      <Animated.ScrollView
+        ref={scrollRef}
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}>
@@ -409,9 +412,15 @@ export default ({
             <WhiteSpace style={{height: 30}} />
             <InputCaseRow>
               <Text>사업장분류</Text>
-              <RequestBorderButton onPress={() => setModalVisible5(true)}>
-                <RequestBorderText> {storeCategoryType}</RequestBorderText>
-              </RequestBorderButton>
+              {storeCategoryType == '분류 선택' ? (
+                <RequestButton onPress={() => setModalVisible5(true)}>
+                  <RequestText>{storeCategoryType}</RequestText>
+                </RequestButton>
+              ) : (
+                <RequestBorderButton onPress={() => setModalVisible5(true)}>
+                  <RequestBorderText>{storeCategoryType}</RequestBorderText>
+                </RequestBorderButton>
+              )}
             </InputCaseRow>
             {storeCategoryType == '기타' && (
               <>
@@ -572,7 +581,7 @@ export default ({
             style={{margin: 0, justifyContent: 'flex-end'}}
             avoidKeyboard={true}>
             <ModalContainer>
-              <ModalList onPress={() => onPressEarly(0, '0')}>
+              <ModalList onPress={() => onPressEarly(0, '1')}>
                 <ModalText>0분</ModalText>
               </ModalList>
               <ModalList onPress={() => onPressEarly(5, '1')}>
@@ -602,7 +611,7 @@ export default ({
             style={{margin: 0, justifyContent: 'flex-end'}}
             avoidKeyboard={true}>
             <ModalContainer>
-              <ModalList onPress={() => onPressLate(0, '0')}>
+              <ModalList onPress={() => onPressLate(0, '1')}>
                 <ModalText>0분</ModalText>
               </ModalList>
               <ModalList onPress={() => onPressLate(5, '1')}>
@@ -721,20 +730,21 @@ export default ({
             text={'등록하기'}
             onPress={() => submit()}
             isRegisted={
-              NAME !== '' &&
-              NAME?.length < 11 &&
-              ADDR1 !== '' &&
-              ADDR2 !== '' &&
-              storeCategoryType !== '분류 선택' && //사업장분류
-              categoryCheck == true && //사업장분류
-              distanceCheck == true && //출퇴근 허용거리
-              timeCheck == true && //지각 허용시간
-              EARLYtimeCheck == true && //조퇴 허용시간
-              dayCheck == true //급여정산일
+              true
+              // NAME !== '' &&
+              // NAME?.length < 11 &&
+              // ADDR1 !== '' &&
+              // ADDR2 !== '' &&
+              // storeCategoryType !== '분류 선택' && //사업장분류
+              // categoryCheck == true && //사업장분류
+              // distanceCheck == true && //출퇴근 허용거리
+              // timeCheck == true && //지각 허용시간
+              // EARLYtimeCheck == true && //조퇴 허용시간
+              // dayCheck == true //급여정산일
             }
           />
         </Container>
-      </ScrollView>
+      </Animated.ScrollView>
     </BackGround>
   );
 };

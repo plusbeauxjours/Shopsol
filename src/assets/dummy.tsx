@@ -1200,6 +1200,3 @@ export const resultdata = {
     weekpaytotal: 0,
   },
 ];
-
-
-[

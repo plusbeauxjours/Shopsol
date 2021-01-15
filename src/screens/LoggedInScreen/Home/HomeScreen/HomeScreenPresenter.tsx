@@ -644,10 +644,10 @@ export default ({
                 style={{width: wp('100%') - 40, height: 300}}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={{
-                  latitude: lat,
-                  longitude: long,
-                  // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                  // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                  // latitude: lat,
+                  // longitude: long,
+                  latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                  longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   latitudeDelta: 0.005,
                   longitudeDelta: 0.005,
                 }}>
@@ -680,10 +680,10 @@ export default ({
                     setWorkingModalOpen(true)
                   }
                   coordinate={{
-                    latitude: lat,
-                    longitude: long,
-                    // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                    // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                    // latitude: lat,
+                    // longitude: long,
+                    latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                    longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
                   }}>
                   <UserMarker
                     distance={
@@ -1267,7 +1267,7 @@ export default ({
           />
         ) : sucessModalOpen ? (
           <GoWorkingSuccessAnimation
-            GENDER={GENDER}
+            AVATAR={AVATAR}
             STORE_NAME={STORE_NAME}
             MEMBER_NAME={MEMBER_NAME}
             setSucessModalOpen={setSucessModalOpen}

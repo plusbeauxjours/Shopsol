@@ -9,6 +9,8 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import {updateTASK_DATA, removeTASK_DATA} from '~/redux/taskSlice';
 import TaskUpdateScreenPresenter from './TaskUpdateScreenPresenter';
+import utils from '~/constants/utils';
+import {setSplashVisible} from '~/redux/splashSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -21,7 +23,9 @@ export default ({route: {params}}) => {
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
   );
-  const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
+  const [cameraPictureLast, setCameraPictureLast] = useState<any>(
+    params?.taskImage || '',
+  );
 
   const alertModal = (text) => {
     const params = {
@@ -63,30 +67,82 @@ export default ({route: {params}}) => {
     if (taskName == '') {
       alertModal('수정할 업무명을 입력해주세요.');
     }
-    try {
-      navigation.goBack();
-      alertModal('수정이 완료되었습니다.');
-      dispatch(
-        updateTASK_DATA({
-          name: params?.name,
+    if (cameraPictureLast?.length === 0) {
+      try {
+        navigation.goBack();
+        alertModal('수정이 완료되었습니다.');
+        dispatch(
+          updateTASK_DATA({
+            name: params?.name,
+            task_SEQ,
+            taskName,
+            taskDate: moment(taskDate).format('YYYY-MM-DD'),
+            taskMemo,
+          }),
+        );
+        const {data} = await api.updateTaskData({
           task_SEQ,
-          taskName,
-          taskDate: moment(taskDate).format('YYYY-MM-DD'),
-          taskMemo,
-        }),
-      );
-      const {data} = await api.updateTaskData({
-        task_SEQ,
-        taskNAME: taskName,
-        taskDATE: moment(taskDate).format('YYYY-MM-DD'),
-        taskMEMO: taskMemo,
-      });
-      await params?.fetchData();
-      if (data.result == '0') {
-        alertModal('연결에 실패하였습니다.');
+          taskNAME: taskName,
+          taskDATE: moment(taskDate).format('YYYY-MM-DD'),
+          taskMEMO: taskMemo,
+        });
+        await params?.fetchData();
+        if (data.result == '0') {
+          alertModal('연결에 실패하였습니다.');
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
+    } else {
+      const formData: any = new FormData();
+      formData.append('task_SEQ', task_SEQ);
+      formData.append('taskNAME', taskName);
+      formData.append('taskDATE', moment(taskDate).format('YYYY-MM-DD'));
+      formData.append('taskMEMO', taskMemo);
+
+      const fileInfoArr = cameraPictureLast.split('/');
+      const fileInfo = fileInfoArr[fileInfoArr.length - 1];
+      const extensionIndex = fileInfo.indexOf('.');
+      let fileName = fileInfo;
+      let fileType = '';
+      if (extensionIndex > -1) {
+        fileName = fileInfo;
+        fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
+        if (fileType === 'image/jpg') {
+          fileType = 'image/jpeg';
+        }
+      }
+      formData.append('image', {
+        uri: utils.isAndroid
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
+        name: fileName,
+        type: fileType,
+      });
+
+      try {
+        navigation.goBack();
+        alertModal('수정이 완료되었습니다.');
+        await params?.fetchData();
+        dispatch(
+          updateTASK_DATA({
+            name: params?.name,
+            task_SEQ,
+            taskName,
+            taskDate: moment(taskDate).format('YYYY-MM-DD'),
+            taskMemo,
+          }),
+        );
+        const {data} = await api.updateTaskDataImg(formData);
+        console.log(data);
+        if (data.result == '0') {
+          alertModal('연결에 실패하였습니다.');
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        dispatch(setSplashVisible({visible: false}));
+      }
     }
   };
 

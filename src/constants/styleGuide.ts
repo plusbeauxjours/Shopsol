@@ -3,9 +3,9 @@ const styleGuide = {
     marginSpacing: 20,
     palette: {
         backgroundPrimary: "#f6f6f6",
-        primary: "#e85356",
-        secondary: "#f4aaab",
-        tertiary: "#6bc5db",
+        primary: "#2c6868",
+        secondary: "#ed7171",
+        tertiary: "#499c9b",
         borderColor: "#f2f2f2",
         greyColor: "#7c7c7c",
         lightGreyColor: '#d0d0d0'

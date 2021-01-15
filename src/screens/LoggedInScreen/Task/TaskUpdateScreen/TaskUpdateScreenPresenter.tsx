@@ -245,7 +245,7 @@ export default ({
             <Row>
               {cameraPictureLast ? (
                 <Touchable
-                  onPress={() => setCameraPictureLast(null)}
+                  onPress={() => setCameraPictureLast('')}
                   disabled={!cameraPictureLast}>
                   <IconContainer>
                     <CloseCircleIcon size={12} />
@@ -253,7 +253,9 @@ export default ({
                   <FastImage
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
-                      uri: cameraPictureLast,
+                      uri: cameraPictureLast.includes('file')
+                        ? cameraPictureLast
+                        : 'http://133.186.210.223/uploads/' + cameraPictureLast,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -373,7 +375,7 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
-                  <HalfBotton onPress={() => setCameraPictureLast(null)}>
+                  <HalfBotton onPress={() => setCameraPictureLast('')}>
                     <HalfBottonText style={{color: styleGuide.palette.primary}}>
                       재촬영
                     </HalfBottonText>

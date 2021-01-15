@@ -5,7 +5,10 @@ const callApi = async (method: string, path: string, data?: any) => {
     Accept: 'application/json',
     // 'Content-Type': 'application/json',
     'Content-Type':
-      path == '/auth/setshelfLifeDataImg/' || path == '/auth/setTaskDataImg/'
+      path == '/auth/setshelfLifeDataImg/' ||
+      path == '/auth/setTaskDataImg/' ||
+      path == '/auth/updateShelfLifeDataImg/' ||
+      path == '/auth/updateTaskDataImg/'
         ? 'multipart/form-data'
         : 'application/json',
   };
@@ -83,6 +86,8 @@ export default {
   checkTaskData: (data: any) => callApi('post', '/auth/checkTaskData/', data),
   cancelTaskData: (data: any) => callApi('post', '/auth/cancelTaskData/', data),
   updateTaskData: (data: any) => callApi('post', '/auth/updateTaskData/', data),
+  updateTaskDataImg: (data: any) =>
+    callApi('post', '/auth/updateTaskDataImg/', data),
   deleteTaskData: (data: any) => callApi('post', '/auth/deleteTaskData/', data),
   setTaskData: (data: any) => callApi('post', '/auth/setTaskData/', data),
   setTaskDataImg: (data: any) => callApi('post', '/auth/setTaskDataImg/', data),

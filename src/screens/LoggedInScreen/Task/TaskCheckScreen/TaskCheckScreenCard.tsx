@@ -164,6 +164,7 @@ export default ({name, item, confirmModal, cancelModal, fetchData}) => {
                 taskName: item.taskName,
                 taskDate: item.taskDate,
                 taskMemo: item.taskMemo,
+                taskImage: item.IMG_LIST,
                 fetchData,
               });
             }, 100)
