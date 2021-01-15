@@ -424,10 +424,11 @@ export default ({
             <>
               <LottieView
                 style={{
-                  width: 160,
-                  height: 160,
+                  width: 150,
+                  height: 150,
+                  marginBottom: 40,
                 }}
-                source={require('../../../../assets/animations/dashBoardLoader.json')}
+                source={require('../../../../assets/animations/loading.json')}
                 loop
                 autoPlay
               />

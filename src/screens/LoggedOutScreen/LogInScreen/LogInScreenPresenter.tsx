@@ -91,12 +91,11 @@ export default ({
         <Container>
           <LogoText isIphoneX={isIphoneX()}>
             <FastImage
-              style={{height: 100, width: 200}}
+              style={{height: 200, width: 200}}
               source={require('../../../assets/images/shopSol.png')}
               resizeMode={FastImage.resizeMode.stretch}
             />
           </LogoText>
-          <WhiteSpace />
           <TextInputBox>
             <TextInputContainer>
               <GreyText>ID</GreyText>

@@ -50,7 +50,7 @@ const Footer = styled.View`
 `;
 
 const WhiteSpace = styled.View`
-  height: 30px;
+  height: 10px;
 `;
 
 const LoginButton = styled(Ripple)`
@@ -71,11 +71,10 @@ export default ({gotoLogin, gotoVerification}) => {
       <Container>
         <Logo>
           <FastImage
-            style={{height: 100, width: 200}}
+            style={{height: 200, width: 200}}
             source={require('../../../assets/images/shopSol.png')}
             resizeMode={FastImage.resizeMode.stretch}
           />
-          <WhiteSpace />
           <LoginButton
             onPress={() => gotoLogin()}
             rippleColor={'#666'}

@@ -20,10 +20,11 @@ export default () => {
     <Container>
       <LottieView
         style={{
-          width: 200,
-          height: 200,
+          width: 150,
+          height: 150,
+          marginBottom: 40,
         }}
-        source={require('../assets/animations/loader.json')}
+        source={require('../assets/animations/loading.json')}
         loop
         autoPlay
       />

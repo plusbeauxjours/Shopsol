@@ -840,10 +840,11 @@ export default ({
                       <LottieView
                         style={{
                           marginTop: 20,
-                          width: 160,
-                          height: 160,
+                          width: 150,
+                          height: 150,
+                          marginBottom: 40,
                         }}
-                        source={require('../../../../assets/animations/dashBoardLoader.json')}
+                        source={require('../../../../assets/animations/loading.json')}
                         loop
                         autoPlay
                       />
@@ -1003,10 +1004,11 @@ export default ({
                       <LottieView
                         style={{
                           marginTop: 20,
-                          width: 160,
-                          height: 160,
+                          width: 150,
+                          height: 150,
+                          marginBottom: 40,
                         }}
-                        source={require('../../../../assets/animations/dashBoardLoader.json')}
+                        source={require('../../../../assets/animations/loading.json')}
                         loop
                         autoPlay
                       />
@@ -1117,8 +1119,8 @@ export default ({
         }}>
         {loading ? (
           <LottieView
-            style={{width: 200, height: 200}}
-            source={require('../../../../assets/animations/loader.json')}
+            style={{width: 150, height: 150, marginBottom: 40}}
+            source={require('../../../../assets/animations/loading.json')}
             loop
             autoPlay
           />
@@ -1260,8 +1262,8 @@ export default ({
         }}>
         {loading ? (
           <LottieView
-            style={{width: 200, height: 200}}
-            source={require('../../../../assets/animations/loader.json')}
+            style={{width: 150, height: 150, marginBottom: 40}}
+            source={require('../../../../assets/animations/loading.json')}
             loop
             autoPlay
           />
