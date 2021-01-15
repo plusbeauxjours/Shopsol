@@ -124,8 +124,14 @@ export default ({route: {params}}) => {
       return alertModal('교육구분을 선택해주세요.');
     }
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          fullText: '위생교육증을 수정중입니다.',
+        }),
+      );
       const formData: any = new FormData();
+
       formData.append('businesstype', businesstype);
       formData.append('position', position);
       formData.append('owner', owner);
@@ -175,7 +181,12 @@ export default ({route: {params}}) => {
 
   const checkOrcFn = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          fullText: '문자인식(OCR) 기술로 정보를 인식중입니다.',
+        }),
+      );
       const formData: any = new FormData();
       formData.append('MEMBER_SEQ', MEMBER_SEQ);
 

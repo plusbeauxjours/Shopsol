@@ -87,7 +87,12 @@ export default ({route: {params}}) => {
       return alertModal('444같은 문자를 4번 이상 사용하실 수 없습니다.');
     }
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          fullText: '소중한 회원님의 정보를 검토중입니다.',
+        }),
+      );
       const {data} = await api.signUp({
         NAME: name,
         BIRTHDATE: moment(birthDate).format('YYYY-MM-DD'),

@@ -32,7 +32,7 @@ export default () => {
     STORE_DATA: {resultdata: {CALCULATE_DAY = null} = {}} = {},
     MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
-  const {EMPLOYEE_INFO_DATA} = useSelector(
+  const {EMPLOYEE_INFO_DATA, MEMBER_NAME} = useSelector(
     (state: any) => state.employeeReducer,
   );
   const {AVATAR} = useSelector((state: any) => state.userReducer);
@@ -259,7 +259,7 @@ export default () => {
   const fetchData = async () => {
     try {
       if (!EMPLOYEE_INFO_DATA) {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(setSplashVisible({visible: true, text: `${MEMBER_NAME}님의`}));
       }
       const {data} = await api.getEmp(EMP_SEQ);
       if (data.message === 'SUCCESS') {

@@ -339,7 +339,7 @@ export default ({route: {params}}) => {
         }),
       );
       try {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(setSplashVisible({visible: true, text: `${EMP_NAME}님의`}));
         const {data} = await api.updateEmp({
           FIRST: MODIFYCOUNT,
           START_TYPE,

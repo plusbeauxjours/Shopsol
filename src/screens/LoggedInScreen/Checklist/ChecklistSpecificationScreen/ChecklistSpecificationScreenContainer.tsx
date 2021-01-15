@@ -203,7 +203,12 @@ export default ({route: {params}}) => {
 
     if (Number(PHOTO_CHECK || 0) === 1) {
       try {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(
+          setSplashVisible({
+            visible: true,
+            fullText: '체크리스트가 등록중입니다.',
+          }),
+        );
         const formData: any = new FormData();
 
         formData.append('LIST', JSON.stringify(newList));

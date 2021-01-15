@@ -93,7 +93,12 @@ export default ({route: {params}}) => {
       Number(moment().format('YYYYMMDD'))
     ) {
       try {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(
+          setSplashVisible({
+            visible: true,
+            text: `${moment(date).add(1, 'month').format('YYYY년 M월 ')}급여`,
+          }),
+        );
         setDate(moment(date).add(1, 'month'));
         const {data} = await api.monthLists(
           STORE_SEQ,
@@ -116,7 +121,14 @@ export default ({route: {params}}) => {
 
   const backpay = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          text: `${moment(date)
+            .subtract(1, 'month')
+            .format('YYYY년 M월 ')}급여`,
+        }),
+      );
       setDate(moment(date).subtract(1, 'month'));
       const {data} = await api.monthLists(
         STORE_SEQ,

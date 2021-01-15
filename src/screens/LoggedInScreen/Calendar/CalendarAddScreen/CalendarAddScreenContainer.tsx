@@ -30,9 +30,10 @@ export default ({route: {params}}) => {
   const [incentiveCheck, setIncentiveCheck] = useState<
     [boolean, boolean, boolean]
   >([true, false, false]); // [기본급 적용(1배), 야간근무수당 적용(1.5배), 야간근무수당 적용(2배)]
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -123,7 +124,12 @@ export default ({route: {params}}) => {
         }
       });
       try {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(
+          setSplashVisible({
+            visible: true,
+            fullText: '새로운 일정을 추가중입니다. ',
+          }),
+        );
         const {data} = await api.createNewSchedule({
           EMPS: newChoiceEmp,
           DATE: newMarkedDates,

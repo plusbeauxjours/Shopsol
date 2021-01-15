@@ -90,7 +90,7 @@ export const getHEALTH_CERTIFICATE_DATA = () => async (dispatch, getState) => {
   } = getState();
   try {
     if (!HEALTH_CERTIFICATE_DATA) {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '위생교육증'}));
     }
     const {data} = await api.getCertificate({STORE_SEQ, MEMBER_SEQ, STORE});
     dispatch(setHEALTH_CERTIFICATE_DATA(data));
@@ -113,7 +113,7 @@ export const getSTORE_HEALTH_EMP_LIST = () => async (dispatch, getState) => {
   } = getState();
   try {
     if (!HEALTH_EMP_LIST) {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '보건증'}));
     }
     const {data} = await api.storeHealthEmpList({STORE_SEQ, STORE, MEMBER_SEQ});
     if (data.message === 'SUCCESS') {

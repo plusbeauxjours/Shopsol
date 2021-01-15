@@ -150,7 +150,12 @@ export default ({route: {params}}) => {
     }
     if (!CHECK_SEQ) {
       try {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(
+          setSplashVisible({
+            visible: true,
+            fullText: '체크리스트가 추가중입니다.',
+          }),
+        );
         if (buffer.length != 0) {
           const {data} = await api.checkRegister({
             LIST: newlist,

@@ -97,7 +97,9 @@ export default ({route: {params}}) => {
       );
     }
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({visible: true, fullText: '보건증을 수정중입니다.'}),
+      );
       const formData: any = new FormData();
       formData.append('EMP_NAME', NAME);
       formData.append('EMP_SEQ', EMP_SEQ);
@@ -145,7 +147,12 @@ export default ({route: {params}}) => {
 
   const checkOrcFn = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          fullText: '문자인식(OCR) 기술로 정보를 인식중입니다.',
+        }),
+      );
       const formData: any = new FormData();
       formData.append('MEMBER_SEQ', MEMBER_SEQ);
 

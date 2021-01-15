@@ -76,7 +76,9 @@ export default ({route: {params}}) => {
       alertModal('회차를 입력해주세요.');
     }
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({visible: true, fullText: '보건증을 등록중입니다.'}),
+      );
       const formData: any = new FormData();
       formData.append('EMP_NAME', NAME);
       formData.append('EMP_SEQ', EMP_SEQ);

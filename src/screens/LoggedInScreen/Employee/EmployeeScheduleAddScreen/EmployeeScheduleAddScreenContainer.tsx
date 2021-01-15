@@ -56,9 +56,10 @@ export default ({route: {params}}) => {
   const [isEndDayModalVisible, setIsEndDayModalVisible] = useState<boolean>(
     false,
   );
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -176,7 +177,7 @@ export default ({route: {params}}) => {
   // 추가 완료 & 수정 완료
   const submitFn = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '일정'}));
       const params = {
         EMP_SEQ,
         START: moment(startDate).format('YYYY-MM-DD'),

@@ -49,7 +49,7 @@ export default () => {
     if (STORE == 1) {
       try {
         if (!CLOSED_STORE_DATA) {
-          dispatch(setSplashVisible({visible: true}));
+          dispatch(setSplashVisible({visible: true, text: '폐업 사업장'}));
         }
         const {data} = await api.closeList(MEMBER_SEQ);
         if (data.message === 'SUCCESS') {
@@ -63,7 +63,7 @@ export default () => {
     } else {
       try {
         if (!CLOSED_STORE_DATA) {
-          dispatch(setSplashVisible({visible: true}));
+          dispatch(setSplashVisible({visible: true, text: '종료 사업장'}));
         }
         const {data} = await api.endList(MEMBER_SEQ);
         if (data.message === 'SUCCESS') {

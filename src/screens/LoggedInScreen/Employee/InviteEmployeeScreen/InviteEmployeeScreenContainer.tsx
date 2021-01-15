@@ -124,7 +124,9 @@ export default () => {
       buffer2.unshift(buffer[i].NAME);
     }
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(
+        setSplashVisible({visible: true, fullText: '직원을 초대중입니다.'}),
+      );
       const {data} = await api.sendEmp2({
         STORE_SEQ,
         LIST: buffer2,

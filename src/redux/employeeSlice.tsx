@@ -77,7 +77,7 @@ export const getRESPONSE_EMPLOYEE = () => async (dispatch, getState) => {
   } = getState();
   try {
     if (!RESPONSE_EMPLOYEE || !NO_RESPONSE_EMPLOYEE) {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '직원'}));
     }
     const {data} = await api.getWaitEmpList(STORE_SEQ);
     if (data.message === 'SUCCESS') {

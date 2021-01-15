@@ -29,7 +29,7 @@ export default ({route: {params}}) => {
 
   const fetchData = async () => {
     try {
-      dispatch(setSplashVisible({visible: true}));
+      dispatch(setSplashVisible({visible: true, text: '체크리스트'}));
       const {data} = await api.getAllCheckSchedules({
         CHECK_SEQ,
         DATE,

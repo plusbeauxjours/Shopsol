@@ -42,7 +42,7 @@ export default () => {
   const fetchData = async () => {
     try {
       if (!EMPLOYEE_LIST) {
-        dispatch(setSplashVisible({visible: true}));
+        dispatch(setSplashVisible({visible: true, text: '직원'}));
       }
       const {data} = await api.getEmpLists(STORE_SEQ);
       if (data.message == 'SUCCESS') {
