@@ -71,8 +71,13 @@ export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const {HEALTH_EMP_LIST} = useSelector((state: any) => state.healthReducer);
-  const {MANAGER_CALLED} = useSelector((state: any) => state.storeReducer);
+  const {HEALTH_EMP_LIST, HEALTH_EMP_LIST_STORE_SEQ} = useSelector(
+    (state: any) => state.healthReducer,
+  );
+  const {MANAGER_CALLED, STORE_SEQ} = useSelector(
+    (state: any) => state.storeReducer,
+  );
+  const {loading} = useSelector((state: any) => state.splashReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -117,64 +122,79 @@ export default () => {
           <Section>
             <Row>
               <TitleText>보건증 등록 직원</TitleText>
-              <NumberText>
-                {HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)?.length ?? 0}
-              </NumberText>
+              {!loading && HEALTH_EMP_LIST_STORE_SEQ == STORE_SEQ && (
+                <NumberText>
+                  {HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)?.length ?? 0}
+                </NumberText>
+              )}
             </Row>
-            {HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)?.length != 0 && (
-              <GreyLine />
+            {!loading && HEALTH_EMP_LIST_STORE_SEQ == STORE_SEQ && (
+              <>
+                {HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)?.length != 0 && (
+                  <GreyLine />
+                )}
+                <EmployeeListBox
+                  hasEmployeeNow={HEALTH_EMP_LIST?.filter(
+                    (i) => i.RESULT_DATE,
+                  )}>
+                  {HEALTH_EMP_LIST &&
+                    HEALTH_EMP_LIST.length !== 0 &&
+                    HEALTH_EMP_LIST?.filter(
+                      (i) => i.RESULT_DATE,
+                    )?.map((data: any, index) => (
+                      <HealthCertificateEmpListCard
+                        key={index}
+                        data={data}
+                        gotoHealthCertificateEmpDetail={
+                          gotoHealthCertificateEmpDetail
+                        }
+                        gotoHealthCertificateEmpForm={
+                          gotoHealthCertificateEmpForm
+                        }
+                        MANAGER_CALLED={MANAGER_CALLED}
+                      />
+                    ))}
+                </EmployeeListBox>
+              </>
             )}
-            <EmployeeListBox
-              hasEmployeeNow={HEALTH_EMP_LIST?.filter((i) => i.RESULT_DATE)}>
-              {HEALTH_EMP_LIST &&
-                HEALTH_EMP_LIST.length !== 0 &&
-                HEALTH_EMP_LIST?.filter(
-                  (i) => i.RESULT_DATE,
-                )?.map((data: any, index) => (
-                  <HealthCertificateEmpListCard
-                    key={index}
-                    data={data}
-                    gotoHealthCertificateEmpDetail={
-                      gotoHealthCertificateEmpDetail
-                    }
-                    gotoHealthCertificateEmpForm={gotoHealthCertificateEmpForm}
-                    MANAGER_CALLED={MANAGER_CALLED}
-                  />
-                ))}
-            </EmployeeListBox>
           </Section>
           <Section>
             <Row>
               <TitleText>보건증 미등록 직원</TitleText>
-              <NumberText>
-                {HEALTH_EMP_LIST?.filter((i) => !i.RESULT_DATE)?.length ?? 0}
-              </NumberText>
-            </Row>
-            {HEALTH_EMP_LIST?.filter((i) => !i.RESULT_DATE)?.length != 0 && (
-              <GreyLine />
-            )}
-            {HEALTH_EMP_LIST &&
-              HEALTH_EMP_LIST.length !== 0 &&
-              HEALTH_EMP_LIST?.filter((i) => !i.RESULT_DATE)?.map(
-                (data: any, index) => (
-                  <EmployeeListBox
-                    hasEmployeeNow={HEALTH_EMP_LIST?.filter(
-                      (i) => !i.RESULT_DATE,
-                    )}>
-                    <HealthCertificateEmpListCard
-                      key={index}
-                      data={data}
-                      gotoHealthCertificateEmpDetail={
-                        gotoHealthCertificateEmpDetail
-                      }
-                      gotoHealthCertificateEmpForm={
-                        gotoHealthCertificateEmpForm
-                      }
-                      MANAGER_CALLED={MANAGER_CALLED}
-                    />
-                  </EmployeeListBox>
-                ),
+              {!loading && HEALTH_EMP_LIST_STORE_SEQ == STORE_SEQ && (
+                <NumberText>
+                  {HEALTH_EMP_LIST?.filter((i) => !i.RESULT_DATE)?.length ?? 0}
+                </NumberText>
               )}
+            </Row>
+            {!loading && HEALTH_EMP_LIST_STORE_SEQ == STORE_SEQ && (
+              <>
+                {HEALTH_EMP_LIST?.filter((i) => !i.RESULT_DATE)?.length !=
+                  0 && <GreyLine />}
+                {HEALTH_EMP_LIST &&
+                  HEALTH_EMP_LIST.length !== 0 &&
+                  HEALTH_EMP_LIST?.filter((i) => !i.RESULT_DATE)?.map(
+                    (data: any, index) => (
+                      <EmployeeListBox
+                        hasEmployeeNow={HEALTH_EMP_LIST?.filter(
+                          (i) => !i.RESULT_DATE,
+                        )}>
+                        <HealthCertificateEmpListCard
+                          key={index}
+                          data={data}
+                          gotoHealthCertificateEmpDetail={
+                            gotoHealthCertificateEmpDetail
+                          }
+                          gotoHealthCertificateEmpForm={
+                            gotoHealthCertificateEmpForm
+                          }
+                          MANAGER_CALLED={MANAGER_CALLED}
+                        />
+                      </EmployeeListBox>
+                    ),
+                  )}
+              </>
+            )}
           </Section>
         </Container>
       </ScrollView>

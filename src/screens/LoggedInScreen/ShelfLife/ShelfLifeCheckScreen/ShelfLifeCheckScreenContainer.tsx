@@ -358,7 +358,6 @@ export default () => {
       onMeasurement={onMeasurement}
       ready={ready}
       gotoAdd={gotoAdd}
-      fetchData={fetchData}
       search={search}
       setSearch={setSearch}
       codenumber={codenumber}
@@ -372,4 +371,3 @@ export default () => {
     />
   );
 };
-

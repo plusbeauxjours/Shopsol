@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
-import {isIphoneX} from 'react-native-iphone-x-helper';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
 
 import InputLine from '~/components/InputLine';
@@ -22,6 +16,7 @@ const Container = styled.View`
   padding: 20px 0;
   align-items: center;
   justify-content: center;
+  height: 100%;
 `;
 
 const Space = styled.View`
@@ -50,7 +45,7 @@ const GreyText = styled.Text`
 `;
 
 const WhiteSpace = styled.View`
-  height: ${hp('3%')}px;
+  height: 30px;
 `;
 
 const TextInputContainer = styled.View`
@@ -61,20 +56,10 @@ const TextInputContainer = styled.View`
 `;
 
 const TextInputBox = styled.View`
-  width: ${wp('80%')}px;
+  width: 300px;
+  position: absolute;
+  bottom: 100px;
 `;
-
-const LogoText = styled.View<ILogoText>`
-  width: ${wp('100%')}px;
-  margin-bottom: ${hp('6%')}px;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
-`;
-
-interface ILogoText {
-  isIphoneX: boolean;
-}
 
 export default ({
   gotoFind,
@@ -85,47 +70,42 @@ export default ({
   logIn,
 }) => {
   return (
-    // <FcmContainer>
     <BackGround>
-      <KeyboardAwareScrollView>
-        <Container>
-          <LogoText isIphoneX={isIphoneX()}>
-            <FastImage
-              style={{height: 200, width: 200}}
-              source={require('../../../assets/images/shopSol.png')}
-              resizeMode={FastImage.resizeMode.stretch}
+      <Container>
+        <FastImage
+          style={{height: 200, width: 200, bottom: 220}}
+          source={require('../../../assets/images/shopSol.png')}
+          resizeMode={FastImage.resizeMode.stretch}
+        />
+        <TextInputBox>
+          <TextInputContainer>
+            <GreyText>ID</GreyText>
+            <TextInput
+              placeholder={'휴대폰번호'}
+              placeholderTextColor={styleGuide.palette.greyColor}
+              onChangeText={(text) => onChangeMobileNum(text)}
+              value={mobileNo}
+              keyboardType={'number-pad'}
+              maxLength={11}
+              clearButtonMode={'always'}
             />
-          </LogoText>
-          <TextInputBox>
-            <TextInputContainer>
-              <GreyText>ID</GreyText>
-              <TextInput
-                placeholder={'휴대폰번호'}
-                placeholderTextColor={styleGuide.palette.greyColor}
-                onChangeText={(text) => onChangeMobileNum(text)}
-                value={mobileNo}
-                keyboardType={'number-pad'}
-                maxLength={11}
-                clearButtonMode={'always'}
-              />
-            </TextInputContainer>
-            <InputLine isBefore={mobileNo == '' ? true : false} />
-            <WhiteSpace />
-            <TextInputContainer>
-              <GreyText>Password</GreyText>
-              <TextInput
-                placeholder={'영문, 숫자 조합 6자 이상'}
-                placeholderTextColor={styleGuide.palette.greyColor}
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                secureTextEntry={true}
-                clearButtonMode={'always'}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-            </TextInputContainer>
-            <InputLine isBefore={password == '' ? true : false} />
-          </TextInputBox>
+          </TextInputContainer>
+          <InputLine isBefore={mobileNo == '' ? true : false} />
+          <WhiteSpace />
+          <TextInputContainer>
+            <GreyText>Password</GreyText>
+            <TextInput
+              placeholder={'영문, 숫자 조합 6자 이상'}
+              placeholderTextColor={styleGuide.palette.greyColor}
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+              secureTextEntry={true}
+              clearButtonMode={'always'}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </TextInputContainer>
+          <InputLine isBefore={password == '' ? true : false} />
           <WhiteSpace />
           <RoundBtn
             isInSection={true}
@@ -140,9 +120,8 @@ export default ({
               <UnderLineText>비밀번호 찾기</UnderLineText>
             </Touchable>
           </Space>
-        </Container>
-      </KeyboardAwareScrollView>
+        </TextInputBox>
+      </Container>
     </BackGround>
-    // </FcmContainer>
   );
 };
