@@ -93,7 +93,7 @@ export default ({
         </TextBox>
         <Touchable
           onPress={() => setSucessModalOpen(false)}
-          rippleColor={'#499c9b'}
+          rippleColor={styleGuide.palette.rippleColor}
           rippleDuration={600}
           rippleSize={1200}
           rippleContainerBorderRadius={30}

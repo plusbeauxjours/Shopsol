@@ -274,7 +274,7 @@ export default ({route: {params}}) => {
           )?.images[0].IMAGE,
         });
       }
-      if (EMPLOYEE_LIST) {
+      if (EMPLOYEE_LIST && EMPLOYEE_LIST?.workinglist) {
         for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
           buffer2.push({
             NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
@@ -287,7 +287,7 @@ export default ({route: {params}}) => {
       }
     } else {
       const buffer = [];
-      if (EMPLOYEE_LIST) {
+      if (EMPLOYEE_LIST && EMPLOYEE_LIST?.workinglist) {
         for (let i = 0; i < EMPLOYEE_LIST?.workinglist.length; i++) {
           buffer.push({
             NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,

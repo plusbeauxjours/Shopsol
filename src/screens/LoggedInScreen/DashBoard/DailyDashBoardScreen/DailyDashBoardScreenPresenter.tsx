@@ -380,7 +380,7 @@ export default ({
         index ==
         (search.length !== 0 ? result.length - 1 : TIME_EMP_LIST.length - 1)
       }
-      rippleColor={'#666'}
+      rippleColor={styleGuide.palette.rippleGreyColor}
       rippleDuration={600}
       rippleSize={1700}
       rippleContainerBorderRadius={20}
@@ -601,7 +601,7 @@ export default ({
             ) : (
               <Section
                 onPress={() => onPressSection()}
-                rippleColor={'#666'}
+                rippleColor={styleGuide.palette.rippleGreyColor}
                 rippleDuration={600}
                 rippleSize={1700}
                 rippleContainerBorderRadius={20}
@@ -753,7 +753,7 @@ export default ({
                 showsHorizontalScrollIndicator={false}>
                 <Card
                   onPress={() => setModalLATE(true)}
-                  rippleColor={'#666'}
+                  rippleColor={styleGuide.palette.rippleGreyColor}
                   rippleDuration={600}
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
@@ -827,7 +827,7 @@ export default ({
                 </Card>
                 <Card
                   onPress={() => setModalEARLY(true)}
-                  rippleColor={'#666'}
+                  rippleColor={styleGuide.palette.rippleGreyColor}
                   rippleDuration={600}
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
@@ -903,7 +903,7 @@ export default ({
                 </Card>
                 <Card
                   onPress={() => setModalNOWORK(true)}
-                  rippleColor={'#666'}
+                  rippleColor={styleGuide.palette.rippleGreyColor}
                   rippleDuration={600}
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
@@ -979,7 +979,7 @@ export default ({
                 </Card>
                 <Card
                   onPress={() => setModalREST_TIME(true)}
-                  rippleColor={'#666'}
+                  rippleColor={styleGuide.palette.rippleGreyColor}
                   rippleDuration={600}
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}
@@ -1049,7 +1049,7 @@ export default ({
                 <Card
                   isLast={true}
                   onPress={() => setModalVACATION(true)}
-                  rippleColor={'#666'}
+                  rippleColor={styleGuide.palette.rippleGreyColor}
                   rippleDuration={600}
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}

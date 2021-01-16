@@ -23,6 +23,9 @@ import styleGuide from '~/constants/styleGuide';
 interface IsError {
   isError: boolean;
 }
+interface IIsChecked {
+  isChecked?: boolean;
+}
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -80,16 +83,20 @@ const GreyLine = styled.View`
   height: 1px;
 `;
 
-const ChecktimeButton = styled.TouchableOpacity`
-  padding: 5px 20px;
-  border-width: 1px;
-  border-radius: 30px;
-  border-color: ${styleGuide.palette.primary};
+const ChecktimeButton = styled.TouchableOpacity<IIsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) =>
+    props.isChecked ? 'white' : styleGuide.palette.primary};
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'white'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  border-radius: 20px;
 `;
 
-const ChecktimeButtonText = styled.Text`
-  color: ${styleGuide.palette.primary};
-  font-weight: ${styleGuide.fontWeight.normal};
+const ChecktimeButtonText = styled.Text<IIsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
 `;
 
 const SubTitleText = styled.Text`
@@ -114,7 +121,7 @@ const DeleteButton = styled.TouchableOpacity`
 const DeleteButtonText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   font-weight: ${styleGuide.fontWeight.bold};
-  color: #ff3d3d;
+  color: ${styleGuide.palette.redColor};
   text-decoration-line: underline;
 `;
 
@@ -336,8 +343,10 @@ export default ({
             <RowTitle>
               <TitleText>체크예정시간</TitleText>
               {!isNoCheckedtime && (
-                <ChecktimeButton onPress={() => setIsCustomModalVisible(true)}>
-                  <ChecktimeButtonText>
+                <ChecktimeButton
+                  isChecked={customChecktimeSet}
+                  onPress={() => setIsCustomModalVisible(true)}>
+                  <ChecktimeButtonText isChecked={customChecktimeSet}>
                     {customChecktimeSet
                       ? moment(customChecktime).format('kk:mm')
                       : '선택'}
@@ -520,7 +529,7 @@ export default ({
                 setIsCustomModalVisible(false);
                 setCustomChecktimeSet(true);
               }}
-              rippleColor={'#666'}
+              rippleColor={styleGuide.palette.rippleGreyColor}
               rippleDuration={600}
               rippleSize={1200}
               rippleContainerBorderRadius={30}

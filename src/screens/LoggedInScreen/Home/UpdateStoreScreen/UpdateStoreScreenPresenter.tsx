@@ -252,7 +252,7 @@ const DeleteBtn = styled.TouchableOpacity`
 const DeleteBtnText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   font-weight: ${styleGuide.fontWeight.bold};
-  color: #ff3d3d;
+  color: ${styleGuide.palette.redColor};
   text-decoration-line: underline;
 `;
 

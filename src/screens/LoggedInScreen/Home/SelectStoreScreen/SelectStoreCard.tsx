@@ -90,7 +90,7 @@ export default ({
     <Touchable
       isStore={STORE == 1}
       onPress={() => gotoHomeScreen(data)}
-      rippleColor={'#666'}
+      rippleColor={styleGuide.palette.rippleGreyColor}
       rippleDuration={600}
       rippleSize={1700}
       rippleContainerBorderRadius={30}

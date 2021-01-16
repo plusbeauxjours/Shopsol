@@ -47,7 +47,6 @@ const Container = styled.View`
 const RenderDayListContainer = styled.View``;
 
 const WhiteText = styled.Text`
-  font-size: ${styleGuide.fontSize.middle}px;
   color: white;
 `;
 
@@ -109,36 +108,18 @@ const SmallLine = styled.View`
   background-color: ${styleGuide.palette.borderColor};
 `;
 
-const WorkTypeAndSalaryBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px 20px 0 20px;
-`;
-
 const WorkTypeAndSalaryInfoBox = styled.View`
   align-items: flex-end;
   padding: 10px 20px;
-  margin: 10px 0;
-`;
-
-const WorkTypeAndSalaryBoxTitle = styled.Text`
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.primary};
-`;
-
-const WorkTypeCheckSection = styled.View`
-  padding: 0 20px;
+  margin: 10px 0;ㅅ
 `;
 
 const WorkScheduleBox = styled.TouchableOpacity`
-  flex-direction: row;
-  margin-left: 10px;
-  border-radius: 20px;
-  padding: 5px 20px;
-  justify-content: center;
+  padding: 7px 14px;
   align-items: center;
+  justify-content: center;
   background-color: ${styleGuide.palette.primary};
+  border-radius: 20px;
 `;
 
 const GreyText = styled.Text`

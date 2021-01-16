@@ -35,7 +35,7 @@ export default ({onPressIn = null, text, onPress = null, isRegisted}) => {
       <SubmitButton
         onPressIn={onPressIn}
         onPress={onPress}
-        rippleColor={'#499c9b'}
+        rippleColor={styleGuide.palette.rippleColor}
         rippleDuration={600}
         rippleSize={1200}
         rippleOpacity={0.45}>
@@ -46,7 +46,7 @@ export default ({onPressIn = null, text, onPress = null, isRegisted}) => {
     return (
       <NoSubmitButton
         onPress={() => {}}
-        rippleColor={'white'}
+        rippleColor={styleGuide.palette.borderColor}
         rippleDuration={600}
         rippleSize={1200}
         rippleOpacity={0.25}>

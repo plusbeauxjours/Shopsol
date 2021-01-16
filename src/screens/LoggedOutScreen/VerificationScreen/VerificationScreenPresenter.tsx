@@ -80,7 +80,7 @@ const TextInput = styled.TextInput`
 const TimeText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   font-weight: ${styleGuide.fontWeight.bold};
-  color: #ff3d3d;
+  color: ${styleGuide.palette.redColor};
   align-self: flex-start;
   margin-bottom: 5px;
 `;

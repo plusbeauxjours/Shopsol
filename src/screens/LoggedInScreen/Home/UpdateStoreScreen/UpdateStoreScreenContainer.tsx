@@ -123,6 +123,7 @@ export default ({route: {params}}) => {
       },
       okButtonText: '변경',
       cancelButtonText: '취소',
+      warning: 'yes',
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));

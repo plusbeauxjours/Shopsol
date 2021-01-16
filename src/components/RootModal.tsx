@@ -69,7 +69,6 @@ const HalfBtnLeft = styled(Ripple)<IWarning>`
   align-items: center;
   justify-content: center;
   border-color: #bbb;
-  border-top-width: ${(props) => (props.warning == 'yes' ? '1px' : 0)};
 `;
 
 const HalfTextLeft = styled.Text`
@@ -79,13 +78,14 @@ const HalfTextLeft = styled.Text`
 
 const HalfBtnRight = styled(HalfBtnLeft)<IWarning>`
   background-color: ${(props) =>
-    props.warning == 'yes' ? 'white' : styleGuide.palette.primary};
-  border-left-width: ${(props) => (props.warning == 'yes' ? '1px' : 0)};
+    props.warning == 'yes'
+      ? styleGuide.palette.redColor
+      : styleGuide.palette.primary};
 `;
 
-const HalfTextRight = styled.Text<IWarning>`
+const HalfTextRight = styled.Text`
   font-size: 18px;
-  color: ${(props) => (props.warning == 'yes' ? '#B91C1B' : 'white')};
+  color: white;
 `;
 
 const BarBtn = styled(Ripple)`
@@ -102,12 +102,6 @@ const WhiteText = styled.Text`
 
 const Row = styled.View`
   flex-direction: row;
-`;
-
-const ImageContainer = styled.TouchableOpacity`
-  height: ${hp('100%') - 300}px;
-  justify-content: center;
-  z-index: 2;
 `;
 
 export default ({alert}) => {
@@ -179,8 +173,12 @@ export default ({alert}) => {
           <Row>
             <WithHelpBtn
               color={'white'}
-              onPress={() => onOKPress()}
-              rippleColor={'#666'}
+              onPress={() =>
+                setTimeout(() => {
+                  onOKPress();
+                }, 200)
+              }
+              rippleColor={styleGuide.palette.lightGreyColor}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.45}>
@@ -188,8 +186,12 @@ export default ({alert}) => {
             </WithHelpBtn>
             <WithHelpBtn
               color={styleGuide.palette.primary}
-              onPress={() => onPressExplain()}
-              rippleColor={'#d6cbcc'}
+              onPress={() =>
+                setTimeout(() => {
+                  onPressExplain();
+                }, 200)
+              }
+              rippleColor={styleGuide.palette.rippleColor}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.1}>
@@ -207,8 +209,12 @@ export default ({alert}) => {
             <Row>
               <HalfBtnLeft
                 warning={alert.warning}
-                onPress={() => onCancelPress()}
-                rippleColor={styleGuide.palette.secondary}
+                onPress={() =>
+                  setTimeout(() => {
+                    onCancelPress();
+                  }, 200)
+                }
+                rippleColor={styleGuide.palette.rippleColor}
                 rippleSize={1200}
                 rippleDuration={600}
                 rippleOpacity={0.45}>
@@ -216,20 +222,26 @@ export default ({alert}) => {
               </HalfBtnLeft>
               <HalfBtnRight
                 warning={alert.warning}
-                onPress={() => onOKPress()}
-                rippleColor={'#ff3333'}
+                onPress={() =>
+                  setTimeout(() => {
+                    onOKPress();
+                  }, 200)
+                }
+                rippleColor={styleGuide.palette.secondary}
                 rippleSize={1200}
                 rippleDuration={600}
                 rippleOpacity={0.1}>
-                <HalfTextRight warning={alert.warning}>
-                  {alert.okButtonText}
-                </HalfTextRight>
+                <HalfTextRight>{alert.okButtonText}</HalfTextRight>
               </HalfBtnRight>
             </Row>
           ) : (
             <BarBtn
-              onPress={() => onOKPress()}
-              rippleColor={styleGuide.palette.secondary}
+              onPress={() =>
+                setTimeout(() => {
+                  onOKPress();
+                }, 200)
+              }
+              rippleColor={styleGuide.palette.rippleColor}
               rippleSize={1200}
               rippleDuration={600}
               rippleOpacity={0.45}>

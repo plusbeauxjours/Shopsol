@@ -218,7 +218,7 @@ export default ({
                         DAY == '토'
                           ? '#87ceeb'
                           : DAY == '일'
-                          ? styleGuide.palette.primary
+                          ? styleGuide.palette.redColor
                           : 'black',
                     }}>
                     {day.month}월 {day.day}일 {DAY}요일
@@ -236,7 +236,7 @@ export default ({
                           DAY == '토'
                             ? '#87ceeb'
                             : DAY == '일'
-                            ? styleGuide.palette.primary
+                            ? styleGuide.palette.redColor
                             : 'black',
                       }}>
                       {day.month}월 {day.day}일 {DAY}요일

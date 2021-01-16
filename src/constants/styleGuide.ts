@@ -10,7 +10,10 @@ const styleGuide = {
         graphColor: "#ebd0d1",
         borderColor: "#f2f2f2",
         greyColor: "#7c7c7c",
-        lightGreyColor: '#d0d0d0'
+        lightGreyColor: '#d0d0d0',
+        rippleColor: '#a3c5c5',
+        rippleGreyColor: '#666',
+        redColor: '#e74141'
     },
     fontSize: {
         large: 16,

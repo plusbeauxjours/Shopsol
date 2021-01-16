@@ -392,7 +392,7 @@ export default ({
                         onPress={() => {
                           openRow(rowMap[index]);
                         }}
-                        rippleColor={'#666'}
+                        rippleColor={styleGuide.palette.rippleGreyColor}
                         rippleDuration={1500}
                         rippleSize={1700}
                         rippleContainerBorderRadius={0}

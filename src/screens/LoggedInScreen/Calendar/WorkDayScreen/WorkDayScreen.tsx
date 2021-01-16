@@ -100,7 +100,10 @@ export default ({route: {params}}) => {
               })
             }>
             <Text>
-              <CalendarTimesIcon color={styleGuide.palette.greyColor} />
+              <CalendarTimesIcon
+                color={styleGuide.palette.greyColor}
+                color={styleGuide.palette.secondary}
+              />
               &nbsp;&nbsp;휴무 설정
             </Text>
             <ForwardIcon color={styleGuide.palette.primary} />
@@ -113,7 +116,10 @@ export default ({route: {params}}) => {
               })
             }>
             <Text>
-              <TimerIcon color={styleGuide.palette.greyColor} />
+              <TimerIcon
+                color={styleGuide.palette.greyColor}
+                color={styleGuide.palette.secondary}
+              />
               &nbsp;&nbsp;휴게시간 설정
             </Text>
             <ForwardIcon color={styleGuide.palette.primary} />

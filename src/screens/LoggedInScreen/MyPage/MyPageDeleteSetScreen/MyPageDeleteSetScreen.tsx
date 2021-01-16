@@ -146,7 +146,7 @@ export default () => {
         <WhiteSpace />
         {isConfirmed && (
           <SubmitBtn
-            rippleColor={'#499c9b'}
+            rippleColor={styleGuide.palette.tertiary}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}

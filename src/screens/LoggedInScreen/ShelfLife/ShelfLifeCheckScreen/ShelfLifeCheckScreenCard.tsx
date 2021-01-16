@@ -99,7 +99,8 @@ const IconContainer = styled.View<IsChecked>`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.isChecked ? '#ccc' : '#000')};
+  background-color: ${(props) =>
+    props.isChecked ? '#ccc' : styleGuide.palette.tertiary};
 `;
 
 const BorderBox = styled.View`
@@ -175,7 +176,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
               });
             }, 100)
           }
-          rippleColor={'#666'}
+          rippleColor={styleGuide.palette.rippleGreyColor}
           rippleDuration={600}
           rippleSize={1700}
           rippleContainerBorderRadius={10}
@@ -225,14 +226,14 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
             )}
             <IconBorder>
               <IconContainer isChecked={false}>
-                <CheckMarkIcon size={12} color={'yellow'} />
+                <CheckMarkIcon size={12} color={'white'} />
               </IconContainer>
             </IconBorder>
           </Touchable>
         </GreyBox>
         <Item
           onPress={() => {}}
-          rippleColor={'#999'}
+          rippleColor={styleGuide.palette.rippleGreyColor}
           rippleDuration={600}
           rippleSize={1700}
           rippleContainerBorderRadius={10}

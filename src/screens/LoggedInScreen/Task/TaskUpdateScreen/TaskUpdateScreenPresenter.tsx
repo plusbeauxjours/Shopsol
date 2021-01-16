@@ -446,7 +446,7 @@ export default ({
           />
           <DatePickerRoundBtn
             onPress={() => setIsDateModalVisible(false)}
-            rippleColor={'#666'}
+            rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}

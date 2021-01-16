@@ -39,7 +39,6 @@ const Container = styled.View`
 const RenderDayListContainer = styled.View``;
 
 const WhiteText = styled.Text`
-  font-size: ${styleGuide.fontSize.middle}px;
   color: white;
 `;
 
@@ -99,13 +98,11 @@ const WorkTypeAndSalaryInfoBox = styled.View`
 `;
 
 const WorkScheduleBox = styled.TouchableOpacity`
-  flex-direction: row;
-  margin-left: 10px;
-  border-radius: 20px;
-  padding: 5px 20px;
-  justify-content: center;
+  padding: 7px 14px;
   align-items: center;
+  justify-content: center;
   background-color: ${styleGuide.palette.primary};
+  border-radius: 20px;
 `;
 
 const DateBox = styled.TouchableOpacity`

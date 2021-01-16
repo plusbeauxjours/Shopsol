@@ -248,7 +248,7 @@ export default ({
               <Button
                 rippleContainerBorderRadius={25}
                 rippleColor={'#ccc'}
-                rippleDuration={400}
+                rippleDuration={300}
                 rippleSize={400}
                 rippleOpacity={0.45}
                 onPress={() => getContactsFn()}>
@@ -260,7 +260,7 @@ export default ({
               <Button
                 rippleContainerBorderRadius={25}
                 rippleColor={'#ccc'}
-                rippleDuration={400}
+                rippleDuration={300}
                 rippleSize={400}
                 rippleOpacity={0.45}
                 onPress={() =>

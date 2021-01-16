@@ -120,7 +120,7 @@ export default ({key, date, data}) => {
       key={key}
       activeOpacity={1}
       onPress={() => gotoCkecklistDetail()}
-      rippleColor={'#666'}
+      rippleColor={styleGuide.palette.rippleGreyColor}
       rippleDuration={600}
       rippleSize={1700}
       rippleContainerBorderRadius={20}

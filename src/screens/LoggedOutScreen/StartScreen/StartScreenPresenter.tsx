@@ -77,7 +77,7 @@ export default ({gotoLogin, gotoVerification}) => {
           />
           <LoginButton
             onPress={() => gotoLogin()}
-            rippleColor={'#666'}
+            rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}
@@ -89,7 +89,7 @@ export default ({gotoLogin, gotoVerification}) => {
       <Footer>
         <BarButton
           onPress={() => gotoVerification()}
-          rippleColor={'#499c9b'}
+          rippleColor={styleGuide.palette.rippleColor}
           rippleDuration={600}
           rippleSize={1200}
           rippleContainerBorderRadius={30}

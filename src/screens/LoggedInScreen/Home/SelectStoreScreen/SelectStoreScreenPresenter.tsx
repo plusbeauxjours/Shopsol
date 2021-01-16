@@ -176,7 +176,7 @@ export default ({
       {STORE == '1' && (
         <AddStoreButton
           onPress={() => gotoAddStore()}
-          rippleColor={'#499c9b'}
+          rippleColor={styleGuide.palette.rippleColor}
           rippleDuration={600}
           rippleSize={1200}
           rippleContainerBorderRadius={30}

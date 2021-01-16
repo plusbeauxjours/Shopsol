@@ -120,7 +120,7 @@ export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
       </WhiteBox>
       <WhiteItem
         onPress={() => deleteBuffer(NAME, DATE)}
-        rippleColor={'#666'}
+        rippleColor={styleGuide.palette.rippleGreyColor}
         rippleDuration={600}
         rippleSize={1700}
         rippleContainerBorderRadius={10}

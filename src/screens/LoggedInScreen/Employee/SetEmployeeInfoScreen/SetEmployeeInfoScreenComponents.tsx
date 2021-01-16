@@ -36,7 +36,7 @@ const SkyblueText = styled.Text`
 `;
 
 const RedText = styled.Text`
-  color: #ff3d3d;
+  color: ${styleGuide.palette.redColor};
 `;
 
 const WhiteText = styled.Text`

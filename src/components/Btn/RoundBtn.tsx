@@ -60,7 +60,7 @@ export default ({
         isWhiteBack={isWhiteBack}
         onPressIn={onPressIn}
         onPress={onPress}
-        rippleColor={'#499c9b'}
+        rippleColor={styleGuide.palette.tertiary}
         rippleDuration={600}
         rippleSize={1200}
         rippleContainerBorderRadius={30}
@@ -74,7 +74,7 @@ export default ({
         isInSection={isInSection}
         isWhiteBack={isWhiteBack}
         onPress={() => {}}
-        rippleColor={'#666'}
+        rippleColor={styleGuide.palette.rippleGreyColor}
         rippleDuration={600}
         rippleSize={1200}
         rippleContainerBorderRadius={30}

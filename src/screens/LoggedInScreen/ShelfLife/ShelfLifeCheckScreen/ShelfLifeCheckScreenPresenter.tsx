@@ -374,7 +374,7 @@ export default ({
                   color={item.backgroundColor}
                   index={index}
                   onPress={() => gotoCategory(index)}
-                  rippleColor={'#666'}
+                  rippleColor={styleGuide.palette.rippleGreyColor}
                   rippleDuration={600}
                   rippleSize={1700}
                   rippleContainerBorderRadius={20}

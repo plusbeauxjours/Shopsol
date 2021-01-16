@@ -370,7 +370,7 @@ export default ({
     count = 0,
   }) => (
     <MenuCnt
-      rippleColor={'white'}
+      rippleColor={styleGuide.palette.borderColor}
       rippleDuration={300}
       rippleSize={200}
       rippleContainerBorderRadius={0}
@@ -410,7 +410,7 @@ export default ({
 
   const HiddenMenuCntContainer = ({type, index, selection, paging, source}) => (
     <MenuCnt
-      rippleColor={'white'}
+      rippleColor={styleGuide.palette.borderColor}
       rippleDuration={300}
       rippleSize={200}
       rippleContainerBorderRadius={0}
@@ -770,11 +770,13 @@ export default ({
                       source={require(`../../../../assets/main/qrRegister.png`)}
                     />
                   ))}
-                <MenuCntContainer
-                  selection={'사업장현황'}
-                  paging={'DashBoardScreen'}
-                  source={require(`../../../../assets/main/DashBoard.png`)}
-                />
+                {TOTAL_COUNT !== 0 && (
+                  <MenuCntContainer
+                    selection={'사업장현황'}
+                    paging={'DashBoardScreen'}
+                    source={require(`../../../../assets/main/DashBoard.png`)}
+                  />
+                )}
               </Container>
               <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                 <MenuTitleArea style={{zIndex: 3}}>
@@ -921,11 +923,13 @@ export default ({
                               source={require(`../../../../assets/main/qrRegister.png`)}
                             />
                           ))}
-                        <MenuCntContainer
-                          selection={'사업장현황'}
-                          paging={'DashBoardScreen'}
-                          source={require(`../../../../assets/main/DashBoard.png`)}
-                        />
+                        {TOTAL_COUNT !== 0 && (
+                          <MenuCntContainer
+                            selection={'사업장현황'}
+                            paging={'DashBoardScreen'}
+                            source={require(`../../../../assets/main/DashBoard.png`)}
+                          />
+                        )}
                       </Container>
                       <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                         <MenuTitleArea style={{zIndex: 3}}>

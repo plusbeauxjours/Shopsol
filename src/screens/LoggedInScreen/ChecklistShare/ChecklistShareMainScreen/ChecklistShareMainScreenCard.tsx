@@ -151,7 +151,7 @@ export default ({
             gotoChecklistShareItem(type, data.NOTICE_SEQ, data.favorite);
           }, 100)
         }
-        rippleColor={'#666'}
+        rippleColor={styleGuide.palette.rippleGreyColor}
         rippleDuration={600}
         rippleSize={1700}
         rippleContainerBorderRadius={20}

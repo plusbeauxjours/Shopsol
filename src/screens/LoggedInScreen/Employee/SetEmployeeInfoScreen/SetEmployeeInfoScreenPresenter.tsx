@@ -40,10 +40,6 @@ interface IsFirst {
   isFirst?: boolean;
 }
 
-interface IIsBefore {
-  isBefore: boolean;
-}
-
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -92,7 +88,7 @@ const TextInputText = styled.Text`
 `;
 
 const RedText = styled.Text`
-  color: #ff3d3d;
+  color: ${styleGuide.palette.redColor};
 `;
 
 const GreyText = styled.Text`
@@ -1539,7 +1535,7 @@ export default ({
               setIsStartDayModalVisible(false);
               setStartDaySet(true);
             }}
-            rippleColor={'#666'}
+            rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}
@@ -1578,7 +1574,7 @@ export default ({
               setEndDayCheck(false);
               setEndDaySet(true);
             }}
-            rippleColor={'#666'}
+            rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}
@@ -1617,7 +1613,7 @@ export default ({
               setIsProbationPeriodModalVisible(false);
               setProbationPeriodSet(true);
             }}
-            rippleColor={'#666'}
+            rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}

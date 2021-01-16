@@ -463,7 +463,7 @@ export default ({
                 setIsStartTimeModalVisible(false);
                 setStartTimeSet(true);
               }}
-              rippleColor={'#666'}
+              rippleColor={styleGuide.palette.rippleGreyColor}
               rippleDuration={600}
               rippleSize={1200}
               rippleContainerBorderRadius={30}
@@ -507,7 +507,7 @@ export default ({
                 setIsEndTimeModalVisible(false);
                 setEndTimeSet(true);
               }}
-              rippleColor={'#666'}
+              rippleColor={styleGuide.palette.rippleGreyColor}
               rippleDuration={600}
               rippleSize={1200}
               rippleContainerBorderRadius={30}
@@ -545,7 +545,7 @@ export default ({
           />
           <DatePickerRoundBtn
             onPress={() => setIsStartDayModalVisible(false)}
-            rippleColor={'#666'}
+            rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}
@@ -578,7 +578,7 @@ export default ({
           />
           <DatePickerRoundBtn
             onPress={() => setIsEndDayModalVisible(false)}
-            rippleColor={'#666'}
+            rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
             rippleContainerBorderRadius={30}
