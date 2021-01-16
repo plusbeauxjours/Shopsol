@@ -104,7 +104,7 @@ const WhiteSpace = styled.View`
 
 const ForwardArrowIconContainer = styled.View`
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   height: 10px;
 `;
 
@@ -301,12 +301,15 @@ export default ({
                 )}
               </Row>
             </RowSpace>
-            {((ATTENDANCE_TIME || START)?.substring(0, 5) ==
-              CHANGE_START?.substring(0, 5) ||
-              (WORK_OFF_TIME || END)?.substring(0, 5) ==
-                CHANGE_END?.substring(0, 5)) &&
-            !CHANGE_START &&
-            !CHANGE_END ? (
+            {(ATTENDANCE_TIME
+              ? ATTENDANCE_TIME?.substring(0, 5) ==
+                CHANGE_START?.substring(0, 5)
+              : START?.substring(0, 5) == CHANGE_START?.substring(0, 5)) &&
+            (WORK_OFF_TIME
+              ? WORK_OFF_TIME?.substring(0, 5) == CHANGE_END?.substring(0, 5)
+              : END?.substring(0, 5) == CHANGE_END?.substring(0, 5)) &&
+            CHANGE_START != 'undefined' &&
+            CHANGE_END != 'undefined' ? (
               <WorkTime>
                 <WorkTitleText>근무시간 </WorkTitleText>
                 {TYPE == '4' ? (

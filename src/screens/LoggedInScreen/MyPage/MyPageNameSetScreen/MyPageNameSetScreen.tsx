@@ -72,7 +72,7 @@ export default () => {
 
   const submitFn = async () => {
     if (NAME === '') {
-      return alert('[에러] 이를을 기입해주세요.');
+      return alert('이를을 기입해주세요.');
     }
     try {
       alertModal('이름이 변경되었습니다.');
@@ -114,7 +114,7 @@ export default () => {
         <SubmitBtn
           onPress={() => submitFn()}
           text={'수정하기'}
-          isRegisted={NAME !== '' && NAME?.length < 6}
+          isRegisted={NAME !== '' && MEMBER_NAME !== NAME && NAME?.length < 6}
         />
       </Container>
     </BackGround>

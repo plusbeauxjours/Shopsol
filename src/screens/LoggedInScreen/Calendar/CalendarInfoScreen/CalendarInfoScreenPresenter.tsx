@@ -41,7 +41,7 @@ const KnobIconContainer = styled.View`
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${styleGuide.palette.tertiary};
 `;
 
 const Bold = styled.Text<IWeekend>`

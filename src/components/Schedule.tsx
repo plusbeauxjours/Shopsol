@@ -40,9 +40,10 @@ const View = styled.View<ITouchable>`
   border-radius: 25px;
   min-width: 46px;
   width: ${(props) => (props.width * maxWidth) / 108000000}px;
-  background-color: ${(props) => props.backgroundColor};
-  opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${(props) =>
+    props.isSelected
+      ? styleGuide.palette.primary
+      : styleGuide.palette.graphColor};
 `;
 
 const Touchable = styled(RNBounceable)<ITouchable>`
@@ -73,8 +74,10 @@ const FrontView = styled.View<ITouchable>`
   min-width: 46px;
   width: ${(props) => ((props.width + 10800000) * maxWidth) / 108000000 + 20}px;
   left: -20px;
-  opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${(props) =>
+    props.isSelected
+      ? styleGuide.palette.primary
+      : styleGuide.palette.graphColor};
 `;
 
 const BackView = styled.View<ITouchable>`
@@ -92,8 +95,10 @@ const BackView = styled.View<ITouchable>`
     ((props.startTime + 10800000) * maxWidth) / 108000000 -
     ((props.endTime + 10800000) * maxWidth) / 108000000 -
     20}px;
-  opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${(props) =>
+    props.isSelected
+      ? styleGuide.palette.primary
+      : styleGuide.palette.graphColor};
 `;
 
 const Bold = styled.Text`
@@ -147,7 +152,7 @@ const RedLine = styled.View<IRedLine>`
   width: 1;
   height: ${(props) => props.height}px;
   max-height: 430px;
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${styleGuide.palette.redColor};
 `;
 
 const IconConatainer = styled.View`
@@ -158,6 +163,15 @@ const IconConatainer = styled.View`
   left: -8px;
   top: -15px;
   z-index: 20;
+`;
+
+const BackImage = styled.View`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: white;
+  position: absolute;
+  left: 3px;
 `;
 
 export default ({
@@ -273,11 +287,13 @@ export default ({
                             <Bold>{i.EMP_NAME}</Bold>
                           </EmpCardRow>
                         )}
+                      <BackImage />
                       <FastImage
                         style={{
                           width: 40,
                           height: 40,
                           borderRadius: 20,
+                          opacity: selectedIndex == index ? 1 : 0.4,
                         }}
                         source={{
                           uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
@@ -295,6 +311,7 @@ export default ({
                         .as('milliseconds')}
                       endTime={moment.duration(i.END_TIME).as('milliseconds')}
                       width={i?.WORKING || 0}>
+                      <BackImage />
                       <FastImage
                         style={{
                           marginRight: 5,
@@ -338,12 +355,14 @@ export default ({
                         .duration(i.START_TIME)
                         .as('milliseconds')}
                       width={i?.WORKING || 0}>
+                      <BackImage />
                       <FastImage
                         style={{
                           marginRight: 5,
                           width: 40,
                           height: 40,
                           borderRadius: 20,
+                          opacity: selectedIndex == index ? 1 : 0.4,
                         }}
                         source={{
                           uri: `http://133.186.210.223/uploads/${i.IMAGE}`,

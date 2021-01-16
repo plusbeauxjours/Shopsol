@@ -133,7 +133,10 @@ export default () => {
         <SubmitBtn
           onPress={() => submitFn()}
           text={'수정하기'}
-          isRegisted={positionTypeCheck.indexOf(true) !== -1}
+          isRegisted={
+            positionTypeCheck.indexOf(true) != STORE &&
+            positionTypeCheck.indexOf(true) !== -1
+          }
         />
       </Container>
     </BackGround>

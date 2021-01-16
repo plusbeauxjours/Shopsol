@@ -51,7 +51,7 @@ export default ({key, name, addr}) => (
     <NameText>{name}</NameText>
     <AddressBox>
       <IconContainer>
-        <LocationIcon size={17} />
+        <LocationIcon color={styleGuide.palette.secondary} size={17} />
       </IconContainer>
       <AddressText>{addr ? addr : '주소 미등록'}</AddressText>
     </AddressBox>

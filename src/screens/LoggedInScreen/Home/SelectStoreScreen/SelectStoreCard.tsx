@@ -105,7 +105,7 @@ export default ({
         )}
         <AddressBox>
           <IconContainer>
-            <LogoutIcon size={17} />
+            <LogoutIcon color={styleGuide.palette.secondary} size={17} />
           </IconContainer>
           <AddressText>
             {address1 && address2
@@ -116,7 +116,7 @@ export default ({
         {STORE == 1 ? (
           <EmployeeBox>
             <IconContainer>
-              <PersonCircleIcon />
+              <PersonCircleIcon color={styleGuide.palette.secondary} />
             </IconContainer>
             <EmployeeText>
               {employee == 0
@@ -127,7 +127,7 @@ export default ({
         ) : (
           <EmployeeBox>
             <IconContainer>
-              <PersonCircleIcon />
+              <PersonCircleIcon color={styleGuide.palette.secondary} />
             </IconContainer>
             {TYPE == '0' ? (
               <EmployeeText>합류 대기중</EmployeeText>

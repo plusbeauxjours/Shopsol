@@ -5,7 +5,7 @@ const styleGuide = {
         backgroundPrimary: "#f6f6f6",
         primary: "#2c6868",
         secondary: "#e39a9c",
-        tertiary: "#499c9b",
+        tertiary: "#6bacab",
         headerColor: "#2c6868",
         graphColor: "#ebd0d1",
         borderColor: "#f2f2f2",

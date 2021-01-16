@@ -232,7 +232,7 @@ const AddButton = styled.TouchableOpacity`
   border-radius: 30px;
   align-items: center;
   justify-content: center;
-  background-color: ${styleGuide.palette.primary};
+  background-color: ${styleGuide.palette.tertiary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
