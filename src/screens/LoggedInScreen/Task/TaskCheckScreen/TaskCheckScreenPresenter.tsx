@@ -25,7 +25,7 @@ interface ICard {
 }
 
 interface ILoading {
-  loading: boolean;
+  loading?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -48,7 +48,7 @@ const Row = styled.View`
 
 const SpaceRow = styled(Row)`
   margin-right: 10px;
-  min-width: 60px;
+  min-width: 70px;
   justify-content: space-between;
 `;
 
@@ -156,7 +156,7 @@ const AddButton = styled.TouchableOpacity`
 
 const SearchInput = styled.TextInput`
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.searchBarColor};
   width: ${wp('100%') - 40}px;
   background-color: white;
   border-radius: 30px;
@@ -375,13 +375,13 @@ export default ({
                 <SearchInputContainer>
                   <SearchInput
                     placeholder="물품 검색"
-                    placeholderTextColor={styleGuide.palette.greyColor}
+                    placeholderTextColor={styleGuide.palette.searchBarColor}
                     onChangeText={(text) => setSearch(text)}
                     value={search}
                   />
                   <CloseIconContainer onPress={() => setSearch('')}>
                     <CloseCircleOutlineIcon
-                      color={styleGuide.palette.secondary}
+                      color={styleGuide.palette.searchBarColor}
                       size={24}
                     />
                   </CloseIconContainer>

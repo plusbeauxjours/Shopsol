@@ -158,7 +158,7 @@ const AddButton = styled.TouchableOpacity`
 
 const SearchInput = styled.TextInput`
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.searchBarColor};
   width: ${wp('100%') - 90}px;
   background-color: white;
   border-radius: 30px;
@@ -432,17 +432,20 @@ export default ({
                       setCodenumber('');
                       utils.handleCameraPermission(setBarCodeCameraModalOpen);
                     }}>
-                    <BarCodeIcon size={20} />
+                    <BarCodeIcon
+                      color={styleGuide.palette.searchBarColor}
+                      size={20}
+                    />
                   </BarcodeIconConatiner>
                   <SearchInput
                     placeholder="물품 검색"
-                    placeholderTextColor={styleGuide.palette.greyColor}
+                    placeholderTextColor={styleGuide.palette.searchBarColor}
                     onChangeText={(text) => setSearch(text)}
                     value={search}
                   />
                   <CloseIconContainer onPress={() => setSearch('')}>
                     <CloseCircleOutlineIcon
-                      color={styleGuide.palette.secondary}
+                      color={styleGuide.palette.searchBarColor}
                       size={24}
                     />
                   </CloseIconContainer>

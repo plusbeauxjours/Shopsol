@@ -38,8 +38,8 @@ export default () => {
   };
 
   const defaultData = [
-    {name: '당일', color: styleGuide.palette.secondary, items: []},
-    {name: '1일전', color: styleGuide.palette.secondary, items: []},
+    {name: '당일', color: styleGuide.palette.donutColor, items: []},
+    {name: '1일전', color: styleGuide.palette.donutColor, items: []},
     {name: '1주전', color: '#ccc', items: []},
     {name: '2주전', color: '#ccc', items: []},
     {name: '1달전', color: '#ccc', items: []},
@@ -245,7 +245,7 @@ export default () => {
         {
           titleWord: '당일',
           backgroundColor: 'white',
-          textColor: styleGuide.palette.secondary,
+          textColor: styleGuide.palette.donutColor,
           totalQTY: ddayCount ?? 0,
           doneQTY: ddayDone,
           percentage: isNaN(ddayDone / ddayCount)
@@ -255,7 +255,7 @@ export default () => {
         {
           titleWord: '1일전',
           backgroundColor: 'white',
-          textColor: styleGuide.palette.secondary,
+          textColor: styleGuide.palette.donutColor,
           totalQTY: dayCount ?? 0,
           doneQTY: dayDone,
           percentage: isNaN(dayDone / dayCount)
@@ -265,7 +265,7 @@ export default () => {
         {
           titleWord: '1주전',
           backgroundColor: 'white',
-          textColor: styleGuide.palette.greyColor,
+          textColor: styleGuide.palette.lightGreyColor,
           totalQTY: weekCount ?? 0,
           doneQTY: weekDone,
           percentage: isNaN(weekDone / weekCount)
@@ -275,7 +275,7 @@ export default () => {
         {
           titleWord: '2주전',
           backgroundColor: 'white',
-          textColor: styleGuide.palette.greyColor,
+          textColor: styleGuide.palette.lightGreyColor,
           totalQTY: weeksCount ?? 0,
           doneQTY: weeksDone,
           percentage: isNaN(weeksDone / weeksCount)
@@ -285,7 +285,7 @@ export default () => {
         {
           titleWord: '1달전',
           backgroundColor: 'white',
-          textColor: styleGuide.palette.greyColor,
+          textColor: styleGuide.palette.lightGreyColor,
           totalQTY: monthCount ?? 0,
           doneQTY: monthDone ?? 0,
           percentage: isNaN(monthDone / monthCount)

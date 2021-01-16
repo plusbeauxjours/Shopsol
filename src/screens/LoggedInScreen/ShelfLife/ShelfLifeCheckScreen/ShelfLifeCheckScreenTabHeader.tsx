@@ -115,7 +115,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
               index={index}
               color={
                 index === 0 || index === 1
-                  ? styleGuide.palette.secondary
+                  ? styleGuide.palette.donutColor
                   : styleGuide.palette.greyColor
               }
               gotoCategory={gotoCategory}

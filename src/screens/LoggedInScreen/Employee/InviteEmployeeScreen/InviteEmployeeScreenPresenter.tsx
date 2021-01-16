@@ -8,7 +8,7 @@ import {
 import Ripple from 'react-native-material-ripple';
 
 import InviteEmployeeScreenCard from './InviteEmployeeScreenCard';
-import {HelpCircleIcon, SearchIcon} from '~/constants/Icons';
+import {HelpCircleIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
@@ -102,27 +102,31 @@ const ModalContainer = styled.View`
   border-top-right-radius: 20px;
 `;
 
-const SearchBox = styled.View`
-  padding: 20px;
-  padding-bottom: 2px;
-  position: relative;
-`;
-
-const SearchIconContainer = styled.View`
-  position: absolute;
-  top: 32px;
-  right: 40px;
-`;
-
 const SearchInput = styled.TextInput`
-  border-width: 1px;
-  border-color: ${styleGuide.palette.primary};
+  border-width: 2px;
+  border-color: ${styleGuide.palette.searchBarColor};
+  width: ${wp('100%') - 40}px;
+  background-color: white;
   border-radius: 30px;
   padding-left: 20px;
-  padding-top: 2px;
-  color: #333;
-  height: 50px;
-  background-color: white;
+  align-items: center;
+  height: 40px;
+  justify-content: center;
+`;
+
+const CloseIconContainer = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+  height: 40px;
+  justify-content: center;
+`;
+
+const SearchInputContainer = styled.View`
+  width: ${wp('100%') - 40}px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 `;
 
 const SubmitButton = styled(Ripple)<IIsBefore>`
@@ -223,6 +227,7 @@ export default ({
   isToastVisible,
   isInputModalVisible,
   setIsInputModalVisible,
+  setSearch,
 }) => {
   var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
   return (
@@ -371,17 +376,20 @@ export default ({
         style={{margin: 0, justifyContent: 'flex-end'}}
         avoidKeyboard={true}>
         <ModalContainer>
-          <SearchBox>
+          <SearchInputContainer>
             <SearchInput
               placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-              placeholderTextColor={styleGuide.palette.greyColor}
+              placeholderTextColor={styleGuide.palette.searchBarColor}
               onChangeText={(text) => searchName(text)}
               value={search}
             />
-            <SearchIconContainer>
-              <SearchIcon />
-            </SearchIconContainer>
-          </SearchBox>
+            <CloseIconContainer onPress={() => setSearch('')}>
+              <CloseCircleOutlineIcon
+                color={styleGuide.palette.searchBarColor}
+                size={24}
+              />
+            </CloseIconContainer>
+          </SearchInputContainer>
           <ScrollView
             keyboardShouldPersistTaps={'handled'}
             keyboardDismissMode="on-drag"

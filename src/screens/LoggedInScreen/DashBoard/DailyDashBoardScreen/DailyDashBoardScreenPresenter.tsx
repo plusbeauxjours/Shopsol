@@ -241,7 +241,7 @@ const ModalSection = styled.View`
 
 const SearchInput = styled.TextInput`
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.searchBarColor};
   width: ${wp('100%') - 40}px;
   background-color: white;
   border-radius: 30px;
@@ -609,7 +609,7 @@ export default ({
                 <Row>
                   <DonutCard
                     percentage={totalWORKING / totlaWORKING_EMP}
-                    color={styleGuide.palette.primary}
+                    color={styleGuide.palette.donutColor}
                     max={86400000}
                   />
                   <DodnutTextContainer
@@ -680,13 +680,13 @@ export default ({
               <SearchInputContainer>
                 <SearchInput
                   placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-                  placeholderTextColor={styleGuide.palette.greyColor}
+                  placeholderTextColor={styleGuide.palette.searchBarColor}
                   onChangeText={(text) => searchName(text)}
                   value={search}
                 />
                 <CloseIconContainer onPress={() => setSearch('')}>
                   <CloseCircleOutlineIcon
-                    color={styleGuide.palette.secondary}
+                    color={styleGuide.palette.searchBarColor}
                     size={24}
                   />
                 </CloseIconContainer>
@@ -762,7 +762,7 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}
-                    color={styleGuide.palette.primary}
+                    color={styleGuide.palette.donutColor}
                     max={100}
                   />
                   {totalLATE / totlaWORKING_EMP == 0 ? (
@@ -838,7 +838,7 @@ export default ({
                     percentage={Math.ceil(
                       (totalEARLY / totlaWORKING_EMP) * 100,
                     )}
-                    color={styleGuide.palette.primary}
+                    color={styleGuide.palette.donutColor}
                     max={100}
                   />
                   {totalEARLY / totlaWORKING_EMP == 0 ? (
@@ -914,7 +914,7 @@ export default ({
                     percentage={Math.ceil(
                       (totalNOWORK / totlaWORKING_EMP) * 100,
                     )}
-                    color={styleGuide.palette.primary}
+                    color={styleGuide.palette.donutColor}
                     max={100}
                   />
                   {totalNOWORK / totlaWORKING_EMP == 0 ? (
@@ -988,7 +988,7 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={Math.ceil(totalREST_TIME / totlaWORKING_EMP)}
-                    color={styleGuide.palette.primary}
+                    color={styleGuide.palette.donutColor}
                     max={60}
                   />
                   <DodnutTextContainer>
@@ -1058,7 +1058,7 @@ export default ({
                   <CardGreyLine />
                   <DonutCard
                     percentage={totalVACATION}
-                    color={styleGuide.palette.primary}
+                    color={styleGuide.palette.donutColor}
                     max={totlaWORKING_EMP}
                   />
                   {totalVACATION / totlaWORKING_EMP == 0 ? (
