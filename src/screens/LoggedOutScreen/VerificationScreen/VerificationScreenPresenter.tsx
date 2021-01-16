@@ -13,7 +13,7 @@ import {getText1, getText2, getText3} from '~/constants/getText';
 import {CheckMarkIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
-interface IIsBefore {
+interface IsBefore {
   isBefore: boolean;
 }
 
@@ -33,21 +33,18 @@ const BackGround = styled.View`
 `;
 
 const RequestText = styled.Text`
-  font-size: 14px;
-  color: ${styleGuide.palette.primary};
+  color: white;
 `;
 
-const VerifyText = styled.Text`
-  font-size: 14px;
-  color: white;
+const VerifyText = styled.Text<IsBefore>`
+  color: ${(props) => (props.isBefore ? 'grey' : styleGuide.palette.primary)};
 `;
 
 const RequestButton = styled.TouchableOpacity`
   padding: 7px 14px;
   align-items: center;
   justify-content: center;
-  border-width: 1px;
-  border-color: ${styleGuide.palette.primary};
+  background-color: ${styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
@@ -91,12 +88,13 @@ const CountText = styled(TimeText)`
   margin-bottom: 0;
 `;
 
-const VerifyButton = styled.TouchableOpacity<IIsBefore>`
+const VerifyButton = styled.TouchableOpacity<IsBefore>`
   padding: 8px 14px;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) =>
-    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
+  border-color: ${(props) =>
+    props.isBefore ? 'grey' : styleGuide.palette.primary};
+  border-width: 1px;
   border-radius: 20px;
 `;
 
@@ -295,8 +293,11 @@ export default ({
                     {isCountDownStarted && <CountText>{countdown}초</CountText>}
                     <VerifyButton
                       onPress={() => onVerifyCode()}
+                      disabled={verifyCode == ''}
                       isBefore={verifyCode == '' ? true : false}>
-                      <VerifyText>인증확인</VerifyText>
+                      <VerifyText isBefore={verifyCode == '' ? true : false}>
+                        인증확인
+                      </VerifyText>
                     </VerifyButton>
                   </TextinputCase>
                   <InputLine isBefore={verifyCode == '' ? true : false} />

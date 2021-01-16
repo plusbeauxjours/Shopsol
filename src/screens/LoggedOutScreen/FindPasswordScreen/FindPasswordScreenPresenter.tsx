@@ -7,7 +7,7 @@ import InputLine from '~/components/InputLine';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
 import styleGuide from '~/constants/styleGuide';
 
-interface IIsBefore {
+interface IsBefore {
   isBefore: boolean;
 }
 
@@ -25,13 +25,11 @@ const Container = styled.View`
 `;
 
 const RequestText = styled.Text`
-  font-size: 14px;
-  color: ${styleGuide.palette.primary};
+  color: white;
 `;
 
-const VerifyText = styled.Text`
-  font-size: 14px;
-  color: white;
+const VerifyText = styled.Text<IsBefore>`
+  color: ${(props) => (props.isBefore ? 'grey' : styleGuide.palette.primary)};
 `;
 
 const GreyText = styled.Text<IsError>`
@@ -44,8 +42,7 @@ const RequestButton = styled.TouchableOpacity`
   padding: 7px 14px;
   align-items: center;
   justify-content: center;
-  border-width: 1px;
-  border-color: ${styleGuide.palette.primary};
+  background-color: ${styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
@@ -90,12 +87,13 @@ const CountText = styled(TimeText)`
   margin-bottom: 0;
 `;
 
-const VerifyButton = styled.TouchableOpacity<IIsBefore>`
+const VerifyButton = styled.TouchableOpacity<IsBefore>`
   padding: 8px 14px;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) =>
-    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
+  border-color: ${(props) =>
+    props.isBefore ? 'grey' : styleGuide.palette.primary};
+  border-width: 1px;
   border-radius: 20px;
 `;
 
@@ -180,11 +178,12 @@ export default ({
                 />
                 {isCountDownStarted && <CountText>{countdown}초</CountText>}
                 <VerifyButton
-                  onPress={() => {
-                    verifyCode !== onVerifyCode();
-                  }}
+                  onPress={() => verifyCode !== onVerifyCode()}
+                  disabled={!verifyCode}
                   isBefore={verifyCode ? false : true}>
-                  <VerifyText>인증확인</VerifyText>
+                  <VerifyText isBefore={verifyCode ? false : true}>
+                    인증확인
+                  </VerifyText>
                 </VerifyButton>
               </TextinputCase>
               <InputLine isBefore={verifyCode == '' ? true : false} />

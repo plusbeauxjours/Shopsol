@@ -40,6 +40,10 @@ interface IsFirst {
   isFirst?: boolean;
 }
 
+interface IsChecked {
+  isChecked?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -320,17 +324,20 @@ const InputCaseRow = styled.View`
   align-items: baseline;
 `;
 
-const RequestBorderButton = styled.TouchableOpacity`
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
   padding: 7px 14px;
   align-items: center;
   justify-content: center;
-  border-color: ${styleGuide.palette.primary};
-  border-width: 1px;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
   border-radius: 20px;
 `;
 
-const RequestBorderText = styled.Text`
-  color: ${styleGuide.palette.primary};
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
 `;
 
 export default ({
@@ -534,8 +541,9 @@ export default ({
                     </Touchable>
                   </Row>
                   <RequestBorderButton
+                    isChecked={true}
                     onPress={() => setIsStartDayModalVisible(true)}>
-                    <RequestBorderText>
+                    <RequestBorderText isChecked={true}>
                       {startDaySet
                         ? moment(startDay).format('YYYY년 M월 D일')
                         : moment().format('YYYY년 M월 D일')}
@@ -583,8 +591,9 @@ export default ({
                         }}>
                         <Text>퇴사일</Text>
                         <RequestBorderButton
+                          isChecked={endDaySet}
                           onPress={() => setIsEndDayModalVisible(true)}>
-                          <RequestBorderText>
+                          <RequestBorderText isChecked={endDaySet}>
                             {endDaySet
                               ? moment(endDay).format('YYYY년 M월 D일')
                               : '퇴사일 설정'}
@@ -945,13 +954,14 @@ export default ({
                             </Touchable>
                           </Row>
                           <RequestBorderButton
+                            isChecked={probationPeriodSet}
                             onPress={() => {
                               setProbationPeriod(
                                 moment(startDay).add(1, 'days').toDate(),
                               );
                               setIsProbationPeriodModalVisible(true);
                             }}>
-                            <RequestBorderText>
+                            <RequestBorderText isChecked={probationPeriodSet}>
                               {probationPeriodSet
                                 ? moment(probationPeriod).format(
                                     'YYYY년 M월 D일',
@@ -969,10 +979,12 @@ export default ({
                           }}>
                           <Text>수습기간 급여비율</Text>
                           <RequestBorderButton
+                            isChecked={probationPercent != ''}
                             onPress={() =>
                               setIsProbationPercentModalVisible(true)
                             }>
-                            <RequestBorderText>
+                            <RequestBorderText
+                              isChecked={probationPercent != ''}>
                               {probationPercent
                                 ? `${probationPercent}%`
                                 : '설정'}

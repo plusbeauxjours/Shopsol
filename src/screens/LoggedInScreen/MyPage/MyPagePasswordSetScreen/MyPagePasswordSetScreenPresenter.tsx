@@ -11,6 +11,7 @@ interface IsError {
   isError: boolean;
 }
 interface HasCheckedVerifyCode {
+  hasPassword: boolean;
   hasCheckedVerifyCode: boolean;
 }
 
@@ -83,17 +84,30 @@ const RequestButton = styled.TouchableOpacity<HasCheckedVerifyCode>`
   padding: 7px 14px;
   align-items: center;
   justify-content: center;
-  border-width: 1px;
   border-color: ${(props) =>
-    props.hasCheckedVerifyCode
-      ? styleGuide.palette.greyColor
-      : styleGuide.palette.primary};
+    props.hasPassword
+      ? props.hasCheckedVerifyCode
+        ? styleGuide.palette.primary
+        : 'transparent'
+      : 'grey'};
+  border-width: ${(props) =>
+    props.hasPassword ? (props.hasCheckedVerifyCode ? 1 : 0) : 1}px;
+  background-color: ${(props) =>
+    props.hasPassword
+      ? props.hasCheckedVerifyCode
+        ? 'transparent'
+        : styleGuide.palette.primary
+      : 'transparent'};
   border-radius: 20px;
 `;
 
-const RequestText = styled.Text`
-  font-size: 14px;
-  color: ${styleGuide.palette.primary};
+const RequestText = styled.Text<HasCheckedVerifyCode>`
+  color: ${(props) =>
+    props.hasPassword
+      ? props.hasCheckedVerifyCode
+        ? styleGuide.palette.primary
+        : 'white'
+      : 'grey'};
 `;
 
 const MobileNoText = styled.Text`
@@ -210,6 +224,7 @@ export default ({
               <TextinputCase>
                 <MobileNoText>{MOBILE_NO}</MobileNoText>
                 <RequestButton
+                  hasPassword={passwordCheck != '' && password != ''}
                   hasCheckedVerifyCode={hasCheckedVerifyCode}
                   onPress={() => requireVerifyCode()}
                   disabled={
@@ -217,13 +232,11 @@ export default ({
                     passwordCheck == '' ||
                     password == ''
                   }>
-                  {hasCheckedVerifyCode ? (
-                    <RequestText style={{color: styleGuide.palette.greyColor}}>
-                      요청완료
-                    </RequestText>
-                  ) : (
-                    <RequestText>인증요청</RequestText>
-                  )}
+                  <RequestText
+                    hasPassword={passwordCheck != '' && password != ''}
+                    hasCheckedVerifyCode={hasCheckedVerifyCode}>
+                    {hasCheckedVerifyCode ? '요청완료' : '인증요청'}
+                  </RequestText>
                 </RequestButton>
               </TextinputCase>
               <InputLine isBefore={MOBILE_NO ? false : true} />
