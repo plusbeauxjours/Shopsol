@@ -75,7 +75,7 @@ export default ({
       <WhiteSpace />
       <Touchable
         onPress={() => setFailModalOpen(false)}
-        rippleColor={'#e39a9c'}
+        rippleColor={'#499c9b'}
         rippleDuration={600}
         rippleSize={1200}
         rippleContainerBorderRadius={30}

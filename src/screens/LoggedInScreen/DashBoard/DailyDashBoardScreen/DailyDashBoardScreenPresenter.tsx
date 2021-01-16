@@ -104,7 +104,7 @@ const PercentageText = styled.Text<IColor>`
 
 const PercentageSubText = styled.Text<IColor>`
   color: ${(props) => props.color ?? 'black'};
-  font-size: 18px;
+  font-size: ${styleGuide.fontSize.middle}px;
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
@@ -774,7 +774,7 @@ export default ({
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
-                    <DodnutTextContainer>
+                    <DodnutTextContainer style={{marginTop: 5}}>
                       <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
@@ -850,7 +850,7 @@ export default ({
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
-                    <DodnutTextContainer>
+                    <DodnutTextContainer style={{marginTop: 5}}>
                       <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
@@ -926,7 +926,7 @@ export default ({
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
-                    <DodnutTextContainer>
+                    <DodnutTextContainer style={{marginTop: 5}}>
                       <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
                       </PercentageText>
@@ -1070,7 +1070,7 @@ export default ({
                       </PercentageText>
                     </DodnutTextContainer>
                   ) : (
-                    <DodnutTextContainer>
+                    <DodnutTextContainer style={{marginTop: 5}}>
                       <PercentageText color={styleGuide.palette.primary}>
                         {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
                       </PercentageText>

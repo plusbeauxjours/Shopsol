@@ -332,7 +332,6 @@ export default () => {
         alertModal('바코드를 읽을 수 없습니다.');
       }, 100);
     } else {
-      console.log(codenumber);
       setCodenumber(codenumber);
     }
   };

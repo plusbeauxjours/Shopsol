@@ -125,7 +125,11 @@ export default ({
                 </IconContainer>
               ) : HEALTH_CERTIFICATE_APPLY == 0 ? (
                 <IconContainer>
-                  <Text isSubmited={false}> 미등록</Text>
+                  <Text
+                    style={{textDecorationLine: 'underline'}}
+                    isSubmited={false}>
+                    미등록
+                  </Text>
                 </IconContainer>
               ) : (
                 <IconContainer
@@ -289,7 +293,11 @@ export default ({
                 </IconContainer>
               ) : HEALTH_CERTIFICATE_APPLY == 0 ? (
                 <IconContainer>
-                  <Text isSubmited={false}>미등록</Text>
+                  <Text
+                    style={{textDecorationLine: 'underline'}}
+                    isSubmited={false}>
+                    미등록
+                  </Text>
                 </IconContainer>
               ) : Number(HEALTH_CERTIFICATE_APPLY) ==
                 Number(HEALTH_CERTIFICATE_TARGET) ? (

@@ -432,7 +432,7 @@ export default ({
             onPress={() => {
               choice?.length === 0 ? {} : onPressSubmitButton();
             }}
-            rippleColor={choice?.length === 0 ? 'white' : '#e39a9c'}
+            rippleColor={choice?.length === 0 ? 'white' : '#499c9b'}
             rippleDuration={600}
             rippleSize={1200}
             rippleOpacity={0.45}>

@@ -4,7 +4,7 @@ const styleGuide = {
     palette: {
         backgroundPrimary: "#f6f6f6",
         primary: "#2c6868",
-        secondary: "#ed7171",
+        secondary: "#e39a9c",
         tertiary: "#499c9b",
         headerColor: "#2c6868",
         graphColor: "#ebd0d1",

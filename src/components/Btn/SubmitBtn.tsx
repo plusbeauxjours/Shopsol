@@ -35,7 +35,7 @@ export default ({onPressIn = null, text, onPress = null, isRegisted}) => {
       <SubmitButton
         onPressIn={onPressIn}
         onPress={onPress}
-        rippleColor={'#e39a9c'}
+        rippleColor={'#499c9b'}
         rippleDuration={600}
         rippleSize={1200}
         rippleOpacity={0.45}>

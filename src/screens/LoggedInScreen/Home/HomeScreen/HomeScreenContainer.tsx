@@ -34,7 +34,6 @@ export default ({route: {params}}) => {
     GPS,
     QR_Num,
   } = params;
-  console.log('QR_Num', QR_Num);
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
   const {
     AVATAR,
