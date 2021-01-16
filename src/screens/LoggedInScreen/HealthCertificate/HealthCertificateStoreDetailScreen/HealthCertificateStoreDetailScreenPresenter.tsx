@@ -89,7 +89,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.arrowColor};
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -252,7 +252,7 @@ export default ({
                       increaseSELECT_INDEX();
                     }
                   }}>
-                  <BackIcon size={22} color={styleGuide.palette.secondary} />
+                  <BackIcon size={22} color={styleGuide.palette.arrowColor} />
                 </DateArrowLeft>
                 <DateTextArea>
                   <DateText>
@@ -269,7 +269,7 @@ export default ({
                   onPress={() => onRefresh()}>
                   <ReloadCircleIcon
                     size={18}
-                    color={styleGuide.palette.secondary}
+                    color={styleGuide.palette.arrowColor}
                   />
                 </DateArrowRight>
                 <DateArrowRight
@@ -280,7 +280,10 @@ export default ({
                       decreaseSELECT_INDEX();
                     }
                   }}>
-                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
+                  <ForwardIcon
+                    size={22}
+                    color={styleGuide.palette.arrowColor}
+                  />
                 </DateArrowRight>
               </Date>
               <ContentWrapper>

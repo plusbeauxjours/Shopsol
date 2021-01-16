@@ -15,7 +15,8 @@ const styleGuide = {
         rippleGreyColor: '#666',
         redColor: '#e74141',
         searchBarColor: "#e39a9c",
-        donutColor: '#95b1b0'
+        donutColor: '#95b1b0',
+        arrowColor: '#95b1b0'
     },
     fontSize: {
         large: 16,

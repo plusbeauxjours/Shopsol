@@ -74,7 +74,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.arrowColor};
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -269,14 +269,14 @@ export default ({
               setDate(yesterday);
               fetchData(location, yesterday);
             }}>
-            <BackIcon size={22} color={styleGuide.palette.secondary} />
+            <BackIcon size={22} color={styleGuide.palette.arrowColor} />
           </DateArrowLeft>
           <DateToday
             onPress={() => {
               setDate(moment(date).format('YYYY-MM-DD'));
               fetchData(location, date);
             }}>
-            <ReloadCircleIcon size={18} color={styleGuide.palette.secondary} />
+            <ReloadCircleIcon size={18} color={styleGuide.palette.arrowColor} />
           </DateToday>
           <DateTextArea>
             <DateText>{moment(date).format('YYYY년 M월 D일')}</DateText>
@@ -293,14 +293,14 @@ export default ({
               markingFn(moment(date).format('YYYY'), moment(date).format('M'));
               setIsCalendarModalVisible(true);
             }}>
-            <CalendarIcon size={18} color={styleGuide.palette.secondary} />
+            <CalendarIcon size={18} color={styleGuide.palette.arrowColor} />
           </CalendarOpenBtn>
           <DateArrowRight
             onPress={() => {
               setDate(tomorrow);
               fetchData(location, tomorrow);
             }}>
-            <ForwardIcon size={22} color={styleGuide.palette.secondary} />
+            <ForwardIcon size={22} color={styleGuide.palette.arrowColor} />
           </DateArrowRight>
         </Date>
       </Section>

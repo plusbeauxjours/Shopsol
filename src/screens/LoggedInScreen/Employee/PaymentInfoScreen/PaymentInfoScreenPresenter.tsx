@@ -59,7 +59,7 @@ const DateArrow = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.arrowColor};
 `;
 
 const DateTextArea = styled.View`
@@ -155,7 +155,7 @@ export default ({
           <Section>
             <DateBox>
               <DateArrow onPress={() => backpay()}>
-                <BackIcon size={22} color={styleGuide.palette.secondary} />
+                <BackIcon size={22} color={styleGuide.palette.arrowColor} />
               </DateArrow>
               <DateTextArea>
                 <DateText>{moment(startDate).format('YYYY년 M월')}</DateText>
@@ -176,11 +176,11 @@ export default ({
               <DateArrow style={{marginRight: 5}} onPress={() => onRefresh()}>
                 <ReloadCircleIcon
                   size={18}
-                  color={styleGuide.palette.secondary}
+                  color={styleGuide.palette.arrowColor}
                 />
               </DateArrow>
               <DateArrow onPress={() => nextpay()}>
-                <ForwardIcon size={22} color={styleGuide.palette.secondary} />
+                <ForwardIcon size={22} color={styleGuide.palette.arrowColor} />
               </DateArrow>
             </DateBox>
             <Line />

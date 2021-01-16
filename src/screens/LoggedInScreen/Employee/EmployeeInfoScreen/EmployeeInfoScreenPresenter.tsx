@@ -114,7 +114,7 @@ const DateBox = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.arrowColor};
 `;
 
 const GreyText = styled.Text`
@@ -415,7 +415,7 @@ export default ({
                         }}>
                         <BackIcon
                           size={22}
-                          color={styleGuide.palette.secondary}
+                          color={styleGuide.palette.arrowColor}
                         />
                       </DateBox>
                     )}
@@ -439,7 +439,7 @@ export default ({
                         }}>
                         <ForwardIcon
                           size={22}
-                          color={styleGuide.palette.secondary}
+                          color={styleGuide.palette.arrowColor}
                         />
                       </DateBox>
                     )}
@@ -553,7 +553,7 @@ export default ({
                       moment(date).subtract(1, 'month').format('MM'),
                     );
                   }}>
-                  <BackIcon size={22} color={styleGuide.palette.secondary} />
+                  <BackIcon size={22} color={styleGuide.palette.arrowColor} />
                 </DateBox>
                 <DateTextArea>
                   <DateText>{moment(date).format('YYYY년 M월')}</DateText>
@@ -578,7 +578,10 @@ export default ({
                       moment(date).add(1, 'month').format('MM'),
                     );
                   }}>
-                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
+                  <ForwardIcon
+                    size={22}
+                    color={styleGuide.palette.arrowColor}
+                  />
                 </DateBox>
               </Row>
               <WorkTypeAndSalaryInfoBox>

@@ -266,7 +266,7 @@ const DateArrowLeft = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.arrowColor};
 `;
 
 const DateArrowRight = styled(DateArrowLeft)``;
@@ -553,7 +553,7 @@ export default ({
             <DateSection>
               <Date>
                 <DateArrowLeft onPress={() => prevDay()}>
-                  <BackIcon size={22} color={styleGuide.palette.secondary} />
+                  <BackIcon size={22} color={styleGuide.palette.arrowColor} />
                 </DateArrowLeft>
                 <DateTextArea>
                   <DateText>{moment(toDay).format('YYYY년 M월 D일')}</DateText>
@@ -566,7 +566,10 @@ export default ({
                   </DateText>
                 </DateTextArea>
                 <DateArrowRight onPress={() => nextDay()}>
-                  <ForwardIcon size={22} color={styleGuide.palette.secondary} />
+                  <ForwardIcon
+                    size={22}
+                    color={styleGuide.palette.arrowColor}
+                  />
                 </DateArrowRight>
               </Date>
             </DateSection>

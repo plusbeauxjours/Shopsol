@@ -215,7 +215,7 @@ const DateBox = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: transparent;
   border-width: 2px;
-  border-color: ${styleGuide.palette.secondary};
+  border-color: ${styleGuide.palette.arrowColor};
 `;
 
 const DateBoxText = styled.Text`
@@ -1150,7 +1150,7 @@ export default ({
                           .format('YYYY-MM-01'),
                       )
                     }>
-                    <BackIcon size={22} color={styleGuide.palette.secondary} />
+                    <BackIcon size={22} color={styleGuide.palette.arrowColor} />
                   </DateBox>
                   <DateBoxText>
                     {moment(payDay).format('YYYY년 M월')}
@@ -1163,7 +1163,7 @@ export default ({
                     }>
                     <ForwardIcon
                       size={22}
-                      color={styleGuide.palette.secondary}
+                      color={styleGuide.palette.arrowColor}
                     />
                   </DateBox>
                 </Row>
@@ -1372,7 +1372,7 @@ export default ({
                         moment(annual_START).subtract(1, 'year').format('YYYY'),
                       )
                     }>
-                    <BackIcon size={22} color={styleGuide.palette.secondary} />
+                    <BackIcon size={22} color={styleGuide.palette.arrowColor} />
                   </DateBox>
                   <DateBoxText>{annual_START}년</DateBoxText>
                   <DateBox
@@ -1383,7 +1383,7 @@ export default ({
                     }>
                     <ForwardIcon
                       size={22}
-                      color={styleGuide.palette.secondary}
+                      color={styleGuide.palette.arrowColor}
                     />
                   </DateBox>
                 </Row>
