@@ -349,7 +349,10 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                  <Touchable
+                    onPress={() =>
+                      utils.handleCameraPermission(setIsCameraModalVisible)
+                    }>
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -365,7 +368,10 @@ export default ({
                       </GreyText>
                     </BorderBox>
                   </Touchable>
-                  <Touchable onPress={() => setBarCodeCameraModalOpen(true)}>
+                  <Touchable
+                    onPress={() =>
+                      utils.handleCameraPermission(setBarCodeCameraModalOpen)
+                    }>
                     <BorderBox>
                       <BarCodeIcon size={20} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>

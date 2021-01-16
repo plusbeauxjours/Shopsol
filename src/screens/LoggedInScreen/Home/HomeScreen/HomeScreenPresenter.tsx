@@ -25,6 +25,7 @@ import {
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IHasHeight {
   hasHeight: boolean;
@@ -313,8 +314,8 @@ export default ({
   setQrCameraModalOpen2,
   workingModalOpen,
   setWorkingModalOpen,
-  setShowPictureModal,
-  showPictureModal,
+  setShowPictureModalOpen,
+  showPictureModalOpen,
   goWorkFn,
   leaveWorkFn,
   handleBarCodeScanned1,
@@ -380,9 +381,9 @@ export default ({
         editMode && type == 'emp'
           ? addCUSTOM_MENU_EMP_Fn(index)
           : selection == 'QR보기'
-          ? setShowPictureModal(true)
+          ? setShowPictureModalOpen(true)
           : selection == 'QR등록하기'
-          ? setQrCameraModalOpen2(true)
+          ? utils.handleCameraPermission(setQrCameraModalOpen2)
           : gotoScreen(`${paging}`);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
@@ -422,9 +423,9 @@ export default ({
               CUSTOM_MENU_EMP[STORE_SEQ]?.filter((i) => i !== index),
             )
           : selection == 'QR보기'
-          ? setShowPictureModal(true)
+          ? setShowPictureModalOpen(true)
           : selection == 'QR등록하기'
-          ? setQrCameraModalOpen2(true)
+          ? utils.handleCameraPermission(setQrCameraModalOpen2)
           : gotoScreen(`${paging}`);
       }}>
       <EyeIconContainer isEyeOn={false} style={{zIndex: 5}}>
@@ -606,7 +607,7 @@ export default ({
                       setIsWorkingMode(false);
                       setSucessModalOpen(false);
                       setFailModalOpen(false);
-                      setQrCameraModalOpen1(true);
+                      utils.handleCameraPermission(setQrCameraModalOpen1);
                       setWorkingTYPE('QR');
                     }}
                     hasGPS={GPS !== '0'}>
@@ -617,7 +618,7 @@ export default ({
                 <BoxContainer>
                   <Box
                     onPress={() => {
-                      setQrCameraModalOpen1(true);
+                      utils.handleCameraPermission(setQrCameraModalOpen1);
                       setWorkingTYPE('QR');
                     }}
                     hasGPS={GPS !== '0'}>
@@ -1299,14 +1300,14 @@ export default ({
       <Modal
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
-        isVisible={showPictureModal}
+        isVisible={showPictureModalOpen}
         style={{margin: 0}}
         onBackdropPress={() => {
-          setShowPictureModal(false);
+          setShowPictureModalOpen(false);
           setQrCameraMode(false);
         }}
         onRequestClose={() => {
-          setShowPictureModal(false);
+          setShowPictureModalOpen(false);
           setQrCameraMode(false);
         }}>
         {qrCameraMode ? (
@@ -1330,7 +1331,7 @@ export default ({
             />
             <Footer
               onPress={() => {
-                setShowPictureModal(false);
+                setShowPictureModalOpen(false);
                 setQrCameraMode(false);
               }}>
               <FooterText>닫기</FooterText>
@@ -1339,7 +1340,7 @@ export default ({
         ) : (
           <ShowPictureModalTouchable
             onPress={() => {
-              setShowPictureModal(false);
+              setShowPictureModalOpen(false);
             }}>
             <ShowPictureModalImage>
               <FastImage
@@ -1351,7 +1352,7 @@ export default ({
             <StoreUpdateBtn
               style={{width: 110, alignSelf: 'flex-end', marginTop: 20}}
               onPress={() => {
-                setQrCameraMode(true);
+                utils.handleCameraPermission(setQrCameraMode);
               }}>
               <WhiteText>QR코드 재등록</WhiteText>
             </StoreUpdateBtn>

@@ -430,7 +430,7 @@ export default ({
                     onPress={() => {
                       setSearch('');
                       setCodenumber('');
-                      setBarCodeCameraModalOpen(true);
+                      utils.handleCameraPermission(setBarCodeCameraModalOpen);
                     }}>
                     <BarCodeIcon size={20} />
                   </BarcodeIconConatiner>

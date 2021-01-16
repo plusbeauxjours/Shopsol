@@ -318,7 +318,10 @@ export default ({
                 horizontal={true}>
                 <EndRow>
                   <Column>
-                    <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                    <Touchable
+                      onPress={() =>
+                        utils.handleCameraPermission(setIsCameraModalVisible)
+                      }>
                       <BorderBox>
                         <CameraIcon size={25} color={'#ccc'} />
                         <GreyText style={{fontSize: styleGuide.fontSize.small}}>

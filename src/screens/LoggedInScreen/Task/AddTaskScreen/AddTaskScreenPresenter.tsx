@@ -327,7 +327,10 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
-                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                  <Touchable
+                    onPress={() =>
+                      utils.handleCameraPermission(setIsCameraModalVisible)
+                    }>
                     {/* <Touchable
                     onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>

@@ -287,7 +287,10 @@ export default ({
                 </CameraBoxContainer>
               ) : (
                 <CameraBoxContainer>
-                  <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                  <Touchable
+                    onPress={() =>
+                      utils.handleCameraPermission(setIsCameraModalVisible)
+                    }>
                     <BorderBox>
                       <CameraIcon
                         size={25}

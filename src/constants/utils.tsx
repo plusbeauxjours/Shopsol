@@ -1,7 +1,37 @@
-import {Platform} from 'react-native';
-
+import {Platform, Linking, Alert} from 'react-native';
+import {
+  openSettings,
+  PERMISSIONS,
+  check,
+  RESULTS,
+} from 'react-native-permissions';
 export default {
   isAndroid: () => Platform.OS === 'android',
+  handleCameraPermission: async (handle) => {
+    const res = await check(PERMISSIONS.IOS.CAMERA);
+    if (res === RESULTS.GRANTED) {
+      handle(true);
+    } else {
+      Alert.alert(
+        '카메라 권한 거절',
+        '앱을 사용하기 위해서는 반드시 카메라 권한을 허용해야 합니다.\n 확인을 누르신 뒤 설정에서 카메라 권한을 켜십시오.',
+        [
+          {
+            text: '취소',
+            style: 'cancel',
+          },
+          {
+            text: '확인',
+            onPress: () => {
+              Platform.OS === 'android'
+                ? openSettings()
+                : Linking.openURL('app-settings:');
+            },
+          },
+        ],
+      );
+    }
+  },
   appVersion: '2.1.2',
   miniPay: '8,720',
   calculateDay: 23,

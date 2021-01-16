@@ -14,6 +14,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {CameraIcon, PictureIcon, CloseCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -276,7 +277,10 @@ export default ({
                 horizontal={true}>
                 <EndRow>
                   <Column>
-                    <Touchable onPress={() => setIsCameraModalVisible(true)}>
+                    <Touchable
+                      onPress={() =>
+                        utils.handleCameraPermission(setIsCameraModalVisible)
+                      }>
                       <BorderBox>
                         <CameraIcon size={25} color={'#ccc'} />
                         <GreyText style={{fontSize: styleGuide.fontSize.small}}>

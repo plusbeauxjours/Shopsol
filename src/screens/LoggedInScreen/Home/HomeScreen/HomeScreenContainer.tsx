@@ -7,10 +7,9 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {openSettings, PERMISSIONS, request} from 'react-native-permissions';
+import {openSettings} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 import {useNavigation} from '@react-navigation/native';
-import moment from 'moment';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -53,7 +52,9 @@ export default ({route: {params}}) => {
   const [QR, setQR] = useState<string>('');
   const [invitedEmpCount, setInvitedEmpCount] = useState<number>(0);
   const [checklistCount, setChecklistCount] = useState<number>(0);
-  const [showPictureModal, setShowPictureModal] = useState<boolean>(false);
+  const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
+    false,
+  );
   const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
   const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
@@ -373,7 +374,7 @@ export default ({route: {params}}) => {
         console.log(e);
       } finally {
         setQrCameraModalOpen2(false);
-        setShowPictureModal(false);
+        setShowPictureModalOpen(false);
         setQrCameraMode(false);
       }
     }
@@ -417,7 +418,7 @@ export default ({route: {params}}) => {
         } else {
           Alert.alert(
             '위치정보 권한 거절',
-            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 위치권한 허용을 해야 합니다.',
+            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.확인을 누르신 뒤 설정에서 위치정보 권한을 켜십시오.',
             [
               {
                 text: '취소',
@@ -441,7 +442,7 @@ export default ({route: {params}}) => {
         } else {
           Alert.alert(
             '위치정보 권한 거절',
-            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 위치권한 허용을 해야 합니다.',
+            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.확인을 누르신 뒤 설정에서 위치정보 권한을 켜십시오.',
             [
               {
                 text: '취소',
@@ -543,8 +544,8 @@ export default ({route: {params}}) => {
       STORE_NAME={STORE_NAME}
       TOTAL_COUNT={TOTAL_COUNT}
       WORKING_COUNT={WORKING_COUNT}
-      setShowPictureModal={setShowPictureModal}
-      showPictureModal={showPictureModal}
+      setShowPictureModalOpen={setShowPictureModalOpen}
+      showPictureModalOpen={showPictureModalOpen}
       workingModalOpen={workingModalOpen}
       setWorkingModalOpen={setWorkingModalOpen}
       goWorkFn={goWorkFn}

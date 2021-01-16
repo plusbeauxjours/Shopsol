@@ -15,6 +15,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {CheckBoxIcon, CameraIcon, PictureIcon} from '~/constants/Icons';
 import {CloseCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 interface IsLast {
   isLast?: boolean;
 }
@@ -394,7 +395,7 @@ export default ({
                       <Touchable
                         onPress={() => {
                           setCameraPictureLast(null);
-                          setIsCameraModalVisible(true);
+                          utils.handleCameraPermission(setIsCameraModalVisible);
                         }}>
                         <BorderBox>
                           <CameraIcon size={25} color={'#ccc'} />
