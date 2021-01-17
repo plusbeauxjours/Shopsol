@@ -52,6 +52,11 @@ const BackGround = styled.View`
 const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
 
+const LoadingText = styled.Text`
+  position: absolute;
+  bottom: 30px;
+  color: white;
+`;
 const Container = styled.View`
   width: 100%;
   flex-direction: row;
@@ -339,7 +344,7 @@ export default ({
   setWorkingTYPE,
   errorMessage,
   GENDER,
-  loading,
+  workingLoading,
   isWorkingMode,
   setIsWorkingMode,
   editMode,
@@ -358,6 +363,8 @@ export default ({
   QR_Num,
   refreshing,
   onRefresh,
+  setLat,
+  setLong,
 }) => {
   const navigation = useNavigation();
 
@@ -501,8 +508,8 @@ export default ({
               </MarkerText>
               <MarkerText style={{textAlign: 'right'}}>
                 {Number(Math.round(getDistance() * 10) / 10) < 1000
-                  ? Number(Math.round(getDistance() * 10) / 10) + 'm'
-                  : Number(Math.round(getDistance() * 10) / 10) / 1000 + 'km'}
+                  ? Math.round(getDistance() * 10) / 10 + 'm'
+                  : Math.round(getDistance() * 10) / 10000 + 'km'}
               </MarkerText>
             </Column>
           ) : (
@@ -626,7 +633,11 @@ export default ({
                   </Box>
                   <Box
                     onPress={() => {
-                      setIsGpsVisible(!isGpsVisible);
+                      utils.handleLocationPermission(
+                        setIsGpsVisible,
+                        setLat,
+                        setLong,
+                      );
                       setWorkingTYPE('GPS');
                     }}
                     hasGPS={GPS !== '0'}>
@@ -636,72 +647,6 @@ export default ({
                   </Box>
                 </BoxContainer>
               )}
-            </>
-          )}
-          {isGpsVisible && (
-            <>
-              <MapView
-                style={{width: wp('100%') - 40, height: 300}}
-                provider={PROVIDER_GOOGLE}
-                initialRegion={{
-                  // latitude: lat,
-                  // longitude: long,
-                  latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                  longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
-                  latitudeDelta: 0.005,
-                  longitudeDelta: 0.005,
-                }}>
-                {STORE_DATA?.resultdata.JULI !== -1 && (
-                  <Circle
-                    zIndex={0}
-                    radius={STORE_DATA.resultdata.JULI}
-                    strokeWidth={0}
-                    fillColor={
-                      getDistance() < STORE_DATA.resultdata.JULI
-                        ? 'rgba(0, 230, 64, 0.2)'
-                        : 'rgba(240, 52, 52, 0.2)'
-                    }
-                    strokeColor={
-                      getDistance() < STORE_DATA.resultdata.JULI
-                        ? 'rgba(0, 230, 64, 1)'
-                        : 'rgba(240, 52, 52, 1)'
-                    }
-                    center={{
-                      latitude: Number(STORE_DATA.resultdata.LAT),
-                      longitude: Number(STORE_DATA.resultdata.LONG),
-                    }}
-                  />
-                )}
-                <Marker
-                  onPress={() =>
-                    (STORE_DATA.resultdata.JULI >
-                      Math.round(getDistance() * 10) / 10 ||
-                      STORE_DATA.resultdata.JULI == -1) &&
-                    setWorkingModalOpen(true)
-                  }
-                  coordinate={{
-                    // latitude: lat,
-                    // longitude: long,
-                    latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
-                    longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
-                  }}>
-                  <UserMarker
-                    distance={
-                      STORE_DATA.resultdata.JULI == '-1'
-                        ? '제한 없음'
-                        : STORE_DATA.resultdata.JULI
-                    }
-                    current={Math.round(getDistance() * 10) / 10}
-                  />
-                </Marker>
-                <Marker
-                  coordinate={{
-                    latitude: Number(STORE_DATA.resultdata.LAT),
-                    longitude: Number(STORE_DATA.resultdata.LONG),
-                  }}>
-                  <ShopMarker />
-                </Marker>
-              </MapView>
             </>
           )}
           {STORE == '1' ? ( // 사업주 ============================
@@ -1122,7 +1067,7 @@ export default ({
         style={{
           margin: 0,
         }}>
-        {loading ? (
+        {workingLoading ? (
           <LottieView
             style={{width: 150, height: 150, marginBottom: 40}}
             source={require('../../../../assets/animations/loading.json')}
@@ -1242,7 +1187,103 @@ export default ({
           </Footer>
         </RNCamera>
       </Modal>
-
+      <Modal
+        isVisible={isGpsVisible}
+        onBackdropPress={() => setIsGpsVisible(false)}
+        onRequestClose={() => setIsGpsVisible(false)}
+        avoidKeyboard={true}
+        style={{
+          margin: 0,
+        }}>
+        {lat == 0 && long == 0 ? (
+          <Container style={{justifyContent: 'center'}}>
+            <LottieView
+              style={{
+                width: 150,
+                height: 150,
+                marginBottom: 40,
+              }}
+              source={require('../../../../assets/animations/loading.json')}
+              loop
+              autoPlay
+            />
+            <LoadingText>
+              {MEMBER_NAME}님의 위치정보를 불러오는 중입니다.
+            </LoadingText>
+            <LoadingText style={{bottom: 10}}>
+              잠시만 기다려주세요.
+            </LoadingText>
+          </Container>
+        ) : (
+          <>
+            <MapView
+              style={{flex: 1}}
+              provider={PROVIDER_GOOGLE}
+              initialRegion={{
+                latitude: lat,
+                longitude: long,
+                // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              }}>
+              {STORE_DATA?.resultdata.JULI !== -1 && (
+                <Circle
+                  zIndex={0}
+                  radius={STORE_DATA.resultdata.JULI}
+                  strokeWidth={0}
+                  fillColor={
+                    getDistance() < STORE_DATA.resultdata.JULI
+                      ? 'rgba(0, 230, 64, 0.2)'
+                      : 'rgba(240, 52, 52, 0.2)'
+                  }
+                  strokeColor={
+                    getDistance() < STORE_DATA.resultdata.JULI
+                      ? 'rgba(0, 230, 64, 1)'
+                      : 'rgba(240, 52, 52, 1)'
+                  }
+                  center={{
+                    latitude: Number(STORE_DATA.resultdata.LAT),
+                    longitude: Number(STORE_DATA.resultdata.LONG),
+                  }}
+                />
+              )}
+              <Marker
+                onPress={() =>
+                  (STORE_DATA.resultdata.JULI >
+                    Math.round(getDistance() * 10) / 10 ||
+                    STORE_DATA.resultdata.JULI == -1) &&
+                  setWorkingModalOpen(true)
+                }
+                coordinate={{
+                  latitude: lat,
+                  longitude: long,
+                  // latitude: Number(STORE_DATA.resultdata.LAT) + 0.002,
+                  // longitude: Number(STORE_DATA.resultdata.LONG) + 0.002,
+                }}>
+                <UserMarker
+                  distance={
+                    STORE_DATA.resultdata.JULI == '-1'
+                      ? '제한 없음'
+                      : STORE_DATA.resultdata.JULI
+                  }
+                  current={Math.round(getDistance() * 10) / 10}
+                />
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: Number(STORE_DATA.resultdata.LAT),
+                  longitude: Number(STORE_DATA.resultdata.LONG),
+                }}>
+                <ShopMarker />
+              </Marker>
+            </MapView>
+            <Footer onPress={() => setIsGpsVisible(false)}>
+              <FooterText>닫기</FooterText>
+            </Footer>
+          </>
+        )}
+      </Modal>
       <Modal
         isVisible={workingModalOpen}
         animationOutTiming={1}
@@ -1255,7 +1296,7 @@ export default ({
           width: wp('100%'),
           height: '100%',
         }}>
-        {loading ? (
+        {workingLoading ? (
           <LottieView
             style={{width: 150, height: 150, marginBottom: 40}}
             source={require('../../../../assets/animations/loading.json')}

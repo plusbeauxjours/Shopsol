@@ -1,14 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Alert,
-  Linking,
-  BackHandler,
-  NativeModules,
-  PermissionsAndroid,
-} from 'react-native';
+import {Linking, BackHandler, NativeModules} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {openSettings} from 'react-native-permissions';
-import Geolocation from 'react-native-geolocation-service';
 import {useNavigation} from '@react-navigation/native';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
@@ -45,7 +37,7 @@ export default ({route: {params}}) => {
   const {NOTICE_COUNT} = useSelector(
     (state: any) => state.checklistshareReducer,
   );
-  const [loading, setLoading] = useState<boolean>(false);
+  const [workingLoading, setWorkingLoading] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
@@ -261,49 +253,49 @@ export default ({route: {params}}) => {
   const goWorkFn = async (TYPE) => {
     setActionTYPE('출근');
     try {
-      setLoading(true);
+      setWorkingLoading(true);
       const {data} = await api.attendanceWork({
         STORE_ID: STORE_SEQ,
-        // LAT: lat,
-        // LONG: long,
-        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
 
       if (data.message === 'CONTRACT_END') {
-        setLoading(false);
+        setWorkingLoading(false);
         setErrorMessage('정확한 사업장 QR코드가 아닙니다');
         setFailModalOpen(true);
       } else if (data.message === 'WORK_ON_SUCCESS') {
-        setLoading(false);
+        setWorkingLoading(false);
         setSucessModalOpen(true);
       } else if (data.message === 'SCHEDULE_EMPTY') {
-        setLoading(false);
+        setWorkingLoading(false);
         setErrorMessage('오늘은 근무일이 아닙니다');
         setFailModalOpen(true);
       } else if (data.message === 'SCHEDULE_EXIST') {
-        setLoading(false);
+        setWorkingLoading(false);
         setErrorMessage('이미 출근처리를 완료했습니다');
         setFailModalOpen(true);
       } else if (data.message === 'ALREADY_SUCCESS') {
-        setLoading(false);
+        setWorkingLoading(false);
         setErrorMessage('이미 출근처리를 완료했습니다');
         setFailModalOpen(true);
       } else if (data.message === 'FAIL') {
-        setLoading(false);
+        setWorkingLoading(false);
         setErrorMessage(data.result);
         setFailModalOpen(true);
       } else {
-        setLoading(false);
+        setWorkingLoading(false);
         setErrorMessage(data.result);
         setFailModalOpen(true);
       }
     } catch (e) {
       console.log(e);
     } finally {
-      setLoading(false);
+      setWorkingLoading(false);
     }
   };
 
@@ -311,13 +303,13 @@ export default ({route: {params}}) => {
   const leaveWorkFn = async (TYPE) => {
     setActionTYPE('퇴근');
     try {
-      setLoading(true);
+      setWorkingLoading(true);
       const {data} = await api.attendanceOffWork({
         STORE_ID: STORE_SEQ,
-        // LAT: lat,
-        // LONG: long,
-        LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
         MEMBER_SEQ,
         TYPE,
       });
@@ -342,7 +334,7 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
-      setLoading(false);
+      setWorkingLoading(false);
     }
   };
 
@@ -407,107 +399,33 @@ export default ({route: {params}}) => {
     }
   };
 
-  const locationPermission = async () => {
-    try {
-      if (utils.isAndroid()) {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          getLocation();
-        } else {
-          Alert.alert(
-            '위치정보 권한 거절',
-            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.확인을 누르신 뒤 설정에서 위치정보 권한을 켜십시오.',
-            [
-              {
-                text: '취소',
-                style: 'cancel',
-              },
-              {
-                text: '확인',
-                onPress: () => {
-                  utils.isAndroid()
-                    ? openSettings()
-                    : Linking.openURL('app-settings:');
-                },
-              },
-            ],
-          );
-        }
-      } else {
-        const permission = await Geolocation.requestAuthorization('always');
-        if (permission === 'granted') {
-          getLocation();
-        } else {
-          Alert.alert(
-            '위치정보 권한 거절',
-            '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.확인을 누르신 뒤 설정에서 위치정보 권한을 켜십시오.',
-            [
-              {
-                text: '취소',
-                style: 'cancel',
-              },
-              {
-                text: '확인',
-                onPress: () => {
-                  utils.isAndroid()
-                    ? openSettings()
-                    : Linking.openURL('app-settings:');
-                },
-              },
-            ],
-          );
-        }
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-  const getLocation = () => {
-    Geolocation.watchPosition(
-      (position) => {
-        setLat(position.coords.latitude);
-        setLong(position.coords.longitude);
-      },
-      (e) => {
-        console.log(e);
-      },
-      {
-        enableHighAccuracy: true,
-        distanceFilter: 100,
-        interval: 5000,
-        fastestInterval: 2000,
-      },
-    );
-  };
-
   const getDistance = () => {
-    const prevLatInRad = toRad(Number(STORE_DATA.resultdata.LAT));
-    const prevLongInRad = toRad(Number(STORE_DATA.resultdata.LONG));
-    // const latInRad = lat;
-    // const longInRad = long;
-    const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
-    const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
+    const R = 6371e3; // metres
+    const lat1 = Number(STORE_DATA.resultdata.LAT);
+    const lon1 = Number(STORE_DATA.resultdata.LONG);
+    // const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
+    // const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
 
-    return (
-      6377830.272 *
-      Math.acos(
-        Math.sin(prevLatInRad) * Math.sin(latInRad) +
-          Math.cos(prevLatInRad) *
-            Math.cos(latInRad) *
-            Math.cos(longInRad - prevLongInRad),
-      )
-    );
+    const lat2 = lat;
+    const lon2 = long;
+
+    const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+    const φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c; // in metres
+    return d;
   };
 
   const gotoScreen = (paging) => {
     navigation.navigate(`${paging}`);
     setEditMode(false);
-  };
-
-  const toRad = (angle) => {
-    return (angle * Math.PI) / 180;
   };
 
   useEffect(() => {
@@ -528,9 +446,6 @@ export default ({route: {params}}) => {
     //         }),
     //       );
     // }
-    if (STORE == '0') {
-      locationPermission();
-    }
     fetchData();
     checkVersion();
   }, []);
@@ -575,7 +490,7 @@ export default ({route: {params}}) => {
       setWorkingTYPE={setWorkingTYPE}
       errorMessage={errorMessage}
       GENDER={GENDER}
-      loading={loading}
+      workingLoading={workingLoading}
       isWorkingMode={isWorkingMode}
       setIsWorkingMode={setIsWorkingMode}
       editMode={editMode}
@@ -594,6 +509,8 @@ export default ({route: {params}}) => {
       QR_Num={QR_Num}
       refreshing={refreshing}
       onRefresh={onRefresh}
+      setLat={setLat}
+      setLong={setLong}
     />
   );
 };
