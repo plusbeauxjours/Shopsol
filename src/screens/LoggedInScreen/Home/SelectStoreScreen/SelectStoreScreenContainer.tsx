@@ -7,6 +7,7 @@ import {NativeModules} from 'react-native';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {getSTORELIST_DATA} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
+import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
 import {
   resetCALENDAR_DATA,
   setCALENDAR_DATA_STORE_SEQ,
@@ -75,6 +76,8 @@ export default () => {
 
   useEffect(() => {
     try {
+      dispatch(setSplashVisible({visible: false}));
+      dispatch(setLoadingVisible(false));
       dispatch(setCALENDAR_DATA_STORE_SEQ(''));
       dispatch(resetCALENDAR_DATA());
       dispatch(getSTORELIST_DATA());

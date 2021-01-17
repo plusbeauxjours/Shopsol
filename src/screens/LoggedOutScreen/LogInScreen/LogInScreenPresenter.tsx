@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import InputLine from '~/components/InputLine';
 import RoundBtn from '~/components/Btn/RoundBtn';
 import styleGuide from '~/constants/styleGuide';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const BackGround = styled.View`
   flex: 1;
@@ -74,55 +72,61 @@ export default ({
   return (
     <BackGround>
       <Container>
-        <FastImage
-          style={{height: 200, width: 200, marginBottom: 50}}
-          source={require('../../../assets/images/shopSol.png')}
-          resizeMode={FastImage.resizeMode.stretch}
-        />
-        <TextInputBox>
-          <TextInputContainer>
-            <GreyText>ID</GreyText>
-            <TextInput
-              placeholder={'휴대폰번호'}
-              placeholderTextColor={styleGuide.palette.greyColor}
-              onChangeText={(text) => onChangeMobileNum(text)}
-              value={mobileNo}
-              keyboardType={'number-pad'}
-              maxLength={11}
-              clearButtonMode={'always'}
-            />
-          </TextInputContainer>
-          <InputLine isBefore={mobileNo == '' ? true : false} />
-          <WhiteSpace />
-          <TextInputContainer>
-            <GreyText>Password</GreyText>
-            <TextInput
-              placeholder={'영문, 숫자 조합 6자 이상'}
-              placeholderTextColor={styleGuide.palette.greyColor}
-              onChangeText={(text) => setPassword(text)}
-              value={password}
-              secureTextEntry={true}
-              clearButtonMode={'always'}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </TextInputContainer>
-          <InputLine isBefore={password == '' ? true : false} />
-          <WhiteSpace />
-          <RoundBtn
-            isInSection={true}
-            isWhiteBack={false}
-            text={'로그인'}
-            onPress={() => logIn()}
-            isRegisted={mobileNo || password}
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={'handled'}
+          keyboardDismissMode="on-drag"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{alignItems: 'center'}}>
+          <FastImage
+            style={{height: 200, width: 200, marginVertical: 50}}
+            source={require('../../../assets/images/shopSol.png')}
+            resizeMode={FastImage.resizeMode.stretch}
           />
-          <WhiteSpace />
-          <Space>
-            <Touchable onPress={() => gotoFind()}>
-              <UnderLineText>비밀번호 찾기</UnderLineText>
-            </Touchable>
-          </Space>
-        </TextInputBox>
+          <TextInputBox>
+            <TextInputContainer>
+              <GreyText>ID</GreyText>
+              <TextInput
+                placeholder={'휴대폰번호'}
+                placeholderTextColor={styleGuide.palette.greyColor}
+                onChangeText={(text) => onChangeMobileNum(text)}
+                value={mobileNo}
+                keyboardType={'number-pad'}
+                maxLength={11}
+                clearButtonMode={'always'}
+              />
+            </TextInputContainer>
+            <InputLine isBefore={mobileNo == '' ? true : false} />
+            <WhiteSpace />
+            <TextInputContainer>
+              <GreyText>Password</GreyText>
+              <TextInput
+                placeholder={'영문, 숫자 조합 6자 이상'}
+                placeholderTextColor={styleGuide.palette.greyColor}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                secureTextEntry={true}
+                clearButtonMode={'always'}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </TextInputContainer>
+            <InputLine isBefore={password == '' ? true : false} />
+            <WhiteSpace />
+            <RoundBtn
+              isInSection={true}
+              isWhiteBack={false}
+              text={'로그인'}
+              onPress={() => logIn()}
+              isRegisted={mobileNo || password}
+            />
+            <WhiteSpace />
+            <Space>
+              <Touchable onPress={() => gotoFind()}>
+                <UnderLineText>비밀번호 찾기</UnderLineText>
+              </Touchable>
+            </Space>
+          </TextInputBox>
+        </KeyboardAwareScrollView>
       </Container>
     </BackGround>
   );

@@ -157,8 +157,6 @@ export default ({route: {params}}) => {
       }
     } catch (e) {
       console.log(e);
-    } finally {
-      alertModal('등록이 완료되었습니다.');
     }
   };
 
