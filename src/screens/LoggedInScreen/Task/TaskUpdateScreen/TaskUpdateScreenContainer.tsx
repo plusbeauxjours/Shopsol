@@ -19,14 +19,12 @@ export default ({route: {params}}) => {
   const [taskName, setTaskName] = useState<string>(params?.taskName || '');
   const [taskMemo, setTaskMemo] = useState<string>(params?.taskMemo || '');
   const [taskDate, setTaskDate] = useState<any>(moment(params?.taskDate));
+  const [cameraPictureLast, setCameraPictureLast] = useState<any>(
+    params?.taskImage || null,
+  );
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
   const [isCameraModalVisible, setIsCameraModalVisible] = useState<boolean>(
     false,
-  );
-  const [cameraPictureLast, setCameraPictureLast] = useState<any>(
-    params?.taskImage
-      ? `http://133.186.210.223/uploads/${params?.taskImage}`
-      : '',
   );
 
   const alertModal = (text) => {
@@ -69,9 +67,8 @@ export default ({route: {params}}) => {
     if (taskName == '') {
       alertModal('수정할 업무명을 입력해주세요.');
     }
-    if (cameraPictureLast?.length === 0) {
+    if (!cameraPictureLast) {
       try {
-        dispatch(setLoadingVisible(true));
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
         dispatch(
@@ -95,41 +92,38 @@ export default ({route: {params}}) => {
         }
       } catch (e) {
         console.log(e);
-      } finally {
-        await params?.onRefresh();
-        dispatch(setLoadingVisible(false));
       }
     } else {
-      const formData: any = new FormData();
-      formData.append('task_SEQ', task_SEQ);
-      formData.append('taskNAME', taskName);
-      formData.append('taskDATE', moment(taskDate).format('YYYY-MM-DD'));
-      formData.append('taskMEMO', taskMemo);
-
-      const fileInfoArr = cameraPictureLast.split('/');
-      const fileInfo = fileInfoArr[fileInfoArr.length - 1];
-      const extensionIndex = fileInfo.indexOf('.');
-      let fileName = fileInfo;
-      let fileType = '';
-      if (extensionIndex > -1) {
-        fileName = fileInfo;
-        fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
-        if (fileType === 'image/jpg') {
-          fileType = 'image/jpeg';
-        }
-      }
-      formData.append('image', {
-        uri: utils.isAndroid
-          ? cameraPictureLast
-          : cameraPictureLast.replace('file://', ''),
-        name: fileName,
-        type: fileType,
-      });
-
       try {
-        dispatch(setLoadingVisible(true));
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
+        dispatch(setLoadingVisible(true));
+        const formData: any = new FormData();
+        formData.append('task_SEQ', task_SEQ);
+        formData.append('taskNAME', taskName);
+        formData.append('taskDATE', moment(taskDate).format('YYYY-MM-DD'));
+        formData.append('taskMEMO', taskMemo);
+
+        const fileInfoArr = cameraPictureLast.split('/');
+        const fileInfo = fileInfoArr[fileInfoArr.length - 1];
+        const extensionIndex = fileInfo.indexOf('.');
+        let fileName = fileInfo;
+        let fileType = '';
+        if (extensionIndex > -1) {
+          fileName = fileInfo;
+          fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
+          if (fileType === 'image/jpg') {
+            fileType = 'image/jpeg';
+          }
+        }
+        formData.append('image', {
+          uri: utils.isAndroid
+            ? cameraPictureLast
+            : cameraPictureLast.replace('file://', ''),
+          name: fileName,
+          type: fileType,
+        });
+
         dispatch(
           updateTASK_DATA({
             name: params?.name,
@@ -143,12 +137,11 @@ export default ({route: {params}}) => {
         const {data} = await api.updateTaskDataImg(formData);
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
+        } else {
+          dispatch(setLoadingVisible(false));
         }
       } catch (e) {
         console.log(e);
-      } finally {
-        await params?.onRefresh();
-        dispatch(setLoadingVisible(false));
       }
     }
   };

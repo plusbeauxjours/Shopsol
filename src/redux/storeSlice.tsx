@@ -36,8 +36,6 @@ const storeSlice = createSlice({
     },
     setSTORE_DATA(state, action) {
       const {payload: STORE_DATA} = action;
-      console.log('LAT', STORE_DATA.resultdata.LAT);
-      console.log('LONG', STORE_DATA.resultdata.LONG);
       return {
         ...state,
         MANAGER_CALLED:

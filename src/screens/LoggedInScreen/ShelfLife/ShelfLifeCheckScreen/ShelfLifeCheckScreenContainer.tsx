@@ -299,7 +299,7 @@ export default () => {
   };
 
   const gotoAdd = () => {
-    navigation.navigate('AddShelfLifeScreen', {fetchData});
+    navigation.navigate('AddShelfLifeScreen', {onRefresh});
   };
 
   const gotoCategory = (index) => {
@@ -325,15 +325,10 @@ export default () => {
 
   const onScroll = onScrollEvent({y});
 
-  const handleBarCodeScanned = async (codenumber) => {
+  const handleBarCodeScanned = (codenumber) => {
     setBarCodeCameraModalOpen(false);
-    if (!codenumber) {
-      setTimeout(() => {
-        alertModal('바코드를 읽을 수 없습니다.');
-      }, 100);
-    } else {
-      setCodenumber(codenumber);
-    }
+    setSearch(codenumber);
+    setCodenumber(codenumber);
   };
 
   useEffect(() => {

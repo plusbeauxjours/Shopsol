@@ -700,21 +700,26 @@ export default ({
                     source={require(`../../../../assets/main/PaymentInfo.png`)}
                   />
                 )}
-                {TOTAL_COUNT !== 0 &&
-                  ((initLoading && QR_Num) ||
-                  (!initLoading && STORE_DATA.resultdata?.QR_Num) ? (
+                {
+                  TOTAL_COUNT !== 0 && (
+                    // 다음 버전에 주석 해제
+                    // ((initLoading && QR_Num) ||
+                    // (!initLoading && STORE_DATA.resultdata?.QR_Num) ? (
                     <MenuCntContainer
                       selection={'QR보기'}
                       paging={'qrViewScreen'}
                       source={require(`../../../../assets/main/qrView.png`)}
                     />
-                  ) : (
-                    <MenuCntContainer
-                      selection={'QR등록하기'}
-                      paging={'qrRegisterScreen'}
-                      source={require(`../../../../assets/main/qrRegister.png`)}
-                    />
-                  ))}
+                  )
+                  // 다음 버전에 주석 해제
+                  // ) : (
+                  //   <MenuCntContainer
+                  //     selection={'QR등록하기'}
+                  //     paging={'qrRegisterScreen'}
+                  //     source={require(`../../../../assets/main/qrRegister.png`)}
+                  //   />
+                  // ))
+                }
                 {TOTAL_COUNT !== 0 && (
                   <MenuCntContainer
                     selection={'사업장현황'}
@@ -853,21 +858,26 @@ export default ({
                             />
                           )
                         )}
-                        {TOTAL_COUNT !== 0 &&
-                          ((initLoading && QR_Num) ||
-                          (!initLoading && STORE_DATA.resultdata?.QR_Num) ? (
+                        {
+                          TOTAL_COUNT !== 0 && (
+                            // 다음 버전에 주석 해제
+                            // ((initLoading && QR_Num) ||
+                            // (!initLoading && STORE_DATA.resultdata?.QR_Num) ? (
                             <MenuCntContainer
                               selection={'QR보기'}
                               paging={'qrViewScreen'}
                               source={require(`../../../../assets/main/qrView.png`)}
                             />
-                          ) : (
-                            <MenuCntContainer
-                              selection={'QR등록하기'}
-                              paging={'qrRegisterScreen'}
-                              source={require(`../../../../assets/main/qrRegister.png`)}
-                            />
-                          ))}
+                          )
+                          // 다음 버전에 주석 해제
+                          // ) : (
+                          //   <MenuCntContainer
+                          //     selection={'QR등록하기'}
+                          //     paging={'qrRegisterScreen'}
+                          //     source={require(`../../../../assets/main/qrRegister.png`)}
+                          //   />
+                          // ))
+                        }
                         {TOTAL_COUNT !== 0 && (
                           <MenuCntContainer
                             selection={'사업장현황'}
@@ -1210,9 +1220,7 @@ export default ({
             <LoadingText>
               {MEMBER_NAME}님의 위치정보를 불러오는 중입니다.
             </LoadingText>
-            <LoadingText style={{bottom: 10}}>
-              잠시만 기다려주세요.
-            </LoadingText>
+            <LoadingText style={{bottom: 10}}>잠시만 기다려주세요.</LoadingText>
           </Container>
         ) : (
           <>
@@ -1394,13 +1402,16 @@ export default ({
                 resizeMode={FastImage.resizeMode.contain}
               />
             </ShowPictureModalImage>
-            <StoreUpdateBtn
-              style={{width: 110, alignSelf: 'flex-end', marginTop: 20}}
-              onPress={() => {
-                utils.handleCameraPermission(setQrCameraMode);
-              }}>
-              <WhiteText>QR코드 재등록</WhiteText>
-            </StoreUpdateBtn>
+            {/* 
+              다음 버전에 주석 해제
+              <StoreUpdateBtn
+                style={{width: 110, alignSelf: 'flex-end', marginTop: 20}}
+                onPress={() => {
+                  utils.handleCameraPermission(setQrCameraMode);
+                }}>
+                <WhiteText>QR코드 재등록</WhiteText>
+              </StoreUpdateBtn> 
+            */}
           </ShowPictureModalTouchable>
         )}
       </Modal>

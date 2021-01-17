@@ -96,16 +96,16 @@ const CloseIconContainer = styled.View`
   right: -10px;
 `;
 
-export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
+export default ({taskIMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
   return (
     <Row style={{marginTop: 10, marginBottom: 10}}>
       <WhiteBox>
-        <Touchable onPress={onPress} disabled={!IMAGE}>
-          {IMAGE ? (
+        <Touchable onPress={onPress} disabled={!taskIMAGE}>
+          {taskIMAGE ? (
             <FastImage
               style={{width: 60, height: 60, borderRadius: 10}}
               source={{
-                uri: IMAGE,
+                uri: taskIMAGE,
                 headers: {Authorization: 'someAuthToken'},
                 priority: FastImage.priority.low,
               }}

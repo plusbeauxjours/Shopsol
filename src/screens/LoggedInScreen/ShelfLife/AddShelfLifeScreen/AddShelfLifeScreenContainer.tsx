@@ -16,7 +16,6 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
 
   const shelfLifeDataTempList = [];
-  let last = false;
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const [shelfLifeName, setShelfLifeName] = useState<string>('');
@@ -34,7 +33,13 @@ export default ({route: {params}}) => {
   const [barCodeCameraModalOpen, setBarCodeCameraModalOpen] = useState<boolean>(
     false,
   );
-  const [codenumber, setCodenumber] = useState<string>('');
+  const [codenumber, setCodenumber] = useState<string>(null);
+  const [shelfLifeBarcode, setShelfLifeBarcode] = useState<string>(null);
+  const [shelfLifeImgLink, setShelfLifeImgLink] = useState<string>(null);
+  const [
+    barCodeInputCameraModalOpen,
+    setBarCodeInputCameraModalOpen,
+  ] = useState<boolean>(false);
 
   const alertModal = (text, okCallback = () => {}) => {
     const params = {
@@ -71,7 +76,16 @@ export default ({route: {params}}) => {
         shelfLifeName == list[i].shelfLifeNAME &&
         moment(shelfLifeDate).format('YYYY-MM-DD') == list[i].shelfLifeDATE
       ) {
-        return alertModal('같은 일자에 동일한 상품이 작성되어 있습니다.');
+        return alertModal('같은 일자에 동일한 상품명이 작성되어 있습니다.');
+      }
+      if (
+        shelfLifeBarcode &&
+        shelfLifeBarcode == list[i].shelfLifeBarcode &&
+        moment(shelfLifeDate).format('YYYY-MM-DD') == list[i].shelfLifeDATE
+      ) {
+        return alertModal(
+          '같은 일자에 동일한 바코드의 상품이 작성되어 있습니다.',
+        );
       }
     }
     let buffer = list;
@@ -80,12 +94,16 @@ export default ({route: {params}}) => {
       shelfLifeDATE: moment(shelfLifeDate).format('YYYY-MM-DD'),
       shelfLifeMEMO: shelfLifeMemo,
       shelfLifeIMAGE: cameraPictureLast,
+      shelfLifeBarcode,
+      shelfLifeImgLink,
     });
     setCameraPictureLast(null);
     setShelfLifeName('');
     setShelfLifeDate(moment());
     setShelfLifeDateSet(false);
     setShelfLifeMemo('');
+    setShelfLifeBarcode(null);
+    setShelfLifeImgLink(null);
     setList(buffer);
   };
 
@@ -100,40 +118,47 @@ export default ({route: {params}}) => {
   };
 
   const submitShelfLifeDataImg = async (i, shelfLifeSTORE_SEQ) => {
-    const formData: any = new FormData();
-    formData.append('STORE_SEQ', shelfLifeSTORE_SEQ);
-    formData.append('shelfLifeDATE', i.shelfLifeDATE);
-    formData.append('shelfLifeMEMO', i.shelfLifeMEMO);
-    formData.append('shelfLifeNAME', i.shelfLifeNAME);
-
-    const fileInfoArr = i.shelfLifeIMAGE.split('/');
-    const fileInfo = fileInfoArr[fileInfoArr.length - 1];
-    const extensionIndex = fileInfo.indexOf('.');
-    let fileName = fileInfo;
-    let fileType = '';
-    if (extensionIndex > -1) {
-      fileName = fileInfo;
-      fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
-      if (fileType === 'image/jpg') {
-        fileType = 'image/jpeg';
-      }
-    }
-    formData.append('image', {
-      uri: utils.isAndroid
-        ? i.shelfLifeIMAGE
-        : i.shelfLifeIMAGE.replace('file://', ''),
-      name: fileName,
-      type: fileType,
-    });
-
     try {
+      dispatch(setLoadingVisible(true));
+      const formData: any = new FormData();
+      formData.append('STORE_SEQ', shelfLifeSTORE_SEQ);
+      formData.append('shelfLifeDATE', i.shelfLifeDATE);
+      formData.append('shelfLifeMEMO', i.shelfLifeMEMO);
+      formData.append('shelfLifeNAME', i.shelfLifeNAME);
+      formData.append('shelfLifeBarcode', i.shelfLifeBarcode);
+      formData.append('shelfLifeImgLink', i.shelfLifeImgLink);
+
+      const fileInfoArr = i.shelfLifeIMAGE.split('/');
+      const fileInfo = fileInfoArr[fileInfoArr.length - 1];
+      const extensionIndex = fileInfo.indexOf('.');
+      let fileName = fileInfo;
+      let fileType = '';
+      if (extensionIndex > -1) {
+        fileName = fileInfo;
+        fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
+        if (fileType === 'image/jpg') {
+          fileType = 'image/jpeg';
+        }
+      }
+      formData.append('image', {
+        uri: utils.isAndroid
+          ? i.shelfLifeIMAGE
+          : i.shelfLifeIMAGE.replace('file://', ''),
+        name: fileName,
+        type: fileType,
+      });
+
       const {data} = await api.setShelfLifeDataImg(formData);
-      console.log(data);
       if (data.result == '0') {
         alertModal('연결에 실패하였습니다.');
+      } else {
+        dispatch(setLoadingVisible(false));
+        params?.onRefresh();
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      alertModal('등록이 완료되었습니다.');
     }
   };
 
@@ -157,6 +182,10 @@ export default ({route: {params}}) => {
           });
           if (data.result == '0') {
             alertModal('연결에 실패하였습니다.');
+          } else {
+            dispatch(setLoadingVisible(false));
+            alertModal('등록이 완료되었습니다.');
+            params?.onRefresh();
           }
         } catch (e) {
           console.log(e);
@@ -164,10 +193,6 @@ export default ({route: {params}}) => {
       }
     } catch (e) {
       console.log(e);
-    } finally {
-      await params?.fetchData();
-      alertModal('등록이 완료되었습니다.');
-      dispatch(setLoadingVisible(false));
     }
   };
 
@@ -205,7 +230,7 @@ export default ({route: {params}}) => {
     );
   };
 
-  const handleBarCodeScanned = async (codenumber) => {
+  const handleBarCodeScanned = (codenumber) => {
     setBarCodeCameraModalOpen(false);
     if (!codenumber) {
       setTimeout(() => {
@@ -216,21 +241,36 @@ export default ({route: {params}}) => {
     }
   };
 
+  const handleBarCodeInputScanned = (codenumber) => {
+    setBarCodeInputCameraModalOpen(false);
+    if (!codenumber) {
+      setTimeout(() => {
+        alertModal('바코드를 읽을 수 없습니다.');
+      }, 100);
+    } else {
+      setShelfLifeBarcode(codenumber);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
         dispatch(setSplashVisible({visible: true, text: '유통기한'}));
-        if (codenumber !== '') {
+        if (codenumber) {
           const {data} = await api.getBarCode(codenumber);
           if (data.resultdata?.length > 0) {
             dispatch(setSplashVisible({visible: false}));
             setShelfLifeName(data.resultdata[0].NAME);
             setShelfLifeMemo(data.resultdata[0].BRAND);
-            setCameraPictureLast(data.resultdata[0].IMG);
+            setShelfLifeBarcode(data.resultdata[0].codenumber);
+            setShelfLifeImgLink(data.resultdata[0].IMG);
           } else {
             dispatch(setSplashVisible({visible: false}));
             setTimeout(() => {
-              alertModal('등록된 데이터가 없습니다.');
+              setShelfLifeBarcode(codenumber);
+              alertModal(
+                '등록된 데이터가 없습니다.\n직접입력하여 진행해 주세요.',
+              );
             }, 100);
           }
         }
@@ -274,6 +314,13 @@ export default ({route: {params}}) => {
       barCodeCameraModalOpen={barCodeCameraModalOpen}
       setBarCodeCameraModalOpen={setBarCodeCameraModalOpen}
       handleBarCodeScanned={handleBarCodeScanned}
+      handleBarCodeInputScanned={handleBarCodeInputScanned}
+      shelfLifeBarcode={shelfLifeBarcode}
+      setShelfLifeBarcode={setShelfLifeBarcode}
+      barCodeInputCameraModalOpen={barCodeInputCameraModalOpen}
+      setBarCodeInputCameraModalOpen={setBarCodeInputCameraModalOpen}
+      shelfLifeImgLink={shelfLifeImgLink}
+      setShelfLifeImgLink={setShelfLifeImgLink}
     />
   );
 };

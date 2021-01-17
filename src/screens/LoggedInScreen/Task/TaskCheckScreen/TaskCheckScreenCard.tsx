@@ -140,7 +140,8 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                 source={{
                   uri:
                     item.IMG_LIST.includes('file://') ||
-                    item.IMG_LIST.includes('http://')
+                    item.IMG_LIST.includes('http://') ||
+                    item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
                       : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
@@ -169,7 +170,13 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                 taskName: item.taskName,
                 taskDate: item.taskDate,
                 taskMemo: item.taskMemo,
-                taskImage: item.IMG_LIST,
+                taskImage: !item.IMG_LIST
+                  ? null
+                  : item?.IMG_LIST?.includes('file://') ||
+                    item?.IMG_LIST?.includes('http://') ||
+                    item?.IMG_LIST?.includes('content://')
+                  ? item.IMG_LIST
+                  : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                 onRefresh,
               });
             }, 100)
@@ -207,7 +214,8 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                 source={{
                   uri:
                     item.IMG_LIST.includes('file://') ||
-                    item.IMG_LIST.includes('http://')
+                    item.IMG_LIST.includes('http://') ||
+                    item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
                       : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},

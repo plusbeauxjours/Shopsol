@@ -245,7 +245,7 @@ export default ({
             <Row>
               {cameraPictureLast ? (
                 <Touchable
-                  onPress={() => setCameraPictureLast('')}
+                  onPress={() => setCameraPictureLast(null)}
                   disabled={!cameraPictureLast}>
                   <IconContainer>
                     <CloseCircleIcon size={12} />
@@ -292,6 +292,8 @@ export default ({
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskName(text)}
                     value={taskName}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     maxLength={15}
                     multiline={true}
                     style={{
@@ -316,6 +318,8 @@ export default ({
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskMemo(text)}
                     value={taskMemo}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     multiline={true}
                     style={{
                       textAlignVertical: 'top',
@@ -376,7 +380,7 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
-                  <HalfBotton onPress={() => setCameraPictureLast('')}>
+                  <HalfBotton onPress={() => setCameraPictureLast(null)}>
                     <HalfBottonText style={{color: styleGuide.palette.primary}}>
                       재촬영
                     </HalfBottonText>

@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import InputLine from '~/components/InputLine';
 import RoundBtn from '~/components/Btn/RoundBtn';
@@ -56,9 +60,7 @@ const TextInputContainer = styled.View`
 `;
 
 const TextInputBox = styled.View`
-  width: 300px;
-  position: absolute;
-  bottom: 100px;
+  width: ${wp('100%') - 80}px;
 `;
 
 export default ({
@@ -73,7 +75,7 @@ export default ({
     <BackGround>
       <Container>
         <FastImage
-          style={{height: 200, width: 200, bottom: 220}}
+          style={{height: 200, width: 200, marginBottom: 50}}
           source={require('../../../assets/images/shopSol.png')}
           resizeMode={FastImage.resizeMode.stretch}
         />

@@ -194,7 +194,7 @@ export default ({alert}) => {
               rippleColor={styleGuide.palette.rippleColor}
               rippleSize={1200}
               rippleDuration={600}
-              rippleOpacity={0.1}>
+              rippleOpacity={0.4}>
               <WhiteText>도움말</WhiteText>
               <WhiteText>전체보기</WhiteText>
             </WithHelpBtn>
@@ -222,15 +222,16 @@ export default ({alert}) => {
               </HalfBtnLeft>
               <HalfBtnRight
                 warning={alert.warning}
-                onPress={() =>
+                onPress={(e) => {
+                  e.preventDefault();
                   setTimeout(() => {
                     onOKPress();
-                  }, 200)
-                }
+                  }, 200);
+                }}
                 rippleColor={styleGuide.palette.secondary}
                 rippleSize={1200}
                 rippleDuration={600}
-                rippleOpacity={0.1}>
+                rippleOpacity={0.4}>
                 <HalfTextRight>{alert.okButtonText}</HalfTextRight>
               </HalfBtnRight>
             </Row>

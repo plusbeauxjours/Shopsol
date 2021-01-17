@@ -6,7 +6,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
 import Ripple from 'react-native-material-ripple';
 
-import {CheckMarkIcon} from '~/constants/Icons';
+import {CheckMarkIcon, BarCodeIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
 interface IsChecked {
@@ -126,6 +126,32 @@ const GreyBox = styled.View`
   border-radius: 10px;
 `;
 
+const WhiteBack = styled.View`
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background-color: white;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: -9px;
+  right: -9px;
+  z-index: 30;
+`;
+
+const BarcodeIconContainer = styled.View`
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background-color: transparent;
+  border-width: 1px;
+  border-color: ${styleGuide.palette.greyColor};
+  z-index: 32;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+`;
+
 export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
   const navigation = useNavigation();
   if (item.checkType === '0') {
@@ -136,13 +162,17 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
             onPress={() =>
               confirmModal(name, item.shelfLife_SEQ, item.IMG_LIST)
             }>
-            {item.IMG_LIST ? (
+            {item.IMG_LIST || item?.shelfLifeImgLink ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
                   uri:
-                    item.IMG_LIST.includes('file://') ||
-                    item.IMG_LIST.includes('http://')
+                    item?.shelfLifeImgLink !== 'undefined' &&
+                    item?.shelfLifeImgLink !== 'null'
+                      ? item.shelfLifeImgLink
+                      : item?.IMG_LIST?.includes('file://') ||
+                        item?.IMG_LIST?.includes('http://') ||
+                        item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
                       : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
@@ -162,6 +192,15 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
             </IconBorder>
           </Touchable>
         </GreyBox>
+        {item?.shelfLifeBarcode?.length > 0 &&
+          item?.shelfLifeBarcode !== 'undefined' &&
+          item?.shelfLifeBarcode !== 'null' && (
+            <WhiteBack>
+              <BarcodeIconContainer>
+                <BarCodeIcon color={styleGuide.palette.greyColor} size={13} />
+              </BarcodeIconContainer>
+            </WhiteBack>
+          )}
         <WhiteItem
           onPress={() =>
             setTimeout(() => {
@@ -171,8 +210,26 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                 shelfLifeName: item.shelfLifeName,
                 shelfLifeDate: item.shelfLifeDate,
                 shelfLifeMemo: item.shelfLifeMemo,
-                shelfLifeImage: item.IMG_LIST,
+                shelfLifeImage: !item.IMG_LIST
+                  ? null
+                  : item?.IMG_LIST?.includes('file://') ||
+                    item?.IMG_LIST?.includes('http://') ||
+                    item?.IMG_LIST?.includes('content://')
+                  ? item.IMG_LIST
+                  : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                 onRefresh,
+                shelfLifeBarcode:
+                  item?.shelfLifeBarcode == 'undefined'
+                    ? null
+                    : item?.shelfLifeBarcode == 'null'
+                    ? null
+                    : item?.shelfLifeBarcode,
+                shelfLifeImgLink:
+                  item?.shelfLifeImgLink == 'undefined'
+                    ? null
+                    : item?.shelfLifeImgLink == 'null'
+                    ? null
+                    : item?.shelfLifeImgLink,
               });
             }, 100)
           }
@@ -205,13 +262,17 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
             onPress={() =>
               cancelModal(name, item.shelfLife_SEQ, item.IMG_LIST)
             }>
-            {item.IMG_LIST ? (
+            {item.IMG_LIST || item?.shelfLifeImgLink ? (
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
                   uri:
-                    item.IMG_LIST.includes('file://') ||
-                    item.IMG_LIST.includes('http://')
+                    item?.shelfLifeImgLink !== 'undefined' &&
+                    item?.shelfLifeImgLink !== 'null'
+                      ? item.shelfLifeImgLink
+                      : item?.IMG_LIST?.includes('file://') ||
+                        item?.IMG_LIST?.includes('http://') ||
+                        item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
                       : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
@@ -231,6 +292,12 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
             </IconBorder>
           </Touchable>
         </GreyBox>
+        <WhiteBack
+          style={{backgroundColor: styleGuide.palette.backgroundPrimary}}>
+          <BarcodeIconContainer>
+            <BarCodeIcon color={styleGuide.palette.greyColor} size={13} />
+          </BarcodeIconContainer>
+        </WhiteBack>
         <Item
           onPress={() => {}}
           rippleColor={styleGuide.palette.rippleGreyColor}

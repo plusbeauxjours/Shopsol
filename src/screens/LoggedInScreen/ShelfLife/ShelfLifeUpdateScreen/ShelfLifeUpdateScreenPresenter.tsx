@@ -17,9 +17,13 @@ import {PictureIcon, CameraIcon, BarCodeIcon} from '~/constants/Icons';
 import {CloseCircleIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
+import BarcodeMask from 'react-native-barcode-mask';
 
 interface ITextInput {
   isBefore: boolean;
+}
+interface IsChecked {
+  isChecked?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -44,9 +48,15 @@ const Section = styled.View`
 `;
 
 const TextContainer = styled.View`
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+const ListContasiner = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 const Row = styled.View`
@@ -214,6 +224,39 @@ const DatePickerText = styled.Text`
   text-align: center;
 `;
 
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
+`;
+
+const Footer = styled.TouchableOpacity`
+  width: ${wp('100%')}px;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: ${styleGuide.palette.primary};
+`;
+
+const FooterText = styled.Text`
+  color: #ffffff;
+  font-size: 14px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
+
 export default ({
   deleteModal,
   cameraPictureLast,
@@ -232,6 +275,16 @@ export default ({
   isDateModalVisible,
   submit,
   alertModal,
+  barCodeCameraModalOpen,
+  setBarCodeCameraModalOpen,
+  handleBarCodeScanned,
+  handleBarCodeInputScanned,
+  shelfLifeBarcode,
+  setShelfLifeBarcode,
+  barCodeInputCameraModalOpen,
+  setBarCodeInputCameraModalOpen,
+  shelfLifeImgLink,
+  setShelfLifeImgLink,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -243,17 +296,21 @@ export default ({
         <Container>
           <Section>
             <Row>
-              {cameraPictureLast ? (
+              {shelfLifeImgLink || cameraPictureLast ? (
                 <Touchable
-                  onPress={() => setCameraPictureLast('')}
-                  disabled={!cameraPictureLast}>
+                  onPress={() =>
+                    shelfLifeImgLink
+                      ? setShelfLifeImgLink(null)
+                      : setCameraPictureLast(null)
+                  }
+                  disabled={!cameraPictureLast && !shelfLifeImgLink}>
                   <IconContainer>
                     <CloseCircleIcon size={12} />
                   </IconContainer>
                   <FastImage
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
-                      uri: cameraPictureLast,
+                      uri: shelfLifeImgLink ?? cameraPictureLast,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -343,6 +400,29 @@ export default ({
                       minHeight: 80,
                     }}
                   />
+                  <ListContasiner style={{width: '100%', marginTop: 32}}>
+                    <Touchable
+                      onPress={() =>
+                        shelfLifeBarcode
+                          ? setShelfLifeBarcode(null)
+                          : setBarCodeInputCameraModalOpen(true)
+                      }>
+                      {shelfLifeBarcode && (
+                        <IconContainer style={{top: -5, right: -5}}>
+                          <CloseCircleIcon size={12} />
+                        </IconContainer>
+                      )}
+                      <RequestBorderButton
+                        disabled={true}
+                        isChecked={shelfLifeBarcode}>
+                        <RequestBorderText isChecked={shelfLifeBarcode}>
+                          {shelfLifeBarcode
+                            ? shelfLifeBarcode
+                            : '바코드 넘버 입력'}
+                        </RequestBorderText>
+                      </RequestBorderButton>
+                    </Touchable>
+                  </ListContasiner>
                 </TextContainer>
               </WhiteItem>
             </Row>
@@ -393,7 +473,7 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <Row style={{position: 'absolute', bottom: 0, flex: 1}}>
-                  <HalfBotton onPress={() => setCameraPictureLast('')}>
+                  <HalfBotton onPress={() => setCameraPictureLast(null)}>
                     <HalfBottonText style={{color: styleGuide.palette.primary}}>
                       재촬영
                     </HalfBottonText>
@@ -438,6 +518,36 @@ export default ({
           )}
         </Modal>
       </ScrollView>
+      <Modal
+        isVisible={barCodeInputCameraModalOpen}
+        onBackdropPress={() => setBarCodeInputCameraModalOpen(false)}
+        onRequestClose={() => setBarCodeInputCameraModalOpen(false)}
+        style={{margin: 0}}
+        avoidKeyboard={true}>
+        <RNCamera
+          ref={cameraRef}
+          style={{flex: 1}}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.off}
+          autoFocus={RNCamera.Constants.AutoFocus.on}
+          captureAudio={false}
+          onFacesDetected={() => {}}
+          onFocusChanged={() => {}}
+          onZoomChanged={() => {}}
+          onBarCodeRead={({data}) => handleBarCodeInputScanned(data)}>
+          <BarcodeMask
+            width={300}
+            height={100}
+            outerMaskOpacity={0.8}
+            edgeColor={styleGuide.palette.tertiary}
+            edgeBorderWidth={2}
+            showAnimatedLine={false}
+          />
+          <Footer onPress={() => setBarCodeInputCameraModalOpen(false)}>
+            <FooterText>닫기</FooterText>
+          </Footer>
+        </RNCamera>
+      </Modal>
       <Modal
         onRequestClose={() => setIsDateModalVisible(false)}
         onBackdropPress={() => setIsDateModalVisible(false)}

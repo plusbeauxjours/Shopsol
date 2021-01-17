@@ -361,6 +361,8 @@ export default ({
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskName(text)}
                     value={taskName}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     maxLength={15}
                     multiline={true}
                     style={{
@@ -396,6 +398,8 @@ export default ({
                     placeholderTextColor="#CCC"
                     onChangeText={(text) => setTaskMemo(text)}
                     value={taskMemo}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     multiline={true}
                     style={{
                       textAlignVertical: 'top',
@@ -441,7 +445,7 @@ export default ({
                     setIsImageViewVisible(true);
                     setSelectedIndex(index);
                   }}
-                  IMAGE={data.taskIMAGE}
+                  taskIMAGE={data.taskIMAGE}
                   NAME={data.taskNAME}
                   DATE={data.taskDATE}
                   MEMO={data.taskMEMO}

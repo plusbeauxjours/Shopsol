@@ -179,7 +179,6 @@ const BarcodeIconConatiner = styled.TouchableOpacity`
   position: absolute;
   left: 0px;
   height: 40px;
-  justify-content: center;
   width: 40px;
   border-width: 2px;
   border-color: ${styleGuide.palette.secondary};
@@ -236,21 +235,6 @@ const ModalFooterText = styled.Text`
   font-size: 14px;
   margin-top: 15px;
   margin-bottom: 15px;
-`;
-
-const GreyText = styled.Text`
-  font-size: ${styleGuide.fontSize.middle}px;
-  position: absolute;
-  color: ${styleGuide.palette.greyColor};
-`;
-
-const EmptyView = styled.View`
-  width: ${wp('100%') - 40}px;
-  border-radius: 20px;
-  background-color: white;
-  justify-content: center;
-  align-items: center;
-  padding-top: 10px;
 `;
 
 const ModalPopupArea = styled.View`
@@ -443,7 +427,11 @@ export default ({
                     onChangeText={(text) => setSearch(text)}
                     value={search}
                   />
-                  <CloseIconContainer onPress={() => setSearch('')}>
+                  <CloseIconContainer
+                    onPress={() => {
+                      setSearch('');
+                      setCodenumber('');
+                    }}>
                     <CloseCircleOutlineIcon
                       color={styleGuide.palette.searchBarColor}
                       size={24}
@@ -460,38 +448,8 @@ export default ({
                     },
                   }) => index !== 0 && onMeasurement(index, {name, anchor})}>
                   <VerticalLine />
-                  {codenumber.length > 0 ? (
-                    items?.filter((i) => i.shelfLifeBarcode == codenumber)
-                      .length == 0 ? (
-                      <EmptyView>
-                        <FastImage
-                          style={{
-                            width: 220,
-                            height: 55,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginRight: 90,
-                          }}
-                          source={require('../../../../assets/images/emptyBalloons.png')}
-                          resizeMode={FastImage.resizeMode.cover}>
-                          <GreyText>
-                            촬영한 바코드로 등록된 상품이 없습니다.
-                          </GreyText>
-                        </FastImage>
-                        <FastImage
-                          style={{
-                            width: 100,
-                            height: 63,
-                            marginTop: 3,
-                            bottom: 0,
-                            marginLeft: 170,
-                          }}
-                          source={require('../../../../assets/images/emptyIcon.png')}
-                          resizeMode={FastImage.resizeMode.cover}
-                        />
-                      </EmptyView>
-                    ) : (
-                      items
+                  {codenumber?.length > 0
+                    ? items
                         ?.filter((i) => i.shelfLifeBarcode == codenumber)
                         .map((item, index) => {
                           return index == 0 ? (
@@ -521,19 +479,49 @@ export default ({
                             </View>
                           );
                         })
-                    )
-                  ) : search.length > 0 ? (
-                    items
-                      ?.filter(
-                        (i) =>
-                          i.shelfLifeName
-                            .toLowerCase()
-                            .includes(search.toLowerCase()) ||
-                          i.shelfLifeMemo
-                            .toLowerCase()
-                            .includes(search.toLowerCase()),
-                      )
-                      .map((item, index) => {
+                    : search.length > 0
+                    ? items
+                        ?.filter(
+                          (i) =>
+                            i.shelfLifeName
+                              .toLowerCase()
+                              .includes(search.toLowerCase()) ||
+                            i.shelfLifeMemo
+                              .toLowerCase()
+                              .includes(search.toLowerCase()) ||
+                            i.shelfLifeBarcode
+                              .toLowerCase()
+                              .includes(search.toLowerCase()),
+                        )
+                        .map((item, index) => {
+                          return index == 0 ? (
+                            <React.Fragment key={index}>
+                              <LineTextContainer color={color}>
+                                <LineText color={color}>{name}</LineText>
+                              </LineTextContainer>
+                              <View key={index}>
+                                <ShelfLifeCheckScreenCard
+                                  name={name}
+                                  item={item}
+                                  confirmModal={confirmModal}
+                                  cancelModal={cancelModal}
+                                  onRefresh={onRefresh}
+                                />
+                              </View>
+                            </React.Fragment>
+                          ) : (
+                            <View key={index}>
+                              <ShelfLifeCheckScreenCard
+                                name={name}
+                                item={item}
+                                confirmModal={confirmModal}
+                                cancelModal={cancelModal}
+                                onRefresh={onRefresh}
+                              />
+                            </View>
+                          );
+                        })
+                    : items?.map((item, index) => {
                         return index == 0 ? (
                           <React.Fragment key={index}>
                             <LineTextContainer color={color}>
@@ -560,37 +548,7 @@ export default ({
                             />
                           </View>
                         );
-                      })
-                  ) : (
-                    items?.map((item, index) => {
-                      return index == 0 ? (
-                        <React.Fragment key={index}>
-                          <LineTextContainer color={color}>
-                            <LineText color={color}>{name}</LineText>
-                          </LineTextContainer>
-                          <View key={index}>
-                            <ShelfLifeCheckScreenCard
-                              name={name}
-                              item={item}
-                              confirmModal={confirmModal}
-                              cancelModal={cancelModal}
-                              onRefresh={onRefresh}
-                            />
-                          </View>
-                        </React.Fragment>
-                      ) : (
-                        <View key={index}>
-                          <ShelfLifeCheckScreenCard
-                            name={name}
-                            item={item}
-                            confirmModal={confirmModal}
-                            cancelModal={cancelModal}
-                            onRefresh={onRefresh}
-                          />
-                        </View>
-                      );
-                    })
-                  )}
+                      })}
                 </View>
               ))}
             </Container>

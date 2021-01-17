@@ -95,37 +95,43 @@ export default ({route: {params}}) => {
   };
 
   const taskDataImg = async (i, taskSTORE_SEQ) => {
-    const formData: any = new FormData();
-    formData.append('STORE_SEQ', taskSTORE_SEQ);
-    formData.append('taskDATE', i.taskDATE);
-    formData.append('taskMEMO', i.taskMEMO);
-    formData.append('taskNAME', i.taskNAME);
-
-    const fileInfoArr = i.taskIMAGE.split('/');
-    const fileInfo = fileInfoArr[fileInfoArr.length - 1];
-    const extensionIndex = fileInfo.indexOf('.');
-    let fileName = fileInfo;
-    let fileType = '';
-    if (extensionIndex > -1) {
-      fileName = fileInfo;
-      fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
-      if (fileType === 'image/jpg') {
-        fileType = 'image/jpeg';
-      }
-    }
-    formData.append('image', {
-      uri: utils.isAndroid ? i.taskIMAGE : i.taskIMAGE.replace('file://', ''),
-      name: fileName,
-      type: fileType,
-    });
-
     try {
+      dispatch(setLoadingVisible(true));
+      const formData: any = new FormData();
+      formData.append('STORE_SEQ', taskSTORE_SEQ);
+      formData.append('taskDATE', i.taskDATE);
+      formData.append('taskMEMO', i.taskMEMO);
+      formData.append('taskNAME', i.taskNAME);
+
+      const fileInfoArr = i.taskIMAGE.split('/');
+      const fileInfo = fileInfoArr[fileInfoArr.length - 1];
+      const extensionIndex = fileInfo.indexOf('.');
+      let fileName = fileInfo;
+      let fileType = '';
+      if (extensionIndex > -1) {
+        fileName = fileInfo;
+        fileType = `image/${fileInfo.substring(extensionIndex + 1)}`;
+        if (fileType === 'image/jpg') {
+          fileType = 'image/jpeg';
+        }
+      }
+      formData.append('image', {
+        uri: utils.isAndroid ? i.taskIMAGE : i.taskIMAGE.replace('file://', ''),
+        name: fileName,
+        type: fileType,
+      });
+
       const {data} = await api.setTaskDataImg(formData);
       if (data.result == '0') {
         alertModal('연결에 실패하였습니다.');
+      } else {
+        dispatch(setLoadingVisible(false));
+        params?.onRefresh();
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      alertModal('등록이 완료되었습니다.');
     }
   };
 
@@ -146,13 +152,13 @@ export default ({route: {params}}) => {
         });
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
+        } else {
+          dispatch(setLoadingVisible(false));
+          alertModal('등록이 완료되었습니다.');
+          params?.onRefresh();
         }
       } catch (e) {
         console.log(e);
-      } finally {
-        await params?.fetchData();
-        alertModal('등록이 완료되었습니다.');
-        dispatch(setLoadingVisible(false));
       }
     }
   };

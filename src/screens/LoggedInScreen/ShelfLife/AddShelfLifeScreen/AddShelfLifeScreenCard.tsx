@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Ripple from 'react-native-material-ripple';
-import {CloseCircleIcon} from '~/constants/Icons';
+import {CloseCircleIcon, BarCodeIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
 const Text = styled.Text`
@@ -95,20 +95,57 @@ const CloseIconContainer = styled.View`
   position: absolute;
   justify-content: center;
   align-items: center;
-  top: -10px;
+  top: -15px;
   right: -10px;
 `;
 
-export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
+const WhiteBack = styled.View`
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background-color: white;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: -15px;
+  right: 15px;
+  z-index: 0;
+`;
+
+const BarcodeIconContainer = styled.View`
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background-color: transparent;
+  border-width: 1px;
+  border-color: ${styleGuide.palette.greyColor};
+  z-index: 32;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+`;
+
+export default ({
+  shelfLifeImgLink,
+  shelfLifeIMAGE,
+  shelfLifeBarcode,
+  deleteBuffer,
+  onPress,
+  NAME,
+  DATE,
+  MEMO,
+}) => {
   return (
     <Row style={{marginTop: 10, marginBottom: 10}}>
       <WhiteBox>
-        <Touchable onPress={onPress} disabled={!IMAGE}>
-          {IMAGE ? (
+        <Touchable
+          onPress={onPress}
+          disabled={!shelfLifeImgLink && !shelfLifeIMAGE}>
+          {shelfLifeImgLink || shelfLifeIMAGE ? (
             <FastImage
               style={{width: 60, height: 60, borderRadius: 10}}
               source={{
-                uri: IMAGE,
+                uri: shelfLifeImgLink ?? shelfLifeIMAGE,
                 headers: {Authorization: 'someAuthToken'},
                 priority: FastImage.priority.low,
               }}
@@ -128,6 +165,13 @@ export default ({IMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
         rippleSize={1700}
         rippleContainerBorderRadius={10}
         rippleOpacity={0.1}>
+        {shelfLifeBarcode && (
+          <WhiteBack>
+            <BarcodeIconContainer>
+              <BarCodeIcon color={styleGuide.palette.greyColor} size={13} />
+            </BarcodeIconContainer>
+          </WhiteBack>
+        )}
         <CloseIconContainer>
           <CloseCircleIcon />
         </CloseIconContainer>

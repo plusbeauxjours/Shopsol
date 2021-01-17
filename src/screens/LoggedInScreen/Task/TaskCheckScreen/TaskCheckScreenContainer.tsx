@@ -295,7 +295,7 @@ export default () => {
   };
 
   const gotoAdd = () => {
-    navigation.navigate('AddTaskScreen', {fetchData});
+    navigation.navigate('AddTaskScreen', {onRefresh});
   };
 
   const gotoCategory = (index) => {

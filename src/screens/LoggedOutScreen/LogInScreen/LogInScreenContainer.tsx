@@ -46,7 +46,7 @@ export default () => {
       alertModal('휴대폰번호 또는 비밀번호가 입력되지 않았습니다.');
     }
     try {
-      console.log(PUSH_TOKEN, 'PUSH_TOKEN');
+      console.log('PUSH_TOKEN', PUSH_TOKEN);
       dispatch(setSplashVisible({visible: true, text: '로그인'}));
       const {data} = await api.logIn({
         MobileNo: mobileNo,

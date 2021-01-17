@@ -1,7 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import api from '../constants/LoggedInApi';
 import moment from 'moment';
-import {setSplashVisible} from '~/redux/splashSlice';
 
 const shelflifetSlice = createSlice({
   name: 'shelflife',
@@ -49,6 +48,8 @@ const shelflifetSlice = createSlice({
           shelfLifeDate,
           shelfLifeMemo,
           IMG_LIST,
+          shelfLifeBarcode,
+          shelfLifeImgLink,
         },
       } = action;
       const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
@@ -59,6 +60,8 @@ const shelflifetSlice = createSlice({
         item.shelfLifeDate = shelfLifeDate;
         item.shelfLifeMemo = shelfLifeMemo;
         item.IMG_LIST = IMG_LIST;
+        item.shelfLifeBarcode = shelfLifeBarcode;
+        item.shelfLifeImgLink = shelfLifeImgLink;
       }
     },
     removeSHELFLIFE_DATA(state, action) {

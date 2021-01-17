@@ -24,6 +24,10 @@ import {
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
+interface IsChecked {
+  isChecked?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -71,12 +75,14 @@ const GreyLine = styled.View`
 `;
 
 const TextContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
-const ListContasiner = styled(TextContainer)`
+const ListContasiner = styled.View`
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 
@@ -271,6 +277,22 @@ const FooterText = styled.Text`
   margin-bottom: 15px;
 `;
 
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
+`;
+
 export default ({
   addFn,
   explainModal,
@@ -301,6 +323,13 @@ export default ({
   barCodeCameraModalOpen,
   setBarCodeCameraModalOpen,
   handleBarCodeScanned,
+  handleBarCodeInputScanned,
+  shelfLifeBarcode,
+  setShelfLifeBarcode,
+  barCodeInputCameraModalOpen,
+  setBarCodeInputCameraModalOpen,
+  shelfLifeImgLink,
+  setShelfLifeImgLink,
 }) => {
   const cameraRef = useRef(null);
 
@@ -330,17 +359,21 @@ export default ({
             </TextContainer>
             <GreyLine />
             <Row style={{marginTop: 10, marginBottom: 20}}>
-              {cameraPictureLast ? (
+              {shelfLifeImgLink || cameraPictureLast ? (
                 <Touchable
-                  onPress={() => setCameraPictureLast(null)}
-                  disabled={!cameraPictureLast}>
+                  onPress={() =>
+                    shelfLifeImgLink
+                      ? setShelfLifeImgLink(null)
+                      : setCameraPictureLast(null)
+                  }
+                  disabled={!shelfLifeImgLink || !cameraPictureLast}>
                   <IconContainer>
                     <CloseCircleIcon size={12} />
                   </IconContainer>
                   <FastImage
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
-                      uri: cameraPictureLast,
+                      uri: shelfLifeImgLink ?? cameraPictureLast,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -441,6 +474,29 @@ export default ({
                       minHeight: 80,
                     }}
                   />
+                  <ListContasiner style={{width: '100%', marginTop: 32}}>
+                    <Touchable
+                      onPress={() =>
+                        shelfLifeBarcode
+                          ? setShelfLifeBarcode(null)
+                          : setBarCodeInputCameraModalOpen(true)
+                      }>
+                      {shelfLifeBarcode && (
+                        <IconContainer style={{top: -5, right: -5}}>
+                          <CloseCircleIcon size={12} />
+                        </IconContainer>
+                      )}
+                      <RequestBorderButton
+                        disabled={true}
+                        isChecked={shelfLifeBarcode}>
+                        <RequestBorderText isChecked={shelfLifeBarcode}>
+                          {shelfLifeBarcode
+                            ? shelfLifeBarcode
+                            : '바코드 넘버 입력'}
+                        </RequestBorderText>
+                      </RequestBorderButton>
+                    </Touchable>
+                  </ListContasiner>
                 </TextContainer>
               </WhiteItem>
             </Row>
@@ -474,7 +530,9 @@ export default ({
                     setIsImageViewVisible(true);
                     setSelectedIndex(index);
                   }}
-                  IMAGE={data.shelfLifeIMAGE}
+                  shelfLifeImgLink={data.shelfLifeImgLink}
+                  shelfLifeIMAGE={data.shelfLifeIMAGE}
+                  shelfLifeBarcode={data.shelfLifeBarcode}
                   NAME={data.shelfLifeNAME}
                   DATE={data.shelfLifeDATE}
                   MEMO={data.shelfLifeMEMO}
@@ -581,6 +639,36 @@ export default ({
               showAnimatedLine={false}
             />
             <Footer onPress={() => setBarCodeCameraModalOpen(false)}>
+              <FooterText>닫기</FooterText>
+            </Footer>
+          </RNCamera>
+        </Modal>
+        <Modal
+          isVisible={barCodeInputCameraModalOpen}
+          onBackdropPress={() => setBarCodeInputCameraModalOpen(false)}
+          onRequestClose={() => setBarCodeInputCameraModalOpen(false)}
+          style={{margin: 0}}
+          avoidKeyboard={true}>
+          <RNCamera
+            ref={cameraRef}
+            style={{flex: 1}}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            autoFocus={RNCamera.Constants.AutoFocus.on}
+            captureAudio={false}
+            onFacesDetected={() => {}}
+            onFocusChanged={() => {}}
+            onZoomChanged={() => {}}
+            onBarCodeRead={({data}) => handleBarCodeInputScanned(data)}>
+            <BarcodeMask
+              width={300}
+              height={100}
+              outerMaskOpacity={0.8}
+              edgeColor={styleGuide.palette.tertiary}
+              edgeBorderWidth={2}
+              showAnimatedLine={false}
+            />
+            <Footer onPress={() => setBarCodeInputCameraModalOpen(false)}>
               <FooterText>닫기</FooterText>
             </Footer>
           </RNCamera>
