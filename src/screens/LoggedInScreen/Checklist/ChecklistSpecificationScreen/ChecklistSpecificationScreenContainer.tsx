@@ -18,25 +18,24 @@ export default ({route: {params}}) => {
   const {STORE, MEMBER_SEQ, MEMBER_NAME} = useSelector(
     (state: any) => state.userReducer,
   );
-  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
-
-  const {
-    data: {
-      CHECK_SEQ = null,
-      TITLE = null,
-      END_TIME = null,
-      CS_SEQ = null,
-      EMP_NAME = null,
-      CHECK_TIME = null,
-      CHECK_DATE = null,
-      PHOTO_CHECK = null,
-      NAME = null,
-      IMAGE_LIST = [],
-      CHECK_TYPE = null,
-      EMP_SEQ = null,
-    } = {},
-    scan,
-  } = params;
+  const {STORE_SEQ, EMP_SEQ} = useSelector((state: any) => state.storeReducer);
+  console.log('()()', params);
+  // const {
+  //   data: {
+  //     CHECK_SEQ = null,
+  //     TITLE = null,
+  //     END_TIME = null,
+  //     CS_SEQ = null,
+  //     EMP_NAME = null,
+  //     CHECK_TIME = null,
+  //     CHECK_DATE = null,
+  //     PHOTO_CHECK = null,
+  //     NAME = null,
+  //     IMAGE_LIST = [],
+  //     CHECK_TYPE = null,
+  //     EMP_SEQ = null,
+  //   } = {},
+  // } = params;
   // FROM MODAL EDITABLE
   // {
   //   "scan": "1"
@@ -98,11 +97,12 @@ export default ({route: {params}}) => {
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(null);
   const [LIST, setLIST] = useState<any>([]);
   const [checklistGoodState, setChecklistGoodState] = useState<any>(
-    new Array(params?.data.LIST.split('@@').length),
+    new Array(params?.data?.LIST.split('@@').length),
   );
   const [checklistBadState, setChecklistBadState] = useState<any>(
-    new Array(params?.data.LIST.split('@@').length),
+    new Array(params?.data?.LIST.split('@@').length),
   );
+  const [scan, setScan] = useState<string>(params?.scan);
   const [CHECK_TITLE, setCHECK_TITLE] = useState<string>(
     params?.scan === '1' ? null : params?.data?.CHECK_TITLE,
   );
@@ -165,15 +165,15 @@ export default ({route: {params}}) => {
 
   const gotoChecklistAdd = () => {
     navigation.navigate('ChecklistAddScreen', {
-      CHECK_SEQ,
-      PHOTO_CHECK,
-      NAME,
-      DATE: CHECK_DATE,
-      CHECK_TITLE: TITLE,
+      CHECK_SEQ: params?.data?.CHECK_SEQ || null,
+      PHOTO_CHECK: params?.data?.PHOTO_CHECK || null,
+      NAME: params?.data?.NAME || null,
+      DATE: params?.data?.CHECK_DATE || null,
+      CHECK_TITLE: params?.data?.TITLE || null,
       CHECK_LIST: LIST,
-      CHECK_TIME: END_TIME,
+      CHECK_TIME: params?.data?.END_TIME || null,
       type: '수정',
-      EMP_SEQ,
+      EMP_SEQ: params?.data?.EMP_SEQ || null,
     });
   };
 
@@ -197,11 +197,14 @@ export default ({route: {params}}) => {
     if (badflag === true && CHECK_TITLE == null) {
       return alertModal('체크리스트 항목에 이상이 있을시 메모를 입력해주세요.');
     }
-    if (Number(PHOTO_CHECK || 0) === 1 && cameraPictureList.length === 0) {
+    if (
+      Number(params?.data?.PHOTO_CHECK || 0) === 1 &&
+      cameraPictureList.length === 0
+    ) {
       return alertModal('체크리스트 관련 사진을 등록해주세요.');
     }
 
-    if (Number(PHOTO_CHECK || 0) === 1) {
+    if (Number(params?.data?.PHOTO_CHECK || 0) === 1) {
       try {
         dispatch(
           setSplashVisible({
@@ -213,9 +216,9 @@ export default ({route: {params}}) => {
 
         formData.append('LIST', JSON.stringify(newList));
         formData.append('CHECK_TITLE', CHECK_TITLE);
-        formData.append('CHECK_SEQ', CHECK_SEQ);
+        formData.append('CHECK_SEQ', params?.data?.CHECK_SEQ || null);
         formData.append('NAME', MEMBER_NAME);
-        formData.append('CS_SEQ', CS_SEQ);
+        formData.append('CS_SEQ', params?.data?.CS_SEQ || null);
         formData.append('STORE_SEQ', STORE_SEQ);
         formData.append('MEMBER_SEQ', MEMBER_SEQ);
 
@@ -261,14 +264,13 @@ export default ({route: {params}}) => {
         const {data} = await api.setCheckList2({
           LIST: JSON.stringify(newList),
           CHECK_TITLE,
-          CHECK_SEQ,
+          CHECK_SEQ: params?.data?.CHECK_SEQ || null,
           NAME: MEMBER_NAME,
-          CS_SEQ,
+          CS_SEQ: params?.data?.CS_SEQ || null,
           STORE_SEQ,
           MEMBER_SEQ,
         });
         if (data.result === 'SUCCESS') {
-          alertModal('체크가 완료되었습니다.');
           dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
         }
       } catch (e) {
@@ -310,8 +312,11 @@ export default ({route: {params}}) => {
     setChecklistGoodState(checklistGoodStat);
     setChecklistBadState(checklistBadStat);
     setLIST(list);
-    if (cameraPictureList?.length === 0 && IMAGE_LIST?.length > 0) {
-      const allimg = IMAGE_LIST?.split('@');
+    if (
+      cameraPictureList?.length === 0 &&
+      params?.data?.IMAGE_LIST?.length > 0
+    ) {
+      const allimg = params?.data?.IMAGE_LIST?.split('@');
       for (let i = 0; i < allimg.length; i++) {
         setCameraPictureList((cameraPictureList) => [
           ...cameraPictureList,
@@ -328,17 +333,20 @@ export default ({route: {params}}) => {
   return (
     <ChecklistSpecificationScreenPresenter
       scan={scan}
+      setScan={setScan}
       gotoChecklistAdd={gotoChecklistAdd}
       CHECK_TITLE={CHECK_TITLE}
       setCHECK_TITLE={setCHECK_TITLE}
-      TITLE={TITLE}
+      TITLE={params?.data?.TITLE || null}
       LIST={LIST}
-      NAME={NAME}
+      NAME={params?.data?.NAME || null}
       STORE={STORE}
-      CHECK_TIME={CHECK_TIME}
-      PHOTO_CHECK={PHOTO_CHECK}
-      END_TIME={END_TIME}
-      EMP_NAME={EMP_NAME}
+      EMP_SEQ={EMP_SEQ}
+      ITEM_EMP_SEQ={params?.data?.EMP_SEQ || null}
+      CHECK_TIME={params?.data?.CHECK_TIME || null}
+      PHOTO_CHECK={params?.data?.PHOTO_CHECK || null}
+      END_TIME={params?.data?.END_TIME || null}
+      EMP_NAME={params?.data?.EMP_NAME || null}
       isCameraModalVisible={isCameraModalVisible}
       setIsCameraModalVisible={setIsCameraModalVisible}
       checklistGoodState={checklistGoodState}

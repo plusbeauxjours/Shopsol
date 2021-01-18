@@ -16,6 +16,7 @@ import {CheckBoxIcon, CameraIcon, PictureIcon} from '~/constants/Icons';
 import {CloseCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
+import {AddIcon} from '../../../../constants/Icons';
 interface IsLast {
   isLast?: boolean;
 }
@@ -92,11 +93,6 @@ const ChecklistTitle = styled.View`
   align-items: center;
   height: 30px;
   padding-right: 5px;
-`;
-
-const GreyText = styled(Text)`
-  margin: 10px 0;
-  color: #bbb;
 `;
 
 const CameraPictureCloseButtonText = styled.Text`
@@ -202,8 +198,36 @@ const EndRow = styled.View`
   height: 140px;
 `;
 
+const AddButtonContainer = styled.View`
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const AddButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${styleGuide.palette.tertiary};
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
+const AddButtonText = styled.Text`
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: white;
+`;
+
 export default ({
   scan,
+  setScan,
   gotoChecklistAdd,
   CHECK_TITLE,
   setCHECK_TITLE,
@@ -211,6 +235,8 @@ export default ({
   LIST,
   NAME,
   STORE,
+  EMP_SEQ,
+  ITEM_EMP_SEQ,
   CHECK_TIME,
   PHOTO_CHECK,
   END_TIME,
@@ -232,7 +258,6 @@ export default ({
 }) => {
   const cameraRef = useRef(null);
   const scrollRef = createRef(0);
-
   return (
     <>
       <BackGround>
@@ -474,8 +499,16 @@ export default ({
             )}
           </Container>
         </ScrollView>
+        {((STORE == '0' && ITEM_EMP_SEQ?.includes(EMP_SEQ)) ||
+          (STORE == '0' && !ITEM_EMP_SEQ)) &&
+          scan === '0' && (
+            <AddButtonContainer>
+              <AddButton onPress={() => setScan('1')}>
+                <AddButtonText>체크</AddButtonText>
+              </AddButton>
+            </AddButtonContainer>
+          )}
       </BackGround>
-
       <Modal
         isVisible={isCameraModalVisible}
         style={{margin: 0}}

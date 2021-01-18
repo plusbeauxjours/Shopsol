@@ -14,6 +14,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import {CheckBoxIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import Loader from '~/components/Loader';
 import styleGuide from '~/constants/styleGuide';
+import LottieView from 'lottie-react-native';
 
 interface ISelected {
   isSelected: boolean;
@@ -21,6 +22,10 @@ interface ISelected {
 
 interface IsLast {
   isLast?: boolean;
+}
+
+interface ILoading {
+  loading?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -146,6 +151,33 @@ const Line = styled.View`
   margin: 20px 0 20px 0;
 `;
 
+const AddButtonContainer = styled.View<ILoading>`
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: ${(props) => (props.loading ? 'transparent' : 'white')};
+`;
+
+const AddButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${styleGuide.palette.tertiary};
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
+const AddButtonText = styled.Text`
+  font-weight: ${styleGuide.fontWeight.bold};
+  color: white;
+`;
+
 export default ({
   selectedCategory,
   cameraPictureList,
@@ -174,6 +206,11 @@ export default ({
   data,
   imageIndex,
   setImageIndex,
+  ITEM_EMP_SEQ,
+  EMP_SEQ,
+  STORE,
+  gotoChecklistSpecification,
+  loading,
 }) => {
   const renderImage = (item, index) => (
     <Touchable
@@ -482,6 +519,29 @@ export default ({
           />
         </Modal>
       </ScrollView>
+      {((STORE == '0' && ITEM_EMP_SEQ?.includes(EMP_SEQ)) ||
+        (STORE == '0' && !ITEM_EMP_SEQ)) && (
+        <AddButtonContainer loading={loading}>
+          {loading ? (
+            <LottieView
+              style={{
+                position: 'absolute',
+                right: -15,
+                bottom: -15,
+                width: 150,
+                height: 150,
+              }}
+              source={require('../../../../assets/animations/loading.json')}
+              loop
+              autoPlay
+            />
+          ) : (
+            <AddButton onPress={() => gotoChecklistSpecification()}>
+              <AddButtonText>체크</AddButtonText>
+            </AddButton>
+          )}
+        </AddButtonContainer>
+      )}
     </BackGround>
   );
 };

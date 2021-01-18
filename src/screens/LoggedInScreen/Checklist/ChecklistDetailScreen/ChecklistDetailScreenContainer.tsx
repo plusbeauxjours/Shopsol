@@ -1,15 +1,25 @@
 import React, {useState, useEffect} from 'react';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import ChecklistDetailScreenPresenter from './ChecklistDetailScreenPresenter';
 import {setSplashVisible} from '~/redux/splashSlice';
 import api from '~/constants/LoggedInApi';
+import {useNavigation} from '@react-navigation/native';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-  const {CHECK_SEQ = null, DATE = null} = params;
+  const {
+    QR_SEQ = null,
+    ITEM_EMP_SEQ = null,
+    CHECK_SEQ = null,
+    DATE = null,
+  } = params;
+
+  const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
+  const {EMP_SEQ, STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
   const [data, setData] = useState<any>();
   const [cameraPictureList, setCameraPictureList] = useState<any>([]);
@@ -26,6 +36,7 @@ export default ({route: {params}}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('1');
   const [categoryList, setCategoryList] = useState<any>([]);
   const [imageIndex, setImageIndex] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = async () => {
     try {
@@ -114,6 +125,30 @@ export default ({route: {params}}) => {
     }
   };
 
+  const gotoChecklistSpecification = async () => {
+    try {
+      setLoading(true);
+      const {data} = await api.checkChecklist({
+        STORE_ID: STORE_SEQ + '-' + QR_SEQ,
+        LAT: 0,
+        LONG: 0,
+        MEMBER_SEQ,
+      });
+      if (data.message == 'SUCCESS' && data.result.length > 0) {
+        navigation.navigate('ChecklistSpecificationScreen', {
+          data: data.result[0],
+          scan: '1',
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 100);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -147,6 +182,11 @@ export default ({route: {params}}) => {
       data={data}
       imageIndex={imageIndex}
       setImageIndex={setImageIndex}
+      ITEM_EMP_SEQ={ITEM_EMP_SEQ}
+      EMP_SEQ={EMP_SEQ}
+      STORE={STORE}
+      gotoChecklistSpecification={gotoChecklistSpecification}
+      loading={loading}
     />
   );
 };

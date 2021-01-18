@@ -7,14 +7,23 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {EllipseIcon, ForwardIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import {CheckMarkIcon} from '../../../../constants/Icons';
 
-const Touchable = styled(Ripple)`
+interface IContain {
+  isContainedEmp: boolean;
+}
+
+const Touchable = styled(Ripple)<IContain>`
   width: 100%;
   flex-direction: row;
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 20px;
-  background-color: white;
+  border-width: ${(props) => (props.isContainedEmp ? 0 : 1)}px;
+  border-color: ${(props) =>
+    props.isContainedEmp ? 'transparent' : styleGuide.palette.rippleColor};
+  background-color: ${(props) =>
+    props.isContainedEmp ? 'white' : styleGuide.palette.backgroundPrimary};
 `;
 
 const ArrowBox = styled.View`
@@ -45,7 +54,7 @@ const GreyText = styled.Text`
 `;
 const CheckpointBox = styled.View`
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 5px;
   width: ${wp('100') - 150}px;
 `;
@@ -61,7 +70,19 @@ const CalendarText = styled.Text`
   color: #333;
 `;
 
-export default ({key, date, data}) => {
+const IconContainer = styled.View`
+  z-index: 10;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${styleGuide.palette.tertiary};
+`;
+
+export default ({key, date, data, EMP_SEQ}) => {
   const navigation = useNavigation();
   const [willCheck, setWillCheck] = useState<boolean>(false);
   const [checkNo, setCheckNo] = useState<boolean>(false);
@@ -74,11 +95,14 @@ export default ({key, date, data}) => {
       done = true;
     }
   }
+  console.log('data1112', data);
 
   const gotoCkecklistDetail = () => {
     if (data.CS_SEQ) {
       navigation.navigate('ChecklistDetailScreen', {
-        CHECK_SEQ: data.CHECK_SEQ,
+        QR_SEQ: data?.QR_SEQ,
+        ITEM_EMP_SEQ: data?.EMP_SEQ,
+        CHECK_SEQ: data?.CHECK_SEQ,
         DATE: date,
       });
     } else {
@@ -120,6 +144,7 @@ export default ({key, date, data}) => {
       key={key}
       activeOpacity={1}
       onPress={() => gotoCkecklistDetail()}
+      isContainedEmp={!data?.EMP_SEQ || data?.EMP_SEQ?.includes(EMP_SEQ)}
       rippleColor={styleGuide.palette.rippleGreyColor}
       rippleDuration={600}
       rippleSize={1700}
@@ -166,6 +191,9 @@ export default ({key, date, data}) => {
             <CheckpointBox>
               <ChecktimeText>체크시간</ChecktimeText>
               <GreyText>{data.CHECK_TIME}</GreyText>
+              <IconContainer>
+                <CheckMarkIcon size={12} color={'white'} />
+              </IconContainer>
             </CheckpointBox>
             {data.EMP_SEQ ? (
               <CheckpointBox>

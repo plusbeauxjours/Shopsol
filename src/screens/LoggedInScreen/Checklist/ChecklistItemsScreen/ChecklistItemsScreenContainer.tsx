@@ -40,14 +40,9 @@ export default () => {
   const [isCalendarModalVisible, setIsCalendarModalVisible] = useState<boolean>(
     false,
   );
-  const [isChecklistModalVisible, setIsChecklistModalVisible] = useState<
-    boolean
-  >(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [date, setDate] = useState<string>(moment().format('YYYY-MM-DD') || '');
   const [staticmarkedDates, setStaticmarkedDates] = useState<any>({});
-  const [lat, setLat] = useState<string>('0');
-  const [long, setLong] = useState<string>('0');
   const [loading, setLoading] = useState<boolean>(true);
 
   const onRefresh = () => {
@@ -175,53 +170,6 @@ export default () => {
     dispatch(setCHECKLIST_MARKED(markedDates));
   };
 
-  // 직원이 체크 버튼을 눌렀을 때
-  const selectCheckListFn = async () => {
-    try {
-      dispatch(getCHECKLIST_DATA());
-      setIsChecklistModalVisible(true);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // 직원이 체크 버튼을 실행한 뒤 모달에서 아이템을 눌렀을 때
-  const checkdataFn = (item) => {
-    setTimeout(async () => {
-      setIsChecklistModalVisible(false);
-      let flag = true;
-      if (item.EMP_SEQ != null) {
-        flag = false;
-        let emparr = item.EMP_SEQ.split('@');
-        for (let index = 0; index < emparr.length; index++) {
-          if (emparr[index] == EMP_SEQ) {
-            flag = true;
-          }
-        }
-      }
-
-      if (flag) {
-        setIsChecklistModalVisible(false);
-        const {data} = await api.checkChecklist({
-          STORE_ID: STORE_SEQ + '-' + item.QR_SEQ,
-          LAT: lat,
-          LONG: long,
-          MEMBER_SEQ,
-        });
-        if (data.message == 'SUCCESS' && data.result.length > 0) {
-          navigation.navigate('ChecklistSpecificationScreen', {
-            data: data.result[0],
-            scan: '1',
-          });
-        }
-      } else {
-        setTimeout(async () => {
-          alertModal('담당직원이 아닙니다.');
-        }, 300);
-      }
-    }, 300);
-  };
-
   const fetchData = (date) => {
     dispatch(getCHECKLIST_DATA(date));
     markingFn(
@@ -242,6 +190,7 @@ export default () => {
 
   return (
     <ChecklistItemsScreenPresenter
+      EMP_SEQ={EMP_SEQ}
       STORE={STORE}
       date={date}
       setDate={setDate}
@@ -250,15 +199,11 @@ export default () => {
       markingFn={markingFn}
       isCalendarModalVisible={isCalendarModalVisible}
       setIsCalendarModalVisible={setIsCalendarModalVisible}
-      isChecklistModalVisible={isChecklistModalVisible}
-      setIsChecklistModalVisible={setIsChecklistModalVisible}
       onPressAddChecklist={onPressAddChecklist}
       CHECKLIST_MARKED={CHECKLIST_MARKED}
       onDayPress={(date) => onDayPress(date)}
       onMonthChange={onMonthChange}
       CHECKLIST_DATA={CHECKLIST_DATA}
-      selectCheckListFn={selectCheckListFn}
-      checkdataFn={checkdataFn}
       fetchData={fetchData}
       loading={loading}
     />

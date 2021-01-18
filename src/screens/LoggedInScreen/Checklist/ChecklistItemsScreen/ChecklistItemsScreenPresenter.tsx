@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {RefreshControl} from 'react-native';
 import {Calendar} from 'react-native-calendars';
-import {isIphoneX} from 'react-native-iphone-x-helper';
-import Ripple from 'react-native-material-ripple';
-
 import Modal from 'react-native-modal';
 
 import {
@@ -13,14 +10,13 @@ import {
   BackIcon,
   ReloadCircleIcon,
   CalendarIcon,
-  CheckMarkIcon,
 } from '~/constants/Icons';
 import moment from 'moment';
 import ChecklistItemsScreenCard from './ChecklistItemsScreenCard';
 import FastImage from 'react-native-fast-image';
 import LottieView from 'lottie-react-native';
 
-import {AddIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
+import {AddIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 
@@ -41,17 +37,6 @@ const CalendarText = styled.Text`
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
-`;
-
-const ModalItemTouchable = styled(Ripple)`
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const RowSpace = styled(Row)`
-  width: 100%;
-  justify-content: space-between;
 `;
 
 const BackGround = styled.SafeAreaView`
@@ -166,55 +151,6 @@ const Column = styled.View`
   align-items: center;
 `;
 
-const WhiteText = styled.Text`
-  color: white;
-`;
-
-const IconContainer = styled.TouchableOpacity`
-  position: absolute;
-  right: -15px;
-  top: ${(props) => (isIphoneX() ? -15 : -35)}px;
-`;
-
-const WhiteBigText = styled(WhiteText)`
-  font-size: 20px;
-`;
-
-const ChecklistModalBox = styled.View`
-  flex: 4;
-  justify-content: center;
-  height: 100px;
-  padding: 20px;
-  background-color: white;
-`;
-
-const ChecklistTitleText = styled.Text`
-  margin: 10px 0;
-  font-size: ${styleGuide.fontSize.large}px;
-`;
-
-const ChecklistIconContainer = styled.View<IsEmpName>`
-  flex: 1;
-  height: 100px;
-  align-items: center;
-  justify-content: center;
-  background-color: ${(props) =>
-    props.isEmpName ? styleGuide.palette.primary : '#ddd'};
-`;
-
-const ChecklistTypeText1 = styled.Text`
-  align-self: flex-start;
-  color: ${styleGuide.palette.primary};
-  font-size: ${styleGuide.fontSize.small}px;
-`;
-
-const ChecklistTypeText2 = styled.Text`
-  flex: 1;
-  padding-left: 10px;
-  color: #7e7c7c;
-  font-size: ${styleGuide.fontSize.middle}px;
-`;
-
 const AddButtonContainer = styled.View`
   position: absolute;
   z-index: 2;
@@ -238,6 +174,7 @@ const AddButton = styled.TouchableOpacity`
 `;
 
 export default ({
+  EMP_SEQ,
   STORE,
   date,
   setDate,
@@ -246,123 +183,16 @@ export default ({
   markingFn,
   isCalendarModalVisible,
   setIsCalendarModalVisible,
-  isChecklistModalVisible,
-  setIsChecklistModalVisible,
   onPressAddChecklist,
   CHECKLIST_MARKED,
   onDayPress,
   onMonthChange,
   CHECKLIST_DATA,
-  selectCheckListFn,
-  checkdataFn,
   fetchData,
   loading,
 }) => {
   const yesterday = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
   const tomorrow = moment(date).add(1, 'days').format('YYYY-MM-DD');
-  const CheckState = ({check}) => {
-    let checkState;
-    if (check !== null) {
-      check = check.split('@');
-      for (let i = 0; i < check.length / 2; i++) {
-        let temp = 2 * i + 1;
-        if (check[temp] === '1') {
-          checkState = 'checkComplete';
-        }
-        if (check[temp] === '2') {
-          checkState = 'checkIncomplete';
-          break;
-        }
-      }
-    } else {
-      checkState = 'willCheck';
-    }
-    if (checkState == 'checkComplete') {
-      return (
-        <Row>
-          <EllipseIcon size={8} color={'#AACE36'} />
-          <CalendarText>체크정상</CalendarText>
-        </Row>
-      );
-    } else if (checkState == 'checkIncomplete') {
-      return (
-        <Row>
-          <EllipseIcon size={8} color={'#984B19'} />
-          <CalendarText>체크이상</CalendarText>
-          <EllipseIcon size={8} color={'#FEBF40'} />
-          <CalendarText>특이사항</CalendarText>
-        </Row>
-      );
-    } else {
-      return (
-        <Row>
-          <EllipseIcon size={8} color={'#0D4F8A'} />
-          <CalendarText>체크예정</CalendarText>
-        </Row>
-      );
-    }
-  };
-
-  const ModalItem = ({item, key}) => (
-    <ModalItemTouchable
-      key={key}
-      onPress={() => checkdataFn(item)}
-      rippleColor={'#111111'}
-      rippleDuration={400}
-      rippleSize={1200}
-      rippleOpacity={0.45}>
-      <ChecklistModalBox>
-        <RowSpace>
-          <CheckState check={item.CHECK_LIST} />
-        </RowSpace>
-        <ChecklistTitleText ellipsizeMode={'tail'} numberOfLines={1}>
-          {item.TITLE}
-        </ChecklistTitleText>
-        {item.EMP_NAME ? ( // 체크한 상태
-          <>
-            <Row>
-              <ChecklistTypeText1>체크시간</ChecklistTypeText1>
-              <ChecklistTypeText2>{item.CHECK_TIME}</ChecklistTypeText2>
-            </Row>
-            {item.EMP_SEQ ? (
-              <Row>
-                <ChecklistTypeText1>담당직원</ChecklistTypeText1>
-                <ChecklistTypeText2>
-                  {item.NAME.split('@').join(' / ')}
-                </ChecklistTypeText2>
-              </Row>
-            ) : (
-              <Row>
-                <ChecklistTypeText1>체크직원</ChecklistTypeText1>
-                <ChecklistTypeText2>{item.EMP_NAME}</ChecklistTypeText2>
-              </Row>
-            )}
-          </>
-        ) : (
-          // 미체크 상태
-          <>
-            <Row>
-              <ChecklistTypeText1>체크예정시간</ChecklistTypeText1>
-              <ChecklistTypeText2>
-                {item.END_TIME === '' ? '미사용' : item.END_TIME}
-              </ChecklistTypeText2>
-            </Row>
-            {item.EMP_SEQ && ( // 담당직원이 설정된 상태
-              <Row>
-                <ChecklistTypeText1>담당직원</ChecklistTypeText1>
-                <ChecklistTypeText2>
-                  {item.NAME.split('@').join(' / ')}
-                </ChecklistTypeText2>
-              </Row>
-            )}
-          </>
-        )}
-      </ChecklistModalBox>
-      <ChecklistIconContainer isEmpName={item.EMP_NAME}>
-        <CheckMarkIcon size={34} color="white" />
-      </ChecklistIconContainer>
-    </ModalItemTouchable>
-  );
 
   return (
     <BackGround>
@@ -483,11 +313,13 @@ export default ({
                 <>
                   {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '1').map(
                     (data, index) => {
+                      console.log(data);
                       return (
                         <ChecklistItemsScreenCard
                           key={index}
                           date={date}
                           data={data}
+                          EMP_SEQ={EMP_SEQ}
                         />
                       );
                     },
@@ -496,48 +328,9 @@ export default ({
               )}
             </>
           )}
+          {console.log(CHECKLIST_DATA)}
         </Container>
       </ScrollView>
-      {STORE == '0' && (
-        <AddButtonContainer>
-          <AddButton onPress={() => selectCheckListFn()}>
-            <WhiteText>체크</WhiteText>
-          </AddButton>
-        </AddButtonContainer>
-      )}
-      <Modal
-        isVisible={isChecklistModalVisible}
-        style={{marginTop: 60}}
-        onBackdropPress={() => setIsChecklistModalVisible(false)}
-        onRequestClose={() => setIsChecklistModalVisible(false)}>
-        {CHECKLIST_DATA && CHECKLIST_DATA.length == 0 ? (
-          <Row style={{justifyContent: 'center'}}>
-            <WhiteBigText>등록된 체크리스트가 없습니다</WhiteBigText>
-          </Row>
-        ) : (
-          <IconContainer onPress={() => setIsChecklistModalVisible(false)}>
-            <CloseCircleOutlineIcon size={30} color={'white'} />
-          </IconContainer>
-        )}
-        <ScrollView
-          keyboardDismissMode="on-drag"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingTop: isIphoneX() ? 40 : 10,
-            alignItems: 'center',
-          }}>
-          {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '0').map(
-            (item, index) => (
-              <ModalItem item={item} key={index} />
-            ),
-          )}
-          {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '1').map(
-            (item, index) => (
-              <ModalItem item={item} key={index} />
-            ),
-          )}
-        </ScrollView>
-      </Modal>
       <Modal
         isVisible={isCalendarModalVisible}
         onRequestClose={() => {
