@@ -154,7 +154,6 @@ const BarcodeIconContainer = styled.View`
 
 export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
   const navigation = useNavigation();
-  console.log(item);
   if (item.checkType === '0') {
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>

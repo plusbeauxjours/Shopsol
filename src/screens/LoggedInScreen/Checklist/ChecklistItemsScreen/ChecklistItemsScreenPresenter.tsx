@@ -313,7 +313,6 @@ export default ({
                 <>
                   {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '1').map(
                     (data, index) => {
-                      console.log(data);
                       return (
                         <ChecklistItemsScreenCard
                           key={index}
@@ -328,7 +327,6 @@ export default ({
               )}
             </>
           )}
-          {console.log(CHECKLIST_DATA)}
         </Container>
       </ScrollView>
       <Modal

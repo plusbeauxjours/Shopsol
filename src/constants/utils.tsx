@@ -106,11 +106,6 @@ export default {
         if (permission === 'granted') {
           Geolocation.getCurrentPosition(
             (position) => {
-              console.log(
-                'position',
-                position.coords.latitude,
-                position.coords.longitude,
-              );
               setLat(position.coords.latitude);
               setLong(position.coords.longitude);
             },

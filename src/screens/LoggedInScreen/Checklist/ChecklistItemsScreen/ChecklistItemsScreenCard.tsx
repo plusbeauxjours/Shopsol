@@ -95,7 +95,6 @@ export default ({key, date, data, EMP_SEQ}) => {
       done = true;
     }
   }
-  console.log('data1112', data);
 
   const gotoCkecklistDetail = () => {
     if (data.CS_SEQ) {

@@ -101,7 +101,6 @@ export default ({route: {params}}) => {
 
   const checkPermission = async () => {
     const enabled = await firebase.messaging().hasPermission();
-    console.log(enabled);
     if (enabled) {
       getToken();
     } else {
@@ -136,7 +135,6 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
-    console.log(params);
     if (params?.from == 'loginScreen') {
       checkPermission();
     }

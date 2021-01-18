@@ -19,7 +19,6 @@ export default ({route: {params}}) => {
     (state: any) => state.userReducer,
   );
   const {STORE_SEQ, EMP_SEQ} = useSelector((state: any) => state.storeReducer);
-  console.log('()()', params);
   // const {
   //   data: {
   //     CHECK_SEQ = null,
