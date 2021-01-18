@@ -18,8 +18,8 @@ import BarcodeMask from 'react-native-barcode-mask';
 import {
   HelpIcon,
   SettingIcon,
-  EyeOnIcon,
-  EyeOffIcon,
+  BoldAddIcon,
+  BoldRemoveIcon,
   CloseIcon,
 } from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
@@ -101,7 +101,7 @@ const EyeIconContainer = styled(NewCnt)<IEye>`
     props.isEyeOn
       ? styleGuide.palette.tertiary
       : styleGuide.palette.lightGreyColor};
-  border-width: 0.7px;
+  border-width: 1px;
 `;
 
 const NewCntText = styled.Text`
@@ -403,8 +403,10 @@ export default ({
           </NewCnt>
         )}
       {editMode && type == 'emp' && (
-        <EyeIconContainer isEyeOn={true} style={{zIndex: 5}}>
-          <EyeOnIcon color={styleGuide.palette.tertiary} />
+        <EyeIconContainer
+          isEyeOn={true}
+          style={{width: 20, height: 20, zIndex: 5, paddingLeft: 1}}>
+          <BoldRemoveIcon size={12} color={styleGuide.palette.tertiary} />
         </EyeIconContainer>
       )}
       <FastImage
@@ -435,8 +437,10 @@ export default ({
           ? utils.handleCameraPermission(setQrCameraModalOpen2)
           : gotoScreen(`${paging}`);
       }}>
-      <EyeIconContainer isEyeOn={false} style={{zIndex: 5}}>
-        <EyeOffIcon color={styleGuide.palette.lightGreyColor} />
+      <EyeIconContainer
+        isEyeOn={false}
+        style={{width: 20, height: 20, zIndex: 5, paddingLeft: 1}}>
+        <BoldAddIcon size={12} color={styleGuide.palette.lightGreyColor} />
       </EyeIconContainer>
       <FastImage
         style={{width: '100%', height: '100%', opacity: 0.3}}

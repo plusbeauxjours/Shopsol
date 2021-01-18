@@ -139,6 +139,20 @@ export const CheckBoxIcon: React.FC<IProps> = ({size, color}) => (
   />
 );
 
+export const BoldAddIcon: React.FC<IProps> = ({size, color}) => (
+  <MaterialCommunityIcons
+    name={'plus'}
+    size={size ?? 14}
+    color={color ?? styleGuide.palette.primary}
+  />
+);
+export const BoldRemoveIcon: React.FC<IProps> = ({size, color}) => (
+  <MaterialCommunityIcons
+    name={'minus'}
+    size={size ?? 14}
+    color={color ?? styleGuide.palette.primary}
+  />
+);
 export const CheckMarkIcon: React.FC<IProps> = ({size, color}) => (
   <MaterialCommunityIcons
     name={'check-bold'}

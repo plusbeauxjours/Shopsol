@@ -151,7 +151,6 @@ export default ({route: {params}}) => {
             USERID: PUSH_TOKEN,
             push: null,
           });
-          console.log('data', data);
           dispatch(setUSER(data.result));
           dispatch(setMOBILE_NO(mobileNo));
           dispatch(userLogin());

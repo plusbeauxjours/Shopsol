@@ -171,7 +171,6 @@ export const getSTORELIST_DATA = () => async (dispatch, getState) => {
   }
   try {
     const {data} = await api.storeList(STORE, MEMBER_SEQ);
-    console.log('data', data);
     if (data.message === 'SUCCESS') {
       dispatch(setSTORELIST_DATA(data.result));
     }
