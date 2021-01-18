@@ -7,6 +7,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import CheckPasswordBtn from '~/components/Btn/CheckPasswordBtn';
@@ -219,7 +220,7 @@ export default ({
   };
   return (
     <BackGround>
-      <ScrollView
+      <KeyboardAwareScrollView
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}>
@@ -448,7 +449,7 @@ export default ({
             </ScrollView>
           </RBSheet>
         </Container>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <Modal
         onRequestClose={() => setIsBirthDateVisible(false)}
         onBackdropPress={() => setIsBirthDateVisible(false)}

@@ -379,7 +379,11 @@ export default ({
                     onChangeText={(text) => setSearch(text)}
                     value={search}
                   />
-                  <CloseIconContainer onPress={() => setSearch('')}>
+                  <CloseIconContainer
+                    onPress={() => {
+                      e.preventDefault();
+                      setSearch('');
+                    }}>
                     <CloseCircleOutlineIcon
                       color={styleGuide.palette.searchBarColor}
                       size={24}

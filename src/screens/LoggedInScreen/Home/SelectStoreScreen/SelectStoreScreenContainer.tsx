@@ -2,23 +2,28 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import SelectStoreScreenPresenter from './SelectStoreScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
-import {NativeModules} from 'react-native';
+import {NativeModules, Alert, Linking, Platform} from 'react-native';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {getSTORELIST_DATA} from '~/redux/userSlice';
+import {getSTORELIST_DATA, setDEVICE_INFO} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
 import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
+import firebase from 'react-native-firebase';
+import utils from '~/constants/utils';
+import {openSettings} from 'react-native-permissions';
+import DeviceInfo from 'react-native-device-info';
+import api from '~/constants/LoggedInApi';
 import {
   resetCALENDAR_DATA,
   setCALENDAR_DATA_STORE_SEQ,
 } from '~/redux/calendarSlice';
 
-export default () => {
+export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
   const {visible} = useSelector((state: any) => state.splashReducer);
-  const {STORE, STORELIST_DATA} = useSelector(
+  const {MEMBER_SEQ, STORE, STORELIST_DATA} = useSelector(
     (state: any) => state.userReducer,
   );
   const {MANAGER_CALLED} = useSelector((state: any) => state.storeReducer);
@@ -73,6 +78,69 @@ export default () => {
   const gotoAddStore = () => {
     navigation.navigate('AddStoreScreen');
   };
+
+  const getToken = async () => {
+    const PUSH_TOKEN = await firebase.messaging().getToken();
+    console.log('PUSH_TOKEN', PUSH_TOKEN);
+    if (PUSH_TOKEN) {
+      await api.changeToken({
+        token: PUSH_TOKEN,
+        MEMBER_SEQ,
+      });
+      dispatch(
+        setDEVICE_INFO({
+          PUSH_TOKEN,
+          DEVICE_MODEL: DeviceInfo.getModel(),
+          DEVICE_PLATFORM: Platform.OS,
+          DEVICE_SYSTEM_VERSION:
+            Platform.OS + ' ' + DeviceInfo.getSystemVersion(),
+        }),
+      );
+    }
+  };
+
+  const checkPermission = async () => {
+    const enabled = await firebase.messaging().hasPermission();
+    console.log(enabled);
+    if (enabled) {
+      getToken();
+    } else {
+      requestPermission();
+    }
+  };
+
+  const requestPermission = async () => {
+    try {
+      await firebase.messaging().requestPermission();
+      getToken();
+    } catch (error) {
+      Alert.alert(
+        '푸쉬 알림 거절',
+        '푸시 알림을 받으려면 확인을 누른 뒤, 환경 설정에서 푸시를 켜주세요.',
+        [
+          {
+            text: '취소',
+            style: 'cancel',
+          },
+          {
+            text: '확인',
+            onPress: () => {
+              utils.isAndroid
+                ? openSettings()
+                : Linking.openURL('app-settings:');
+            },
+          },
+        ],
+      );
+    }
+  };
+
+  useEffect(() => {
+    console.log(params);
+    if (params?.from == 'loginScreen') {
+      checkPermission();
+    }
+  }, [params]);
 
   useEffect(() => {
     try {

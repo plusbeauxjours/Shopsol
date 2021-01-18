@@ -154,6 +154,7 @@ const BarcodeIconContainer = styled.View`
 
 export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
   const navigation = useNavigation();
+  console.log(item);
   if (item.checkType === '0') {
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
@@ -167,6 +168,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
                   uri:
+                    item?.shelfLifeImgLink &&
                     item?.shelfLifeImgLink !== 'undefined' &&
                     item?.shelfLifeImgLink !== 'null'
                       ? item.shelfLifeImgLink
@@ -192,7 +194,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
             </IconBorder>
           </Touchable>
         </GreyBox>
-        {item?.shelfLifeBarcode?.length > 0 &&
+        {item?.shelfLifeBarcode &&
           item?.shelfLifeBarcode !== 'undefined' &&
           item?.shelfLifeBarcode !== 'null' && (
             <WhiteBack>
@@ -267,6 +269,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
                   uri:
+                    item?.shelfLifeImgLink &&
                     item?.shelfLifeImgLink !== 'undefined' &&
                     item?.shelfLifeImgLink !== 'null'
                       ? item.shelfLifeImgLink

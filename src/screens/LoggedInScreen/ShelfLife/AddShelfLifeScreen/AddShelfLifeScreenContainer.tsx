@@ -149,6 +149,7 @@ export default ({route: {params}}) => {
       });
 
       const {data} = await api.setShelfLifeDataImg(formData);
+      console.log(data);
       if (data.result == '0') {
         alertModal('연결에 실패하였습니다.');
       } else {
@@ -157,6 +158,9 @@ export default ({route: {params}}) => {
       }
     } catch (e) {
       console.log(e);
+      alertModal('연결에 실패하였습니다.');
+    } finally {
+      dispatch(setLoadingVisible(false));
     }
   };
 

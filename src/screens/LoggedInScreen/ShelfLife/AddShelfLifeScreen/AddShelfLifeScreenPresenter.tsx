@@ -366,7 +366,7 @@ export default ({
                       ? setShelfLifeImgLink(null)
                       : setCameraPictureLast(null)
                   }
-                  disabled={!shelfLifeImgLink || !cameraPictureLast}>
+                  disabled={!shelfLifeImgLink && !cameraPictureLast}>
                   <IconContainer>
                     <CloseCircleIcon size={12} />
                   </IconContainer>
@@ -405,7 +405,7 @@ export default ({
                     onPress={() =>
                       utils.handleCameraPermission(setBarCodeCameraModalOpen)
                     }>
-                    <BorderBox>
+                    <BorderBox style={{marginBottom: 0}}>
                       <BarCodeIcon size={20} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
                         바코드

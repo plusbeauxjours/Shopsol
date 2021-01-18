@@ -54,7 +54,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) GPS출퇴근을 위한 위치 공유를 허용하시겠습니까?</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) 업로드를 위한 카메라 사용을 허용하시겠습니까?</string>
+	<string>$(PRODUCT_NAME) 업로드와 QR코드 스캔을 위한 카메라 사용을 허용하시겠습니까?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) 업로드를 위한 앨범 접근을 허용하시겠습니까?</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -45,43 +45,6 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:44557955526:android:1ac4df75531b075ec382c7",
-        "android_client_info": {
-          "package_name": "com.shopsolwesop"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "44557955526-e9kbmc8v6jl0vlfjckmovmh0ggc3vl2g.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBa_FYioT7Xad5Md7A2Fd8aM4HF3xNaCmQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "44557955526-e9kbmc8v6jl0vlfjckmovmh0ggc3vl2g.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "44557955526-08nhqqo0imkso8k2nirg4k63rbbkbj7e.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.wesop.appshopsol",
-                "app_store_id": "1408364175"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:44557955526:android:dc3492c2c482010f",
         "android_client_info": {
           "package_name": "com.wesop.appshopsol"

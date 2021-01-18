@@ -428,7 +428,8 @@ export default ({
                     value={search}
                   />
                   <CloseIconContainer
-                    onPress={() => {
+                    onPress={(e) => {
+                      e.preventDefault();
                       setSearch('');
                       setCodenumber('');
                     }}>

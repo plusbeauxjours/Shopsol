@@ -2,7 +2,7 @@ import {Platform, Linking, Alert, PermissionsAndroid} from 'react-native';
 import {
   openSettings,
   PERMISSIONS,
-  check,
+  request,
   RESULTS,
 } from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
@@ -13,7 +13,7 @@ export default {
     try {
       if (Platform.OS === 'android') {
         const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          PermissionsAndroid.PERMISSIONS.CAMERA,
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           handle(true);
@@ -36,7 +36,7 @@ export default {
           );
         }
       } else {
-        const permission = await check(PERMISSIONS.IOS.CAMERA);
+        const permission = await request(PERMISSIONS.IOS.CAMERA);
         if (permission === RESULTS.GRANTED) {
           handle(true);
         } else {

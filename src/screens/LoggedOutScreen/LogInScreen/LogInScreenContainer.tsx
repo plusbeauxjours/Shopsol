@@ -58,6 +58,7 @@ export default () => {
         USERID: PUSH_TOKEN,
         push: PUSH_TOKEN,
       });
+      console.log('data', data);
       switch (data.message) {
         case 'SUCCESS':
           dispatch(setUSER(data.result));
@@ -72,7 +73,7 @@ export default () => {
                   routes: [
                     {
                       name: 'SelectStoreScreen',
-                      params: {MEMBER_SEQ: data?.result.MEMBER_SEQ},
+                      params: {from: 'loginScreen'},
                     },
                   ],
                 },

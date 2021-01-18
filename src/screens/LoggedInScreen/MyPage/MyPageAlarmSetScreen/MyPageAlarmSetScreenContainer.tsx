@@ -84,6 +84,7 @@ export default () => {
 
   const getToken = async () => {
     const PUSH_TOKEN = await firebase.messaging().getToken();
+    console.log('PUSH_TOKEN', PUSH_TOKEN);
     if (PUSH_TOKEN) {
       await api.changeToken({
         token: PUSH_TOKEN,
@@ -103,6 +104,7 @@ export default () => {
 
   const checkPermission = async () => {
     const enabled = await firebase.messaging().hasPermission();
+    console.log('enabled', enabled);
     if (enabled) {
       getToken();
     } else {

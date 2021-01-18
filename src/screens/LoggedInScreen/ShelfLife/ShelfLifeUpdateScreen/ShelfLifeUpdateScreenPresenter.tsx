@@ -339,8 +339,10 @@ export default ({
                     </BorderBox>
                   </Touchable>
                   <Touchable
-                    onPress={() => alertModal('바코드 서비스 준비중입니다.')}>
-                    <BorderBox>
+                    onPress={() =>
+                      utils.handleCameraPermission(setBarCodeCameraModalOpen)
+                    }>
+                    <BorderBox style={{marginBottom: 0}}>
                       <BarCodeIcon size={20} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
                         바코드
@@ -516,6 +518,36 @@ export default ({
               </CameraPictureCloseButton>
             </RNCamera>
           )}
+        </Modal>
+        <Modal
+          isVisible={barCodeCameraModalOpen}
+          onBackdropPress={() => setBarCodeCameraModalOpen(false)}
+          onRequestClose={() => setBarCodeCameraModalOpen(false)}
+          style={{margin: 0}}
+          avoidKeyboard={true}>
+          <RNCamera
+            ref={cameraRef}
+            style={{flex: 1}}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            autoFocus={RNCamera.Constants.AutoFocus.on}
+            captureAudio={false}
+            onFacesDetected={() => {}}
+            onFocusChanged={() => {}}
+            onZoomChanged={() => {}}
+            onBarCodeRead={({data}) => handleBarCodeScanned(data)}>
+            <BarcodeMask
+              width={300}
+              height={100}
+              outerMaskOpacity={0.8}
+              edgeColor={styleGuide.palette.tertiary}
+              edgeBorderWidth={2}
+              showAnimatedLine={false}
+            />
+            <Footer onPress={() => setBarCodeCameraModalOpen(false)}>
+              <FooterText>닫기</FooterText>
+            </Footer>
+          </RNCamera>
         </Modal>
       </ScrollView>
       <Modal
