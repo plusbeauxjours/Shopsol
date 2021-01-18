@@ -73,6 +73,7 @@ export default ({
     <BackGround>
       <Container>
         <KeyboardAwareScrollView
+          extraScrollHeight={100}
           keyboardShouldPersistTaps={'handled'}
           keyboardDismissMode="on-drag"
           showsVerticalScrollIndicator={false}

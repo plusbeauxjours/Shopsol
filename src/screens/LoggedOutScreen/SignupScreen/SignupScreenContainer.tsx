@@ -2,17 +2,26 @@ import React, {useState, useEffect} from 'react';
 
 import {useNavigation} from '@react-navigation/native';
 import SignupScreenPresenter from './SignupScreenPresenter';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
+import {setUSER, setMOBILE_NO} from '~/redux/userSlice';
+import {userLogin} from '../../../redux/userSlice';
 
 export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const {
+    PUSH_TOKEN,
+    DEVICE_MODEL,
+    DEVICE_PLATFORM,
+    DEVICE_SYSTEM_VERSION,
+  } = useSelector((state: any) => state.userReducer);
 
   const {mobileNo = null, verifyCode = null} = params;
   const [name, setName] = useState<string>('');
@@ -61,8 +70,14 @@ export default ({route: {params}}) => {
   };
 
   const submitFn = async () => {
-    if (!/^[a-zA-Z0-9]{6,15}$/.test(password)) {
-      return alertModal('숫자와 영문자 조합으로 6~15자리를 사용해야 합니다.');
+    const checkNumber = password.search(/[0-9]/g);
+    const checkEnglish = password.search(/[a-z]/gi);
+
+    if (name.length == 0) {
+      return alertModal('이름을 입력하세요.');
+    }
+    if (!birthDateSet) {
+      return alertModal('생일을 선택하세요.');
     }
     if (positionTypeCheck[1] == true && joinRoute == '가입경로') {
       alertModal('가입경로를 입력해주세요.');
@@ -77,14 +92,31 @@ export default ({route: {params}}) => {
         }
       }
     }
-    const checkNumber = password.search(/[0-9]/g);
-    const checkEnglish = password.search(/[a-z]/gi);
-
+    if (positionTypeCheck.indexOf(true).toString() == '-1') {
+      return alertModal('성별을 입력하세요.');
+    }
+    if (genderTypeCheck.indexOf(true).toString() == '-1') {
+      return alertModal('가입유형을 선택하세요.');
+    }
+    if (password.length == 0) {
+      return alertModal('비밀번호를 입력하세요.');
+    }
+    if (passwordCheck.length == 0) {
+      return alertModal('비밀번호 확인을 입력하세요.');
+    }
+    if (password != passwordCheck) {
+      return alertModal('비밀번호와 비밀번호 확인이 같지 않습니다.');
+    }
     if (checkNumber < 0 || checkEnglish < 0) {
       return alertModal('숫자와 영문자를 혼용하여야 합니다.');
     }
     if (/(\w)\1\1\1/.test(password)) {
       return alertModal('444같은 문자를 4번 이상 사용하실 수 없습니다.');
+    }
+    if (!/^[a-zA-Z0-9]{6,15}$/.test(password)) {
+      return alertModal(
+        '비밀번호는 숫자와 영문자 조합으로 6~15자리를 사용해야 합니다.',
+      );
     }
     try {
       dispatch(
@@ -105,22 +137,56 @@ export default ({route: {params}}) => {
         CATEGORY: joinRoute,
         other: otherJoinRoute,
       });
-      if (data.message === 'ALREADY_SUCCESS') {
+      if (data.message == 'SUCCESS') {
+        try {
+          console.log('PUSH_TOKEN', PUSH_TOKEN);
+          dispatch(setSplashVisible({visible: true, text: '로그인'}));
+          const {data} = await api.logIn({
+            MobileNo: mobileNo,
+            PASSWORD: password,
+            Device_Version: DEVICE_SYSTEM_VERSION || '',
+            Device_Platform: DEVICE_PLATFORM || '',
+            Device_Model: DEVICE_MODEL || '',
+            App_Version: utils.appVersion || '',
+            USERID: PUSH_TOKEN,
+            push: null,
+          });
+          console.log('data', data);
+          dispatch(setUSER(data.result));
+          dispatch(setMOBILE_NO(mobileNo));
+          dispatch(userLogin());
+          dispatch(setSplashVisible({visible: false}));
+          return navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'LoggedInNavigation',
+                state: {
+                  routes: [
+                    {
+                      name: 'SelectStoreScreen',
+                      params: {from: 'loginScreen'},
+                    },
+                  ],
+                },
+              },
+            ],
+          });
+        } catch (e) {
+          console.log(e);
+          alertModal('서버 접속이 원할하지 않습니다.');
+        }
+      } else if (data.message === 'ALREADY_SUCCESS') {
         alertModal('이미 가입한 휴대폰번호입니다.');
         navigation.goBack();
+        dispatch(setSplashVisible({visible: false}));
       } else if (data.message === 'SMSERROR') {
         alertModal('인증번호 오류입니다.');
         navigation.goBack();
-      } else {
-        alertModal('회원가입이 완료되었습니다. 로그인해 주세요.');
-        navigation.navigate('LogInScreen', {
-          appVersion: utils.appVersion,
-        });
+        dispatch(setSplashVisible({visible: false}));
       }
     } catch (e) {
       console.log(e);
-    } finally {
-      dispatch(setSplashVisible({visible: false}));
     }
   };
 

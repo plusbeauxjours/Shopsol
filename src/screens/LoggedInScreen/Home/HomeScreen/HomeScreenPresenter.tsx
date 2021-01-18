@@ -940,15 +940,6 @@ export default ({
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 일터관리</Bold>
                     </MenuTitleArea>
-                    <Row>
-                      <IconContainer onPress={() => setEditMode(!editMode)}>
-                        {editMode ? (
-                          <CloseIcon size={24} color={'white'} />
-                        ) : (
-                          <SettingIcon size={20} color={'white'} />
-                        )}
-                      </IconContainer>
-                    </Row>
                   </SpaceRow>
                   {initLoading ? (
                     <Container style={{justifyContent: 'center'}}>
@@ -969,73 +960,34 @@ export default ({
                       <Container>
                         {employeesMenu.map((menu, index) => {
                           if (
-                            CUSTOM_MENU_EMP &&
-                            !CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
+                            menu.paging == 'EmpPayInfoScreen' &&
+                            STORE_DATA?.PAY_SHOW == 1
                           ) {
-                            if (
-                              menu.paging == 'EmpPayInfoScreen' &&
-                              STORE_DATA?.PAY_SHOW == 1
-                            ) {
-                              return (
-                                <MenuCntContainer
-                                  key={index}
-                                  index={index}
-                                  type={'emp'}
-                                  selection={menu.selection}
-                                  paging={menu.paging}
-                                  count={menu.count}
-                                  source={menu.source}
-                                />
-                              );
-                            } else {
-                              return (
-                                <MenuCntContainer
-                                  key={index}
-                                  index={index}
-                                  type={'emp'}
-                                  selection={menu.selection}
-                                  paging={menu.paging}
-                                  count={menu.count}
-                                  source={menu.source}
-                                />
-                              );
-                            }
+                            return (
+                              <MenuCntContainer
+                                key={index}
+                                index={index}
+                                type={'store'}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
+                          } else {
+                            return (
+                              <MenuCntContainer
+                                key={index}
+                                index={index}
+                                type={'store'}
+                                selection={menu.selection}
+                                paging={menu.paging}
+                                count={menu.count}
+                                source={menu.source}
+                              />
+                            );
                           }
                         })}
-                        {editMode &&
-                          employeesMenu.map((menu, index) => {
-                            if (
-                              CUSTOM_MENU_EMP &&
-                              CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
-                            ) {
-                              if (
-                                menu.paging == 'EmpPayInfoScreen' &&
-                                STORE_DATA?.PAY_SHOW == 1
-                              ) {
-                                return (
-                                  <HiddenMenuCntContainer
-                                    key={index}
-                                    index={index}
-                                    type={'emp'}
-                                    selection={menu.selection}
-                                    paging={menu.paging}
-                                    source={menu.source}
-                                  />
-                                );
-                              } else {
-                                return (
-                                  <HiddenMenuCntContainer
-                                    key={index}
-                                    index={index}
-                                    type={'emp'}
-                                    selection={menu.selection}
-                                    paging={menu.paging}
-                                    source={menu.source}
-                                  />
-                                );
-                              }
-                            }
-                          })}
                       </Container>
                     </>
                   )}

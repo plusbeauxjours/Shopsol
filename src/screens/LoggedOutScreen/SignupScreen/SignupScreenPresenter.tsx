@@ -20,6 +20,10 @@ interface IsError {
   isError?: boolean;
 }
 
+interface IsChecked {
+  isChecked?: boolean;
+}
+
 const BackGround = styled.View`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -68,6 +72,14 @@ const TypeCheckCase = styled.View`
   margin-top: 20px;
 `;
 
+const SpaceRow = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
 const WhiteSpace = styled.View`
   height: 30px;
 `;
@@ -89,12 +101,7 @@ const GreyText = styled.Text<IsError>`
   margin-top: 5px;
 `;
 
-const Placeholder = styled(TextId)`
-  color: #e5e5e5;
-`;
-
 const ScrollView = styled.ScrollView``;
-const Touchable = styled.TouchableOpacity``;
 const SheetTouchable = styled.TouchableOpacity`
   width: 100%;
   align-items: center;
@@ -139,6 +146,22 @@ const DatePickerText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.greyColor};
   text-align: center;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
 `;
 
 export default ({
@@ -221,6 +244,7 @@ export default ({
   return (
     <BackGround>
       <KeyboardAwareScrollView
+        extraScrollHeight={140}
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}>
@@ -247,6 +271,19 @@ export default ({
               <InputLine isBefore={name == '' ? true : false} />
             </Case>
             <WhiteSpace />
+            <SpaceRow>
+              <NameText>생일</NameText>
+              <RequestBorderButton
+                isChecked={birthDateSet}
+                onPress={() => setIsBirthDateVisible(true)}>
+                <RequestBorderText isChecked={birthDateSet}>
+                  {birthDateSet
+                    ? moment(birthDate).format('YYYY년 M월 D일')
+                    : '생일 선택'}
+                </RequestBorderText>
+              </RequestBorderButton>
+            </SpaceRow>
+            <WhiteSpace />
             <Case>
               <NameText>성별</NameText>
               <TypeCheckCase>
@@ -256,24 +293,6 @@ export default ({
             </Case>
             <WhiteSpace />
             <Case>
-              <NameText>생일</NameText>
-              <Touchable onPress={() => setIsBirthDateVisible(true)}>
-                <TextinputCase>
-                  {birthDateSet ? (
-                    <TextId>{moment(birthDate).format('YYYY.MM.DD')}</TextId>
-                  ) : (
-                    <GreyText
-                      style={{fontSize: 14, margin: 10, color: '#e5e5e5'}}>
-                      탭하여 생일을 선택하세요
-                    </GreyText>
-                  )}
-                </TextinputCase>
-              </Touchable>
-              <InputLine isBefore={!birthDateSet} />
-            </Case>
-            <WhiteSpace />
-
-            <Case>
               <NameText>가입유형</NameText>
               <TypeCheckCase>
                 <View>{positionType(1, '사업주')}</View>
@@ -282,19 +301,16 @@ export default ({
             </Case>
             <WhiteSpace />
             {positionTypeCheck[1] == true && (
-              <Case>
+              <SpaceRow>
                 <NameText>가입경로</NameText>
-                <Touchable onPress={() => sheetRef.current.open()}>
-                  <TypeCheckCase style={{margin: 10}}>
-                    {joinRoute === '가입경로' ? (
-                      <Placeholder>가입경로</Placeholder>
-                    ) : (
-                      <TextId>{joinRoute}</TextId>
-                    )}
-                  </TypeCheckCase>
-                </Touchable>
-                <InputLine isBefore={joinRoute == '가입경로' ? true : false} />
-              </Case>
+                <RequestBorderButton
+                  isChecked={joinRoute != '가입경로'}
+                  onPress={() => sheetRef.current.open()}>
+                  <RequestBorderText isChecked={joinRoute != '가입경로'}>
+                    {joinRoute == '가입경로' ? '가입경로' : joinRoute}
+                  </RequestBorderText>
+                </RequestBorderButton>
+              </SpaceRow>
             )}
             {positionTypeCheck[1] == true && joinRoute == '기타' && (
               <Case>
@@ -403,16 +419,7 @@ export default ({
                 '사업주: 사업주\n직원: 매니저(관리자) 또는 직원',
               )
             }
-            isRegisted={
-              mobileNo &&
-              name.length > 0 &&
-              birthDateSet &&
-              password === passwordCheck &&
-              passwordCheck.length > 6 &&
-              password.search(/[0-9]/g) >= 0 &&
-              password.search(/[a-z]/gi) >= 0 &&
-              !/(\w)\1\1\1/.test(password)
-            }
+            isRegisted={true}
           />
           <WhiteSpace />
           <RBSheet

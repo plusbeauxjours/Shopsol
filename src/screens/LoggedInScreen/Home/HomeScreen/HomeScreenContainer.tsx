@@ -384,6 +384,7 @@ export default ({route: {params}}) => {
         MEMBER_SEQ,
         STORE_SEQ,
       });
+      console.log('data', data);
       if (data.resultmsg === '1') {
         dispatch(setSTORE_DATA(data));
         dispatch(setEMP_SEQ(data.EMP_SEQ));
