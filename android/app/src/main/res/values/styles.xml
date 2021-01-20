@@ -7,12 +7,12 @@
 
    <style name="DialogDatePicker.Theme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">#f6f6f6</item>
-        <item name="colorAccent">#642a8c</item>
+        <item name="colorAccent">#2c6868</item>
     </style>
 
    <style name="ClockTimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">#f6f6f6</item>
-        <item name="colorAccent">#642a8c</item>
+        <item name="colorAccent">#2c6868</item>
     </style>
 
 </resources>

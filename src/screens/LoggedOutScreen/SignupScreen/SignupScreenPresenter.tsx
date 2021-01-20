@@ -107,7 +107,7 @@ const SheetTouchable = styled.TouchableOpacity`
   align-items: center;
   padding: 20px 0;
   border-bottom-width: 1px;
-  border-color: ${styleGuide.palette.greyColor};
+  border-color: ${styleGuide.palette.lightGreyColor};
 `;
 
 const Section = styled.View`
@@ -169,7 +169,6 @@ export default ({
   mobileNo,
   name,
   confirmModal,
-  onChangeName,
   password,
   passwordCheck,
   positionTypeCheck,
@@ -196,6 +195,7 @@ export default ({
   setIsBirthDateVisible,
   birthDateSet,
   setBirthDateSet,
+  setName,
 }) => {
   const sheetRef = useRef(null);
   const positionType = (selection, text) => {
@@ -207,7 +207,7 @@ export default ({
           value[selection] = true;
           setPositionTypeCheck(value);
           alertModal(
-            '정확한 가입 유형을 선택하셨나요?\n사업주: 사업주\n직원: 매니저(관리자) 또는 직원',
+            '정확한 가입 유형을 선택하셨나요?\n사업주: 사업장 등록 및 관리자\n직원: 사업장에 소속되어 있는 직원',
           );
         }}>
         <Row>
@@ -264,11 +264,14 @@ export default ({
                 <TextInput
                   placeholder={'이름'}
                   placeholderTextColor={'#E5E5E5'}
-                  onChangeText={(text) => onChangeName(text)}
+                  onChangeText={(text) => setName(text)}
                   value={name}
                 />
               </TextinputCase>
               <InputLine isBefore={name == '' ? true : false} />
+              <GreyText isError={name?.length > 6}>
+                * 이름은 6자 이하로 입력해주세요.
+              </GreyText>
             </Case>
             <WhiteSpace />
             <SpaceRow>
@@ -287,8 +290,8 @@ export default ({
             <Case>
               <NameText>성별</NameText>
               <TypeCheckCase>
-                <View>{genderType(0, '남자')}</View>
-                <View>{genderType(1, '여자')}</View>
+                <View>{genderType(1, '남자')}</View>
+                <View>{genderType(0, '여자')}</View>
               </TypeCheckCase>
             </Case>
             <WhiteSpace />
@@ -352,6 +355,7 @@ export default ({
                 />
                 <CheckPasswordBtn
                   onPress={() => setIsPasswordSeen(!isPasswordSeen)}
+                  isEmpty={password.length == 0}
                   isPasswordSeen={isPasswordSeen}
                 />
               </TextinputCase>
@@ -396,6 +400,7 @@ export default ({
                 />
                 <CheckPasswordBtn
                   onPress={() => setIsPasswordCheckSeen(!isPasswordCheckSeen)}
+                  isEmpty={isPasswordCheckSeen.length == 0}
                   isPasswordSeen={isPasswordCheckSeen}
                 />
               </TextinputCase>
@@ -416,7 +421,7 @@ export default ({
             onPress={() =>
               confirmModal(
                 '정확한 가입유형을 선택하셨나요?',
-                '사업주: 사업주\n직원: 매니저(관리자) 또는 직원',
+                '사업주: 사업장 등록 및 관리자\n직원: 사업장에 소속되어 있는 직원',
               )
             }
             isRegisted={true}

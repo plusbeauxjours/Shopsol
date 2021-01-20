@@ -74,6 +74,9 @@ export default () => {
     if (NAME === '') {
       return alert('이를을 기입해주세요.');
     }
+    if (NAME.length > 6) {
+      return alertModal('이름은 6자 이하로 입력해주세요.');
+    }
     try {
       alertModal('이름이 변경되었습니다.');
       navigation.goBack();
@@ -100,9 +103,7 @@ export default () => {
             placeholder={'변경하실 이름을 입력해주세요.'}
             selectionColor={styleGuide.palette.greyColor}
             placeholderTextColor={'#CCCCCC'}
-            onChangeText={(text) => {
-              setNAME(text);
-            }}
+            onChangeText={(text) => setNAME(text)}
             value={NAME}
             maxLength={10}
           />

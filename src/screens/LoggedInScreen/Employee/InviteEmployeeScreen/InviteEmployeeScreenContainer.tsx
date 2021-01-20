@@ -266,7 +266,7 @@ export default () => {
       isToastVisible={isToastVisible}
       isInputModalVisible={isInputModalVisible}
       setIsInputModalVisible={setIsInputModalVisible}
-      setSearch
+      setSearch={setSearch}
     />
   );
 };

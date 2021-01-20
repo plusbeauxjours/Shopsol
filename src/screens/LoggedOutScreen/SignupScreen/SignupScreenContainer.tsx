@@ -9,8 +9,7 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
-import {setUSER, setMOBILE_NO} from '~/redux/userSlice';
-import {userLogin} from '../../../redux/userSlice';
+import {setUSER, setMOBILE_NO, userLogin} from '~/redux/userSlice';
 
 export default ({route: {params}}) => {
   const navigation = useNavigation();
@@ -76,6 +75,10 @@ export default ({route: {params}}) => {
     if (name.length == 0) {
       return alertModal('이름을 입력하세요.');
     }
+
+    if (name.length > 6) {
+      return alertModal('이름은 6자 이하로 입력해주세요.');
+    }
     if (!birthDateSet) {
       return alertModal('생일을 선택하세요.');
     }
@@ -93,10 +96,10 @@ export default ({route: {params}}) => {
       }
     }
     if (positionTypeCheck.indexOf(true).toString() == '-1') {
-      return alertModal('성별을 입력하세요.');
+      return alertModal('가입유형을 입력하세요.');
     }
     if (genderTypeCheck.indexOf(true).toString() == '-1') {
-      return alertModal('가입유형을 선택하세요.');
+      return alertModal('성별을 선택하세요.');
     }
     if (password.length == 0) {
       return alertModal('비밀번호를 입력하세요.');
@@ -105,7 +108,7 @@ export default ({route: {params}}) => {
       return alertModal('비밀번호 확인을 입력하세요.');
     }
     if (password != passwordCheck) {
-      return alertModal('비밀번호와 비밀번호 확인이 같지 않습니다.');
+      return alertModal('비밀번호가 동일하지 않습니다.');
     }
     if (checkNumber < 0 || checkEnglish < 0) {
       return alertModal('숫자와 영문자를 혼용하여야 합니다.');
@@ -138,43 +141,11 @@ export default ({route: {params}}) => {
         other: otherJoinRoute,
       });
       if (data.message == 'SUCCESS') {
-        try {
-          console.log('PUSH_TOKEN', PUSH_TOKEN);
-          dispatch(setSplashVisible({visible: true, text: '로그인'}));
-          const {data} = await api.logIn({
-            MobileNo: mobileNo,
-            PASSWORD: password,
-            Device_Version: DEVICE_SYSTEM_VERSION || '',
-            Device_Platform: DEVICE_PLATFORM || '',
-            Device_Model: DEVICE_MODEL || '',
-            App_Version: utils.appVersion || '',
-            USERID: PUSH_TOKEN,
-            push: null,
-          });
-          dispatch(setUSER(data.result));
-          dispatch(setMOBILE_NO(mobileNo));
-          dispatch(userLogin());
-          dispatch(setSplashVisible({visible: false}));
-          return navigation.reset({
-            index: 0,
-            routes: [
-              {
-                name: 'LoggedInNavigation',
-                state: {
-                  routes: [
-                    {
-                      name: 'SelectStoreScreen',
-                      params: {from: 'loginScreen'},
-                    },
-                  ],
-                },
-              },
-            ],
-          });
-        } catch (e) {
-          console.log(e);
-          alertModal('서버 접속이 원할하지 않습니다.');
-        }
+        dispatch(setSplashVisible({visible: false}));
+        navigation.navigate('LogInScreen', {
+          appVersion: utils.appVersion,
+        });
+        alertModal('회원가입이 완료되었습니다. 로그인해 주세요.');
       } else if (data.message === 'ALREADY_SUCCESS') {
         alertModal('이미 가입한 휴대폰번호입니다.');
         navigation.goBack();
@@ -226,14 +197,6 @@ export default ({route: {params}}) => {
     }
   };
 
-  const onChangeName = (text) => {
-    if (name?.length > 6) {
-      alertModal('이름은 6자리 이하로 입력해주세요.');
-    } else {
-      setName(text);
-    }
-  };
-
   const fetchData = async () => {
     const {data} = await api.help2();
     if (data.helparr.length > 0) {
@@ -251,7 +214,6 @@ export default ({route: {params}}) => {
       mobileNo={mobileNo}
       name={name}
       confirmModal={confirmModal}
-      onChangeName={onChangeName}
       password={password}
       passwordCheck={passwordCheck}
       positionTypeCheck={positionTypeCheck}
@@ -278,6 +240,7 @@ export default ({route: {params}}) => {
       setIsBirthDateVisible={setIsBirthDateVisible}
       birthDateSet={birthDateSet}
       setBirthDateSet={setBirthDateSet}
+      setName={setName}
     />
   );
 };

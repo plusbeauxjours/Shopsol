@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>44557955526-256cq7mdcfjd531hn4jgpgtl67ot7hfj.apps.googleusercontent.com</string>
+	<string>690515042246-1g38ke1do9fagp4fjc5iqpd30vnodh4r.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.44557955526-256cq7mdcfjd531hn4jgpgtl67ot7hfj</string>
+	<string>com.googleusercontent.apps.690515042246-1g38ke1do9fagp4fjc5iqpd30vnodh4r</string>
 	<key>API_KEY</key>
-	<string>AIzaSyATCfu_c5BpH6XeaX3jpGxu_9UayhrZKF0</string>
+	<string>AIzaSyCGtbRz493JHhNmrlM3n_XhSBcLvwlpak4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>44557955526</string>
+	<string>690515042246</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.shopsolwesop</string>
 	<key>PROJECT_ID</key>
-	<string>shopsol-f86dd</string>
+	<string>shopsol-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>shopsol-f86dd.appspot.com</string>
+	<string>shopsol-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:44557955526:ios:e4197f0c5509b3b9c382c7</string>
-	<key>DATABASE_URL</key>
-	<string>https://shopsol-f86dd.firebaseio.com</string>
+	<string>1:690515042246:ios:1183da28aa648c7c2c9cc7</string>
 </dict>
 </plist>

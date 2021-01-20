@@ -8,10 +8,10 @@ const CheckPasswordButton = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export default ({onPress, isPasswordSeen}) => {
+export default ({onPress, isEmpty, isPasswordSeen}) => {
   return (
     <CheckPasswordButton activeOpacity={1} onPress={() => onPress()}>
-      {isPasswordSeen ? <EyeOnIcon /> : <EyeOffIcon />}
+      {isPasswordSeen && !isEmpty ? <EyeOnIcon /> : <EyeOffIcon />}
     </CheckPasswordButton>
   );
 };

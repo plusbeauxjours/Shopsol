@@ -50,6 +50,7 @@ export default () => {
         setHasCheckedVerifyCode(false);
         setIsCountDownStarted(false);
         setHasCheckTimeOut(true);
+        setVerifyCode('');
       }
       duration = moment.duration(duration.asSeconds() - 1, 'seconds');
       setCountdown(
@@ -139,6 +140,12 @@ export default () => {
   };
 
   const gotoSignup = () => {
+    setVerifyCode('');
+    setCountdown('');
+    setIsCountDownStarted(false);
+    setHasCheckTimeOut(false);
+    setIsVerified(false);
+    setHasCheckedVerifyCode(false);
     navigation.navigate('SignupScreen', {mobileNo, verifyCode});
   };
 

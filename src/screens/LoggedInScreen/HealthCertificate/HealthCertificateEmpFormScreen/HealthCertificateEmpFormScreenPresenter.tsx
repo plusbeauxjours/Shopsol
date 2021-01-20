@@ -230,7 +230,11 @@ export default ({
   const cameraRef = useRef(null);
   return (
     <BackGround>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        extraScrollHeight={140}
+        keyboardShouldPersistTaps={'handled'}
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}>
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           keyboardDismissMode="on-drag"

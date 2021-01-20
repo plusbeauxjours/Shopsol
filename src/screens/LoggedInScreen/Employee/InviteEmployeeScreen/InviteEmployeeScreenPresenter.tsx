@@ -383,7 +383,7 @@ export default ({
               onChangeText={(text) => searchName(text)}
               value={search}
             />
-            <CloseIconContainer onPress={() => setSearch('')}>
+            <CloseIconContainer onPress={() => setSearch(null)}>
               <CloseCircleOutlineIcon
                 color={styleGuide.palette.searchBarColor}
                 size={24}

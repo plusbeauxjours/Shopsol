@@ -229,7 +229,11 @@ export default ({
   );
   return (
     <BackGround>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        extraScrollHeight={140}
+        keyboardShouldPersistTaps={'handled'}
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}>
         <Container>
           <Sheet sheetRef={RBSheet1} getText={getText1()} />
           <Sheet sheetRef={RBSheet2} getText={getText2()} />
@@ -260,9 +264,7 @@ export default ({
                       placeholder={'휴대폰번호를 입력해주세요'}
                       placeholderTextColor={'#CCCCCC'}
                       selectionColor={styleGuide.palette.greyColor}
-                      onChangeText={(text) => {
-                        onChangeMobileNum(text);
-                      }}
+                      onChangeText={(text) => onChangeMobileNum(text)}
                       value={mobileNo}
                       keyboardType={'number-pad'}
                       maxLength={11}
@@ -280,12 +282,10 @@ export default ({
                   <NameText>인증번호입력</NameText>
                   <TextinputCase>
                     <TextInput
-                      placeholder={'인증번호를 입력해주세요'}
+                      placeholder={'인증번호 6자리 입력'}
                       placeholderTextColor={'#CCCCCC'}
                       selectionColor={styleGuide.palette.greyColor}
-                      onChangeText={(text) => {
-                        onChangeVerifyNum(text);
-                      }}
+                      onChangeText={(text) => onChangeVerifyNum(text)}
                       value={verifyCode}
                       keyboardType={'number-pad'}
                       maxLength={6}
