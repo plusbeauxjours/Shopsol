@@ -136,6 +136,7 @@ export default ({route: {params}}) => {
   const [authorityCheck, setAuthorityCheck] = useState<
     [boolean, boolean, boolean, boolean, boolean]
   >([false, false, false, false, false]); //  [선택 시 본인급여 확인 가능, [매니저] 타 직원급여 확인 및 수정 가능, [매니저] 직원 일정 수정 가능, [매니저] 타 직원 출퇴근 알람 받기]
+  const [MINPAY, setMINPAY] = useState<string>('');
 
   const alertModal = (text) => {
     const params = {
@@ -491,6 +492,7 @@ export default ({route: {params}}) => {
         } else {
           insuranceChecked[3] = false;
         }
+        setMINPAY(data.resultdata.MINPAY);
         if (from === 'EmployeeInfoScreen') {
           setStartDay(data.result.START);
           setEndDay(data.result.END ? data.result.END : '');
@@ -504,15 +506,6 @@ export default ({route: {params}}) => {
           setPay3(data.result.PAY_TYPE === '2' ? data.result.SELF_DRIVING : '');
           setPay4(data.result.PAY_TYPE === '2' ? data.result.BONUS : '');
           setPay5(data.result.PAY_TYPE === '2' ? data.result.INCENTIVE : '');
-
-          //수습
-          setProbation(data.result.probation == '1' ? true : false);
-          setProbationPeriod(
-            data.result.probation == '1' ? data.result.probationDATE : moment(),
-          );
-          setProbationPercent(
-            data.result.probation == '1' ? data.result.probationPercent : '',
-          );
 
           // ↓ STEP 3(급여 상세정보 입력)
           setSalarySystemCheck(salarySystemChecked);
@@ -671,6 +664,7 @@ export default ({route: {params}}) => {
       START={START}
       END={END}
       PAY={PAY}
+      MINPAY={MINPAY}
       mobileNo={mobileNo}
       CALCULATE_DAY={CALCULATE_DAY}
       MANAGER_CALLED={MANAGER_CALLED}

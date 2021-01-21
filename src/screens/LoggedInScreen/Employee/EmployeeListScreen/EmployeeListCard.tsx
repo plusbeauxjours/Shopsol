@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 
-import {ForwardIcon, PhoneIcon} from '~/constants/Icons';
+import {ForwardIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
 const Touchable = styled.TouchableOpacity`
@@ -81,10 +81,6 @@ export default ({
           <NameText>{EMP_NAME}</NameText>
           <DateText>[{IS_MANAGER}]</DateText>
         </Row>
-        <Row style={{justifyContent: 'flex-start'}}>
-          <PhoneIcon color={'#707070'} />
-          <InfoText style={{marginLeft: 5}}>{mobileNo}</InfoText>
-        </Row>
         <InfoText>
           근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)
         </InfoText>
@@ -92,6 +88,7 @@ export default ({
           {moment(START).format('YYYY.MM.DD')} ~&nbsp;
           {END ? moment(END).format('YYYY.MM.DD') : '계속'}
         </InfoText>
+        <InfoText>수습정보 (EmployeeListCard)</InfoText>
       </NameBox>
       <IconContainer>
         <ForwardIcon />

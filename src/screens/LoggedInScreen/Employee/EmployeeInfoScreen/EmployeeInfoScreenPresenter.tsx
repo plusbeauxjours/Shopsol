@@ -269,6 +269,11 @@ const DateTextArea = styled.View`
   justify-content: center;
 `;
 
+const PhoneIconContainer = styled.View`
+  justify-content: center;
+  margin-bottom: 5px;
+`;
+
 export default ({
   STORE,
   originalDayList,
@@ -500,19 +505,19 @@ export default ({
                   resizeMode={FastImage.resizeMode.cover}
                 />
                 <NameBox>
+                  <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
+                    <NameText>{data?.EMP_NAME}&nbsp;</NameText>
+                    <NameText style={{fontSize: 10}}>
+                      {data?.IS_MANAGER === '1'
+                        ? `[${MANAGER_CALLED}]`
+                        : '[직원]'}
+                    </NameText>
+                  </Row>
                   <Touchable onPress={() => Linking.openURL(`tel:${mobileNo}`)}>
-                    <Row
-                      style={{justifyContent: 'flex-start', marginBottom: 5}}>
-                      <NameText>{data?.EMP_NAME}&nbsp;</NameText>
-                      <NameText style={{fontSize: 10}}>
-                        {data?.IS_MANAGER === '1'
-                          ? `[${MANAGER_CALLED}]`
-                          : '[직원]'}
-                      </NameText>
-                    </Row>
                     <Row style={{justifyContent: 'flex-start'}}>
-                      <PhoneIcon color={styleGuide.palette.greyColor} />
-                      <InfoText style={{marginLeft: 5}}>{mobileNo}</InfoText>
+                      <PhoneIconContainer>
+                        <PhoneIcon color={styleGuide.palette.greyColor} />
+                      </PhoneIconContainer>
                       <InfoText
                         style={{
                           marginLeft: 5,
@@ -531,6 +536,7 @@ export default ({
                     {moment(START).format('YYYY.MM.DD')} ~&nbsp;
                     {END ? moment(END).format('YYYY.MM.DD') : '계속'}
                   </InfoText>
+                  <InfoText>수습정보 (EmployeeInfoScreen)</InfoText>
                 </NameBox>
                 <NavigationButton onPress={() => gotoSetInfo(data, IMAGE)}>
                   <Bold>정보수정</Bold>

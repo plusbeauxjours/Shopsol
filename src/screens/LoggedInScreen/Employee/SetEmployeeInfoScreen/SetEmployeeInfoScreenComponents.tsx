@@ -267,7 +267,7 @@ export const SalarySystem = ({
         <SalarySystemSettingButton
           onPress={() => setIsSalaryModalVisible1(!isSalaryModalVisible1)}>
           <SalarySystemSettingText
-            isSmallText={weekTime && weekTime.length > 2}>
+            isSmallText={weekTime && weekTime?.length > 2}>
             {weekTime ? `${weekTime}시간` : '설정'}
           </SalarySystemSettingText>
         </SalarySystemSettingButton>
@@ -276,7 +276,7 @@ export const SalarySystem = ({
         <SalarySystemSettingButton
           onPress={() => setIsSalaryModalVisible2(!isSalaryModalVisible2)}>
           <SalarySystemSettingText
-            isSmallText={weekTime && restTime.length > 2}>
+            isSmallText={weekTime && restTime?.length > 2}>
             {restTime ? `${restTime}분` : '설정'}
           </SalarySystemSettingText>
         </SalarySystemSettingButton>

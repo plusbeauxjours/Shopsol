@@ -366,6 +366,7 @@ export default ({
               {moment(START).format('YYYY.MM.DD')}&nbsp;~&nbsp;
               {END ? moment(END).format('YYYY.MM.DD') : '계속'}
             </EmployeeText>
+            <EmployeeText>수습정보 (EmpPayInfoScreen)</EmployeeText>
           </NameBox>
           {STORE == '1' && (
             <NavigationButton onPress={() => gotoSetInfo()}>

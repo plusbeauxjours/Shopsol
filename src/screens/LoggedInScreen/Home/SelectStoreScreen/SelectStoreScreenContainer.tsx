@@ -42,7 +42,6 @@ export default ({route: {params}}) => {
       setRefreshing(false);
     }
   };
-  console.log(EMP_SEQ);
   const alertModal = (text, okCallback = () => {}) => {
     const params = {
       alertType: 'alert',

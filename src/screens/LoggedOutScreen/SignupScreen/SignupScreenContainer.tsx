@@ -166,7 +166,7 @@ export default ({route: {params}}) => {
     } else {
       setPasswordCheck('');
       if (reg1.test(text)) {
-        if (password.length < 6) {
+        if (password.length < 5) {
           setPassword(text);
           setIsPasswordError(true);
         } else {

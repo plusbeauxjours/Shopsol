@@ -8,7 +8,6 @@ import {
 } from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import Animated from 'react-native-reanimated';
-import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 import {isIphoneX} from 'react-native-iphone-x-helper';
@@ -185,41 +184,8 @@ const PictureBorderBox = styled.View`
   margin-bottom: 5px;
 `;
 
-const DatePickerContainer = styled.View`
-  width: 330px;
-  height: 320px;
-  border-radius: 20px;
-  padding: 20px;
-  padding-top: 30px;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: white;
-`;
-
-const DatePickerRoundBtn = styled(Ripple)`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
-const DatePickerText = styled.Text`
-  font-weight: ${styleGuide.fontWeight.normal};
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
-  text-align: center;
-`;
-
 export default ({
-  isDateModalVisible,
-  setIsDateModalVisible,
   date,
-  setDate,
   title,
   setTitle,
   content,
@@ -269,20 +235,7 @@ export default ({
                       width: 180,
                     }}
                   />
-                  <Touchable onPress={() => setIsDateModalVisible(true)}>
-                    {moment(date).format('YYYY-MM-DD')?.length === 0 ? (
-                      <GreyText
-                        style={{
-                          color: '#CCC',
-                          fontSize: styleGuide.fontSize.large,
-                          marginRight: 10,
-                        }}>
-                        등록일
-                      </GreyText>
-                    ) : (
-                      <DateText>{moment(date).format('YYYY.MM.DD')}</DateText>
-                    )}
-                  </Touchable>
+                  <DateText>{moment(date).format('YYYY.MM.DD')}</DateText>
                 </Name>
                 <Line />
                 <TextContainer>
@@ -448,39 +401,6 @@ export default ({
           </Modal>
         </ScrollView>
       </BackGround>
-      <Modal
-        onRequestClose={() => setIsDateModalVisible(false)}
-        onBackdropPress={() => setIsDateModalVisible(false)}
-        isVisible={isDateModalVisible}
-        style={{
-          margin: 0,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          height: '100%',
-        }}>
-        <DatePickerContainer>
-          <DatePicker
-            style={{width: utils.isAndroid() ? 200 : 230}}
-            locale="ko"
-            date={moment(date).toDate()}
-            mode={'date'}
-            androidVariant="iosClone"
-            onDateChange={(date) => setDate(moment(date).format('YYYY-MM-DD'))}
-          />
-          <DatePickerRoundBtn
-            onPress={() => {
-              setIsDateModalVisible(false);
-            }}
-            rippleColor={styleGuide.palette.rippleGreyColor}
-            rippleDuration={600}
-            rippleSize={1200}
-            rippleContainerBorderRadius={30}
-            rippleOpacity={0.1}>
-            <DatePickerText>확인</DatePickerText>
-          </DatePickerRoundBtn>
-        </DatePickerContainer>
-      </Modal>
     </>
   );
 };

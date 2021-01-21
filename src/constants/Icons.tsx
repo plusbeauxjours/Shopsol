@@ -386,7 +386,11 @@ export const PictureIcon: React.FC<IProps> = ({size, color}) => (
 );
 
 export const PhoneIcon: React.FC<IProps> = ({size, color}) => (
-  <FontAwesome name={'phone'} size={size ?? 10} color={color ?? 'black'} />
+  <MaterialCommunityIcons
+    name={'phone'}
+    size={size ?? 10}
+    color={color ?? styleGuide.palette.primary}
+  />
 );
 
 export const BarCodeIcon: React.FC<IProps> = ({size, color}) => (

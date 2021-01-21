@@ -429,7 +429,6 @@ export default ({
                   }}
                   resizeMode={FastImage.resizeMode.cover}
                 />
-
                 <NameBox>
                   <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
                     <NameText>{EMPLOYEE_INFO_DATA?.EMP_NAME}&nbsp;</NameText>
@@ -451,6 +450,7 @@ export default ({
                       ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
                       : '계속'}
                   </InfoText>
+                  <InfoText>수습정보 (EmployeeInfoEMPScreen)</InfoText>
                 </NameBox>
               </EmployeeBox>
             </Section>

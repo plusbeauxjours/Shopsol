@@ -10,10 +10,10 @@ import moment from 'moment';
 import {RNCamera} from 'react-native-camera';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import Animated from 'react-native-reanimated';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {
-  CheckBoxIcon,
   CameraIcon,
   PictureIcon,
   CheckBoxOnIcon,
@@ -31,7 +31,6 @@ const BackGround = styled.SafeAreaView`
   background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
-const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
 const Touchable = styled.TouchableOpacity``;
 const Container = styled.View`
@@ -266,10 +265,11 @@ export default ({
   return (
     <>
       <BackGround>
-        <ScrollView
+        <KeyboardAwareScrollView
+          extraScrollHeight={100}
           keyboardShouldPersistTaps={'handled'}
           keyboardDismissMode="on-drag"
-          contentContainerStyle={{alignItems: 'center'}}>
+          showsVerticalScrollIndicator={false}>
           <Container>
             <Section>
               <RowSpace>
@@ -410,7 +410,9 @@ export default ({
                     onChangeText={(text) => setCHECK_TITLE(text)}
                     value={CHECK_TITLE}
                     placeholder={'내용를 입력하세요.'}
-                    placeholderTextColor={styleGuide.palette.primary}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholderTextColor={styleGuide.palette.greyColor}
                     multiline={true}
                   />
                 </Box>
@@ -509,7 +511,7 @@ export default ({
               />
             )}
           </Container>
-        </ScrollView>
+        </KeyboardAwareScrollView>
         {((STORE == '0' && ITEM_EMP_SEQ?.includes(EMP_SEQ)) ||
           (STORE == '0' && !ITEM_EMP_SEQ)) &&
           scan === '0' && (

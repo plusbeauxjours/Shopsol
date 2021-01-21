@@ -278,10 +278,9 @@ export default ({
               </WorkTimeText>
             </WorkTime>
           )}
-          {START_TIME?.substring(0, 5) == UPDATED_START?.substring(0, 5) &&
-          END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5) &&
-          !UPDATED_START &&
-          !UPDATED_END ? (
+          {(START_TIME?.substring(0, 5) == UPDATED_START?.substring(0, 5) &&
+            END_TIME?.substring(0, 5) == UPDATED_END?.substring(0, 5)) ||
+          (!UPDATED_START && !UPDATED_END) ? (
             <WorkTime>
               <WorkTitleText>출퇴근시간 </WorkTitleText>
               <WorkTimeText>

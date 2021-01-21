@@ -34,7 +34,7 @@ const BackGround = styled.View`
 `;
 
 const WhiteBox = styled.View<IIsHeight>`
-  height: ${(props) => (props.isHeight ? 360 : 280)}px;
+  height: ${(props) => (props.isHeight ? 440 : 280)}px;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;

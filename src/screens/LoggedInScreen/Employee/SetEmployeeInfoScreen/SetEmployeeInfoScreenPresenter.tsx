@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import moment from 'moment';
-import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {Keyboard, TouchableWithoutFeedback, Linking} from 'react-native';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
 import Ripple from 'react-native-material-ripple';
@@ -34,6 +34,7 @@ import {
 } from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
 import styleGuide from '~/constants/styleGuide';
+import {PhoneIcon} from '../../../../constants/Icons';
 
 interface IsFirst {
   height?: number;
@@ -42,6 +43,10 @@ interface IsFirst {
 
 interface IsChecked {
   isChecked?: boolean;
+}
+
+interface IIsCancel {
+  isCancelBtn?: boolean;
 }
 
 const BackGround = styled.SafeAreaView`
@@ -226,7 +231,7 @@ const DateBoxText = styled.Text`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 320px;
+  height: 390px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -235,22 +240,24 @@ const DatePickerContainer = styled.View`
   background-color: white;
 `;
 
-const DatePickerRoundBtn = styled(Ripple)`
-  position: absolute;
+const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
+  background-color: ${(props) =>
+    props.isCancelBtn ? 'transparent' : styleGuide.palette.primary};
+  justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
-const DatePickerText = styled.Text`
+const DatePickerText = styled.Text<IIsCancel>`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
+  color: ${(props) =>
+    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'}
   text-align: center;
 `;
 
@@ -339,6 +346,12 @@ const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
 const RequestBorderText = styled.Text<IsChecked>`
   color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
 `;
+
+const PhoneIconContainer = styled.View`
+  justify-content: center;
+  margin-bottom: 5px;
+`;
+
 
 export default ({
   submitFn,
@@ -440,6 +453,7 @@ export default ({
   START,
   END,
   PAY,
+  MINPAY,
   mobileNo,
   CALCULATE_DAY,
   MANAGER_CALLED,
@@ -473,7 +487,21 @@ export default ({
                 </DateText>
               )}
             </Row>
-            {mobileNo && <EmployeeCardText>{mobileNo}</EmployeeCardText>}
+            <Touchable onPress={() => Linking.openURL(`tel:${mobileNo}`)}>
+              <Row style={{justifyContent: 'flex-start'}}>
+              <PhoneIconContainer>
+                        <PhoneIcon color={styleGuide.palette.greyColor} />
+                      </PhoneIconContainer>
+                <EmployeeCardText
+                  style={{
+                    marginLeft: 5,
+                    color: styleGuide.palette.primary,
+                    fontWeight: '600',
+                  }}>
+                  전화걸기
+                </EmployeeCardText>
+              </Row>
+            </Touchable>
             {EMP_PAY_TYPE && PAY && (
               <EmployeeCardText>
                 {EMP_PAY_TYPE === '0' && '시급'}
@@ -493,6 +521,9 @@ export default ({
                 </EmployeeCardText>
               </>
             )}
+            <EmployeeCardText>
+              수습정보 (SetEmployeeInfoScreen)
+            </EmployeeCardText>
           </NameBox>
         </EmployeeCardContainer>
       </TopArea>
@@ -694,7 +725,7 @@ export default ({
                         alignSelf: 'center',
                         top: 160,
                       }}>
-                      2021년 최저 시급은 {utils.miniPay}원 입니다.
+                      2021년 최저 시급은 {MINPAY}원 입니다.
                     </GreyText>
                   </>
                 )}
@@ -1527,8 +1558,8 @@ export default ({
         </TouchableWithoutFeedback>
       </Animated.ScrollView>
       <Modal
-        onRequestClose={() => setIsStartDayModalVisible(false)}
-        onBackdropPress={() => setIsStartDayModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isStartDayModalVisible}
         style={{
           margin: 0,
@@ -1544,7 +1575,6 @@ export default ({
             date={moment(startDay).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            maximumDate={endDay && moment(endDay).toDate()}
             onDateChange={(date) => {
               setStartDaySet(true);
               setStartDay(moment(date).format('YYYY-MM-DD'));
@@ -1561,6 +1591,19 @@ export default ({
             rippleContainerBorderRadius={30}
             rippleOpacity={0.1}>
             <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setIsStartDayModalVisible(false);
+              setStartDaySet(true);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
           </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>

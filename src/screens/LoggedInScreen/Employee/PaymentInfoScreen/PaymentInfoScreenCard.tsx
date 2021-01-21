@@ -109,6 +109,7 @@ export default ({
           {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
           {data?.END ? moment(data?.END).format('YYYY.MM.DD') : '계속'}
         </PayText>
+        <PayText>수습정보 (PaymentInfoScreen)</PayText>
       </NameBox>
       <IconContainer>
         <ForwardIcon />
