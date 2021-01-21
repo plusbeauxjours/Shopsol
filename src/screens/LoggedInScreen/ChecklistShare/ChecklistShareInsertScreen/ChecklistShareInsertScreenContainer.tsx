@@ -60,7 +60,7 @@ export default ({route: {params}}) => {
         dispatch(
           setSplashVisible({
             visible: true,
-            fullText: `${params?.TITLE}이 등록중입니다.`,
+            fullText: `${params?.TITLE}이 등록 중 입니다.`,
           }),
         );
         const formData: any = new FormData();

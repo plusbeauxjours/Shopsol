@@ -2,25 +2,17 @@ import React, {useState, useEffect} from 'react';
 
 import {useNavigation} from '@react-navigation/native';
 import SignupScreenPresenter from './SignupScreenPresenter';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import moment from 'moment';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
-import {setUSER, setMOBILE_NO, userLogin} from '~/redux/userSlice';
 
 export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const {
-    PUSH_TOKEN,
-    DEVICE_MODEL,
-    DEVICE_PLATFORM,
-    DEVICE_SYSTEM_VERSION,
-  } = useSelector((state: any) => state.userReducer);
 
   const {mobileNo = null, verifyCode = null} = params;
   const [name, setName] = useState<string>('');

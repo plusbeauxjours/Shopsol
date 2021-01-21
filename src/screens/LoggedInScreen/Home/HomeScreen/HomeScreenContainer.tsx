@@ -37,6 +37,7 @@ export default ({route: {params}}) => {
   const {NOTICE_COUNT} = useSelector(
     (state: any) => state.checklistshareReducer,
   );
+  const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
   const [workingLoading, setWorkingLoading] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
@@ -47,6 +48,10 @@ export default ({route: {params}}) => {
   const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
     false,
   );
+  const [
+    qrCameraConfirmModalOpen,
+    setQrCameraConfirmModalOpen,
+  ] = useState<boolean>(false);
   const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
   const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
@@ -266,7 +271,7 @@ export default ({route: {params}}) => {
 
       if (data.message === 'CONTRACT_END') {
         setWorkingLoading(false);
-        setErrorMessage('정확한 사업장 QR코드가 아닙니다');
+        setErrorMessage('해당 사업장 QR코드가 아닙니다');
         setFailModalOpen(true);
       } else if (data.message === 'WORK_ON_SUCCESS') {
         setWorkingLoading(false);
@@ -314,7 +319,7 @@ export default ({route: {params}}) => {
         TYPE,
       });
       if (data.message == 'CONTRACT_END') {
-        setErrorMessage('정확한 사업장 QR코드가 아닙니다');
+        setErrorMessage('해당 사업장 QR코드가 아닙니다');
         setFailModalOpen(true);
       } else if (data.message == 'FAIL') {
         setErrorMessage(data.result);
@@ -343,7 +348,7 @@ export default ({route: {params}}) => {
     if (!codenumber || STORE_SEQ != codenumber) {
       setQrCameraModalOpen1(false);
       setTimeout(() => {
-        alertModal('', '정확한 사업장 QR코드가 아닙니다');
+        alertModal('', '해당 사업장 QR코드가 아닙니다');
       }, 500);
     } else {
       setIsWorkingMode(true);
@@ -352,8 +357,9 @@ export default ({route: {params}}) => {
 
   // 사업장QR 스캔
   const handleBarCodeScanned2 = async (codenumber) => {
-    setQrCameraModalOpen2(false);
-    if (codenumber) {
+    await setQrCameraModalOpen2(false);
+    console.log(codenumber, !/^wes/.test(codenumber));
+    if (!/^wes/.test(codenumber)) {
       try {
         const {data} = await api.insertQR(STORE_SEQ, codenumber);
         if (data.message !== 'SUCCESS') {
@@ -471,6 +477,10 @@ export default ({route: {params}}) => {
       checklistCount={checklistCount}
       NOTICE_COUNT={NOTICE_COUNT}
       QR={QR}
+      qrCameraConfirmModalOpen={qrCameraConfirmModalOpen}
+      setQrCameraConfirmModalOpen={setQrCameraConfirmModalOpen}
+      qrConfirmLoading={qrConfirmLoading}
+      setQrConfirmLoading={setQrConfirmLoading}
       qrCameraModalOpen1={qrCameraModalOpen1}
       setQrCameraModalOpen1={setQrCameraModalOpen1}
       qrCameraModalOpen2={qrCameraModalOpen2}
@@ -489,7 +499,6 @@ export default ({route: {params}}) => {
       workingTYPE={workingTYPE}
       setWorkingTYPE={setWorkingTYPE}
       errorMessage={errorMessage}
-      GENDER={GENDER}
       workingLoading={workingLoading}
       isWorkingMode={isWorkingMode}
       setIsWorkingMode={setIsWorkingMode}

@@ -364,6 +364,8 @@ export default ({
               <TextInput
                 placeholder={'ex) OOO점'}
                 placeholderTextColor={'#E5E5E5'}
+                autoCapitalize="none"
+                autoCorrect={false}
                 onChangeText={(text) => {
                   setNAME(text);
                 }}
@@ -394,6 +396,8 @@ export default ({
               placeholder={'서울시 성동구'}
               placeholderTextColor={'#E5E5E5'}
               onChangeText={(text) => setADDR1(text)}
+              autoCapitalize="none"
+              autoCorrect={false}
               value={ADDR1}
               editable={false}
             />
@@ -403,6 +407,8 @@ export default ({
             <TextInput
               placeholder={'1층 102호'}
               placeholderTextColor={'#E5E5E5'}
+              autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={(text) => {
                 setADDR2(text);
               }}
@@ -428,6 +434,8 @@ export default ({
                 <TextInput
                   placeholder={'기타 사업장 분류를 입력해주세요.'}
                   placeholderTextColor={'#E5E5E5'}
+                  autoCapitalize="none"
+                  autoCorrect={false}
                   onChangeText={(text) => {
                     setStoreCategoryTypeEtc(text);
                   }}

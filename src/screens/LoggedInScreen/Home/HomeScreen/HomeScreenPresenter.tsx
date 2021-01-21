@@ -21,6 +21,7 @@ import {
   BoldAddIcon,
   BoldRemoveIcon,
   CloseIcon,
+  QrCodeIcon,
 } from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
@@ -42,6 +43,10 @@ interface IBox {
 
 interface IEye {
   isEyeOn: boolean;
+}
+
+interface IHasQr {
+  hasQr: boolean;
 }
 
 const BackGround = styled.View`
@@ -73,6 +78,11 @@ const IconContainer = styled.TouchableOpacity`
   justify-content: center;
   background-color: ${styleGuide.palette.tertiary};
   border-radius: 20px;
+`;
+
+const QrIconContainer = styled(IconContainer)<IHasQr>`
+  background-color: ${(props) =>
+    props.hasQr ? styleGuide.palette.tertiary : styleGuide.palette.redColor};
 `;
 
 const MenuCnt = styled(Ripple)`
@@ -189,6 +199,7 @@ const Bold = styled(MenuTitle)`
 `;
 
 const ShowPictureModalTouchable = styled.TouchableOpacity`
+  flex: 1;
   margin: 0 20px;
   align-items: center;
   justify-content: center;
@@ -305,6 +316,55 @@ const FooterText = styled.Text`
   margin-bottom: 15px;
 `;
 
+const ConfirmBackGround = styled.View`
+  flex: 1;
+  background-color: #ffffff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+`;
+
+const ConfirmWhiteBox = styled.View`
+  height: 280px;
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  bottom: 0;
+`;
+
+const ConfirmBox = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+`;
+
+const ConfirmContent = styled.Text`
+  font-size: 14px;
+  color: ${styleGuide.palette.greyColor};
+`;
+
+const ConfirmHalfBtnLeft = styled(Ripple)`
+  height: 60px;
+  width: ${wp('50%')}px;
+  align-items: center;
+  justify-content: center;
+  border-color: #bbb;
+`;
+
+const ConfirmHalfBtnRight = styled(ConfirmHalfBtnLeft)`
+  background-color: ${styleGuide.palette.primary};
+`;
+
+const ConfirmHalfTextLeft = styled.Text`
+  font-size: 18px;
+  color: ${styleGuide.palette.primary};
+`;
+
+const ConfirmHalfTextRight = styled.Text`
+  font-size: 18px;
+  color: white;
+`;
+
 export default ({
   STORE_DATA,
   MEMBER_NAME,
@@ -313,6 +373,10 @@ export default ({
   STORE_NAME,
   TOTAL_COUNT,
   WORKING_COUNT,
+  qrCameraConfirmModalOpen,
+  setQrCameraConfirmModalOpen,
+  qrConfirmLoading,
+  setQrConfirmLoading,
   qrCameraModalOpen1,
   setQrCameraModalOpen1,
   qrCameraModalOpen2,
@@ -343,7 +407,6 @@ export default ({
   workingTYPE,
   setWorkingTYPE,
   errorMessage,
-  GENDER,
   workingLoading,
   isWorkingMode,
   setIsWorkingMode,
@@ -387,10 +450,6 @@ export default ({
       onPress={() => {
         editMode && type == 'emp'
           ? addCUSTOM_MENU_EMP_Fn(index)
-          : selection == 'QR보기'
-          ? setShowPictureModalOpen(true)
-          : selection == 'QR등록하기'
-          ? utils.handleCameraPermission(setQrCameraModalOpen2)
           : gotoScreen(`${paging}`);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
@@ -431,10 +490,6 @@ export default ({
           ? removeCUSTOM_MENU_EMP_Fn(
               CUSTOM_MENU_EMP[STORE_SEQ]?.filter((i) => i !== index),
             )
-          : selection == 'QR보기'
-          ? setShowPictureModalOpen(true)
-          : selection == 'QR등록하기'
-          ? utils.handleCameraPermission(setQrCameraModalOpen2)
           : gotoScreen(`${paging}`);
       }}>
       <EyeIconContainer
@@ -605,6 +660,15 @@ export default ({
                 }}>
                 <WhiteText>마이 페이지</WhiteText>
               </StoreUpdateBtn>
+              {STORE === '1' && (
+                <StoreUpdateBtn
+                  style={{width: 35}}
+                  onPress={() => {
+                    navigation.navigate('HelpModalScreen');
+                  }}>
+                  <HelpIcon size={16} color={'white'} />
+                </StoreUpdateBtn>
+              )}
             </Row>
           </StoreUpdate>
         </FastImage>
@@ -660,12 +724,21 @@ export default ({
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
                 </MenuTitleArea>
-                <IconContainer
-                  onPress={() => {
-                    navigation.navigate('HelpModalScreen');
-                  }}>
-                  <HelpIcon size={18} />
-                </IconContainer>
+                {TOTAL_COUNT !== 0 && (
+                  <QrIconContainer
+                    hasQr={
+                      (initLoading && QR_Num) ||
+                      (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                    }
+                    onPress={() => {
+                      (initLoading && QR_Num) ||
+                      (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                        ? setShowPictureModalOpen(true)
+                        : utils.handleCameraPermission(setQrCameraModalOpen2);
+                    }}>
+                    <QrCodeIcon color={'white'} size={18} />
+                  </QrIconContainer>
+                )}
               </SpaceRow>
               <Container>
                 <MenuCntContainer
@@ -702,21 +775,6 @@ export default ({
                     selection={'급여정보'}
                     paging={'PaymentInfoScreen'}
                     source={require(`../../../../assets/main/PaymentInfo.png`)}
-                  />
-                )}
-                {TOTAL_COUNT !== 0 &&
-                ((initLoading && QR_Num) ||
-                  (!initLoading && STORE_DATA.resultdata?.QR_Num)) ? (
-                  <MenuCntContainer
-                    selection={'QR보기'}
-                    paging={'qrViewScreen'}
-                    source={require(`../../../../assets/main/qrView.png`)}
-                  />
-                ) : (
-                  <MenuCntContainer
-                    selection={'QR등록하기'}
-                    paging={'qrRegisterScreen'}
-                    source={require(`../../../../assets/main/qrRegister.png`)}
                   />
                 )}
                 {TOTAL_COUNT !== 0 && (
@@ -783,10 +841,27 @@ export default ({
             <>
               {STORE_DATA?.IS_MANAGER == '1' ? (
                 <>
-                  <MenuTitleArea style={{zIndex: 3}}>
-                    <MenuTitle>더욱 쉬워진,</MenuTitle>
-                    <Bold> 직원관리</Bold>
-                  </MenuTitleArea>
+                  <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                    <MenuTitleArea style={{zIndex: 3}}>
+                      <MenuTitle>더욱 쉬워진,</MenuTitle>
+                      <Bold> 직원관리</Bold>
+                    </MenuTitleArea>
+                    <QrIconContainer
+                      hasQr={
+                        TOTAL_COUNT !== 0 &&
+                        ((initLoading && QR_Num) ||
+                          (!initLoading && STORE_DATA.resultdata?.QR_Num))
+                      }
+                      onPress={() => {
+                        TOTAL_COUNT !== 0 &&
+                        ((initLoading && QR_Num) ||
+                          (!initLoading && STORE_DATA.resultdata?.QR_Num))
+                          ? setShowPictureModalOpen(true)
+                          : utils.handleCameraPermission(setQrCameraModalOpen2);
+                      }}>
+                      <QrCodeIcon color={'white'} size={18} />
+                    </QrIconContainer>
+                  </SpaceRow>
                   {initLoading ? (
                     <Container style={{justifyContent: 'center'}}>
                       <LottieView
@@ -856,21 +931,6 @@ export default ({
                               source={require(`../../../../assets/main/PaymentInfo.png`)}
                             />
                           )
-                        )}
-                        {TOTAL_COUNT !== 0 &&
-                        ((initLoading && QR_Num) ||
-                          (!initLoading && STORE_DATA.resultdata?.QR_Num)) ? (
-                          <MenuCntContainer
-                            selection={'QR보기'}
-                            paging={'qrViewScreen'}
-                            source={require(`../../../../assets/main/qrView.png`)}
-                          />
-                        ) : (
-                          <MenuCntContainer
-                            selection={'QR등록하기'}
-                            paging={'qrRegisterScreen'}
-                            source={require(`../../../../assets/main/qrRegister.png`)}
-                          />
                         )}
                         {TOTAL_COUNT !== 0 && (
                           <MenuCntContainer
@@ -1296,20 +1356,31 @@ export default ({
           </BoxContainer>
         )}
       </Modal>
+      {/* DONE */}
       <Modal
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
         isVisible={showPictureModalOpen}
         style={{margin: 0}}
         onBackdropPress={() => {
-          setShowPictureModalOpen(false);
-          setQrCameraMode(false);
+          if (!qrConfirmLoading) {
+            setShowPictureModalOpen(false);
+            setQrCameraConfirmModalOpen(false);
+            setQrConfirmLoading(false);
+            setQrCameraMode(false);
+          }
         }}
         onRequestClose={() => {
-          setShowPictureModalOpen(false);
-          setQrCameraMode(false);
+          if (!qrConfirmLoading) {
+            setShowPictureModalOpen(false);
+            setQrCameraConfirmModalOpen(false);
+            setQrConfirmLoading(false);
+            setQrCameraMode(false);
+          }
         }}>
-        {qrCameraMode ? (
+        {qrConfirmLoading ? (
+          <WhiteText>로딩중</WhiteText>
+        ) : qrCameraMode ? (
           <RNCamera
             style={{flex: 1, alignItems: 'center'}}
             type={RNCamera.Constants.Type.back}
@@ -1330,12 +1401,63 @@ export default ({
             />
             <Footer
               onPress={() => {
-                setShowPictureModalOpen(false);
+                setQrCameraConfirmModalOpen(false);
+                setQrConfirmLoading(false);
                 setQrCameraMode(false);
               }}>
               <FooterText>닫기</FooterText>
             </Footer>
           </RNCamera>
+        ) : qrCameraConfirmModalOpen ? (
+          <>
+            <ShowPictureModalTouchable
+              onPress={() => {
+                setQrCameraConfirmModalOpen(false);
+              }}>
+              <ShowPictureModalImage>
+                <FastImage
+                  style={{width: '100%', height: '100%'}}
+                  source={{uri: 'http://133.186.210.223/' + QR}}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
+              </ShowPictureModalImage>
+            </ShowPictureModalTouchable>
+            <ConfirmWhiteBox>
+              <ConfirmBackGround>
+                <ConfirmBox>
+                  <ConfirmContent>
+                    사업장의 QR을 변경하시겠습니까?
+                  </ConfirmContent>
+                </ConfirmBox>
+              </ConfirmBackGround>
+              <Row>
+                <ConfirmHalfBtnLeft
+                  onPress={() => {
+                    setShowPictureModalOpen(false);
+                    setQrCameraConfirmModalOpen(false);
+                    setQrConfirmLoading(false);
+                    setQrCameraMode(false);
+                  }}
+                  rippleColor={styleGuide.palette.rippleColor}
+                  rippleSize={1200}
+                  rippleDuration={600}
+                  rippleOpacity={0.45}>
+                  <ConfirmHalfTextLeft>취소</ConfirmHalfTextLeft>
+                </ConfirmHalfBtnLeft>
+                <ConfirmHalfBtnRight
+                  onPress={(e) => {
+                    e.preventDefault();
+                    utils.handleCameraPermission(setQrCameraMode);
+                  }}
+                  rippleColor={styleGuide.palette.secondary}
+                  rippleSize={1200}
+                  rippleDuration={600}
+                  rippleOpacity={0.4}>
+                  <ConfirmHalfTextRight>변경</ConfirmHalfTextRight>
+                </ConfirmHalfBtnRight>
+              </Row>
+            </ConfirmWhiteBox>
+          </>
         ) : (
           <ShowPictureModalTouchable
             onPress={() => {
@@ -1351,7 +1473,11 @@ export default ({
             <StoreUpdateBtn
               style={{width: 110, alignSelf: 'flex-end', marginTop: 20}}
               onPress={() => {
-                utils.handleCameraPermission(setQrCameraMode);
+                setQrConfirmLoading(true);
+                setTimeout(() => {
+                  setQrConfirmLoading(false);
+                  setQrCameraConfirmModalOpen(true);
+                }, 500);
               }}>
               <WhiteText>QR코드 재등록</WhiteText>
             </StoreUpdateBtn>

@@ -479,7 +479,7 @@ export default ({
                       onPress={() =>
                         shelfLifeBarcode
                           ? setShelfLifeBarcode(null)
-                          : setBarCodeInputCameraModalOpen(true)
+                          : utils.handleCameraPermission(setBarCodeInputCameraModalOpen)
                       }>
                       {shelfLifeBarcode && (
                         <IconContainer style={{top: -5, right: -5}}>

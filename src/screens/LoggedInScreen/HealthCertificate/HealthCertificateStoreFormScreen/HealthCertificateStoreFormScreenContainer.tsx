@@ -104,7 +104,7 @@ export default ({route: {params}}) => {
       dispatch(
         setSplashVisible({
           visible: true,
-          fullText: '위생교육증을 등록중입니다.',
+          fullText: '위생교육증을 등록 중 입니다.',
         }),
       );
       const formData: any = new FormData();

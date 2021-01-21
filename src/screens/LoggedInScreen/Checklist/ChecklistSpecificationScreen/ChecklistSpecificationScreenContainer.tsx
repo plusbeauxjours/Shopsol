@@ -208,7 +208,7 @@ export default ({route: {params}}) => {
         dispatch(
           setSplashVisible({
             visible: true,
-            fullText: '체크리스트가 등록중입니다.',
+            fullText: '체크리스트가 등록 중 입니다.',
           }),
         );
         const formData: any = new FormData();

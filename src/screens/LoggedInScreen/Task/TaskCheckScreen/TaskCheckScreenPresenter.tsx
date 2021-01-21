@@ -374,13 +374,13 @@ export default ({
               <Row>
                 <SearchInputContainer>
                   <SearchInput
-                    placeholder="물품 검색"
+                    placeholder="업무 검색"
                     placeholderTextColor={styleGuide.palette.searchBarColor}
                     onChangeText={(text) => setSearch(text)}
                     value={search}
                   />
                   <CloseIconContainer
-                    onPress={() => {
+                    onPress={(e) => {
                       e.preventDefault();
                       setSearch('');
                     }}>

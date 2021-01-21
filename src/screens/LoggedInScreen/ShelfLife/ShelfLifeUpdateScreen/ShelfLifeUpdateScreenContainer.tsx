@@ -156,7 +156,7 @@ export default ({route: {params}}) => {
           name: fileName,
           type: fileType,
         });
-        
+
         dispatch(
           updateSHELFLIFE_DATA({
             name: params?.name,
@@ -215,8 +215,8 @@ export default ({route: {params}}) => {
     );
   };
 
-  const handleBarCodeScanned = (codenumber) => {
-    setBarCodeCameraModalOpen(false);
+  const handleBarCodeScanned = async (codenumber) => {
+    await setBarCodeCameraModalOpen(false);
     if (!codenumber) {
       setTimeout(() => {
         alertModal('바코드를 읽을 수 없습니다.');
@@ -226,8 +226,8 @@ export default ({route: {params}}) => {
     }
   };
 
-  const handleBarCodeInputScanned = (codenumber) => {
-    setBarCodeInputCameraModalOpen(false);
+  const handleBarCodeInputScanned = async (codenumber) => {
+    await setBarCodeInputCameraModalOpen(false);
     if (!codenumber) {
       setTimeout(() => {
         alertModal('바코드를 읽을 수 없습니다.');

@@ -77,7 +77,7 @@ export default ({route: {params}}) => {
     }
     try {
       dispatch(
-        setSplashVisible({visible: true, fullText: '보건증을 등록중입니다.'}),
+        setSplashVisible({visible: true, fullText: '보건증을 등록 중 입니다.'}),
       );
       const formData: any = new FormData();
       formData.append('EMP_NAME', NAME);

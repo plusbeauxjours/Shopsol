@@ -221,7 +221,6 @@ export default ({
         style={{flex: 1, paddingVertical: 16, paddingHorizontal: 16}}>
         <Text>{getText}</Text>
       </ScrollView>
-
       <ButtonAfter onPress={() => sheetRef.current.close()}>
         <WhiteText>닫기</WhiteText>
       </ButtonAfter>
