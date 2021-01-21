@@ -18,10 +18,6 @@ import {CloseCircleIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 
-interface ITextInput {
-  isBefore: boolean;
-}
-
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -288,7 +284,6 @@ export default ({
               <WhiteItem style={{justifyContent: 'flex-start'}}>
                 <Name>
                   <TextInput
-                    isBefore={taskName == ''}
                     placeholder="업무명"
                     selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor={styleGuide.palette.lightGreyColor}
@@ -327,7 +322,6 @@ export default ({
                 <Line />
                 <TextContainer>
                   <TextInput
-                    isBefore={taskMemo == ''}
                     placeholder="메모 입력"
                     selectionColor={styleGuide.palette.secondary}
                     placeholderTextColor={styleGuide.palette.lightGreyColor}
