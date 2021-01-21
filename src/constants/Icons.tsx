@@ -349,7 +349,7 @@ export const PinIcon: React.FC<IProps> = ({size, color}) => (
   <MaterialCommunityIcons
     name={'pin'}
     size={size ?? 24}
-    color={color ?? 'yellow'}
+    color={color ?? styleGuide.palette.secondary}
   />
 );
 

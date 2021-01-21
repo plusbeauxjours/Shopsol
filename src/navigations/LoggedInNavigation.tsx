@@ -484,7 +484,7 @@ export default () => {
           name="PaymentInfoScreen"
           component={PaymentInfoScreen}
           options={{
-            headerTitle: '점포급여 정보',
+            headerTitle: '점포 급여 정보',
             title: '사업장(점포) 급여정보',
             headerRight: () => <HomeBtn depth={1} />, /////
           }}
@@ -493,7 +493,7 @@ export default () => {
           name="EmpPayInfoScreen"
           component={EmpPayInfoScreen}
           options={{
-            headerTitle: '직원급여 정보',
+            headerTitle: '직원 급여 정보',
             title: '직원 급여정보',
             headerRight: () => <HomeBtn depth={2} />, /////
           }}
@@ -503,7 +503,7 @@ export default () => {
           component={SetEmployeeInfoScreen}
           options={{
             headerLeft: () => <ConfirmBackBtn />,
-            headerTitle: '직원정보 입력',
+            headerTitle: '직원 정보 입력',
             title: '직원 정보등록 & 정보수정',
             headerRight: () => (
               <HomeBtn depth={3} from={'SetEmployeeInfoScreen'} /> /////
@@ -524,7 +524,7 @@ export default () => {
           component={EmployeeScheduleInfoScreen}
           options={{
             headerLeft: () => <ConfirmBackBtn />,
-            headerTitle: '직원정보 입력',
+            headerTitle: '직원 정보 입력',
             title: '직원 근무일정 (최초 가입시)',
             headerRight: () => null,
           }}
@@ -533,7 +533,7 @@ export default () => {
           name="EmployeeScheduleAddScreen"
           component={EmployeeScheduleAddScreen}
           options={{
-            headerTitle: '일정추가',
+            headerTitle: '일정 추가',
             title: '직원 급여유형 (최초 가입시)',
             headerRight: () => null,
           }}

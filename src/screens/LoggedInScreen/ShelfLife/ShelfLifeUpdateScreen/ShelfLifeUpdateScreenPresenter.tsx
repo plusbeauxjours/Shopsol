@@ -53,11 +53,12 @@ const TextContainer = styled.View`
   justify-content: center;
 `;
 
-const ListContasiner = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
+// v2.3
+// const ListContasiner = styled.View`
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: space-between;
+// `;
 
 const Row = styled.View`
   flex-direction: row;
@@ -69,15 +70,11 @@ const GreyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
 `;
 
-const TextInput = styled.TextInput<ITextInput>`
-  border-color: ${(props) =>
-    props.isBefore ? '#ddd' : styleGuide.palette.primary};
+const TextInput = styled.TextInput`
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  border-width: 1px;
-  width: ${wp('50%')}px;
-  min-height: 40px;
+  width: 100%;
+  min-height: 30px;
 `;
 
 const Name = styled.View`
@@ -100,9 +97,8 @@ const WhiteItem = styled.View`
 `;
 
 const DateText = styled.Text`
-  color: #333;
-  text-align: right;
-  width: 75px;
+  font-size: ${styleGuide.fontSize.middle}px;
+  margin-left: 10px;
 `;
 
 const BorderBox = styled.View`
@@ -119,6 +115,7 @@ const BorderBox = styled.View`
 
 const Line = styled.View`
   margin-top: 5px;
+  margin-bottom: 5px;
   height: 0.6px;
   background-color: #ccc;
 `;
@@ -224,22 +221,6 @@ const DatePickerText = styled.Text`
   text-align: center;
 `;
 
-const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
-  padding: 7px 14px;
-  align-items: center;
-  justify-content: center;
-  border-color: ${(props) =>
-    props.isChecked ? styleGuide.palette.primary : 'transparent'};
-  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
-  background-color: ${(props) =>
-    props.isChecked ? 'transparent' : styleGuide.palette.primary};
-  border-radius: 20px;
-`;
-
-const RequestBorderText = styled.Text<IsChecked>`
-  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
-`;
-
 const Footer = styled.TouchableOpacity`
   width: ${wp('100%')}px;
   height: 60px;
@@ -255,6 +236,12 @@ const FooterText = styled.Text`
   font-size: 14px;
   margin-top: 15px;
   margin-bottom: 15px;
+`;
+
+const DateRow = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 export default ({
@@ -357,7 +344,7 @@ export default ({
                     isBefore={shelfLifeName == ''}
                     placeholder="상품명"
                     selectionColor={styleGuide.palette.secondary}
-                    placeholderTextColor="#CCC"
+                    placeholderTextColor={styleGuide.palette.lightGreyColor}
                     onChangeText={(text) => setShelfLifeName(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -367,41 +354,51 @@ export default ({
                     style={{
                       fontSize: styleGuide.fontSize.large,
                       fontWeight: '600',
-                      height: 5,
-                      margin: -10,
                       borderWidth: 0,
-                      width: wp('100%') - 240,
                     }}
                   />
-                  <Touchable onPress={() => setIsDateModalVisible(true)}>
+                </Name>
+                <Line />
+                <Touchable
+                  style={{
+                    width: '100%',
+                    height: 30,
+                    justifyContent: 'center',
+                  }}
+                  onPress={() => setIsDateModalVisible(true)}>
+                  <DateRow>
+                    <GreyText
+                      style={{
+                        fontSize: styleGuide.fontSize.large,
+                        color: styleGuide.palette.lightGreyColor,
+                      }}>
+                      기한
+                    </GreyText>
                     <DateText>
                       {moment(shelfLifeDate).format('YYYY.MM.DD')}
                     </DateText>
-                  </Touchable>
-                </Name>
+                  </DateRow>
+                </Touchable>
                 <Line />
                 <TextContainer>
                   <TextInput
-                    isBefore={shelfLifeMemo == ''}
                     placeholder="메모 입력"
                     selectionColor={styleGuide.palette.secondary}
-                    placeholderTextColor="#CCC"
+                    placeholderTextColor={styleGuide.palette.lightGreyColor}
                     onChangeText={(text) => setShelfLifeMemo(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
                     value={shelfLifeMemo}
                     multiline={true}
                     style={{
-                      textAlignVertical: 'top',
-                      marginLeft: -10,
-                      marginTop: 0,
-                      borderWidth: 0,
+                      fontSize: styleGuide.fontSize.middle,
                       width: '100%',
                       paddingTop: 10,
-                      paddingBottom: 10,
-                      minHeight: 80,
+                      minHeight: 87,
                     }}
                   />
+                  {/* 
+                  v2.3
                   <ListContasiner style={{width: '100%', marginTop: 32}}>
                     <Touchable
                       onPress={() =>
@@ -424,7 +421,7 @@ export default ({
                         </RequestBorderText>
                       </RequestBorderButton>
                     </Touchable>
-                  </ListContasiner>
+                  </ListContasiner> */}
                 </TextContainer>
               </WhiteItem>
             </Row>

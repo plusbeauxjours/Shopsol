@@ -243,7 +243,9 @@ export const getCHECKLIST_SHARE_DATA1 = (date) => async (
         dispatch(increaseNEW_CNT1());
       }
     }
-    dispatch(setCHECKLIST_SHARE_DATA1(data));
+    if (data.message[0]?.ADDDATE == date) {
+      dispatch(setCHECKLIST_SHARE_DATA1(data));
+    }
   } catch (e) {
     console.log(e);
   } finally {
@@ -279,7 +281,9 @@ export const getCHECKLIST_SHARE_DATA2 = (date) => async (
         dispatch(increaseNEW_CNT2());
       }
     }
-    dispatch(setCHECKLIST_SHARE_DATA2(data));
+    if (data.message[0]?.ADDDATE == date) {
+      dispatch(setCHECKLIST_SHARE_DATA2(data));
+    }
   } catch (e) {
     console.log(e);
   } finally {

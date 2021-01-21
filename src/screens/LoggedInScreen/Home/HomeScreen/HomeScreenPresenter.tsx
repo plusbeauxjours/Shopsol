@@ -67,6 +67,7 @@ const Container = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   padding-top: 10px;
+  padding-bottom: 40px;
 `;
 
 const IconContainer = styled.TouchableOpacity`

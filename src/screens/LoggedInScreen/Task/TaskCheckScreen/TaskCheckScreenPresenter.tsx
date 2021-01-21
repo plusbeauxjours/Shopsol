@@ -152,6 +152,7 @@ const AddButton = styled.TouchableOpacity`
   background-color: ${styleGuide.palette.tertiary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
+  padding-left: 3px;
 `;
 
 const SearchInput = styled.TextInput`

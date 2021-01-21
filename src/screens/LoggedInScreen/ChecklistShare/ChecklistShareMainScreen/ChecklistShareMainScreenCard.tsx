@@ -70,7 +70,10 @@ const PinTouchable = styled.TouchableOpacity<IsFavorite>`
   align-items: center;
   justify-content: center;
   border-radius: 30px;
-  background-color: ${(props) => (props.isFavorite ? '#000' : '#ddd')};
+  background-color: ${(props) =>
+    props.isFavorite
+      ? styleGuide.palette.primary
+      : styleGuide.palette.lightGreyColor};
   z-index: 10;
 `;
 
@@ -206,10 +209,7 @@ export default ({
       <PinTouchable
         isFavorite={data.favorite === '1'}
         onPress={() => confirmModal(data.NOTICE_SEQ)}>
-        <PinIcon
-          size={18}
-          color={data.favorite == '1' ? 'yellow' : styleGuide.palette.greyColor}
-        />
+        <PinIcon size={18} color={'white'} />
       </PinTouchable>
     </View>
   );

@@ -32,6 +32,8 @@ export default ({route: {params}}) => {
   );
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [date, setDate] = useState<any>(moment(params?.date));
+  const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
 
   const alertModal = (text) => {
     const params = {
@@ -64,7 +66,7 @@ export default ({route: {params}}) => {
         const formData: any = new FormData();
         formData.append('TITLE', title);
         formData.append('CONTENTS', content);
-        formData.append('ADDDATE', moment(params?.date).format('YYYY-MM-DD'));
+        formData.append('ADDDATE', moment(date).format('YYYY-MM-DD'));
         formData.append('STORE_SEQ', STORE_SEQ);
         formData.append('STORE', params.TITLE == '지시사항' ? '1' : '0');
         formData.append('EMP_NAME', MEMBER_NAME);
@@ -96,15 +98,11 @@ export default ({route: {params}}) => {
           alertModal(`${params.TITLE}이 등록되었습니다.`);
           if (params.TITLE === '지시사항') {
             dispatch(
-              getCHECKLIST_SHARE_DATA1(
-                moment(params?.date).format('YYYY-MM-DD'),
-              ),
+              getCHECKLIST_SHARE_DATA1(moment(date).format('YYYY-MM-DD')),
             );
           } else {
             dispatch(
-              getCHECKLIST_SHARE_DATA2(
-                moment(params?.date).format('YYYY-MM-DD'),
-              ),
+              getCHECKLIST_SHARE_DATA2(moment(date).format('YYYY-MM-DD')),
             );
           }
           navigation.goBack();
@@ -126,21 +124,17 @@ export default ({route: {params}}) => {
           STORE: params.TITLE == '지시사항' ? '1' : '0',
           EMP_NAME: MEMBER_NAME,
           MEMBER_SEQ,
-          ADDDATE: moment(params?.date).format('YYYY-MM-DD'),
+          ADDDATE: moment(date).format('YYYY-MM-DD'),
         });
         if (data.result === 'SUCCESS') {
           alertModal(`${params.TITLE}이 등록되었습니다.`);
           if (params.TITLE === '지시사항') {
             dispatch(
-              getCHECKLIST_SHARE_DATA1(
-                moment(params?.date).format('YYYY-MM-DD'),
-              ),
+              getCHECKLIST_SHARE_DATA1(moment(date).format('YYYY-MM-DD')),
             );
           } else {
             dispatch(
-              getCHECKLIST_SHARE_DATA2(
-                moment(params?.date).format('YYYY-MM-DD'),
-              ),
+              getCHECKLIST_SHARE_DATA2(moment(date).format('YYYY-MM-DD')),
             );
           }
           navigation.goBack();
@@ -210,7 +204,10 @@ export default ({route: {params}}) => {
 
   return (
     <ChecklistShareInsertScreenPresenter
-      date={params?.date}
+      isDateModalVisible={isDateModalVisible}
+      setIsDateModalVisible={setIsDateModalVisible}
+      date={date}
+      setDate={setDate}
       title={title}
       setTitle={setTitle}
       content={content}

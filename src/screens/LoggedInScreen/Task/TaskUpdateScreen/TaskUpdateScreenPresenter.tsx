@@ -59,15 +59,11 @@ const GreyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
 `;
 
-const TextInput = styled.TextInput<ITextInput>`
-  border-color: ${(props) =>
-    props.isBefore ? '#ddd' : styleGuide.palette.primary};
+const TextInput = styled.TextInput`
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  border-width: 1px;
-  width: ${wp('50%')}px;
-  min-height: 40px;
+  width: 100%;
+  min-height: 30px;
 `;
 
 const Name = styled.View`
@@ -90,9 +86,8 @@ const WhiteItem = styled.View`
 `;
 
 const DateText = styled.Text`
-  color: #333;
-  text-align: right;
-  width: 75px;
+  font-size: ${styleGuide.fontSize.middle}px;
+  margin-left: 10px;
 `;
 
 const BorderBox = styled.View`
@@ -109,6 +104,7 @@ const BorderBox = styled.View`
 
 const Line = styled.View`
   margin-top: 5px;
+  margin-bottom: 5px;
   height: 0.6px;
   background-color: #ccc;
 `;
@@ -214,6 +210,12 @@ const DatePickerText = styled.Text`
   text-align: center;
 `;
 
+const DateRow = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
 export default ({
   deleteModal,
   cameraPictureLast,
@@ -289,7 +291,7 @@ export default ({
                     isBefore={taskName == ''}
                     placeholder="업무명"
                     selectionColor={styleGuide.palette.secondary}
-                    placeholderTextColor="#CCC"
+                    placeholderTextColor={styleGuide.palette.lightGreyColor}
                     onChangeText={(text) => setTaskName(text)}
                     value={taskName}
                     autoCapitalize="none"
@@ -299,37 +301,46 @@ export default ({
                     style={{
                       fontSize: styleGuide.fontSize.large,
                       fontWeight: '600',
-                      height: 5,
-                      margin: -10,
                       borderWidth: 0,
-                      width: wp('100%') - 240,
                     }}
                   />
-                  <Touchable onPress={() => setIsDateModalVisible(true)}>
-                    <DateText>{moment(taskDate).format('YYYY.MM.DD')}</DateText>
-                  </Touchable>
                 </Name>
+                <Line />
+                <Touchable
+                  style={{
+                    width: '100%',
+                    height: 30,
+                    justifyContent: 'center',
+                  }}
+                  onPress={() => setIsDateModalVisible(true)}>
+                  <DateRow>
+                    <GreyText
+                      style={{
+                        fontSize: styleGuide.fontSize.large,
+                        color: styleGuide.palette.lightGreyColor,
+                      }}>
+                      기한
+                    </GreyText>
+                    <DateText>{moment(taskDate).format('YYYY.MM.DD')}</DateText>
+                  </DateRow>
+                </Touchable>
                 <Line />
                 <TextContainer>
                   <TextInput
                     isBefore={taskMemo == ''}
                     placeholder="메모 입력"
                     selectionColor={styleGuide.palette.secondary}
-                    placeholderTextColor="#CCC"
+                    placeholderTextColor={styleGuide.palette.lightGreyColor}
                     onChangeText={(text) => setTaskMemo(text)}
                     value={taskMemo}
                     autoCapitalize="none"
                     autoCorrect={false}
                     multiline={true}
                     style={{
-                      textAlignVertical: 'top',
-                      marginLeft: -10,
-                      marginTop: 0,
-                      borderWidth: 0,
+                      fontSize: styleGuide.fontSize.middle,
                       width: '100%',
                       paddingTop: 10,
-                      paddingBottom: 10,
-                      minHeight: 80,
+                      minHeight: 87,
                     }}
                   />
                 </TextContainer>

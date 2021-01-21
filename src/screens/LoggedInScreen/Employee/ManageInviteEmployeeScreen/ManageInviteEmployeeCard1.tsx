@@ -98,7 +98,7 @@ export default ({
     const params = {
       alertType: 'confirm',
       title: '',
-      content: `[${EMP_NAME}] 직원을 합류시키시겠습니까?\n\n직원정보 입력을 완료하신 후 합류완료 버튼을 눌러야 합류됩니다.`,
+      content: `[${EMP_NAME}] 직원을 합류시키시겠습니까?\n\n직원 정보 입력을 완료하신 후 합류완료 버튼을 눌러야 합류됩니다.`,
       cancelButtonText: '취소',
       okButtonText: '승인',
       okCallback: () => {

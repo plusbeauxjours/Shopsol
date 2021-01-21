@@ -81,7 +81,7 @@ const TextInput = styled.TextInput`
   margin-left: 5px;
   text-align: center;
   margin-right: 5px;
-  width: 128px;
+  width: 100px;
   text-align: right;
   padding: 0;
   height: 18px;
@@ -90,9 +90,9 @@ const TextInput = styled.TextInput`
 const TextInputText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   margin-left: 5px;
-  text-align: center;
+  text-align: right;
   margin-right: 5px;
-  width: 125px;
+  width: 100px;
   text-align: right;
 `;
 
@@ -352,6 +352,9 @@ const PhoneIconContainer = styled.View`
   margin-bottom: 5px;
 `;
 
+const VacationText = styled.Text`
+  width: 60px;
+`;
 
 export default ({
   submitFn,
@@ -489,9 +492,9 @@ export default ({
             </Row>
             <Touchable onPress={() => Linking.openURL(`tel:${mobileNo}`)}>
               <Row style={{justifyContent: 'flex-start'}}>
-              <PhoneIconContainer>
-                        <PhoneIcon color={styleGuide.palette.greyColor} />
-                      </PhoneIconContainer>
+                <PhoneIconContainer>
+                  <PhoneIcon color={styleGuide.palette.greyColor} />
+                </PhoneIconContainer>
                 <EmployeeCardText
                   style={{
                     marginLeft: 5,
@@ -1343,63 +1346,57 @@ export default ({
               <InputCase isFirst={true} height={200}>
                 <ColumnPayBox>
                   <BoxTitle>
-                    <Text>총 연차</Text>
-                    <Row>
-                      <TextInput
-                        placeholder={'연차를 입력해주세요'}
-                        placeholderTextColor={'#E5E5E5'}
-                        onChangeText={(text) => {
+                    <VacationText>총 연차</VacationText>
+                    <TextInput
+                      placeholder={'연차를 입력해주세요'}
+                      placeholderTextColor={'#E5E5E5'}
+                      onChangeText={(text) => {
+                        setRemainderVacation(
+                          Number(text) - Number(useVacation),
+                        );
+                        setTotalVacation(text.replace(/,/g, ''));
+                      }}
+                      value={totalVacation
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      keyboardType={'number-pad'}
+                      maxLength={3}
+                    />
+                    <Text>일</Text>
+                  </BoxTitle>
+                  <WhiteSpace />
+                  <BoxTitle>
+                    <VacationText>사용 연차</VacationText>
+                    <TextInput
+                      placeholder={'연차를 입력해주세요'}
+                      placeholderTextColor={'#E5E5E5'}
+                      onChangeText={(text) => {
+                        if (Number(totalVacation) - Number(text) < 0) {
+                          alertModal('총연차보다 낮게 입력해주세요');
+                          setUseVacation('0');
                           setRemainderVacation(
-                            Number(text) - Number(useVacation),
+                            Number(totalVacation) - Number('0'),
                           );
-                          setTotalVacation(text.replace(/,/g, ''));
-                        }}
-                        value={totalVacation
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        keyboardType={'number-pad'}
-                        maxLength={3}
-                      />
-                      <Text>일</Text>
-                    </Row>
+                        } else {
+                          setRemainderVacation(
+                            Number(totalVacation) - Number(text),
+                          );
+                          setUseVacation(text.replace(/,/g, ''));
+                        }
+                      }}
+                      value={useVacation
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      keyboardType={'number-pad'}
+                      maxLength={3}
+                    />
+                    <Text>일</Text>
                   </BoxTitle>
                   <WhiteSpace />
                   <BoxTitle>
-                    <Text>사용 연차</Text>
-                    <Row>
-                      <TextInput
-                        placeholder={'연차를 입력해주세요'}
-                        placeholderTextColor={'#E5E5E5'}
-                        onChangeText={(text) => {
-                          if (Number(totalVacation) - Number(text) < 0) {
-                            alertModal('총연차보다 낮게 입력해주세요');
-                            setUseVacation('0');
-                            setRemainderVacation(
-                              Number(totalVacation) - Number('0'),
-                            );
-                          } else {
-                            setRemainderVacation(
-                              Number(totalVacation) - Number(text),
-                            );
-                            setUseVacation(text.replace(/,/g, ''));
-                          }
-                        }}
-                        value={useVacation
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        keyboardType={'number-pad'}
-                        maxLength={3}
-                      />
-                      <Text>일</Text>
-                    </Row>
-                  </BoxTitle>
-                  <WhiteSpace />
-                  <BoxTitle>
-                    <Text>남은 연차</Text>
-                    <Row>
-                      <TextInputText>{remainderVacation}</TextInputText>
-                      <Text>일</Text>
-                    </Row>
+                    <VacationText>남은 연차</VacationText>
+                    <TextInputText>{remainderVacation}</TextInputText>
+                    <Text>일</Text>
                   </BoxTitle>
                 </ColumnPayBox>
               </InputCase>

@@ -181,6 +181,7 @@ const AddButton = styled.TouchableOpacity`
   background-color: ${styleGuide.palette.tertiary};
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
+  padding-left: 3px;
 `;
 
 const EmptyListContainer = styled.View`
@@ -211,6 +212,7 @@ const Column = styled.View`
 const EmptyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
+  text-align: center;
 `;
 
 export default ({
@@ -458,7 +460,7 @@ export default ({
           <FastImage
             style={{
               width: 201,
-              marginVertical: 20,
+              marginBottom: 20,
               height: 284,
               justifyContent: 'center',
               alignItems: 'center',
@@ -481,7 +483,7 @@ export default ({
           <FastImage
             style={{
               width: 201,
-              marginVertical: 20,
+              marginBottom: 20,
               height: 284,
               justifyContent: 'center',
               alignItems: 'center',
@@ -504,7 +506,7 @@ export default ({
           <FastImage
             style={{
               width: 201,
-              marginVertical: 20,
+              marginBottom: 20,
               height: 284,
               justifyContent: 'center',
               alignItems: 'center',
@@ -527,7 +529,7 @@ export default ({
           <FastImage
             style={{
               width: 201,
-              marginVertical: 20,
+              marginBottom: 20,
               height: 284,
               justifyContent: 'center',
               alignItems: 'center',

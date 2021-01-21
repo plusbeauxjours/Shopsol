@@ -182,7 +182,7 @@ export default () => {
               </Arrow>
             </Card>
             <Card onPress={() => logOut()}>
-              <CardText>로그 아웃</CardText>
+              <CardText>로그아웃</CardText>
               <Arrow>
                 <LogoutIcon size={24} />
               </Arrow>

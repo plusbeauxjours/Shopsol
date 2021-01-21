@@ -129,9 +129,7 @@ export default ({taskIMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
           <CloseCircleIcon />
         </CloseIconContainer>
         <Name>
-          <NameText>
-            {NAME.length > 10 ? `${NAME.substring(0, 10)}...` : NAME}
-          </NameText>
+          <NameText>{NAME}</NameText>
           <DateText>
             {DATE.slice(0, 4)}.{DATE.slice(5, 7)}.{DATE.slice(8, 10)}
           </DateText>

@@ -54,7 +54,13 @@ const TextInput = styled.TextInput`
   justify-content: center;
   align-items: center;
   width: ${wp('50%')}px;
+  font-size: ${styleGuide.fontSize.middle}px;
   min-height: 40px;
+`;
+
+const DateText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
+  margin-left: 10px;
 `;
 
 const GreyText = styled(Text)`
@@ -113,12 +119,6 @@ const CameraLastPictureContainer = styled.View`
   align-items: center;
 `;
 
-const DateText = styled.Text`
-  font-size: ${styleGuide.fontSize.large}px;
-  margin-left: 5px;
-  margin-top: 10px;
-`;
-
 const CloseIconContainer = styled.View`
   width: 26px;
   height: 26px;
@@ -148,6 +148,7 @@ const WhiteItem = styled.View`
 const Name = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  height: 40px;
 `;
 
 const Line = styled.View`
@@ -234,15 +235,18 @@ export default ({
                     style={{
                       fontSize: styleGuide.fontSize.large,
                       fontWeight: '600',
-                      height: 5,
                       borderWidth: 0,
-                      maxWidth: 160,
+                      width: 180,
                     }}
                   />
+                </Name>
+                <Line />
+                <TextContainer style={{height: 40}}>
+                  <GreyText>등록일</GreyText>
                   <DateText>
                     {moment(CREATE_TIME).format('YYYY년 M월 D일')}
                   </DateText>
-                </Name>
+                </TextContainer>
                 <Line />
                 <TextContainer>
                   <TextInput

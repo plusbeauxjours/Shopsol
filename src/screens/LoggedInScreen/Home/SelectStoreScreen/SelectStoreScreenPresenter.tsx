@@ -23,6 +23,12 @@ const BackGround = styled.View<IIsStore>`
 
 const ScrollView = styled.ScrollView``;
 
+const Container = styled.View`
+  width: 100%;
+  padding-bottom: 40px;
+  align-items: center;
+`;
+
 const EmptyBox = styled.View`
   flex-direction: column;
   align-items: center;
@@ -198,8 +204,10 @@ export default ({
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}>
-        {STORE == '1' ? <WhiteSpace /> : <SmallWhiteSpace />}
-        <StoreList />
+        <Container>
+          {STORE == '1' ? <WhiteSpace /> : <SmallWhiteSpace />}
+          <StoreList />
+        </Container>
       </ScrollView>
     </BackGround>
   );
