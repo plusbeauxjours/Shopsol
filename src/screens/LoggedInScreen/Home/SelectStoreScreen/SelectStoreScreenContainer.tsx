@@ -26,7 +26,9 @@ export default ({route: {params}}) => {
   const {MEMBER_SEQ, STORE, STORELIST_DATA} = useSelector(
     (state: any) => state.userReducer,
   );
-  const {MANAGER_CALLED} = useSelector((state: any) => state.storeReducer);
+  const {MANAGER_CALLED, EMP_SEQ} = useSelector(
+    (state: any) => state.storeReducer,
+  );
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -40,7 +42,7 @@ export default ({route: {params}}) => {
       setRefreshing(false);
     }
   };
-
+  console.log(EMP_SEQ);
   const alertModal = (text, okCallback = () => {}) => {
     const params = {
       alertType: 'alert',

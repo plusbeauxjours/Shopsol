@@ -93,7 +93,7 @@ export default ({route: {params}}) => {
   );
 
   ///// 수습 /////
-  const [probation, setProbation] = useState<boolean>(true);
+  const [probation, setProbation] = useState<boolean>(false);
   const [probationPeriod, setProbationPeriod] = useState<any>(moment());
   const [probationPeriodSet, setProbationPeriodSet] = useState<boolean>(false);
   const [probationPercent, setProbationPercent] = useState<string>('');
@@ -147,11 +147,12 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
-  const explainModal = (text) => {
+  const explainModal = (text, isHeight = false) => {
     const params = {
       alertType: 'explain',
       title: '',
       content: text,
+      isHeight,
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));

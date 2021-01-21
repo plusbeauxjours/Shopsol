@@ -27,8 +27,8 @@ import {HelpCircleIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import {
-  RadioBtnOnIcon,
-  RadioBtnOffIcon,
+  CheckBoxOnIcon,
+  CheckBoxOffIcon,
   BackIcon,
   ForwardIcon,
 } from '~/constants/Icons';
@@ -561,9 +561,9 @@ export default ({
                   }}>
                   <SideBox>
                     {endDayCheck ? (
-                      <RadioBtnOnIcon size={22} />
+                      <CheckBoxOnIcon size={22} />
                     ) : (
-                      <RadioBtnOffIcon size={22} />
+                      <CheckBoxOffIcon size={22} />
                     )}
                     <Row>
                       <Text style={{marginLeft: 5}}>퇴사일 미정</Text>
@@ -674,6 +674,7 @@ export default ({
                         <Row>
                           <TextInput
                             placeholder={'금액을 입력해주세요'}
+                            style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay(text.replace(/,/g, ''));
@@ -707,6 +708,7 @@ export default ({
                         <Row>
                           <TextInput
                             placeholder={'금액을 입력해주세요'}
+                            style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay(text.replace(/,/g, ''));
@@ -731,6 +733,7 @@ export default ({
                         <Row>
                           <TextInput
                             placeholder={'금액을 입력해주세요'}
+                            style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay(text.replace(/,/g, ''));
@@ -749,6 +752,7 @@ export default ({
                         <Row>
                           <TextInput
                             placeholder={'금액을 입력해주세요'}
+                            style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay2(text.replace(/,/g, ''));
@@ -769,6 +773,7 @@ export default ({
                         <Row>
                           <TextInput
                             placeholder={'금액을 입력해주세요'}
+                            style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay3(text.replace(/,/g, ''));
@@ -789,6 +794,7 @@ export default ({
                         <Row>
                           <TextInput
                             placeholder={'금액을 입력해주세요'}
+                            style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay4(text.replace(/,/g, ''));
@@ -809,6 +815,7 @@ export default ({
                         <Row>
                           <TextInput
                             placeholder={'금액을 입력해주세요'}
+                            style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
                               setPay5(text.replace(/,/g, ''));
@@ -924,9 +931,9 @@ export default ({
                     }}>
                     <SideBox>
                       {!probation ? (
-                        <RadioBtnOnIcon size={22} />
+                        <CheckBoxOnIcon size={22} />
                       ) : (
-                        <RadioBtnOffIcon size={22} />
+                        <CheckBoxOffIcon size={22} />
                       )}
                       <Text style={{marginLeft: 5}}>수습기간 없음</Text>
                     </SideBox>
@@ -1175,7 +1182,8 @@ export default ({
                   <Touchable
                     onPress={() => {
                       explainModal(
-                        '[ 급여 적용 시작월 이란? ]\n\n설정한 급여가 적용되는 월이며, 7월로 설정할 경우 정산일 기준 7월에 시작하는 날부터 적용됩니다.\nEx) 적용시작월 7월, 정산일 15일\n= 급여 계산 시작일: 7월16일\n\n[ 급여가 변경되었을 경우? ]\n\n기존 직원의 급여가 변경된 경우 [직원설정]에서 변경된 직원의 급여를 입력 후 변경이 시작되는 월을 설정해놓으면 해당 월부터 자동으로 급여 변경이 적용됩니다.',
+                        '[ 급여 적용 시작월 이란? ]\n\n설정한 급여가 적용되는 월이며, 7월로 설정할 경우 정산일 기준 7월에 시작하는 날부터 적용됩니다.\nEx) 적용시작월 7월, 정산일 15일\n= 급여 계산 시작일: 7월16일\n\n\n\n[ 급여가 변경되었을 경우? ]\n\n기존 직원의 급여가 변경된 경우 [직원설정]에서 변경된 직원의 급여를 입력 후 변경이 시작되는 월을 설정해놓으면 해당 월부터 자동으로 급여 변경이 적용됩니다.',
+                        true,
                       );
                     }}>
                     <HelpCircleIcon />
@@ -1637,4 +1645,3 @@ export default ({
     </BackGround>
   );
 };
-

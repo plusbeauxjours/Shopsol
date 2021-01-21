@@ -9,8 +9,8 @@ import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 
 import {
-  RadioBtnOffIcon,
-  RadioBtnOnIcon,
+  CheckBoxOffIcon,
+  CheckBoxOnIcon,
   AddCircleIcon,
   RemoveCircleIcon,
 } from '~/constants/Icons';
@@ -359,9 +359,9 @@ export default ({
             <Touchable onPress={() => setIsNoCheckedtime(!isNoCheckedtime)}>
               <Row>
                 {isNoCheckedtime ? (
-                  <RadioBtnOnIcon size={22} />
+                  <CheckBoxOnIcon size={22} />
                 ) : (
-                  <RadioBtnOffIcon size={22} />
+                  <CheckBoxOffIcon size={22} />
                 )}
                 <SubTitleText>체크예정시간 미입력</SubTitleText>
               </Row>
@@ -380,9 +380,9 @@ export default ({
             <Touchable onPress={() => setIsCheckedCamera(!isCheckedCamera)}>
               <Row>
                 {isCheckedCamera ? (
-                  <RadioBtnOnIcon size={22} />
+                  <CheckBoxOnIcon size={22} />
                 ) : (
-                  <RadioBtnOffIcon size={22} />
+                  <CheckBoxOffIcon size={22} />
                 )}
                 <SubTitleText>체크리스트 관련내용 사진촬영 필수</SubTitleText>
               </Row>
@@ -413,9 +413,9 @@ export default ({
               onPress={() => setIsCheckedEmpChoise(!isCheckedEmpChoise)}>
               <Row>
                 {isCheckedEmpChoise ? (
-                  <RadioBtnOnIcon size={22} />
+                  <CheckBoxOnIcon size={22} />
                 ) : (
-                  <RadioBtnOffIcon size={22} />
+                  <CheckBoxOffIcon size={22} />
                 )}
                 <SubTitleText>
                   담당직원만 체크할 수 있도록 설정합니다.

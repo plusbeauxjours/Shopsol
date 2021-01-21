@@ -9,10 +9,16 @@ import Modal from 'react-native-modal';
 
 import {
   HelpCircleIcon,
+  CheckBoxOnIcon,
+  CheckBoxOffIcon,
   RadioBtnOnIcon,
   RadioBtnOffIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+
+interface IIsSmallText {
+  isSmallText: boolean;
+}
 
 const Row = styled.View`
   width: 100%;
@@ -71,9 +77,9 @@ const SalarySystemSettingButton = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-const SalarySystemSettingText = styled.Text`
+const SalarySystemSettingText = styled.Text<IIsSmallText>`
   color: white;
-  font-size: 14px;
+  font-size: ${(props) => (props.isSmallText ? 12 : 14)}px;
 `;
 
 const SalarySystemText = styled.Text`
@@ -114,9 +120,9 @@ export const Authority = ({
           }
         }}>
         {authorityCheck[selection] ? (
-          <RadioBtnOnIcon size={18} />
+          <CheckBoxOnIcon size={18} />
         ) : (
-          <RadioBtnOffIcon size={18} />
+          <CheckBoxOffIcon size={18} />
         )}
         <Text>{text}</Text>
         {STORE == '1' && selection !== 4 && (
@@ -185,9 +191,9 @@ export const SalarySystem = ({
           setSalarySystemCheck(value);
         }}>
         {salarySystemCheck[selection] ? (
-          <RadioBtnOnIcon size={18} />
+          <CheckBoxOnIcon size={18} />
         ) : (
-          <RadioBtnOffIcon size={18} />
+          <CheckBoxOffIcon size={18} />
         )}
         {selection === 0 && (
           <SalarySystemText>
@@ -260,7 +266,8 @@ export const SalarySystem = ({
       {selection === 1 && salarySystemCheck[1] === true && (
         <SalarySystemSettingButton
           onPress={() => setIsSalaryModalVisible1(!isSalaryModalVisible1)}>
-          <SalarySystemSettingText>
+          <SalarySystemSettingText
+            isSmallText={weekTime && weekTime.length > 2}>
             {weekTime ? `${weekTime}시간` : '설정'}
           </SalarySystemSettingText>
         </SalarySystemSettingButton>
@@ -268,7 +275,8 @@ export const SalarySystem = ({
       {selection === 2 && salarySystemCheck[2] === true && (
         <SalarySystemSettingButton
           onPress={() => setIsSalaryModalVisible2(!isSalaryModalVisible2)}>
-          <SalarySystemSettingText>
+          <SalarySystemSettingText
+            isSmallText={weekTime && restTime.length > 2}>
             {restTime ? `${restTime}분` : '설정'}
           </SalarySystemSettingText>
         </SalarySystemSettingButton>

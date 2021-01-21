@@ -12,6 +12,7 @@ import {HelpCircleIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
+import LottieView from 'lottie-react-native';
 
 interface IIsBefore {
   isBefore: boolean;
@@ -164,9 +165,7 @@ const ModalPopup = styled.View`
   shadow-offset: 3px 3px;
   shadow-opacity: 0.5;
   shadow-radius: 3px;
-  background-color: ${utils.isAndroid
-    ? styleGuide.palette.greyColor
-    : 'rgba(0,0,0,0.7)'};
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const SpaceRow = styled.View`
@@ -205,6 +204,17 @@ const HelpText = styled.Text`
   margin-top: 5px;
 `;
 
+const LoadingContainer = styled.View`
+  width: 100%;
+  padding: 20px;
+  align-items: center;
+  padding-bottom: 80px;
+`;
+
+const EmptyText = styled.Text`
+  color: ${styleGuide.palette.greyColor};
+  font-size: ${styleGuide.fontSize.large}px;
+`;
 export default ({
   explainModal,
   setName,
@@ -228,6 +238,8 @@ export default ({
   isInputModalVisible,
   setIsInputModalVisible,
   setSearch,
+  isModalToastVisible,
+  loading,
 }) => {
   var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
   return (
@@ -325,6 +337,13 @@ export default ({
           justifyContent: 'center',
           alignItems: 'center',
         }}>
+        {isModalToastVisible && (
+          <ModalPopupArea>
+            <ModalPopup>
+              <ModalPopupText>직원을 목록에 추가하였습니다</ModalPopupText>
+            </ModalPopup>
+          </ModalPopupArea>
+        )}
         <TextInput
           placeholder={'홍길동'}
           selectionColor={'white'}
@@ -376,76 +395,98 @@ export default ({
         style={{margin: 0, justifyContent: 'flex-end'}}
         avoidKeyboard={true}>
         <ModalContainer>
-          <SearchInputContainer>
-            <SearchInput
-              placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-              placeholderTextColor={styleGuide.palette.searchBarColor}
-              onChangeText={(text) => searchName(text)}
-              value={search}
-            />
-            <CloseIconContainer onPress={() => setSearch(null)}>
-              <CloseCircleOutlineIcon
-                color={styleGuide.palette.searchBarColor}
-                size={24}
+          {loading ? (
+            <LoadingContainer style={{justifyContent: 'center'}}>
+              <LottieView
+                style={{
+                  marginTop: 20,
+                  width: 150,
+                  height: 150,
+                  marginBottom: 40,
+                }}
+                source={require('../../../../assets/animations/loading.json')}
+                loop
+                autoPlay
               />
-            </CloseIconContainer>
-          </SearchInputContainer>
-          <ScrollView
-            keyboardShouldPersistTaps={'handled'}
-            keyboardDismissMode="on-drag"
-            showsVerticalScrollIndicator={false}>
-            {result
-              ?.filter((i) => i.phoneNumbers[0]?.number)
-              ?.sort((a, b) =>
-                a.familyName < b.familyName
-                  ? -1
-                  : a.familyName > b.familyName
-                  ? 1
-                  : 0,
-              )
-              .map((data, index) => {
-                if (data.phoneNumbers[0]?.number) {
-                  return (
-                    <Touchable
-                      key={index}
-                      onPress={() => {
-                        toastFn();
-                        onPress(data);
-                      }}>
-                      <InviteEmployeeScreenCard
-                        name={data.familyName + data.givenName}
-                        phone={
-                          data.phoneNumbers[0]?.number
-                            ? data.phoneNumbers[0].number.replace(/\D/g, '')
-                            : 'No Number'
-                        }
-                        isSearched={true}
-                      />
-                    </Touchable>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-          </ScrollView>
-          {isToastVisible && (
-            <ModalPopupArea>
-              <ModalPopup>
-                <ModalPopupText>직원을 목록에 추가하였습니다</ModalPopupText>
-              </ModalPopup>
-            </ModalPopupArea>
+              <EmptyText>연락처 정보를 불러오는 중입니다. </EmptyText>
+              <EmptyText>잠시만 기다려주세요.</EmptyText>
+            </LoadingContainer>
+          ) : (
+            <>
+              <SearchInputContainer>
+                <SearchInput
+                  placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
+                  placeholderTextColor={styleGuide.palette.searchBarColor}
+                  onChangeText={(text) => searchName(text)}
+                  value={search}
+                />
+                <CloseIconContainer onPress={() => setSearch(null)}>
+                  <CloseCircleOutlineIcon
+                    color={styleGuide.palette.searchBarColor}
+                    size={24}
+                  />
+                </CloseIconContainer>
+              </SearchInputContainer>
+              <ScrollView
+                keyboardShouldPersistTaps={'handled'}
+                keyboardDismissMode="on-drag"
+                showsVerticalScrollIndicator={false}>
+                {result
+                  ?.filter((i) => i.phoneNumbers[0]?.number)
+                  ?.sort((a, b) =>
+                    a.familyName < b.familyName
+                      ? -1
+                      : a.familyName > b.familyName
+                      ? 1
+                      : 0,
+                  )
+                  .map((data, index) => {
+                    if (data.phoneNumbers[0]?.number) {
+                      return (
+                        <Touchable
+                          key={index}
+                          onPress={() => {
+                            toastFn();
+                            onPress(data);
+                          }}>
+                          <InviteEmployeeScreenCard
+                            name={data.familyName + data.givenName}
+                            phone={
+                              data.phoneNumbers[0]?.number
+                                ? data.phoneNumbers[0].number.replace(/\D/g, '')
+                                : 'No Number'
+                            }
+                            isSearched={true}
+                          />
+                        </Touchable>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+              </ScrollView>
+              {isToastVisible && (
+                <ModalPopupArea>
+                  <ModalPopup>
+                    <ModalPopupText>
+                      직원을 목록에 추가하였습니다
+                    </ModalPopupText>
+                  </ModalPopup>
+                </ModalPopupArea>
+              )}
+              <SubmitButton
+                isBefore={choice?.length === 0}
+                onPress={() => {
+                  choice?.length === 0 ? {} : onPressSubmitButton();
+                }}
+                rippleColor={choice?.length === 0 ? 'white' : '#499c9b'}
+                rippleDuration={600}
+                rippleSize={1200}
+                rippleOpacity={0.45}>
+                <WhiteText>완료</WhiteText>
+              </SubmitButton>
+            </>
           )}
-          <SubmitButton
-            isBefore={choice?.length === 0}
-            onPress={() => {
-              choice?.length === 0 ? {} : onPressSubmitButton();
-            }}
-            rippleColor={choice?.length === 0 ? 'white' : '#499c9b'}
-            rippleDuration={600}
-            rippleSize={1200}
-            rippleOpacity={0.45}>
-            <WhiteText>완료</WhiteText>
-          </SubmitButton>
         </ModalContainer>
       </Modal>
     </BackGround>

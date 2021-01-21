@@ -14,6 +14,7 @@ const alertSlice = createSlice({
     warning: 'no',
     close: null,
     image: null,
+    isHeight: false,
   },
   reducers: {
     setAlertVisible(state, action) {
@@ -37,6 +38,7 @@ const alertSlice = createSlice({
           warning,
           close,
           image,
+          isHeight,
         },
       } = action;
       return {
@@ -52,6 +54,7 @@ const alertSlice = createSlice({
         warning,
         close,
         image,
+        isHeight,
       };
     },
   },

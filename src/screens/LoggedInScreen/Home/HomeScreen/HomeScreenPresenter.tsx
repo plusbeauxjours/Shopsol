@@ -724,21 +724,19 @@ export default ({
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
                 </MenuTitleArea>
-                {TOTAL_COUNT !== 0 && (
-                  <QrIconContainer
-                    hasQr={
-                      (initLoading && QR_Num) ||
-                      (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                    }
-                    onPress={() => {
-                      (initLoading && QR_Num) ||
-                      (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                        ? setShowPictureModalOpen(true)
-                        : utils.handleCameraPermission(setQrCameraModalOpen2);
-                    }}>
-                    <QrCodeIcon color={'white'} size={18} />
-                  </QrIconContainer>
-                )}
+                <QrIconContainer
+                  hasQr={
+                    (initLoading && QR_Num) ||
+                    (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                  }
+                  onPress={() => {
+                    (initLoading && QR_Num) ||
+                    (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                      ? setShowPictureModalOpen(true)
+                      : utils.handleCameraPermission(setQrCameraModalOpen2);
+                  }}>
+                  <QrCodeIcon color={'white'} size={18} />
+                </QrIconContainer>
               </SpaceRow>
               <Container>
                 <MenuCntContainer
@@ -848,14 +846,12 @@ export default ({
                     </MenuTitleArea>
                     <QrIconContainer
                       hasQr={
-                        TOTAL_COUNT !== 0 &&
-                        ((initLoading && QR_Num) ||
-                          (!initLoading && STORE_DATA.resultdata?.QR_Num))
+                        (initLoading && QR_Num) ||
+                        (!initLoading && STORE_DATA.resultdata?.QR_Num)
                       }
                       onPress={() => {
-                        TOTAL_COUNT !== 0 &&
-                        ((initLoading && QR_Num) ||
-                          (!initLoading && STORE_DATA.resultdata?.QR_Num))
+                        (initLoading && QR_Num) ||
+                        (!initLoading && STORE_DATA.resultdata?.QR_Num)
                           ? setShowPictureModalOpen(true)
                           : utils.handleCameraPermission(setQrCameraModalOpen2);
                       }}>

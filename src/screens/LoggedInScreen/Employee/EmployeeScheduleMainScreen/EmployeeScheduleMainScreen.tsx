@@ -130,7 +130,8 @@ export default ({route: {params}}) => {
       <Row style={{marginTop: 10, paddingLeft: 20}}>
         {text == '일정이 있는 직원' ? (
           <GreyText>
-            정해진 일정으로 출퇴근하며 캘린더에 근무일정이 표시됩니다.
+            정해진 일정으로 출퇴근하며 캘린더에 근무현황(지각, 조퇴, 휴무 등)이
+            표시됩니다.
           </GreyText>
         ) : (
           <GreyText>

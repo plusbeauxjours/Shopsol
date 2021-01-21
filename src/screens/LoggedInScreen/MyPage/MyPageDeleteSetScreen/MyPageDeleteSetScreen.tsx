@@ -11,7 +11,7 @@ import Ripple from 'react-native-material-ripple';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
 import {userLogout} from '~/redux/userSlice';
-import {CheckBoxIcon} from '~/constants/Icons';
+import {CheckBoxOnIcon, CheckBoxOffIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.SafeAreaView`
@@ -104,6 +104,7 @@ export default () => {
   };
 
   const submit = async () => {
+    ㅔ;
     try {
       dispatch(userLogout());
       navigation.reset({
@@ -137,9 +138,12 @@ export default () => {
         </Title>
         <Check onPress={() => setIsConfirmed(!isConfirmed)}>
           {isConfirmed ? (
-            <CheckBoxIcon size={22} color={styleGuide.palette.primary} />
+            <CheckBoxOnIcon size={22} color={styleGuide.palette.primary} />
           ) : (
-            <CheckBoxIcon size={22} color={'#E5E5E5'} />
+            <CheckBoxOffIcon
+              size={22}
+              color={styleGuide.palette.lightGreyColor}
+            />
           )}
           <CheckText>데이터를 모두 삭제하고 탈퇴하겠습니다</CheckText>
         </Check>

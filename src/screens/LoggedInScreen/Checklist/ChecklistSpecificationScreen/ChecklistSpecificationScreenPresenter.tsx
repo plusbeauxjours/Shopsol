@@ -12,11 +12,16 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import Animated from 'react-native-reanimated';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import {CheckBoxIcon, CameraIcon, PictureIcon} from '~/constants/Icons';
+import {
+  CheckBoxIcon,
+  CameraIcon,
+  PictureIcon,
+  CheckBoxOnIcon,
+  CheckBoxOffIcon,
+} from '~/constants/Icons';
 import {CloseCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
-import {AddIcon} from '../../../../constants/Icons';
 interface IsLast {
   isLast?: boolean;
 }
@@ -318,14 +323,20 @@ export default ({
                       <Text
                         style={{
                           fontSize: styleGuide.fontSize.middle,
-                          color: scan == '0' ? '#CCCCCC' : '#000',
+                          color:
+                            scan == '0'
+                              ? styleGuide.palette.primary
+                              : styleGuide.palette.primary,
                         }}>
                         정상
                       </Text>
                       <Text
                         style={{
                           fontSize: styleGuide.fontSize.middle,
-                          color: scan == '0' ? '#CCCCCC' : '#B91C1B',
+                          color:
+                            scan == '0'
+                              ? styleGuide.palette.primary
+                              : '#B91C1B',
                         }}>
                         이상
                       </Text>
@@ -350,16 +361,15 @@ export default ({
                           setChecklistBadState(checklistBadStated);
                         }}
                         disabled={scan == '1' ? false : true}>
-                        <CheckBoxIcon
-                          size={25}
-                          color={
-                            JSON.parse(JSON.stringify(checklistGoodState))[
-                              index
-                            ]
-                              ? '#000'
-                              : '#CCCCCC'
-                          }
-                        />
+                        {JSON.parse(JSON.stringify(checklistGoodState))[
+                          index
+                        ] ? (
+                          <CheckBoxOnIcon color={styleGuide.palette.primary} />
+                        ) : (
+                          <CheckBoxOffIcon
+                            color={styleGuide.palette.lightGreyColor}
+                          />
+                        )}
                       </Touchable>
                       <WhiteSpace />
                       <Touchable
@@ -376,14 +386,15 @@ export default ({
                           setChecklistBadState(checklistBadStated);
                         }}
                         disabled={scan == '1' ? false : true}>
-                        <CheckBoxIcon
-                          size={25}
-                          color={
-                            JSON.parse(JSON.stringify(checklistBadState))[index]
-                              ? '#B91C1B'
-                              : '#CCCCCC'
-                          }
-                        />
+                        {JSON.parse(JSON.stringify(checklistBadState))[
+                          index
+                        ] ? (
+                          <CheckBoxOnIcon color={'#B91C1B'} />
+                        ) : (
+                          <CheckBoxOffIcon
+                            color={styleGuide.palette.lightGreyColor}
+                          />
+                        )}
                       </Touchable>
                     </CheckBoxIconContainer>
                   </ChecklistItem>
@@ -399,7 +410,7 @@ export default ({
                     onChangeText={(text) => setCHECK_TITLE(text)}
                     value={CHECK_TITLE}
                     placeholder={'내용를 입력하세요.'}
-                    placeholderTextColor={'#CCCCCC'}
+                    placeholderTextColor={styleGuide.palette.primary}
                     multiline={true}
                   />
                 </Box>

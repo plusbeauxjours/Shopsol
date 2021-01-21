@@ -10,8 +10,8 @@ import {
   EllipseIcon,
   RemoveCircleIcon,
   HelpCircleIcon,
-  RadioBtnOnIcon,
-  RadioBtnOffIcon,
+  CheckBoxOnIcon,
+  CheckBoxOffIcon,
 } from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import RoundBtn from '~/components/Btn/RoundBtn';
@@ -310,11 +310,11 @@ export default ({
                 }}>
                 <SideBox>
                   {checkNoEndDate ? (
-                    <RadioBtnOnIcon size={22} />
+                    <CheckBoxOnIcon size={22} />
                   ) : (
-                    <RadioBtnOffIcon size={22} />
+                    <CheckBoxOffIcon size={22} />
                   )}
-                  <Text>일정 종료일 없음</Text>
+                  <Text style={{marginLeft: 5}}>일정 종료일 없음</Text>
                 </SideBox>
               </RowTouchable>
               {!checkNoEndDate && (

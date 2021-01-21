@@ -22,6 +22,10 @@ interface IWarning {
   warning: string;
 }
 
+interface IIsHeight {
+  isHeight: boolean;
+}
+
 const BackGround = styled.View`
   flex: 1;
   background-color: #ffffff;
@@ -29,8 +33,8 @@ const BackGround = styled.View`
   border-top-right-radius: 20px;
 `;
 
-const WhiteBox = styled.View`
-  height: 280px;
+const WhiteBox = styled.View<IIsHeight>`
+  height: ${(props) => (props.isHeight ? 360 : 280)}px;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -166,7 +170,7 @@ export default ({alert}) => {
         />
       )}
       {alert.alertType == 'explain' ? (
-        <WhiteBox>
+        <WhiteBox isHeight={alert.isHeight}>
           <BackGround>
             <TextBox alert={alert} />
           </BackGround>

@@ -139,6 +139,22 @@ export const CheckBoxIcon: React.FC<IProps> = ({size, color}) => (
   />
 );
 
+export const CheckBoxOnIcon: React.FC<IProps> = ({size, color}) => (
+  <MaterialCommunityIcons
+    name={'checkbox-marked-circle-outline'}
+    size={size ?? 22}
+    color={color ?? styleGuide.palette.tertiary}
+  />
+);
+
+export const CheckBoxOffIcon: React.FC<IProps> = ({size, color}) => (
+  <MaterialCommunityIcons
+    name={'checkbox-blank-circle-outline'}
+    size={size ?? 22}
+    color={color ?? styleGuide.palette.lightGreyColor}
+  />
+);
+
 export const BoldAddIcon: React.FC<IProps> = ({size, color}) => (
   <MaterialCommunityIcons
     name={'plus'}
@@ -162,16 +178,16 @@ export const CheckMarkIcon: React.FC<IProps> = ({size, color}) => (
 );
 
 export const RadioBtnOnIcon: React.FC<IProps> = ({size, color}) => (
-  <Ionicons
-    name={'radio-button-on-outline'}
+  <MaterialCommunityIcons
+    name={'radiobox-marked'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.tertiary}
   />
 );
 
 export const RadioBtnOffIcon: React.FC<IProps> = ({size, color}) => (
-  <Ionicons
-    name={'radio-button-off-outline'}
+  <MaterialCommunityIcons
+    name={'radiobox-blank'}
     size={size ?? 14}
     color={color ?? '#CCCCCC'}
   />

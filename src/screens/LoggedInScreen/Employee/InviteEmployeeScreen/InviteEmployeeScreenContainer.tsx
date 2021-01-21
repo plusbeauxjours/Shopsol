@@ -20,6 +20,7 @@ export default () => {
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>(null);
   const [phone, setPhone] = useState<string>(null);
   const [search, setSearch] = useState<string>(null);
@@ -31,6 +32,9 @@ export default () => {
   );
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
+  const [isModalToastVisible, setIsModalToastVisible] = useState<boolean>(
+    false,
+  );
 
   const explainModal = (title, text) => {
     const params = {
@@ -56,6 +60,7 @@ export default () => {
   };
 
   const addFn = () => {
+    modalToastFn();
     let buffer = choice;
     let flag = true;
     for (var i = 0; i < buffer.length; i++) {
@@ -152,7 +157,6 @@ export default () => {
   };
 
   const onPress = (data) => {
-    dispatch(setSplashVisible({visible: true}));
     try {
       choiseFn(
         data.recordID,
@@ -162,13 +166,13 @@ export default () => {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setSplashVisible({visible: false}));
       setSearch(null);
     }
   };
 
   const getContactsFn = () => {
     try {
+      setIsModalVisible(true);
       if (utils.isAndroid()) {
         requestPermissionsAndroid();
       } else {
@@ -181,20 +185,23 @@ export default () => {
 
   const requestPermissionsIOS = async () => {
     try {
+      setLoading(true);
       Contacts.checkPermission((err, permission) => {
         Contacts.getAll((err, contacts: any) => {
           setContacts(contacts);
           setResult(contacts);
         });
-        setIsModalVisible(true);
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   const requestPermissionsAndroid = async () => {
     try {
+      setLoading(true);
       const result = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
         {
@@ -224,10 +231,11 @@ export default () => {
           setContacts(contacts);
           setResult(contacts);
         });
-        setIsModalVisible(true);
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -236,6 +244,14 @@ export default () => {
     setIsToastVisible(true);
     setTimeout(() => {
       setIsToastVisible(false);
+    }, 1000);
+  };
+
+  const modalToastFn = () => {
+    clearTimeout();
+    setIsModalToastVisible(true);
+    setTimeout(() => {
+      setIsModalToastVisible(false);
     }, 1000);
   };
 
@@ -267,6 +283,8 @@ export default () => {
       isInputModalVisible={isInputModalVisible}
       setIsInputModalVisible={setIsInputModalVisible}
       setSearch={setSearch}
+      isModalToastVisible={isModalToastVisible}
+      loading={loading}
     />
   );
 };

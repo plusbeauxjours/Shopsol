@@ -5,6 +5,8 @@ import {useSelector} from 'react-redux';
 import {
   RadioBtnOnIcon,
   RadioBtnOffIcon,
+  CheckBoxOnIcon,
+  CheckBoxOffIcon,
   HelpCircleIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
@@ -91,9 +93,12 @@ export const InsuranceType = ({
           setInsuranceCheck(value);
         }}>
         {insuranceCheck[selection] ? (
-          <RadioBtnOnIcon size={18} />
+          <CheckBoxOnIcon size={18} />
         ) : (
-          <RadioBtnOffIcon size={18} />
+          <CheckBoxOffIcon
+            color={styleGuide.palette.lightGreyColor}
+            size={18}
+          />
         )}
         <Text>{text}</Text>
       </TypeContainer>

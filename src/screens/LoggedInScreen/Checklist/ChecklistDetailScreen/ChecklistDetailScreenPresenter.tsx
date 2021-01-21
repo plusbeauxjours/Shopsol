@@ -11,7 +11,11 @@ import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
-import {CheckBoxIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
+import {
+  CheckBoxOnIcon,
+  CheckBoxOffIcon,
+  CloseCircleOutlineIcon,
+} from '~/constants/Icons';
 import Loader from '~/components/Loader';
 import styleGuide from '~/constants/styleGuide';
 import LottieView from 'lottie-react-native';
@@ -379,7 +383,7 @@ export default ({
                     <Text
                       style={{
                         fontSize: styleGuide.fontSize.middle,
-                        color: '#000',
+                        color: styleGuide.palette.primary,
                       }}>
                       정상
                     </Text>
@@ -415,9 +419,12 @@ export default ({
                       }}
                       disabled={true}>
                       {checklistGoodState[index] ? (
-                        <CheckBoxIcon size={25} color="#000" />
+                        <CheckBoxOnIcon
+                          size={25}
+                          color={styleGuide.palette.primary}
+                        />
                       ) : (
-                        <CheckBoxIcon size={25} color="#CCCCCC" />
+                        <CheckBoxOffIcon size={25} color={styleGuide.palette.lightGreyColor} />
                       )}
                     </Touchable>
                     <WhiteSpace />
@@ -436,9 +443,9 @@ export default ({
                       }}
                       disabled={true}>
                       {checklistBadState[index] ? (
-                        <CheckBoxIcon size={25} color="#B91C1B" />
+                        <CheckBoxOnIcon size={25} color="#B91C1B" />
                       ) : (
-                        <CheckBoxIcon size={25} color="#CCCCCC" />
+                        <CheckBoxOffIcon size={25} color={styleGuide.palette.lightGreyColor} />
                       )}
                     </Touchable>
                   </CheckBoxIconContainer>
