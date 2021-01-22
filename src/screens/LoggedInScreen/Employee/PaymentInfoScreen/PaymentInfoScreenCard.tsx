@@ -76,6 +76,8 @@ export default ({
       image,
       START: data?.START,
       END: data?.END,
+      probationDATE: data?.probationDATE,
+      probationPercent: data?.probationPercent,
     });
   };
   return (
@@ -109,7 +111,14 @@ export default ({
           {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
           {data?.END ? moment(data?.END).format('YYYY.MM.DD') : '계속'}
         </PayText>
-        <PayText>수습정보 (PaymentInfoScreen)</PayText>
+        {data?.probationDATE && (
+          <PayText>
+            수습기간&nbsp;
+            {moment() > moment(data?.probationDATE)
+              ? '종료'
+              : moment(data?.probationDATE).format('~YYYY.MM.DD')}
+          </PayText>
+        )}
       </NameBox>
       <IconContainer>
         <ForwardIcon />

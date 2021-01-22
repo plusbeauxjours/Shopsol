@@ -31,6 +31,9 @@ export default ({route: {params}}) => {
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(
     moment(params?.EDUCATION_DATE) || moment(),
   ); // 교육일시 / 검진일
+  const [initEDUCATION_DATE, setInitEDUCATION_DATE] = useState<any>(
+    moment(params?.EDUCATION_DATE) || moment(),
+  );
   const [NAME, setNAME] = useState<string>(params?.NAME || ''); // 교육이수자성명 / 성명
   const [RESULT_COUNT, setRESULT_COUNT] = useState<any>(
     params?.RESULT_COUNT || null,
@@ -184,6 +187,7 @@ export default ({route: {params}}) => {
         alertModal('인식 완료');
         setNAME(data.name);
         setEDUCATION_DATE(data.resultdate);
+        setInitEDUCATION_DATE(data.resultdate);
         setRESULT_COUNT(data.count);
       }
     } catch (e) {
@@ -233,6 +237,7 @@ export default ({route: {params}}) => {
       RESULT_COUNT={RESULT_COUNT}
       setRESULT_COUNT={setRESULT_COUNT}
       EDUCATION_DATE={EDUCATION_DATE}
+      initEDUCATION_DATE={initEDUCATION_DATE}
       setEDUCATION_DATE={setEDUCATION_DATE}
     />
   );

@@ -536,7 +536,14 @@ export default ({
                     {moment(START).format('YYYY.MM.DD')} ~&nbsp;
                     {END ? moment(END).format('YYYY.MM.DD') : '계속'}
                   </InfoText>
-                  <InfoText>수습정보 (EmployeeInfoScreen)</InfoText>
+                  {data?.probationDATE && (
+                    <InfoText>
+                      수습기간&nbsp;
+                      {moment() > moment(data?.probationDATE)
+                        ? '종료'
+                        : moment(data?.probationDATE).format('~YYYY.MM.DD')}
+                    </InfoText>
+                  )}
                 </NameBox>
                 <NavigationButton onPress={() => gotoSetInfo(data, IMAGE)}>
                   <Bold>정보수정</Bold>

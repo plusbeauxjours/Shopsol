@@ -19,6 +19,10 @@ import {CameraIcon, PictureIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 
+interface IIsCancel {
+  isCancelBtn?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -188,7 +192,7 @@ const PictureBorderBox = styled.View`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 320px;
+  height: 390px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -197,22 +201,24 @@ const DatePickerContainer = styled.View`
   background-color: white;
 `;
 
-const DatePickerRoundBtn = styled(Ripple)`
-  position: absolute;
+const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
+  background-color: ${(props) =>
+    props.isCancelBtn ? 'transparent' : styleGuide.palette.primary};
+  justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
-const DatePickerText = styled.Text`
+const DatePickerText = styled.Text<IIsCancel>`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
+  color: ${(props) =>
+    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'};
   text-align: center;
 `;
 
@@ -220,6 +226,7 @@ export default ({
   isDateModalVisible,
   setIsDateModalVisible,
   date,
+  initDate,
   setDate,
   title,
   setTitle,
@@ -444,8 +451,8 @@ export default ({
         </ScrollView>
       </BackGround>
       <Modal
-        onRequestClose={() => setIsDateModalVisible(false)}
-        onBackdropPress={() => setIsDateModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isDateModalVisible}
         style={{
           margin: 0,
@@ -473,6 +480,19 @@ export default ({
             rippleContainerBorderRadius={30}
             rippleOpacity={0.1}>
             <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setIsDateModalVisible(false);
+              setDate(moment(initDate).format('YYYY-MM-DD'));
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
           </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>

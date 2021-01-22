@@ -223,6 +223,8 @@ export default ({
   loading,
   date,
   MANAGER_CALLED,
+  probationDATE,
+  probationPercent,
 }) => {
   const boxButtonTransition = useTransition(boxButton);
   const boxButton2Transition = useTransition(boxButton2);
@@ -366,7 +368,14 @@ export default ({
               {moment(START).format('YYYY.MM.DD')}&nbsp;~&nbsp;
               {END ? moment(END).format('YYYY.MM.DD') : '계속'}
             </EmployeeText>
-            <EmployeeText>수습정보 (EmpPayInfoScreen)</EmployeeText>
+            {probationDATE && (
+              <EmployeeText>
+                수습기간&nbsp;
+                {moment() > moment(probationDATE)
+                  ? '종료'
+                  : moment(probationDATE).format('~YYYY.MM.DD')}
+              </EmployeeText>
+            )}
           </NameBox>
           {STORE == '1' && (
             <NavigationButton onPress={() => gotoSetInfo()}>

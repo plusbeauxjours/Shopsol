@@ -450,7 +450,16 @@ export default ({
                       ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
                       : '계속'}
                   </InfoText>
-                  <InfoText>수습정보 (EmployeeInfoEMPScreen)</InfoText>
+                  {EMPLOYEE_INFO_DATA?.probationDATE && (
+                    <InfoText>
+                      수습기간&nbsp;
+                      {moment() > moment(EMPLOYEE_INFO_DATA?.probationDATE)
+                        ? '종료'
+                        : moment(EMPLOYEE_INFO_DATA?.probationDATE).format(
+                            '~YYYY.MM.DD',
+                          )}
+                    </InfoText>
+                  )}
                 </NameBox>
               </EmployeeBox>
             </Section>

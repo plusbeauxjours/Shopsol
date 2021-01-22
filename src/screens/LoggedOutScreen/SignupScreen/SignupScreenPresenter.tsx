@@ -24,6 +24,10 @@ interface IsChecked {
   isChecked?: boolean;
 }
 
+interface IIsCancel {
+  isCancelBtn?: boolean;
+}
+
 const BackGround = styled.View`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -118,36 +122,6 @@ const Section = styled.View`
   background-color: white;
 `;
 
-const DatePickerContainer = styled.View`
-  width: 330px;
-  height: 320px;
-  border-radius: 20px;
-  padding: 20px;
-  padding-top: 30px;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: white;
-`;
-
-const DatePickerRoundBtn = styled(Ripple)`
-  position: absolute;
-  width: 250px;
-  height: 60px;
-  border-width: 0.5px;
-  border-radius: 30px;
-  border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
-const DatePickerText = styled.Text`
-  font-weight: ${styleGuide.fontWeight.normal};
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
-  text-align: center;
-`;
-
 const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
   padding: 7px 14px;
   align-items: center;
@@ -162,6 +136,38 @@ const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
 
 const RequestBorderText = styled.Text<IsChecked>`
   color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
+`;
+
+const DatePickerContainer = styled.View`
+  width: 330px;
+  height: 390px;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+`;
+
+const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
+  width: 250px;
+  height: 50px;
+  border-width: 0.5px;
+  border-radius: 30px;
+  border-color: ${styleGuide.palette.greyColor};
+  background-color: ${(props) =>
+    props.isCancelBtn ? 'transparent' : styleGuide.palette.primary};
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const DatePickerText = styled.Text<IIsCancel>`
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${(props) =>
+    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'};
+  text-align: center;
 `;
 
 export default ({
@@ -461,8 +467,8 @@ export default ({
         </Container>
       </KeyboardAwareScrollView>
       <Modal
-        onRequestClose={() => setIsBirthDateVisible(false)}
-        onBackdropPress={() => setIsBirthDateVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isBirthDateVisible}
         style={{
           margin: 0,
@@ -495,6 +501,20 @@ export default ({
             rippleContainerBorderRadius={30}
             rippleOpacity={0.1}>
             <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setBirthDateSet(false);
+              setIsBirthDateVisible(false);
+              setBirthDate(moment().format('YYYY-MM-DD'));
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
           </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>

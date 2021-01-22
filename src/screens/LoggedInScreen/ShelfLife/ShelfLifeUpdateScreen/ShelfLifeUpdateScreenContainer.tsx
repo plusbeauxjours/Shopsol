@@ -28,6 +28,7 @@ export default ({route: {params}}) => {
   const [shelfLifeDate, setShelfLifeDate] = useState<any>(
     moment(params?.shelfLifeDate),
   );
+
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(
     params?.shelfLifeImage || null,
   );
@@ -228,6 +229,7 @@ export default ({route: {params}}) => {
   };
 
   const handleBarCodeInputScanned = async (codenumber) => {
+    console.log(codenumber);
     await setBarCodeInputCameraModalOpen(false);
     if (!codenumber) {
       setTimeout(() => {
@@ -295,6 +297,7 @@ export default ({route: {params}}) => {
       setBarCodeInputCameraModalOpen={setBarCodeInputCameraModalOpen}
       shelfLifeImgLink={shelfLifeImgLink}
       setShelfLifeImgLink={setShelfLifeImgLink}
+      initShelfLifeDate={params?.shelfLifeDate}
     />
   );
 };

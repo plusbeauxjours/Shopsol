@@ -361,6 +361,7 @@ export default ({
   payDay,
   setPayDay,
   startDay,
+  initStartDay,
   setStartDay,
   endDay,
   setEndDay,
@@ -461,6 +462,8 @@ export default ({
   CALCULATE_DAY,
   MANAGER_CALLED,
   scrollRef,
+  probationDATEstate,
+  probationPercentstate,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const click1Transition = useTransition(click1);
@@ -524,9 +527,14 @@ export default ({
                 </EmployeeCardText>
               </>
             )}
-            <EmployeeCardText>
-              수습정보 (SetEmployeeInfoScreen)
-            </EmployeeCardText>
+            {probationDATEstate && (
+              <EmployeeCardText>
+                수습기간&nbsp;
+                {moment() > moment(probationDATEstate)
+                  ? '종료'
+                  : moment(probationDATEstate).format('~YYYY.MM.DD')}
+              </EmployeeCardText>
+            )}
           </NameBox>
         </EmployeeCardContainer>
       </TopArea>
@@ -1592,8 +1600,8 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
+              setStartDay(moment(initStartDay).format('YYYY-MM-DD'));
               setIsStartDayModalVisible(false);
-              setStartDaySet(true);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
@@ -1605,8 +1613,8 @@ export default ({
         </DatePickerContainer>
       </Modal>
       <Modal
-        onRequestClose={() => setIsEndDayModalVisible(false)}
-        onBackdropPress={() => setIsEndDayModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isEndDayModalVisible}
         style={{
           margin: 0,
@@ -1622,7 +1630,6 @@ export default ({
             date={moment(endDay).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            minimumDate={startDay && moment(startDay).add(1, 'days').toDate()}
             onDateChange={(date) => {
               setEndDaySet(true);
               setEndDay(moment(date).format('YYYY-MM-DD'));
@@ -1641,11 +1648,24 @@ export default ({
             rippleOpacity={0.1}>
             <DatePickerText>확인</DatePickerText>
           </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setIsEndDayModalVisible(false);
+              setEndDaySet(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
       <Modal
-        onRequestClose={() => setIsProbationPeriodModalVisible(false)}
-        onBackdropPress={() => setIsProbationPeriodModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isProbationPeriodModalVisible}
         style={{
           margin: 0,
@@ -1661,8 +1681,6 @@ export default ({
             date={moment(probationPeriod).toDate()}
             mode={'date'}
             androidVariant="iosClone"
-            minimumDate={startDay && moment(startDay).add(1, 'days').toDate()}
-            maximumDate={endDay && moment(endDay).toDate()}
             onDateChange={(date) => {
               setProbationPeriodSet(true);
               setProbationPeriod(moment(date).format('YYYY-MM-DD'));
@@ -1679,6 +1697,20 @@ export default ({
             rippleContainerBorderRadius={30}
             rippleOpacity={0.1}>
             <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setIsProbationPeriodModalVisible(false);
+              setProbationPeriodSet(false);
+              setProbationPeriod(moment());
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
           </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>

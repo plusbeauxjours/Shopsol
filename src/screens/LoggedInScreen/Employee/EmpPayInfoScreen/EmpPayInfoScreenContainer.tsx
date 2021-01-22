@@ -235,6 +235,8 @@ export default ({route: {params}}) => {
       loading={loading}
       date={date}
       MANAGER_CALLED={MANAGER_CALLED}
+      probationDATE={params?.probationDATE}
+      probationPercent={params?.probationPercent}
     />
   );
 };

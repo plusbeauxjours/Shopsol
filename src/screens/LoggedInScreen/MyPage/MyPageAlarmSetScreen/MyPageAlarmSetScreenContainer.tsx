@@ -104,7 +104,6 @@ export default () => {
 
   const checkPermission = async () => {
     const enabled = await firebase.messaging().hasPermission();
-    console.log('enabled', enabled);
     if (enabled) {
       getToken();
     } else {

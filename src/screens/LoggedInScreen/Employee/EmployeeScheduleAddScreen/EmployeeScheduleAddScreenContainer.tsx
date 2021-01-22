@@ -36,6 +36,12 @@ export default ({route: {params}}) => {
   const [endDate, setEndDate] = useState<any>(
     moment(params?.endDate) || moment(),
   ); // 근무 종료일
+  const [initStartDate, setInitStartDate] = useState<any>(
+    moment(params?.startDate) || moment(),
+  ); // 근무 시작일
+  const [initEndDate, setInitEndDate] = useState<any>(
+    moment(params?.endDate) || moment(),
+  ); // 근무 종료일
 
   const [startTime, setStartTime] = useState<any>(moment());
   const [endTime, setEndTime] = useState<any>(moment());
@@ -92,8 +98,10 @@ export default ({route: {params}}) => {
     };
     if (calendarModalType === 'start') {
       setStartDate(date.dateString);
+      setInitStartDate(date.dateString);
     } else {
       params?.endDate && setEndDate(moment(date.dateString));
+      params?.endDate && setInitEndDate(moment(date.dateString));
     }
   };
 
@@ -318,6 +326,8 @@ export default ({route: {params}}) => {
       setStartTimeSet={setStartTimeSet}
       endTimeSet={endTimeSet}
       setEndTimeSet={setEndTimeSet}
+      initStartDate={initStartDate}
+      initEndDate={initEndDate}
     />
   );
 };

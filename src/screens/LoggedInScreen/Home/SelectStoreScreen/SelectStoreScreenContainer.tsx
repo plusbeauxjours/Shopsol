@@ -54,7 +54,6 @@ export default ({route: {params}}) => {
   const gotoHomeScreen = (data) => {
     if (STORE == 0 && data.TYPE == '0') {
       alertModal('합류승인 대기중입니다.');
-      console.log('data', data);
     } else {
       navigation.navigate('HomeScreen', {
         STORE_SEQ: data.STORE_SEQ,

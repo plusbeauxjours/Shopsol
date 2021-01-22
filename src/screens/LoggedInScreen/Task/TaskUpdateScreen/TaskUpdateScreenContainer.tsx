@@ -199,6 +199,7 @@ export default ({route: {params}}) => {
       setIsDateModalVisible={setIsDateModalVisible}
       submit={submit}
       alertModal={alertModal}
+      initTaskDate={params?.taskDate}
     />
   );
 };

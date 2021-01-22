@@ -24,6 +24,10 @@ import {
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 
+interface IIsCancel {
+  isCancelBtn?: boolean;
+}
+
 const WhiteSpace = styled.View`
   height: 20px;
 `;
@@ -188,7 +192,7 @@ const CameraLastPictureContainer = styled.View`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 320px;
+  height: 390px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -197,25 +201,26 @@ const DatePickerContainer = styled.View`
   background-color: white;
 `;
 
-const DatePickerRoundBtn = styled(Ripple)`
-  position: absolute;
+const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
+  background-color: ${(props) =>
+    props.isCancelBtn ? 'transparent' : styleGuide.palette.primary};
+  justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
-const DatePickerText = styled.Text`
+const DatePickerText = styled.Text<IIsCancel>`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
+  color: ${(props) =>
+    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'};
   text-align: center;
 `;
-
 export default ({
   submitFn,
   setNAME,
@@ -227,6 +232,7 @@ export default ({
   setStorename,
   storename,
   EDUCATION_DATE,
+  initEDUCATION_DATE,
   setEDUCATION_DATE,
   EDUCATION_TYPE,
   setBusinesstype,
@@ -371,7 +377,7 @@ export default ({
               <WhiteSpace />
               <TextInputContainer>
                 <Touchable
-                  style={{alignItems: 'flex-start'}}
+                  style={{alignItems: 'flex-start', width: '100%'}}
                   onPress={() => setDateModalVisible(true)}>
                   <GreyText>교육 일시</GreyText>
                   <DateText>
@@ -511,8 +517,8 @@ export default ({
         )}
       </Modal>
       <Modal
-        onRequestClose={() => setDateModalVisible(false)}
-        onBackdropPress={() => setDateModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={dateModalVisible}
         style={{
           margin: 0,
@@ -540,6 +546,21 @@ export default ({
             rippleContainerBorderRadius={30}
             rippleOpacity={0.1}>
             <DatePickerText>확인</DatePickerText>
+          </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setDateModalVisible(false);
+              setEDUCATION_DATE(
+                moment(initEDUCATION_DATE).format('YYYY-MM-DD'),
+              );
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
           </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>

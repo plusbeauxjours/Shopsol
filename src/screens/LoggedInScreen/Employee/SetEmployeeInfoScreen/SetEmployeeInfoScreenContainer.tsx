@@ -8,7 +8,6 @@ import SetEmployeeInfoScreenPresenter from './SetEmployeeInfoScreenPresenter';
 import {setSplashVisible} from '~/redux/splashSlice';
 import {updateEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import api from '~/constants/LoggedInApi';
-import utils from '~/constants/utils';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -56,6 +55,7 @@ export default ({route: {params}}) => {
 
   ///// STEP 1 /////
   const [click1, setClick1] = useState<boolean>(false);
+  const [initStartDay, setInitStartDay] = useState<any>(moment());
   const [startDay, setStartDay] = useState<any>(moment());
   const [startDaySet, setStartDaySet] = useState<boolean>(START ? true : false);
   const [endDay, setEndDay] = useState<any>(moment());
@@ -495,6 +495,7 @@ export default ({route: {params}}) => {
         setMINPAY(data.resultdata.MINPAY);
         if (from === 'EmployeeInfoScreen') {
           setStartDay(data.result.START);
+          setInitStartDay(data.result.START);
           setEndDay(data.result.END ? data.result.END : '');
           setEndDayCheck(data.result.END ? false : true);
 
@@ -569,6 +570,7 @@ export default ({route: {params}}) => {
       payDay={payDay}
       setPayDay={setPayDay}
       startDay={startDay}
+      initStartDay={initStartDay}
       setStartDay={setStartDay}
       endDay={endDay}
       setEndDay={setEndDay}
@@ -669,6 +671,8 @@ export default ({route: {params}}) => {
       CALCULATE_DAY={CALCULATE_DAY}
       MANAGER_CALLED={MANAGER_CALLED}
       scrollRef={scrollRef}
+      probationDATEstate={params?.probationDATE}
+      probationPercentstate={params?.probationPercent}
     />
   );
 };

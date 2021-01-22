@@ -38,7 +38,9 @@ export default ({route: {params}}) => {
   const [EDUCATION_DATE, setEDUCATION_DATE] = useState<any>(
     moment(params?.EDUCATION_DATE) || moment(),
   ); // 교육일시 / 검진일
-  const [EDUCATION_DATE_SET, setEDUCATION_DATE_SET] = useState<boolean>(false);
+  const [initEDUCATION_DATE, setInitEDUCATION_DATE] = useState<any>(
+    moment(params?.EDUCATION_DATE) || moment(),
+  );
   const [EDUCATION_TYPE, setEDUCATION_TYPE] = useState<'online' | 'offline'>(
     params?.EDUCATION_TYPE || 'online',
   ); // 교육구분
@@ -231,6 +233,13 @@ export default ({route: {params}}) => {
             '-' +
             daystr[0].replace(' ', ''),
         );
+        setInitEDUCATION_DATE(
+          yearstr[0] +
+            '-' +
+            monthstr[0].replace(' ', '') +
+            '-' +
+            daystr[0].replace(' ', ''),
+        );
         setBusinesstype(data.businesstype);
         setEDUCATION_TYPE(data.EDUCATION_TYPE);
       }
@@ -274,6 +283,7 @@ export default ({route: {params}}) => {
       setStorename={setStorename}
       storename={storename}
       EDUCATION_DATE={EDUCATION_DATE}
+      initEDUCATION_DATE={initEDUCATION_DATE}
       setEDUCATION_DATE={setEDUCATION_DATE}
       EDUCATION_TYPE={EDUCATION_TYPE}
       setBusinesstype={setBusinesstype}
@@ -288,8 +298,6 @@ export default ({route: {params}}) => {
       takePictureFn={takePictureFn}
       checkOrcFn={checkOrcFn}
       confirmModal={confirmModal}
-      EDUCATION_DATE_SET={EDUCATION_DATE_SET}
-      setEDUCATION_DATE_SET={setEDUCATION_DATE_SET}
     />
   );
 };

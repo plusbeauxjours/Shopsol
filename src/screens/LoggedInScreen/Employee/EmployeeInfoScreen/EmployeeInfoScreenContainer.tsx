@@ -288,6 +288,8 @@ export default ({route: {params}}) => {
       mobileNo: params?.data.MobileNo,
       START: data?.START,
       END: data?.END,
+      probationDATE: data?.probationDATE,
+      probationPercent: data?.probationPercent,
     });
   };
 

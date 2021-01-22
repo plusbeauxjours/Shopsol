@@ -207,6 +207,7 @@ export default ({route: {params}}) => {
       isDateModalVisible={isDateModalVisible}
       setIsDateModalVisible={setIsDateModalVisible}
       date={date}
+      initDate={params?.date}
       setDate={setDate}
       title={title}
       setTitle={setTitle}
