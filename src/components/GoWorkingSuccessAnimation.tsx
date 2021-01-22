@@ -12,6 +12,7 @@ import styleGuide from '~/constants/styleGuide';
 const BigText = styled.Text`
   color: #000;
   font-size: 24px;
+  text-align: center;
 `;
 const Text = styled.Text`
   color: #000;
@@ -30,8 +31,10 @@ const View = styled.View`
 `;
 
 const Touchable = styled(Ripple)`
+  position: absolute;
+  bottom: 0;
   width: 80%;
-  height: 60px;
+  height: 50px;
   align-items: center;
   justify-content: center;
   border-radius: 30px;
@@ -40,9 +43,12 @@ const Touchable = styled(Ripple)`
   border-color: ${styleGuide.palette.primary};
 `;
 
+const WhiteSpace = styled.View`
+  height: 15px;
+`;
+
 const TextBox = styled.View`
   padding: 0 10px;
-  margin-top: 70px;
   align-items: center;
 `;
 
@@ -83,12 +89,10 @@ export default ({
       />
       <View>
         <TextBox>
-          <BigText style={{textAlign: 'center'}}>
-            {MEMBER_NAME}님, {STORE_NAME}점에
-          </BigText>
-          <BigText style={{textAlign: 'center'}}>
-            무사히 {actionTYPE}하였습니다.
-          </BigText>
+          <BigText>{MEMBER_NAME}님, </BigText>
+          <BigText>{STORE_NAME}점에</BigText>
+          <BigText>무사히 {actionTYPE}하였습니다.</BigText>
+          <WhiteSpace />
           <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>
         </TextBox>
         <Touchable

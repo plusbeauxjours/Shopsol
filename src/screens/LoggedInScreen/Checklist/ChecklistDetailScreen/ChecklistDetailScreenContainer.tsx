@@ -38,9 +38,21 @@ export default ({route: {params}}) => {
   const [imageIndex, setImageIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchData = async () => {
+  const onRefresh = () => {
     try {
-      dispatch(setSplashVisible({visible: true, text: '체크리스트'}));
+      setLoading(true);
+      fetchData();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchData = async (init = false) => {
+    try {
+      if (init) {
+        dispatch(setSplashVisible({visible: true, text: '체크리스트'}));
+      }
       const {data} = await api.getAllCheckSchedules({
         CHECK_SEQ,
         DATE,
@@ -138,6 +150,7 @@ export default ({route: {params}}) => {
         navigation.navigate('ChecklistSpecificationScreen', {
           data: data.result[0],
           scan: '1',
+          onRefresh,
         });
       }
     } catch (e) {
@@ -150,7 +163,7 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(true);
   }, []);
 
   return (

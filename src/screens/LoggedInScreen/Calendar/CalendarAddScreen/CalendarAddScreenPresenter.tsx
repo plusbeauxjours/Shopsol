@@ -406,7 +406,7 @@ export default ({
             </SelectedText>
             {timeSelected === index ? (
               <RenderWorkDayTouchable onPress={() => deleteColorFn(index)}>
-                <RemoveCircleIcon size={30} />
+                <RemoveCircleIcon />
               </RenderWorkDayTouchable>
             ) : (
               <EmptySpace />

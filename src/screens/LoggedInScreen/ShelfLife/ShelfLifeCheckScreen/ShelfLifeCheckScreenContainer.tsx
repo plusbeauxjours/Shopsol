@@ -326,6 +326,7 @@ export default () => {
   const onScroll = onScrollEvent({y});
 
   const handleBarCodeScanned = async (codenumber) => {
+    console.log(codenumber);
     await setBarCodeCameraModalOpen(false);
     setSearch(codenumber);
     setCodenumber(codenumber);

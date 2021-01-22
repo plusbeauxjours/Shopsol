@@ -415,7 +415,7 @@ export default ({
                     {timeListIndex === index ? (
                       <RenderWorkDayTouchable
                         onPress={() => removeTimeFn(index)}>
-                        <RemoveCircleIcon size={30} />
+                        <RemoveCircleIcon />
                       </RenderWorkDayTouchable>
                     ) : (
                       <EmptySpace />

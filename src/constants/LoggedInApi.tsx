@@ -123,9 +123,9 @@ export default {
     STORE: string,
     MEMBER_SEQ: string,
   ) =>
-    oldApi(
+    callApi(
       'get',
-      `/Employee/getNotice2?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&DATE=${DATE}&MEMBER_SEQ=${MEMBER_SEQ}`,
+      `/auth/getNotice?STORE_SEQ=${STORE_SEQ}&STORE=${STORE}&DATE=${DATE}&MEMBER_SEQ=${MEMBER_SEQ}`,
     ),
   setNoticeFavorite: (data: any) =>
     callApi('post', '/auth/setNoticeFavorite/', data),
@@ -237,4 +237,5 @@ export default {
     callApi('get', `/auth/getBarCode?codenumber=${codenumber}`),
   insertQR: (STORE_SEQ: string, QR_NUM: any) =>
     callApi('get', `/auth/insertQR?STORE_SEQ=${STORE_SEQ}&QR_NUM=${QR_NUM}`),
+  confirmQR: (data: any) => callApi('post', '/auth/sawQRMsg/', data),
 };

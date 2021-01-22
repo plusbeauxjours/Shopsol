@@ -216,6 +216,7 @@ export default ({
                     />
                     <CheckPasswordBtn
                       onPress={() => setIsPasswordSeen(!isPasswordSeen)}
+                      isEmpty={password.length == 0}
                       isPasswordSeen={isPasswordSeen}
                     />
                   </TextinputCase>
@@ -253,6 +254,7 @@ export default ({
                       onPress={() =>
                         setIsPasswordCheckSeen(!isPasswordCheckSeen)
                       }
+                      isEmpty={passwordCheck.length == 0}
                       isPasswordSeen={isPasswordCheckSeen}
                     />
                   </TextinputCase>

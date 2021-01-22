@@ -211,6 +211,7 @@ export default () => {
             '1',
             MEMBER_SEQ,
           );
+
           dispatch(setCHECKLIST_SHARE_STORE_SEQ(STORE_SEQ));
           dispatch(setCHECKLIST_SHARE_DATA1(dataA));
           const {data: dataB} = await api.getNotice(

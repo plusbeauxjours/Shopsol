@@ -10,6 +10,7 @@ import Ripple from 'react-native-material-ripple';
 
 import {NewBoxIcon, PinIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import {CommentIcon} from '../../../../constants/Icons';
 
 interface IsFavorite {
   isFavorite: boolean;
@@ -132,6 +133,19 @@ const BorderBox = styled.View`
   align-items: center;
 `;
 
+const IconContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+`;
+
+const IconText = styled.Text`
+  margin-left: 5px;
+  font-size: ${styleGuide.fontSize.small};
+  color: ${styleGuide.palette.primary};
+`;
+
 export default ({
   key,
   data,
@@ -179,6 +193,10 @@ export default ({
               <InfoText style={{color: 'black'}}>
                 &nbsp;-&nbsp;{decodeURI(data?.EMP_NAME)}
               </InfoText>
+              <IconContainer>
+                <CommentIcon />
+                <IconText>{data?.comment}</IconText>
+              </IconContainer>
             </AddressBox>
           </ContentBox>
           <ImageSection>

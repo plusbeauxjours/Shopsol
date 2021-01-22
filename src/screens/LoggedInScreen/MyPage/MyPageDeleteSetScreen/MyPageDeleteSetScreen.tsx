@@ -104,7 +104,6 @@ export default () => {
   };
 
   const submit = async () => {
-    ㅔ;
     try {
       dispatch(userLogout());
       navigation.reset({

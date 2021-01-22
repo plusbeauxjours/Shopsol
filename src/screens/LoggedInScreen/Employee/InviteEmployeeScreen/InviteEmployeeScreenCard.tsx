@@ -44,11 +44,7 @@ export default ({name, phone, isSearched}) => (
       <PhoneText>{phone}</PhoneText>
     </Phone>
     <IconContainer>
-      {isSearched ? (
-        <AddCircleIcon size={24} />
-      ) : (
-        <RemoveCircleIcon size={24} />
-      )}
+      {isSearched ? <AddCircleIcon /> : <RemoveCircleIcon />}
     </IconContainer>
   </Row>
 );

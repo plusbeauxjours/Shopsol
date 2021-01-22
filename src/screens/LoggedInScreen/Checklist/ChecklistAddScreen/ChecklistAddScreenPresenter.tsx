@@ -141,7 +141,7 @@ const Bold = styled.Text`
 `;
 
 const ChecklistItem = styled.View`
-  padding: 6px 10px;
+  padding: 6px 0px 6px 10px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -326,7 +326,7 @@ export default ({
               )}
               {LIST?.map((data, index) => (
                 <ChecklistItem key={index}>
-                  <Text isError={false}>{data}</Text>
+                  <Text style={{maxWidth: wp('100%') - 140}}>{data}</Text>
                   <Touchable
                     onPress={() => {
                       let value = JSON.parse(JSON.stringify(LIST));

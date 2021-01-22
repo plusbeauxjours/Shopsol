@@ -381,8 +381,7 @@ export default ({
                     value={search}
                   />
                   <CloseIconContainer
-                    onPress={(e) => {
-                      e.preventDefault();
+                    onPress={() => {
                       setSearch('');
                     }}>
                     <CloseCircleOutlineIcon
@@ -407,10 +406,10 @@ export default ({
                         ?.filter(
                           (i) =>
                             i.taskName
-                              .toLowerCase()
+                              ?.toLowerCase()
                               .includes(search.toLowerCase()) ||
                             i.taskMemo
-                              .toLowerCase()
+                              ?.toLowerCase()
                               .includes(search.toLowerCase()),
                         )
                         .map((item, index) => {

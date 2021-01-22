@@ -12,6 +12,7 @@ const Touchable = styled.TouchableOpacity`
 `;
 const IconContainer = styled.View`
   height: 25px;
+  justify-content: center;
 `;
 
 const Text = styled.Text`
@@ -41,7 +42,7 @@ export default () => {
         }, 1000);
       }}>
       <IconContainer>
-        <LogoutIcon size={24} color="white" />
+        <LogoutIcon size={20} color="white" />
       </IconContainer>
       <Text>로그아웃</Text>
     </Touchable>

@@ -43,9 +43,12 @@ const RenderDayTime = styled.View`
 `;
 
 const RenderWorkDayTouchable = styled.TouchableOpacity`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
   align-items: center;
   justify-content: center;
-  margin-left: 15px;
 `;
 
 const RenderDayTimeText = styled.Text<IsSelected>`
@@ -138,12 +141,11 @@ export default ({index, removeDayFn, timeList, timeListIndex, originalDay}) => {
       </RenderDuration>
       {flag && isSelected && (
         <RenderWorkDayTouchable
-          style={{marginLeft: 40}}
           onPress={() => {
             setIsSelected(false);
             removeDayFn(originalDay);
           }}>
-          <RemoveCircleIcon size={22} />
+          <RemoveCircleIcon />
         </RenderWorkDayTouchable>
       )}
     </RenderDayRow>

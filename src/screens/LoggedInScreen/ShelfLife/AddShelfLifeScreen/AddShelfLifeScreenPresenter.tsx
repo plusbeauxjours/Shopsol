@@ -417,6 +417,8 @@ export default ({
                     maxLength={15}
                     multiline={true}
                     style={{
+                      padding: 0,
+                      height: 30,
                       fontSize: styleGuide.fontSize.large,
                       fontWeight: '600',
                       borderWidth: 0,
@@ -433,13 +435,19 @@ export default ({
                   onPress={() => setIsDateModalVisible(true)}>
                   {!shelfLifeDateSet ? (
                     <GreyText
-                      style={{fontSize: styleGuide.fontSize.large,color: styleGuide.palette.lightGreyColor}}>
+                      style={{
+                        fontSize: styleGuide.fontSize.large,
+                        color: styleGuide.palette.lightGreyColor,
+                      }}>
                       기한
                     </GreyText>
                   ) : (
                     <DateRow>
                       <GreyText
-                        style={{fontSize: styleGuide.fontSize.large,color: styleGuide.palette.lightGreyColor}}>
+                        style={{
+                          fontSize: styleGuide.fontSize.large,
+                          color: styleGuide.palette.lightGreyColor,
+                        }}>
                         기한
                       </GreyText>
                       <DateText>
@@ -460,6 +468,8 @@ export default ({
                     autoCorrect={false}
                     multiline={true}
                     style={{
+                      padding: 0,
+                      top: 0,
                       fontSize: styleGuide.fontSize.middle,
                       width: '100%',
                       paddingTop: 10,

@@ -66,6 +66,9 @@ export default ({route: {params}}) => {
   const [initLoading, setInitLoading] = useState<boolean>(
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
+  const [hasConfirmed, setHasConfirmed] = useState<boolean>(
+    params?.hasConfirmed == '1',
+  );
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const onRefresh = async () => {
@@ -218,6 +221,23 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  const confirmModal = () => {
+    const params = {
+      alertType: 'confirm',
+      title: '',
+      content: '텍스트텍스트텍스트?',
+      cancelButtonText: '취소',
+      okButtonText: '확인',
+      okCallback: async () => {
+        setHasConfirmed(true);
+        const {data} = await api.confirmQR({STORE_SEQ});
+        utils.handleCameraPermission(setQrCameraModalOpen2);
+      },
+    };
+    dispatch(setAlertInfo(params));
+    dispatch(setAlertVisible(true));
+  };
+
   // VERSION
   const checkVersion = async () => {
     try {
@@ -345,6 +365,7 @@ export default ({route: {params}}) => {
 
   // 출퇴근QR 스캔
   const handleBarCodeScanned1 = (codenumber) => {
+    console.log(codenumber);
     if (!codenumber || STORE_SEQ != codenumber) {
       setQrCameraModalOpen1(false);
       setTimeout(() => {
@@ -357,9 +378,9 @@ export default ({route: {params}}) => {
 
   // 사업장QR 스캔
   const handleBarCodeScanned2 = async (codenumber) => {
+    console.log(codenumber, /^wes/.test(codenumber));
     await setQrCameraModalOpen2(false);
-    console.log(codenumber, !/^wes/.test(codenumber));
-    if (!/^wes/.test(codenumber)) {
+    if (/^wes/.test(codenumber)) {
       try {
         const {data} = await api.insertQR(STORE_SEQ, codenumber);
         if (data.message !== 'SUCCESS') {
@@ -375,6 +396,8 @@ export default ({route: {params}}) => {
         setShowPictureModalOpen(false);
         setQrCameraMode(false);
       }
+    } else {
+      alertModal('', '샵솔에서 제공한 QR코드가 아닙니다.');
     }
   };
 
@@ -520,6 +543,8 @@ export default ({route: {params}}) => {
       onRefresh={onRefresh}
       setLat={setLat}
       setLong={setLong}
+      hasConfirmed={hasConfirmed}
+      confirmModal={confirmModal}
     />
   );
 };

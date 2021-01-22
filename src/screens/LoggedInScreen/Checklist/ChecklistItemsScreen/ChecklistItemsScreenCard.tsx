@@ -18,6 +18,7 @@ const Touchable = styled(Ripple)<IContain>`
   flex-direction: row;
   border-radius: 20px;
   padding: 20px;
+  padding-bottom: 25px;
   margin-bottom: 20px;
   border-width: ${(props) => (props.isContainedEmp ? 0 : 1)}px;
   border-color: ${(props) =>
@@ -175,7 +176,7 @@ export default ({key, date, data, EMP_SEQ}) => {
                   <CalendarText>체크이상</CalendarText>
                 </Row>
               )}
-              {data.CHECK_TITLE && data.CS_SEQ && (
+              {data.CHECK_TITLE?.length > 0 && data.CHECK_TITLE && data.CS_SEQ && (
                 <Row>
                   <EllipseIcon size={8} color={'#FEBF40'} />
                   <CalendarText>특이사항</CalendarText>
@@ -189,7 +190,11 @@ export default ({key, date, data, EMP_SEQ}) => {
           <>
             <CheckpointBox>
               <ChecktimeText>체크시간</ChecktimeText>
-              <GreyText>{data.CHECK_TIME}</GreyText>
+              <GreyText>
+                {data?.CHECK_TIME?.split('-')
+                  .join('.')
+                  .slice(0, data?.CHECK_TIME?.length - 3)}
+              </GreyText>
               <IconContainer>
                 <CheckMarkIcon size={12} color={'white'} />
               </IconContainer>

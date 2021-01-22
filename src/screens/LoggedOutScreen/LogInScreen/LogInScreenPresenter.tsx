@@ -1,4 +1,5 @@
 import React from 'react';
+import {Keyboard} from 'react-native';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
@@ -71,13 +72,13 @@ export default ({
 }) => {
   return (
     <BackGround>
-      <Container>
-        <KeyboardAwareScrollView
-          extraScrollHeight={100}
-          keyboardShouldPersistTaps={'handled'}
-          keyboardDismissMode="on-drag"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{alignItems: 'center'}}>
+      <KeyboardAwareScrollView
+        extraScrollHeight={100}
+        keyboardShouldPersistTaps={'handled'}
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{alignItems: 'center'}}>
+        <Container>
           <FastImage
             style={{height: 200, width: 200, marginVertical: 50}}
             source={require('../../../assets/images/shopSol.png')}
@@ -122,13 +123,17 @@ export default ({
             />
             <WhiteSpace />
             <Space>
-              <Touchable onPress={() => gotoFind()}>
+              <Touchable
+                onPress={() => {
+                  Keyboard.dismiss;
+                  gotoFind();
+                }}>
                 <UnderLineText>비밀번호 찾기</UnderLineText>
               </Touchable>
             </Space>
           </TextInputBox>
-        </KeyboardAwareScrollView>
-      </Container>
+        </Container>
+      </KeyboardAwareScrollView>
     </BackGround>
   );
 };

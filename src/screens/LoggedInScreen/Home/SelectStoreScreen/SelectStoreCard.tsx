@@ -52,7 +52,7 @@ const NameText = styled.Text`
 
 const ArrowBox = styled.View`
   position: absolute;
-  right: 10px;
+  right: 15px;
   align-items: center;
   justify-content: center;
 `;

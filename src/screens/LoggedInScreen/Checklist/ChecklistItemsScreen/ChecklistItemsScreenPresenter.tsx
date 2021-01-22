@@ -312,18 +312,30 @@ export default ({
                 )
               ) : (
                 <>
-                  {CHECKLIST_DATA?.filter((i) => i.CHECK_TYPE == '1').map(
-                    (data, index) => {
-                      return (
-                        <ChecklistItemsScreenCard
-                          key={index}
-                          date={date}
-                          data={data}
-                          EMP_SEQ={EMP_SEQ}
-                        />
-                      );
-                    },
-                  )}
+                  {CHECKLIST_DATA?.filter(
+                    (i) => !i?.EMP_SEQ || i?.EMP_SEQ?.includes(EMP_SEQ),
+                  ).map((data, index) => {
+                    return (
+                      <ChecklistItemsScreenCard
+                        key={index}
+                        date={date}
+                        data={data}
+                        EMP_SEQ={EMP_SEQ}
+                      />
+                    );
+                  })}
+                  {CHECKLIST_DATA?.filter(
+                    (i) => i?.EMP_SEQ && !i?.EMP_SEQ?.includes(EMP_SEQ),
+                  ).map((data, index) => {
+                    return (
+                      <ChecklistItemsScreenCard
+                        key={index}
+                        date={date}
+                        data={data}
+                        EMP_SEQ={EMP_SEQ}
+                      />
+                    );
+                  })}
                 </>
               )}
             </>
@@ -343,15 +355,15 @@ export default ({
         <CalendarTitle>
           <CalendarTextBox>
             <Row>
-              <EllipseIcon size={8} color={'#0D4F8A'} />
+              <EllipseIcon size={8} color={'#c8d2d1'} />
               <CalendarText>미체크</CalendarText>
             </Row>
             <Row>
-              <EllipseIcon size={8} color={'#984B19'} />
+              <EllipseIcon size={8} color={'#ec7272'} />
               <CalendarText>체크이상</CalendarText>
             </Row>
             <Row>
-              <EllipseIcon size={8} color={'#AACE36'} />
+              <EllipseIcon size={8} color={'#67b956'} />
               <CalendarText>체크정상</CalendarText>
             </Row>
           </CalendarTextBox>

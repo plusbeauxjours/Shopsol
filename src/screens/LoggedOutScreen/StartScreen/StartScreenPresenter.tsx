@@ -49,10 +49,6 @@ const Footer = styled.View`
   bottom: 0;
 `;
 
-const WhiteSpace = styled.View`
-  height: 10px;
-`;
-
 const LoginButton = styled(Ripple)`
   margin-top: 30px;
   width: 200px;

@@ -124,8 +124,8 @@ export const LocationIcon: React.FC<IProps> = ({size, color}) => (
 );
 
 export const LogoutIcon: React.FC<IProps> = ({size, color}) => (
-  <Ionicons
-    name={'log-out-outline'}
+  <MaterialCommunityIcons
+    name={'logout'}
     size={size ?? 14}
     color={color ?? styleGuide.palette.primary}
   />
@@ -162,6 +162,15 @@ export const BoldAddIcon: React.FC<IProps> = ({size, color}) => (
     color={color ?? styleGuide.palette.primary}
   />
 );
+
+export const CommentIcon: React.FC<IProps> = ({size, color}) => (
+  <MaterialCommunityIcons
+    name={'comment-multiple-outline'}
+    size={size ?? 14}
+    color={color ?? styleGuide.palette.primary}
+  />
+);
+
 export const BoldRemoveIcon: React.FC<IProps> = ({size, color}) => (
   <MaterialCommunityIcons
     name={'minus'}
@@ -169,6 +178,7 @@ export const BoldRemoveIcon: React.FC<IProps> = ({size, color}) => (
     color={color ?? styleGuide.palette.primary}
   />
 );
+
 export const CheckMarkIcon: React.FC<IProps> = ({size, color}) => (
   <MaterialCommunityIcons
     name={'check-bold'}
@@ -313,7 +323,7 @@ export const PersonAddIcon: React.FC<IProps> = ({size, color}) => (
 export const RemoveCircleIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={'remove-circle-outline'}
-    size={size ?? 30}
+    size={size ?? 22}
     color={color ?? '#B91C1B'}
   />
 );

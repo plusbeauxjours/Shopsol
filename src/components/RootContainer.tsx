@@ -54,37 +54,38 @@ export default () => {
     <NavigationContainer
       ref={navigationRef}
       onReady={() =>
-        (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
+        (routeNameRef.current = navigationRef.current.getCurrentRoute()?.name)
       }
       onStateChange={() => {
         const previousRouteName = routeNameRef.current;
-        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+        const currentRouteName = navigationRef?.current?.getCurrentRoute()
+          ?.name;
         if (
           previousRouteName !== currentRouteName &&
-          navigationRef.current.getCurrentOptions().title
+          navigationRef.current.getCurrentOptions()?.title
         ) {
           console.log(
             '===================',
-            navigationRef.current.getCurrentOptions().title,
+            navigationRef.current.getCurrentOptions()?.title,
             '===================',
           );
           firebase
             .analytics()
-            .setCurrentScreen(navigationRef.current.getCurrentOptions().title);
+            .setCurrentScreen(navigationRef.current.getCurrentOptions()?.title);
         } else {
           if (
-            navigationRef.current.getCurrentRoute().name !==
+            navigationRef.current.getCurrentRoute()?.name !==
               'ChecklistShareUpdateScreen' &&
-            navigationRef.current.getCurrentRoute().name !== '특이사항' &&
-            navigationRef.current.getCurrentRoute().name !== '지시사항' &&
-            navigationRef.current.getCurrentRoute().name !==
+            navigationRef.current.getCurrentRoute()?.name !== '특이사항' &&
+            navigationRef.current.getCurrentRoute()?.name !== '지시사항' &&
+            navigationRef.current.getCurrentRoute()?.name !==
               'ChecklistShareItemScreen' &&
-            navigationRef.current.getCurrentRoute().name !==
+            navigationRef.current.getCurrentRoute()?.name !==
               'ChecklistShareInsertScreen'
           ) {
             console.log(
               'NO TITLE *********************',
-              navigationRef.current.getCurrentRoute().name,
+              navigationRef.current.getCurrentRoute()?.name,
               '********************* HERE',
             );
           }

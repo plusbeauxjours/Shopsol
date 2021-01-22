@@ -429,8 +429,7 @@ export default ({
                     value={search}
                   />
                   <CloseIconContainer
-                    onPress={(e) => {
-                      e.preventDefault();
+                    onPress={() => {
                       setSearch('');
                       setCodenumber('');
                     }}>
@@ -486,13 +485,13 @@ export default ({
                         ?.filter(
                           (i) =>
                             i.shelfLifeName
-                              .toLowerCase()
+                              ?.toLowerCase()
                               .includes(search.toLowerCase()) ||
                             i.shelfLifeMemo
-                              .toLowerCase()
+                              ?.toLowerCase()
                               .includes(search.toLowerCase()) ||
                             i.shelfLifeBarcode
-                              .toLowerCase()
+                              ?.toLowerCase()
                               .includes(search.toLowerCase()),
                         )
                         .map((item, index) => {

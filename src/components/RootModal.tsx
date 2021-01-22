@@ -226,8 +226,7 @@ export default ({alert}) => {
               </HalfBtnLeft>
               <HalfBtnRight
                 warning={alert.warning}
-                onPress={(e) => {
-                  e.preventDefault();
+                onPress={() => {
                   setTimeout(() => {
                     onOKPress();
                   }, 200);

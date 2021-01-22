@@ -17,6 +17,7 @@ const Touchable = styled.TouchableOpacity`
 
 const IconContainer = styled.View`
   height: 25px;
+  justify-content: center;
 `;
 
 const Text = styled.Text`
@@ -37,7 +38,7 @@ export default () => {
             navigation.navigate('HelpModalScreen');
           }}>
           <IconContainer>
-            <HelpIcon size={20} />
+            <HelpIcon size={18} />
           </IconContainer>
           <Text>도움말</Text>
         </Touchable>
@@ -47,7 +48,7 @@ export default () => {
           navigation.navigate('MyPageMainScreen');
         }}>
         <IconContainer>
-          <SettingIcon size={20} color="white" />
+          <SettingIcon size={18} color="white" />
         </IconContainer>
         <Text>설정</Text>
       </Touchable>

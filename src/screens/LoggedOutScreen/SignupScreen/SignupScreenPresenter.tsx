@@ -351,7 +351,6 @@ export default ({
                   secureTextEntry={isPasswordSeen ? false : true}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  keyboardType={'email-address'}
                 />
                 <CheckPasswordBtn
                   onPress={() => setIsPasswordSeen(!isPasswordSeen)}
@@ -396,7 +395,6 @@ export default ({
                   }}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  keyboardType={'email-address'}
                 />
                 <CheckPasswordBtn
                   onPress={() => setIsPasswordCheckSeen(!isPasswordCheckSeen)}

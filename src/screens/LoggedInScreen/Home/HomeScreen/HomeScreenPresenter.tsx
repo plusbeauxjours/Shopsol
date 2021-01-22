@@ -22,6 +22,7 @@ import {
   BoldRemoveIcon,
   CloseIcon,
   QrCodeIcon,
+  LocationIcon,
 } from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
@@ -82,8 +83,8 @@ const IconContainer = styled.TouchableOpacity`
 `;
 
 const QrIconContainer = styled(IconContainer)<IHasQr>`
-  background-color: ${(props) =>
-    props.hasQr ? styleGuide.palette.tertiary : styleGuide.palette.redColor};
+  flex-direction: row;
+  background-color: ${styleGuide.palette.tertiary};
 `;
 
 const MenuCnt = styled(Ripple)`
@@ -103,7 +104,9 @@ const NewCnt = styled.View`
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  background-color: ${styleGuide.palette.tertiary}; ;
+  background-color: white;
+  border-color: ${styleGuide.palette.tertiary};
+  border-width: 2px;
 `;
 
 const EyeIconContainer = styled(NewCnt)<IEye>`
@@ -116,12 +119,13 @@ const EyeIconContainer = styled(NewCnt)<IEye>`
 `;
 
 const NewCntText = styled.Text`
-  color: white;
+  color: ${styleGuide.palette.tertiary};
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
 const MenuBox = styled.View`
   padding: 10px;
+  padding-top: 0;
   background-color: white;
   flex: 1;
   align-items: center;
@@ -240,6 +244,7 @@ const BoxText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
   color: white;
   font-weight: ${styleGuide.fontWeight.bold};
+  justify-content: center;
 `;
 
 const BoxContainer = styled.View`
@@ -429,9 +434,10 @@ export default ({
   onRefresh,
   setLat,
   setLong,
+  hasConfirmed,
+  confirmModal,
 }) => {
   const navigation = useNavigation();
-
   const MenuCntContainer = ({
     index = 0,
     type = 'store',
@@ -679,6 +685,7 @@ export default ({
               {GPS == '0' ? (
                 <BoxContainer>
                   <Box
+                    style={{flexDirection: 'row'}}
                     onPress={() => {
                       setIsWorkingMode(false);
                       setSucessModalOpen(false);
@@ -687,20 +694,24 @@ export default ({
                       setWorkingTYPE('QR');
                     }}
                     hasGPS={GPS !== '0'}>
-                    <BoxText>QR출퇴근하기</BoxText>
+                    <QrCodeIcon color={'white'} size={22} />
+                    <BoxText style={{marginLeft: 5}}>QR출퇴근하기</BoxText>
                   </Box>
                 </BoxContainer>
               ) : (
                 <BoxContainer>
                   <Box
+                    style={{flexDirection: 'row'}}
                     onPress={() => {
                       utils.handleCameraPermission(setQrCameraModalOpen1);
                       setWorkingTYPE('QR');
                     }}
                     hasGPS={GPS !== '0'}>
-                    <BoxText>QR출퇴근하기</BoxText>
+                    <QrCodeIcon color={'white'} size={22} />
+                    <BoxText style={{marginLeft: 5}}>QR출퇴근하기</BoxText>
                   </Box>
                   <Box
+                    style={{flexDirection: 'row'}}
                     onPress={() => {
                       utils.handleLocationPermission(
                         setIsGpsVisible,
@@ -710,9 +721,8 @@ export default ({
                       setWorkingTYPE('GPS');
                     }}
                     hasGPS={GPS !== '0'}>
-                    <BoxText>
-                      {isGpsVisible ? 'GPS닫기' : 'GPS출퇴근하기'}
-                    </BoxText>
+                    <LocationIcon color={'white'} size={22} />
+                    <BoxText style={{marginLeft: 5}}>GPS출퇴근하기</BoxText>
                   </Box>
                 </BoxContainer>
               )}
@@ -725,19 +735,42 @@ export default ({
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
                 </MenuTitleArea>
-                <QrIconContainer
-                  hasQr={
-                    (initLoading && QR_Num) ||
-                    (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                  }
-                  onPress={() => {
-                    (initLoading && QR_Num) ||
-                    (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                      ? setShowPictureModalOpen(true)
-                      : utils.handleCameraPermission(setQrCameraModalOpen2);
-                  }}>
-                  <QrCodeIcon color={'white'} size={18} />
-                </QrIconContainer>
+                {!initLoading &&
+                  (hasConfirmed ? (
+                    <QrIconContainer
+                      hasQr={true}
+                      onPress={() => {
+                        (initLoading && QR_Num) ||
+                        (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                          ? setShowPictureModalOpen(true)
+                          : utils.handleCameraPermission(setQrCameraModalOpen2);
+                      }}>
+                      <QrCodeIcon color={'white'} size={18} />
+                    </QrIconContainer>
+                  ) : (
+                    <>
+                      <LottieView
+                        style={{
+                          top: -12,
+                          right: -6,
+                          width: 150,
+                          height: 150,
+                          position: 'absolute',
+                          zIndex: -1,
+                        }}
+                        source={require('../../../../assets/animations/qrLoading.json')}
+                        loop
+                        autoPlay
+                      />
+                      <QrIconContainer
+                        style={{width: 90}}
+                        hasQr={false}
+                        onPress={() => confirmModal()}>
+                        <QrCodeIcon color={'white'} size={18} />
+                        <WhiteText style={{marginLeft: 5}}>등록하기</WhiteText>
+                      </QrIconContainer>
+                    </>
+                  ))}
               </SpaceRow>
               <Container>
                 <MenuCntContainer
@@ -845,19 +878,46 @@ export default ({
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 직원관리</Bold>
                     </MenuTitleArea>
-                    <QrIconContainer
-                      hasQr={
-                        (initLoading && QR_Num) ||
-                        (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                      }
-                      onPress={() => {
-                        (initLoading && QR_Num) ||
-                        (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                          ? setShowPictureModalOpen(true)
-                          : utils.handleCameraPermission(setQrCameraModalOpen2);
-                      }}>
-                      <QrCodeIcon color={'white'} size={18} />
-                    </QrIconContainer>
+                    {!initLoading &&
+                      (hasConfirmed ? (
+                        <QrIconContainer
+                          hasQr={true}
+                          onPress={() => {
+                            (initLoading && QR_Num) ||
+                            (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                              ? setShowPictureModalOpen(true)
+                              : utils.handleCameraPermission(
+                                  setQrCameraModalOpen2,
+                                );
+                          }}>
+                          <QrCodeIcon color={'white'} size={18} />
+                        </QrIconContainer>
+                      ) : (
+                        <>
+                          <LottieView
+                            style={{
+                              top: -12,
+                              right: -6,
+                              width: 150,
+                              height: 150,
+                              position: 'absolute',
+                              zIndex: -1,
+                            }}
+                            source={require('../../../../assets/animations/qrLoading.json')}
+                            loop
+                            autoPlay
+                          />
+                          <QrIconContainer
+                            style={{width: 90}}
+                            hasQr={false}
+                            onPress={() => confirmModal()}>
+                            <QrCodeIcon color={'white'} size={18} />
+                            <WhiteText style={{marginLeft: 5}}>
+                              등록하기
+                            </WhiteText>
+                          </QrIconContainer>
+                        </>
+                      ))}
                   </SpaceRow>
                   {initLoading ? (
                     <Container style={{justifyContent: 'center'}}>
@@ -1324,6 +1384,7 @@ export default ({
           />
         ) : failModalOpen ? (
           <GoWorkingFailAnimation
+            AVATAR={AVATAR}
             STORE_NAME={STORE_NAME}
             MEMBER_NAME={MEMBER_NAME}
             setFailModalOpen={setFailModalOpen}
@@ -1353,7 +1414,6 @@ export default ({
           </BoxContainer>
         )}
       </Modal>
-      {/* DONE */}
       <Modal
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
@@ -1442,8 +1502,7 @@ export default ({
                   <ConfirmHalfTextLeft>취소</ConfirmHalfTextLeft>
                 </ConfirmHalfBtnLeft>
                 <ConfirmHalfBtnRight
-                  onPress={(e) => {
-                    e.preventDefault();
+                  onPress={() => {
                     utils.handleCameraPermission(setQrCameraMode);
                   }}
                   rippleColor={styleGuide.palette.secondary}

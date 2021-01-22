@@ -193,7 +193,7 @@ export default ({route: {params}}) => {
         return alertModal('체크리스트 항목을 모두 체크해주세요.');
       }
     }
-    if (badflag === true && CHECK_TITLE == null) {
+    if (badflag === true && (CHECK_TITLE == null || CHECK_TITLE.length == 0)) {
       return alertModal('체크리스트 항목에 이상이 있을시 메모를 입력해주세요.');
     }
     if (
@@ -270,6 +270,7 @@ export default ({route: {params}}) => {
           MEMBER_SEQ,
         });
         if (data.result === 'SUCCESS') {
+          params?.onRefresh();
           dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
         }
       } catch (e) {

@@ -26,9 +26,7 @@ export default ({route: {params}}) => {
   const {MEMBER_SEQ, STORE, STORELIST_DATA} = useSelector(
     (state: any) => state.userReducer,
   );
-  const {MANAGER_CALLED, EMP_SEQ} = useSelector(
-    (state: any) => state.storeReducer,
-  );
+
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -56,13 +54,8 @@ export default ({route: {params}}) => {
   const gotoHomeScreen = (data) => {
     if (STORE == 0 && data.TYPE == '0') {
       alertModal('합류승인 대기중입니다.');
+      console.log('data', data);
     } else {
-      dispatch(
-        selectSTORE({
-          STORE_SEQ: data.STORE_SEQ,
-          STORE_NAME: data.NAME,
-        }),
-      );
       navigation.navigate('HomeScreen', {
         STORE_SEQ: data.STORE_SEQ,
         STORE,
@@ -71,7 +64,14 @@ export default ({route: {params}}) => {
         TOTAL_COUNT: data.emplist,
         GPS: data.GPS,
         QR_Num: data.QR_Num,
+        hasConfirmed: data.hasConfirmedQr,
       });
+      dispatch(
+        selectSTORE({
+          STORE_SEQ: data.STORE_SEQ,
+          STORE_NAME: data.NAME,
+        }),
+      );
     }
   };
 

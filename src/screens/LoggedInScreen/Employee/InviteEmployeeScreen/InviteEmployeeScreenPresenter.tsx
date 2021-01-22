@@ -10,7 +10,6 @@ import Ripple from 'react-native-material-ripple';
 import InviteEmployeeScreenCard from './InviteEmployeeScreenCard';
 import {HelpCircleIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
-import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 import LottieView from 'lottie-react-native';
 
@@ -200,7 +199,7 @@ const HelpText = styled.Text`
   color: white;
   margin-bottom: 20px;
   text-align: left;
-  margin-left: 80px;
+  margin-left: 120px;
   margin-top: 5px;
 `;
 
@@ -215,6 +214,7 @@ const EmptyText = styled.Text`
   color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
 `;
+
 export default ({
   explainModal,
   setName,
@@ -334,6 +334,8 @@ export default ({
         }}
         style={{
           flex: 1,
+          margin: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
           justifyContent: 'center',
           alignItems: 'center',
         }}>

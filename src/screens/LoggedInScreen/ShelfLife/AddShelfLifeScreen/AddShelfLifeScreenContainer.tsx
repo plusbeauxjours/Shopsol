@@ -232,6 +232,7 @@ export default ({route: {params}}) => {
   };
 
   const handleBarCodeScanned = async (codenumber) => {
+    console.log(codenumber);
     await setBarCodeCameraModalOpen(false);
     if (!codenumber) {
       setTimeout(() => {
