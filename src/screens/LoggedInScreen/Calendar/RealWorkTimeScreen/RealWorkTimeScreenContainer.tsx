@@ -43,7 +43,21 @@ export default ({route: {params}}) => {
       ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
       : moment(START?.substring(0, 5), 'kk:mm'),
   );
+  const [initStartTime, setInitStartTime] = useState<any>(
+    UPDATED_START
+      ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
+      : ATTENDANCE_TIME
+      ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
+      : moment(START?.substring(0, 5), 'kk:mm'),
+  );
   const [endTime, setEndTime] = useState<any>(
+    UPDATED_END
+      ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
+      : WORK_OFF_TIME
+      ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
+      : moment(END?.substring(0, 5), 'kk:mm'),
+  );
+  const [initEndTime, setInitEndTime] = useState<any>(
     UPDATED_END
       ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
       : WORK_OFF_TIME
@@ -58,9 +72,10 @@ export default ({route: {params}}) => {
   const [noEnd, setNoEnd] = useState<boolean>(
     !WORK_OFF_TIME && !UPDATED_END ? true : false,
   );
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -150,9 +165,27 @@ export default ({route: {params}}) => {
           ? moment(START?.substring(0, 5), 'kk:mm')
           : moment(),
       );
+      setInitStartTime(
+        ATTENDANCE_TIME
+          ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
+          : CHANGE_START
+          ? moment(CHANGE_START?.substring(0, 5), 'kk:mm')
+          : START
+          ? moment(START?.substring(0, 5), 'kk:mm')
+          : moment(),
+      );
     } else if (type == 'end') {
       setNoEnd(false);
       setEndTime(
+        WORK_OFF_TIME
+          ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
+          : CHANGE_END
+          ? moment(CHANGE_END?.substring(0, 5), 'kk:mm')
+          : END
+          ? moment(END?.substring(0, 5), 'kk:mm')
+          : moment(),
+      );
+      setInitEndTime(
         WORK_OFF_TIME
           ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
           : CHANGE_END
@@ -200,6 +233,10 @@ export default ({route: {params}}) => {
       noEnd={noEnd}
       AUTOWORKOFF={AUTOWORKOFF}
       REST_TIME={REST_TIME}
+      initStartTime={initStartTime}
+      setInitStartTime={setInitStartTime}
+      initEndTime={initEndTime}
+      setInitEndTime={setInitEndTime}
     />
   );
 };

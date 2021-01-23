@@ -360,7 +360,7 @@ export default ({
                     <SwipeRow
                       key={index}
                       rightOpenValue={-100}
-                      disableLeftSwipe={item.MEMBER_SEQ != ME && STORE == '0'}
+                      disableLeftSwipe={item.MEMBER_SEQ != ME}
                       disableRightSwipe={true}>
                       <BackBtn>
                         <RowTouchable
@@ -388,6 +388,7 @@ export default ({
                       </BackBtn>
                       <CommentBox
                         key={index}
+                        disabled={item.MEMBER_SEQ != ME}
                         isLast={CHECKLIST_SHARE_COMMENTS?.length - 1 == index}
                         onPress={() => {
                           openRow(rowMap[index]);
@@ -436,7 +437,7 @@ export default ({
                               </Text>
                             </Row>
                           </Column>
-                          {(item.MEMBER_SEQ == ME || STORE == '1') && (
+                          {item.MEMBER_SEQ == ME && (
                             <CommentIconContainer>
                               <MenuIcon />
                             </CommentIconContainer>

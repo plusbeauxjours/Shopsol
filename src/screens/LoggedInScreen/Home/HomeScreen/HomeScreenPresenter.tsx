@@ -735,42 +735,41 @@ export default ({
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
                 </MenuTitleArea>
-                {!initLoading &&
-                  (hasConfirmed ? (
+                {hasConfirmed ? (
+                  <QrIconContainer
+                    hasQr={true}
+                    onPress={() => {
+                      (initLoading && QR_Num) ||
+                      (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                        ? setShowPictureModalOpen(true)
+                        : utils.handleCameraPermission(setQrCameraModalOpen2);
+                    }}>
+                    <QrCodeIcon color={'white'} size={18} />
+                  </QrIconContainer>
+                ) : (
+                  <>
+                    <LottieView
+                      style={{
+                        top: -12,
+                        right: -6,
+                        width: 150,
+                        height: 150,
+                        position: 'absolute',
+                        zIndex: -1,
+                      }}
+                      source={require('../../../../assets/animations/qrLoading.json')}
+                      loop
+                      autoPlay
+                    />
                     <QrIconContainer
-                      hasQr={true}
-                      onPress={() => {
-                        (initLoading && QR_Num) ||
-                        (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                          ? setShowPictureModalOpen(true)
-                          : utils.handleCameraPermission(setQrCameraModalOpen2);
-                      }}>
+                      style={{width: 90}}
+                      hasQr={false}
+                      onPress={() => confirmModal()}>
                       <QrCodeIcon color={'white'} size={18} />
+                      <WhiteText style={{marginLeft: 5}}>등록하기</WhiteText>
                     </QrIconContainer>
-                  ) : (
-                    <>
-                      <LottieView
-                        style={{
-                          top: -12,
-                          right: -6,
-                          width: 150,
-                          height: 150,
-                          position: 'absolute',
-                          zIndex: -1,
-                        }}
-                        source={require('../../../../assets/animations/qrLoading.json')}
-                        loop
-                        autoPlay
-                      />
-                      <QrIconContainer
-                        style={{width: 90}}
-                        hasQr={false}
-                        onPress={() => confirmModal()}>
-                        <QrCodeIcon color={'white'} size={18} />
-                        <WhiteText style={{marginLeft: 5}}>등록하기</WhiteText>
-                      </QrIconContainer>
-                    </>
-                  ))}
+                  </>
+                )}
               </SpaceRow>
               <Container>
                 <MenuCntContainer
@@ -878,46 +877,45 @@ export default ({
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 직원관리</Bold>
                     </MenuTitleArea>
-                    {!initLoading &&
-                      (hasConfirmed ? (
+                    {hasConfirmed ? (
+                      <QrIconContainer
+                        hasQr={true}
+                        onPress={() => {
+                          (initLoading && QR_Num) ||
+                          (!initLoading && STORE_DATA.resultdata?.QR_Num)
+                            ? setShowPictureModalOpen(true)
+                            : utils.handleCameraPermission(
+                                setQrCameraModalOpen2,
+                              );
+                        }}>
+                        <QrCodeIcon color={'white'} size={18} />
+                      </QrIconContainer>
+                    ) : (
+                      <>
+                        <LottieView
+                          style={{
+                            top: -12,
+                            right: -6,
+                            width: 150,
+                            height: 150,
+                            position: 'absolute',
+                            zIndex: -1,
+                          }}
+                          source={require('../../../../assets/animations/qrLoading.json')}
+                          loop
+                          autoPlay
+                        />
                         <QrIconContainer
-                          hasQr={true}
-                          onPress={() => {
-                            (initLoading && QR_Num) ||
-                            (!initLoading && STORE_DATA.resultdata?.QR_Num)
-                              ? setShowPictureModalOpen(true)
-                              : utils.handleCameraPermission(
-                                  setQrCameraModalOpen2,
-                                );
-                          }}>
+                          style={{width: 90}}
+                          hasQr={false}
+                          onPress={() => confirmModal()}>
                           <QrCodeIcon color={'white'} size={18} />
+                          <WhiteText style={{marginLeft: 5}}>
+                            등록하기
+                          </WhiteText>
                         </QrIconContainer>
-                      ) : (
-                        <>
-                          <LottieView
-                            style={{
-                              top: -12,
-                              right: -6,
-                              width: 150,
-                              height: 150,
-                              position: 'absolute',
-                              zIndex: -1,
-                            }}
-                            source={require('../../../../assets/animations/qrLoading.json')}
-                            loop
-                            autoPlay
-                          />
-                          <QrIconContainer
-                            style={{width: 90}}
-                            hasQr={false}
-                            onPress={() => confirmModal()}>
-                            <QrCodeIcon color={'white'} size={18} />
-                            <WhiteText style={{marginLeft: 5}}>
-                              등록하기
-                            </WhiteText>
-                          </QrIconContainer>
-                        </>
-                      ))}
+                      </>
+                    )}
                   </SpaceRow>
                   {initLoading ? (
                     <Container style={{justifyContent: 'center'}}>
@@ -1436,7 +1434,14 @@ export default ({
           }
         }}>
         {qrConfirmLoading ? (
-          <WhiteText>로딩중</WhiteText>
+          <ConfirmBox>
+            <LottieView
+              style={{width: 150, height: 150, marginBottom: 40}}
+              source={require('../../../../assets/animations/loading.json')}
+              loop
+              autoPlay
+            />
+          </ConfirmBox>
         ) : qrCameraMode ? (
           <RNCamera
             style={{flex: 1, alignItems: 'center'}}

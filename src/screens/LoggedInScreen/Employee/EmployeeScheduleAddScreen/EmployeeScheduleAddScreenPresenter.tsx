@@ -185,16 +185,16 @@ const DatePickerText = styled.Text<IIsCancel>`
   text-align: center;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
+const DatePickerRoundView = styled.View<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
+  background-color: white;
+  justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
 const TextInputLine = styled.View<IIsBefore>`
@@ -250,7 +250,13 @@ export default ({
   endTimeSet,
   setEndTimeSet,
   initStartDate,
+  setInitStartDate,
   initEndDate,
+  setInitEndDate,
+  initStartTime,
+  setInitStartTime,
+  initEndTime,
+  setInitEndTime,
 }) => {
   const RenderWorkDayList = () => (
     <WorkTypeCheckSection>
@@ -442,8 +448,8 @@ export default ({
         </Container>
       </ScrollView>
       <Modal
-        onRequestClose={() => setIsStartTimeModalVisible(false)}
-        onBackdropPress={() => setIsStartTimeModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isStartTimeModalVisible}
         style={{
           margin: 0,
@@ -468,6 +474,7 @@ export default ({
           {startTimeSet ? (
             <DatePickerRoundBtn
               onPress={() => {
+                setInitStartTime(moment(startTime));
                 setIsStartTimeModalVisible(false);
                 setStartTimeSet(true);
               }}
@@ -483,11 +490,25 @@ export default ({
               <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
             </DatePickerRoundView>
           )}
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setStartTime(moment(initStartTime));
+              setStartTimeSet(false);
+              setIsStartTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
       <Modal
-        onRequestClose={() => setIsEndTimeModalVisible(false)}
-        onBackdropPress={() => setIsEndTimeModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isEndTimeModalVisible}
         style={{
           margin: 0,
@@ -512,6 +533,7 @@ export default ({
           {endTimeSet ? (
             <DatePickerRoundBtn
               onPress={() => {
+                setInitEndTime(moment(endTime));
                 setIsEndTimeModalVisible(false);
                 setEndTimeSet(true);
               }}
@@ -527,6 +549,20 @@ export default ({
               <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
             </DatePickerRoundView>
           )}
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setEndTime(moment(initEndTime));
+              setEndTimeSet(false);
+              setIsEndTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
       <Modal
@@ -552,7 +588,10 @@ export default ({
             }
           />
           <DatePickerRoundBtn
-            onPress={() => setIsStartDayModalVisible(false)}
+            onPress={() => {
+              setInitStartDate(moment(startDate).format('YYYY-MM-DD'));
+              setIsStartDayModalVisible(false);
+            }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
@@ -598,7 +637,10 @@ export default ({
             }
           />
           <DatePickerRoundBtn
-            onPress={() => setIsEndDayModalVisible(false)}
+            onPress={() => {
+              setInitEndDate(moment(endDate).format('YYYY-MM-DD'));
+              setIsEndDayModalVisible(false);
+            }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}

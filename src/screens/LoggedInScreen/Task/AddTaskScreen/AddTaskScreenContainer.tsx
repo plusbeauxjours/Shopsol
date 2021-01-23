@@ -20,6 +20,7 @@ export default ({route: {params}}) => {
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const [taskName, setTaskName] = useState<string>('');
   const [taskDate, setTaskDate] = useState<any>(moment());
+  const [initTaskDate, setInitTaskDate] = useState<any>(moment());
   const [taskDateSet, setTaskDateSet] = useState<boolean>(false);
   const [taskMemo, setTaskMemo] = useState<string>('');
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
@@ -79,6 +80,7 @@ export default ({route: {params}}) => {
     setCameraPictureLast(null);
     setTaskName('');
     setTaskDate(moment());
+    setInitTaskDate(moment());
     setTaskDateSet(false);
     setTaskMemo('');
     setList(buffer);
@@ -207,7 +209,9 @@ export default ({route: {params}}) => {
       taskMemo={taskMemo}
       setTaskMemo={setTaskMemo}
       taskDate={taskDate}
+      initTaskDate={initTaskDate}
       setTaskDate={setTaskDate}
+      setInitTaskDate={setInitTaskDate}
       isDateModalVisible={isDateModalVisible}
       setIsDateModalVisible={setIsDateModalVisible}
       cameraPictureLast={cameraPictureLast}

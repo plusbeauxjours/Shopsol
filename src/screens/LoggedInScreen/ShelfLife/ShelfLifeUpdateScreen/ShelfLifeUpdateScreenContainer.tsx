@@ -28,7 +28,9 @@ export default ({route: {params}}) => {
   const [shelfLifeDate, setShelfLifeDate] = useState<any>(
     moment(params?.shelfLifeDate),
   );
-
+  const [initShelfLifeDate, setInitShelfLifeDate] = useState<any>(
+    moment(params?.shelfLifeDate),
+  );
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(
     params?.shelfLifeImage || null,
   );
@@ -283,6 +285,8 @@ export default ({route: {params}}) => {
       setShelfLifeName={setShelfLifeName}
       shelfLifeDate={shelfLifeDate}
       setShelfLifeDate={setShelfLifeDate}
+      initShelfLifeDate={initShelfLifeDate}
+      setInitShelfLifeDate={setInitShelfLifeDate}
       shelfLifeMemo={shelfLifeMemo}
       setShelfLifeMemo={setShelfLifeMemo}
       takePictureFn={takePictureFn}
@@ -301,7 +305,6 @@ export default ({route: {params}}) => {
       setBarCodeInputCameraModalOpen={setBarCodeInputCameraModalOpen}
       shelfLifeImgLink={shelfLifeImgLink}
       setShelfLifeImgLink={setShelfLifeImgLink}
-      initShelfLifeDate={params?.shelfLifeDate}
     />
   );
 };

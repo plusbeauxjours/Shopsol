@@ -146,7 +146,13 @@ export default ({route: {params}}) => {
               placeholder={'0'}
               placeholderTextColor={'#E5E5E5'}
               selectionColor={styleGuide.palette.greyColor}
-              onChangeText={(text) => setRestTime(text)}
+              onChangeText={(text) =>
+                setRestTime(
+                  restTime.length > 0
+                    ? text.replace(/(^0+)/, '').replace(/[^0-9]/g, '')
+                    : text.replace(/[^0-9]/g, ''),
+                )
+              }
               maxLength={3}
               value={restTime}
               autoFocus={true}

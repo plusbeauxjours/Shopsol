@@ -147,7 +147,7 @@ const TimePickBoxTimeText = styled.Text`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 320px;
+  height: 390px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -156,35 +156,37 @@ const DatePickerContainer = styled.View`
   background-color: white;
 `;
 
-const DatePickerRoundBtn = styled(Ripple)`
-  position: absolute;
+const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
+  background-color: ${(props) =>
+    props.isCancelBtn ? 'transparent' : styleGuide.palette.primary};
+  justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
+const DatePickerText = styled.Text<IIsCancel>`
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${(props) =>
+    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'};
+  text-align: center;
+`;
+
+const DatePickerRoundView = styled.View<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
+  background-color: white;
+  justify-content: center;
   align-items: center;
-`;
-
-const DatePickerText = styled.Text`
-  font-weight: ${styleGuide.fontWeight.normal};
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
-  text-align: center;
+  margin-top: 10px;
 `;
 
 const ForwardArrowIconContainer = styled.View`
@@ -224,6 +226,10 @@ export default ({
   noEnd,
   AUTOWORKOFF,
   REST_TIME,
+  initStartTime,
+  setInitStartTime,
+  initEndTime,
+  setInitEndTime,
 }) => {
   const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);
   const isNextDay2 = CHANGE_START > CHANGE_END;
@@ -410,8 +416,8 @@ export default ({
         </Container>
       </ScrollView>
       <Modal
-        onRequestClose={() => setIsStartTimeModalVisible(false)}
-        onBackdropPress={() => setIsStartTimeModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isStartTimeModalVisible}
         style={{
           margin: 0,
@@ -436,6 +442,7 @@ export default ({
           {startTimeSet ? (
             <DatePickerRoundBtn
               onPress={() => {
+                setInitStartTime(moment(startTime));
                 setIsStartTimeModalVisible(false);
                 setStartTimeSet(true);
               }}
@@ -451,11 +458,25 @@ export default ({
               <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
             </DatePickerRoundView>
           )}
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setStartTime(moment(initStartTime));
+              setStartTimeSet(false);
+              setIsStartTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
       <Modal
-        onRequestClose={() => setIsEndTimeModalVisible(false)}
-        onBackdropPress={() => setIsEndTimeModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isEndTimeModalVisible}
         style={{
           margin: 0,
@@ -480,6 +501,7 @@ export default ({
           {endTimeSet ? (
             <DatePickerRoundBtn
               onPress={() => {
+                setInitEndTime(moment(endTime));
                 setIsEndTimeModalVisible(false);
                 setEndTimeSet(true);
               }}
@@ -495,6 +517,20 @@ export default ({
               <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
             </DatePickerRoundView>
           )}
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setEndTime(moment(initEndTime));
+              setEndTimeSet(false);
+              setIsEndTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
     </BackGround>

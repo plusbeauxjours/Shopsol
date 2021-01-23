@@ -46,6 +46,7 @@ const NameText = styled.Text<IsChecked>`
   color: ${(props) => (props.isChecked ? '#ccc' : '#333')};
   color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.large}px;
+  width: ${wp('100%') - 240}px;
 `;
 
 const Line = styled.View`

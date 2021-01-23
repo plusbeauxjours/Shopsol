@@ -148,7 +148,7 @@ export default ({route: {params}}) => {
           CONTENTS: comment,
           CREATE_TIME: moment().format('YYYY-MM-DD'),
           EMP_NAME: MEMBER_NAME,
-          IS_MANAGER: STORE == '1' ? '점주' : '직원',
+          IS_MANAGER: STORE == '1' ? '사업주' : '직원',
           MEMBER_SEQ: ME.toString(),
           NOTICE_SEQ: NOTICE_SEQ.toString(),
         }),

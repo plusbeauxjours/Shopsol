@@ -253,6 +253,8 @@ export default ({
   setShelfLifeName,
   shelfLifeDate,
   setShelfLifeDate,
+  initShelfLifeDate,
+  setInitShelfLifeDate,
   shelfLifeMemo,
   setShelfLifeMemo,
   takePictureFn,
@@ -271,7 +273,6 @@ export default ({
   setBarCodeInputCameraModalOpen,
   shelfLifeImgLink,
   setShelfLifeImgLink,
-  initShelfLifeDate,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -601,7 +602,10 @@ export default ({
             }
           />
           <DatePickerRoundBtn
-            onPress={() => setIsDateModalVisible(false)}
+            onPress={() => {
+              setInitShelfLifeDate(moment(shelfLifeDate).format('YYYY-MM-DD'));
+              setIsDateModalVisible(false);
+            }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
@@ -612,8 +616,8 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
-              setIsDateModalVisible(false);
               setShelfLifeDate(moment(initShelfLifeDate).format('YYYY-MM-DD'));
+              setIsDateModalVisible(false);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

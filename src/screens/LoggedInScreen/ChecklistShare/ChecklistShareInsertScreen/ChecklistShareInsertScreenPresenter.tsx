@@ -227,6 +227,7 @@ export default ({
   setIsDateModalVisible,
   date,
   initDate,
+  setInitDate,
   setDate,
   title,
   setTitle,
@@ -473,6 +474,7 @@ export default ({
           <DatePickerRoundBtn
             onPress={() => {
               setIsDateModalVisible(false);
+              setInitDate(moment(date).format('YYYY-MM-DD'));
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

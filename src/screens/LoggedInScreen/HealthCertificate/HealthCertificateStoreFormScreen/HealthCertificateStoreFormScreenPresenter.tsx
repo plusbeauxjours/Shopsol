@@ -234,6 +234,7 @@ export default ({
   EDUCATION_DATE,
   initEDUCATION_DATE,
   setEDUCATION_DATE,
+  setInitEDUCATION_DATE,
   EDUCATION_TYPE,
   setBusinesstype,
   businesstype,
@@ -539,7 +540,12 @@ export default ({
             }
           />
           <DatePickerRoundBtn
-            onPress={() => setDateModalVisible(false)}
+            onPress={() => {
+              setInitEDUCATION_DATE(
+                moment(EDUCATION_DATE).format('YYYY-MM-DD'),
+              );
+              setDateModalVisible(false);
+            }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}

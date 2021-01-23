@@ -361,7 +361,6 @@ export default ({
   payDay,
   setPayDay,
   startDay,
-  initStartDay,
   setStartDay,
   endDay,
   setEndDay,
@@ -464,6 +463,12 @@ export default ({
   scrollRef,
   probationDATEstate,
   probationPercentstate,
+  initStartDay,
+  setInitStartDay,
+  initEndDay,
+  setInitEndDay,
+  initProbationPeriod,
+  setInitProbationPeriod,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const click1Transition = useTransition(click1);
@@ -721,7 +726,7 @@ export default ({
                             style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
-                              setPay(text.replace(/,/g, ''));
+                              setPay(text.replace(/[^0-9]/g, ''));
                             }}
                             value={pay
                               .toString()
@@ -755,7 +760,7 @@ export default ({
                             style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
-                              setPay(text.replace(/,/g, ''));
+                              setPay(text.replace(/[^0-9]/g, ''));
                             }}
                             value={pay
                               .toString()
@@ -780,7 +785,7 @@ export default ({
                             style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
-                              setPay(text.replace(/,/g, ''));
+                              setPay(text.replace(/[^0-9]/g, ''));
                             }}
                             value={pay
                               .toString()
@@ -799,7 +804,7 @@ export default ({
                             style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
-                              setPay2(text.replace(/,/g, ''));
+                              setPay2(text.replace(/[^0-9]/g, ''));
                             }}
                             onFocus={() => setPay2('')}
                             onBlur={() => pay2 === '' && setPay2('0')}
@@ -820,7 +825,7 @@ export default ({
                             style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
-                              setPay3(text.replace(/,/g, ''));
+                              setPay3(text.replace(/[^0-9]/g, ''));
                             }}
                             onFocus={() => setPay3('')}
                             onBlur={() => pay3 === '' && setPay3('0')}
@@ -841,7 +846,7 @@ export default ({
                             style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
-                              setPay4(text.replace(/,/g, ''));
+                              setPay4(text.replace(/[^0-9]/g, ''));
                             }}
                             onFocus={() => setPay4('')}
                             onBlur={() => pay4 === '' && setPay4('0')}
@@ -862,7 +867,7 @@ export default ({
                             style={{fontSize: 12}}
                             placeholderTextColor={'#E5E5E5'}
                             onChangeText={(text) => {
-                              setPay5(text.replace(/,/g, ''));
+                              setPay5(text.replace(/[^0-9]/g, ''));
                             }}
                             onFocus={() => setPay5('')}
                             onBlur={() => pay5 === '' && setPay5('0')}
@@ -1362,9 +1367,14 @@ export default ({
                       placeholderTextColor={'#E5E5E5'}
                       onChangeText={(text) => {
                         setRemainderVacation(
-                          Number(text) - Number(useVacation),
+                          Number(text.replace(/[^0-9]/g, '')) -
+                            Number(useVacation),
                         );
-                        setTotalVacation(text.replace(/,/g, ''));
+                        setTotalVacation(
+                          totalVacation.length > 0
+                            ? text.replace(/(^0+)/, '').replace(/[^0-9]/g, '')
+                            : text.replace(/[^0-9]/g, ''),
+                        );
                       }}
                       value={totalVacation
                         .toString()
@@ -1381,7 +1391,11 @@ export default ({
                       placeholder={'연차를 입력해주세요'}
                       placeholderTextColor={'#E5E5E5'}
                       onChangeText={(text) => {
-                        if (Number(totalVacation) - Number(text) < 0) {
+                        if (
+                          Number(totalVacation) -
+                            Number(text.replace(/[^0-9]/g, '')) <
+                          0
+                        ) {
                           alertModal('총연차보다 낮게 입력해주세요');
                           setUseVacation('0');
                           setRemainderVacation(
@@ -1389,9 +1403,14 @@ export default ({
                           );
                         } else {
                           setRemainderVacation(
-                            Number(totalVacation) - Number(text),
+                            Number(totalVacation) -
+                              Number(text.replace(/[^0-9]/g, '')),
                           );
-                          setUseVacation(text.replace(/,/g, ''));
+                          setUseVacation(
+                            useVacation.length > 0
+                              ? text.replace(/(^0+)/, '').replace(/[^0-9]/g, '')
+                              : text.replace(/[^0-9]/g, ''),
+                          );
                         }
                       }}
                       value={useVacation
@@ -1583,12 +1602,12 @@ export default ({
             mode={'date'}
             androidVariant="iosClone"
             onDateChange={(date) => {
-              setStartDaySet(true);
               setStartDay(moment(date).format('YYYY-MM-DD'));
             }}
           />
           <DatePickerRoundBtn
             onPress={() => {
+              setInitStartDay(moment(startDay).format('YYYY-MM-DD'));
               setIsStartDayModalVisible(false);
               setStartDaySet(true);
             }}
@@ -1633,12 +1652,12 @@ export default ({
             mode={'date'}
             androidVariant="iosClone"
             onDateChange={(date) => {
-              setEndDaySet(true);
               setEndDay(moment(date).format('YYYY-MM-DD'));
             }}
           />
           <DatePickerRoundBtn
             onPress={() => {
+              setInitEndDay(moment(endDay).format('YYYY-MM-DD'));
               setIsEndDayModalVisible(false);
               setEndDayCheck(false);
               setEndDaySet(true);
@@ -1653,8 +1672,8 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
+              setEndDay(moment(initEndDay).format('YYYY-MM-DD'));
               setIsEndDayModalVisible(false);
-              setEndDaySet(false);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
@@ -1684,12 +1703,14 @@ export default ({
             mode={'date'}
             androidVariant="iosClone"
             onDateChange={(date) => {
-              setProbationPeriodSet(true);
               setProbationPeriod(moment(date).format('YYYY-MM-DD'));
             }}
           />
           <DatePickerRoundBtn
             onPress={() => {
+              setInitProbationPeriod(
+                moment(probationPeriod).format('YYYY-MM-DD'),
+              );
               setIsProbationPeriodModalVisible(false);
               setProbationPeriodSet(true);
             }}
@@ -1703,9 +1724,10 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
+              setProbationPeriod(
+                moment(initProbationPeriod).format('YYYY-MM-DD'),
+              );
               setIsProbationPeriodModalVisible(false);
-              setProbationPeriodSet(false);
-              setProbationPeriod(moment());
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

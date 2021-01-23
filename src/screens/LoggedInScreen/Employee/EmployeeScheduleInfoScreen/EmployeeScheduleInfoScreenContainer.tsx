@@ -375,8 +375,8 @@ export default ({route: {params}}) => {
       dispatch(setSplashVisible({visible: true, text: '일정'}));
       const {data} = await api.getEmp(EMP_SEQ);
       if (data.message === 'SUCCESS') {
-        setData(data.result);
-        fetchSchedule(data.result.EMP_SEQ);
+        setData(data?.result);
+        fetchSchedule(data?.result?.EMP_SEQ);
       }
     } catch (e) {
       console.log(e);
@@ -448,6 +448,8 @@ export default ({route: {params}}) => {
       IMAGE={params?.IMAGE}
       MANAGER_CALLED={MANAGER_CALLED}
       mobileNo={params?.mobileNo}
+      probationDATE={params?.probationDATE}
+      probationPercent={params?.probationPercent}
     />
   );
 };

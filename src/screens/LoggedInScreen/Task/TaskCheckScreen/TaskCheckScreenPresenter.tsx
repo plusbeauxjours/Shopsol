@@ -328,34 +328,20 @@ export default ({
                       marginTop: 20,
                       width: '100%',
                       justifyContent: 'space-between',
+                      alignItems: 'center',
                     }}>
                     <TitleText color={item.textColor}>
                       {item.titleWord}
                     </TitleText>
-                    <Footer>
-                      <SpaceRow>
-                        <SmallText color={item.textColor}>
-                          전체 업무량
-                        </SmallText>
-                        <SmallText color={item.textColor}>
-                          <SmallBold color={item.textColor}>
-                            {item.totalQTY}
-                          </SmallBold>
-                          &nbsp;개
-                        </SmallText>
-                      </SpaceRow>
-                      <SpaceRow>
-                        <SmallText color={item.textColor}>
-                          처리 업무량
-                        </SmallText>
-                        <SmallText color={item.textColor}>
-                          <SmallBold color={item.textColor}>
-                            {item.doneQTY}
-                          </SmallBold>
-                          &nbsp;개
-                        </SmallText>
-                      </SpaceRow>
-                    </Footer>
+                    <Column style={{marginRight: 10}}>
+                      <SmallText color={item.textColor}>전체 업무량</SmallText>
+                      <SmallBold color={item.textColor}>
+                        <SmallBold color={item.textColor}>
+                          {item.totalQTY}
+                        </SmallBold>
+                        &nbsp;개
+                      </SmallBold>
+                    </Column>
                   </Row>
                   <CardGreyLine />
                   <DonutCard

@@ -227,7 +227,9 @@ export default ({
   taskName,
   setTaskName,
   taskDate,
+  initTaskDate,
   setTaskDate,
+  setInitTaskDate,
   taskMemo,
   setTaskMemo,
   takePictureFn,
@@ -236,7 +238,6 @@ export default ({
   isDateModalVisible,
   submit,
   alertModal,
-  initTaskDate,
 }) => {
   const cameraRef = useRef(null);
   return (
@@ -461,7 +462,10 @@ export default ({
             }
           />
           <DatePickerRoundBtn
-            onPress={() => setIsDateModalVisible(false)}
+            onPress={() => {
+              setInitTaskDate(moment(taskDate).format('YYYY-MM-DD'));
+              setIsDateModalVisible(false);
+            }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
             rippleSize={1200}
@@ -472,8 +476,8 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
-              setIsDateModalVisible(false);
               setTaskDate(moment(initTaskDate).format('YYYY-MM-DD'));
+              setIsDateModalVisible(false);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

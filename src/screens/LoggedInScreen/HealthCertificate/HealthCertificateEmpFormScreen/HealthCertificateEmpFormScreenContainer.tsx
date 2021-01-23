@@ -190,6 +190,7 @@ export default ({route: {params}}) => {
       EDUCATION_DATE={EDUCATION_DATE}
       initEDUCATION_DATE={initEDUCATION_DATE}
       setEDUCATION_DATE={setEDUCATION_DATE}
+      setInitEDUCATION_DATE={setInitEDUCATION_DATE}
       isCameraModalVisible={isCameraModalVisible}
       setIsCameraModalVisible={setIsCameraModalVisible}
       cameraPictureLast={cameraPictureLast}

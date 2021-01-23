@@ -178,7 +178,7 @@ export default ({route: {params}}) => {
   // 수정하기버튼
   const submit = async (sign) => {
     if (sign == 'close') {
-      alertModal('매장의 폐업처리가 완료되었습니다.');
+      alertModal('사업장의 폐업처리가 완료되었습니다.');
       navigation.reset({
         index: 0,
         routes: [{name: 'SelectStoreScreen'}],

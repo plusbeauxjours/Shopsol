@@ -749,9 +749,9 @@ export default ({
               <InputCase>
                 <DeleteBtn
                   onPress={() =>
-                    confirmModal('매장을 폐업상태로 변경하시겠습니까?')
+                    confirmModal('사업장을 폐업상태로 변경하시겠습니까?')
                   }>
-                  <DeleteBtnText>매장 폐업하기</DeleteBtnText>
+                  <DeleteBtnText>사업장 폐업하기</DeleteBtnText>
                 </DeleteBtn>
               </InputCase>
               <WhiteSpace />

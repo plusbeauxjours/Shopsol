@@ -300,6 +300,8 @@ export default ({
   setShelfLifeMemo,
   shelfLifeDate,
   setShelfLifeDate,
+  initShelfLifeDate,
+  setInitShelfLifeDate,
   isDateModalVisible,
   setIsDateModalVisible,
   cameraPictureLast,
@@ -737,7 +739,6 @@ export default ({
             androidVariant="iosClone"
             minimumDate={moment().toDate()}
             onDateChange={(date) => {
-              setShelfLifeDateSet(true);
               setShelfLifeDate(moment(date).format('YYYY-MM-DD'));
             }}
           />
@@ -745,6 +746,7 @@ export default ({
             onPress={() => {
               setIsDateModalVisible(false);
               setShelfLifeDateSet(true);
+              setInitShelfLifeDate(moment(shelfLifeDate).format('YYYY-MM-DD'));
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
@@ -756,9 +758,8 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
+              setShelfLifeDate(moment(initShelfLifeDate).format('YYYY-MM-DD'));
               setIsDateModalVisible(false);
-              setShelfLifeDateSet(false);
-              setShelfLifeDate(moment().format('YYYY-MM-DD'));
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

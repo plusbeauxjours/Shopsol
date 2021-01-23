@@ -20,7 +20,9 @@ export default ({route: {params}}) => {
   const [emplist, setEmplist] = useState<any>(EMPLOYEE_LIST?.workinglist);
   const [choiceEmp, setChoiceEmp] = useState<any>([]);
   const [startTime, setStartTime] = useState<any>(moment());
+  const [initStartTime, setInitStartTime] = useState<any>(moment());
   const [endTime, setEndTime] = useState<any>(moment());
+  const [initEndTime, setInitEndTime] = useState<any>(moment());
   const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
   const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
   const [timeSelected, setTimeSelected] = useState<any>(null);
@@ -261,6 +263,10 @@ export default ({route: {params}}) => {
       setStartTimeSet={setStartTimeSet}
       endTimeSet={endTimeSet}
       setEndTimeSet={setEndTimeSet}
+      initStartTime={initStartTime}
+      setInitStartTime={setInitStartTime}
+      initEndTime={initEndTime}
+      setInitEndTime={setInitEndTime}
     />
   );
 };

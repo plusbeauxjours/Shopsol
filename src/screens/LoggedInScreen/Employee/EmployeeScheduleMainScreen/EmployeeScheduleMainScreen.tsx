@@ -166,6 +166,8 @@ export default ({route: {params}}) => {
               PAY_TYPE,
               IMAGE: params?.IMAGE,
               mobileNo: params?.mobileNo,
+              probationDATE: params?.probationDATE,
+              probationPercent: params?.probationPercent,
             });
           }}
           isRegisted={true}

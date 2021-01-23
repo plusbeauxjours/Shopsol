@@ -33,6 +33,7 @@ export default ({route: {params}}) => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [date, setDate] = useState<any>(moment(params?.date));
+  const [initDate, setInitDate] = useState<any>(moment(params?.date));
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
 
   const alertModal = (text) => {
@@ -207,7 +208,8 @@ export default ({route: {params}}) => {
       isDateModalVisible={isDateModalVisible}
       setIsDateModalVisible={setIsDateModalVisible}
       date={date}
-      initDate={params?.date}
+      initDate={initDate}
+      setInitDate={setInitDate}
       setDate={setDate}
       title={title}
       setTitle={setTitle}

@@ -196,7 +196,9 @@ export default ({
   isPasswordError,
   isPasswordCheckError,
   birthDate,
+  initBirthDate,
   setBirthDate,
+  setInitBirthDate,
   isBirthDateVisible,
   setIsBirthDateVisible,
   birthDateSet,
@@ -486,12 +488,12 @@ export default ({
             androidVariant="iosClone"
             maximumDate={moment().toDate()}
             onDateChange={(date) => {
-              setBirthDateSet(true);
               setBirthDate(moment(date).format('YYYY-MM-DD'));
             }}
           />
           <DatePickerRoundBtn
             onPress={() => {
+              setInitBirthDate(moment(birthDate).format('YYYY-MM-DD'));
               setIsBirthDateVisible(false);
               setBirthDateSet(true);
             }}
@@ -505,9 +507,8 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
-              setBirthDateSet(false);
               setIsBirthDateVisible(false);
-              setBirthDate(moment().format('YYYY-MM-DD'));
+              setBirthDate(moment(initBirthDate).format('YYYY-MM-DD'));
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

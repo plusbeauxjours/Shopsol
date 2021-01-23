@@ -58,6 +58,7 @@ export default ({route: {params}}) => {
   const [initStartDay, setInitStartDay] = useState<any>(moment());
   const [startDay, setStartDay] = useState<any>(moment());
   const [startDaySet, setStartDaySet] = useState<boolean>(START ? true : false);
+  const [initEndDay, setInitEndDay] = useState<any>(moment());
   const [endDay, setEndDay] = useState<any>(moment());
   const [endDaySet, setEndDaySet] = useState<boolean>(END ? true : false);
   const [endDayCheck, setEndDayCheck] = useState<boolean>(true);
@@ -94,6 +95,7 @@ export default ({route: {params}}) => {
 
   ///// 수습 /////
   const [probation, setProbation] = useState<boolean>(false);
+  const [initProbationPeriod, setInitProbationPeriod] = useState<any>(moment());
   const [probationPeriod, setProbationPeriod] = useState<any>(moment());
   const [probationPeriodSet, setProbationPeriodSet] = useState<boolean>(false);
   const [probationPercent, setProbationPercent] = useState<string>('');
@@ -326,6 +328,9 @@ export default ({route: {params}}) => {
     } else if (payDay === '') {
       alertModal('급여정보 입력\n적용 시작 년,월을 입력해주세요.');
       openAccordion('click2');
+    } else if (Number(remainderVacation) < 0) {
+      alertModal('총연차는 사용 연차보다 많아야합니다.');
+      openAccordion('click3');
     } else if (positionChecked === -1) {
       alertModal('직책/권한 설정\n직원의 직책을 선택해주세요.');
       openAccordion('click5');
@@ -377,7 +382,7 @@ export default ({route: {params}}) => {
           Annual_START: annual_START,
           // 수습
           probation: probation ? '1' : '0',
-          probationDATE: probationPeriod,
+          probationDATE: probationPeriodSet ? probationPeriod : null,
           probationPercent: probationPercent,
           health: insuranceCheck[1] ? '1' : '0',
           pension: insuranceCheck[0] ? '1' : '0',
@@ -401,6 +406,8 @@ export default ({route: {params}}) => {
               PAY: pay,
               IMAGE,
               mobileNo,
+              probationDATE: probationPeriodSet ? probationPeriod : null,
+              probationPercent: probationPercent,
             });
           } else {
             alertModal('직원정보가 수정되었습니다.');
@@ -496,7 +503,8 @@ export default ({route: {params}}) => {
         if (from === 'EmployeeInfoScreen') {
           setStartDay(data.result.START);
           setInitStartDay(data.result.START);
-          setEndDay(data.result.END ? data.result.END : '');
+          setEndDay(data.result.END ? data.result.END : moment());
+          setInitEndDay(data.result.END ? data.result.END : moment());
           setEndDayCheck(data.result.END ? false : true);
 
           // ↓ STEP 2(급여정보 입력)
@@ -570,7 +578,6 @@ export default ({route: {params}}) => {
       payDay={payDay}
       setPayDay={setPayDay}
       startDay={startDay}
-      initStartDay={initStartDay}
       setStartDay={setStartDay}
       endDay={endDay}
       setEndDay={setEndDay}
@@ -673,6 +680,12 @@ export default ({route: {params}}) => {
       scrollRef={scrollRef}
       probationDATEstate={params?.probationDATE}
       probationPercentstate={params?.probationPercent}
+      initStartDay={initStartDay}
+      setInitStartDay={setInitStartDay}
+      initEndDay={initEndDay}
+      setInitEndDay={setInitEndDay}
+      initProbationPeriod={initProbationPeriod}
+      setInitProbationPeriod={setInitProbationPeriod}
     />
   );
 };

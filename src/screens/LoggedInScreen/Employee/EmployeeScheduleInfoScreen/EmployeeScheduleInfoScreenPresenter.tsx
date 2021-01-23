@@ -19,6 +19,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import styleGuide from '~/constants/styleGuide';
 import {PhoneIcon} from '../../../../constants/Icons';
 import {Linking} from 'react-native';
+import LottieView from 'lottie-react-native';
 
 interface IsSelected {
   isSelected: boolean;
@@ -301,6 +302,8 @@ export default ({
   IMAGE,
   MANAGER_CALLED,
   mobileNo,
+  probationDATE,
+  probationPercent,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -374,7 +377,7 @@ export default ({
         </RenderDayBox>
         <RenderDayTime>
           <RenderDayTimeText isSelected={isSelected} substract={substract}>
-            {isSelected ? startTime : '00:00'} ~{' '}
+            {isSelected ? startTime : '00:00'} ~&nbsp;
             {isSelected ? endTime : '00:00'}
           </RenderDayTimeText>
         </RenderDayTime>
@@ -529,14 +532,25 @@ export default ({
                       ? moment(data?.END).format('YYYY.MM.DD')
                       : '계속'}
                   </InfoText>
-                  {data?.probationDATE && data?.probationPercent && (
+                  {data?.probationDATE?.length > 0 &&
+                    data?.probationPercent?.length > 0 && (
+                      <InfoText>
+                        수습기간&nbsp;
+                        {moment() > moment(data?.probationDATE)
+                          ? `종료 (${data?.probationPercent ?? '0'}%적용)`
+                          : `${moment(data?.probationDATE).format(
+                              '~YYYY.MM.DD',
+                            )}까지 (${data?.probationPercent ?? '0'}%적용)`}
+                      </InfoText>
+                    )}
+                  {probationDATE?.length > 0 && probationPercent?.length > 0 && (
                     <InfoText>
                       수습기간&nbsp;
-                      {moment() > moment(data?.probationDATE)
-                        ? `종료 (${data?.probationPercent}%적용)`
-                        : `${moment(data?.probationDATE).format(
+                      {moment() > moment(probationDATE)
+                        ? `종료 (${probationPercent ?? '0'}%적용)`
+                        : `${moment(probationDATE).format(
                             '~YYYY.MM.DD',
-                          )}까지 (${data?.probationPercent}%적용)`}
+                          )}까지 (${probationPercent ?? '0'}%적용)`}
                     </InfoText>
                   )}
                 </NameBox>
@@ -642,7 +656,9 @@ export default ({
                     <GreyLine />
                     <FixTypeDayChangeButton
                       style={{
+                        backgroundColor: 'white',
                         borderColor: styleGuide.palette.greyColor,
+                        alignItems: 'center',
                         width: '100%',
                       }}
                       onPress={() => registerScheduleFn()}>

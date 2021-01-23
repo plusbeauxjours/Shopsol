@@ -44,7 +44,9 @@ export default ({route: {params}}) => {
   ); // 근무 종료일
 
   const [startTime, setStartTime] = useState<any>(moment());
+  const [initStartTime, setInitStartTime] = useState<any>(moment());
   const [endTime, setEndTime] = useState<any>(moment());
+  const [initEndTime, setInitEndTime] = useState<any>(moment());
   const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
   const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
 
@@ -327,7 +329,13 @@ export default ({route: {params}}) => {
       endTimeSet={endTimeSet}
       setEndTimeSet={setEndTimeSet}
       initStartDate={initStartDate}
+      setInitStartDate={setInitStartDate}
       initEndDate={initEndDate}
+      setInitEndDate={setInitEndDate}
+      initStartTime={initStartTime}
+      setInitStartTime={setInitStartTime}
+      initEndTime={initEndTime}
+      setInitEndTime={setInitEndTime}
     />
   );
 };

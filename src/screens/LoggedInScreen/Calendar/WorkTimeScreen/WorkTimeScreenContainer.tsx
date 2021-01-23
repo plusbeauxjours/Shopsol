@@ -48,7 +48,22 @@ export default ({route: {params}}) => {
       ? moment(ATTENDANCE_TIME?.substring(0, 5), 'HH:mm')
       : moment(START?.substring(0, 5), 'HH:mm'),
   );
+  const [initStartTime, setInitStartTime] = useState<any>(
+    CHANGE_START
+      ? moment(CHANGE_START?.substring(0, 5), 'HH:mm')
+      : ATTENDANCE_TIME
+      ? moment(ATTENDANCE_TIME?.substring(0, 5), 'HH:mm')
+      : moment(START?.substring(0, 5), 'HH:mm'),
+  );
   const [endTime, setEndTime] = useState<any>(
+    CHANGE_END
+      ? moment(CHANGE_END?.substring(0, 5), 'HH:mm')
+      : WORK_OFF_TIME
+      ? moment(WORK_OFF_TIME?.substring(0, 5), 'HH:mm')
+      : moment(END?.substring(0, 5), 'HH:mm'),
+  );
+
+  const [initEndTime, setInitEndTime] = useState<any>(
     CHANGE_END
       ? moment(CHANGE_END?.substring(0, 5), 'HH:mm')
       : WORK_OFF_TIME
@@ -57,9 +72,10 @@ export default ({route: {params}}) => {
   );
   const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
   const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -168,6 +184,10 @@ export default ({route: {params}}) => {
       endTimeSet={endTimeSet}
       setEndTimeSet={setEndTimeSet}
       REST_TIME={REST_TIME}
+      initStartTime={initStartTime}
+      setInitStartTime={setInitStartTime}
+      initEndTime={initEndTime}
+      setInitEndTime={setInitEndTime}
     />
   );
 };

@@ -127,14 +127,14 @@ export default ({route: {params}}) => {
   const submit = async () => {
     if (NAME == '') {
       dispatch(setSplashVisible({visible: false}));
-      alertModal('점포명을 입력해주세요.');
+      alertModal('사업장명을 입력해주세요.');
       scrollRef.current?.getNode()?.scrollTo({
         y: 0,
         animated: true,
       });
     } else if (NAME?.length > 10) {
       dispatch(setSplashVisible({visible: false}));
-      alertModal('점포명은 10자 이하로 입력해주세요.');
+      alertModal('사업장명은 10자 이하로 입력해주세요.');
       scrollRef.current?.getNode()?.scrollTo({
         y: 0,
         animated: true,
@@ -166,7 +166,7 @@ export default ({route: {params}}) => {
     } else {
       try {
         dispatch(
-          setSplashVisible({visible: true, fullText: '점포를 등록중입니다.'}),
+          setSplashVisible({visible: true, fullText: '사업장을 등록중입니다.'}),
         );
         const {data} = await api.addStore({
           NAME,

@@ -19,6 +19,9 @@ export default ({route: {params}}) => {
   const [taskName, setTaskName] = useState<string>(params?.taskName || '');
   const [taskMemo, setTaskMemo] = useState<string>(params?.taskMemo || '');
   const [taskDate, setTaskDate] = useState<any>(moment(params?.taskDate));
+  const [initTaskDate, setInitTaskDate] = useState<any>(
+    moment(params?.taskDate),
+  );
   const [cameraPictureLast, setCameraPictureLast] = useState<any>(
     params?.taskImage || null,
   );
@@ -190,7 +193,9 @@ export default ({route: {params}}) => {
       taskName={taskName}
       setTaskName={setTaskName}
       taskDate={taskDate}
+      initTaskDate={initTaskDate}
       setTaskDate={setTaskDate}
+      setInitTaskDate={setInitTaskDate}
       taskMemo={taskMemo}
       setTaskMemo={setTaskMemo}
       takePictureFn={takePictureFn}
@@ -199,7 +204,6 @@ export default ({route: {params}}) => {
       setIsDateModalVisible={setIsDateModalVisible}
       submit={submit}
       alertModal={alertModal}
-      initTaskDate={params?.taskDate}
     />
   );
 };

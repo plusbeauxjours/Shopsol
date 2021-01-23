@@ -154,7 +154,7 @@ export default () => {
         checkTASK({
           name,
           task_SEQ,
-          checkEmpName: STORE === '1' ? '점주' : MEMBER_NAME,
+          checkEmpName: STORE === '1' ? '사업주' : MEMBER_NAME,
           checkTime: moment().format('YYYY-MM-DD HH:mm'),
         }),
       );

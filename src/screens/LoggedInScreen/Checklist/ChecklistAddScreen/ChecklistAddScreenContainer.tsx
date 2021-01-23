@@ -44,6 +44,9 @@ export default ({route: {params}}) => {
   const [customChecktime, setCustomChecktime] = useState<any>(
     CHECK_TIME?.length > 0 ? moment(CHECK_TIME, 'kk:mm') : moment(),
   );
+  const [initCustomChecktime, setInitCustomChecktime] = useState<any>(
+    CHECK_TIME?.length > 0 ? moment(CHECK_TIME, 'kk:mm') : moment(),
+  );
   const [customChecktimeSet, setCustomChecktimeSet] = useState<boolean>(
     CHECK_TIME?.length > 0 ? true : false,
   );
@@ -334,6 +337,8 @@ export default ({route: {params}}) => {
       alertModal={alertModal}
       customChecktimeSet={customChecktimeSet}
       setCustomChecktimeSet={setCustomChecktimeSet}
+      initCustomChecktime={initCustomChecktime}
+      setInitCustomChecktime={setInitCustomChecktime}
     />
   );
 };

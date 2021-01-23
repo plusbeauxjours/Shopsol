@@ -55,15 +55,23 @@ export default ({route: {params}}) => {
     if (STORE == 0 && data.TYPE == '0') {
       alertModal('합류승인 대기중입니다.');
     } else {
-      navigation.navigate('HomeScreen', {
-        STORE_SEQ: data.STORE_SEQ,
-        STORE,
-        STORE_NAME: data.NAME,
-        WORKING_COUNT: data.workinglist,
-        TOTAL_COUNT: data.emplist,
-        GPS: data.GPS,
-        QR_Num: data.QR_Num,
-        hasConfirmed: data.hasConfirmedQr,
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'HomeScreen',
+            params: {
+              STORE_SEQ: data.STORE_SEQ,
+              STORE,
+              STORE_NAME: data.NAME,
+              WORKING_COUNT: data.workinglist,
+              TOTAL_COUNT: data.emplist,
+              GPS: data.GPS,
+              QR_Num: data.QR_Num,
+              hasConfirmed: data.hasConfirmedQr,
+            },
+          },
+        ],
       });
       dispatch(
         selectSTORE({
@@ -74,7 +82,7 @@ export default ({route: {params}}) => {
     }
   };
 
-  // GOTO 점포 등록하기
+  // GOTO 사업장 등록하기
   const gotoAddStore = () => {
     navigation.navigate('AddStoreScreen');
   };

@@ -29,7 +29,9 @@ const ConfirmBackBtn: React.FC = () => {
   return (
     <Touchable
       onPress={() =>
-        confirmModal('입력하였던 정보가 없어집니다. \n계속 하시겠습니까?')
+        confirmModal(
+          '입력하였던 정보가 없어집니다. \n(기존 정보는 유지됩니다.) \n계속 하시겠습니까?',
+        )
       }>
       <BackIcon size={28} color={'white'} />
     </Touchable>

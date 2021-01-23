@@ -27,6 +27,7 @@ export default ({route: {params}}) => {
   const [otherJoinRoute, setOtherJoinRoute] = useState<string>('');
   const [password, setPassword] = useState<any>('');
   const [birthDate, setBirthDate] = useState<any>(moment());
+  const [initBirthDate, setInitBirthDate] = useState<any>(moment());
   const [birthDateSet, setBirthDateSet] = useState<boolean>(false);
 
   const [isBirthDateVisible, setIsBirthDateVisible] = useState<boolean>(false);
@@ -227,7 +228,9 @@ export default ({route: {params}}) => {
       isPasswordError={isPasswordError}
       isPasswordCheckError={isPasswordCheckError}
       birthDate={birthDate}
+      initBirthDate={initBirthDate}
       setBirthDate={setBirthDate}
+      setInitBirthDate={setInitBirthDate}
       isBirthDateVisible={isBirthDateVisible}
       setIsBirthDateVisible={setIsBirthDateVisible}
       birthDateSet={birthDateSet}

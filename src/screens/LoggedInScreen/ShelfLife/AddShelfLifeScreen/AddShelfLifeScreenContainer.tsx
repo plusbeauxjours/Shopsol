@@ -20,6 +20,7 @@ export default ({route: {params}}) => {
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const [shelfLifeName, setShelfLifeName] = useState<string>('');
   const [shelfLifeDate, setShelfLifeDate] = useState<any>(moment());
+  const [initShelfLifeDate, setInitShelfLifeDate] = useState<any>(moment());
   const [shelfLifeDateSet, setShelfLifeDateSet] = useState<boolean>(false);
   const [shelfLifeMemo, setShelfLifeMemo] = useState<string>('');
   const [isDateModalVisible, setIsDateModalVisible] = useState<boolean>(false);
@@ -100,6 +101,7 @@ export default ({route: {params}}) => {
     setCameraPictureLast(null);
     setShelfLifeName('');
     setShelfLifeDate(moment());
+    setInitShelfLifeDate(moment());
     setShelfLifeDateSet(false);
     setShelfLifeMemo('');
     setShelfLifeBarcode(null);
@@ -303,6 +305,8 @@ export default ({route: {params}}) => {
       setShelfLifeMemo={setShelfLifeMemo}
       shelfLifeDate={shelfLifeDate}
       setShelfLifeDate={setShelfLifeDate}
+      initShelfLifeDate={initShelfLifeDate}
+      setInitShelfLifeDate={setInitShelfLifeDate}
       isDateModalVisible={isDateModalVisible}
       setIsDateModalVisible={setIsDateModalVisible}
       cameraPictureLast={cameraPictureLast}

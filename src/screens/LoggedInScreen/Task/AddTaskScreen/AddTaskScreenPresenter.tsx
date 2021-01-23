@@ -270,7 +270,9 @@ export default ({
   taskMemo,
   setTaskMemo,
   taskDate,
+  initTaskDate,
   setTaskDate,
+  setInitTaskDate,
   isDateModalVisible,
   setIsDateModalVisible,
   cameraPictureLast,
@@ -596,12 +598,12 @@ export default ({
             androidVariant="iosClone"
             minimumDate={moment().toDate()}
             onDateChange={(date) => {
-              setTaskDateSet(true);
               setTaskDate(moment(date).format('YYYY-MM-DD'));
             }}
           />
           <DatePickerRoundBtn
             onPress={() => {
+              setInitTaskDate(moment(taskDate).format('YYYY-MM-DD'));
               setIsDateModalVisible(false);
               setTaskDateSet(true);
             }}
@@ -616,8 +618,7 @@ export default ({
             isCancelBtn={true}
             onPress={() => {
               setIsDateModalVisible(false);
-              setTaskDateSet(false);
-              setTaskDate(moment().format('YYYY-MM-DD'));
+              setTaskDate(moment(initTaskDate).format('YYYY-MM-DD'));
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

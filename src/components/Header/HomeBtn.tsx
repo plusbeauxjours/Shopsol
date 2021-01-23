@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HomeIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
+import api from '~/constants/LoggedInApi';
 
 const Touchable = styled.TouchableOpacity`
   margin-right: 15px;
@@ -18,9 +19,21 @@ const Text = styled.Text`
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
-export default ({depth, from = ''}) => {
+export default ({from = ''}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
+  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
+
+  const onRefresh = async () => {
+    navigation.popToTop();
+    await api.getStoreInfo({
+      STORE,
+      MEMBER_SEQ,
+      STORE_SEQ,
+    });
+  };
 
   const confirmModal = (content) => {
     const params = {
@@ -28,7 +41,7 @@ export default ({depth, from = ''}) => {
       title: '',
       content,
       okCallback: () => {
-        navigation.pop(depth);
+        onRefresh();
       },
       okButtonText: '확인',
       cancelButtonText: '취소',
@@ -41,8 +54,10 @@ export default ({depth, from = ''}) => {
     <Touchable
       onPress={() =>
         from == 'SetEmployeeInfoScreen' || from == 'EmployeeScheduleInfoScreen'
-          ? confirmModal('입력하였던 정보가 없어집니다. \n계속 하시겠습니까?')
-          : navigation.pop(depth)
+          ? confirmModal(
+              '입력하였던 정보가 없어집니다. \n(기존 정보는 유지됩니다.) \n계속 하시겠습니까?',
+            )
+          : onRefresh()
       }>
       <HomeIcon size={22} color="white" />
       <Text>HOME</Text>

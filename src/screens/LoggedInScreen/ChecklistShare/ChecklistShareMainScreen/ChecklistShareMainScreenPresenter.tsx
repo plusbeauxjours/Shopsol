@@ -472,7 +472,7 @@ export default ({
             <Column>
               <EmptyText>특이사항을 등록해주세요.</EmptyText>
               <EmptyText>
-                직원이 점포 운영현황을 사업주에게 전달합니다.
+                직원이 사업장 운영현황을 사업주에게 전달합니다.
               </EmptyText>
             </Column>
           </TextBox>
@@ -518,7 +518,7 @@ export default ({
             <Column>
               <EmptyText>특이사항이 없습니다.</EmptyText>
               <EmptyText>
-                직원이 점포 운영현황을 사업주에게 전달합니다.
+                직원이 사업장 운영현황을 사업주에게 전달합니다.
               </EmptyText>
             </Column>
           </TextBox>

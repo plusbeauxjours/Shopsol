@@ -27,6 +27,10 @@ interface IIsChecked {
   isChecked?: boolean;
 }
 
+interface IIsCancel {
+  isCancelBtn?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
@@ -198,7 +202,7 @@ const GreyText = styled.Text<IsError>`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 320px;
+  height: 390px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -207,35 +211,37 @@ const DatePickerContainer = styled.View`
   background-color: white;
 `;
 
-const DatePickerRoundBtn = styled(Ripple)`
-  position: absolute;
+const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
-  bottom: 20px;
-  padding: 20px;
+  background-color: ${(props) =>
+    props.isCancelBtn ? 'transparent' : styleGuide.palette.primary};
+  justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
-const DatePickerRoundView = styled.View`
-  position: absolute;
+const DatePickerText = styled.Text<IIsCancel>`
+  font-weight: ${styleGuide.fontWeight.normal};
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${(props) =>
+    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'};
+  text-align: center;
+`;
+
+const DatePickerRoundView = styled.View<IIsCancel>`
   width: 250px;
-  height: 60px;
+  height: 50px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: #ddd;
-  bottom: 20px;
-  padding: 20px;
+  background-color: white;
+  justify-content: center;
   align-items: center;
-`;
-
-const DatePickerText = styled.Text`
-  font-weight: ${styleGuide.fontWeight.normal};
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.greyColor};
-  text-align: center;
+  margin-top: 10px;
 `;
 
 export default ({
@@ -267,6 +273,8 @@ export default ({
   alertModal,
   customChecktimeSet,
   setCustomChecktimeSet,
+  initCustomChecktime,
+  setInitCustomChecktime,
 }) => {
   const RBSheetRef = useRef(null);
 
@@ -500,8 +508,8 @@ export default ({
         )}
       </RBSheet>
       <Modal
-        onRequestClose={() => setIsCustomModalVisible(false)}
-        onBackdropPress={() => setIsCustomModalVisible(false)}
+        onRequestClose={() => {}}
+        onBackdropPress={() => {}}
         isVisible={isCustomModalVisible}
         style={{
           margin: 0,
@@ -526,6 +534,7 @@ export default ({
           {customChecktimeSet ? (
             <DatePickerRoundBtn
               onPress={() => {
+                setInitCustomChecktime(moment(customChecktime));
                 setIsCustomModalVisible(false);
                 setCustomChecktimeSet(true);
               }}
@@ -541,6 +550,20 @@ export default ({
               <DatePickerText style={{color: '#ddd'}}>확인</DatePickerText>
             </DatePickerRoundView>
           )}
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            onPress={() => {
+              setCustomChecktime(moment(initCustomChecktime));
+              setCustomChecktimeSet(false);
+              setIsCustomModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText isCancelBtn={true}>취소</DatePickerText>
+          </DatePickerRoundBtn>
         </DatePickerContainer>
       </Modal>
     </BackGround>

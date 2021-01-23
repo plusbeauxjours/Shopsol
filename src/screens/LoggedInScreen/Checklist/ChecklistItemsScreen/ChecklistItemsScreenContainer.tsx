@@ -72,7 +72,7 @@ export default () => {
     setDate(date.dateString);
   };
 
-  // 점주가 체크리스트 추가하기를 눌렀을 때
+  // 사업주가 체크리스트 추가하기를 눌렀을 때
   const onPressAddChecklist = () => {
     if (Number(MAX_CHECK_COUNT) <= Number(CHECK_COUNT)) {
       alertModal(
@@ -149,7 +149,7 @@ export default () => {
     }
   };
 
-  // 캘린더에서 날짜를 선택하는 경우 공통업무와 점포업무 로드
+  // 캘린더에서 날짜를 선택하는 경우 공통업무와 사업장업무 로드
   const onDayPress = (date) => {
     let markedDates = staticmarkedDates;
     let iterator = Object.keys(markedDates);
