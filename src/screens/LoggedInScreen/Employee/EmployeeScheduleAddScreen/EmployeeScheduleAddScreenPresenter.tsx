@@ -437,11 +437,12 @@ export default ({
                       setTimeListIndex(index);
                     }
                   }}>
-                  <Row>
+                  <Row style={{paddingLeft: 3}}>
                     <EllipseIcon
                       color={timeListIndex === index ? data.color : '#ddd'}
                     />
                     <SelectedText
+                      style={{paddingLeft: 17}}
                       isSelected={timeListIndex === index}
                       color={data.color}>
                       {data.startTime} ~ {data.endTime}

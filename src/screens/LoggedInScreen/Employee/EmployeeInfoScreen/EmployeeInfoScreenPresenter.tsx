@@ -222,7 +222,7 @@ const DateBoxText = styled.Text`
 `;
 
 const TimeListBoxText = styled.Text<IsSelected>`
-  font-weight: ${(props) => (props.isSelected ? '600' : '300')};
+  margin-left: 10px;
   color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
@@ -461,15 +461,17 @@ export default ({
                           setTimeListIndex(index);
                         }
                       }}>
-                      <TimeListBoxText
-                        isSelected={timeListIndex === index}
-                        color={timeListIndex === index ? data.color : '#ddd'}>
+                      <Row style={{paddingLeft: 3}}>
                         <EllipseIcon
                           color={timeListIndex === index ? data.color : '#ddd'}
                         />
-                        &nbsp;&nbsp;
-                        {data.startTime}&nbsp;~&nbsp;{data.endTime}
-                      </TimeListBoxText>
+                        <TimeListBoxText
+                          style={{paddingLeft: 27}}
+                          isSelected={timeListIndex === index}
+                          color={timeListIndex === index ? data.color : '#ddd'}>
+                          {data.startTime}&nbsp;~&nbsp;{data.endTime}
+                        </TimeListBoxText>
+                      </Row>
                       <TimeListBoxText
                         isSelected={true}
                         color={timeListIndex === index ? data.color : '#ddd'}>

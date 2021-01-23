@@ -150,14 +150,16 @@ export default ({
   key,
   data,
   ME,
-  type,
+  TITLE,
+  isOnFix,
   confirmModal,
   gotoChecklistShareItem,
 }) => {
+  console.log('()()()()',data)
   let imgarr = [];
   let allimg = [];
-  if (data.IMG_LIST != null) {
-    allimg = data.IMG_LIST.split('@');
+  if (data?.IMG_LIST != null) {
+    allimg = data?.IMG_LIST?.split('@');
     imgarr.push(allimg[0]);
   }
   return (
@@ -165,7 +167,7 @@ export default ({
       <Touchable
         onPress={() =>
           setTimeout(() => {
-            gotoChecklistShareItem(type, data.NOTICE_SEQ, data.favorite);
+            gotoChecklistShareItem(TITLE, data.NOTICE_SEQ, data.favorite);
           }, 100)
         }
         rippleColor={styleGuide.palette.rippleGreyColor}
@@ -174,7 +176,7 @@ export default ({
         rippleContainerBorderRadius={20}
         rippleOpacity={0.1}>
         <Section>
-          {ME !== data.MEMBER_SEQ && data.NoticeCheck_SEQ == null && (
+          {ME !== data?.MEMBER_SEQ && data?.NoticeCheck_SEQ == null && (
             <NewBadge>
               <NewBoxIcon />
             </NewBadge>
@@ -225,7 +227,7 @@ export default ({
         </Section>
       </Touchable>
       <PinTouchable
-        isFavorite={data.favorite === '1'}
+        isFavorite={!isOnFix}
         onPress={() => confirmModal(data.NOTICE_SEQ)}>
         <PinIcon size={18} color={'white'} />
       </PinTouchable>

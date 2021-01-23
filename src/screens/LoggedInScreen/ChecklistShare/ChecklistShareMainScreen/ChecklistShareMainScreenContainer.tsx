@@ -12,6 +12,8 @@ import {
   getCHECKLIST_SHARE_DATA1,
   getCHECKLIST_SHARE_DATA2,
   setCHECKLIST_SHARE_MARKED,
+  onCHECKLIST_SHARE_FAVORITE,
+  offCHECKLIST_SHARE_FAVORITE,
 } from '~/redux/checklistshareSlice';
 import ChecklistShareMainScreenPresenter from './ChecklistShareMainScreenPresenter';
 import api from '~/constants/LoggedInApi';
@@ -53,7 +55,15 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
-  const confirmModal = (title, text, cancel, okBtn, noticeSeq, TITLE) => {
+  const confirmModal = (
+    title,
+    text,
+    cancel,
+    okBtn,
+    noticeSeq,
+    TITLE,
+    isOnFix,
+  ) => {
     const params = {
       alertType: 'confirm',
       title: title,
@@ -61,7 +71,7 @@ export default () => {
       cancelButtonText: cancel,
       okButtonText: okBtn,
       okCallback: () => {
-        registerFn(noticeSeq, TITLE);
+        registerFn(noticeSeq, TITLE, isOnFix);
       },
     };
     dispatch(setAlertInfo(params));
@@ -69,15 +79,15 @@ export default () => {
   };
 
   // 해당 Route만 리로드
-  const fixControlFn = (noticeSeq, type, TITLE) => {
+  const fixControlFn = (noticeSeq, isOnFix, TITLE) => {
     let TYPE;
-    type == 'fix' ? (TYPE = '고정은') : (TYPE = '고정해제는');
+    isOnFix ? (TYPE = '고정은') : (TYPE = '고정해제는');
     if (STORE == '0' && IS_MANAGER == 0) {
       return alertModal(
         `상단${TYPE} 사업주 또는 ${MANAGER_CALLED}만 가능합니다`,
       );
     }
-    if (type == 'fix') {
+    if (isOnFix) {
       return confirmModal(
         '상단고정',
         '게시글을 상단에 고정합니다\n최신 고정순으로 정렬됩니다',
@@ -85,6 +95,7 @@ export default () => {
         '고정',
         noticeSeq,
         TITLE,
+        isOnFix,
       );
     } else {
       return confirmModal(
@@ -94,6 +105,7 @@ export default () => {
         '해제',
         noticeSeq,
         TITLE,
+        isOnFix,
       );
     }
   };
@@ -129,16 +141,15 @@ export default () => {
   };
 
   // 고정 & 고정해제
-  const registerFn = async (noticeSeq, TITLE) => {
+  const registerFn = async (noticeSeq, TITLE, isOnFix) => {
     try {
-      const {data} = await api.setNoticeFavorite({NOTICE_SEQ: noticeSeq});
-      if (data.resultmsg === '1') {
-        if (TITLE === '지시사항') {
-          dispatch(getCHECKLIST_SHARE_DATA1(date));
-        } else {
-          dispatch(getCHECKLIST_SHARE_DATA2(date));
-        }
+      console.log(noticeSeq, TITLE, 'isOnFix', isOnFix);
+      if (isOnFix) {
+        dispatch(onCHECKLIST_SHARE_FAVORITE({TITLE, NOTICE_SEQ: noticeSeq}));
+      } else {
+        dispatch(offCHECKLIST_SHARE_FAVORITE({TITLE, NOTICE_SEQ: noticeSeq}));
       }
+      await api.setNoticeFavorite({NOTICE_SEQ: noticeSeq});
     } catch (e) {
       console.log(e);
     }

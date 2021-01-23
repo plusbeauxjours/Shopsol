@@ -182,6 +182,12 @@ const AddButtonText = styled.Text`
   color: white;
 `;
 
+const ChecklistTextContainer = styled.View`
+  background-color: green;
+  width: ${wp('100%') - 180}px;
+  flex-wrap: nowrap;
+`;
+
 export default ({
   selectedCategory,
   cameraPictureList,
@@ -402,7 +408,9 @@ export default ({
                 <ChecklistItem
                   key={index}
                   isLast={checklist?.length - 1 == index}>
-                  <Text>{data}</Text>
+                  <ChecklistTextContainer>
+                    <Text>{data}</Text>
+                  </ChecklistTextContainer>
                   <CheckBoxIconContainer>
                     <Touchable
                       onPress={() => {
@@ -424,7 +432,10 @@ export default ({
                           color={styleGuide.palette.primary}
                         />
                       ) : (
-                        <CheckBoxOffIcon size={25} color={styleGuide.palette.lightGreyColor} />
+                        <CheckBoxOffIcon
+                          size={25}
+                          color={styleGuide.palette.lightGreyColor}
+                        />
                       )}
                     </Touchable>
                     <WhiteSpace />
@@ -445,7 +456,10 @@ export default ({
                       {checklistBadState[index] ? (
                         <CheckBoxOnIcon size={25} color="#B91C1B" />
                       ) : (
-                        <CheckBoxOffIcon size={25} color={styleGuide.palette.lightGreyColor} />
+                        <CheckBoxOffIcon
+                          size={25}
+                          color={styleGuide.palette.lightGreyColor}
+                        />
                       )}
                     </Touchable>
                   </CheckBoxIconContainer>

@@ -137,7 +137,7 @@ const TextBox = styled.View`
 `;
 
 const Text = styled.Text<IText>`
-  width: 30px;
+  width: 24px;
   font-size: ${styleGuide.fontSize.small}px;
   color: ${(props) =>
     props.index == 0 || props.index == 10

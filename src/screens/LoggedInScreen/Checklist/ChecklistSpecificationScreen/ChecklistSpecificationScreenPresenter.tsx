@@ -229,6 +229,12 @@ const AddButtonText = styled.Text`
   color: white;
 `;
 
+const ChecklistTextContainer = styled.View`
+  background-color: green;
+  width: ${wp('100%') - 180}px;
+  flex-wrap: nowrap;
+`;
+
 export default ({
   scan,
   setScan,
@@ -345,7 +351,9 @@ export default ({
                 </ChecklistTitle>
                 {LIST?.map((data, index) => (
                   <ChecklistItem key={index} isLast={LIST?.length - 1 == index}>
-                    <Text>{data}</Text>
+                    <ChecklistTextContainer>
+                      <Text>{data}</Text>
+                    </ChecklistTextContainer>
                     <CheckBoxIconContainer>
                       <Touchable
                         onPress={() => {

@@ -348,9 +348,10 @@ export default ({
                   key={index}
                   data={data}
                   ME={MEMBER_SEQ}
-                  type={'지시사항'}
+                  TITLE={'지시사항'}
+                  isOnFix={false}
                   confirmModal={(noticeSeq) =>
-                    fixControlFn(noticeSeq, 'unFix', '지시사항')
+                    fixControlFn(noticeSeq, false, '지시사항')
                   }
                   gotoChecklistShareItem={gotoChecklistShareItem}
                 />
@@ -360,9 +361,10 @@ export default ({
                   key={index}
                   data={data}
                   ME={MEMBER_SEQ}
-                  type={'지시사항'}
+                  TITLE={'지시사항'}
+                  isOnFix={true}
                   confirmModal={(noticeSeq) =>
-                    fixControlFn(noticeSeq, 'fix', '지시사항')
+                    fixControlFn(noticeSeq, true, '지시사항')
                   }
                   gotoChecklistShareItem={gotoChecklistShareItem}
                 />
@@ -420,9 +422,10 @@ export default ({
                   key={index}
                   data={data}
                   ME={MEMBER_SEQ}
-                  type={'특이사항'}
+                  TITLE={'특이사항'}
+                  isOnFix={false}
                   confirmModal={(noticeSeq) =>
-                    fixControlFn(noticeSeq, 'unFix', '특이사항')
+                    fixControlFn(noticeSeq, false, '특이사항')
                   }
                   gotoChecklistShareItem={gotoChecklistShareItem}
                 />
@@ -432,9 +435,10 @@ export default ({
                   key={index}
                   data={data}
                   ME={MEMBER_SEQ}
-                  type={'특이사항'}
+                  TITLE={'특이사항'}
+                  isOnFix={true}
                   confirmModal={(noticeSeq) =>
-                    fixControlFn(noticeSeq, 'fix', '특이사항')
+                    fixControlFn(noticeSeq, true, '특이사항')
                   }
                   gotoChecklistShareItem={gotoChecklistShareItem}
                 />

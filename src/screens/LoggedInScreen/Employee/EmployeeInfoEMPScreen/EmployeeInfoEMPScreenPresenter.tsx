@@ -6,7 +6,6 @@ import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 
 import {BackIcon, ForwardIcon, EllipseIcon} from '~/constants/Icons';
-import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 
 interface IsSelected {
@@ -55,7 +54,6 @@ const NameText = styled.Text`
 
 const DateText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
-  font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -186,7 +184,7 @@ const DateBoxText = styled.Text`
 `;
 
 const TimeListBoxText = styled.Text<IsSelected>`
-  font-weight: ${(props) => (props.isSelected ? '600' : '300')};
+  margin-left: 10px;
   color: ${(props) => (props.isSelected ? `${props.color}` : '#CCCCCC')};
 `;
 
@@ -383,15 +381,17 @@ export default ({
                           setTimeListIndex(index);
                         }
                       }}>
-                      <TimeListBoxText
-                        isSelected={timeListIndex === index}
-                        color={timeListIndex === index ? data.color : '#ddd'}>
+                      <Row style={{paddingLeft: 3}}>
                         <EllipseIcon
                           color={timeListIndex === index ? data.color : '#ddd'}
                         />
-                        &nbsp;&nbsp;
-                        {data.startTime}&nbsp;~&nbsp;{data.endTime}
-                      </TimeListBoxText>
+                        <TimeListBoxText
+                          style={{paddingLeft: 17}}
+                          isSelected={timeListIndex === index}
+                          color={timeListIndex === index ? data.color : '#ddd'}>
+                          {data.startTime}&nbsp;~&nbsp;{data.endTime}
+                        </TimeListBoxText>
+                      </Row>
                       <TimeListBoxText
                         isSelected={true}
                         color={timeListIndex === index ? data.color : '#ddd'}>
@@ -450,16 +450,19 @@ export default ({
                       ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
                       : '계속'}
                   </InfoText>
-                  {EMPLOYEE_INFO_DATA?.probationDATE &&
-                    EMPLOYEE_INFO_DATA?.probationPercent && (
+                  {console.log(EMPLOYEE_INFO_DATA)}
+                  {EMPLOYEE_INFO_DATA?.probationDATE?.length > 0 &&
+                    EMPLOYEE_INFO_DATA?.probationPercent?.length > 0 && (
                       <InfoText>
                         수습기간&nbsp;
                         {moment() > moment(EMPLOYEE_INFO_DATA?.probationDATE)
-                          ? `종료 (${EMPLOYEE_INFO_DATA?.probationPercent}%적용)`
+                          ? `종료 (${
+                              EMPLOYEE_INFO_DATA?.probationPercent ?? '0'
+                            }%적용)`
                           : `${moment(EMPLOYEE_INFO_DATA?.probationDATE).format(
                               '~YYYY.MM.DD',
                             )}까지 (${
-                              EMPLOYEE_INFO_DATA?.probationPercent
+                              EMPLOYEE_INFO_DATA?.probationPercent ?? '0'
                             }%적용)`}
                       </InfoText>
                     )}
@@ -488,7 +491,6 @@ export default ({
                   <DateText
                     style={{
                       fontSize: styleGuide.fontSize.middle,
-                      fontWeight: '300',
                     }}>
                     {moment(date).format('M월 D일')}&nbsp;~&nbsp;
                     {moment(date)

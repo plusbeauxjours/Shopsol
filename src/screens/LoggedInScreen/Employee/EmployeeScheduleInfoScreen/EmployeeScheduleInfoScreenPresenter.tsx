@@ -456,12 +456,17 @@ export default ({
                           setTimeListIndex(index);
                         }
                       }}>
-                      <TimeListBoxText isSelected={timeListIndex === index}>
+                      <Row
+                        style={{justifyContent: 'flex-start', paddingLeft: 3}}>
                         <EllipseIcon
                           color={timeListIndex === index ? data.color : '#ddd'}
                         />
-                        &nbsp;&nbsp;{data.startTime} ~ {data.endTime}
-                      </TimeListBoxText>
+                        <TimeListBoxText
+                          style={{paddingLeft: 17}}
+                          isSelected={timeListIndex === index}>
+                          {data.startTime} ~ {data.endTime}
+                        </TimeListBoxText>
+                      </Row>
                       <TimeListBoxText isSelected={true}>보기</TimeListBoxText>
                     </TimeListBox>
                   ))}
