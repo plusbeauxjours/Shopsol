@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import Animated from 'react-native-reanimated';
 
 import {
   EllipseIcon,
@@ -15,7 +16,6 @@ import {
 } from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import RoundBtn from '~/components/Btn/RoundBtn';
-import InputLine from '~/components/InputLine';
 import EmployeeScheduleAddScreenRenderDayPicker from './EmployeeScheduleAddScreenRenderDayPicker';
 import EmployeeScheduleAddScreenRenderWorkDay from './EmployeeScheduleAddScreenRenderWorkDay';
 import utils from '~/constants/utils';
@@ -35,12 +35,15 @@ interface IIsCancel {
   isCancelBtn?: boolean;
 }
 
+interface IsChecked {
+  isChecked?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
-const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
 
 const Container = styled.View`
@@ -101,13 +104,6 @@ const WorkTypeCheckSection = styled.View``;
 
 const InputCase = styled.View`
   margin-bottom: 20px;
-`;
-
-const DateTouchable = styled.TouchableOpacity`
-  justify-content: flex-end;
-  padding-bottom: 5px;
-  height: 40px;
-  width: 100%;
 `;
 
 const SideBox = styled.View`
@@ -197,13 +193,6 @@ const DatePickerRoundView = styled.View<IIsCancel>`
   margin-top: 10px;
 `;
 
-const TextInputLine = styled.View<IIsBefore>`
-  width: ${wp('100%') - 120}px;
-  height: 0.7px;
-  background-color: ${(props) =>
-    props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
-`;
-
 const ColumnPayBox = styled.View`
   width: ${wp('100%') - 80}px;
   padding: 20px;
@@ -213,6 +202,32 @@ const ColumnPayBox = styled.View`
   align-items: center;
 `;
 
+const InputCaseRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
+const Touchable = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
+`;
 export default ({
   timeList,
   timeListIndex,
@@ -257,6 +272,9 @@ export default ({
   setInitStartTime,
   initEndTime,
   setInitEndTime,
+  endDaySet,
+  setEndDaySet,
+  scrollRef,
 }) => {
   const RenderWorkDayList = () => (
     <WorkTypeCheckSection>
@@ -291,7 +309,8 @@ export default ({
 
   return (
     <BackGround>
-      <ScrollView
+      <Animated.ScrollView
+        ref={scrollRef}
         keyboardShouldPersistTaps={'handled'}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}>
@@ -300,20 +319,28 @@ export default ({
             <InputCase>
               <TitleText>일정 정보</TitleText>
               <GreyLine />
-              <Row>
-                <RowTouchable
-                  onPress={() =>
-                    explainModal('샵솔 출퇴근관리가 시작되는 일자입니다.')
-                  }>
+              <InputCaseRow>
+                <Row
+                  style={{
+                    justifyContent: 'flex-start',
+                  }}>
                   <Text>일정 시작일</Text>
-                  <HelpCircleIcon />
-                </RowTouchable>
-              </Row>
+                  <Touchable
+                    onPress={() => {
+                      explainModal('샵솔 출퇴근관리가 시작되는 일자입니다.');
+                    }}>
+                    <HelpCircleIcon />
+                  </Touchable>
+                </Row>
 
-              <DateTouchable onPress={() => setIsStartDayModalVisible(true)}>
-                <Text>{moment(startDate).format('YYYY년 M월 D일') ?? ''}</Text>
-              </DateTouchable>
-              <InputLine isBefore={startDate === ''} />
+                <RequestBorderButton
+                  isChecked={true}
+                  onPress={() => setIsStartDayModalVisible(true)}>
+                  <RequestBorderText isChecked={true}>
+                    {moment(startDate).format('YYYY년 M월 D일') ?? ''}
+                  </RequestBorderText>
+                </RequestBorderButton>
+              </InputCaseRow>
             </InputCase>
             <InputCase>
               <RowTouchable
@@ -339,24 +366,24 @@ export default ({
                       style={{
                         width: wp('100%') - 80,
                         paddingHorizontal: 20,
+                        justifyContent: 'space-between',
+                        alignItems: 'baseline',
                       }}>
-                      <Text>일정 종료일</Text>
+                      <Row>
+                        <Text>일정종료일</Text>
+                      </Row>
+                      <RequestBorderButton
+                        isChecked={endDaySet}
+                        onPress={() => {
+                          setIsEndDayModalVisible(true);
+                        }}>
+                        <RequestBorderText isChecked={endDaySet}>
+                          {endDaySet
+                            ? moment(endDate).format('YYYY년 M월 D일')
+                            : '일정종료일 설정'}
+                        </RequestBorderText>
+                      </RequestBorderButton>
                     </Row>
-                    <DateTouchable
-                      style={{
-                        paddingHorizontal: 20,
-                        alignItems: 'flex-start',
-                        width: wp('100%') - 80,
-                      }}
-                      onPress={() => setIsEndDayModalVisible(true)}
-                      disabled={checkNoEndDate}>
-                      <Text>
-                        {!checkNoEndDate
-                          ? moment(endDate).format('YYYY년 M월 D일')
-                          : ''}
-                      </Text>
-                    </DateTouchable>
-                    <TextInputLine isBefore={checkNoEndDate} />
                   </ColumnPayBox>
                 </>
               )}
@@ -446,7 +473,7 @@ export default ({
             isRegisted={timeList.length > 0}
           />
         </Container>
-      </ScrollView>
+      </Animated.ScrollView>
       <Modal
         onRequestClose={() => {}}
         onBackdropPress={() => {}}
@@ -640,6 +667,7 @@ export default ({
             onPress={() => {
               setInitEndDate(moment(endDate).format('YYYY-MM-DD'));
               setIsEndDayModalVisible(false);
+              setEndDaySet(true);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

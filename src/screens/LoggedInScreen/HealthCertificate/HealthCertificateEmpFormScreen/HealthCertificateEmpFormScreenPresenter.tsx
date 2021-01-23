@@ -20,12 +20,11 @@ interface IIsCancel {
   isCancelBtn?: boolean;
 }
 
+interface IsChecked {
+  isChecked?: boolean;
+}
 const WhiteSpace = styled.View`
   height: 20px;
-`;
-
-const SmallWhiteSpace = styled.View`
-  height: 10px;
 `;
 
 const BackGround = styled.SafeAreaView`
@@ -60,13 +59,6 @@ const CameraBoxContainer = styled.View`
 
 const TextContainer = styled.View`
   align-items: flex-start;
-`;
-
-const DateText = styled.Text`
-  width: 100%;
-  font-size: 14px;
-  margin-left: 5px;
-  margin-top: 10px;
 `;
 
 const TextInput = styled.TextInput`
@@ -215,6 +207,29 @@ const DatePickerText = styled.Text<IIsCancel>`
   text-align: center;
 `;
 
+const InputCaseRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-left: 5px;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
+`;
+
 export default ({
   submitFn,
   checkOrcFn,
@@ -335,18 +350,19 @@ export default ({
               </TextInputContainer>
               <InputLine isBefore={!RESULT_COUNT} />
               <WhiteSpace />
-              <TextInputContainer>
-                <Touchable
-                  style={{alignItems: 'flex-start', width: '100%'}}
-                  onPress={() => setDateModalVisible(true)}>
+
+              <InputCaseRow>
+                <Row style={{justifyContent: 'flex-start'}}>
                   <GreyText>검진일</GreyText>
-                  <DateText>
+                </Row>
+                <RequestBorderButton
+                  isChecked={true}
+                  onPress={() => setDateModalVisible(true)}>
+                  <RequestBorderText isChecked={true}>
                     {moment(EDUCATION_DATE).format('YYYY.MM.DD')}
-                  </DateText>
-                </Touchable>
-              </TextInputContainer>
-              <SmallWhiteSpace />
-              <InputLine isBefore={false} />
+                  </RequestBorderText>
+                </RequestBorderButton>
+              </InputCaseRow>
             </Section>
             <SubmitBtn
               text={'입력완료'}

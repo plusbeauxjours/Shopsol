@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {createRef, useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
 
@@ -27,6 +27,8 @@ const constant = {
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const scrollRef = createRef(0);
+
   const {type: TYPE, EMP_SEQ, fetchData} = params;
   const [isUpdateMode, setIsUpdateMode] = useState<boolean>(false); // INSERT 또는 UPDATE 상태값
   const [timeList, setTimeList] = useState<any>(params?.timeList || []); // 저장된 근무 시간 목록
@@ -42,7 +44,7 @@ export default ({route: {params}}) => {
   const [initEndDate, setInitEndDate] = useState<any>(
     moment(params?.endDate) || moment(),
   ); // 근무 종료일
-
+  const [endDaySet, setEndDaySet] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<any>(moment());
   const [initStartTime, setInitStartTime] = useState<any>(moment());
   const [endTime, setEndTime] = useState<any>(moment());
@@ -186,51 +188,59 @@ export default ({route: {params}}) => {
 
   // 추가 완료 & 수정 완료
   const submitFn = async () => {
-    try {
-      dispatch(setSplashVisible({visible: true, text: '일정'}));
-      const params = {
-        EMP_SEQ,
-        START: moment(startDate).format('YYYY-MM-DD'),
-        END: !checkNoEndDate ? moment(endDate).format('YYYY-MM-DD') : null,
-        empSchedules: [],
-      };
-      for (const time of timeList) {
-        for (const day of time.dayList) {
-          if (day.isChecked) {
-            params.empSchedules.push({
-              EMP_SCH_SEQ: -1,
-              JE_SEQ: -1,
-              EMP_SEQ,
-              DAY: day.day,
-              ATTENDANCE_TIME: time.startTime,
-              WORK_OFF_TIME: time.endTime,
-              USE_FLAG: 1,
-              START: moment(startDate).format('YYYY-MM-DD'),
-              END: !checkNoEndDate
-                ? moment(endDate).format('YYYY-MM-DD')
-                : null,
-            });
+    if (!endDaySet && !checkNoEndDate) {
+      alertModal('일정종료일을 입력해주세요');
+      scrollRef.current?.getNode()?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    } else {
+      try {
+        dispatch(setSplashVisible({visible: true, text: '일정'}));
+        const params = {
+          EMP_SEQ,
+          START: moment(startDate).format('YYYY-MM-DD'),
+          END: !checkNoEndDate ? moment(endDate).format('YYYY-MM-DD') : null,
+          empSchedules: [],
+        };
+        for (const time of timeList) {
+          for (const day of time.dayList) {
+            if (day.isChecked) {
+              params.empSchedules.push({
+                EMP_SCH_SEQ: -1,
+                JE_SEQ: -1,
+                EMP_SEQ,
+                DAY: day.day,
+                ATTENDANCE_TIME: time.startTime,
+                WORK_OFF_TIME: time.endTime,
+                USE_FLAG: 1,
+                START: moment(startDate).format('YYYY-MM-DD'),
+                END: !checkNoEndDate
+                  ? moment(endDate).format('YYYY-MM-DD')
+                  : null,
+              });
+            }
           }
         }
-      }
-      if (isUpdateMode) {
-        const {data} = await api.updateEmpSchedule({DEL: deleteList});
-        if (data.message !== 'SUCCESS') {
+        if (isUpdateMode) {
+          const {data} = await api.updateEmpSchedule({DEL: deleteList});
+          if (data.message !== 'SUCCESS') {
+            alertModal(data.result);
+          }
+        }
+        const {data} = await api.insertEmpSchedule(params);
+        if (data.message === 'SUCCESS') {
+          alertModal('일정이 ' + TYPE + '되었습니다.');
+        } else {
           alertModal(data.result);
         }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        fetchData();
+        navigation.goBack();
+        dispatch(setSplashVisible({visible: false}));
       }
-      const {data} = await api.insertEmpSchedule(params);
-      if (data.message === 'SUCCESS') {
-        alertModal('일정이 ' + TYPE + '되었습니다.');
-      } else {
-        alertModal(data.result);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      fetchData();
-      navigation.goBack();
-      dispatch(setSplashVisible({visible: false}));
     }
   };
 
@@ -336,6 +346,9 @@ export default ({route: {params}}) => {
       setInitStartTime={setInitStartTime}
       initEndTime={initEndTime}
       setInitEndTime={setInitEndTime}
+      endDaySet={endDaySet}
+      setEndDaySet={setEndDaySet}
+      scrollRef={scrollRef}
     />
   );
 };

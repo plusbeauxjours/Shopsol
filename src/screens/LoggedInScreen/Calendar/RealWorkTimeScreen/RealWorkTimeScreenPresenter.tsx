@@ -19,6 +19,10 @@ interface IsSelected {
   color?: string;
 }
 
+interface IIsCancel {
+  isCancelBtn?: boolean;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};

@@ -24,11 +24,15 @@ import {
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 
+interface IIsCancel {
+  isCancelBtn?: boolean;
+}
+
+interface IsChecked {
+  isChecked?: boolean;
+}
 const WhiteSpace = styled.View`
   height: 20px;
-`;
-const SmallWhiteSpace = styled.View`
-  height: 10px;
 `;
 
 const BackGround = styled.SafeAreaView`
@@ -66,13 +70,6 @@ const TextContainer = styled.View`
 `;
 
 const Text = styled.Text``;
-
-const DateText = styled.Text`
-  width: 100%;
-  font-size: 14px;
-  margin-left: 5px;
-  margin-top: 10px;
-`;
 
 const TextInput = styled.TextInput`
   width: 100%;
@@ -223,10 +220,32 @@ const DatePickerText = styled.Text<IIsCancel>`
   font-weight: ${styleGuide.fontWeight.normal};
   font-size: ${styleGuide.fontSize.large}px;
   color: ${(props) =>
-    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'}
+    props.isCancelBtn ? styleGuide.palette.greyColor : 'white'};
   text-align: center;
+  margin-left: 5px;
 `;
 
+const InputCaseRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
+`;
 export default ({
   submitFn,
   setNAME,
@@ -382,18 +401,18 @@ export default ({
               </TextInputContainer>
               <InputLine isBefore={storename == '' ? true : false} />
               <WhiteSpace />
-              <TextInputContainer>
-                <Touchable
-                  style={{alignItems: 'flex-start', width: '100%'}}
-                  onPress={() => setDateModalVisible(true)}>
+              <InputCaseRow>
+                <Row style={{justifyContent: 'flex-start'}}>
                   <GreyText>교육 일시</GreyText>
-                  <DateText>
+                </Row>
+                <RequestBorderButton
+                  isChecked={true}
+                  onPress={() => setDateModalVisible(true)}>
+                  <RequestBorderText isChecked={true}>
                     {moment(EDUCATION_DATE).format('YYYY.MM.DD')}
-                  </DateText>
-                </Touchable>
-              </TextInputContainer>
-              <SmallWhiteSpace />
-              <InputLine isBefore={false} />
+                  </RequestBorderText>
+                </RequestBorderButton>
+              </InputCaseRow>
               <WhiteSpace />
               <TextInputContainer>
                 <GreyText>영업의 종류</GreyText>
