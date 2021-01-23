@@ -79,10 +79,14 @@ export default ({route: {params}}) => {
 
   const deleteShelfLife = async () => {
     try {
-      alertModal('상품을 삭제하였습니다.');
-      navigation.goBack();
       dispatch(removeSHELFLIFE_DATA({name: params?.name, shelfLife_SEQ}));
-      await api.deleteShelfLifeData({shelfLife_SEQ});
+      const {data} = await api.deleteShelfLifeData({shelfLife_SEQ});
+      if (data.resultmsg === 'success') {
+        alertModal('상품을 삭제하였습니다.');
+        navigation.goBack();
+      } else {
+        alertModal('연결에 실패하였습니다.');
+      }
     } catch (e) {
       console.log(e);
     }

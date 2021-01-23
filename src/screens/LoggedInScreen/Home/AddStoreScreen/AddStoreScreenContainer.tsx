@@ -166,7 +166,7 @@ export default ({route: {params}}) => {
     } else {
       try {
         dispatch(
-          setSplashVisible({visible: true, fullText: '점포를 등록 중 입니다.'}),
+          setSplashVisible({visible: true, fullText: '점포를 등록중입니다.'}),
         );
         const {data} = await api.addStore({
           NAME,

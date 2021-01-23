@@ -111,12 +111,14 @@ export default ({
           {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
           {data?.END ? moment(data?.END).format('YYYY.MM.DD') : '계속'}
         </PayText>
-        {data?.probationDATE && (
+        {data?.probationDATE && data?.probationPercent && (
           <PayText>
             수습기간&nbsp;
             {moment() > moment(data?.probationDATE)
-              ? '종료'
-              : moment(data?.probationDATE).format('~YYYY.MM.DD')}
+              ? `종료 (${data?.probationPercent}%적용)`
+              : `${moment(data?.probationDATE).format('~YYYY.MM.DD')}까지 (${
+                  data?.probationPercent
+                }%적용)`}
           </PayText>
         )}
       </NameBox>

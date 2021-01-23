@@ -368,12 +368,14 @@ export default ({
               {moment(START).format('YYYY.MM.DD')}&nbsp;~&nbsp;
               {END ? moment(END).format('YYYY.MM.DD') : '계속'}
             </EmployeeText>
-            {probationDATE && (
+            {probationDATE && probationPercent && (
               <EmployeeText>
                 수습기간&nbsp;
                 {moment() > moment(probationDATE)
-                  ? '종료'
-                  : moment(probationDATE).format('~YYYY.MM.DD')}
+                  ? `종료 (${probationPercent}%적용)`
+                  : `${moment(probationDATE).format(
+                      '~YYYY.MM.DD',
+                    )}까지 (${probationPercent}%적용)`}
               </EmployeeText>
             )}
           </NameBox>

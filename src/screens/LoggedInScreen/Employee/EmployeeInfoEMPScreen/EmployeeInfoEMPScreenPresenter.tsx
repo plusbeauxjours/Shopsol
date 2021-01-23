@@ -450,16 +450,19 @@ export default ({
                       ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
                       : '계속'}
                   </InfoText>
-                  {EMPLOYEE_INFO_DATA?.probationDATE && (
-                    <InfoText>
-                      수습기간&nbsp;
-                      {moment() > moment(EMPLOYEE_INFO_DATA?.probationDATE)
-                        ? '종료'
-                        : moment(EMPLOYEE_INFO_DATA?.probationDATE).format(
-                            '~YYYY.MM.DD',
-                          )}
-                    </InfoText>
-                  )}
+                  {EMPLOYEE_INFO_DATA?.probationDATE &&
+                    EMPLOYEE_INFO_DATA?.probationPercent && (
+                      <InfoText>
+                        수습기간&nbsp;
+                        {moment() > moment(EMPLOYEE_INFO_DATA?.probationDATE)
+                          ? `종료 (${EMPLOYEE_INFO_DATA?.probationPercent}%적용)`
+                          : `${moment(EMPLOYEE_INFO_DATA?.probationDATE).format(
+                              '~YYYY.MM.DD',
+                            )}까지 (${
+                              EMPLOYEE_INFO_DATA?.probationPercent
+                            }%적용)`}
+                      </InfoText>
+                    )}
                 </NameBox>
               </EmployeeBox>
             </Section>

@@ -291,6 +291,12 @@ const MainItemContainer = styled.TouchableOpacity<IsFirst>`
   height: ${(props) => (props.isFirst ? 60 : 40)}px;
 `;
 
+const EmpModalContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+`;
+
 export default ({
   alertModal,
   markedDates,
@@ -544,25 +550,31 @@ export default ({
           persistentScrollbar={true}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{alignItems: 'center'}}>
-          {emplist?.map((data, index) => (
-            <Touchable
-              key={index}
-              onPress={() => {
-                toastFn();
-                addEmpFn(data);
-              }}>
-              <ModalCheckEmpList>
-                <Bold>{data.EMP_NAME}</Bold>
-                <Text>{data.MobileNo}</Text>
-                <AddCircleIcon size={20} />
-              </ModalCheckEmpList>
-            </Touchable>
-          ))}
+          {emplist?.length > 0 ? (
+            emplist?.map((data, index) => (
+              <Touchable
+                key={index}
+                onPress={() => {
+                  toastFn();
+                  addEmpFn(data);
+                }}>
+                <ModalCheckEmpList>
+                  <Bold>{data.EMP_NAME}</Bold>
+                  <Text>{data.MobileNo}</Text>
+                  <AddCircleIcon size={20} />
+                </ModalCheckEmpList>
+              </Touchable>
+            ))
+          ) : (
+            <EmpModalContainer>
+              <Text>선택가능한 직원이 없습니다.</Text>
+            </EmpModalContainer>
+          )}
         </ScrollView>
         {isToastVisible && (
           <ModalPopupArea>
             <ModalPopup>
-              <ModalPopupText>직원을 목록에 추가하였습니다</ModalPopupText>
+              <ModalPopupText>직원을 목록에 추가하였습니다.</ModalPopupText>
             </ModalPopup>
           </ModalPopupArea>
         )}

@@ -168,32 +168,37 @@ export default ({route: {params}}) => {
       return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
     }
     try {
-      dispatch(setLoadingVisible(true));
-      list.map((i, index) => {
-        i.shelfLifeIMAGE
-          ? submitShelfLifeDataImg(i, STORE_SEQ)
-          : shelfLifeDataTempList.push(i);
-      });
-      navigation.goBack();
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          fullText: '유통기한을 등록중입니다.',
+        }),
+      );
+      list.map(
+        (i, index) => !i.shelfLifeIMAGE && shelfLifeDataTempList.push(i),
+      );
       if (shelfLifeDataTempList.length > 0) {
-        try {
-          const {data} = await api.setShelfLifeData({
-            STORE_SEQ,
-            LIST: shelfLifeDataTempList,
-          });
-          if (data.result == '0') {
-            alertModal('연결에 실패하였습니다.');
-          } else {
-            dispatch(setLoadingVisible(false));
-            alertModal('등록이 완료되었습니다.');
-            params?.onRefresh();
-          }
-        } catch (e) {
-          console.log(e);
+        const {data} = await api.setShelfLifeData({
+          STORE_SEQ,
+          LIST: shelfLifeDataTempList,
+        });
+        if (data.result == '0') {
+          alertModal('연결에 실패하였습니다.');
+        } else {
+          alertModal('등록이 완료되었습니다.');
+          params?.onRefresh();
         }
+      } else {
+        return;
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      navigation.goBack();
+      dispatch(setSplashVisible({visible: false}));
+      list.map(
+        (i, index) => i.shelfLifeIMAGE && submitShelfLifeDataImg(i, STORE_SEQ),
+      );
     }
   };
 

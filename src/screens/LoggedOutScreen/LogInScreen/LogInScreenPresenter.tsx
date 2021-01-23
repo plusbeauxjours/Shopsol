@@ -25,7 +25,9 @@ const Container = styled.View`
 const Space = styled.View`
   justify-content: flex-end;
   align-items: center;
+  margin-bottom: 70px;
 `;
+
 const Touchable = styled.TouchableOpacity``;
 
 const TextInput = styled.TextInput`

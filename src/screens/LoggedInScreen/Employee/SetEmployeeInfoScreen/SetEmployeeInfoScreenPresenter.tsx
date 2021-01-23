@@ -527,12 +527,14 @@ export default ({
                 </EmployeeCardText>
               </>
             )}
-            {probationDATEstate && (
+            {probationDATEstate && probationPercentstate && (
               <EmployeeCardText>
                 수습기간&nbsp;
                 {moment() > moment(probationDATEstate)
-                  ? '종료'
-                  : moment(probationDATEstate).format('~YYYY.MM.DD')}
+                  ? `종료 (${probationPercentstate}%적용)`
+                  : `${moment(probationDATEstate).format(
+                      '~YYYY.MM.DD',
+                    )}까지 (${probationPercentstate}%적용)`}
               </EmployeeCardText>
             )}
           </NameBox>
