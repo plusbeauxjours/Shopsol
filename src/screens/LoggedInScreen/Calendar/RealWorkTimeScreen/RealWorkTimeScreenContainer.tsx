@@ -36,41 +36,35 @@ export default ({route: {params}}) => {
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
-  const [startTime, setStartTime] = useState<any>(
-    UPDATED_START
-      ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
-      : ATTENDANCE_TIME
-      ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
-      : moment(START?.substring(0, 5), 'kk:mm'),
-  );
-  const [initStartTime, setInitStartTime] = useState<any>(
-    UPDATED_START
-      ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
-      : ATTENDANCE_TIME
-      ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
-      : moment(START?.substring(0, 5), 'kk:mm'),
-  );
-  const [endTime, setEndTime] = useState<any>(
-    UPDATED_END
-      ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
-      : WORK_OFF_TIME
-      ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
-      : moment(END?.substring(0, 5), 'kk:mm'),
-  );
-  const [initEndTime, setInitEndTime] = useState<any>(
-    UPDATED_END
-      ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
-      : WORK_OFF_TIME
-      ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
-      : moment(END?.substring(0, 5), 'kk:mm'),
-  );
+  console.log('ATTENDANCE_TIME', ATTENDANCE_TIME);
+  console.log('UPDATED_START', UPDATED_START);
+  console.log('WORK_OFF_TIME', WORK_OFF_TIME);
+  console.log('UPDATED_END', UPDATED_END);
+  console.log('START', START);
+  console.log('END', END);
+  const initAttendanceTime = UPDATED_START
+    ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
+    : ATTENDANCE_TIME
+    ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
+    : moment(START_TIME?.substring(0, 5), 'kk:mm');
+
+  const initWorkOffTime = UPDATED_END
+    ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
+    : WORK_OFF_TIME
+    ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
+    : moment(END_TIME?.substring(0, 5), 'kk:mm');
+
+  const [startTime, setStartTime] = useState<any>(initAttendanceTime);
+  const [initStartTime, setInitStartTime] = useState<any>(initAttendanceTime);
+  const [endTime, setEndTime] = useState<any>(initWorkOffTime);
+  const [initEndTime, setInitEndTime] = useState<any>(initWorkOffTime);
   const [startTimeSet, setStartTimeSet] = useState<boolean>(false);
   const [endTimeSet, setEndTimeSet] = useState<boolean>(false);
   const [noStart, setNoStart] = useState<boolean>(
-    !ATTENDANCE_TIME && !UPDATED_START ? true : false,
+    !ATTENDANCE_TIME && !UPDATED_START && !START_TIME ? true : false,
   );
   const [noEnd, setNoEnd] = useState<boolean>(
-    !WORK_OFF_TIME && !UPDATED_END ? true : false,
+    !WORK_OFF_TIME && !UPDATED_END && !END_TIME ? true : false,
   );
   const [
     isStartTimeModalVisible,
@@ -156,44 +150,12 @@ export default ({route: {params}}) => {
   const nomalTimeFn = (type) => {
     if (type == 'start') {
       setNoStart(false);
-      setStartTime(
-        ATTENDANCE_TIME
-          ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
-          : CHANGE_START
-          ? moment(CHANGE_START?.substring(0, 5), 'kk:mm')
-          : START
-          ? moment(START?.substring(0, 5), 'kk:mm')
-          : moment(),
-      );
-      setInitStartTime(
-        ATTENDANCE_TIME
-          ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
-          : CHANGE_START
-          ? moment(CHANGE_START?.substring(0, 5), 'kk:mm')
-          : START
-          ? moment(START?.substring(0, 5), 'kk:mm')
-          : moment(),
-      );
+      setStartTime(initAttendanceTime);
+      setInitStartTime(initAttendanceTime);
     } else if (type == 'end') {
       setNoEnd(false);
-      setEndTime(
-        WORK_OFF_TIME
-          ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
-          : CHANGE_END
-          ? moment(CHANGE_END?.substring(0, 5), 'kk:mm')
-          : END
-          ? moment(END?.substring(0, 5), 'kk:mm')
-          : moment(),
-      );
-      setInitEndTime(
-        WORK_OFF_TIME
-          ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
-          : CHANGE_END
-          ? moment(CHANGE_END?.substring(0, 5), 'kk:mm')
-          : END
-          ? moment(END?.substring(0, 5), 'kk:mm')
-          : moment(),
-      );
+      setEndTime(initWorkOffTime);
+      setInitEndTime(initWorkOffTime);
     } else if (type == 'deleteStart') {
       setNoStart(true);
     } else if (type == 'deleteEnd') {
@@ -237,6 +199,10 @@ export default ({route: {params}}) => {
       setInitStartTime={setInitStartTime}
       initEndTime={initEndTime}
       setInitEndTime={setInitEndTime}
+      setNoStart={setNoStart}
+      setNoEnd={setNoEnd}
+      initAttendanceTime={initAttendanceTime}
+      initWorkOffTime={initWorkOffTime}
     />
   );
 };

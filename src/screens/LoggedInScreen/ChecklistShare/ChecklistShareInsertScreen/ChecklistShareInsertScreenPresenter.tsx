@@ -192,7 +192,7 @@ const PictureBorderBox = styled.View`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 390px;
+  height: 370px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -203,7 +203,7 @@ const DatePickerContainer = styled.View`
 
 const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};

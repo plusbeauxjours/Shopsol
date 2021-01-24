@@ -28,14 +28,12 @@ interface IIsCancel {
   isCancelBtn?: boolean;
 }
 
-
 interface IsChecked {
   isChecked?: boolean;
 }
 const WhiteSpace = styled.View`
   height: 20px;
 `;
-
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -70,8 +68,6 @@ const CameraBoxContainer = styled.View`
 const TextContainer = styled.View`
   align-items: flex-start;
 `;
-
-
 
 const TextInput = styled.TextInput`
   width: 100%;
@@ -189,7 +185,7 @@ const CameraLastPictureContainer = styled.View`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 390px;
+  height: 370px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -200,7 +196,7 @@ const DatePickerContainer = styled.View`
 
 const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
@@ -224,7 +220,6 @@ const InputCaseRow = styled.View`
   justify-content: space-between;
   align-items: baseline;
   margin-left: 5px;
-
 `;
 
 const RequestBorderButton = styled.TouchableOpacity<IsChecked>`

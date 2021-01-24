@@ -8,6 +8,7 @@ import moment from 'moment';
 import Animated from 'react-native-reanimated';
 import {mix, useTransition} from 'react-native-redash';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import LottieView from 'lottie-react-native';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {ForwardArrowIcon} from '~/constants/Icons';
@@ -102,8 +103,10 @@ const RowTouchable = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const RowSpaceTouchable = styled(RowTouchable)`
+const RowSpaceTouchable = styled.View`
   justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const SideText = styled.Text`
@@ -120,7 +123,7 @@ const TimePickBoxTimeText = styled.Text<IsSelected>`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 390px;
+  height: 370px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -131,7 +134,7 @@ const DatePickerContainer = styled.View`
 
 const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
@@ -152,7 +155,7 @@ const DatePickerText = styled.Text<IIsCancel>`
 
 const DatePickerRoundView = styled.View<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: #ddd;
@@ -226,6 +229,23 @@ const ForwardArrowIconContainer = styled.View`
   justify-content: center;
   align-items: flex-end;
   height: 10px;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+  height: 32px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
 `;
 
 export default ({
@@ -390,18 +410,26 @@ export default ({
         <TitleText>변경할 근무시간</TitleText>
       </RowTitle>
       <GreyLine />
-      <RowSpaceTouchable onPress={() => setIsStartTimeModalVisible(true)}>
+      <RowSpaceTouchable>
         <SideText>근무 시작시간</SideText>
-        <TimePickBoxTimeText isSelected={!!moment(startTime).format('HH:mm')}>
-          {moment(startTime).format('HH:mm')}
-        </TimePickBoxTimeText>
+        <RequestBorderButton
+          isChecked={!!moment(startTime).format('HH:mm')}
+          onPress={() => setIsStartTimeModalVisible(true)}>
+          <RequestBorderText isChecked={!!moment(startTime).format('HH:mm')}>
+            {moment(startTime).format('HH:mm')}
+          </RequestBorderText>
+        </RequestBorderButton>
       </RowSpaceTouchable>
       <WhiteSpace />
-      <RowSpaceTouchable onPress={() => setIsEndTimeModalVisible(true)}>
+      <RowSpaceTouchable>
         <SideText>근무 종료시간</SideText>
-        <TimePickBoxTimeText isSelected={!!moment(endTime).format('HH:mm')}>
-          {moment(endTime).format('HH:mm')}
-        </TimePickBoxTimeText>
+        <RequestBorderButton
+          isChecked={!!moment(endTime).format('HH:mm')}
+          onPress={() => setIsEndTimeModalVisible(true)}>
+          <RequestBorderText isChecked={!!moment(endTime).format('HH:mm')}>
+            {moment(endTime).format('HH:mm')}
+          </RequestBorderText>
+        </RequestBorderButton>
       </RowSpaceTouchable>
     </Section>
   );
@@ -481,6 +509,19 @@ export default ({
           height: '100%',
         }}>
         <DatePickerContainer>
+          {!startTimeSet && (
+            <LottieView
+              style={{
+                width: 150,
+                top: 23,
+                right: 0,
+                position: 'absolute',
+              }}
+              source={require('../../../../assets/animations/rowlett.json')}
+              loop={true}
+              autoPlay
+            />
+          )}
           <DatePicker
             date={moment(startTime).toDate()}
             mode={'time'}
@@ -540,6 +581,19 @@ export default ({
           height: '100%',
         }}>
         <DatePickerContainer>
+          {!endTimeSet && (
+            <LottieView
+              style={{
+                width: 150,
+                top: 23,
+                right: 0,
+                position: 'absolute',
+              }}
+              source={require('../../../../assets/animations/rowlett.json')}
+              loop={true}
+              autoPlay
+            />
+          )}
           <DatePicker
             date={moment(endTime).toDate()}
             mode={'time'}

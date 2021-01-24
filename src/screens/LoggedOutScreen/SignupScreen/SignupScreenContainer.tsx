@@ -32,7 +32,7 @@ export default ({route: {params}}) => {
 
   const [isBirthDateVisible, setIsBirthDateVisible] = useState<boolean>(false);
   const [passwordCheck, setPasswordCheck] = useState<any>('');
-  const [isPasswordSeen, setIsPasswordSeen] = useState<boolean>(true);
+  const [isPasswordSeen, setIsPasswordSeen] = useState<boolean>(false);
   const [isPasswordCheckSeen, setIsPasswordCheckSeen] = useState<boolean>(
     false,
   );
@@ -157,6 +157,7 @@ export default ({route: {params}}) => {
     const reg1 = /^[A-Za-z0-9]*$/;
     const reg2 = /[0-9]/g;
     const reg3 = /[a-z]/gi;
+    console.log(text);
     if (isPasswordCheck) {
       if (reg1.test(text)) {
         setPasswordCheck(text);

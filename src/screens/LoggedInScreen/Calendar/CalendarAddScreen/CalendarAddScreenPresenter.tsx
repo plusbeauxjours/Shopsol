@@ -12,6 +12,7 @@ import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 import {mix, useTransition} from 'react-native-redash';
 import Animated from 'react-native-reanimated';
+import LottieView from 'lottie-react-native';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {
@@ -195,7 +196,7 @@ const ModalPopup = styled.View`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 390px;
+  height: 370px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -206,7 +207,7 @@ const DatePickerContainer = styled.View`
 
 const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
@@ -227,7 +228,7 @@ const DatePickerText = styled.Text<IIsCancel>`
 
 const DatePickerRoundView = styled.View<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: #ddd;
@@ -601,6 +602,19 @@ export default ({
           height: '100%',
         }}>
         <DatePickerContainer>
+          {!startTimeSet && (
+            <LottieView
+              style={{
+                width: 150,
+                top: 23,
+                right: 0,
+                position: 'absolute',
+              }}
+              source={require('../../../../assets/animations/rowlett.json')}
+              loop={true}
+              autoPlay
+            />
+          )}
           <DatePicker
             date={moment(startTime).toDate()}
             mode={'time'}
@@ -660,6 +674,19 @@ export default ({
           height: '100%',
         }}>
         <DatePickerContainer>
+          {!endTimeSet && (
+            <LottieView
+              style={{
+                width: 150,
+                top: 23,
+                right: 0,
+                position: 'absolute',
+              }}
+              source={require('../../../../assets/animations/rowlett.json')}
+              loop={true}
+              autoPlay
+            />
+          )}
           <DatePicker
             date={moment(endTime).toDate()}
             mode={'time'}

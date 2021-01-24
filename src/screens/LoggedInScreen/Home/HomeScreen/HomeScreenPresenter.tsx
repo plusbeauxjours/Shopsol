@@ -84,7 +84,11 @@ const IconContainer = styled.TouchableOpacity`
 
 const QrIconContainer = styled(IconContainer)<IHasQr>`
   flex-direction: row;
-  background-color: ${styleGuide.palette.tertiary};
+  background-color: ${(props) =>
+    props.hasQr ? styleGuide.palette.tertiary : 'white'};
+  border-width: ${(props) => (props.hasQr ? 0 : 2)}px;
+  border-color: ${(props) =>
+    props.hasQr ? 'transparent' : styleGuide.palette.tertiary};
 `;
 
 const MenuCnt = styled(Ripple)`
@@ -737,14 +741,17 @@ export default ({
                 </MenuTitleArea>
                 {hasConfirmed ? (
                   <QrIconContainer
-                    hasQr={true}
+                    hasQr={QR_Num}
                     onPress={() => {
                       (initLoading && QR_Num) ||
                       (!initLoading && STORE_DATA.resultdata?.QR_Num)
                         ? setShowPictureModalOpen(true)
                         : utils.handleCameraPermission(setQrCameraModalOpen2);
                     }}>
-                    <QrCodeIcon color={'white'} size={18} />
+                    <QrCodeIcon
+                      color={QR_Num ? 'white' : styleGuide.palette.tertiary}
+                      size={18}
+                    />
                   </QrIconContainer>
                 ) : (
                   <>

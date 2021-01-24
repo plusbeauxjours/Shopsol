@@ -9,6 +9,7 @@ import DatePicker from 'react-native-date-picker';
 import Modal from 'react-native-modal';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
+import LottieView from 'lottie-react-native';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {ForwardArrowIcon} from '~/constants/Icons';
@@ -17,6 +18,10 @@ import styleGuide from '~/constants/styleGuide';
 interface IsSelected {
   isSelected: boolean;
   color?: string;
+}
+
+interface IsChecked {
+  isChecked?: boolean;
 }
 
 interface IIsCancel {
@@ -127,15 +132,11 @@ const CntArea = styled.View`
   padding-left: 15px;
 `;
 
-const RowTouchable = styled.TouchableOpacity`
+const RowSpaceTouchable = styled.View`
   flex-direction: row;
   align-items: center;
-`;
-
-const RowSpaceTouchable = styled(RowTouchable)`
   justify-content: space-around;
   align-items: center;
-  height: 22px;
 `;
 
 const SideText = styled.Text`
@@ -151,7 +152,7 @@ const TimePickBoxTimeText = styled.Text`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 390px;
+  height: 370px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -162,7 +163,7 @@ const DatePickerContainer = styled.View`
 
 const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
@@ -183,7 +184,7 @@ const DatePickerText = styled.Text<IIsCancel>`
 
 const DatePickerRoundView = styled.View<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: #ddd;
@@ -197,6 +198,23 @@ const ForwardArrowIconContainer = styled.View`
   justify-content: center;
   align-items: flex-end;
   height: 10px;
+`;
+
+const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
+  padding: 7px 14px;
+  align-items: center;
+  justify-content: center;
+  border-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
+  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
+  background-color: ${(props) =>
+    props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-radius: 20px;
+  height: 32px;
+`;
+
+const RequestBorderText = styled.Text<IsChecked>`
+  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
 `;
 
 export default ({
@@ -234,6 +252,10 @@ export default ({
   setInitStartTime,
   initEndTime,
   setInitEndTime,
+  setNoStart,
+  setNoEnd,
+  initAttendanceTime,
+  initWorkOffTime,
 }) => {
   const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);
   const isNextDay2 = CHANGE_START > CHANGE_END;
@@ -348,58 +370,27 @@ export default ({
         <TitleText>변경할 출퇴근시간</TitleText>
       </RowTitle>
       <GreyLine />
-      <RowSpaceTouchable
-        disabled={noStart}
-        onPress={() => setIsStartTimeModalVisible(true)}>
+      <RowSpaceTouchable>
         <SideText>출근시간</SideText>
-        <TimePickBoxTimeText>
-          {noStart ? '미출근' : moment(startTime).format('kk:mm')}
-        </TimePickBoxTimeText>
+        <RequestBorderButton
+          isChecked={!noStart}
+          onPress={() => setIsStartTimeModalVisible(true)}>
+          <RequestBorderText isChecked={!noStart}>
+            {noStart ? '미출근' : moment(startTime).format('kk:mm')}
+          </RequestBorderText>
+        </RequestBorderButton>
       </RowSpaceTouchable>
       <WhiteSpace />
-      <RowSpaceTouchable
-        disabled={noEnd}
-        onPress={() => setIsEndTimeModalVisible(true)}>
+      <RowSpaceTouchable>
         <SideText>퇴근시간</SideText>
-        <TimePickBoxTimeText>
-          {noEnd ? '미퇴근' : moment(endTime).format('kk:mm')}
-        </TimePickBoxTimeText>
+        <RequestBorderButton
+          isChecked={!noEnd}
+          onPress={() => setIsEndTimeModalVisible(true)}>
+          <RequestBorderText isChecked={!noEnd}>
+            {noEnd ? '미퇴근' : moment(endTime).format('kk:mm')}
+          </RequestBorderText>
+        </RequestBorderButton>
       </RowSpaceTouchable>
-      <WhiteSpace />
-      <NormalContainer>
-        <NormalBox
-          disabled={!noStart}
-          onPress={() => nomalTimeFn('start')}
-          isSelected={!noStart}>
-          <NormalText isSelected={!noStart}>정상출근</NormalText>
-          <NormalText
-            style={{marginTop: 5, fontSize: 10}}
-            isSelected={!noStart}>
-            ({moment(startTime).format('kk:mm')})
-          </NormalText>
-        </NormalBox>
-        <NormalBox
-          disabled={!noEnd}
-          onPress={() => nomalTimeFn('end')}
-          isSelected={!noEnd}>
-          <NormalText isSelected={!noEnd}>정상퇴근</NormalText>
-          <NormalText style={{marginTop: 5, fontSize: 10}} isSelected={!noEnd}>
-            ({moment(endTime).format('kk:mm')})
-          </NormalText>
-        </NormalBox>
-        <NormalBox
-          disabled={noStart}
-          onPress={() => nomalTimeFn('deleteStart')}
-          isSelected={noStart}>
-          <NormalText isSelected={noStart}>미출근</NormalText>
-        </NormalBox>
-        <NormalBox
-          disabled={noEnd}
-          onPress={() => nomalTimeFn('deleteEnd')}
-          isSelected={noEnd}>
-          <NormalText isSelected={noEnd}>미퇴근</NormalText>
-        </NormalBox>
-      </NormalContainer>
     </Section>
   );
 
@@ -430,7 +421,20 @@ export default ({
           width: '100%',
           height: '100%',
         }}>
-        <DatePickerContainer>
+        <DatePickerContainer style={{height: 490}}>
+          {!startTimeSet && (
+            <LottieView
+              style={{
+                width: 150,
+                top: 23,
+                right: 0,
+                position: 'absolute',
+              }}
+              source={require('../../../../assets/animations/rowlett.json')}
+              loop={true}
+              autoPlay
+            />
+          )}
           <DatePicker
             date={moment(startTime).toDate()}
             mode={'time'}
@@ -443,9 +447,51 @@ export default ({
             is24hourSource="locale"
             minuteInterval={10}
           />
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            style={{
+              borderColor: styleGuide.palette.primary,
+            }}
+            onPress={() => {
+              nomalTimeFn('start');
+              setIsStartTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText
+              style={{color: styleGuide.palette.primary}}
+              isCancelBtn={true}>
+              정상출근&nbsp;({moment(initAttendanceTime).format('kk:mm')})
+            </DatePickerText>
+          </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            style={{
+              borderColor: styleGuide.palette.primary,
+            }}
+            onPress={() => {
+              nomalTimeFn('deleteStart');
+              setIsStartTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText
+              style={{color: styleGuide.palette.primary}}
+              isCancelBtn={true}>
+              미출근
+            </DatePickerText>
+          </DatePickerRoundBtn>
+          <WhiteSpace style={{height: 20}} />
           {startTimeSet ? (
             <DatePickerRoundBtn
               onPress={() => {
+                setNoStart(false);
                 setInitStartTime(moment(startTime));
                 setIsStartTimeModalVisible(false);
                 setStartTimeSet(true);
@@ -489,7 +535,20 @@ export default ({
           width: '100%',
           height: '100%',
         }}>
-        <DatePickerContainer>
+        <DatePickerContainer style={{height: 490}}>
+          {!endTimeSet && (
+            <LottieView
+              style={{
+                width: 150,
+                top: 23,
+                right: 0,
+                position: 'absolute',
+              }}
+              source={require('../../../../assets/animations/rowlett.json')}
+              loop={true}
+              autoPlay
+            />
+          )}
           <DatePicker
             date={moment(endTime).toDate()}
             mode={'time'}
@@ -502,9 +561,51 @@ export default ({
             is24hourSource="locale"
             minuteInterval={10}
           />
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            style={{
+              borderColor: styleGuide.palette.primary,
+            }}
+            onPress={() => {
+              nomalTimeFn('end');
+              setIsEndTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText
+              style={{color: styleGuide.palette.primary}}
+              isCancelBtn={true}>
+              정상퇴근&nbsp;({moment(initWorkOffTime).format('kk:mm')})
+            </DatePickerText>
+          </DatePickerRoundBtn>
+          <DatePickerRoundBtn
+            isCancelBtn={true}
+            style={{
+              borderColor: styleGuide.palette.primary,
+            }}
+            onPress={() => {
+              nomalTimeFn('deleteEnd');
+              setIsEndTimeModalVisible(false);
+            }}
+            rippleColor={styleGuide.palette.rippleGreyColor}
+            rippleDuration={600}
+            rippleSize={1200}
+            rippleContainerBorderRadius={30}
+            rippleOpacity={0.1}>
+            <DatePickerText
+              style={{color: styleGuide.palette.primary}}
+              isCancelBtn={true}>
+              미퇴근
+            </DatePickerText>
+          </DatePickerRoundBtn>
+          <WhiteSpace style={{height: 20}} />
           {endTimeSet ? (
             <DatePickerRoundBtn
               onPress={() => {
+                setNoEnd(false);
                 setInitEndTime(moment(endTime));
                 setIsEndTimeModalVisible(false);
                 setEndTimeSet(true);

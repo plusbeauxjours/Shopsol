@@ -140,7 +140,7 @@ const RequestBorderText = styled.Text<IsChecked>`
 
 const DatePickerContainer = styled.View`
   width: 330px;
-  height: 390px;
+  height: 370px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -151,7 +151,7 @@ const DatePickerContainer = styled.View`
 
 const DatePickerRoundBtn = styled(Ripple)<IIsCancel>`
   width: 250px;
-  height: 50px;
+  height: 40px;
   border-width: 0.5px;
   border-radius: 30px;
   border-color: ${styleGuide.palette.greyColor};
@@ -341,19 +341,24 @@ export default ({
               <NameText>비밀번호</NameText>
               <TextinputCase>
                 <TextInput
+                  clearTextOnFocus={true}
                   placeholder={'영문, 숫자 조합 6자 이상'}
                   placeholderTextColor={'#E5E5E5'}
                   selectionColor={styleGuide.palette.greyColor}
                   onFocus={() => {
                     setPassword('');
                     setPasswordCheck('');
-                    setIsPasswordSeen(true);
                   }}
                   onChangeText={(text) => {
-                    if (password.length == 0) {
-                      setIsPasswordSeen(false);
+                    if (!/^[A-Za-z0-9]*$/.test(text)) {
+                      setIsPasswordSeen(true);
+                    } else {
+                      if (isPasswordSeen && password.length == 0) {
+                        setIsPasswordSeen(false);
+                      } else {
+                        passwordCheckerFn(text, false);
+                      }
                     }
-                    passwordCheckerFn(text, false);
                   }}
                   value={password}
                   secureTextEntry={isPasswordSeen ? false : true}
@@ -386,21 +391,26 @@ export default ({
               <NameText>비밀번호 확인</NameText>
               <TextinputCase>
                 <TextInput
+                  clearTextOnFocus={true}
                   placeholder={'새 비밀번호 확인'}
                   placeholderTextColor={'#E5E5E5'}
                   selectionColor={styleGuide.palette.greyColor}
+                  onFocus={() => {
+                    setPasswordCheck('');
+                  }}
                   onChangeText={(text) => {
-                    if (passwordCheck.length == 0) {
-                      setIsPasswordCheckSeen(false);
+                    if (!/^[A-Za-z0-9]*$/.test(text)) {
+                      setIsPasswordCheckSeen(true);
+                    } else {
+                      if (isPasswordCheckSeen && passwordCheck.length == 0) {
+                        setIsPasswordCheckSeen(false);
+                      } else {
+                        passwordCheckerFn(text, true);
+                      }
                     }
-                    passwordCheckerFn(text, true);
                   }}
                   value={passwordCheck}
                   secureTextEntry={isPasswordCheckSeen ? false : true}
-                  onFocus={() => {
-                    setPasswordCheck('');
-                    setIsPasswordCheckSeen(true);
-                  }}
                   autoCapitalize="none"
                   autoCorrect={false}
                 />
