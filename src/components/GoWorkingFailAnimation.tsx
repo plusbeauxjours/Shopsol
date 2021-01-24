@@ -84,10 +84,11 @@ export default ({
           <BigText> {actionTYPE}을 진행할 수 없습니다.</BigText>
           <BigText
             style={{
+              fontSize: 14,
               color: 'red',
               fontWeight: '600',
             }}>
-            {errorMessage}
+            {errorMessage.split('.')[0]}.
           </BigText>
           <WhiteSpace />
           <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>

@@ -55,8 +55,9 @@ export default ({route: {params}}) => {
 
   ///// STEP 1 /////
   const [click1, setClick1] = useState<boolean>(false);
-  const [initStartDay, setInitStartDay] = useState<any>(moment());
-  const [startDay, setStartDay] = useState<any>(moment());
+  const [initSTART, setInitSTART] = useState<any>(moment(START));
+  const [initStartDay, setInitStartDay] = useState<any>(moment(START));
+  const [startDay, setStartDay] = useState<any>(moment(START));
   const [startDaySet, setStartDaySet] = useState<boolean>(START ? true : false);
   const [initEndDay, setInitEndDay] = useState<any>(moment());
   const [endDay, setEndDay] = useState<any>(moment());
@@ -79,10 +80,10 @@ export default ({route: {params}}) => {
   ); //  급여 적용 시작 년월
   ///// STEP 3 /////
   const [pay, setPay] = useState<string>(''); //  pay
-  const [pay2, setPay2] = useState<string>(''); //  pay2
-  const [pay3, setPay3] = useState<string>(''); //  pay3
-  const [pay4, setPay4] = useState<string>(''); //  pay4
-  const [pay5, setPay5] = useState<string>(''); //  pay5
+  const [pay2, setPay2] = useState<string>('0'); //  pay2
+  const [pay3, setPay3] = useState<string>('0'); //  pay3
+  const [pay4, setPay4] = useState<string>('0'); //  pay4
+  const [pay5, setPay5] = useState<string>('0'); //  pay5
 
   ///// STEP 4 /////
   const [click4, setClick4] = useState<boolean>(false);
@@ -238,14 +239,14 @@ export default ({route: {params}}) => {
         y: 0,
         animated: true,
       });
-    } else if (moment(endDay) < moment(startDay)) {
+    } else if (!endDayCheck && moment(endDay) < moment(startDay)) {
       alertModal('퇴사일은 입사일보다 늦어야합니다.');
       openAccordion('click1');
       scrollRef.current?.getNode()?.scrollTo({
         y: 0,
         animated: true,
       });
-    } else if (moment(endDay) < moment(startDay)) {
+    } else if (!endDayCheck && moment(endDay) < moment(startDay)) {
       alertModal('입사일은 퇴사일보다 빨라야합니다.');
       openAccordion('click1');
       scrollRef.current?.getNode()?.scrollTo({
@@ -343,6 +344,8 @@ export default ({route: {params}}) => {
             endDayCheck === true ? null : moment(endDay).format('YYYY-MM-DD'),
           PAY: pay,
           PAY_TYPE: payChecked,
+          probationDATE: probation ? probationPeriod : null,
+          probationPercent: probation ? probationPercent : null,
         }),
       );
       try {
@@ -433,7 +436,6 @@ export default ({route: {params}}) => {
         payChecked[Number(data.result.PAY_TYPE)] = true;
 
         let salarySystemChecked = JSON.parse(JSON.stringify(salarySystemCheck));
-        salarySystemChecked.fill(false);
         if (data.result.THREE_ALLOWANCE === '1') {
           salarySystemChecked[0] = true;
         }
@@ -503,18 +505,49 @@ export default ({route: {params}}) => {
         if (from === 'EmployeeInfoScreen') {
           setStartDay(data.result.START);
           setInitStartDay(data.result.START);
+          setInitSTART(data.result.START);
           setEndDay(data.result.END ? data.result.END : moment());
           setInitEndDay(data.result.END ? data.result.END : moment());
           setEndDayCheck(data.result.END ? false : true);
 
+          setProbation(
+            data.result.probation == '1' &&
+              moment() < moment(data.result.probationDATE)
+              ? true
+              : false,
+          );
+          setProbationPeriod(
+            data.result.probation == '1'
+              ? moment(data.result.probationDATE)
+              : moment(),
+          );
+          setInitProbationPeriod(
+            data.result.probation == '1'
+              ? moment(data.result.probationDATE)
+              : moment(),
+          );
+          setProbationPercent(
+            data.result.probation == '1' &&
+              moment() < moment(data.result.probationDATE)
+              ? data.result.probationPercent
+              : '',
+          );
+          setProbationPeriodSet(
+            data.result.probation == '1' &&
+              moment() < moment(data.result.probationDATE)
+              ? true
+              : false,
+          );
           // ↓ STEP 2(급여정보 입력)
           setPayCheck(payChecked);
           setPayDay(data.result.PAY_START);
-          setPay(data.result.PAY_TYPE !== '2' ? data.result.PAY : '');
-          setPay2(data.result.PAY_TYPE === '2' ? data.result.MEALS : '');
-          setPay3(data.result.PAY_TYPE === '2' ? data.result.SELF_DRIVING : '');
-          setPay4(data.result.PAY_TYPE === '2' ? data.result.BONUS : '');
-          setPay5(data.result.PAY_TYPE === '2' ? data.result.INCENTIVE : '');
+          setPay(data.result.PAY);
+          setPay2(data.result.PAY_TYPE === '2' ? data.result.MEALS : '0');
+          setPay3(
+            data.result.PAY_TYPE === '2' ? data.result.SELF_DRIVING : '0',
+          );
+          setPay4(data.result.PAY_TYPE === '2' ? data.result.BONUS : '0');
+          setPay5(data.result.PAY_TYPE === '2' ? data.result.INCENTIVE : '0');
 
           // ↓ STEP 3(급여 상세정보 입력)
           setSalarySystemCheck(salarySystemChecked);
@@ -686,6 +719,7 @@ export default ({route: {params}}) => {
       setInitEndDay={setInitEndDay}
       initProbationPeriod={initProbationPeriod}
       setInitProbationPeriod={setInitProbationPeriod}
+      initSTART={initSTART}
     />
   );
 };

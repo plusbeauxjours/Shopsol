@@ -155,7 +155,6 @@ export default ({
   confirmModal,
   gotoChecklistShareItem,
 }) => {
-  console.log('()()()()',data)
   let imgarr = [];
   let allimg = [];
   if (data?.IMG_LIST != null) {

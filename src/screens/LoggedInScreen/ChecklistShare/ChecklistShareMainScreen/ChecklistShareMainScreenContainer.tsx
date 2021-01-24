@@ -143,7 +143,6 @@ export default () => {
   // 고정 & 고정해제
   const registerFn = async (noticeSeq, TITLE, isOnFix) => {
     try {
-      console.log(noticeSeq, TITLE, 'isOnFix', isOnFix);
       if (isOnFix) {
         dispatch(onCHECKLIST_SHARE_FAVORITE({TITLE, NOTICE_SEQ: noticeSeq}));
       } else {

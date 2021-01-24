@@ -6,7 +6,6 @@ import Ripple from 'react-native-material-ripple';
 import moment from 'moment';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 
 const BigText = styled.Text`
@@ -23,7 +22,7 @@ const View = styled.View`
   z-index: 10;
   background-color: white;
   border-radius: 20px;
-  width: 300px;
+  width: 280px;
   min-height: 300px;
   justify-content: center;
   align-items: center;

@@ -432,9 +432,8 @@ export default ({route: {params}}) => {
     const R = 6371e3; // metres
     const lat1 = Number(STORE_DATA.resultdata.LAT);
     const lon1 = Number(STORE_DATA.resultdata.LONG);
-    // const latInRad = toRad(Number(STORE_DATA.resultdata.LAT) + 0.002);
-    // const longInRad = toRad(Number(STORE_DATA.resultdata.LONG) + 0.002);
-
+    // const lat1 = Number(STORE_DATA.resultdata.LAT) + 0.002;
+    // const lon1 = Number(STORE_DATA.resultdata.LONG) + 0.002;
     const lat2 = lat;
     const lon2 = long;
 
@@ -545,6 +544,7 @@ export default ({route: {params}}) => {
       setLong={setLong}
       hasConfirmed={hasConfirmed}
       confirmModal={confirmModal}
+      category={params?.category}
     />
   );
 };

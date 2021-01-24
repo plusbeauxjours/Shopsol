@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
-import {RefreshControl} from 'react-native';
+import {RefreshControl, StatusBar} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import {
   widthPercentageToDP as wp,
@@ -152,13 +152,13 @@ const StoreName = styled.View`
 `;
 
 const StoreText = styled.Text`
-  color: white;
+  color: ${styleGuide.palette.darkGreyColor};
   font-size: 24px;
   line-height: ${wp('8%')}px;
 `;
 
 const StoreSubText = styled.Text`
-  color: #ddd;
+  color: ${styleGuide.palette.darkGreyColor};
   font-size: 22px;
 `;
 
@@ -375,6 +375,10 @@ const ConfirmHalfTextRight = styled.Text`
   color: white;
 `;
 
+const DarkGreyColor = styled.Text`
+  color: ${styleGuide.palette.darkGreyColor};
+`;
+
 export default ({
   STORE_DATA,
   MEMBER_NAME,
@@ -440,6 +444,7 @@ export default ({
   setLong,
   hasConfirmed,
   confirmModal,
+  category,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -593,8 +598,9 @@ export default ({
 
   return (
     <BackGround>
+      <StatusBar barStyle="dark-content" />
       <GrayLinearGradient
-        colors={['white', 'black']}
+        colors={['white', '#f8f1e9']}
         hasHeight={STORE == '1'}
         style={{height: hp('60%')}}
       />
@@ -608,8 +614,18 @@ export default ({
           />
         }>
         <FastImage
-          style={{width: wp('100%'), height: hp('30%')}}
-          source={require('../../../../assets/main/mainTopBg.png')}
+          style={{width: wp('100%'), height: hp('35%'), opacity: 0.7}}
+          source={
+            category == '일반회사'
+              ? require('../../../../assets/main/1.png')
+              : category == '도,소매업(편의점 등)'
+              ? require('../../../../assets/main/2.png')
+              : category == '요식업(음식점,카페 등)'
+              ? require('../../../../assets/main/3.png')
+              : category == '서비스업(PC방,헬스장 등)'
+              ? require('../../../../assets/main/4.png')
+              : require('../../../../assets/main/5.png')
+          }
           resizeMode={FastImage.resizeMode.cover}>
           <StoreName>
             <StoreText>안녕하세요.</StoreText>
@@ -622,7 +638,7 @@ export default ({
             <Row>
               <Text
                 style={{
-                  color: 'white',
+                  color: styleGuide.palette.darkGreyColor,
                   fontWeight: '600',
                   fontSize: 18,
                 }}>
@@ -631,15 +647,15 @@ export default ({
             </Row>
             <Row>
               {TOTAL_COUNT > 0 ? (
-                <Text
+                <DarkGreyColor
                   style={{
-                    color: 'white',
+                    color: styleGuide.palette.darkGreyColor,
                     fontSize: 14,
                     alignSelf: 'flex-end',
                   }}>
-                  <WhiteText>{TOTAL_COUNT}</WhiteText>명 중&nbsp;
-                  <WhiteText>{WORKING_COUNT}</WhiteText>명 근무중
-                </Text>
+                  <DarkGreyColor>{TOTAL_COUNT}</DarkGreyColor>명 중&nbsp;
+                  <DarkGreyColor>{WORKING_COUNT}</DarkGreyColor>명 근무중
+                </DarkGreyColor>
               ) : (
                 <Text style={{color: 'white', fontSize: 14}}>
                   합류된 직원이 없습니다 직원을 초대하세요
@@ -707,8 +723,11 @@ export default ({
                   <Box
                     style={{flexDirection: 'row'}}
                     onPress={() => {
-                      utils.handleCameraPermission(setQrCameraModalOpen1);
+                      setIsWorkingMode(false);
+                      setSucessModalOpen(false);
+                      setFailModalOpen(false);
                       setWorkingTYPE('QR');
+                      utils.handleCameraPermission(setQrCameraModalOpen1);
                     }}
                     hasGPS={GPS !== '0'}>
                     <QrCodeIcon color={'white'} size={22} />
@@ -717,12 +736,15 @@ export default ({
                   <Box
                     style={{flexDirection: 'row'}}
                     onPress={() => {
+                      setIsWorkingMode(false);
+                      setSucessModalOpen(false);
+                      setFailModalOpen(false);
+                      setWorkingTYPE('GPS');
                       utils.handleLocationPermission(
                         setIsGpsVisible,
                         setLat,
                         setLong,
                       );
-                      setWorkingTYPE('GPS');
                     }}
                     hasGPS={GPS !== '0'}>
                     <LocationIcon color={'white'} size={22} />
@@ -734,7 +756,8 @@ export default ({
           )}
           {STORE == '1' ? ( // 사업주 ============================
             <>
-              <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+              <SpaceRow
+                style={{marginTop: 30, width: '100%', alignItems: 'center'}}>
                 <MenuTitleArea style={{zIndex: 3}}>
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
@@ -879,7 +902,12 @@ export default ({
             <>
               {STORE_DATA?.IS_MANAGER == '1' ? (
                 <>
-                  <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                  <SpaceRow
+                    style={{
+                      marginTop: 30,
+                      width: '100%',
+                      alignItems: 'center',
+                    }}>
                     <MenuTitleArea style={{zIndex: 3}}>
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 직원관리</Bold>
@@ -1061,7 +1089,12 @@ export default ({
               ) : (
                 // 직원 ============================
                 <>
-                  <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                  <SpaceRow
+                    style={{
+                      marginTop: 30,
+                      width: '100%',
+                      alignItems: 'center',
+                    }}>
                     <MenuTitleArea style={{zIndex: 3}}>
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 일터관리</Bold>
@@ -1122,7 +1155,7 @@ export default ({
             </>
           )}
           <GrayLinearGradient
-            colors={['#222', 'white']}
+            colors={['#f8f1e9', 'white']}
             hasHeight={STORE == '1'}
           />
         </MenuBox>
@@ -1162,6 +1195,7 @@ export default ({
           />
         ) : failModalOpen ? (
           <GoWorkingFailAnimation
+            AVATAR={AVATAR}
             STORE_NAME={STORE_NAME}
             MEMBER_NAME={MEMBER_NAME}
             setFailModalOpen={setFailModalOpen}
@@ -1325,12 +1359,15 @@ export default ({
                 />
               )}
               <Marker
-                onPress={() =>
+                onPress={() => {
                   (STORE_DATA.resultdata.JULI >
                     Math.round(getDistance() * 10) / 10 ||
                     STORE_DATA.resultdata.JULI == -1) &&
-                  setWorkingModalOpen(true)
-                }
+                    setIsGpsVisible(false);
+                  setTimeout(() => {
+                    setWorkingModalOpen(true);
+                  }, 600);
+                }}
                 coordinate={{
                   latitude: lat,
                   longitude: long,

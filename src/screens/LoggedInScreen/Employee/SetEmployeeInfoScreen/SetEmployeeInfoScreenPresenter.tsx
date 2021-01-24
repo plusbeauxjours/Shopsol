@@ -469,6 +469,7 @@ export default ({
   setInitEndDay,
   initProbationPeriod,
   setInitProbationPeriod,
+  initSTART,
 }) => {
   const DEDUCTION_TYPE_INDEX_INSURANCE = 0;
   const click1Transition = useTransition(click1);
@@ -521,13 +522,14 @@ export default ({
                 {PAY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
               </EmployeeCardText>
             )}
-            {START && (
+            {initSTART && (
               <>
                 <EmployeeCardText>
-                  근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)
+                  근무기간&nbsp;({moment().diff(moment(initSTART), 'month')}
+                  개월)
                 </EmployeeCardText>
                 <EmployeeCardText>
-                  {moment(START).format('YYYY.MM.DD')} ~&nbsp;
+                  {moment(initSTART).format('YYYY.MM.DD')} ~&nbsp;
                   {END ? moment(END).format('YYYY.MM.DD') : '계속'}
                 </EmployeeCardText>
               </>
@@ -686,30 +688,18 @@ export default ({
                     selection={0}
                     text={'시급'}
                     payCheck={payCheck}
-                    setPay2={setPay2}
-                    setPay3={setPay3}
-                    setPay4={setPay4}
-                    setPay5={setPay5}
                     setPayCheck={setPayCheck}
                   />
                   <PayCheck
                     selection={1}
                     text={'일급'}
                     payCheck={payCheck}
-                    setPay2={setPay2}
-                    setPay3={setPay3}
-                    setPay4={setPay4}
-                    setPay5={setPay5}
                     setPayCheck={setPayCheck}
                   />
                   <PayCheck
                     selection={2}
                     text={'월급'}
                     payCheck={payCheck}
-                    setPay2={setPay2}
-                    setPay3={setPay3}
-                    setPay4={setPay4}
-                    setPay5={setPay5}
                     setPayCheck={setPayCheck}
                   />
                 </SelectArea>
@@ -1012,9 +1002,6 @@ export default ({
                           <RequestBorderButton
                             isChecked={probationPeriodSet}
                             onPress={() => {
-                              setProbationPeriod(
-                                moment(startDay).add(1, 'days').toDate(),
-                              );
                               setIsProbationPeriodModalVisible(true);
                             }}>
                             <RequestBorderText isChecked={probationPeriodSet}>

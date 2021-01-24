@@ -216,7 +216,7 @@ export const PositionType = ({
       <TypeContainer
         onPress={() => {
           valueP.fill(false); // ES6
-          valueA.fill(false); // ES6
+          // valueA.fill(false); // ES6
           valueP[selection] = true;
           setPositionCheck(valueP);
           setAuthorityCheck(valueA);

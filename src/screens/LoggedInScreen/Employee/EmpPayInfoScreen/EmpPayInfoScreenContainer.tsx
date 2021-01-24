@@ -28,8 +28,8 @@ export default ({route: {params}}) => {
   const {EMPLOYEE_LIST: {workinglist = []} = {}} = useSelector(
     (state: any) => state.employeeReducer,
   );
-
-  const user = workinglist.find((i) => (i.EMP_SEQ = EMP_SEQ));
+  
+  const user = workinglist?.find((i) => i.EMP_SEQ == EMP_SEQ);
   const START_store = user?.START;
   const END_store = user?.END;
   const PAY_TYPE_store = user?.PAY_TYPE;

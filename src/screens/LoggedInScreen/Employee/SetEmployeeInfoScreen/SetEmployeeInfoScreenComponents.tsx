@@ -289,10 +289,7 @@ export const PayCheck = ({
   selection,
   text,
   payCheck,
-  setPay2,
-  setPay3,
-  setPay4,
-  setPay5,
+
   setPayCheck,
 }) => {
   let value = JSON.parse(JSON.stringify(payCheck));
@@ -302,19 +299,7 @@ export const PayCheck = ({
       onPress={() => {
         value.fill(false);
         value[selection] = true;
-        if (selection === 0 || selection === 1) {
-          setPay2('');
-          setPay3('');
-          setPay4('');
-          setPay5('');
-          setPayCheck(value);
-        } else if (selection === 2) {
-          setPay2('0');
-          setPay3('0');
-          setPay4('0');
-          setPay5('0');
-          setPayCheck(value);
-        }
+        setPayCheck(value);
       }}>
       {payCheck[selection] ? (
         <RadioBtnOnIcon size={22} />

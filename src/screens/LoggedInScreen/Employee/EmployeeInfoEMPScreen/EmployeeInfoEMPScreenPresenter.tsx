@@ -450,7 +450,6 @@ export default ({
                       ? moment(EMPLOYEE_INFO_DATA?.END).format('YYYY.MM.DD')
                       : '계속'}
                   </InfoText>
-                  {console.log(EMPLOYEE_INFO_DATA)}
                   {EMPLOYEE_INFO_DATA?.probationDATE?.length > 0 &&
                     EMPLOYEE_INFO_DATA?.probationPercent?.length > 0 && (
                       <InfoText>

@@ -40,6 +40,8 @@ export default ({route: {params}}) => {
   const END = user?.END;
   const EMP_PAY_TYPE = user?.PAY_TYPE;
   const EMP_PAY = user?.PAY;
+  const probationDATE = user?.probationDATE;
+  const probationPercent = user?.probationPercent;
 
   const [isFreeWorkingType, setIsFreeWorkingType] = useState<boolean>(true); // true: 자율출퇴근 직원, false: 일정이 있는 직원
   const [timeTableIndex, setTimeTableIndex] = useState<any>(null); // 저장된 시간 목록 중 선택된 항목의 인덱스
@@ -286,10 +288,10 @@ export default ({route: {params}}) => {
       IMAGE: data?.images[0]?.IMAGE,
       IS_MANAGER: data?.IS_MANAGER,
       mobileNo: params?.data.MobileNo,
-      START: data?.START,
-      END: data?.END,
-      probationDATE: data?.probationDATE,
-      probationPercent: data?.probationPercent,
+      START: START,
+      END: END,
+      probationDATE,
+      probationPercent,
     });
   };
 
@@ -436,6 +438,8 @@ export default ({route: {params}}) => {
       END={END}
       EMP_PAY_TYPE={EMP_PAY_TYPE}
       EMP_PAY={EMP_PAY}
+      probationDATE={probationDATE}
+      probationPercent={probationPercent}
     />
   );
 };

@@ -251,13 +251,10 @@ export default ({
           ) : (
             <Section>
               <EmployeeListBox>
-                {EMPLOYEE_LIST?.workinglist?.map((data) => (
+                {EMPLOYEE_LIST?.workinglist?.map((data, index) => (
                   <PaymentInfoScreenCard
-                    key={data.MEMBER_SEQ}
-                    name={data.EMP_NAME}
-                    isManager={data.IS_MANAGER}
+                    key={index}
                     MANAGER_CALLED={MANAGER_CALLED}
-                    image={data.images[0].IMAGE}
                     data={data}
                     STORE={STORE}
                     STORE_SEQ={STORE_SEQ}

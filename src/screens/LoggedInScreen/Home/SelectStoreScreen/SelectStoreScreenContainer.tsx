@@ -69,6 +69,7 @@ export default ({route: {params}}) => {
               GPS: data.GPS,
               QR_Num: data.QR_Num,
               hasConfirmed: data.hasConfirmedQr,
+              category: data.CATEGORY,
             },
           },
         ],

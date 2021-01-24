@@ -20,18 +20,15 @@ const checklistshareSlice = createSlice({
       const {
         payload: {TITLE, NOTICE_SEQ},
       } = action;
-      console.log(TITLE, NOTICE_SEQ);
       if (TITLE === '지시사항') {
         const item = state.CHECKLIST_SHARE_DATA1.basic.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-        console.log('1', item);
         state.CHECKLIST_SHARE_DATA1.favorite.unshift(item);
       } else {
         const item = state.CHECKLIST_SHARE_DATA2.basic.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-        console.log('2', item);
         state.CHECKLIST_SHARE_DATA2.favorite.unshift(item);
       }
     },
@@ -39,19 +36,16 @@ const checklistshareSlice = createSlice({
       const {
         payload: {TITLE, NOTICE_SEQ},
       } = action;
-      console.log(TITLE, NOTICE_SEQ);
       if (TITLE === '지시사항') {
         const item = state.CHECKLIST_SHARE_DATA1.favorite.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-        console.log('3', item);
 
         state.CHECKLIST_SHARE_DATA1.basic.unshift(item);
       } else {
         const item = state.CHECKLIST_SHARE_DATA2.favorite.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-        console.log('4', item);
 
         state.CHECKLIST_SHARE_DATA2.basic.unshift(item);
       }
@@ -60,9 +54,7 @@ const checklistshareSlice = createSlice({
       const {
         payload: {TITLE, NOTICE_SEQ},
       } = action;
-      console.log(TITLE, NOTICE_SEQ);
       if (TITLE === '지시사항') {
-        console.log('5');
         return {
           ...state,
           CHECKLIST_SHARE_DATA1: {
@@ -73,7 +65,6 @@ const checklistshareSlice = createSlice({
           },
         };
       } else {
-        console.log('6');
         return {
           ...state,
           CHECKLIST_SHARE_DATA2: {
@@ -89,9 +80,7 @@ const checklistshareSlice = createSlice({
       const {
         payload: {TITLE, NOTICE_SEQ},
       } = action;
-      console.log(TITLE, NOTICE_SEQ);
       if (TITLE === '지시사항') {
-        console.log('7');
         return {
           ...state,
           CHECKLIST_SHARE_DATA1: {
@@ -102,7 +91,6 @@ const checklistshareSlice = createSlice({
           },
         };
       } else {
-        console.log('8');
         return {
           ...state,
           CHECKLIST_SHARE_DATA2: {

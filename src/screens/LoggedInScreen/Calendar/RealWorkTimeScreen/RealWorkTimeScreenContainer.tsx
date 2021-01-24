@@ -36,12 +36,6 @@ export default ({route: {params}}) => {
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
-  console.log('ATTENDANCE_TIME', ATTENDANCE_TIME);
-  console.log('UPDATED_START', UPDATED_START);
-  console.log('WORK_OFF_TIME', WORK_OFF_TIME);
-  console.log('UPDATED_END', UPDATED_END);
-  console.log('START', START);
-  console.log('END', END);
   const initAttendanceTime = UPDATED_START
     ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
     : ATTENDANCE_TIME

@@ -9,11 +9,12 @@ const styleGuide = {
         headerColor: "#2c6868",
         graphColor: "#ebd0d1",
         borderColor: "#f2f2f2",
+        darkGreyColor: '#1e1e1e',
         greyColor: "#7c7c7c",
         lightGreyColor: '#d0d0d0',
         rippleColor: '#a3c5c5',
         rippleGreyColor: '#666',
-        redColor: '#FF3D3D',
+        redColor: '#d25d60',
         searchBarColor: "#e39a9c",
         donutColor: '#95b1b0',
         arrowColor: '#95b1b0'

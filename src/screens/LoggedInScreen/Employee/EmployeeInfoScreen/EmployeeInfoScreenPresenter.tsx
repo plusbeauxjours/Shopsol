@@ -307,6 +307,8 @@ export default ({
   END,
   EMP_PAY_TYPE,
   EMP_PAY,
+  probationDATE,
+  probationPercent,
 }) => {
   const RenderDayList = () => {
     if (timeTable && timeTable.length !== 0) {
@@ -538,14 +540,14 @@ export default ({
                     {moment(START).format('YYYY.MM.DD')} ~&nbsp;
                     {END ? moment(END).format('YYYY.MM.DD') : '계속'}
                   </InfoText>
-                  {data?.probationDATE && data?.probationPercent && (
+                  {probationDATE && probationPercent && (
                     <InfoText>
                       수습기간&nbsp;
-                      {moment() > moment(data?.probationDATE)
-                        ? `종료 (${data?.probationPercent}%적용)`
-                        : `${moment(data?.probationDATE).format(
+                      {moment() > moment(probationDATE)
+                        ? `종료 (${probationPercent}%적용)`
+                        : `${moment(probationDATE).format(
                             '~YYYY.MM.DD',
-                          )}까지 (${data?.probationPercent}%적용)`}
+                          )}까지 (${probationPercent}%적용)`}
                     </InfoText>
                   )}
                 </NameBox>

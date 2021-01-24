@@ -51,29 +51,20 @@ const IconContainer = styled.View`
   right: 20px;
 `;
 
-export default ({
-  key,
-  name,
-  isManager,
-  MANAGER_CALLED,
-  image,
-  data,
-  STORE,
-  STORE_SEQ,
-  STOREPAY_SHOW,
-}) => {
+export default ({MANAGER_CALLED, data, STORE, STORE_SEQ, STOREPAY_SHOW}) => {
   const navigation = useNavigation();
-  const payInfo = () => {
+  console.log(data);
+  const gotoPayInfo = () => {
     navigation.navigate('EmpPayInfoScreen', {
       STORE_SEQ,
       EMP_SEQ: data.EMP_SEQ,
       STORE,
       STOREPAY_SHOW,
-      MEMBER_NAME: name,
-      IS_MANAGER: isManager,
+      MEMBER_NAME: data?.EMP_NAME,
+      IS_MANAGER: data?.IS_MANAGER,
       EMP_PAY_TYPE: data?.PAY_TYPE,
       PAY: data?.PAY,
-      image,
+      image: data?.images[0].IMAGE,
       START: data?.START,
       END: data?.END,
       probationDATE: data?.probationDATE,
@@ -81,11 +72,11 @@ export default ({
     });
   };
   return (
-    <Touchable key={key} onPress={() => payInfo()}>
+    <Touchable onPress={() => gotoPayInfo()}>
       <FastImage
         style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
         source={{
-          uri: `http://133.186.210.223/uploads/${image}`,
+          uri: `http://133.186.210.223/uploads/${data?.images[0].IMAGE}`,
           headers: {Authorization: 'someAuthToken'},
           priority: FastImage.priority.low,
         }}
@@ -93,9 +84,9 @@ export default ({
       />
       <NameBox>
         <Row style={{justifyContent: 'flex-start', marginBottom: 5}}>
-          <NameText>{name}</NameText>
+          <NameText>{data?.EMP_NAME}</NameText>
           <DateText>
-            {isManager == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}
+            {data?.IS_MANAGER == '1' ? `[${MANAGER_CALLED}]` : '[직원]'}
           </DateText>
         </Row>
         <PayText>
