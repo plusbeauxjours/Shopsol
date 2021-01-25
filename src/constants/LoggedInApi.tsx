@@ -3,16 +3,20 @@ import axios from 'axios';
 const callApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
-    // 'Content-Type':
-    //   path == '/auth/setshelfLifeDataImg/' ||
-    //   path == '/auth/setTaskDataImg/' ||
-    //   path == '/auth/updateShelfLifeDataImg/' ||
-    //   path == '/auth/updateTaskDataImg/'
-    //     ? 'multipart/form-data'
-    //     : 'application/json',
+    'Content-Type':
+      path == 'auth/updateNoticeImg' ||
+      path == '/auth/checkocr1/' ||
+      path == '/auth/setCheckListImg2/' ||
+      path == '/auth/setNoticeImg2/' ||
+      path == '/auth/setshelfLifeDataImg/' ||
+      path == '/auth/setTaskDataImg/' ||
+      path == '/auth/updateShelfLifeDataImg/' ||
+      path == '/auth/updateTaskDataImg/'
+        ? 'multipart/form-data'
+        : 'application/json',
   };
   const baseUrl = 'http://shopsolapi.shop-sol.com:3003/api';
+  // const baseUrl = 'http://awsss.shop-sol.com:10011/api';
   const fullUrl = `${baseUrl}${path}`;
   console.log(method, fullUrl, data, {headers});
 
@@ -29,6 +33,7 @@ const oldApi = async (method: string, path: string, data?: any) => {
     'Content-Type': 'application/json',
   };
   const baseUrl = 'http://shopsolapi.shop-sol.com:80/api/v2';
+  // const baseUrl = 'http://awsss.shop-sol.com:80/api/v2';
   const fullUrl = `${baseUrl}${path}`;
   console.log(method, fullUrl, data, {headers});
 

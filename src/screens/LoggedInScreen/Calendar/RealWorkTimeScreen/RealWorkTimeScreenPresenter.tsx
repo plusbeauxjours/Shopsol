@@ -256,6 +256,8 @@ export default ({
   setNoEnd,
   initAttendanceTime,
   initWorkOffTime,
+  workingStartTime,
+  workingEndTime,
 }) => {
   const isNextDay1 = (ATTENDANCE_TIME || START) > (WORK_OFF_TIME || END);
   const isNextDay2 = CHANGE_START > CHANGE_END;
@@ -376,7 +378,11 @@ export default ({
           isChecked={!noStart}
           onPress={() => setIsStartTimeModalVisible(true)}>
           <RequestBorderText isChecked={!noStart}>
-            {noStart ? '미출근' : moment(startTime).format('kk:mm')}
+            {noStart
+              ? '미출근'
+              : !START_TIME && !UPDATED_START && !startTimeSet
+              ? '00:00'
+              : moment(startTime).format('kk:mm')}
           </RequestBorderText>
         </RequestBorderButton>
       </RowSpaceTouchable>
@@ -387,7 +393,11 @@ export default ({
           isChecked={!noEnd}
           onPress={() => setIsEndTimeModalVisible(true)}>
           <RequestBorderText isChecked={!noEnd}>
-            {noEnd ? '미퇴근' : moment(endTime).format('kk:mm')}
+            {noEnd
+              ? '미퇴근'
+              : !END_TIME && !UPDATED_END && !endTimeSet
+              ? '00:00'
+              : moment(endTime).format('kk:mm')}
           </RequestBorderText>
         </RequestBorderButton>
       </RowSpaceTouchable>
@@ -455,6 +465,7 @@ export default ({
             onPress={() => {
               nomalTimeFn('start');
               setIsStartTimeModalVisible(false);
+              setStartTimeSet(true);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
@@ -464,7 +475,9 @@ export default ({
             <DatePickerText
               style={{color: styleGuide.palette.primary}}
               isCancelBtn={true}>
-              정상출근&nbsp;({moment(initAttendanceTime).format('kk:mm')})
+              정상출근&nbsp;
+              {workingStartTime &&
+                `(${moment(workingStartTime).format('kk:mm')})`}
             </DatePickerText>
           </DatePickerRoundBtn>
           <DatePickerRoundBtn
@@ -475,6 +488,7 @@ export default ({
             onPress={() => {
               nomalTimeFn('deleteStart');
               setIsStartTimeModalVisible(false);
+              setStartTimeSet(true);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
@@ -569,6 +583,7 @@ export default ({
             onPress={() => {
               nomalTimeFn('end');
               setIsEndTimeModalVisible(false);
+              setEndTimeSet(true);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
@@ -578,7 +593,8 @@ export default ({
             <DatePickerText
               style={{color: styleGuide.palette.primary}}
               isCancelBtn={true}>
-              정상퇴근&nbsp;({moment(initWorkOffTime).format('kk:mm')})
+              정상퇴근&nbsp;
+              {workingEndTime && `(${moment(workingEndTime).format('kk:mm')})`}
             </DatePickerText>
           </DatePickerRoundBtn>
           <DatePickerRoundBtn
@@ -589,6 +605,7 @@ export default ({
             onPress={() => {
               nomalTimeFn('deleteEnd');
               setIsEndTimeModalVisible(false);
+              setEndTimeSet(true);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

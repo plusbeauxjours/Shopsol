@@ -7,6 +7,7 @@ import RealWorkTimeScreenPresenter from './RealWorkTimeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {updateSCHEDULE} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
+import {cos} from 'react-native-reanimated';
 
 export default ({route: {params}}) => {
   const navigation = useNavigation();
@@ -36,16 +37,38 @@ export default ({route: {params}}) => {
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
+  console.log(UPDATED_START, ATTENDANCE_TIME, START_TIME, START);
+  console.log(UPDATED_END, WORK_OFF_TIME, END_TIME, END);
   const initAttendanceTime = UPDATED_START
     ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
     : ATTENDANCE_TIME
     ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
-    : moment(START_TIME?.substring(0, 5), 'kk:mm');
+    : START_TIME
+    ? moment(START_TIME?.substring(0, 5), 'kk:mm')
+    : moment(START?.substring(0, 5), 'kk:mm');
 
   const initWorkOffTime = UPDATED_END
     ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
     : WORK_OFF_TIME
     ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
+    : END_TIME
+    ? moment(END_TIME?.substring(0, 5), 'kk:mm')
+    : moment(END?.substring(0, 5), 'kk:mm');
+
+  const workingStartTime = UPDATED_START
+    ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
+    : ATTENDANCE_TIME
+    ? moment(ATTENDANCE_TIME?.substring(0, 5), 'kk:mm')
+    : START
+    ? moment(START?.substring(0, 5), 'kk:mm')
+    : moment(START_TIME?.substring(0, 5), 'kk:mm');
+
+  const workingEndTime = UPDATED_END
+    ? moment(UPDATED_END?.substring(0, 5), 'kk:mm')
+    : WORK_OFF_TIME
+    ? moment(WORK_OFF_TIME?.substring(0, 5), 'kk:mm')
+    : END
+    ? moment(END?.substring(0, 5), 'kk:mm')
     : moment(END_TIME?.substring(0, 5), 'kk:mm');
 
   const [startTime, setStartTime] = useState<any>(initAttendanceTime);
@@ -60,10 +83,9 @@ export default ({route: {params}}) => {
   const [noEnd, setNoEnd] = useState<boolean>(
     !WORK_OFF_TIME && !UPDATED_END && !END_TIME ? true : false,
   );
-  const [
-    isStartTimeModalVisible,
-    setIsStartTimeModalVisible,
-  ] = useState<boolean>(false);
+  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
+    boolean
+  >(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
@@ -98,7 +120,7 @@ export default ({route: {params}}) => {
             UPDATED_END: noEnd ? null : moment(endTime).format('kk:mm'),
           }),
         );
-        await api.createSchedule({
+        const {data} = await api.createSchedule({
           STORE_ID: STORE_SEQ,
           EMP_ID,
           EMP_NAME: NAME,
@@ -109,6 +131,7 @@ export default ({route: {params}}) => {
           SCHEDULETYPE: '0',
           CHANGE: '2',
         });
+        console.log(data);
       } catch (e) {
         console.log(e);
       }
@@ -144,12 +167,12 @@ export default ({route: {params}}) => {
   const nomalTimeFn = (type) => {
     if (type == 'start') {
       setNoStart(false);
-      setStartTime(initAttendanceTime);
-      setInitStartTime(initAttendanceTime);
+      setStartTime(workingStartTime);
+      setInitStartTime(workingStartTime);
     } else if (type == 'end') {
       setNoEnd(false);
-      setEndTime(initWorkOffTime);
-      setInitEndTime(initWorkOffTime);
+      setEndTime(workingEndTime);
+      setInitEndTime(workingEndTime);
     } else if (type == 'deleteStart') {
       setNoStart(true);
     } else if (type == 'deleteEnd') {
@@ -197,6 +220,8 @@ export default ({route: {params}}) => {
       setNoEnd={setNoEnd}
       initAttendanceTime={initAttendanceTime}
       initWorkOffTime={initWorkOffTime}
+      workingStartTime={workingStartTime}
+      workingEndTime={workingEndTime}
     />
   );
 };

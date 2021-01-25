@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Linking, BackHandler, NativeModules} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -14,6 +14,7 @@ import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import {getStore} from '../../../../redux/storeSlice';
 
 export default ({route: {params}}) => {
+  const mapRef = useRef(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
@@ -279,6 +280,7 @@ export default ({route: {params}}) => {
     setActionTYPE('출근');
     try {
       setWorkingLoading(true);
+      await utils.handleLocationPermission(setLat, setLong);
       const {data} = await api.attendanceWork({
         STORE_ID: STORE_SEQ,
         LAT: lat,
@@ -314,7 +316,6 @@ export default ({route: {params}}) => {
         setFailModalOpen(true);
       } else {
         setWorkingLoading(false);
-        setErrorMessage(data.result);
         setFailModalOpen(true);
       }
     } catch (e) {
@@ -329,6 +330,7 @@ export default ({route: {params}}) => {
     setActionTYPE('퇴근');
     try {
       setWorkingLoading(true);
+      await utils.handleLocationPermission(setLat, setLong);
       const {data} = await api.attendanceOffWork({
         STORE_ID: STORE_SEQ,
         LAT: lat,
@@ -454,6 +456,18 @@ export default ({route: {params}}) => {
     setEditMode(false);
   };
 
+  const moveMap = () => {
+    mapRef.current?.animateCamera(
+      {
+        center: {
+          latitude: parseFloat(lat.toString()),
+          longitude: parseFloat(long.toString()),
+        },
+      },
+      {duration: 1000},
+    );
+  };
+
   useEffect(() => {
     // if (utils.isAndroid) {
     //   STORE === '1'
@@ -543,6 +557,8 @@ export default ({route: {params}}) => {
       hasConfirmed={hasConfirmed}
       confirmModal={confirmModal}
       category={params?.category}
+      mapRef={mapRef}
+      moveMap={moveMap}
     />
   );
 };

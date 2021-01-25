@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import {ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import Ripple from 'react-native-material-ripple';
 
 interface IText {
   isSubmited?: boolean;
@@ -45,7 +46,7 @@ const GreyText = styled(Text)`
   font-size: ${styleGuide.fontSize.middle}px;
 `;
 
-const Section = styled.TouchableOpacity`
+const Section = styled(Ripple)`
   width: ${wp('100%') - 40}px;
   padding: 20px;
   border-radius: 20px;
@@ -115,7 +116,12 @@ export default ({
             <Section
               onPress={() =>
                 navigation.navigate('HealthCertificateEmpListScreen')
-              }>
+              }
+              rippleColor={styleGuide.palette.rippleGreyColor}
+              rippleDuration={600}
+              rippleSize={1700}
+              rippleContainerBorderRadius={20}
+              rippleOpacity={0.1}>
               <TypeTitle>
                 <TitleText>보건증</TitleText>
               </TypeTitle>
@@ -184,7 +190,12 @@ export default ({
               <Section
                 onPress={() =>
                   navigation.navigate('HealthCertificateStoreDetailScreen')
-                }>
+                }
+                rippleColor={styleGuide.palette.rippleGreyColor}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
                 <TypeTitle>
                   <Row>
                     <TitleText>위생교육증</TitleText>
@@ -236,7 +247,12 @@ export default ({
                   navigation.navigate('HealthCertificateStoreFormScreen', {
                     count: 3,
                   })
-                }>
+                }
+                rippleColor={styleGuide.palette.rippleGreyColor}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
                 <TypeTitle>
                   <Row>
                     <TitleText>위생교육증</TitleText>
@@ -272,7 +288,12 @@ export default ({
             <Section
               onPress={() =>
                 navigation.navigate('HealthCertificateEmpListScreen')
-              }>
+              }
+              rippleColor={styleGuide.palette.rippleGreyColor}
+              rippleDuration={600}
+              rippleSize={1700}
+              rippleContainerBorderRadius={20}
+              rippleOpacity={0.1}>
               <TypeTitle>
                 <Row>
                   <TitleText>보건증</TitleText>

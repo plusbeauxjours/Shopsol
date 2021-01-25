@@ -27,6 +27,10 @@ export const EyeOnIcon: React.FC<IProps> = ({size, color}) => (
   />
 );
 
+export const NavigateIcon: React.FC<IProps> = ({size, color}) => (
+  <Ionicons name={'navigate'} size={size ?? 24} color={color ?? 'white'} />
+);
+
 export const EyeOffIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid() ? 'md-eye-off' : 'ios-eye-off'}

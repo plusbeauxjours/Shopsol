@@ -23,6 +23,7 @@ import {
   CloseIcon,
   QrCodeIcon,
   LocationIcon,
+  NavigateIcon,
 } from '~/constants/Icons';
 import GoWorkingSuccessAnimation from '~/components/GoWorkingSuccessAnimation';
 import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
@@ -380,6 +381,28 @@ const DarkGreyColor = styled.Text`
   color: ${styleGuide.palette.darkGreyColor};
 `;
 
+const AddButtonContainer = styled.View`
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 100px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const AddButton = styled.TouchableOpacity`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${styleGuide.palette.tertiary};
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
 export default ({
   STORE_DATA,
   MEMBER_NAME,
@@ -446,6 +469,8 @@ export default ({
   hasConfirmed,
   confirmModal,
   category,
+  mapRef,
+  moveMap,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -740,15 +765,15 @@ export default ({
                   </Box>
                   <Box
                     style={{flexDirection: 'row'}}
-                    onPress={() => {
+                    onPress={async () => {
                       setIsWorkingMode(false);
                       setSucessModalOpen(false);
                       setFailModalOpen(false);
                       setWorkingTYPE('GPS');
                       utils.handleLocationPermission(
-                        setIsGpsVisible,
                         setLat,
                         setLong,
+                        setIsGpsVisible,
                       );
                     }}
                     hasGPS={GPS !== '0'}>
@@ -1342,6 +1367,7 @@ export default ({
         ) : (
           <>
             <MapView
+              ref={mapRef}
               style={{flex: 1}}
               provider={PROVIDER_GOOGLE}
               initialRegion={{
@@ -1406,6 +1432,15 @@ export default ({
                 <ShopMarker />
               </Marker>
             </MapView>
+            <AddButtonContainer>
+              <AddButton
+                onPress={() => {
+                  utils.handleLocationPermission(setLat, setLong);
+                  moveMap();
+                }}>
+                <NavigateIcon />
+              </AddButton>
+            </AddButtonContainer>
             <Footer onPress={() => setIsGpsVisible(false)}>
               <FooterText>닫기</FooterText>
             </Footer>

@@ -2,7 +2,6 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
-import NetInfo from "@react-native-community/netinfo";
 
 // 직원관리 ========================================================
 import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
@@ -95,7 +94,7 @@ export default () => {
     !isIphoneX() && {
       height: 56,
     };
-    
+
   return (
     <React.Fragment>
       <LoggedInNavigation.Navigator

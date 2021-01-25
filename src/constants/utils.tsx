@@ -62,7 +62,11 @@ export default {
       console.log(e);
     }
   },
-  handleLocationPermission: async (handle, setLat, setLong) => {
+  handleLocationPermission: async (
+    setLat,
+    setLong,
+    handle = (boolean) => {},
+  ) => {
     try {
       if (Platform.OS === 'android') {
         const granted = await PermissionsAndroid.request(
@@ -71,6 +75,7 @@ export default {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           Geolocation.getCurrentPosition(
             (position) => {
+              console.log(position);
               setLat(position.coords.latitude);
               setLong(position.coords.longitude);
             },
@@ -79,6 +84,7 @@ export default {
             },
             {
               enableHighAccuracy: true,
+              maximumAge: 0,
               distanceFilter: 100,
             },
           );
@@ -106,6 +112,7 @@ export default {
         if (permission === 'granted') {
           Geolocation.getCurrentPosition(
             (position) => {
+              console.log(position);
               setLat(position.coords.latitude);
               setLong(position.coords.longitude);
             },
@@ -114,6 +121,7 @@ export default {
             },
             {
               enableHighAccuracy: true,
+              maximumAge: 0,
               distanceFilter: 100,
             },
           );
