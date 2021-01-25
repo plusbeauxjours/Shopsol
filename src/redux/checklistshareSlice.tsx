@@ -13,7 +13,6 @@ const checklistshareSlice = createSlice({
     CHECKLIST_SHARE_MARKED: {},
     CHECKLIST_SHARE_DETAIL: null,
     CHECKLIST_SHARE_COMMENTS: [],
-    NOTICE_COUNT: 0,
   },
   reducers: {
     addCHECKLIST_SHARE_TO_FAVORITE(state, action) {
@@ -108,13 +107,6 @@ const checklistshareSlice = createSlice({
       return {
         ...state,
         CHECKLIST_SHARE_STORE_SEQ,
-      };
-    },
-    setNOTICE_COUNT(state, action) {
-      const {payload: NOTICE_COUNT} = action;
-      return {
-        ...state,
-        NOTICE_COUNT,
       };
     },
     setCHECKLIST_SHARE_DATA1(state, action) {
@@ -292,7 +284,6 @@ export const {
   removeCHECKLIST_SHARE_FROM_FAVORITE,
   removeCHECKLIST_SHARE_FROM_BASIC,
   setCHECKLIST_SHARE_STORE_SEQ,
-  setNOTICE_COUNT,
   setCHECKLIST_SHARE_DATA1,
   setCHECKLIST_SHARE_DATA2,
   setCHECKLIST_SHARE_MARKED,

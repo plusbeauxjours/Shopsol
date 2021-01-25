@@ -78,7 +78,7 @@ export default () => {
   const navigation = useNavigation();
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
-  const {RESPONSE_EMPLOYEE, NO_RESPONSE_EMPLOYEE} = useSelector(
+  const {RESPONSE_EMPLOYEE} = useSelector(
     (state: any) => state.employeeReducer,
   );
 
@@ -133,15 +133,15 @@ export default () => {
                 </TitleText>
                 <HelpCircleIcon />
               </Row>
-              <NumberText>{RESPONSE_EMPLOYEE?.length ?? 0}</NumberText>
+              <NumberText>{RESPONSE_EMPLOYEE?.result?.length ?? 0}</NumberText>
             </SpaceRow>
-            {RESPONSE_EMPLOYEE?.length !== 0 && <GreyLine />}
+            {RESPONSE_EMPLOYEE?.result?.length !== 0 && <GreyLine />}
             <EmployeeListBox>
-              {RESPONSE_EMPLOYEE?.map((data, index) => (
+              {RESPONSE_EMPLOYEE?.result?.map((data, index) => (
                 <ManageInviteEmployeeCard1
                   key={index}
                   data={data}
-                  isLast={RESPONSE_EMPLOYEE?.length - 1 == index}
+                  isLast={RESPONSE_EMPLOYEE?.result?.length - 1 == index}
                   EMP_NAME={data.EMP_NAME}
                   EMP_SEQ={data.EMP_SEQ}
                   PHONE={data.MobileNo}
@@ -166,14 +166,14 @@ export default () => {
                 </TitleText>
                 <HelpCircleIcon />
               </Row>
-              <NumberText>{NO_RESPONSE_EMPLOYEE?.length ?? 0}</NumberText>
+              <NumberText>{RESPONSE_EMPLOYEE?.result2?.length ?? 0}</NumberText>
             </SpaceRow>
-            {NO_RESPONSE_EMPLOYEE?.length !== 0 && <GreyLine />}
+            {RESPONSE_EMPLOYEE?.result2?.length !== 0 && <GreyLine />}
             <EmployeeListBox>
-              {NO_RESPONSE_EMPLOYEE?.map((data, index) => (
+              {RESPONSE_EMPLOYEE?.result2?.map((data, index) => (
                 <ManageInviteEmployeeCard2
                   key={index}
-                  isLast={RESPONSE_EMPLOYEE?.length - 1 == index}
+                  isLast={RESPONSE_EMPLOYEE?.result?.length - 1 == index}
                   join_emp_seq={data.join_emp_seq}
                   EMP_NAME={data.EMP_NAME}
                   PHONE={data.PHONE}

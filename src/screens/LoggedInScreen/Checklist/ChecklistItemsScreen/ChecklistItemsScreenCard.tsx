@@ -83,7 +83,7 @@ const IconContainer = styled.View`
   background-color: ${styleGuide.palette.tertiary};
 `;
 
-export default ({key, date, data, EMP_SEQ}) => {
+export default ({date, data, EMP_SEQ}) => {
   const navigation = useNavigation();
   const [willCheck, setWillCheck] = useState<boolean>(false);
   const [checkNo, setCheckNo] = useState<boolean>(false);
@@ -141,7 +141,6 @@ export default ({key, date, data, EMP_SEQ}) => {
 
   return (
     <Touchable
-      key={key}
       activeOpacity={1}
       onPress={() => gotoCkecklistDetail()}
       isContainedEmp={!data?.EMP_SEQ || data?.EMP_SEQ?.includes(EMP_SEQ)}

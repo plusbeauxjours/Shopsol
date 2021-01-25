@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
+import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
+import api from '~/constants/LoggedInApi';
 
 const storeSlice = createSlice({
   name: 'store',
@@ -28,13 +29,7 @@ const storeSlice = createSlice({
         };
       }
     },
-    setEMP_SEQ(state, action) {
-      const {payload: EMP_SEQ} = action;
-      return {
-        ...state,
-        EMP_SEQ,
-      };
-    },
+
     setSTORE_DATA(state, action) {
       const {payload: STORE_DATA} = action;
       return {
@@ -42,6 +37,7 @@ const storeSlice = createSlice({
         MANAGER_CALLED:
           STORE_DATA?.resultdata.CATEGORY == '일반회사' ? '관리자' : '매니저',
         STORE_DATA,
+        EMP_SEQ: STORE_DATA.EMP_SEQ,
       };
     },
     selectSTORE(state, action) {
@@ -112,7 +108,6 @@ const storeSlice = createSlice({
 
 export const {
   updateQR_Num,
-  setEMP_SEQ,
   setSTORE_DATA,
   selectSTORE,
   updateSTORE,
@@ -120,10 +115,24 @@ export const {
   removeSTORE_NAME,
 } = storeSlice.actions;
 
-export const getStore = (data) => async (dispatch) => {
+export const getStore = (data) => async (dispatch, getState) => {
+  const {
+    storeReducer: {STORE_SEQ},
+  } = getState();
+  const {
+    employeeReducer: {EMPLOYEE_LIST_SEQ},
+  } = getState();
   dispatch(setSTORE_DATA(data));
-  dispatch(setEMP_SEQ(data.EMP_SEQ));
-  dispatch(setNOTICE_COUNT(data.noticelength));
+  if (EMPLOYEE_LIST_SEQ != STORE_SEQ) {
+    try {
+      const {data: empData} = await api.getEmpLists(STORE_SEQ);
+      if (empData.message == 'SUCCESS') {
+        dispatch(setEMPLOYEE_LIST({EMPLOYEE_LIST: empData, STORE_SEQ}));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 };
 
 export default storeSlice.reducer;

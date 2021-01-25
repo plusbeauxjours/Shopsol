@@ -428,8 +428,6 @@ export default ({
   handleBarCodeScanned1,
   handleBarCodeScanned2,
   invitedEmpCount,
-  checklistCount,
-  NOTICE_COUNT,
   QR,
   isGpsVisible,
   setIsGpsVisible,

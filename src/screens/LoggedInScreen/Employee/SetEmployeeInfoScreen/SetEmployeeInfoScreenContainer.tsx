@@ -428,175 +428,176 @@ export default ({route: {params}}) => {
   };
 
   const fetchData = async () => {
-    try {
-      const {data} = await api.getEmp(EMP_SEQ);
-      if (data.message === 'SUCCESS') {
-        let payChecked = JSON.parse(JSON.stringify(payCheck)); // 급여 유형
-        payChecked.fill(false);
-        payChecked[Number(data.result.PAY_TYPE)] = true;
+    // try {
+    //   dispatch(
+    //     setSplashVisible({
+    //       visible: true,
+    //       fullText: `${EMP_NAME}님의 정보를 가져오고 있습니다.`,
+    //     }),
+    //   );
+    const {data} = await api.getEmp(EMP_SEQ);
+    console.log(data);
+    if (data.message === 'SUCCESS') {
+      let payChecked = JSON.parse(JSON.stringify(payCheck)); // 급여 유형
+      payChecked.fill(false);
+      payChecked[Number(data.result.PAY_TYPE)] = true;
 
-        let salarySystemChecked = JSON.parse(JSON.stringify(salarySystemCheck));
-        if (data.result.THREE_ALLOWANCE === '1') {
-          salarySystemChecked[0] = true;
-        }
-        if (data.result.WEEKEND_ALLOWANCE === '1') {
-          salarySystemChecked[1] = true;
-        }
-
-        let weekTypeChecked = JSON.parse(JSON.stringify(weekTypeCheck));
-        weekTypeChecked.fill(false);
-        weekTypeChecked[Number(data.result.WeekType)] = true;
-        if (data.result.REST_ALLOWANCE === '1') {
-          salarySystemChecked[2] = true;
-        }
-
-        let restTypeChecked = JSON.parse(JSON.stringify(restTypeCheck));
-        restTypeChecked.fill(false);
-        restTypeChecked[Number(data.result.RestType)] = true;
-
-        let deductionTypeChecked = JSON.parse(
-          JSON.stringify(deductionTypeCheck),
-        ); // 공제유형
-        deductionTypeChecked.fill(false);
-        if (data.result.insurance === '2') {
-          deductionTypeChecked[0] = true; // 2: 4대보험
-        } else if (data.result.insurance === '1') {
-          deductionTypeChecked[1] = true; // 1: 프리랜서
-        } else {
-          deductionTypeChecked[2] = true; // 0: 없음
-        }
-
-        let positionChecked = JSON.parse(JSON.stringify(positionCheck));
-        positionChecked.fill(false);
-        positionChecked[Number(data.result.IS_MANAGER)] = true;
-
-        let authorityChecked = JSON.parse(JSON.stringify(authorityCheck));
-        authorityChecked.fill(false);
-        if (data.result.IS_MANAGER === '1') {
-          if (data.result.OTHERPAY_SHOW === '1') authorityChecked[1] = true;
-          if (data.result.CalendarEdit === '1') authorityChecked[2] = true;
-          if (data.result.PUSH === '1') authorityChecked[3] = true;
-          if (data.result.STOREPAY_SHOW === '1') authorityChecked[4] = true;
-        }
-        if (data.result.PAY_SHOW === '1') authorityChecked[0] = true;
-
-        let insuranceChecked = insuranceCheck;
-        if (data.result.pension === '1') {
-          insuranceChecked[0] = true; // 국민연금
-        } else {
-          insuranceChecked[0] = false;
-        }
-        if (data.result.health === '1') {
-          insuranceChecked[1] = true; // 건강보험
-        } else {
-          insuranceChecked[1] = false;
-        }
-        if (data.result.employment === '1') {
-          insuranceChecked[2] = true; // 고용보험
-        } else {
-          insuranceChecked[2] = false;
-        }
-        if (data.result.accident === '1') {
-          insuranceChecked[3] = true; // 산재보험
-        } else {
-          insuranceChecked[3] = false;
-        }
-        setMINPAY(data.resultdata.MINPAY);
-        if (from === 'EmployeeInfoScreen') {
-          setStartDay(data.result.START);
-          setInitStartDay(data.result.START);
-          setInitSTART(data.result.START);
-          setEndDay(data.result.END ? data.result.END : moment());
-          setInitEndDay(data.result.END ? data.result.END : moment());
-          setEndDayCheck(data.result.END ? false : true);
-
-          setProbation(
-            data.result.probation == '1' &&
-              moment() < moment(data.result.probationDATE)
-              ? true
-              : false,
-          );
-          setProbationPeriod(
-            data.result.probation == '1'
-              ? moment(data.result.probationDATE)
-              : moment(),
-          );
-          setInitProbationPeriod(
-            data.result.probation == '1'
-              ? moment(data.result.probationDATE)
-              : moment(),
-          );
-          setProbationPercent(
-            data.result.probation == '1' &&
-              moment() < moment(data.result.probationDATE)
-              ? data.result.probationPercent
-              : '',
-          );
-          setProbationPeriodSet(
-            data.result.probation == '1' &&
-              moment() < moment(data.result.probationDATE)
-              ? true
-              : false,
-          );
-          // ↓ STEP 2(급여정보 입력)
-          setPayCheck(payChecked);
-          setPayDay(data.result.PAY_START);
-          setPay(data.result.PAY);
-          setPay2(data.result.PAY_TYPE === '2' ? data.result.MEALS : '0');
-          setPay3(
-            data.result.PAY_TYPE === '2' ? data.result.SELF_DRIVING : '0',
-          );
-          setPay4(data.result.PAY_TYPE === '2' ? data.result.BONUS : '0');
-          setPay5(data.result.PAY_TYPE === '2' ? data.result.INCENTIVE : '0');
-
-          // ↓ STEP 3(급여 상세정보 입력)
-          setSalarySystemCheck(salarySystemChecked);
-          setWeekTypeCheck(weekTypeChecked);
-          setWeekTime(
-            weekTypeChecked[0] === true ? data.result.WeekTime : null,
-          );
-          setRestTypeCheck(restTypeChecked);
-          setRestTime(
-            restTypeChecked[0] === true ? data.result.RestTime : null,
-          );
-          setDeductionTypeCheck(deductionTypeChecked);
-          setInsuranceCheck(insuranceChecked);
-          setMODIFYCOUNT(data.result.FIRST); // 첫번째 적용 확인 구분값
-          // ↓ STEP 4(연차설정)
-          setUseVacation(
-            typeof data.result.USE_Annual !== undefined
-              ? data.result.USE_Annual
-              : '',
-          );
-          setRemainderVacation(
-            typeof data.result.Annual !== undefined
-              ? (
-                  Number(data.result.Annual) - Number(data.result.USE_Annual)
-                ).toString()
-              : '',
-          );
-          setTotalVacation(
-            typeof data.result.Annual !== undefined ? data.result.Annual : '',
-          );
-          setAnnual_START(
-            data.result.Annual_START !== null
-              ? data.result.Annual_START
-              : moment().format('YYYY'),
-          );
-
-          // ↓ STEP 5(직책/권한 설정)
-          setPositionCheck(positionChecked);
-          setAuthorityCheck(authorityChecked);
-        } else {
-          setSTART_TYPE('1');
-          setMODIFYCOUNT('1'); // 첫번째 적용 확인 구분값
-        }
+      let salarySystemChecked = JSON.parse(JSON.stringify(salarySystemCheck));
+      if (data.result.THREE_ALLOWANCE === '1') {
+        salarySystemChecked[0] = true;
       }
-    } catch (e) {
-      console.log(e);
-      alertModal('통신이 원활하지 않습니다.');
-      navigation.goBack();
+      if (data.result.WEEKEND_ALLOWANCE === '1') {
+        salarySystemChecked[1] = true;
+      }
+
+      let weekTypeChecked = JSON.parse(JSON.stringify(weekTypeCheck));
+      weekTypeChecked.fill(false);
+      weekTypeChecked[Number(data.result.WeekType)] = true;
+      if (data.result.REST_ALLOWANCE === '1') {
+        salarySystemChecked[2] = true;
+      }
+
+      let restTypeChecked = JSON.parse(JSON.stringify(restTypeCheck));
+      restTypeChecked.fill(false);
+      restTypeChecked[Number(data.result.RestType)] = true;
+
+      let deductionTypeChecked = JSON.parse(JSON.stringify(deductionTypeCheck)); // 공제유형
+      deductionTypeChecked.fill(false);
+      if (data.result.insurance === '2') {
+        deductionTypeChecked[0] = true; // 2: 4대보험
+      } else if (data.result.insurance === '1') {
+        deductionTypeChecked[1] = true; // 1: 프리랜서
+      } else {
+        deductionTypeChecked[2] = true; // 0: 없음
+      }
+
+      let positionChecked = JSON.parse(JSON.stringify(positionCheck));
+      positionChecked.fill(false);
+      positionChecked[Number(data.result.IS_MANAGER)] = true;
+
+      let authorityChecked = JSON.parse(JSON.stringify(authorityCheck));
+      authorityChecked.fill(false);
+      if (data.result.IS_MANAGER === '1') {
+        if (data.result.OTHERPAY_SHOW === '1') authorityChecked[1] = true;
+        if (data.result.CalendarEdit === '1') authorityChecked[2] = true;
+        if (data.result.PUSH === '1') authorityChecked[3] = true;
+        if (data.result.STOREPAY_SHOW === '1') authorityChecked[4] = true;
+      }
+      if (data.result.PAY_SHOW === '1') authorityChecked[0] = true;
+
+      let insuranceChecked = insuranceCheck;
+      if (data.result.pension === '1') {
+        insuranceChecked[0] = true; // 국민연금
+      } else {
+        insuranceChecked[0] = false;
+      }
+      if (data.result.health === '1') {
+        insuranceChecked[1] = true; // 건강보험
+      } else {
+        insuranceChecked[1] = false;
+      }
+      if (data.result.employment === '1') {
+        insuranceChecked[2] = true; // 고용보험
+      } else {
+        insuranceChecked[2] = false;
+      }
+      if (data.result.accident === '1') {
+        insuranceChecked[3] = true; // 산재보험
+      } else {
+        insuranceChecked[3] = false;
+      }
+      setMINPAY(data.resultdata.MINPAY);
+      if (from === 'EmployeeInfoScreen') {
+        setStartDay(data.result.START);
+        setInitStartDay(data.result.START);
+        setInitSTART(data.result.START);
+        setEndDay(data.result.END ? data.result.END : moment());
+        setInitEndDay(data.result.END ? data.result.END : moment());
+        setEndDayCheck(data.result.END ? false : true);
+
+        setProbation(
+          data.result.probation == '1' &&
+            moment() < moment(data.result.probationDATE)
+            ? true
+            : false,
+        );
+        setProbationPeriod(
+          data.result.probation == '1'
+            ? moment(data.result.probationDATE)
+            : moment(),
+        );
+        setInitProbationPeriod(
+          data.result.probation == '1'
+            ? moment(data.result.probationDATE)
+            : moment(),
+        );
+        setProbationPercent(
+          data.result.probation == '1' &&
+            moment() < moment(data.result.probationDATE)
+            ? data.result.probationPercent
+            : '',
+        );
+        setProbationPeriodSet(
+          data.result.probation == '1' &&
+            moment() < moment(data.result.probationDATE)
+            ? true
+            : false,
+        );
+        // ↓ STEP 2(급여정보 입력)
+        setPayCheck(payChecked);
+        setPayDay(data.result.PAY_START);
+        setPay(data.result.PAY);
+        setPay2(data.result.PAY_TYPE === '2' ? data.result.MEALS : '0');
+        setPay3(data.result.PAY_TYPE === '2' ? data.result.SELF_DRIVING : '0');
+        setPay4(data.result.PAY_TYPE === '2' ? data.result.BONUS : '0');
+        setPay5(data.result.PAY_TYPE === '2' ? data.result.INCENTIVE : '0');
+
+        // ↓ STEP 3(급여 상세정보 입력)
+        setSalarySystemCheck(salarySystemChecked);
+        setWeekTypeCheck(weekTypeChecked);
+        setWeekTime(weekTypeChecked[0] === true ? data.result.WeekTime : null);
+        setRestTypeCheck(restTypeChecked);
+        setRestTime(restTypeChecked[0] === true ? data.result.RestTime : null);
+        setDeductionTypeCheck(deductionTypeChecked);
+        setInsuranceCheck(insuranceChecked);
+        setMODIFYCOUNT(data.result.FIRST); // 첫번째 적용 확인 구분값
+        // ↓ STEP 4(연차설정)
+        setUseVacation(
+          typeof data.result.USE_Annual !== undefined
+            ? data.result.USE_Annual
+            : '',
+        );
+        setRemainderVacation(
+          typeof data.result.Annual !== undefined
+            ? (
+                Number(data.result.Annual) - Number(data.result.USE_Annual)
+              ).toString()
+            : '',
+        );
+        setTotalVacation(
+          typeof data.result.Annual !== undefined ? data.result.Annual : '',
+        );
+        setAnnual_START(
+          data.result.Annual_START !== null
+            ? data.result.Annual_START
+            : moment().format('YYYY'),
+        );
+
+        // ↓ STEP 5(직책/권한 설정)
+        setPositionCheck(positionChecked);
+        setAuthorityCheck(authorityChecked);
+      } else {
+        setSTART_TYPE('1');
+        setMODIFYCOUNT('1'); // 첫번째 적용 확인 구분값
+      }
     }
+    // } catch (e) {
+    //   console.log(e);
+    //   alertModal('통신이 원활하지 않습니다.');
+    //   navigation.goBack();
+    // } finally {
+    //     dispatch(setSplashVisible({visible: false}));
+    // }
   };
 
   useEffect(() => {

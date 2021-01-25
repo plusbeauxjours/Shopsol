@@ -5,12 +5,10 @@ import {useNavigation} from '@react-navigation/native';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {updateQR_Num, setSTORE_DATA, setEMP_SEQ} from '~/redux/storeSlice';
+import {updateQR_Num} from '~/redux/storeSlice';
 import {addCUSTOM_MENU_EMP, removeCUSTOM_MENU_EMP} from '~/redux/userSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
-import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
-import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import {getStore} from '../../../../redux/storeSlice';
 
 export default ({route: {params}}) => {
@@ -36,9 +34,6 @@ export default ({route: {params}}) => {
     GENDER,
     CUSTOM_MENU_EMP,
   } = useSelector((state: any) => state.userReducer);
-  const {NOTICE_COUNT} = useSelector(
-    (state: any) => state.checklistshareReducer,
-  );
   const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
   const [workingLoading, setWorkingLoading] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
@@ -93,7 +88,6 @@ export default ({route: {params}}) => {
     {
       selection: '업무일지',
       paging: 'ChecklistShareMainScreen',
-      count: NOTICE_COUNT,
       source: require(`../../../../assets/main/ChecklistShareMain.png`),
     },
     {
@@ -126,7 +120,6 @@ export default ({route: {params}}) => {
     {
       selection: '업무일지',
       paging: 'ChecklistShareMainScreen',
-      count: NOTICE_COUNT,
       source: require(`../../../../assets/main/ChecklistShareMain.png`),
     },
     {
@@ -180,7 +173,6 @@ export default ({route: {params}}) => {
     {
       selection: '업무일지',
       paging: 'ChecklistShareMainScreen',
-      count: NOTICE_COUNT,
       source: require(`../../../../assets/main/ChecklistShareMain.png`),
     },
     {
@@ -406,10 +398,6 @@ export default ({route: {params}}) => {
   const fetchData = async () => {
     setWorkingModalOpen(false);
     try {
-      const {data: empData} = await api.getEmpLists(STORE_SEQ);
-      if (empData.message == 'SUCCESS') {
-        dispatch(setEMPLOYEE_LIST(empData));
-      }
       const {data} = await api.getStoreInfo({
         STORE,
         MEMBER_SEQ,
@@ -509,7 +497,6 @@ export default ({route: {params}}) => {
       handleBarCodeScanned2={handleBarCodeScanned2}
       invitedEmpCount={invitedEmpCount}
       checklistCount={checklistCount}
-      NOTICE_COUNT={NOTICE_COUNT}
       QR={QR}
       qrCameraConfirmModalOpen={qrCameraConfirmModalOpen}
       setQrCameraConfirmModalOpen={setQrCameraConfirmModalOpen}

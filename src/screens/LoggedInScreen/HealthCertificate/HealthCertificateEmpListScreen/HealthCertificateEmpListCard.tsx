@@ -54,7 +54,6 @@ const IconContainer = styled.View`
 `;
 
 export default ({
-  key,
   data,
   gotoHealthCertificateEmpDetail,
   gotoHealthCertificateEmpForm,
@@ -63,7 +62,7 @@ export default ({
   const dday = moment(data?.PUSH_DAY).diff(moment(), 'days');
   if (data.RESULT_DATE) {
     return (
-      <Touchable key={key} onPress={() => gotoHealthCertificateEmpDetail(data)}>
+      <Touchable onPress={() => gotoHealthCertificateEmpDetail(data)}>
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
           source={{
@@ -104,7 +103,6 @@ export default ({
   } else {
     return (
       <Touchable
-        key={key}
         onPress={() =>
           gotoHealthCertificateEmpForm(
             data.NAME,

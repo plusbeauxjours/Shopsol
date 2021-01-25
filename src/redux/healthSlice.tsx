@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {setSplashVisible, setLoadingVisible} from './splashSlice';
+import {setSplashVisible} from './splashSlice';
 import api from '../constants/LoggedInApi';
 
 const healthSlice = createSlice({
@@ -8,7 +8,7 @@ const healthSlice = createSlice({
     SELECT_INDEX: 0,
     HEALTH_CERTIFICATE_DATA: {},
     HEALTH_EMP_LIST: [],
-    HEALTH_EMP_LIST_STORE_SEQ: null,
+    HEALTH_EMP_LIST_SEQ: null,
     HEALTH_EMP_DETAIL: [],
     HEALTH_STORE_DETAIL: [],
   },
@@ -20,18 +20,14 @@ const healthSlice = createSlice({
         HEALTH_CERTIFICATE_DATA,
       };
     },
-    setHEALTH_EMP_LIST_STORE_SEQ(state, action) {
-      const {payload: HEALTH_EMP_LIST_STORE_SEQ} = action;
-      return {
-        ...state,
-        HEALTH_EMP_LIST_STORE_SEQ,
-      };
-    },
     setHEALTH_EMP_LIST(state, action) {
-      const {payload: HEALTH_EMP_LIST} = action;
+      const {
+        payload: {HEALTH_EMP_LIST, STORE_SEQ},
+      } = action;
       return {
         ...state,
         HEALTH_EMP_LIST,
+        HEALTH_EMP_LIST_SEQ: STORE_SEQ,
       };
     },
     setHEALTH_EMP_DETAIL(state, action) {
@@ -78,7 +74,6 @@ const healthSlice = createSlice({
 
 export const {
   setHEALTH_CERTIFICATE_DATA,
-  setHEALTH_EMP_LIST_STORE_SEQ,
   setHEALTH_EMP_LIST,
   setHEALTH_EMP_DETAIL,
   setHEALTH_STORE_DETAIL,
@@ -118,12 +113,11 @@ export const getSTORE_HEALTH_EMP_LIST = () => async (dispatch, getState) => {
     userReducer: {STORE, MEMBER_SEQ},
   } = getState();
   const {
-    healthReducer: {HEALTH_EMP_LIST_STORE_SEQ},
+    healthReducer: {HEALTH_EMP_LIST_SEQ},
   } = getState();
 
   try {
-    if (HEALTH_EMP_LIST_STORE_SEQ !== STORE_SEQ) {
-      dispatch(setLoadingVisible(true));
+    if (HEALTH_EMP_LIST_SEQ !== STORE_SEQ) {
       dispatch(setSplashVisible({visible: true, text: '보건증 직원 목록'}));
     }
     const {data} = await api.storeHealthEmpList({
@@ -131,14 +125,13 @@ export const getSTORE_HEALTH_EMP_LIST = () => async (dispatch, getState) => {
       STORE,
       MEMBER_SEQ,
     });
+    console.log(data);
     if (data.message === 'SUCCESS') {
-      dispatch(setHEALTH_EMP_LIST_STORE_SEQ(STORE_SEQ));
-      dispatch(setHEALTH_EMP_LIST(data.result));
+      dispatch(setHEALTH_EMP_LIST({HEALTH_EMP_LIST: data.result, STORE_SEQ}));
     }
   } catch (e) {
     console.log(e);
   } finally {
-    dispatch(setLoadingVisible(false));
     dispatch(setSplashVisible({visible: false}));
   }
 };

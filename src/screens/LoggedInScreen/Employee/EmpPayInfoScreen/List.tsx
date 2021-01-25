@@ -110,8 +110,12 @@ export default ({list}) => {
         <Text>Total Points</Text>
       </TotalContainer>
       <HiddenItems as={Animated.View} style={{height}}>
-        {list.items.map((item, key) => (
-          <Item key={key} isLast={key === list.items.length - 1} {...{item}} />
+        {list.items.map((item, index) => (
+          <Item
+            key={index}
+            isLast={index === list.items.length - 1}
+            {...{item}}
+          />
         ))}
       </HiddenItems>
       <BorderFooter />

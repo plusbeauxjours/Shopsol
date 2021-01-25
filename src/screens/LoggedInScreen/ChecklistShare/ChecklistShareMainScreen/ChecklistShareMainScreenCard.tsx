@@ -147,7 +147,6 @@ const IconText = styled.Text`
 `;
 
 export default ({
-  key,
   data,
   ME,
   TITLE,
@@ -162,7 +161,7 @@ export default ({
     imgarr.push(allimg[0]);
   }
   return (
-    <View key={key}>
+    <View>
       <Touchable
         onPress={() =>
           setTimeout(() => {

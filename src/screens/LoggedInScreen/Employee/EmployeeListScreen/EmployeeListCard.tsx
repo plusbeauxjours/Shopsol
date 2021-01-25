@@ -50,20 +50,10 @@ const IconContainer = styled.View`
   right: 5px;
 `;
 
-export default ({
-  key,
-  EMP_NAME,
-  IS_MANAGER,
-  data,
-  image,
-  mobileNo,
-  START,
-  END,
-}) => {
+export default ({EMP_NAME, IS_MANAGER, data, image, mobileNo, START, END}) => {
   const navigation = useNavigation();
   return (
     <Touchable
-      key={key}
       onPress={() => {
         navigation.navigate('EmployeeInfoScreen', {data});
       }}>

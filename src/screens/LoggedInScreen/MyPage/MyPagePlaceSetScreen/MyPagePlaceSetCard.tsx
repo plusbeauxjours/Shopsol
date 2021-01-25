@@ -46,8 +46,8 @@ const IconContainer = styled.View`
   margin: 1px 3px 0 0;
 `;
 
-export default ({key, name, addr}) => (
-  <Container key={key} disabled={true}>
+export default ({name, addr}) => (
+  <Container disabled={true}>
     <NameText>{name}</NameText>
     <AddressBox>
       <IconContainer>

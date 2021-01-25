@@ -6,6 +6,7 @@ import {RefreshControl} from 'react-native';
 import EmployeeListCard from './EmployeeListCard';
 import {HelpCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import LottieView from 'lottie-react-native';
 
 interface IEmployeeListBox {
   hasEmployeeNow?: boolean;
@@ -67,6 +68,14 @@ const EmployeeListBox = styled.View<IEmployeeListBox>`
   border-radius: 20px;
   border-color: ${styleGuide.palette.borderColor};
   background-color: white;
+`;
+
+const Column = styled.View`
+  flex-direction: column;
+`;
+
+const DarkGreyColor = styled.Text`
+  color: ${styleGuide.palette.darkGreyColor};
 `;
 
 export default ({
@@ -135,7 +144,7 @@ export default ({
 
             {employeeNowOff && <GreyLine />}
             {employeeNowOff?.map((data, index) => (
-              <EmployeeListBox hasEmployeeNow={employeeNowOff}>
+              <EmployeeListBox key={index} hasEmployeeNow={employeeNowOff}>
                 <EmployeeListCard
                   key={index}
                   EMP_NAME={data?.EMP_NAME}
