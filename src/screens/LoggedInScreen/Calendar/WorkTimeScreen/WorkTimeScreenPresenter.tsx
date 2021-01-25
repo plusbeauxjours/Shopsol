@@ -15,9 +15,15 @@ import {ForwardArrowIcon} from '~/constants/Icons';
 import {RadioBtnOnIcon, RadioBtnOffIcon} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
+
 interface IsSelected {
   isSelected: boolean;
   color?: string;
+}
+
+interface IsChecked {
+  isChecked?: boolean;
 }
 
 interface IsFirst {
@@ -98,11 +104,6 @@ const CntArea = styled.View`
   padding-left: 15px;
 `;
 
-const RowTouchable = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-`;
-
 const RowSpaceTouchable = styled.View`
   justify-content: space-around;
   flex-direction: row;
@@ -115,15 +116,9 @@ const SideText = styled.Text`
   color: #212121;
 `;
 
-const TimePickBoxTimeText = styled.Text<IsSelected>`
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${(props) =>
-    props.isSelected ? styleGuide.palette.primary : '#cccccc'};
-`;
-
 const DatePickerContainer = styled.View`
-  width: 330px;
-  height: 370px;
+  width: ${utils.isAndroid() ? 300 : 330}px;
+  height: ${utils.isAndroid() ? 330 : 370}px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;

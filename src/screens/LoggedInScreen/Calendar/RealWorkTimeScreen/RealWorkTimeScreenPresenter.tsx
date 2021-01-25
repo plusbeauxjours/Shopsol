@@ -14,6 +14,7 @@ import LottieView from 'lottie-react-native';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import {ForwardArrowIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IsSelected {
   isSelected: boolean;
@@ -83,32 +84,6 @@ const WhiteSpace = styled.View`
   height: 30px;
 `;
 
-const NormalContainer = styled.View`
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-`;
-
-const NormalBox = styled.TouchableOpacity<IsSelected>`
-  width: ${(wp('100%') - 130) / 4}px;
-  height: 50px;
-  margin: 0 5px;
-  border-radius: 10px;
-  border-width: ${(props) => (props.isSelected ? 2 : 1)}px;
-  border-color: ${(props) =>
-    props.isSelected ? styleGuide.palette.primary : '#dedede'};
-  background-color: transparent;
-  align-items: center;
-  justify-content: center;
-`;
-
-const NormalText = styled.Text<IsSelected>`
-  color: ${(props) =>
-    props.isSelected ? styleGuide.palette.primary : '#dedede'};
-  font-size: 14px;
-`;
-
 const WorkTime = styled.View`
   height: 15px;
   flex-direction: row;
@@ -145,14 +120,9 @@ const SideText = styled.Text`
   color: #212121;
 `;
 
-const TimePickBoxTimeText = styled.Text`
-  font-size: ${styleGuide.fontSize.large}px;
-  color: ${styleGuide.palette.primary};
-`;
-
 const DatePickerContainer = styled.View`
-  width: 330px;
-  height: 370px;
+  width: ${utils.isAndroid() ? 300 : 330}px;
+  height: ${utils.isAndroid() ? 330 : 370}px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
@@ -431,7 +401,7 @@ export default ({
           width: '100%',
           height: '100%',
         }}>
-        <DatePickerContainer style={{height: 490}}>
+        <DatePickerContainer style={{height: utils.isAndroid() ? 450 : 490}}>
           {!startTimeSet && (
             <LottieView
               style={{
@@ -549,7 +519,7 @@ export default ({
           width: '100%',
           height: '100%',
         }}>
-        <DatePickerContainer style={{height: 490}}>
+        <DatePickerContainer style={{height: utils.isAndroid() ? 450 : 490}}>
           {!endTimeSet && (
             <LottieView
               style={{

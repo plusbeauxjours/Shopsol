@@ -56,6 +56,8 @@ export default ({
   STORE_NAME,
   MEMBER_NAME,
   setSucessModalOpen,
+  workingModalOpen,
+  setQrCameraModalOpen1,
   actionTYPE,
 }) => {
   return (
@@ -95,7 +97,11 @@ export default ({
           <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>
         </TextBox>
         <Touchable
-          onPress={() => setSucessModalOpen(false)}
+          onPress={() => {
+            setSucessModalOpen(false);
+            workingModalOpen(false);
+            setQrCameraModalOpen1(false);
+          }}
           rippleColor={styleGuide.palette.rippleColor}
           rippleDuration={600}
           rippleSize={1200}

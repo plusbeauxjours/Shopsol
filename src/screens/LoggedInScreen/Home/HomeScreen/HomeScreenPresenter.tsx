@@ -1231,6 +1231,8 @@ export default ({
             STORE_NAME={STORE_NAME}
             MEMBER_NAME={MEMBER_NAME}
             setSucessModalOpen={setSucessModalOpen}
+            workingModalOpen={workingModalOpen}
+            setQrCameraModalOpen1={setQrCameraModalOpen1}
             actionTYPE={actionTYPE}
           />
         ) : failModalOpen ? (
@@ -1472,6 +1474,8 @@ export default ({
             STORE_NAME={STORE_NAME}
             MEMBER_NAME={MEMBER_NAME}
             setSucessModalOpen={setSucessModalOpen}
+            workingModalOpen={workingModalOpen}
+            setQrCameraModalOpen1={setQrCameraModalOpen1}
             actionTYPE={actionTYPE}
           />
         ) : failModalOpen ? (

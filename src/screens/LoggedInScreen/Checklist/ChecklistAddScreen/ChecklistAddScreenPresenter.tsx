@@ -202,8 +202,8 @@ const GreyText = styled.Text<IsError>`
 `;
 
 const DatePickerContainer = styled.View`
-  width: 330px;
-  height: 370px;
+  width: ${utils.isAndroid() ? 300 : 330}px;
+  height: ${utils.isAndroid() ? 330 : 370}px;
   border-radius: 20px;
   padding: 20px;
   padding-top: 30px;
