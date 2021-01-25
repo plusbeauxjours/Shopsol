@@ -253,12 +253,17 @@ export default ({
         loadItemsForMonth={(date) => onChangeMonth(date)}
         markingType={'multi-dot'}
       />
-      <AddButtonContainer>
-        <AddButton
-          onPress={() => navigation.navigate('CalendarAddScreen', {fetchData})}>
-          <AddIcon />
-        </AddButton>
-      </AddButtonContainer>
+      {STORE == '1' ||
+        ((CALENDAR_EDIT == '1' || undefined) && (
+          <AddButtonContainer>
+            <AddButton
+              onPress={() =>
+                navigation.navigate('CalendarAddScreen', {fetchData})
+              }>
+              <AddIcon />
+            </AddButton>
+          </AddButtonContainer>
+        ))}
     </>
   );
 };

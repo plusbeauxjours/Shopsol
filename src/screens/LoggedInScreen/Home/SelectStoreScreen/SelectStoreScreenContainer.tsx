@@ -22,13 +22,12 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
-  const {visible} = useSelector((state: any) => state.splashReducer);
   const {MEMBER_SEQ, STORE, STORELIST_DATA} = useSelector(
     (state: any) => state.userReducer,
   );
+  const {visible, loading} = useSelector((state: any) => state.splashReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
 
   const onRefresh = async () => {
     try {
@@ -151,15 +150,20 @@ export default ({route: {params}}) => {
 
   useEffect(() => {
     try {
-      dispatch(setSplashVisible({visible: false}));
-      dispatch(setLoadingVisible(false));
-      dispatch(setCALENDAR_DATA_STORE_SEQ(''));
-      dispatch(resetCALENDAR_DATA());
-      dispatch(getSTORELIST_DATA());
+      if (visible) {
+        dispatch(setSplashVisible({visible: false}));
+      }
+      if (loading) {
+        dispatch(setLoadingVisible(false));
+      }
+      // dispatch(resetCALENDAR_DATA());
+      // dispatch(setCALENDAR_DATA_STORE_SEQ(''));
+      if (STORELIST_DATA.length == 0) {
+        dispatch(getSTORELIST_DATA());
+      }
     } catch (e) {
       console.log(e);
     } finally {
-      setLoading(false);
       dispatch(setAlertVisible(false));
     }
     // if (utils.isAndroid) {
@@ -185,8 +189,6 @@ export default ({route: {params}}) => {
       onRefresh={onRefresh}
       gotoAddStore={gotoAddStore}
       gotoHomeScreen={gotoHomeScreen}
-      visible={visible}
-      loading={loading}
     />
   );
 };

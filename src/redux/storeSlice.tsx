@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
 
 const storeSlice = createSlice({
   name: 'store',
@@ -118,5 +119,11 @@ export const {
   closeSTORE_DATA,
   removeSTORE_NAME,
 } = storeSlice.actions;
+
+export const getStore = (data) => async (dispatch) => {
+  dispatch(setSTORE_DATA(data));
+  dispatch(setEMP_SEQ(data.EMP_SEQ));
+  dispatch(setNOTICE_COUNT(data.noticelength));
+};
 
 export default storeSlice.reducer;

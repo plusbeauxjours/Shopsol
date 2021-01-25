@@ -36,19 +36,17 @@ const Section = styled.View`
 
 export default ({
   updateAlarm,
-  All_PUSH,
-  WORK_PUSH,
-  CHECK_PUSH,
-  CHECKSHARE_PUSH,
-  SCHEDULE_PUSH,
-  toggleAlarm,
+  allPushState,
+  workPushState,
+  checkPushState,
+  checksharePushState,
+  scedulePUshState,
 }) => {
   const SwitchBox = ({value, alarm}) => (
     <Switch
       trackColor={{true: '#e39a9c', false: '#ddd'}}
       thumbColor={'white'}
       onValueChange={() => {
-        toggleAlarm(alarm);
         updateAlarm(value, alarm);
       }}
       value={value}
@@ -60,25 +58,28 @@ export default ({
         <Section>
           <Box>
             <Text>푸시 끄기/켜기</Text>
-            <SwitchBox value={All_PUSH} alarm={'All_PUSH'} />
+            <SwitchBox value={allPushState} alarm={'All_PUSH'} />
           </Box>
-          {All_PUSH && (
+          {allPushState && (
             <>
               <Box>
                 <Text>출퇴근 푸시</Text>
-                <SwitchBox value={WORK_PUSH} alarm={'WORK_PUSH'} />
+                <SwitchBox value={workPushState} alarm={'WORK_PUSH'} />
               </Box>
               <Box>
                 <Text>근무일정 푸시</Text>
-                <SwitchBox value={CHECK_PUSH} alarm={'CHECK_PUSH'} />
+                <SwitchBox value={checkPushState} alarm={'CHECK_PUSH'} />
               </Box>
               <Box>
                 <Text>체크리스트 푸시</Text>
-                <SwitchBox value={CHECKSHARE_PUSH} alarm={'CHECKSHARE_PUSH'} />
+                <SwitchBox
+                  value={checksharePushState}
+                  alarm={'CHECKSHARE_PUSH'}
+                />
               </Box>
               <Box>
                 <Text>업무일지 푸시</Text>
-                <SwitchBox value={SCHEDULE_PUSH} alarm={'SCHEDULE_PUSH'} />
+                <SwitchBox value={scedulePUshState} alarm={'SCHEDULE_PUSH'} />
               </Box>
             </>
           )}

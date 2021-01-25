@@ -63,6 +63,7 @@ const LoadingText = styled.Text`
   bottom: 30px;
   color: white;
 `;
+
 const Container = styled.View`
   width: 100%;
   flex-direction: row;
@@ -614,7 +615,7 @@ export default ({
           />
         }>
         <FastImage
-          style={{width: wp('100%'), height: hp('35%'), opacity: 0.7}}
+          style={{width: wp('100%'), height: hp('38%'), opacity: 0.7}}
           source={
             category == '일반회사'
               ? require('../../../../assets/main/1.png')
@@ -657,8 +658,12 @@ export default ({
                   <DarkGreyColor>{WORKING_COUNT}</DarkGreyColor>명 근무중
                 </DarkGreyColor>
               ) : (
-                <Text style={{color: 'white', fontSize: 14}}>
-                  합류된 직원이 없습니다 직원을 초대하세요
+                <Text
+                  style={{
+                    color: styleGuide.palette.darkGreyColor,
+                    fontSize: 14,
+                  }}>
+                  합류된 직원이 없습니다. 직원을 초대하세요.
                 </Text>
               )}
             </Row>
@@ -793,7 +798,7 @@ export default ({
                     />
                     <QrIconContainer
                       style={{width: 90}}
-                      hasQr={false}
+                      hasQr={true}
                       onPress={() => confirmModal()}>
                       <QrCodeIcon color={'white'} size={18} />
                       <WhiteText style={{marginLeft: 5}}>등록하기</WhiteText>
@@ -942,7 +947,7 @@ export default ({
                         />
                         <QrIconContainer
                           style={{width: 90}}
-                          hasQr={false}
+                          hasQr={true}
                           onPress={() => confirmModal()}>
                           <QrCodeIcon color={'white'} size={18} />
                           <WhiteText style={{marginLeft: 5}}>
@@ -953,7 +958,8 @@ export default ({
                     )}
                   </SpaceRow>
                   {initLoading ? (
-                    <Container style={{justifyContent: 'center'}}>
+                    <Column
+                      style={{alignItems: 'center', justifyContent: 'center'}}>
                       <LottieView
                         style={{
                           marginTop: 20,
@@ -965,7 +971,11 @@ export default ({
                         loop
                         autoPlay
                       />
-                    </Container>
+                      <DarkGreyColor>
+                        사업장 정보를 불러오는 중입니다.
+                      </DarkGreyColor>
+                      <DarkGreyColor>잠시만 기다려주세요.</DarkGreyColor>
+                    </Column>
                   ) : (
                     <>
                       <Container>
@@ -1101,7 +1111,8 @@ export default ({
                     </MenuTitleArea>
                   </SpaceRow>
                   {initLoading ? (
-                    <Container style={{justifyContent: 'center'}}>
+                    <Column
+                      style={{alignItems: 'center', justifyContent: 'center'}}>
                       <LottieView
                         style={{
                           marginTop: 20,
@@ -1113,7 +1124,11 @@ export default ({
                         loop
                         autoPlay
                       />
-                    </Container>
+                      <DarkGreyColor>
+                        사업장 정보를 불러오는 중입니다.
+                      </DarkGreyColor>
+                      <DarkGreyColor>잠시만 기다려주세요.</DarkGreyColor>
+                    </Column>
                   ) : (
                     <>
                       <Container>

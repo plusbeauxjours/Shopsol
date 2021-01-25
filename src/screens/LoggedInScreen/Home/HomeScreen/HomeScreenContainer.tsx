@@ -11,6 +11,7 @@ import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {setNOTICE_COUNT} from '~/redux/checklistshareSlice';
 import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
+import {getStore} from '../../../../redux/storeSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -48,10 +49,9 @@ export default ({route: {params}}) => {
   const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
     false,
   );
-  const [
-    qrCameraConfirmModalOpen,
-    setQrCameraConfirmModalOpen,
-  ] = useState<boolean>(false);
+  const [qrCameraConfirmModalOpen, setQrCameraConfirmModalOpen] = useState<
+    boolean
+  >(false);
   const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
   const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
@@ -414,12 +414,10 @@ export default ({route: {params}}) => {
         STORE_SEQ,
       });
       if (data.resultmsg === '1') {
-        dispatch(setSTORE_DATA(data));
-        dispatch(setEMP_SEQ(data.EMP_SEQ));
         setQR(data.resultdata.QR);
         setInvitedEmpCount(data.inviteemp);
         setChecklistCount(data.checklength);
-        dispatch(setNOTICE_COUNT(data.noticelength));
+        dispatch(getStore(data));
       }
     } catch (e) {
       console.log(e);

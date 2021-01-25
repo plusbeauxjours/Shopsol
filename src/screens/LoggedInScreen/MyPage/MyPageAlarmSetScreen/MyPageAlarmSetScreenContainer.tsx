@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import firebase from 'react-native-firebase';
 import {Alert, Linking, Platform} from 'react-native';
@@ -29,7 +29,44 @@ export default () => {
     SCHEDULE_PUSH,
   } = useSelector((state: any) => state.userAlarmReducer);
 
+  const [allPushState, setAllPushState] = useState<boolean>(All_PUSH || false);
+  const [workPushState, setWorkPushState] = useState<boolean>(
+    WORK_PUSH || false,
+  );
+  const [checkPushState, setCheckPushState] = useState<boolean>(
+    CHECK_PUSH || false,
+  );
+  const [checksharePushState, setChecksharePushState] = useState<boolean>(
+    CHECKSHARE_PUSH || false,
+  );
+  const [scedulePUshState, setScedulePUshState] = useState<boolean>(
+    SCHEDULE_PUSH || false,
+  );
+
+  const toggleAlarmState = (value, hasSuccessed) => {
+    console.log('toggleAlarmState', value);
+    switch (value) {
+      case 'All_PUSH':
+        return setAllPushState(hasSuccessed ? !allPushState : All_PUSH);
+      case 'WORK_PUSH':
+        return setWorkPushState(hasSuccessed ? !workPushState : WORK_PUSH);
+      case 'CHECK_PUSH':
+        return setCheckPushState(hasSuccessed ? !checkPushState : CHECK_PUSH);
+      case 'CHECKSHARE_PUSH':
+        return setChecksharePushState(
+          hasSuccessed ? !checksharePushState : CHECKSHARE_PUSH,
+        );
+      case 'SCHEDULE_PUSH':
+        return setScedulePUshState(
+          hasSuccessed ? !scedulePUshState : SCHEDULE_PUSH,
+        );
+      default:
+        break;
+    }
+  };
+
   const toggleAlarm = (value) => {
+    console.log('toggleAlarm', value);
     switch (value) {
       case 'All_PUSH':
         return dispatch(setAllPush(!All_PUSH));
@@ -48,15 +85,21 @@ export default () => {
 
   const updateAlarm = async (value: boolean, alarm: string) => {
     const isAlarmOn = value == true ? '0' : '1';
+    toggleAlarmState(alarm, true);
     try {
-      await api.updatePush({
+      const {data} = await api.updatePush({
         MEMBER_SEQ,
         [alarm]: isAlarmOn,
       });
+      if (data.message == 'SUCCESS') {
+        toggleAlarm(alarm);
+      }
     } catch (e) {
       console.log(e);
       alertModal('통신이 원활하지 않습니다.');
-      toggleAlarm(value);
+      setTimeout(() => {
+        toggleAlarmState(alarm, false);
+      }, 200);
     }
   };
 
@@ -159,12 +202,11 @@ export default () => {
   return (
     <MyPageAlarmSetScreenPresenter
       updateAlarm={updateAlarm}
-      All_PUSH={All_PUSH}
-      WORK_PUSH={WORK_PUSH}
-      CHECK_PUSH={CHECK_PUSH}
-      CHECKSHARE_PUSH={CHECKSHARE_PUSH}
-      SCHEDULE_PUSH={SCHEDULE_PUSH}
-      toggleAlarm={toggleAlarm}
+      allPushState={allPushState}
+      workPushState={workPushState}
+      checkPushState={checkPushState}
+      checksharePushState={checksharePushState}
+      scedulePUshState={scedulePUshState}
     />
   );
 };

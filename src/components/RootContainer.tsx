@@ -2,13 +2,14 @@ import React, {useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {StatusBar, LogBox} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import firebase from 'react-native-firebase';
 import styled from 'styled-components/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import NetInfo from '@react-native-community/netinfo';
 
 import * as Sentry from '@sentry/react-native';
 
@@ -18,6 +19,7 @@ import LoggedOutNavigation from '../navigations/LoggedOutNavigation';
 import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/index';
 import Loader from './Loader';
 import styleGuide from '~/constants/styleGuide';
+import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 
 LogBox.ignoreAllLogs(true);
 
@@ -38,10 +40,26 @@ const Container = styled.View`
 export default () => {
   const routeNameRef = useRef(null);
   const navigationRef = useRef(null);
+  const dispatch = useDispatch();
 
   const {visible} = useSelector((state: any) => state.splashReducer);
   const {isLoggedIn} = useSelector((state: any) => state.userReducer);
   const RootStack = createStackNavigator();
+
+  const isNetworkAvailable = async () => {
+    const response = await NetInfo.fetch();
+    return response.isConnected;
+  };
+
+  const alertModal = (text) => {
+    const params = {
+      alertType: 'alert',
+      title: '',
+      content: text,
+    };
+    dispatch(setAlertInfo(params));
+    dispatch(setAlertVisible(true));
+  };
 
   Sentry.init({
     dsn:
@@ -56,7 +74,13 @@ export default () => {
       onReady={() =>
         (routeNameRef.current = navigationRef.current.getCurrentRoute()?.name)
       }
-      onStateChange={() => {
+      onStateChange={async () => {
+        const onNetwork = await isNetworkAvailable();
+        if (!onNetwork) {
+          alertModal('연결에 실패하였습니다. 네트워크 상태를 확인하세요.');
+          console.log(navigationRef);
+          navigationRef.current.goBack();
+        }
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef?.current?.getCurrentRoute()
           ?.name;

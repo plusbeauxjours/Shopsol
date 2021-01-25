@@ -626,7 +626,9 @@ export default ({
                         .duration(totalWORKING / totlaWORKING_EMP)
                         .asHours(),
                     ) != 0 && (
-                      <PercentageSubText color={styleGuide.palette.primary}>
+                      <PercentageSubText
+                        color={styleGuide.palette.primary}
+                        style={{fontSize: 18}}>
                         {Math.trunc(
                           moment
                             .duration(totalWORKING / totlaWORKING_EMP)
@@ -638,7 +640,9 @@ export default ({
                     {moment
                       .duration(totalWORKING / totlaWORKING_EMP)
                       .minutes() != 0 && (
-                      <PercentageSubText color={styleGuide.palette.primary}>
+                      <PercentageSubText
+                        color={styleGuide.palette.primary}
+                        style={{fontSize: 18}}>
                         {moment
                           .duration(totalWORKING / totlaWORKING_EMP)
                           .minutes()}

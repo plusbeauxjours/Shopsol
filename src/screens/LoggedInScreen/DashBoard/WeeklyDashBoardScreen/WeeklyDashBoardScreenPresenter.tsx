@@ -503,7 +503,10 @@ export default ({
                   </DateText>
                 </DateTextArea>
                 <DateArrowRight onPress={() => nextWeek()}>
-                  <ForwardIcon size={22} color={styleGuide.palette.arrowColor} />
+                  <ForwardIcon
+                    size={22}
+                    color={styleGuide.palette.arrowColor}
+                  />
                 </DateArrowRight>
               </Date>
             </DateSection>

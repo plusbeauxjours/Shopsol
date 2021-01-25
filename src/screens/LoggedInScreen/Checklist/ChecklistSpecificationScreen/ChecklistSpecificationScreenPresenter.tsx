@@ -230,7 +230,6 @@ const AddButtonText = styled.Text`
 `;
 
 const ChecklistTextContainer = styled.View`
-  background-color: green;
   width: ${wp('100%') - 180}px;
   flex-wrap: nowrap;
 `;

@@ -64,7 +64,7 @@ const Top = styled.View<IColumn>`
 const ColumnContainer = styled(RNBounceable)<IColumn>`
   position: absolute;
   left: ${(props) => props.index * step}px;
-  bottom: -20;
+  bottom: -20px;
   width: ${step}px;
   height: ${(props) => props.height + 20}px;
   overflow: hidden;

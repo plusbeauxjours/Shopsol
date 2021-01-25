@@ -204,7 +204,7 @@ export default ({
   const renderBallon = () => (
     <Ballon
       ref={ballonRef}
-      color={styleGuide.palette.primary}
+      color={styleGuide.palette.redColor}
       textStyle={{width: 70, textAlign: 'center', color: 'white'}}
     />
   );

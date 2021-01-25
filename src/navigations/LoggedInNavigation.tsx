@@ -1,6 +1,8 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
+import NetInfo from "@react-native-community/netinfo";
 
 // 직원관리 ========================================================
 import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
@@ -89,6 +91,11 @@ import utils from '~/constants/utils';
 const LoggedInNavigation = createStackNavigator();
 export default () => {
   const alert = useSelector((state: any) => state.alertReducer);
+  const headerStyle = utils.isAndroid() &&
+    !isIphoneX() && {
+      height: 56,
+    };
+    
   return (
     <React.Fragment>
       <LoggedInNavigation.Navigator
@@ -101,7 +108,7 @@ export default () => {
             backgroundColor: styleGuide.palette.headerColor,
             borderColor: 'white',
             borderWidth: 0,
-            paddingTop: 0,
+            ...headerStyle,
           },
           headerTitleAlign: 'center',
           headerTintColor: 'white',

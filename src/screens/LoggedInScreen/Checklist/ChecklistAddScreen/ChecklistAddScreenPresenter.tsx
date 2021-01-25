@@ -245,6 +245,12 @@ const DatePickerRoundView = styled.View<IIsCancel>`
   margin-top: 10px;
 `;
 
+const EmpModalContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+`;
+
 export default ({
   TITLE,
   setTITLE,
@@ -485,20 +491,26 @@ export default ({
           persistentScrollbar={true}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{alignItems: 'center'}}>
-          {emplist?.map((data, index) => (
-            <Touchable
-              key={index}
-              onPress={() => {
-                toastFn();
-                choiseEmpFn(data);
-              }}>
-              <ModalCheckEmpList>
-                <Bold>{data.NAME}</Bold>
-                <Text>{data.MobileNo}</Text>
-                <AddCircleIcon size={20} />
-              </ModalCheckEmpList>
-            </Touchable>
-          ))}
+          {emplist?.length > 0 ? (
+            emplist?.map((data, index) => (
+              <Touchable
+                key={index}
+                onPress={() => {
+                  toastFn();
+                  choiseEmpFn(data);
+                }}>
+                <ModalCheckEmpList>
+                  <Bold>{data.NAME}</Bold>
+                  <Text>{data.MobileNo}</Text>
+                  <AddCircleIcon size={20} />
+                </ModalCheckEmpList>
+              </Touchable>
+            ))
+          ) : (
+            <EmpModalContainer>
+              <Text>선택가능한 직원이 없습니다.</Text>
+            </EmpModalContainer>
+          )}
         </ScrollView>
         {isToastVisible && (
           <ModalPopupArea>
