@@ -36,6 +36,7 @@ const Section = styled.View`
   border-radius: 20px;
   background-color: white;
   justify-content: center;
+  align-items: center;
   padding: 20px 0;
 `;
 
@@ -87,10 +88,10 @@ const PayBox = styled.View`
   height: 100px;
 `;
 
-const Line = styled.View`
+const GreyLine = styled.View`
   height: 1px;
-  width: ${wp('80%')};
-  margin-bottom: 10px;
+  width: ${wp('100%') - 80}px;
+  margin: 10px 0 20px 0;
   background-color: ${styleGuide.palette.borderColor};
 `;
 
@@ -183,7 +184,7 @@ export default ({
                 <ForwardIcon size={22} color={styleGuide.palette.arrowColor} />
               </DateArrow>
             </DateBox>
-            <Line />
+            <GreyLine />
             {loading ? (
               <PayBox>
                 <ActivityIndicator size="small" />

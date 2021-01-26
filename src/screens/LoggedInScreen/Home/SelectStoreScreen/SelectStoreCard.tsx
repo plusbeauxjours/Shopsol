@@ -86,7 +86,6 @@ export default ({
   workinglist,
   gotoHomeScreen,
 }) => {
-  console.log(data);
   return (
     <Touchable
       isStore={STORE == 1}

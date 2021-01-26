@@ -56,7 +56,7 @@ export default ({
   STORE_NAME,
   MEMBER_NAME,
   setSucessModalOpen,
-  workingModalOpen,
+  setWorkingModalOpen,
   setQrCameraModalOpen1,
   actionTYPE,
 }) => {
@@ -99,7 +99,7 @@ export default ({
         <Touchable
           onPress={() => {
             setSucessModalOpen(false);
-            workingModalOpen(false);
+            setWorkingModalOpen(false);
             setQrCameraModalOpen1(false);
           }}
           rippleColor={styleGuide.palette.rippleColor}

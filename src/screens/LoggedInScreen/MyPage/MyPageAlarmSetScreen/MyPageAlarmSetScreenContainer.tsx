@@ -44,7 +44,6 @@ export default () => {
   );
 
   const toggleAlarmState = (value, hasSuccessed) => {
-    console.log('toggleAlarmState', value);
     switch (value) {
       case 'All_PUSH':
         return setAllPushState(hasSuccessed ? !allPushState : All_PUSH);
@@ -66,7 +65,6 @@ export default () => {
   };
 
   const toggleAlarm = (value) => {
-    console.log('toggleAlarm', value);
     switch (value) {
       case 'All_PUSH':
         return dispatch(setAllPush(!All_PUSH));

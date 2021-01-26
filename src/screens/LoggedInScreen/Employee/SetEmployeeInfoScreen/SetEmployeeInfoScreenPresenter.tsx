@@ -230,7 +230,7 @@ const DateBoxText = styled.Text`
 `;
 
 const DatePickerContainer = styled.View`
-  width: ${utils.isAndroid() ? 300 : 330}px;
+  width: 300px;
   height: ${utils.isAndroid() ? 330 : 370}px;
   border-radius: 20px;
   padding: 20px;
@@ -677,12 +677,16 @@ export default ({
                   click2Transition,
                   0,
                   410 +
-                    (payCheck[0] ? 85 : 0) +
-                    (payCheck[0] && probation ? 255 : 0) +
+                    85 +
+                    (probation ? 255 : 0) +
+                    (payCheck[1] && -253) +
                     (deductionTypeCheck.indexOf(true) == 0 ? 480 : 260),
                 ),
               }}>
-              <InputCase style={{paddingTop: 40}} isFirst={true} height={410}>
+              <InputCase
+                style={{paddingTop: 40}}
+                isFirst={true}
+                height={payCheck[1] ? 157 : 410}>
                 <SelectArea style={{paddingHorizontal: 40}}>
                   <PayCheck
                     selection={0}
@@ -761,6 +765,7 @@ export default ({
                         </Row>
                       </Row>
                     </ColumnPayBox>
+                    <GreyText>&nbsp;</GreyText>
                   </>
                 )}
                 {payCheck[2] && (
@@ -880,7 +885,7 @@ export default ({
                     </ColumnPayBox>
                   </>
                 )}
-                {!payCheck[2] && (
+                {payCheck[0] && (
                   <>
                     <Line />
                     <ColumnPayBox style={{padding: 20}}>
@@ -947,169 +952,160 @@ export default ({
                   </>
                 )}
               </InputCase>
-              {payCheck[0] && (
-                <InputCase height={probation ? 340 : 85}>
-                  <WhiteSpace style={{height: 10}} />
-                  <Line />
-                  <Touchable
-                    onPress={() => {
-                      if (probation) {
-                        let periodvalue = JSON.parse(
-                          JSON.stringify(periodCheck),
-                        ).fill(false);
-                        let percentvalue = JSON.parse(
-                          JSON.stringify(percentCheck),
-                        ).fill(false);
-                        setProbationPeriod(moment());
-                        setProbationPercent('');
-                        setPeriodCheck(periodvalue);
-                        setPercentCheck(percentvalue);
-                        setPercentDirectInput('');
-                      }
-                      setProbation(!probation);
-                    }}>
-                    <SideBox>
-                      {!probation ? (
-                        <CheckBoxOnIcon size={22} />
-                      ) : (
-                        <CheckBoxOffIcon size={22} />
-                      )}
-                      <Text style={{marginLeft: 5}}>수습기간 없음</Text>
-                    </SideBox>
-                  </Touchable>
-                  {probation && (
-                    <>
-                      <WhiteSpace />
-                      <ColumnPayBox>
-                        <Row
-                          style={{
-                            width: wp('100%') - 80,
-                            paddingHorizontal: 20,
-                            justifyContent: 'space-between',
-                            alignItems: 'baseline',
-                          }}>
-                          <Row>
-                            <Text>수습종료일</Text>
-                            <Touchable
-                              onPress={() =>
-                                explainModal(
-                                  "급여계산 : 입력하신 '입사일'부터 '수습종료일'까지의 기간동안 '급여비율'에 따라 일할계산 됩니다.",
-                                )
-                              }>
-                              <HelpCircleIcon />
-                            </Touchable>
-                          </Row>
-                          <RequestBorderButton
-                            isChecked={probationPeriodSet}
-                            onPress={() => {
-                              setIsProbationPeriodModalVisible(true);
-                            }}>
-                            <RequestBorderText isChecked={probationPeriodSet}>
-                              {probationPeriodSet
-                                ? moment(probationPeriod).format(
-                                    'YYYY년 M월 D일',
-                                  )
-                                : '수습종료일 설정'}
-                            </RequestBorderText>
-                          </RequestBorderButton>
-                        </Row>
-                        <WhiteSpace />
-                        <Row
-                          style={{
-                            width: wp('100%') - 80,
-                            paddingHorizontal: 20,
-                            justifyContent: 'space-between',
-                          }}>
-                          <Text>수습기간 급여비율</Text>
-                          <RequestBorderButton
-                            isChecked={probationPercent != ''}
-                            onPress={() =>
-                              setIsProbationPercentModalVisible(true)
-                            }>
-                            <RequestBorderText
-                              isChecked={probationPercent != ''}>
-                              {probationPercent
-                                ? `${probationPercent}%`
-                                : '설정'}
-                            </RequestBorderText>
-                          </RequestBorderButton>
-                        </Row>
-                        <WhiteSpace />
-                        <GreyText style={{marginTop: 10, textAlign: 'center'}}>
-                          * 수습기간은 [입사일]인&nbsp;
-                          <Bold>
-                            {moment(startDay).format('YYYY년 M월 D일')}
-                          </Bold>
-                          부터
-                        </GreyText>
-                        <GreyText style={{marginTop: 10, textAlign: 'center'}}>
-                          [수습종료일]까지 적용됩니다.
-                        </GreyText>
-                      </ColumnPayBox>
-                    </>
-                  )}
-
-                  <Modal
-                    onRequestClose={() => {
-                      let value = JSON.parse(JSON.stringify(percentCheck));
-                      value.fill(false);
-                      setIsProbationPercentModalVisible(false);
-                      setPercentCheck(value);
+              <InputCase height={probation ? 340 : 85}>
+                <WhiteSpace style={{height: 10}} />
+                <Line />
+                <Touchable
+                  onPress={() => {
+                    if (probation) {
+                      let periodvalue = JSON.parse(
+                        JSON.stringify(periodCheck),
+                      ).fill(false);
+                      let percentvalue = JSON.parse(
+                        JSON.stringify(percentCheck),
+                      ).fill(false);
+                      setProbationPeriod(moment());
+                      setProbationPercent('');
+                      setPeriodCheck(periodvalue);
+                      setPercentCheck(percentvalue);
                       setPercentDirectInput('');
-                    }}
-                    onBackdropPress={() => {
-                      let value = JSON.parse(JSON.stringify(percentCheck));
-                      value.fill(false);
-                      setIsProbationPercentModalVisible(false);
-                      setPercentCheck(value);
-                      setPercentDirectInput('');
-                    }}
-                    isVisible={isProbationPercentModalVisible}
-                    style={{margin: 0, justifyContent: 'flex-end'}}
-                    avoidKeyboard={true}>
-                    <ModalContainer>
-                      <TitleText>급여비율 선택(%)</TitleText>
-                      <ModalBox>
-                        <RenderProbation2
-                          rowData={[100, 90, 80, 70]}
-                          rowNum={1}
-                          percentCheck={percentCheck}
-                          setPercentCheck={setPercentCheck}
-                          percentDirectInput={percentDirectInput}
-                          setPercentDirectInput={setPercentDirectInput}
-                        />
-                        <RenderProbation2
-                          rowData={[60, 50, 'directInput']}
-                          rowNum={2}
-                          percentCheck={percentCheck}
-                          setPercentCheck={setPercentCheck}
-                          percentDirectInput={percentDirectInput}
-                          setPercentDirectInput={setPercentDirectInput}
-                        />
-                      </ModalBox>
-                    </ModalContainer>
-                    <ModalFooter>
-                      <ModalButton
-                        onPress={() => {
-                          let value = JSON.parse(JSON.stringify(percentCheck));
-                          value.fill(false);
-                          setIsProbationPercentModalVisible(false);
-                          setPercentCheck(value);
-                          setPercentDirectInput('');
+                    }
+                    setProbation(!probation);
+                  }}>
+                  <SideBox>
+                    {!probation ? (
+                      <CheckBoxOnIcon size={22} />
+                    ) : (
+                      <CheckBoxOffIcon size={22} />
+                    )}
+                    <Text style={{marginLeft: 5}}>수습기간 없음</Text>
+                  </SideBox>
+                </Touchable>
+                {probation && (
+                  <>
+                    <WhiteSpace />
+                    <ColumnPayBox>
+                      <Row
+                        style={{
+                          width: wp('100%') - 80,
+                          paddingHorizontal: 20,
+                          justifyContent: 'space-between',
+                          alignItems: 'baseline',
                         }}>
-                        <NameText style={{color: styleGuide.palette.primary}}>
-                          닫기
-                        </NameText>
-                      </ModalButton>
-                      <ModalButton
-                        style={{backgroundColor: styleGuide.palette.primary}}
-                        onPress={() => checkDirectInput2()}>
-                        <NameText style={{color: 'white'}}>확인</NameText>
-                      </ModalButton>
-                    </ModalFooter>
-                  </Modal>
-                </InputCase>
-              )}
+                        <Row>
+                          <Text>수습종료일</Text>
+                          <Touchable
+                            onPress={() =>
+                              explainModal(
+                                "급여계산 : 입력하신 '입사일'부터 '수습종료일'까지의 기간동안 '급여비율'에 따라 일할계산 됩니다.",
+                              )
+                            }>
+                            <HelpCircleIcon />
+                          </Touchable>
+                        </Row>
+                        <RequestBorderButton
+                          isChecked={probationPeriodSet}
+                          onPress={() => {
+                            setIsProbationPeriodModalVisible(true);
+                          }}>
+                          <RequestBorderText isChecked={probationPeriodSet}>
+                            {probationPeriodSet
+                              ? moment(probationPeriod).format('YYYY년 M월 D일')
+                              : '수습종료일 설정'}
+                          </RequestBorderText>
+                        </RequestBorderButton>
+                      </Row>
+                      <WhiteSpace />
+                      <Row
+                        style={{
+                          width: wp('100%') - 80,
+                          paddingHorizontal: 20,
+                          justifyContent: 'space-between',
+                        }}>
+                        <Text>수습기간 급여비율</Text>
+                        <RequestBorderButton
+                          isChecked={probationPercent != ''}
+                          onPress={() =>
+                            setIsProbationPercentModalVisible(true)
+                          }>
+                          <RequestBorderText isChecked={probationPercent != ''}>
+                            {probationPercent ? `${probationPercent}%` : '설정'}
+                          </RequestBorderText>
+                        </RequestBorderButton>
+                      </Row>
+                      <WhiteSpace />
+                      <GreyText style={{marginTop: 10, textAlign: 'center'}}>
+                        * 수습기간은 [입사일]인&nbsp;
+                        <Bold>{moment(startDay).format('YYYY년 M월 D일')}</Bold>
+                        부터
+                      </GreyText>
+                      <GreyText style={{marginTop: 10, textAlign: 'center'}}>
+                        [수습종료일]까지 적용됩니다.
+                      </GreyText>
+                    </ColumnPayBox>
+                  </>
+                )}
+
+                <Modal
+                  onRequestClose={() => {
+                    let value = JSON.parse(JSON.stringify(percentCheck));
+                    value.fill(false);
+                    setIsProbationPercentModalVisible(false);
+                    setPercentCheck(value);
+                    setPercentDirectInput('');
+                  }}
+                  onBackdropPress={() => {
+                    let value = JSON.parse(JSON.stringify(percentCheck));
+                    value.fill(false);
+                    setIsProbationPercentModalVisible(false);
+                    setPercentCheck(value);
+                    setPercentDirectInput('');
+                  }}
+                  isVisible={isProbationPercentModalVisible}
+                  style={{margin: 0, justifyContent: 'flex-end'}}
+                  avoidKeyboard={true}>
+                  <ModalContainer>
+                    <TitleText>급여비율 선택(%)</TitleText>
+                    <ModalBox>
+                      <RenderProbation2
+                        rowData={[100, 90, 80, 70]}
+                        rowNum={1}
+                        percentCheck={percentCheck}
+                        setPercentCheck={setPercentCheck}
+                        percentDirectInput={percentDirectInput}
+                        setPercentDirectInput={setPercentDirectInput}
+                      />
+                      <RenderProbation2
+                        rowData={[60, 50, 'directInput']}
+                        rowNum={2}
+                        percentCheck={percentCheck}
+                        setPercentCheck={setPercentCheck}
+                        percentDirectInput={percentDirectInput}
+                        setPercentDirectInput={setPercentDirectInput}
+                      />
+                    </ModalBox>
+                  </ModalContainer>
+                  <ModalFooter>
+                    <ModalButton
+                      onPress={() => {
+                        let value = JSON.parse(JSON.stringify(percentCheck));
+                        value.fill(false);
+                        setIsProbationPercentModalVisible(false);
+                        setPercentCheck(value);
+                        setPercentDirectInput('');
+                      }}>
+                      <NameText style={{color: styleGuide.palette.primary}}>
+                        닫기
+                      </NameText>
+                    </ModalButton>
+                    <ModalButton
+                      style={{backgroundColor: styleGuide.palette.primary}}
+                      onPress={() => checkDirectInput2()}>
+                      <NameText style={{color: 'white'}}>확인</NameText>
+                    </ModalButton>
+                  </ModalFooter>
+                </Modal>
+              </InputCase>
               <InputCase
                 style={{paddingTop: 10}}
                 isFirst={true}

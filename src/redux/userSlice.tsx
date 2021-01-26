@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import api from '~/constants/LoggedInApi';
 import {removeSTORE_NAME} from './storeSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
+import {closeSTORE_DATA} from '~/redux/storeSlice';
 
 const userSlice = createSlice({
   name: 'user',
@@ -115,6 +116,15 @@ const userSlice = createSlice({
         DEVICE_PLATFORM,
       };
     },
+    removeSTORE_ON_STORE_LIST(state, action) {
+      const {payload: STORE_SEQ} = action;
+      return {
+        ...state,
+        STORELIST_DATA: state.STORELIST_DATA.filter(
+          (i) => i.STORE_SEQ !== STORE_SEQ,
+        ),
+      };
+    },
     setDEVICE_INFO(state, action) {
       const {
         payload: {
@@ -144,6 +154,7 @@ export const {
   setLOGIN,
   setLOGOUT,
   setDEVICE_PLATFORM,
+  removeSTORE_ON_STORE_LIST,
   setDEVICE_INFO,
   addCUSTOM_MENU_EMP,
   removeCUSTOM_MENU_EMP,
@@ -178,6 +189,15 @@ export const getSTORELIST_DATA = () => async (dispatch, getState) => {
     console.log(e);
   } finally {
     dispatch(setSplashVisible({visible: false}));
+  }
+};
+
+export const closeSTORE_ON_STORE_LIST = (STORE_SEQ) => async (dispatch) => {
+  try {
+    dispatch(removeSTORE_ON_STORE_LIST(STORE_SEQ));
+    dispatch(closeSTORE_DATA());
+  } catch (e) {
+    console.log(e);
   }
 };
 

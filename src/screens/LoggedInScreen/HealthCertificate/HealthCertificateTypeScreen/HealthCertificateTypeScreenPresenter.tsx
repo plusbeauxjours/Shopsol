@@ -150,7 +150,7 @@ export default ({
                         ? {
                             textDecorationLine: 'underline',
                             marginTop: 5,
-                            color: 'red',
+                            color: '#FF3D3D',
                           }
                         : {marginTop: 5, color: styleGuide.palette.greyColor}
                     }>
@@ -227,7 +227,7 @@ export default ({
                           ? {
                               textDecorationLine: 'underline',
                               marginTop: 5,
-                              color: 'red',
+                              color: '#FF3D3D',
                             }
                           : {marginTop: 5, color: '#7e7c7c'}
                       }>

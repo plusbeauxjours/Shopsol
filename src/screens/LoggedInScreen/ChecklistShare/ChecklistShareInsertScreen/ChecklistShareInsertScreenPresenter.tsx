@@ -191,7 +191,7 @@ const PictureBorderBox = styled.View`
 `;
 
 const DatePickerContainer = styled.View`
-  width: ${utils.isAndroid() ? 300 : 330}px;
+  width: 300px;
   height: ${utils.isAndroid() ? 330 : 370}px;
   border-radius: 20px;
   padding: 20px;

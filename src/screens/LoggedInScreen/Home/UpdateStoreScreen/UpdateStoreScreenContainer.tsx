@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import UpdateStoreScreenPresenter from './UpdateStoreScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {getSTORELIST_DATA} from '~/redux/userSlice';
+import {closeSTORE_ON_STORE_LIST} from '~/redux/userSlice';
 import api from '~/constants/LoggedInApi';
 import {closeSTORE_DATA, updateSTORE} from '~/redux/storeSlice';
 
@@ -183,8 +183,7 @@ export default ({route: {params}}) => {
         index: 0,
         routes: [{name: 'SelectStoreScreen'}],
       });
-      dispatch(closeSTORE_DATA());
-      dispatch(getSTORELIST_DATA());
+      dispatch(closeSTORE_ON_STORE_LIST(STORE_SEQ));
     } else {
       alertModal('수정하였습니다.');
       dispatch(

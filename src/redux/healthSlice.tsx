@@ -125,7 +125,6 @@ export const getSTORE_HEALTH_EMP_LIST = () => async (dispatch, getState) => {
       STORE,
       MEMBER_SEQ,
     });
-    console.log(data);
     if (data.message === 'SUCCESS') {
       dispatch(setHEALTH_EMP_LIST({HEALTH_EMP_LIST: data.result, STORE_SEQ}));
     }

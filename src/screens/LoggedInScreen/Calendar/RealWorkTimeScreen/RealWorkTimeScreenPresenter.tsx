@@ -121,7 +121,7 @@ const SideText = styled.Text`
 `;
 
 const DatePickerContainer = styled.View`
-  width: ${utils.isAndroid() ? 300 : 330}px;
+  width: 300px;
   height: ${utils.isAndroid() ? 330 : 370}px;
   border-radius: 20px;
   padding: 20px;
@@ -175,16 +175,16 @@ const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
   align-items: center;
   justify-content: center;
   border-color: ${(props) =>
-    props.isChecked ? styleGuide.palette.primary : 'transparent'};
-  border-width: ${(props) => (props.isChecked ? 1 : 0)}px;
-  background-color: ${(props) =>
     props.isChecked ? 'transparent' : styleGuide.palette.primary};
+  border-width: ${(props) => (props.isChecked ? 0 : 1)}px;
+  background-color: ${(props) =>
+    props.isChecked ? styleGuide.palette.primary : 'transparent'};
   border-radius: 20px;
   height: 32px;
 `;
 
 const RequestBorderText = styled.Text<IsChecked>`
-  color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
+  color: ${(props) => (props.isChecked ? 'white' : styleGuide.palette.primary)};
 `;
 
 export default ({
@@ -345,13 +345,16 @@ export default ({
       <RowSpaceTouchable>
         <SideText>출근시간</SideText>
         <RequestBorderButton
-          isChecked={!noStart}
+          isChecked={
+            noStart || (!START_TIME && !UPDATED_START && !startTimeSet)
+          }
           onPress={() => setIsStartTimeModalVisible(true)}>
-          <RequestBorderText isChecked={!noStart}>
-            {noStart
+          <RequestBorderText
+            isChecked={
+              noStart || (!START_TIME && !UPDATED_START && !startTimeSet)
+            }>
+            {noStart || (!START_TIME && !UPDATED_START && !startTimeSet)
               ? '미출근'
-              : !START_TIME && !UPDATED_START && !startTimeSet
-              ? '00:00'
               : moment(startTime).format('kk:mm')}
           </RequestBorderText>
         </RequestBorderButton>
@@ -360,13 +363,12 @@ export default ({
       <RowSpaceTouchable>
         <SideText>퇴근시간</SideText>
         <RequestBorderButton
-          isChecked={!noEnd}
+          isChecked={noEnd || (!END_TIME && !UPDATED_END && !endTimeSet)}
           onPress={() => setIsEndTimeModalVisible(true)}>
-          <RequestBorderText isChecked={!noEnd}>
-            {noEnd
+          <RequestBorderText
+            isChecked={noEnd || (!END_TIME && !UPDATED_END && !endTimeSet)}>
+            {noEnd || (!END_TIME && !UPDATED_END && !endTimeSet)
               ? '미퇴근'
-              : !END_TIME && !UPDATED_END && !endTimeSet
-              ? '00:00'
               : moment(endTime).format('kk:mm')}
           </RequestBorderText>
         </RequestBorderButton>

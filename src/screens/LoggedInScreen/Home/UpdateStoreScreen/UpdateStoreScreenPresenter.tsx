@@ -239,21 +239,10 @@ const SubmitBtnText = styled.Text`
   padding-top: 5px;
 `;
 
-const InputCase = styled.View`
-  margin-top: 20px;
-`;
-
 const DeleteBtn = styled.TouchableOpacity`
-  height: 20px;
+  margin: 50px 0;
   align-items: center;
   justify-content: center;
-`;
-
-const DeleteBtnText = styled.Text`
-  font-size: ${styleGuide.fontSize.large}px;
-  font-weight: ${styleGuide.fontWeight.bold};
-  color: ${styleGuide.palette.redColor};
-  text-decoration-line: underline;
 `;
 
 export default ({
@@ -746,14 +735,20 @@ export default ({
                   storeCategoryType !== '분류 선택'
                 }
               />
-              <InputCase>
-                <DeleteBtn
-                  onPress={() =>
-                    confirmModal('사업장을 폐업상태로 변경하시겠습니까?')
-                  }>
-                  <DeleteBtnText>사업장 폐업하기</DeleteBtnText>
-                </DeleteBtn>
-              </InputCase>
+              <DeleteBtn
+                onPress={() =>
+                  confirmModal('사업장을 폐업상태로 변경하시겠습니까?')
+                }>
+                <Text
+                  style={{
+                    fontSize: styleGuide.fontSize.large,
+                    fontWeight: '600',
+                    color: '#FF3D3D',
+                    textDecorationLine: 'underline',
+                  }}>
+                  사업장 폐업하기
+                </Text>
+              </DeleteBtn>
               <WhiteSpace />
             </>
           )}

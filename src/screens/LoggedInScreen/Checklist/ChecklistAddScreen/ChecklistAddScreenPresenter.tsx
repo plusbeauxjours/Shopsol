@@ -202,7 +202,7 @@ const GreyText = styled.Text<IsError>`
 `;
 
 const DatePickerContainer = styled.View`
-  width: ${utils.isAndroid() ? 300 : 330}px;
+  width: 300px;
   height: ${utils.isAndroid() ? 330 : 370}px;
   border-radius: 20px;
   padding: 20px;
@@ -471,7 +471,15 @@ export default ({
             onPress={() =>
               confirmModal('', '체크리스트를 삭제하시겠습니까?', '취소', '삭제')
             }>
-            <DeleteButtonText>체크리스트 삭제하기</DeleteButtonText>
+            <Text
+              style={{
+                fontSize: styleGuide.fontSize.large,
+                fontWeight: '600',
+                color: '#FF3D3D',
+                textDecorationLine: 'underline',
+              }}>
+              체크리스트 삭제하기
+            </Text>
           </DeleteButton>
         )}
       </ScrollView>

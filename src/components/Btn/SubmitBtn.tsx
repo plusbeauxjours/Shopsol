@@ -13,7 +13,7 @@ interface IIsBefore {
 }
 
 const SubmitButton = styled(Ripple)<IIsBefore>`
-  width: ${wp('100%') - 40};
+  width: ${wp('100%') - 40}px;
   height: 60px;
   align-items: center;
   justify-content: center;

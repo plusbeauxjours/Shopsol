@@ -7,7 +7,6 @@ import RealWorkTimeScreenPresenter from './RealWorkTimeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {updateSCHEDULE} from '~/redux/calendarSlice';
 import api from '~/constants/LoggedInApi';
-import {cos} from 'react-native-reanimated';
 
 export default ({route: {params}}) => {
   const navigation = useNavigation();
@@ -37,8 +36,6 @@ export default ({route: {params}}) => {
 
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
-  console.log(UPDATED_START, ATTENDANCE_TIME, START_TIME, START);
-  console.log(UPDATED_END, WORK_OFF_TIME, END_TIME, END);
   const initAttendanceTime = UPDATED_START
     ? moment(UPDATED_START?.substring(0, 5), 'kk:mm')
     : ATTENDANCE_TIME
@@ -116,22 +113,33 @@ export default ({route: {params}}) => {
             EMP_ID,
             START_TIME,
             END_TIME,
-            UPDATED_START: noStart ? null : moment(startTime).format('kk:mm'),
-            UPDATED_END: noEnd ? null : moment(endTime).format('kk:mm'),
+            UPDATED_START:
+              noStart || (!START_TIME && !UPDATED_START && !startTimeSet)
+                ? null
+                : moment(startTime).format('kk:mm'),
+            UPDATED_END:
+              noEnd || (!END_TIME && !UPDATED_END && !endTimeSet)
+                ? null
+                : moment(endTime).format('kk:mm'),
           }),
         );
         const {data} = await api.createSchedule({
           STORE_ID: STORE_SEQ,
           EMP_ID,
           EMP_NAME: NAME,
-          START: noStart ? '-1' : moment(startTime).format('kk:mm'),
-          END: noEnd ? '-1' : moment(endTime).format('kk:mm'),
+          START:
+            noStart || (!START_TIME && !UPDATED_START && !startTimeSet)
+              ? '-1'
+              : moment(startTime).format('kk:mm'),
+          END:
+            noEnd || (!END_TIME && !UPDATED_END && !endTimeSet)
+              ? '-1'
+              : moment(endTime).format('kk:mm'),
           DATE: date,
           TYPE: '0',
           SCHEDULETYPE: '0',
           CHANGE: '2',
         });
-        console.log(data);
       } catch (e) {
         console.log(e);
       }

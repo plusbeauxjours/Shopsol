@@ -81,7 +81,7 @@ export default ({
           </Row>
           {data?.RESULT_DATE ? (
             <InfoText
-              color={dday <= 0 ? '#CE0505' : '#7e7c7c'}
+              color={dday <= 0 ? '#FF3D3D' : '#7e7c7c'}
               style={dday <= 0 && {textDecorationLine: 'underline'}}>
               검진일 : {moment(data?.RESULT_DATE).format('YYYY.MM.DD')} (갱신 D
               {dday <= 0 ? '+' : '-'}
@@ -89,7 +89,7 @@ export default ({
             </InfoText>
           ) : (
             <InfoText
-              color={'#CE0505'}
+              color={'#FF3D3D'}
               style={{textDecorationLine: 'underline'}}>
               보건증 미등록
             </InfoText>
@@ -128,13 +128,13 @@ export default ({
           </Row>
           {data?.RESULT_DATE ? (
             <InfoText
-              color={dday <= 0 ? '#CE0505' : '#7e7c7c'}
+              color={dday <= 0 ? '#FF3D3D' : '#7e7c7c'}
               style={dday <= 0 && {textDecorationLine: 'underline'}}>
               검진일 : {moment(data?.RESULT_DATE).format('YYYY.MM.DD')}
             </InfoText>
           ) : (
             <InfoText
-              color={'#CE0505'}
+              color={'#FF3D3D'}
               style={{textDecorationLine: 'underline'}}>
               보건증 미등록
             </InfoText>

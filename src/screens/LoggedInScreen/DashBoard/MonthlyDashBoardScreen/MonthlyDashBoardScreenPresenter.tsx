@@ -806,15 +806,6 @@ export default ({
                           : `${moment(toDay).format('M')}월 조퇴률`}
                       </TitleText>
                       <CardGreyLine />
-                      {console.log(
-                        'month',
-                        totalEARLY_COUNT / totalSUB_WORKING_EMP,
-                      )}
-                      {console.log(
-                        'month',
-                        totalEARLY_COUNT,
-                        totalSUB_WORKING_EMP,
-                      )}
                       <DonutCard
                         percentage={Math.ceil(
                           (totalEARLY_COUNT / totalSUB_WORKING_EMP) * 100,

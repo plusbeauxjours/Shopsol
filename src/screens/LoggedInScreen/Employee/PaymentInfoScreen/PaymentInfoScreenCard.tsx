@@ -53,7 +53,6 @@ const IconContainer = styled.View`
 
 export default ({MANAGER_CALLED, data, STORE, STORE_SEQ, STOREPAY_SHOW}) => {
   const navigation = useNavigation();
-  console.log(data);
   const gotoPayInfo = () => {
     navigation.navigate('EmpPayInfoScreen', {
       STORE_SEQ,

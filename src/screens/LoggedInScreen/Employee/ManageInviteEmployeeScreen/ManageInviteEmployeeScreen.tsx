@@ -112,6 +112,7 @@ export default () => {
   useEffect(() => {
     dispatch(getRESPONSE_EMPLOYEE());
   }, []);
+  
   return (
     <BackGround>
       <ScrollView

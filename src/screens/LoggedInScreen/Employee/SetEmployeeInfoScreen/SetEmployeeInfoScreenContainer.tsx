@@ -436,7 +436,6 @@ export default ({route: {params}}) => {
     //     }),
     //   );
     const {data} = await api.getEmp(EMP_SEQ);
-    console.log(data);
     if (data.message === 'SUCCESS') {
       let payChecked = JSON.parse(JSON.stringify(payCheck)); // 급여 유형
       payChecked.fill(false);

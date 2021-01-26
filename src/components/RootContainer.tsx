@@ -78,7 +78,6 @@ export default () => {
         const onNetwork = await isNetworkAvailable();
         if (!onNetwork) {
           alertModal('연결에 실패하였습니다. 네트워크 상태를 확인하세요.');
-          console.log(navigationRef);
           navigationRef.current.goBack();
         }
         const previousRouteName = routeNameRef.current;
