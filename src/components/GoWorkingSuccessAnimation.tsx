@@ -72,7 +72,7 @@ export default ({
           zIndex: 15,
         }}
         source={{
-          uri: `http://133.186.210.223/uploads/${AVATAR}`,
+          uri: `http://shopsolapi.shop-sol.com/uploads/${AVATAR}`,
           headers: {Authorization: 'someAuthToken'},
           priority: FastImage.priority.low,
         }}

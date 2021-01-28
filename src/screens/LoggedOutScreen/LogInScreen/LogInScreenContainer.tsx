@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import LogInScreenPresenter from './LogInScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 
-import {setUSER, setMOBILE_NO, userLogin} from '~/redux/userSlice';
+import {setUSER} from '~/redux/userSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
@@ -62,9 +62,7 @@ export default () => {
         });
         switch (data.message) {
           case 'SUCCESS':
-            dispatch(setUSER(data.result));
-            dispatch(setMOBILE_NO(mobileNo));
-            dispatch(userLogin());
+            dispatch(setUSER({userInfo: data.result, mobileNo}));
             return navigation.reset({
               index: 0,
               routes: [

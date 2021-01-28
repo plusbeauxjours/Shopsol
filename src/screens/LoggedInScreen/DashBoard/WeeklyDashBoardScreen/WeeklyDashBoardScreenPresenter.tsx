@@ -362,7 +362,7 @@ export default ({
               borderRadius: 20,
             }}
             source={{
-              uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+              uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.low,
             }}
@@ -770,7 +770,7 @@ export default ({
                                       borderRadius: 20,
                                     }}
                                     source={{
-                                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                                       headers: {Authorization: 'someAuthToken'},
                                       priority: FastImage.priority.low,
                                     }}
@@ -858,7 +858,7 @@ export default ({
                                       borderRadius: 20,
                                     }}
                                     source={{
-                                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                                       headers: {Authorization: 'someAuthToken'},
                                       priority: FastImage.priority.low,
                                     }}
@@ -946,7 +946,7 @@ export default ({
                                       borderRadius: 20,
                                     }}
                                     source={{
-                                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                                       headers: {Authorization: 'someAuthToken'},
                                       priority: FastImage.priority.low,
                                     }}
@@ -1020,7 +1020,7 @@ export default ({
                                   borderRadius: 20,
                                 }}
                                 source={{
-                                  uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                                  uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                                   headers: {Authorization: 'someAuthToken'},
                                   priority: FastImage.priority.low,
                                 }}
@@ -1106,7 +1106,7 @@ export default ({
                                   borderRadius: 20,
                                 }}
                                 source={{
-                                  uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                                  uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                                   headers: {Authorization: 'someAuthToken'},
                                   priority: FastImage.priority.low,
                                 }}
@@ -1161,7 +1161,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -1215,7 +1215,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -1269,7 +1269,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -1323,7 +1323,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}
@@ -1377,7 +1377,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://133.186.210.223/uploads/${i.IMAGE}`,
+                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
                       headers: {Authorization: 'someAuthToken'},
                       priority: FastImage.priority.low,
                     }}

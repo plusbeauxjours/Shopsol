@@ -179,7 +179,7 @@ export default ({route: {params}}) => {
       for (let i = 0; i < allimg.length; i++) {
         imgarr.push(allimg[i]);
         modalImgarr.push({
-          url: `http://133.186.210.223/uploads/${allimg[i]}`,
+          url: `http://shopsolapi.shop-sol.com/uploads/${allimg[i]}`,
         });
       }
       setModalImgarr(modalImgarr);

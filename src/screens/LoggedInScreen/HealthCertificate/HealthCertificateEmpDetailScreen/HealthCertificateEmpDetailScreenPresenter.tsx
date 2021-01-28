@@ -181,7 +181,7 @@ export default ({
     const navigation = useNavigation();
     const images = [
       {
-        url: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+        url: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
       },
     ];
 
@@ -308,7 +308,7 @@ export default ({
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
                     EDUCATION_DATE:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
-                    IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+                    IMG_LIST: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                     STORE_HEALTH_SEQ:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_HEALTH_SEQ,
                     SELECT_INDEX,
@@ -327,7 +327,7 @@ export default ({
                     RESULT_DATE: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
                     NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
-                    IMG_LIST: `http://133.186.210.223/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+                    IMG_LIST: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
                     SELECT_INDEX,
                   });
                 }}>

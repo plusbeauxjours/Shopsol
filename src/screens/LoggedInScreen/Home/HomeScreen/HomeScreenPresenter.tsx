@@ -591,7 +591,7 @@ export default ({
           <FastImage
             style={{width: 40, height: 40, borderRadius: 20, marginRight: 10}}
             source={{
-              uri: `http://133.186.210.223/uploads/${AVATAR}`,
+              uri: `http://shopsolapi.shop-sol.com/uploads/${AVATAR}`,
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.low,
             }}
@@ -1575,7 +1575,7 @@ export default ({
               <ShowPictureModalImage>
                 <FastImage
                   style={{width: '100%', height: '100%'}}
-                  source={{uri: 'http://133.186.210.223/' + QR}}
+                  source={{uri: 'http://shopsolapi.shop-sol.com/' + QR}}
                   resizeMode={FastImage.resizeMode.contain}
                 />
               </ShowPictureModalImage>
@@ -1623,7 +1623,7 @@ export default ({
             <ShowPictureModalImage>
               <FastImage
                 style={{width: '100%', height: '100%'}}
-                source={{uri: 'http://133.186.210.223/' + QR}}
+                source={{uri: 'http://shopsolapi.shop-sol.com/' + QR}}
                 resizeMode={FastImage.resizeMode.contain}
               />
             </ShowPictureModalImage>

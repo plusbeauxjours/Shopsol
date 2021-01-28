@@ -66,7 +66,7 @@ export default ({
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
           source={{
-            uri: `http://133.186.210.223/uploads/${data?.IMAGE}`,
+            uri: `http://shopsolapi.shop-sol.com/uploads/${data?.IMAGE}`,
             headers: {Authorization: 'someAuthToken'},
             priority: FastImage.priority.low,
           }}
@@ -113,7 +113,7 @@ export default ({
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
           source={{
-            uri: `http://133.186.210.223/uploads/${data?.IMAGE}`,
+            uri: `http://shopsolapi.shop-sol.com/uploads/${data?.IMAGE}`,
             headers: {Authorization: 'someAuthToken'},
             priority: FastImage.priority.low,
           }}

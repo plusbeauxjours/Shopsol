@@ -5,7 +5,8 @@ const callApi = async (method: string, path: string, data?: any) => {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://133.186.210.223:3003/api';
+  // const baseUrl = 'http://shopsolapi.shop-sol.com:3003/api';
+  const baseUrl = 'http://awsss.shop-sol.com:10001/api';
   const fullUrl = `${baseUrl}${path}`;
   console.log(method, fullUrl, data, {headers});
   if (method === 'get' || method === 'delete') {
@@ -20,7 +21,8 @@ const oldApi = async (method: string, path: string, data?: any) => {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://133.186.210.223:80/api/v2';
+  // const baseUrl = 'http://shopsolapi.shop-sol.com:80/api/v2';
+  const baseUrl = 'http://awsss.shop-sol.com:80/api/v2';
   const fullUrl = `${baseUrl}${path}`;
   console.log(method, fullUrl, data, {headers});
   if (method === 'get' || method === 'delete') {

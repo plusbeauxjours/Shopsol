@@ -147,7 +147,9 @@ export default ({alert}) => {
       isVisible={alert.visible}>
       {alert.image && (
         <ImageViewer
-          imageUrls={[{url: 'http://133.186.210.223/uploads/' + alert.image}]}
+          imageUrls={[
+            {url: 'http://shopsolapi.shop-sol.com/uploads/' + alert.image},
+          ]}
           onSwipeDown={() => dispatch(setAlertVisible(false))}
           backgroundColor={'transparent'}
           saveToLocalByLongPress={false}

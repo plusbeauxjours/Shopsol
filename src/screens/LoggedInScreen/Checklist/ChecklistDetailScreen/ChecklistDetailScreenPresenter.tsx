@@ -295,10 +295,10 @@ export default ({
             if (imageList[0] != '') {
               for (const imageName of imageList) {
                 cameraPictureList.push(
-                  `http://133.186.210.223/uploads/${imageName}`,
+                  `http://shopsolapi.shop-sol.com/uploads/${imageName}`,
                 );
                 modalImgarr.push({
-                  url: `http://133.186.210.223/uploads/${imageName}`,
+                  url: `http://shopsolapi.shop-sol.com/uploads/${imageName}`,
                 });
               }
             }

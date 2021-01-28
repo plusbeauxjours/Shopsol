@@ -57,13 +57,6 @@ const userSlice = createSlice({
         MEMBER_NAME,
       };
     },
-    setMOBILE_NO(state, action) {
-      const {payload: MOBILE_NO} = action;
-      return {
-        ...state,
-        MOBILE_NO,
-      };
-    },
     setSTORELIST_DATA(state, action) {
       const {payload: STORELIST_DATA} = action;
       return {
@@ -79,7 +72,9 @@ const userSlice = createSlice({
       };
     },
     setUSER(state, action) {
-      const {payload: userInfo} = action;
+      const {
+        payload: {userInfo, mobileNo},
+      } = action;
       return {
         ...state,
         MEMBER_SEQ: userInfo.MEMBER_SEQ,
@@ -88,12 +83,7 @@ const userSlice = createSlice({
         STORE: userInfo.STORE,
         TYPE: userInfo.TYPE,
         AVATAR: userInfo.images[0].IMAGE,
-        MOBILE_NO: userInfo.MobileNo,
-      };
-    },
-    setLOGIN(state) {
-      return {
-        ...state,
+        MOBILE_NO: mobileNo,
         isLoggedIn: true,
       };
     },
@@ -147,11 +137,9 @@ const userSlice = createSlice({
 
 export const {
   setMEMBER_NAME,
-  setMOBILE_NO,
   setSTORELIST_DATA,
   setSTORE,
   setUSER,
-  setLOGIN,
   setLOGOUT,
   setDEVICE_PLATFORM,
   removeSTORE_ON_STORE_LIST,
@@ -159,14 +147,6 @@ export const {
   addCUSTOM_MENU_EMP,
   removeCUSTOM_MENU_EMP,
 } = userSlice.actions;
-
-export const userLogin = () => async (dispatch) => {
-  try {
-    dispatch(setLOGIN());
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 export const userLogout = () => async (dispatch) => {
   dispatch(removeSTORE_NAME());

@@ -189,6 +189,7 @@ export default ({route: {params}}) => {
       onRefresh={onRefresh}
       gotoAddStore={gotoAddStore}
       gotoHomeScreen={gotoHomeScreen}
+      visible={visible}
     />
   );
 };

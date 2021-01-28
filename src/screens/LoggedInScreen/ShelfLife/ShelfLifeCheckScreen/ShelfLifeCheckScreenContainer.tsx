@@ -38,11 +38,11 @@ export default () => {
   };
 
   const defaultData = [
-    {name: '당일', color: styleGuide.palette.donutColor, items: []},
-    {name: '1일전', color: styleGuide.palette.donutColor, items: []},
-    {name: '1주전', color: '#ccc', items: []},
-    {name: '2주전', color: '#ccc', items: []},
-    {name: '1달전', color: '#ccc', items: []},
+    {name: 'd-day', color: styleGuide.palette.donutColor, items: []},
+    {name: 'd-1', color: styleGuide.palette.donutColor, items: []},
+    {name: 'd-7', color: '#ccc', items: []},
+    {name: 'd-14', color: '#ccc', items: []},
+    {name: 'd-30', color: '#ccc', items: []},
   ];
 
   const defaultTabs = defaultData.map(({name, color}) => ({
@@ -243,7 +243,7 @@ export default () => {
 
       setData([
         {
-          titleWord: '당일',
+          titleWord: 'd-day',
           backgroundColor: 'white',
           textColor: styleGuide.palette.donutColor,
           totalQTY: ddayCount ?? 0,
@@ -253,7 +253,7 @@ export default () => {
             : Math.ceil((ddayDone / ddayCount) * 100),
         },
         {
-          titleWord: '1일전',
+          titleWord: 'd-1',
           backgroundColor: 'white',
           textColor: styleGuide.palette.donutColor,
           totalQTY: dayCount ?? 0,
@@ -263,7 +263,7 @@ export default () => {
             : Math.ceil((dayDone / dayCount) * 100),
         },
         {
-          titleWord: '1주전',
+          titleWord: 'd-7',
           backgroundColor: 'white',
           textColor: styleGuide.palette.lightGreyColor,
           totalQTY: weekCount ?? 0,
@@ -273,7 +273,7 @@ export default () => {
             : Math.ceil((weekDone / weekCount) * 100),
         },
         {
-          titleWord: '2주전',
+          titleWord: 'd-14',
           backgroundColor: 'white',
           textColor: styleGuide.palette.lightGreyColor,
           totalQTY: weeksCount ?? 0,
@@ -283,7 +283,7 @@ export default () => {
             : Math.ceil((weeksDone / weeksCount) * 100),
         },
         {
-          titleWord: '1달전',
+          titleWord: 'd-30',
           backgroundColor: 'white',
           textColor: styleGuide.palette.lightGreyColor,
           totalQTY: monthCount ?? 0,

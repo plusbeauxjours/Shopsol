@@ -144,7 +144,8 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                     item.IMG_LIST.includes('http://') ||
                     item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
-                      : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
+                      : 'http://shopsolapi.shop-sol.com/uploads/' +
+                        item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
@@ -177,7 +178,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                     item?.IMG_LIST?.includes('http://') ||
                     item?.IMG_LIST?.includes('content://')
                   ? item.IMG_LIST
-                  : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
+                  : 'http://shopsolapi.shop-sol.com/uploads/' + item.IMG_LIST,
                 onRefresh,
               });
             }, 100)
@@ -218,7 +219,8 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                     item.IMG_LIST.includes('http://') ||
                     item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
-                      : 'http://133.186.210.223/uploads/' + item.IMG_LIST,
+                      : 'http://shopsolapi.shop-sol.com/uploads/' +
+                        item.IMG_LIST,
                   headers: {Authorization: 'someAuthToken'},
                   priority: FastImage.priority.low,
                 }}
