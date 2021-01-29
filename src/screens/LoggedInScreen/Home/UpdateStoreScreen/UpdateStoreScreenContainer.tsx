@@ -183,7 +183,7 @@ export default ({route: {params}}) => {
         index: 0,
         routes: [{name: 'SelectStoreScreen'}],
       });
-      dispatch(closeSTORE_ON_STORE_LIST(STORE_SEQ));
+      dispatch(closeSTORE_ON_STORE_LIST());
     } else {
       alertModal('수정하였습니다.');
       dispatch(

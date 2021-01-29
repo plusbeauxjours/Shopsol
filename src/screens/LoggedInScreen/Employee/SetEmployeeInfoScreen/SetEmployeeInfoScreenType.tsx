@@ -36,10 +36,10 @@ const TypeContainer = styled.TouchableOpacity`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   font-size: ${styleGuide.fontSize.large}px;
   font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.primary};
-  padding: 0;
   height: 18px;
 `;
 

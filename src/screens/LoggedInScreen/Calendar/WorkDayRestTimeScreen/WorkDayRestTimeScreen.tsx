@@ -43,6 +43,7 @@ const BigText = styled.Text`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   font-size: ${styleGuide.fontSize.large}px;
   color: ${styleGuide.palette.primary};
   margin: 0 5px;

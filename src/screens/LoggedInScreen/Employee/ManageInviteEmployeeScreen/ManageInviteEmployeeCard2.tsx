@@ -133,7 +133,7 @@ export default ({
           style={{width: 60, height: 60, borderRadius: 30}}
           source={{
             uri: `http://shopsolapi.shop-sol.com/uploads/${IMAGE}`,
-            headers: {Authorization: 'someAuthToken'},
+            cache: FastImage.cacheControl.immutable,
             priority: FastImage.priority.low,
           }}
           resizeMode={FastImage.resizeMode.cover}

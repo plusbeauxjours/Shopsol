@@ -51,6 +51,7 @@ const EndRow = styled(Row)`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   justify-content: center;
   align-items: center;
   width: ${wp('50%')}px;
@@ -322,7 +323,7 @@ export default ({
                           }}
                           source={{
                             uri: cameraPicture.uri,
-                            headers: {Authorization: 'someAuthToken'},
+                            cache: FastImage.cacheControl.immutable,
                             priority: FastImage.priority.low,
                           }}
                           resizeMode={FastImage.resizeMode.cover}
@@ -387,7 +388,7 @@ export default ({
                 }}
                 source={{
                   uri: cameraPictureLast,
-                  headers: {Authorization: 'someAuthToken'},
+                  cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}
                 resizeMode={FastImage.resizeMode.cover}

@@ -625,7 +625,7 @@ export default ({
             }}
             locale="fr"
             is24hourSource="locale"
-            minuteInterval={10}
+            minuteInterval={5}
           />
           {startTimeSet ? (
             <DatePickerRoundBtn
@@ -697,7 +697,7 @@ export default ({
             }}
             locale="fr"
             is24hourSource="locale"
-            minuteInterval={10}
+            minuteInterval={5}
           />
           {endTimeSet ? (
             <DatePickerRoundBtn

@@ -76,7 +76,9 @@ const Box = styled.View`
   padding: 10px;
 `;
 
-const TextInput = styled.TextInput``;
+const TextInput = styled.TextInput`
+  padding: 0;
+`;
 
 const WhiteSpace = styled.View`
   height: 10px;
@@ -228,11 +230,13 @@ export default ({
         setIsImageViewVisible(true);
       }}
       key={index}>
+      {console.log(item)}
+
       <FastImage
         style={{width: 100, height: 100, borderRadius: 10, marginHorizontal: 5}}
         source={{
           uri: item,
-          headers: {Authorization: 'someAuthToken'},
+          cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}
         resizeMode={FastImage.resizeMode.cover}
@@ -530,7 +534,7 @@ export default ({
                 style={{width: '100%', height: '100%'}}
                 source={{
                   uri: props.source.uri,
-                  headers: {Authorization: 'someAuthToken'},
+                  cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}
                 resizeMode={FastImage.resizeMode.cover}

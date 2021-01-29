@@ -9,6 +9,14 @@ import Geolocation from 'react-native-geolocation-service';
 
 export default {
   isAndroid: () => Platform.OS === 'android',
+  getUriImage: (uri) => {
+    return uri !== null &&
+      uri !== undefined &&
+      uri.includes('/') &&
+      uri.includes('.')
+      ? uri
+      : '';
+  },
   handleCameraPermission: async (handle) => {
     try {
       if (Platform.OS === 'android') {

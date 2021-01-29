@@ -62,7 +62,9 @@ const SectionText = styled.Text`
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
-const TextInput = styled.TextInput``;
+const TextInput = styled.TextInput`
+  padding: 0;
+`;
 
 const WhiteSpace = styled.View`
   height: 10px;
@@ -267,6 +269,7 @@ export default ({
 }) => {
   const cameraRef = useRef(null);
   const scrollRef = createRef(0);
+  console.log(END_TIME);
   return (
     <>
       <BackGround>
@@ -487,7 +490,7 @@ export default ({
                             }}
                             source={{
                               uri: cameraPicture.uri,
-                              headers: {Authorization: 'someAuthToken'},
+                              cache: FastImage.cacheControl.immutable,
                               priority: FastImage.priority.low,
                             }}
                             resizeMode={FastImage.resizeMode.cover}
@@ -496,7 +499,12 @@ export default ({
                       ))
                     ) : (
                       <PictureBorderBox>
-                        <Text style={{color: '#eee'}}>사진 미등록</Text>
+                        <Text style={{textAlign: 'center', color: '#eee'}}>
+                          사진
+                        </Text>
+                        <Text style={{textAlign: 'center', color: '#eee'}}>
+                          미등록
+                        </Text>
                       </PictureBorderBox>
                     )}
                   </EndRow>
@@ -547,7 +555,7 @@ export default ({
                 }}
                 source={{
                   uri: cameraPictureLast,
-                  headers: {Authorization: 'someAuthToken'},
+                  cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}
                 resizeMode={FastImage.resizeMode.cover}

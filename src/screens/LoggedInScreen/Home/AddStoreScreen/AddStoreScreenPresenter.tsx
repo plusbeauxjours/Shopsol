@@ -81,6 +81,7 @@ const RequestText = styled.Text`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   flex: 1;
   padding: 10px 0;
   margin-left: 5px;

@@ -4,7 +4,7 @@ const callApi = async (method: string, path: string, data?: any) => {
   const headers = {
     Accept: 'application/json',
     'Content-Type':
-      path == 'auth/updateNoticeImg' ||
+      path == '/auth/updateNoticeImg/' ||
       path == '/auth/checkocr1/' ||
       path == '/auth/setCheckListImg2/' ||
       path == '/auth/setNoticeImg2/' ||

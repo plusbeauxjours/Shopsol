@@ -469,6 +469,7 @@ export default ({
   category,
   mapRef,
   moveMap,
+  gotoSelectStoreFn,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -592,7 +593,7 @@ export default ({
             style={{width: 40, height: 40, borderRadius: 20, marginRight: 10}}
             source={{
               uri: `http://shopsolapi.shop-sol.com/uploads/${AVATAR}`,
-              headers: {Authorization: 'someAuthToken'},
+              cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.low,
             }}
             resizeMode={FastImage.resizeMode.cover}
@@ -692,13 +693,7 @@ export default ({
             </Row>
             <WhiteSpace />
             <Row>
-              <StoreUpdateBtn
-                onPress={() => {
-                  navigation.reset({
-                    index: 0,
-                    routes: [{name: 'SelectStoreScreen'}],
-                  });
-                }}>
+              <StoreUpdateBtn onPress={() => gotoSelectStoreFn()}>
                 <WhiteText>사업장 전환</WhiteText>
               </StoreUpdateBtn>
               {STORE === '1' && (
@@ -1214,7 +1209,11 @@ export default ({
         }}
         avoidKeyboard={true}
         style={{
-          margin: 0,
+          marginLeft: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: wp('100%'),
+          height: '100%',
         }}>
         {workingLoading ? (
           <LottieView

@@ -94,8 +94,9 @@ export default ({
   gotoAddStore,
   gotoHomeScreen,
   visible,
+  loading,
 }) => {
-  if (visible) {
+  if (loading || visible) {
     return null;
   } else {
     return (

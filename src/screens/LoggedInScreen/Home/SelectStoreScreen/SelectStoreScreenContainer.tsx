@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeModules, Alert, Linking, Platform} from 'react-native';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {getSTORELIST_DATA, setDEVICE_INFO} from '~/redux/userSlice';
+import {setDEVICE_INFO} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
 import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
 import firebase from 'react-native-firebase';
@@ -13,26 +13,22 @@ import utils from '~/constants/utils';
 import {openSettings} from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
 import api from '~/constants/LoggedInApi';
-import {
-  resetCALENDAR_DATA,
-  setCALENDAR_DATA_STORE_SEQ,
-} from '~/redux/calendarSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
-  const {MEMBER_SEQ, STORE, STORELIST_DATA} = useSelector(
-    (state: any) => state.userReducer,
-  );
-  const {visible, loading} = useSelector((state: any) => state.splashReducer);
+  const {MEMBER_SEQ, STORE} = useSelector((state: any) => state.userReducer);
+  const {visible} = useSelector((state: any) => state.splashReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [STORELIST_DATA, setSTORELIST_DATA] = useState<any>([]);
+  const [loading, setloading] = useState<boolean>(true);
 
   const onRefresh = async () => {
     try {
       setRefreshing(true);
-      await dispatch(getSTORELIST_DATA());
+      await fetchData();
     } catch (e) {
       console.log(e);
     } finally {
@@ -116,6 +112,21 @@ export default ({route: {params}}) => {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      dispatch(setSplashVisible({visible: true, text: '사업장 목록'}));
+      const {data} = await api.storeList(STORE, MEMBER_SEQ);
+      if (data.message === 'SUCCESS') {
+        setSTORELIST_DATA(data.result);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      dispatch(setSplashVisible(false));
+      setloading(false);
+    }
+  };
+
   const requestPermission = async () => {
     try {
       await firebase.messaging().requestPermission();
@@ -149,23 +160,7 @@ export default ({route: {params}}) => {
   }, [params]);
 
   useEffect(() => {
-    try {
-      if (visible) {
-        dispatch(setSplashVisible({visible: false}));
-      }
-      if (loading) {
-        dispatch(setLoadingVisible(false));
-      }
-      // dispatch(resetCALENDAR_DATA());
-      // dispatch(setCALENDAR_DATA_STORE_SEQ(''));
-      if (STORELIST_DATA.length == 0) {
-        dispatch(getSTORELIST_DATA());
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      dispatch(setAlertVisible(false));
-    }
+    fetchData();
     // if (utils.isAndroid) {
     //   if (STORE_NAME == '') {
     //     SharedStorage.set(
@@ -190,6 +185,7 @@ export default ({route: {params}}) => {
       gotoAddStore={gotoAddStore}
       gotoHomeScreen={gotoHomeScreen}
       visible={visible}
+      loading={loading}
     />
   );
 };

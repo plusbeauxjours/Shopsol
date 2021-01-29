@@ -64,6 +64,7 @@ const TextId = styled.Text`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   flex: 1;
   font-size: 14px;
   color: black;

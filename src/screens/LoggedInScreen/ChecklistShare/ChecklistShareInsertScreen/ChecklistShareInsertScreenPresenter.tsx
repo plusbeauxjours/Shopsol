@@ -58,6 +58,7 @@ const EndRow = styled(Row)`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   justify-content: center;
   align-items: center;
   width: ${wp('50%')}px;
@@ -362,7 +363,7 @@ export default ({
                           }}
                           source={{
                             uri: cameraPicture.uri,
-                            headers: {Authorization: 'someAuthToken'},
+                            cache: FastImage.cacheControl.immutable,
                             priority: FastImage.priority.low,
                           }}
                           resizeMode={FastImage.resizeMode.cover}
@@ -371,7 +372,12 @@ export default ({
                     ))
                   ) : (
                     <PictureBorderBox>
-                      <GreyText style={{color: '#eee'}}>사진 미등록</GreyText>
+                      <GreyText style={{textAlign: 'center', color: '#eee'}}>
+                        사진
+                      </GreyText>
+                      <GreyText style={{textAlign: 'center', color: '#eee'}}>
+                        미등록
+                      </GreyText>
                     </PictureBorderBox>
                   )}
                 </EndRow>
@@ -400,7 +406,7 @@ export default ({
                   }}
                   source={{
                     uri: cameraPictureLast,
-                    headers: {Authorization: 'someAuthToken'},
+                    cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}
                   resizeMode={FastImage.resizeMode.cover}

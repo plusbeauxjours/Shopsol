@@ -101,8 +101,8 @@ const Column = styled.View`
 `;
 
 const TextInput = styled.TextInput`
-  flex: 1;
   padding: 0;
+  flex: 1;
   margin-left: 5px;
   color: black;
   height: 24px;

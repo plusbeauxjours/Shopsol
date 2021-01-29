@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {getUserAgent, getUserAgentSync} from 'react-native-device-info';
 import moment from 'moment';
 import {
   widthPercentageToDP as wp,
@@ -11,6 +12,7 @@ import Ripple from 'react-native-material-ripple';
 import {NewBoxIcon, PinIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import {CommentIcon} from '../../../../constants/Icons';
+import utils from '~/constants/utils';
 
 interface IsFavorite {
   isFavorite: boolean;
@@ -31,17 +33,18 @@ const Section = styled.View`
   background-color: white;
   min-height: 100px;
 `;
+
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
 `;
+
 const RowSpace = styled(Row)`
   justify-content: space-between;
 `;
 
 const ContentText = styled.Text`
   margin-bottom: ${hp('1.5%')}px;
-  margin-right: ${wp('20%')}px;
   color: #7b7b7b;
 `;
 
@@ -86,6 +89,7 @@ const InfoText = styled.Text`
 const GreyText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   color: ${styleGuide.palette.greyColor};
+  text-align: center;
 `;
 
 const WhiteText = styled.Text`
@@ -120,7 +124,8 @@ const AddressBox = styled.View`
 
 const ContentBox = styled.View`
   flex: 1;
-  padding: 0 10px;
+  height: 100px;
+  padding: 0 5px;
 `;
 
 const BorderBox = styled.View`
@@ -199,29 +204,25 @@ export default ({
               </IconContainer>
             </AddressBox>
           </ContentBox>
-          <ImageSection>
-            {imgarr?.length > 0 ? (
+          {imgarr?.length > 0 && (
+            <ImageSection>
               <FastImage
                 style={{width: 100, height: 100, borderRadius: 10}}
                 source={{
-                  uri: `http://shopsolapi.shop-sol.com/uploads/${imgarr[0]}`,
-                  headers: {Authorization: 'someAuthToken'},
+                  uri: utils.getUriImage(imgarr[0]),
                   priority: FastImage.priority.low,
+                  cache: FastImage.cacheControl.immutable,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
-            ) : (
-              <BorderBox>
-                <GreyText>사진 미등록</GreyText>
-              </BorderBox>
-            )}
-            {allimg?.length > 1 && (
-              <AnotherBox>
-                <WhiteText>+</WhiteText>
-                <WhiteText>{allimg.length - 1}</WhiteText>
-              </AnotherBox>
-            )}
-          </ImageSection>
+            </ImageSection>
+          )}
+          {allimg?.length > 1 && (
+            <AnotherBox>
+              <WhiteText>+</WhiteText>
+              <WhiteText>{allimg.length - 1}</WhiteText>
+            </AnotherBox>
+          )}
         </Section>
       </Touchable>
       <PinTouchable

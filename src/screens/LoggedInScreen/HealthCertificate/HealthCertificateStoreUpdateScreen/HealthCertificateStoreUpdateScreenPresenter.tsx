@@ -72,6 +72,7 @@ const TextContainer = styled.View`
 const Text = styled.Text``;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   width: 100%;
   font-size: 14px;
   color: black;
@@ -313,7 +314,7 @@ export default ({
                         }}
                         source={{
                           uri: cameraPictureLast,
-                          headers: {Authorization: 'someAuthToken'},
+                          cache: FastImage.cacheControl.immutable,
                           priority: FastImage.priority.low,
                         }}
                         resizeMode={FastImage.resizeMode.cover}
@@ -507,7 +508,7 @@ export default ({
                 }}
                 source={{
                   uri: cameraPictureLast,
-                  headers: {Authorization: 'someAuthToken'},
+                  cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}
                 resizeMode={FastImage.resizeMode.cover}

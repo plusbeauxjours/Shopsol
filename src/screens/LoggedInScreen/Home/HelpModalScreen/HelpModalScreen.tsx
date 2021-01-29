@@ -60,7 +60,7 @@ export default () => {
   const fetchData = async () => {
     try {
       if (!helpCategory) {
-        dispatch(setSplashVisible({visible: true, text: ''}));
+        dispatch(setSplashVisible({visible: true}));
       }
       const {data} = await api.help();
       dispatch(setHelpCategory(data.result));

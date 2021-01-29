@@ -77,13 +77,13 @@ const Line = styled.View`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   font-size: ${styleGuide.fontSize.large}px;
   margin-left: 5px;
   text-align: center;
   margin-right: 5px;
   width: 100px;
   text-align: right;
-  padding: 0;
   height: 18px;
 `;
 
@@ -485,7 +485,7 @@ export default ({
             style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
             source={{
               uri: `http://shopsolapi.shop-sol.com/uploads/${IMAGE}`,
-              headers: {Authorization: 'someAuthToken'},
+              cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.low,
             }}
             resizeMode={FastImage.resizeMode.cover}

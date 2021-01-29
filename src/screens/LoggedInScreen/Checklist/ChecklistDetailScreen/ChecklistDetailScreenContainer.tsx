@@ -106,11 +106,9 @@ export default ({route: {params}}) => {
         if (imageList && Array.isArray(imageList)) {
           if (imageList[0] != '') {
             for (const imageName of imageList) {
-              cameraPictureList.push(
-                `http://shopsolapi.shop-sol.com/uploads/${imageName}`,
-              );
+              cameraPictureList.push(`${imageName}`);
               modalImgarr.push({
-                url: `http://shopsolapi.shop-sol.com/uploads/${imageName}`,
+                url: `${imageName}`,
               });
             }
           }

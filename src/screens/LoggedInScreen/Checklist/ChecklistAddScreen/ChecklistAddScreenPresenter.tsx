@@ -66,12 +66,12 @@ const RowTitle = styled(Row)`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   width: 100%;
   flex-wrap: wrap;
   font-size: ${styleGuide.fontSize.large}px;
   border-bottom-width: 1px;
   border-color: #e5e5e5;
-  padding: 0;
   height: 30px;
 `;
 
@@ -563,7 +563,7 @@ export default ({
             }}
             locale="fr"
             is24hourSource="locale"
-            minuteInterval={10}
+            minuteInterval={5}
           />
           {customChecktimeSet ? (
             <DatePickerRoundBtn

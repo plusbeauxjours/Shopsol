@@ -24,6 +24,7 @@ const TextInputContainer = styled.View<IsBefore>`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   font-size: 14px;
   font-weight: ${styleGuide.fontWeight.bold};
   color: ${styleGuide.palette.primary};

@@ -9,7 +9,8 @@ import {updateQR_Num} from '~/redux/storeSlice';
 import {addCUSTOM_MENU_EMP, removeCUSTOM_MENU_EMP} from '~/redux/userSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
-import {getStore} from '../../../../redux/storeSlice';
+import {getStore} from '~/redux/storeSlice';
+import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
 
 export default ({route: {params}}) => {
   const mapRef = useRef(null);
@@ -438,6 +439,14 @@ export default ({route: {params}}) => {
     return d;
   };
 
+  const gotoSelectStoreFn = () => {
+    dispatch(resetCALENDAR_DATA());
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'SelectStoreScreen'}],
+    });
+  };
+
   const gotoScreen = (paging) => {
     navigation.navigate(`${paging}`);
     setEditMode(false);
@@ -544,6 +553,7 @@ export default ({route: {params}}) => {
       category={params?.category}
       mapRef={mapRef}
       moveMap={moveMap}
+      gotoSelectStoreFn={gotoSelectStoreFn}
     />
   );
 };

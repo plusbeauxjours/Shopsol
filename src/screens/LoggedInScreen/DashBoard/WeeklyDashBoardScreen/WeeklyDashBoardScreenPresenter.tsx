@@ -363,7 +363,7 @@ export default ({
             }}
             source={{
               uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-              headers: {Authorization: 'someAuthToken'},
+              cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.low,
             }}
             resizeMode={FastImage.resizeMode.cover}
@@ -771,7 +771,7 @@ export default ({
                                     }}
                                     source={{
                                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                                      headers: {Authorization: 'someAuthToken'},
+                                      cache: FastImage.cacheControl.immutable,
                                       priority: FastImage.priority.low,
                                     }}
                                     resizeMode={FastImage.resizeMode.cover}
@@ -859,7 +859,7 @@ export default ({
                                     }}
                                     source={{
                                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                                      headers: {Authorization: 'someAuthToken'},
+                                      cache: FastImage.cacheControl.immutable,
                                       priority: FastImage.priority.low,
                                     }}
                                     resizeMode={FastImage.resizeMode.cover}
@@ -947,7 +947,7 @@ export default ({
                                     }}
                                     source={{
                                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                                      headers: {Authorization: 'someAuthToken'},
+                                      cache: FastImage.cacheControl.immutable,
                                       priority: FastImage.priority.low,
                                     }}
                                     resizeMode={FastImage.resizeMode.cover}
@@ -1021,7 +1021,7 @@ export default ({
                                 }}
                                 source={{
                                   uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                                  headers: {Authorization: 'someAuthToken'},
+                                  cache: FastImage.cacheControl.immutable,
                                   priority: FastImage.priority.low,
                                 }}
                                 resizeMode={FastImage.resizeMode.cover}
@@ -1107,7 +1107,7 @@ export default ({
                                 }}
                                 source={{
                                   uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                                  headers: {Authorization: 'someAuthToken'},
+                                  cache: FastImage.cacheControl.immutable,
                                   priority: FastImage.priority.low,
                                 }}
                                 resizeMode={FastImage.resizeMode.cover}
@@ -1162,7 +1162,7 @@ export default ({
                     }}
                     source={{
                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                      headers: {Authorization: 'someAuthToken'},
+                      cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
                     resizeMode={FastImage.resizeMode.cover}
@@ -1216,7 +1216,7 @@ export default ({
                     }}
                     source={{
                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                      headers: {Authorization: 'someAuthToken'},
+                      cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
                     resizeMode={FastImage.resizeMode.cover}
@@ -1270,7 +1270,7 @@ export default ({
                     }}
                     source={{
                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                      headers: {Authorization: 'someAuthToken'},
+                      cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
                     resizeMode={FastImage.resizeMode.cover}
@@ -1324,7 +1324,7 @@ export default ({
                     }}
                     source={{
                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                      headers: {Authorization: 'someAuthToken'},
+                      cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
                     resizeMode={FastImage.resizeMode.cover}
@@ -1378,7 +1378,7 @@ export default ({
                     }}
                     source={{
                       uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
-                      headers: {Authorization: 'someAuthToken'},
+                      cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
                     resizeMode={FastImage.resizeMode.cover}

@@ -26,18 +26,18 @@ const BackGround = styled.SafeAreaView`
 const ScrollView = styled.ScrollView``;
 
 const Container = styled.View`
-  padding: 0 20px;
+  padding: 20px;
   align-items: center;
 `;
 
 const Section = styled.View`
   width: ${wp('100%') - 40}px;
-  margin-top: 20px;
   border-radius: 20px;
   background-color: white;
   justify-content: center;
   align-items: center;
   padding: 20px 0;
+  margin-bottom: 20px;
 `;
 
 const Row = styled.View`

@@ -320,7 +320,7 @@ export default ({route: {params}}) => {
       for (let i = 0; i < allimg.length; i++) {
         setCameraPictureList((cameraPictureList) => [
           ...cameraPictureList,
-          {uri: `http://shopsolapi.shop-sol.com/uploads/${allimg[i]}`},
+          {uri: utils.getUriImage(allimg[i])},
         ]);
       }
     }
@@ -345,7 +345,7 @@ export default ({route: {params}}) => {
       ITEM_EMP_SEQ={params?.data?.EMP_SEQ || null}
       CHECK_TIME={params?.data?.CHECK_TIME || null}
       PHOTO_CHECK={params?.data?.PHOTO_CHECK || null}
-      END_TIME={params?.data?.END_TIME || null}
+      END_TIME={params?.data?.END_TIME || ''}
       EMP_NAME={params?.data?.EMP_NAME || null}
       isCameraModalVisible={isCameraModalVisible}
       setIsCameraModalVisible={setIsCameraModalVisible}

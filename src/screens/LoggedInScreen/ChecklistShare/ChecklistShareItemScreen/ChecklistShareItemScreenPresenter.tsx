@@ -78,6 +78,7 @@ const CommentTextInputContainer = styled.View`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   flex: 1;
   align-items: center;
   margin-left: 10px;
@@ -278,9 +279,9 @@ export default ({
       <FastImage
         style={{width: 120, height: 120, borderRadius: 10, marginHorizontal: 5}}
         source={{
-          uri: `http://shopsolapi.shop-sol.com/uploads/${item}`,
-          headers: {Authorization: 'someAuthToken'},
+          uri: utils.getUriImage(item),
           priority: FastImage.priority.low,
+          cache: FastImage.cacheControl.immutable,
         }}
         resizeMode={FastImage.resizeMode.cover}
       />
@@ -402,8 +403,8 @@ export default ({
                           <FastImage
                             style={{width: 50, height: 50, borderRadius: 25}}
                             source={{
-                              uri: `http://shopsolapi.shop-sol.com/uploads/${item.IMAGE}`,
-                              headers: {Authorization: 'someAuthToken'},
+                              uri: getUriImage(item.IMAGE),
+                              cache: FastImage.cacheControl.immutable,
                               priority: FastImage.priority.low,
                             }}
                             resizeMode={FastImage.resizeMode.cover}
@@ -573,9 +574,9 @@ export default ({
             <FastImage
               style={{width: '100%', height: '100%'}}
               source={{
-                uri: props.source.uri,
-                headers: {Authorization: 'someAuthToken'},
+                uri: utils.getUriImage(props.source.uri),
                 priority: FastImage.priority.low,
+                cache: FastImage.cacheControl.immutable,
               }}
               resizeMode={FastImage.resizeMode.cover}
             />

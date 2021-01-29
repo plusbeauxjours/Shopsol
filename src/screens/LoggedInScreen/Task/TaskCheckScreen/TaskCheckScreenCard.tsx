@@ -118,6 +118,7 @@ const BorderBox = styled.View`
 const GreyText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   color: ${styleGuide.palette.greyColor};
+  text-align: center;
 `;
 
 const GreyBox = styled.View`
@@ -146,14 +147,15 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                       ? item.IMG_LIST
                       : 'http://shopsolapi.shop-sol.com/uploads/' +
                         item.IMG_LIST,
-                  headers: {Authorization: 'someAuthToken'},
+                  cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
             ) : (
               <BorderBox style={{zIndex: 10}}>
-                <GreyText>사진 미등록</GreyText>
+                <GreyText>사진</GreyText>
+                <GreyText>미등록</GreyText>
               </BorderBox>
             )}
             <IconBorder>
@@ -221,14 +223,15 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                       ? item.IMG_LIST
                       : 'http://shopsolapi.shop-sol.com/uploads/' +
                         item.IMG_LIST,
-                  headers: {Authorization: 'someAuthToken'},
+                  cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
             ) : (
               <BorderBox style={{zIndex: 10}}>
-                <GreyText>사진 미등록</GreyText>
+                <GreyText>사진</GreyText>
+                <GreyText>미등록</GreyText>
               </BorderBox>
             )}
             <IconBorder>

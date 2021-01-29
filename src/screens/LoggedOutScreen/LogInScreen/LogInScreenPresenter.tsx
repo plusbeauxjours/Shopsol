@@ -31,6 +31,7 @@ const Space = styled.View`
 const Touchable = styled.TouchableOpacity``;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   width: 100%;
   font-size: ${styleGuide.fontSize.large}px;
   color: black;

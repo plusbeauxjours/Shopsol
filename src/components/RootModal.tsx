@@ -163,7 +163,7 @@ export default ({alert}) => {
               style={{width: '100%', height: '100%'}}
               source={{
                 uri: props.source.uri,
-                headers: {Authorization: 'someAuthToken'},
+                cache: FastImage.cacheControl.immutable,
                 priority: FastImage.priority.low,
               }}
               resizeMode={FastImage.resizeMode.contain}

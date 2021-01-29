@@ -5,7 +5,6 @@ import {useNavigation} from '@react-navigation/native';
 import AddStoreScreenPresenter from './AddStoreScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
-import {getSTORELIST_DATA} from '~/redux/userSlice';
 import api from '~/constants/LoggedInApi';
 
 export default ({route: {params}}) => {
@@ -190,7 +189,6 @@ export default ({route: {params}}) => {
           alertModal(
             '사업장 추가완료\n\n사업장을 클릭하신 후 직원을 초대하세요.',
           );
-          dispatch(getSTORELIST_DATA());
           navigation.goBack();
         }
       } catch (e) {

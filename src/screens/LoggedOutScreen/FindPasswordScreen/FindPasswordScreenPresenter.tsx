@@ -67,6 +67,7 @@ const TextinputCase = styled.View`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   flex: 1;
   font-size: ${styleGuide.fontSize.large}px;
   color: black;

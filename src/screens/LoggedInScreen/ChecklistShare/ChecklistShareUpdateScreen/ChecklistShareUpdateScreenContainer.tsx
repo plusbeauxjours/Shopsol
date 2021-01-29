@@ -239,7 +239,7 @@ export default ({route: {params}}) => {
       for (let i = 0; i < allimg.length; i++) {
         setCameraPictureList((cameraPictureList) => [
           ...cameraPictureList,
-          {uri: `http://shopsolapi.shop-sol.com/uploads/${allimg[i]}`},
+          {uri: utils.getUriImage(allimg[i])},
         ]);
       }
     }

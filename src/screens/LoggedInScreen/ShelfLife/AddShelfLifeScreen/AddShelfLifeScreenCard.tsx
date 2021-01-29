@@ -82,6 +82,7 @@ const BorderBox = styled.View`
 const GreyText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   color: ${styleGuide.palette.greyColor};
+  text-align: center;
 `;
 
 const CloseIconContainer = styled.View`
@@ -146,14 +147,15 @@ export default ({
               style={{width: 60, height: 60, borderRadius: 10}}
               source={{
                 uri: shelfLifeImgLink ?? shelfLifeIMAGE,
-                headers: {Authorization: 'someAuthToken'},
+                cache: FastImage.cacheControl.immutable,
                 priority: FastImage.priority.low,
               }}
               resizeMode={FastImage.resizeMode.cover}
             />
           ) : (
             <BorderBox style={{zIndex: 10}}>
-              <GreyText>사진 미등록</GreyText>
+              <GreyText>사진</GreyText>
+              <GreyText>미등록</GreyText>
             </BorderBox>
           )}
         </Touchable>

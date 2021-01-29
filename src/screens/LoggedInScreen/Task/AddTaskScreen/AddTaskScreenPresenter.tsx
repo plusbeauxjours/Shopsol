@@ -89,6 +89,7 @@ const GreyText = styled.Text`
 `;
 
 const TextInput = styled.TextInput`
+  padding: 0;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -328,7 +329,7 @@ export default ({
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
                       uri: cameraPictureLast,
-                      headers: {Authorization: 'someAuthToken'},
+                      cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
                     resizeMode={FastImage.resizeMode.cover}
@@ -494,7 +495,7 @@ export default ({
                   }}
                   source={{
                     uri: cameraPictureLast,
-                    headers: {Authorization: 'someAuthToken'},
+                    cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}
                   resizeMode={FastImage.resizeMode.cover}
@@ -571,7 +572,7 @@ export default ({
             style={{width: wp('100%'), height: wp('100%')}}
             source={{
               uri: list[selectedIndex]?.taskIMAGE,
-              headers: {Authorization: 'someAuthToken'},
+              cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.low,
             }}
             resizeMode={FastImage.resizeMode.cover}

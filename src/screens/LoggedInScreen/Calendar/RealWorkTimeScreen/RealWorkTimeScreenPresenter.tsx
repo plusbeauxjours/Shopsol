@@ -240,7 +240,7 @@ export default ({
           style={{width: 60, height: 60, borderRadius: 30}}
           source={{
             uri: `http://shopsolapi.shop-sol.com/uploads/${IMAGE}`,
-            headers: {Authorization: 'someAuthToken'},
+            cache: FastImage.cacheControl.immutable,
             priority: FastImage.priority.low,
           }}
           resizeMode={FastImage.resizeMode.cover}
@@ -427,7 +427,7 @@ export default ({
             }}
             locale="fr"
             is24hourSource="locale"
-            minuteInterval={10}
+            minuteInterval={5}
           />
           <DatePickerRoundBtn
             isCancelBtn={true}
@@ -545,7 +545,7 @@ export default ({
             }}
             locale="fr"
             is24hourSource="locale"
-            minuteInterval={10}
+            minuteInterval={5}
           />
           <DatePickerRoundBtn
             isCancelBtn={true}
