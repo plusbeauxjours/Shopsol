@@ -109,6 +109,8 @@ export default ({date, data, EMP_SEQ}) => {
       navigation.navigate('ChecklistSpecificationScreen', {
         data,
         scan: '0',
+        date,
+        onRefresh: () => {},
       });
     }
   };

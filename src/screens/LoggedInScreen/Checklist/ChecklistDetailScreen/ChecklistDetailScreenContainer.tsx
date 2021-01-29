@@ -57,7 +57,6 @@ export default ({route: {params}}) => {
         CHECK_SEQ,
         DATE,
       });
-
       if (data.resultmsg == '1') {
         var list = [];
         for (let index = 0; index < data.resultdata.length; index++) {
@@ -198,6 +197,8 @@ export default ({route: {params}}) => {
       STORE={STORE}
       gotoChecklistSpecification={gotoChecklistSpecification}
       loading={loading}
+      DATE={DATE}
+      
     />
   );
 };

@@ -222,6 +222,7 @@ export default ({
   STORE,
   gotoChecklistSpecification,
   loading,
+  DATE,
 }) => {
   const renderImage = (item, index) => (
     <Touchable
@@ -544,28 +545,29 @@ export default ({
         </Modal>
       </ScrollView>
       {((STORE == '0' && ITEM_EMP_SEQ?.includes(EMP_SEQ)) ||
-        (STORE == '0' && !ITEM_EMP_SEQ)) && (
-        <AddButtonContainer loading={loading}>
-          {loading ? (
-            <LottieView
-              style={{
-                position: 'absolute',
-                right: -15,
-                bottom: -15,
-                width: 150,
-                height: 150,
-              }}
-              source={require('../../../../assets/animations/loading.json')}
-              loop
-              autoPlay
-            />
-          ) : (
-            <AddButton onPress={() => gotoChecklistSpecification()}>
-              <AddButtonText>체크</AddButtonText>
-            </AddButton>
-          )}
-        </AddButtonContainer>
-      )}
+        (STORE == '0' && !ITEM_EMP_SEQ)) &&
+        DATE == moment().format('YYYY-MM-DD') && (
+          <AddButtonContainer loading={loading}>
+            {loading ? (
+              <LottieView
+                style={{
+                  position: 'absolute',
+                  right: -15,
+                  bottom: -15,
+                  width: 150,
+                  height: 150,
+                }}
+                source={require('../../../../assets/animations/loading.json')}
+                loop
+                autoPlay
+              />
+            ) : (
+              <AddButton onPress={() => gotoChecklistSpecification()}>
+                <AddButtonText>체크</AddButtonText>
+              </AddButton>
+            )}
+          </AddButtonContainer>
+        )}
     </BackGround>
   );
 };

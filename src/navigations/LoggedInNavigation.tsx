@@ -101,13 +101,11 @@ export default () => {
         headerMode={'screen'}
         initialRouteName={'SelectStoreScreen'}
         screenOptions={{
-          ...TransitionPresets.SlideFromRightIOS,
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
             backgroundColor: styleGuide.palette.headerColor,
             borderColor: 'white',
             borderWidth: 0,
-            ...headerStyle,
           },
           headerTitleAlign: 'center',
           headerTintColor: 'white',

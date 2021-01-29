@@ -47,6 +47,7 @@ export const getCHECKLIST_DATA = (
     storeReducer: {STORE_SEQ},
   } = getState();
   try {
+    console.log(date);
     const {data} = await api.getChecklist(STORE_SEQ, date);
     if (data.message === 'SUCCESS') {
       dispatch(setCHECKLIST_STORE_SEQ(STORE_SEQ));

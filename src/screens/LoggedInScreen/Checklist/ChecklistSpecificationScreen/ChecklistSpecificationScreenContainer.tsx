@@ -245,21 +245,27 @@ export default ({route: {params}}) => {
         }
         const {data} = await api.setCheckListImg2(formData);
         if (data.result === 'SUCCESS') {
+          params?.onRefresh();
+          navigation.goBack();
           alertModal('체크가 완료되었습니다.');
           dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
+        } else {
+          alertModal('연결에 실패하였습니다.');
         }
       } catch (e) {
         alertModal('연결에 실패하였습니다.');
-        dispatch(setSplashVisible({visible: false}));
         console.log(e);
       } finally {
-        navigation.goBack();
         dispatch(setSplashVisible({visible: false}));
       }
     } else {
       try {
-        navigation.goBack();
-        alertModal('체크가 완료되었습니다.');
+        dispatch(
+          setSplashVisible({
+            visible: true,
+            fullText: '체크리스트가 등록중입니다.',
+          }),
+        );
         const {data} = await api.setCheckList2({
           LIST: JSON.stringify(newList),
           CHECK_TITLE,
@@ -271,12 +277,17 @@ export default ({route: {params}}) => {
         });
         if (data.result === 'SUCCESS') {
           params?.onRefresh();
+          navigation.goBack();
+          alertModal('체크가 완료되었습니다.');
           dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
+        } else {
+          alertModal('연결에 실패하였습니다.');
         }
       } catch (e) {
-        console.log(e);
         alertModal('연결에 실패하였습니다.');
-        navigation.goBack();
+        console.log(e);
+      } finally {
+        dispatch(setSplashVisible({visible: false}));
       }
     }
   };
@@ -361,6 +372,7 @@ export default ({route: {params}}) => {
       setCameraPictureLast={setCameraPictureLast}
       cameraPictureList={cameraPictureList}
       setCameraPictureList={setCameraPictureList}
+      DATE={params?.date}
     />
   );
 };

@@ -266,10 +266,10 @@ export default ({
   setCameraPictureLast,
   cameraPictureList,
   setCameraPictureList,
+  DATE,
 }) => {
   const cameraRef = useRef(null);
   const scrollRef = createRef(0);
-  console.log(END_TIME);
   return (
     <>
       <BackGround>
@@ -529,6 +529,7 @@ export default ({
         </KeyboardAwareScrollView>
         {((STORE == '0' && ITEM_EMP_SEQ?.includes(EMP_SEQ)) ||
           (STORE == '0' && !ITEM_EMP_SEQ)) &&
+          DATE == moment().format('YYYY-MM-DD') &&
           scan === '0' && (
             <AddButtonContainer>
               <AddButton onPress={() => setScan('1')}>
