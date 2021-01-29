@@ -595,9 +595,7 @@ export default ({
                     isChecked={true}
                     onPress={() => setIsStartDayModalVisible(true)}>
                     <RequestBorderText isChecked={true}>
-                      {startDaySet
-                        ? moment(startDay).format('YYYY년 M월 D일')
-                        : moment().format('YYYY년 M월 D일')}
+                      {moment(startDay).format('YYYY년 M월 D일')}
                     </RequestBorderText>
                   </RequestBorderButton>
                 </InputCaseRow>

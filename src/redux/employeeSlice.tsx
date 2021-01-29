@@ -77,6 +77,7 @@ export const {
   setEMPLOYEE_LIST,
   updateEMPLOYEE_LIST,
   setRESPONSE_EMPLOYEE,
+  removeRESPONSE_EMPLOYEE,
 } = employeeSlice.actions;
 
 export const getRESPONSE_EMPLOYEE = () => async (dispatch, getState) => {

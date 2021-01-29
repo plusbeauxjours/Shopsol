@@ -40,9 +40,6 @@ export default ({route: {params}}) => {
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
-  const [QR, setQR] = useState<string>('');
-  const [invitedEmpCount, setInvitedEmpCount] = useState<number>(0);
-  const [checklistCount, setChecklistCount] = useState<number>(0);
   const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
     false,
   );
@@ -83,7 +80,7 @@ export default ({route: {params}}) => {
     {
       selection: '체크리스트',
       paging: 'ChecklistItemsScreen',
-      count: checklistCount,
+      count: STORE_DATA?.checklength || 0,
       source: require(`../../../../assets/main/ChecklistItems.png`),
     },
     {
@@ -115,7 +112,7 @@ export default ({route: {params}}) => {
     {
       selection: '체크리스트',
       paging: 'ChecklistItemsScreen',
-      count: checklistCount,
+      count: STORE_DATA?.checklength || 0,
       source: require(`../../../../assets/main/ChecklistItems.png`),
     },
     {
@@ -168,7 +165,7 @@ export default ({route: {params}}) => {
     {
       selection: '체크리스트',
       paging: 'ChecklistItemsScreen',
-      count: checklistCount,
+      count: STORE_DATA?.checklength || 0,
       source: require(`../../../../assets/main/ChecklistItems.png`),
     },
     {
@@ -404,9 +401,6 @@ export default ({route: {params}}) => {
         STORE_SEQ,
       });
       if (data.resultmsg === '1') {
-        setQR(data.resultdata.QR);
-        setInvitedEmpCount(data.inviteemp);
-        setChecklistCount(data.checklength);
         dispatch(getStore(data));
       }
     } catch (e) {
@@ -503,8 +497,8 @@ export default ({route: {params}}) => {
       leaveWorkFn={leaveWorkFn}
       handleBarCodeScanned1={handleBarCodeScanned1}
       handleBarCodeScanned2={handleBarCodeScanned2}
-      invitedEmpCount={invitedEmpCount}
-      QR={QR}
+      invitedEmpCount={STORE_DATA.inviteemp || 0}
+      QR={STORE_DATA?.resultdata?.QR || ''}
       qrCameraConfirmModalOpen={qrCameraConfirmModalOpen}
       setQrCameraConfirmModalOpen={setQrCameraConfirmModalOpen}
       qrConfirmLoading={qrConfirmLoading}

@@ -75,7 +75,7 @@ export default ({MANAGER_CALLED, data, STORE, STORE_SEQ, STOREPAY_SHOW}) => {
       <FastImage
         style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
         source={{
-          uri: `${data?.images[0].IMAGE}`,
+          uri: `http://shopsolapi.shop-sol.com/uploads/${data?.images[0].IMAGE}`,
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}

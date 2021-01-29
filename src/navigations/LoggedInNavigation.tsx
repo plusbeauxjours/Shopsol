@@ -106,6 +106,7 @@ export default () => {
             backgroundColor: styleGuide.palette.headerColor,
             borderColor: 'white',
             borderWidth: 0,
+            ...headerStyle,
           },
           headerTitleAlign: 'center',
           headerTintColor: 'white',

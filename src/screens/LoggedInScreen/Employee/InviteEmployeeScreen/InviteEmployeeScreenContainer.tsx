@@ -255,10 +255,6 @@ export default () => {
     }, 1000);
   };
 
-  useEffect(() => {
-    dispatch(getRESPONSE_EMPLOYEE());
-  }, []);
-
   return (
     <InviteEmployeeScreenPresenter
       explainModal={explainModal}

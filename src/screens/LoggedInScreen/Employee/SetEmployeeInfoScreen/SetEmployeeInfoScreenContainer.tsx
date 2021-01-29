@@ -52,12 +52,17 @@ export default ({route: {params}}) => {
     isProbationPeriodModalVisible,
     setIsProbationPeriodModalVisible,
   ] = useState<boolean>(false);
-
   ///// STEP 1 /////
   const [click1, setClick1] = useState<boolean>(false);
-  const [initSTART, setInitSTART] = useState<any>(moment(START));
-  const [initStartDay, setInitStartDay] = useState<any>(moment(START));
-  const [startDay, setStartDay] = useState<any>(moment(START));
+  const [initSTART, setInitSTART] = useState<any>(
+    START ? moment(START) : moment(),
+  );
+  const [initStartDay, setInitStartDay] = useState<any>(
+    START ? moment(START) : moment(),
+  );
+  const [startDay, setStartDay] = useState<any>(
+    START ? moment(START) : moment(),
+  );
   const [startDaySet, setStartDaySet] = useState<boolean>(START ? true : false);
   const [initEndDay, setInitEndDay] = useState<any>(moment());
   const [endDay, setEndDay] = useState<any>(moment());

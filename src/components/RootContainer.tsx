@@ -20,6 +20,9 @@ import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/inde
 import Loader from './Loader';
 import styleGuide from '~/constants/styleGuide';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
+import api from '~/constants/LoggedInApi';
+import {getStore} from '../redux/storeSlice';
+import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 
 LogBox.ignoreAllLogs(true);
 
@@ -43,7 +46,10 @@ export default () => {
   const dispatch = useDispatch();
 
   const {visible} = useSelector((state: any) => state.splashReducer);
-  const {isLoggedIn} = useSelector((state: any) => state.userReducer);
+  const {isLoggedIn, STORE, MEMBER_SEQ} = useSelector(
+    (state: any) => state.userReducer,
+  );
+  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const RootStack = createStackNavigator();
 
   const isNetworkAvailable = async () => {
@@ -75,6 +81,18 @@ export default () => {
         (routeNameRef.current = navigationRef.current.getCurrentRoute()?.name)
       }
       onStateChange={async () => {
+        // if (
+        //   navigationRef?.current?.getCurrentOptions()?.title == '메인 페이지'
+        // ) {
+        //   const {data: storeData} = await api.getStoreInfo({
+        //     STORE,
+        //     MEMBER_SEQ,
+        //     STORE_SEQ,
+        //   });
+        //   if (storeData.resultmsg === '1') {
+        //     dispatch(getStore(storeData));
+        //   }
+        // }
         const onNetwork = await isNetworkAvailable();
         if (!onNetwork) {
           alertModal('연결에 실패하였습니다. 네트워크 상태를 확인하세요.');
