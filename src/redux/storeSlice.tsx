@@ -17,38 +17,23 @@ const storeSlice = createSlice({
       if (state.STORE_DATA.resultdata?.QR_Num) {
         state.STORE_DATA.resultdata.QR_Num = QR_Num;
       } else {
-        return {
-          ...state,
-          STORE_DATA: {
-            ...state.STORE_DATA,
-            resultdata: {
-              ...state.STORE_DATA.resultdata,
-              QR_Num,
-            },
-          },
-        };
+        state.STORE_DATA.resultdata.QR_Num = QR_Num;
       }
     },
 
     setSTORE_DATA(state, action) {
       const {payload: STORE_DATA} = action;
-      return {
-        ...state,
-        MANAGER_CALLED:
-          STORE_DATA?.resultdata.CATEGORY == '일반회사' ? '관리자' : '매니저',
-        STORE_DATA,
-        EMP_SEQ: STORE_DATA.EMP_SEQ,
-      };
+      state.MANAGER_CALLED =
+        STORE_DATA?.resultdata.CATEGORY == '일반회사' ? '관리자' : '매니저';
+      state.STORE_DATA = STORE_DATA;
+      state.EMP_SEQ = STORE_DATA.EMP_SEQ;
     },
     selectSTORE(state, action) {
       const {
         payload: {STORE_SEQ, STORE_NAME},
       } = action;
-      return {
-        ...state,
-        STORE_SEQ,
-        STORE_NAME,
-      };
+      state.STORE_SEQ = STORE_SEQ;
+      state.STORE_NAME = STORE_NAME;
     },
     updateSTORE(state, action) {
       const {
@@ -88,20 +73,14 @@ const storeSlice = createSlice({
       state.MANAGER_CALLED = CATEGORY == '일반회사' ? '관리자' : '매니저';
     },
     closeSTORE_DATA(state) {
-      return {
-        ...state,
-        STORE_SEQ: '',
-        STORE_NAME: '',
-        EMP_SEQ: '',
-        STORE_DATA: {},
-        MANAGER_CALLED: '',
-      };
+      state.STORE_SEQ = '';
+      state.STORE_NAME = '';
+      state.EMP_SEQ = '';
+      state.STORE_DATA = {};
+      state.MANAGER_CALLED = '';
     },
     removeSTORE_NAME(state) {
-      return {
-        ...state,
-        STORE_NAME: '',
-      };
+      state.STORE_NAME = '';
     },
   },
 });

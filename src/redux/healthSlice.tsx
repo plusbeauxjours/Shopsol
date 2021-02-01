@@ -15,59 +15,38 @@ const healthSlice = createSlice({
   reducers: {
     setHEALTH_CERTIFICATE_DATA(state, action) {
       const {payload: HEALTH_CERTIFICATE_DATA} = action;
-      return {
-        ...state,
-        HEALTH_CERTIFICATE_DATA,
-      };
+      state.HEALTH_CERTIFICATE_DATA = HEALTH_CERTIFICATE_DATA;
     },
     setHEALTH_EMP_LIST(state, action) {
       const {
         payload: {HEALTH_EMP_LIST, STORE_SEQ},
       } = action;
-      return {
-        ...state,
-        HEALTH_EMP_LIST,
-        HEALTH_EMP_LIST_SEQ: STORE_SEQ,
-      };
+      state.HEALTH_EMP_LIST = HEALTH_EMP_LIST;
+      state.HEALTH_EMP_LIST_SEQ = STORE_SEQ;
     },
     setHEALTH_EMP_DETAIL(state, action) {
       const {payload: HEALTH_EMP_DETAIL} = action;
-      return {
-        ...state,
-        HEALTH_EMP_DETAIL,
-      };
+      state.HEALTH_EMP_DETAIL = HEALTH_EMP_DETAIL;
     },
     setHEALTH_STORE_DETAIL(state, action) {
       const {payload: HEALTH_STORE_DETAIL} = action;
-      return {
-        ...state,
-        HEALTH_STORE_DETAIL,
-      };
+      state.HEALTH_STORE_DETAIL = HEALTH_STORE_DETAIL;
     },
     setSELECT_INDEX(state, action) {
       const {payload: SELECT_INDEX} = action;
-      return {
-        ...state,
-        SELECT_INDEX,
-      };
+      state.SELECT_INDEX = SELECT_INDEX;
     },
     removeHEALTH_EMP_DETAIL(state, action) {
       const {payload: STORE_HEALTH_SEQ} = action;
-      return {
-        ...state,
-        HEALTH_EMP_DETAIL: state.HEALTH_EMP_DETAIL.filter(
-          (i) => i.STORE_HEALTH_SEQ !== STORE_HEALTH_SEQ,
-        ),
-      };
+      state.HEALTH_EMP_DETAIL = state.HEALTH_EMP_DETAIL.filter(
+        (i) => i.STORE_HEALTH_SEQ !== STORE_HEALTH_SEQ,
+      );
     },
     removeHEALTH_STORE_DETAIL(state, action) {
       const {payload: CEO_HEALTH_SEQ} = action;
-      return {
-        ...state,
-        HEALTH_STORE_DETAIL: state.HEALTH_STORE_DETAIL.filter(
-          (i) => i.CEO_HEALTH_SEQ !== CEO_HEALTH_SEQ,
-        ),
-      };
+      state.HEALTH_STORE_DETAIL = state.HEALTH_STORE_DETAIL.filter(
+        (i) => i.CEO_HEALTH_SEQ !== CEO_HEALTH_SEQ,
+      );
     },
   },
 });

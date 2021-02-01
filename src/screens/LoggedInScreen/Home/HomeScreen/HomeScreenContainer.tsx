@@ -375,9 +375,13 @@ export default ({route: {params}}) => {
       try {
         const {data} = await api.insertQR(STORE_SEQ, codenumber);
         if (data.message !== 'SUCCESS') {
-          alertModal('', '연결에 실패하였습니다.');
+          setTimeout(() => {
+            alertModal('', '연결에 실패하였습니다.');
+          }, 500);
         } else {
-          alertModal('', 'QR코드를 등록하였습니다.');
+          setTimeout(() => {
+            alertModal('', 'QR코드를 등록하였습니다.');
+          }, 500);
           dispatch(updateQR_Num(codenumber));
         }
       } catch (e) {
@@ -388,7 +392,9 @@ export default ({route: {params}}) => {
         setQrCameraMode(false);
       }
     } else {
-      alertModal('', '샵솔에서 제공한 QR코드가 아닙니다.');
+      setTimeout(() => {
+        alertModal('', '샵솔에서 제공한 QR코드가 아닙니다.');
+      }, 500);
     }
   };
 

@@ -11,16 +11,11 @@ const calendarSlice = createSlice({
   reducers: {
     setCALENDAR_DATA_STORE_SEQ(state, action) {
       const {payload: CALENDAR_DATA_STORE_SEQ} = action;
-      return {
-        ...state,
-        CALENDAR_DATA_STORE_SEQ,
-      };
+      state.CALENDAR_DATA_STORE_SEQ = CALENDAR_DATA_STORE_SEQ;
     },
     resetCALENDAR_DATA(state) {
-      return {
-        ...state,
-        CALENDAR_DATA: {},
-      };
+      state.CALENDAR_DATA_STORE_SEQ = '';
+      state.CALENDAR_DATA = {};
     },
     setCALENDAR_DATA(state, action) {
       const {
@@ -30,24 +25,12 @@ const calendarSlice = createSlice({
         if (
           state.CALENDAR_DATA.hasOwnProperty(moment(date).format('YYYY-MM-DD'))
         ) {
-          return {
-            ...state,
-            CALENDAR_DATA,
-          };
+          state.CALENDAR_DATA = CALENDAR_DATA;
         } else {
-          return {
-            ...state,
-            CALENDAR_DATA: {
-              ...state.CALENDAR_DATA,
-              ...CALENDAR_DATA,
-            },
-          };
+          state.CALENDAR_DATA = {...CALENDAR_DATA};
         }
       } else {
-        return {
-          ...state,
-          CALENDAR_DATA,
-        };
+        state.CALENDAR_DATA = CALENDAR_DATA;
       }
     },
     toggleVACATION(state, action) {
@@ -79,13 +62,7 @@ const calendarSlice = createSlice({
       const item = state.CALENDAR_DATA[DATE].filter(
         (i) => i.MEMBER_SEQ !== MEMBER_SEQ,
       );
-      return {
-        ...state,
-        CALENDAR_DATA: {
-          ...state.CALENDAR_DATA,
-          [DATE]: item,
-        },
-      };
+      state.CALENDAR_DATA[DATE] = item;
     },
     updateWORKTIME(state, action) {
       const {

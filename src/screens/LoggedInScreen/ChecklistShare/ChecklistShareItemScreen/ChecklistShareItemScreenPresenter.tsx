@@ -403,7 +403,7 @@ export default ({
                           <FastImage
                             style={{width: 50, height: 50, borderRadius: 25}}
                             source={{
-                              uri: getUriImage(item.IMAGE),
+                              uri: utils.getUriImage(item.IMAGE),
                               cache: FastImage.cacheControl.immutable,
                               priority: FastImage.priority.low,
                             }}

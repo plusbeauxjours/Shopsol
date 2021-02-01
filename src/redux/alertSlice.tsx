@@ -19,16 +19,12 @@ const alertSlice = createSlice({
   reducers: {
     setAlertVisible(state, action) {
       const {payload: visible} = action;
-      return {
-        ...state,
-        visible,
-      };
+      state.visible = visible;
     },
     setAlertInfo(state, action) {
       const {
         payload: {
           alertType,
-          height,
           title,
           content,
           okButtonText,
@@ -41,21 +37,17 @@ const alertSlice = createSlice({
           isHeight,
         },
       } = action;
-      return {
-        ...state,
-        alertType,
-        height,
-        title,
-        content,
-        okButtonText: okButtonText ?? '확인',
-        okCallback,
-        cancelButtonText: cancelButtonText ?? '취소',
-        cancelCallback,
-        warning,
-        close,
-        image,
-        isHeight,
-      };
+      state.alertType = alertType;
+      state.title = title;
+      state.content = content;
+      state.okButtonText = okButtonText ?? '확인';
+      state.okCallback = okCallback;
+      state.cancelButtonText = cancelButtonText ?? '취소';
+      state.cancelCallback = cancelCallback;
+      state.warning = warning;
+      state.close = close;
+      state.image = image;
+      state.isHeight = isHeight;
     },
   },
 });

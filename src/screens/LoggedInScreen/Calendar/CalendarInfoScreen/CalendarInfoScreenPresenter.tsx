@@ -8,6 +8,7 @@ import {DownIcon, AddIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import CalendarInfoScreenCard from './CalendarInfoScreenCard';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 interface IWeekend {
   weekend: string;
@@ -248,22 +249,22 @@ export default ({
             }
           }
         }}
+        selected={moment().format('YYYY-MM-DD')}
         rowHasChanged={rowHasChanged}
         onDayPress={(date) => onDayPressFn(date)}
         loadItemsForMonth={(date) => onChangeMonth(date)}
         markingType={'multi-dot'}
       />
-      {STORE == '1' ||
-        ((CALENDAR_EDIT == '1' || undefined) && (
-          <AddButtonContainer>
-            <AddButton
-              onPress={() =>
-                navigation.navigate('CalendarAddScreen', {fetchData})
-              }>
-              <AddIcon />
-            </AddButton>
-          </AddButtonContainer>
-        ))}
+      {(STORE == '1' || CALENDAR_EDIT == '1' || CALENDAR_EDIT == undefined) && (
+        <AddButtonContainer>
+          <AddButton
+            onPress={() =>
+              navigation.navigate('CalendarAddScreen', {fetchData})
+            }>
+            <AddIcon />
+          </AddButton>
+        </AddButtonContainer>
+      )}
     </>
   );
 };

@@ -8,10 +8,7 @@ const helpSlice = createSlice({
   reducers: {
     setHelpCategory(state, action) {
       const {payload: helpCategory} = action;
-      return {
-        ...state,
-        helpCategory,
-      };
+      state.helpCategory = helpCategory;
     },
   },
 });

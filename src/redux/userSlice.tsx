@@ -29,13 +29,7 @@ const userSlice = createSlice({
       if (item) {
         item.push(CUSTOM_MENU_EMP);
       } else {
-        return {
-          ...state,
-          CUSTOM_MENU_EMP: {
-            ...state.CUSTOM_MENU_EMP,
-            [STORE_SEQ]: [CUSTOM_MENU_EMP],
-          },
-        };
+        state.CUSTOM_MENU_EMP[STORE_SEQ] = [CUSTOM_MENU_EMP];
       }
     },
     removeCUSTOM_MENU_EMP(state, action) {
@@ -49,51 +43,36 @@ const userSlice = createSlice({
     },
     setMEMBER_NAME(state, action) {
       const {payload: MEMBER_NAME} = action;
-      return {
-        ...state,
-        MEMBER_NAME,
-      };
+      state.MEMBER_NAME = MEMBER_NAME;
     },
     setSTORE(state, action) {
       const {payload: STORE} = action;
-      return {
-        ...state,
-        STORE,
-      };
+      state.STORE = STORE;
     },
     setUSER(state, action) {
       const {
         payload: {userInfo, mobileNo},
       } = action;
-      return {
-        ...state,
-        MEMBER_SEQ: userInfo.MEMBER_SEQ,
-        GENDER: userInfo.GENDER,
-        MEMBER_NAME: userInfo.NAME,
-        STORE: userInfo.STORE,
-        TYPE: userInfo.TYPE,
-        AVATAR: userInfo.images[0].IMAGE,
-        MOBILE_NO: mobileNo,
-        isLoggedIn: true,
-      };
+      state.MEMBER_SEQ = userInfo.MEMBER_SEQ;
+      state.GENDER = userInfo.GENDER;
+      state.MEMBER_NAME = userInfo.NAME;
+      state.STORE = userInfo.STORE;
+      state.TYPE = userInfo.TYPE;
+      state.AVATAR = userInfo.images[0].IMAGE;
+      state.MOBILE_NO = mobileNo;
+      state.isLoggedIn = true;
     },
     setLOGOUT(state) {
-      return {
-        ...state,
-        isLoggedIn: false,
-        MEMBER_SEQ: '',
-        GENDER: '',
-        STORE: '',
-        MOBILE_NO: '',
-        CUSTOM_MENU_EMP: {},
-      };
+      state.isLoggedIn = false;
+      state.MEMBER_SEQ = '';
+      state.GENDER = '';
+      state.STORE = '';
+      state.MOBILE_NO = '';
+      state.CUSTOM_MENU_EMP = {};
     },
     setDEVICE_PLATFORM(state, action) {
       const {payload: DEVICE_PLATFORM} = action;
-      return {
-        ...state,
-        DEVICE_PLATFORM,
-      };
+      state.DEVICE_PLATFORM = DEVICE_PLATFORM;
     },
     setDEVICE_INFO(state, action) {
       const {
@@ -104,13 +83,10 @@ const userSlice = createSlice({
           DEVICE_SYSTEM_VERSION,
         },
       } = action;
-      return {
-        ...state,
-        PUSH_TOKEN,
-        DEVICE_MODEL,
-        DEVICE_PLATFORM,
-        DEVICE_SYSTEM_VERSION,
-      };
+      state.PUSH_TOKEN = PUSH_TOKEN;
+      state.DEVICE_MODEL = DEVICE_MODEL;
+      state.DEVICE_PLATFORM = DEVICE_PLATFORM;
+      state.DEVICE_SYSTEM_VERSION = DEVICE_SYSTEM_VERSION;
     },
   },
 });

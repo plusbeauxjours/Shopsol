@@ -113,7 +113,9 @@ export default () => {
 
   const fetchData = async (date) => {
     try {
-      dispatch(setSplashVisible({visible: true, text: '캘린더'}));
+      if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
+        dispatch(setSplashVisible({visible: true, text: '캘린더'}));
+      }
       dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       const {data} = await api.getAllSchedules(
         STORE_SEQ,
@@ -158,6 +160,10 @@ export default () => {
       fetchData(date.dateString);
     }
   };
+
+  useEffect(() => {
+    fetchData(moment().format('YYYY-MM-DD'));
+  }, []);
 
   return (
     <CalendarInfoScreenPresenter

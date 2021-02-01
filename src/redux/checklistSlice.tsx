@@ -12,24 +12,15 @@ const checklistSlice = createSlice({
   reducers: {
     setCHECKLIST_STORE_SEQ(state, action) {
       const {payload: CHECKLIST_STORE_SEQ} = action;
-      return {
-        ...state,
-        CHECKLIST_STORE_SEQ,
-      };
+      state.CHECKLIST_STORE_SEQ = CHECKLIST_STORE_SEQ;
     },
     setCHECKLIST_DATA(state, action) {
       const {payload: CHECKLIST_DATA} = action;
-      return {
-        ...state,
-        CHECKLIST_DATA,
-      };
+      state.CHECKLIST_DATA = CHECKLIST_DATA;
     },
     setCHECKLIST_MARKED(state, action) {
       const {payload: CHECKLIST_MARKED} = action;
-      return {
-        ...state,
-        CHECKLIST_MARKED,
-      };
+      state.CHECKLIST_MARKED = CHECKLIST_MARKED;
     },
   },
 });
@@ -47,7 +38,6 @@ export const getCHECKLIST_DATA = (
     storeReducer: {STORE_SEQ},
   } = getState();
   try {
-    console.log(date);
     const {data} = await api.getChecklist(STORE_SEQ, date);
     if (data.message === 'SUCCESS') {
       dispatch(setCHECKLIST_STORE_SEQ(STORE_SEQ));

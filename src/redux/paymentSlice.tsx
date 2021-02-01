@@ -10,10 +10,7 @@ const paymentSlice = createSlice({
   reducers: {
     setTOTAL_PAYMENT_WORKING_EMP(state, action) {
       const {payload: TOTAL_PAYMENT_WORKING_EMP} = action;
-      return {
-        ...state,
-        TOTAL_PAYMENT_WORKING_EMP,
-      };
+      state.TOTAL_PAYMENT_WORKING_EMP = TOTAL_PAYMENT_WORKING_EMP;
     },
   },
 });

@@ -10,6 +10,7 @@ import {setSplashVisible} from '~/redux/splashSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {getCHECKLIST_DATA} from '~/redux/checklistSlice';
+import moment from 'moment';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
@@ -248,7 +249,7 @@ export default ({route: {params}}) => {
           params?.onRefresh();
           navigation.goBack();
           alertModal('체크가 완료되었습니다.');
-          dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
+          dispatch(getCHECKLIST_DATA(moment().format('YYYY-MM-DD')));
         } else {
           alertModal('연결에 실패하였습니다.');
         }
@@ -279,7 +280,7 @@ export default ({route: {params}}) => {
           params?.onRefresh();
           navigation.goBack();
           alertModal('체크가 완료되었습니다.');
-          dispatch(getCHECKLIST_DATA(params?.data.CHECK_DATE));
+          dispatch(getCHECKLIST_DATA(moment().format('YYYY-MM-DD')));
         } else {
           alertModal('연결에 실패하였습니다.');
         }

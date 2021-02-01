@@ -10,10 +10,7 @@ const shelflifetSlice = createSlice({
   reducers: {
     setSHELFLIFE_DATA(state, action) {
       const {payload: SHELFLIFE_DATA} = action;
-      return {
-        ...state,
-        SHELFLIFE_DATA,
-      };
+      state.SHELFLIFE_DATA = SHELFLIFE_DATA;
     },
     checkSHELFLIFE(state, action) {
       const {
@@ -71,18 +68,15 @@ const shelflifetSlice = createSlice({
       const items = state.SHELFLIFE_DATA.find(
         (i) => i.name === name,
       ).items.filter((i) => i.shelfLife_SEQ !== shelfLife_SEQ);
-      return {
-        ...state,
-        SHELFLIFE_DATA: state.SHELFLIFE_DATA.map((item) => {
-          if (item.name === name) {
-            return {
-              ...item,
-              items: [...items],
-            };
-          }
-          return item;
-        }),
-      };
+      state.SHELFLIFE_DATA = state.SHELFLIFE_DATA.map((item) => {
+        if (item.name === name) {
+          return {
+            ...item,
+            items: [...items],
+          };
+        }
+        return item;
+      });
     },
   },
 });

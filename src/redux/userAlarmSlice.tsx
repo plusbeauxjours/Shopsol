@@ -14,52 +14,31 @@ const userAlarmSlice = createSlice({
   reducers: {
     setAllPush(state, action) {
       const {payload: All_PUSH} = action;
-      return {
-        ...state,
-        All_PUSH,
-      };
+      state.All_PUSH = All_PUSH;
     },
     setWorkPush(state, action) {
       const {payload: WORK_PUSH} = action;
-      return {
-        ...state,
-        WORK_PUSH,
-      };
+      state.WORK_PUSH = WORK_PUSH;
     },
     setCheckPush(state, action) {
       const {payload: CHECK_PUSH} = action;
-      return {
-        ...state,
-        CHECK_PUSH,
-      };
+      state.CHECK_PUSH = CHECK_PUSH;
     },
     setChecksharePush(state, action) {
       const {payload: CHECKSHARE_PUSH} = action;
-      return {
-        ...state,
-        CHECKSHARE_PUSH,
-      };
+      state.CHECKSHARE_PUSH = CHECKSHARE_PUSH;
     },
     setScedulePUsh(state, action) {
       const {payload: SCHEDULE_PUSH} = action;
-      return {
-        ...state,
-        SCHEDULE_PUSH,
-      };
+      state.SCHEDULE_PUSH = SCHEDULE_PUSH;
     },
     setShelfPush(state, action) {
       const {payload: SHELF_PUSH} = action;
-      return {
-        ...state,
-        SHELF_PUSH,
-      };
+      state.SHELF_PUSH = SHELF_PUSH;
     },
     setHealthPush(state, action) {
       const {payload: HEALTH_PUSH} = action;
-      return {
-        ...state,
-        HEALTH_PUSH,
-      };
+      state.HEALTH_PUSH = HEALTH_PUSH;
     },
   },
 });

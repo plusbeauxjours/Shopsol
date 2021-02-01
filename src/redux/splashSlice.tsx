@@ -6,26 +6,20 @@ const splashSlice = createSlice({
     visible: false,
     text: '',
     fullText: null,
-    loading: false,
+    loading: true,
   },
   reducers: {
     setSplashVisible(state, action) {
       const {
         payload: {visible, text = '', fullText = null},
       } = action;
-      return {
-        ...state,
-        visible,
-        text,
-        fullText,
-      };
+      state.visible = visible;
+      state.text = text;
+      state.fullText = fullText;
     },
     setLoadingVisible(state, action) {
       const {payload: loading} = action;
-      return {
-        ...state,
-        loading,
-      };
+      state.loading = loading;
     },
   },
 });

@@ -33,7 +33,6 @@ export default () => {
   const adviceModal = (title, text, height) => {
     const params = {
       alertType: 'explain',
-      height: height,
       title: title,
       content: text,
     };

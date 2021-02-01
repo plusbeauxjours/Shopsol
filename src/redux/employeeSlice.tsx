@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import api from '../constants/LoggedInApi';
-import {setSplashVisible} from './splashSlice';
+import {setSplashVisible, setLoadingVisible} from './splashSlice';
 
 const employeeSlice = createSlice({
   name: 'employee',
@@ -14,20 +14,15 @@ const employeeSlice = createSlice({
   reducers: {
     setEMPLOYEE_INFO_DATA(state, action) {
       const {payload: EMPLOYEE_INFO_DATA} = action;
-      return {
-        ...state,
-        EMPLOYEE_INFO_DATA,
-      };
+      state.EMPLOYEE_INFO_DATA = EMPLOYEE_INFO_DATA;
     },
     setEMPLOYEE_LIST(state, action) {
       const {
         payload: {EMPLOYEE_LIST, STORE_SEQ},
       } = action;
-      return {
-        ...state,
-        EMPLOYEE_LIST_SEQ: STORE_SEQ,
-        EMPLOYEE_LIST,
-      };
+
+      state.EMPLOYEE_LIST_SEQ = STORE_SEQ;
+      state.EMPLOYEE_LIST = EMPLOYEE_LIST;
     },
     updateEMPLOYEE_LIST(state, action) {
       const {
@@ -55,19 +50,13 @@ const employeeSlice = createSlice({
     },
     setRESPONSE_EMPLOYEE(state, action) {
       const {payload: RESPONSE_EMPLOYEE} = action;
-      return {...state, RESPONSE_EMPLOYEE};
+      state.RESPONSE_EMPLOYEE = RESPONSE_EMPLOYEE;
     },
     removeRESPONSE_EMPLOYEE(state, action) {
       const {payload: EMP_SEQ} = action;
-      return {
-        ...state,
-        RESPONSE_EMPLOYEE: {
-          ...state.RESPONSE_EMPLOYEE,
-          result: state.RESPONSE_EMPLOYEE?.result.filter(
-            (i) => i.EMP_SEQ !== EMP_SEQ,
-          ),
-        },
-      };
+      state.RESPONSE_EMPLOYEE.result = state.RESPONSE_EMPLOYEE?.result.filter(
+        (i) => i.EMP_SEQ !== EMP_SEQ,
+      );
     },
   },
 });

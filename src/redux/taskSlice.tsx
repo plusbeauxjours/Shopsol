@@ -10,10 +10,7 @@ const taskSlice = createSlice({
   reducers: {
     setTASK_DATA(state, action) {
       const {payload: TASK_DATA} = action;
-      return {
-        ...state,
-        TASK_DATA,
-      };
+      state.TASK_DATA = TASK_DATA;
     },
     checkTASK(state, action) {
       const {
@@ -60,18 +57,15 @@ const taskSlice = createSlice({
       const items = state.TASK_DATA.find((i) => i.name === name).items.filter(
         (i) => i.task_SEQ !== task_SEQ,
       );
-      return {
-        ...state,
-        TASK_DATA: state.TASK_DATA.map((item) => {
-          if (item.name === name) {
-            return {
-              ...item,
-              items: [...items],
-            };
-          }
-          return item;
-        }),
-      };
+      state.TASK_DATA = state.TASK_DATA.map((item) => {
+        if (item.name === name) {
+          return {
+            ...item,
+            items: [...items],
+          };
+        }
+        return item;
+      });
     },
   },
 });

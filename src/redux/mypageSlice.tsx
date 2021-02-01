@@ -8,10 +8,7 @@ const mypageSlice = createSlice({
   reducers: {
     setCLOSED_STORE_DATA(state, action) {
       const {payload: CLOSED_STORE_DATA} = action;
-      return {
-        ...state,
-        CLOSED_STORE_DATA,
-      };
+      state.CLOSED_STORE_DATA = CLOSED_STORE_DATA;
     },
   },
 });

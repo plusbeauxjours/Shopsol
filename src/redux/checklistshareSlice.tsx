@@ -45,7 +45,6 @@ const checklistshareSlice = createSlice({
         const item = state.CHECKLIST_SHARE_DATA2.favorite.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-
         state.CHECKLIST_SHARE_DATA2.basic.unshift(item);
       }
     },
@@ -54,25 +53,13 @@ const checklistshareSlice = createSlice({
         payload: {TITLE, NOTICE_SEQ},
       } = action;
       if (TITLE === '지시사항') {
-        return {
-          ...state,
-          CHECKLIST_SHARE_DATA1: {
-            ...state.CHECKLIST_SHARE_DATA1,
-            favorite: state.CHECKLIST_SHARE_DATA1.favorite.filter(
-              (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-            ),
-          },
-        };
+        state.CHECKLIST_SHARE_DATA1.favorite = state.CHECKLIST_SHARE_DATA1.favorite.filter(
+          (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+        );
       } else {
-        return {
-          ...state,
-          CHECKLIST_SHARE_DATA2: {
-            ...state.CHECKLIST_SHARE_DATA2,
-            favorite: state.CHECKLIST_SHARE_DATA2.favorite.filter(
-              (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-            ),
-          },
-        };
+        state.CHECKLIST_SHARE_DATA2.favorite = state.CHECKLIST_SHARE_DATA2.favorite.filter(
+          (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+        );
       }
     },
     removeCHECKLIST_SHARE_FROM_BASIC(state, action) {
@@ -80,74 +67,41 @@ const checklistshareSlice = createSlice({
         payload: {TITLE, NOTICE_SEQ},
       } = action;
       if (TITLE === '지시사항') {
-        return {
-          ...state,
-          CHECKLIST_SHARE_DATA1: {
-            ...state.CHECKLIST_SHARE_DATA1,
-            basic: state.CHECKLIST_SHARE_DATA1.basic.filter(
-              (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-            ),
-          },
-        };
+        state.CHECKLIST_SHARE_DATA1.basic = state.CHECKLIST_SHARE_DATA1.basic.filter(
+          (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+        );
       } else {
-        return {
-          ...state,
-          CHECKLIST_SHARE_DATA2: {
-            ...state.CHECKLIST_SHARE_DATA2,
-            basic: state.CHECKLIST_SHARE_DATA2.basic.filter(
-              (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-            ),
-          },
-        };
+        state.CHECKLIST_SHARE_DATA2.basic = state.CHECKLIST_SHARE_DATA2.basic.filter(
+          (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+        );
       }
     },
 
     setCHECKLIST_SHARE_STORE_SEQ(state, action) {
       const {payload: CHECKLIST_SHARE_STORE_SEQ} = action;
-      return {
-        ...state,
-        CHECKLIST_SHARE_STORE_SEQ,
-      };
+      state.CHECKLIST_SHARE_STORE_SEQ = CHECKLIST_SHARE_STORE_SEQ;
     },
     setCHECKLIST_SHARE_DATA1(state, action) {
       const {payload: CHECKLIST_SHARE_DATA1} = action;
-      return {
-        ...state,
-        CHECKLIST_SHARE_DATA1,
-      };
+      state.CHECKLIST_SHARE_DATA1 = CHECKLIST_SHARE_DATA1;
     },
     setCHECKLIST_SHARE_DATA2(state, action) {
       const {payload: CHECKLIST_SHARE_DATA2} = action;
-      return {
-        ...state,
-        CHECKLIST_SHARE_DATA2,
-      };
+      state.CHECKLIST_SHARE_DATA2 = CHECKLIST_SHARE_DATA2;
     },
     setCHECKLIST_SHARE_MARKED(state, action) {
       const {payload: CHECKLIST_SHARE_MARKED} = action;
-      return {
-        ...state,
-        CHECKLIST_SHARE_MARKED,
-      };
+      state.CHECKLIST_SHARE_MARKED = CHECKLIST_SHARE_MARKED;
     },
     increaseNEW_CNT1(state) {
-      return {
-        ...state,
-        NEW_CNT1: state.NEW_CNT1 + 1,
-      };
+      state.NEW_CNT1 + 1;
     },
     increaseNEW_CNT2(state) {
-      return {
-        ...state,
-        NEW_CNT2: state.NEW_CNT2 + 1,
-      };
+      state.NEW_CNT2 + 1;
     },
     setCHECKLIST_SHARE_COMMENTS(state, action) {
       const {payload: CHECKLIST_SHARE_COMMENTS} = action;
-      return {
-        ...state,
-        CHECKLIST_SHARE_COMMENTS,
-      };
+      state.CHECKLIST_SHARE_COMMENTS = CHECKLIST_SHARE_COMMENTS;
     },
     addCHECKLIST_SHARE_COMMENTS(state, action) {
       const {payload: CHECKLIST_SHARE_COMMENTS} = action;
@@ -164,12 +118,9 @@ const checklistshareSlice = createSlice({
     },
     deleteCHECKLIST_SHARE_COMMENTS(state, action) {
       const {payload: selectedCOM_SEQ} = action;
-      return {
-        ...state,
-        CHECKLIST_SHARE_COMMENTS: state.CHECKLIST_SHARE_COMMENTS.filter(
-          (i) => i.COM_SEQ !== selectedCOM_SEQ,
-        ),
-      };
+      state.CHECKLIST_SHARE_COMMENTS = state.CHECKLIST_SHARE_COMMENTS.filter(
+        (i) => i.COM_SEQ !== selectedCOM_SEQ,
+      );
     },
     deleteCHECKLIST_SHARE_DATA(state, action) {
       const {
@@ -177,47 +128,23 @@ const checklistshareSlice = createSlice({
       } = action;
       if (TITLE === '지시사항') {
         if (isFavorite) {
-          return {
-            ...state,
-            CHECKLIST_SHARE_DATA1: {
-              ...state.CHECKLIST_SHARE_DATA1,
-              favorite: state.CHECKLIST_SHARE_DATA1.favorite.filter(
-                (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-              ),
-            },
-          };
+          state.CHECKLIST_SHARE_DATA1.favorite = state.CHECKLIST_SHARE_DATA1.favorite.filter(
+            (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+          );
         } else {
-          return {
-            ...state,
-            CHECKLIST_SHARE_DATA1: {
-              ...state.CHECKLIST_SHARE_DATA1,
-              basic: state.CHECKLIST_SHARE_DATA1.basic.filter(
-                (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-              ),
-            },
-          };
+          state.CHECKLIST_SHARE_DATA1.basic = state.CHECKLIST_SHARE_DATA1.basic.filter(
+            (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+          );
         }
       } else {
         if (isFavorite) {
-          return {
-            ...state,
-            CHECKLIST_SHARE_DATA2: {
-              ...state.CHECKLIST_SHARE_DATA2,
-              favorite: state.CHECKLIST_SHARE_DATA2.favorite.filter(
-                (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-              ),
-            },
-          };
+          state.CHECKLIST_SHARE_DATA2.favorite = state.CHECKLIST_SHARE_DATA2.favorite.filter(
+            (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+          );
         } else {
-          return {
-            ...state,
-            CHECKLIST_SHARE_DATA2: {
-              ...state.CHECKLIST_SHARE_DATA2,
-              basic: state.CHECKLIST_SHARE_DATA2.basic.filter(
-                (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
-              ),
-            },
-          };
+          state.CHECKLIST_SHARE_DATA2.basic = state.CHECKLIST_SHARE_DATA2.basic.filter(
+            (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
+          );
         }
       }
     },
