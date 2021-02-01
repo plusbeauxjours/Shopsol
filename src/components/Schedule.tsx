@@ -10,6 +10,7 @@ import {Value} from 'react-native-reanimated';
 
 import ScheduleUnderlay from './ScheduleUnderlay';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface ITouchable {
   isSelected?: boolean;
@@ -296,7 +297,7 @@ export default ({
                           opacity: selectedIndex == index ? 1 : 0.4,
                         }}
                         source={{
-                          uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                          uri: utils.getUriImage(i.IMAGE),
                           cache: FastImage.cacheControl.immutable,
                           priority: FastImage.priority.low,
                         }}
@@ -320,7 +321,7 @@ export default ({
                           borderRadius: 20,
                         }}
                         source={{
-                          uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                          uri: utils.getUriImage(i.IMAGE),
                           cache: FastImage.cacheControl.immutable,
                           priority: FastImage.priority.low,
                         }}
@@ -365,7 +366,7 @@ export default ({
                           opacity: selectedIndex == index ? 1 : 0.4,
                         }}
                         source={{
-                          uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                          uri: utils.getUriImage(i.IMAGE),
                           cache: FastImage.cacheControl.immutable,
                           priority: FastImage.priority.low,
                         }}

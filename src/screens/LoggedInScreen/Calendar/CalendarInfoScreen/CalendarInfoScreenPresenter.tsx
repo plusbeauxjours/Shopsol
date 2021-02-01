@@ -90,6 +90,7 @@ export default ({
   loading,
   fetchData,
   MANAGER_CALLED,
+  onRefresh,
 }) => {
   const navigation = useNavigation();
   const rowHasChanged = (r1, r2) => r1 !== r2;
@@ -189,8 +190,8 @@ export default ({
           },
         }}
         refreshControl={null}
-        refreshing={false}
-        onRefresh={() => fetchData()}
+        refreshing={loading}
+        onRefresh={() => onRefresh()}
         monthFormat={'yyyy년 M월'}
         renderDay={(day, item) => {
           if (day !== undefined) {

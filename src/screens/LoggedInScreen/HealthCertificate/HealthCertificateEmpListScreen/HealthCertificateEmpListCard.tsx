@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 
 import {ForwardIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IText {
   color: string;
@@ -66,7 +67,7 @@ export default ({
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
           source={{
-            uri: `http://shopsolapi.shop-sol.com/uploads/${data?.IMAGE}`,
+            uri: utils.getUriImage(data?.IMAGE),
             cache: FastImage.cacheControl.immutable,
             priority: FastImage.priority.low,
           }}
@@ -113,7 +114,7 @@ export default ({
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
           source={{
-            uri: `http://shopsolapi.shop-sol.com/uploads/${data?.IMAGE}`,
+            uri: utils.getUriImage(data?.IMAGE),
             cache: FastImage.cacheControl.immutable,
             priority: FastImage.priority.low,
           }}

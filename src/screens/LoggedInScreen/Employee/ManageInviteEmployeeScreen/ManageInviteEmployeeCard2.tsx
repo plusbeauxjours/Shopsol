@@ -9,6 +9,7 @@ import {setSplashVisible} from '~/redux/splashSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {getRESPONSE_EMPLOYEE} from '~/redux/employeeSlice';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IsLast {
   isLast?: boolean;
@@ -132,7 +133,7 @@ export default ({
         <FastImage
           style={{width: 60, height: 60, borderRadius: 30}}
           source={{
-            uri: `http://shopsolapi.shop-sol.com/uploads/${IMAGE}`,
+            uri: utils.getUriImage(IMAGE),
             cache: FastImage.cacheControl.immutable,
             priority: FastImage.priority.low,
           }}

@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import {ForwardIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const Touchable = styled.TouchableOpacity`
   align-items: center;
@@ -60,7 +61,7 @@ export default ({EMP_NAME, IS_MANAGER, data, image, mobileNo, START, END}) => {
       <FastImage
         style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
         source={{
-          uri: `http://shopsolapi.shop-sol.com/uploads/${image}`,
+          uri: utils.getUriImage(image),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}

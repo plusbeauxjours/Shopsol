@@ -21,7 +21,7 @@ const SubmitButton = styled(Ripple)<IIsWhiteBack>`
   border-radius: 30px;
   background-color: ${(props) =>
     props.isWhiteBack ? 'transparent' : styleGuide.palette.primary};
-  border-width: ${(props) => (props.isWhiteBack ? '1' : '0')};
+  border-width: ${(props) => (props.isWhiteBack ? '1' : '0')}px;
   border-color: ${(props) =>
     props.isWhiteBack ? styleGuide.palette.primary : 'transparent'};
 `;
@@ -30,7 +30,7 @@ const NoSubmitButton = styled(SubmitButton)`
   background-color: ${(props) =>
     props.isWhiteBack ? 'transparent' : '#cccccc'};
 
-  border-width: ${(props) => (props.isWhiteBack ? '1' : '0')};
+  border-width: ${(props) => (props.isWhiteBack ? '1' : '0')}px;
   border-color: ${(props) => (props.isWhiteBack ? '#cccccc' : 'transparent')};
 `;
 

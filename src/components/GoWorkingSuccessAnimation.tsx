@@ -7,6 +7,7 @@ import moment from 'moment';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const BigText = styled.Text`
   color: #000;
@@ -72,7 +73,7 @@ export default ({
           zIndex: 15,
         }}
         source={{
-          uri: `http://shopsolapi.shop-sol.com/uploads/${AVATAR}`,
+          uri: utils.getUriImage(AVATAR),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}

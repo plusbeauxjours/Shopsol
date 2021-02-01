@@ -41,25 +41,25 @@ export default () => {
   };
 
   const fetchData = async () => {
-    if (EMPLOYEE_LIST_SEQ != STORE_SEQ) {
-      try {
-        if (!EMPLOYEE_LIST) {
-          dispatch(setSplashVisible({visible: true, text: '직원'}));
-        }
-        const {data} = await api.getEmpLists(STORE_SEQ);
-        if (data.message == 'SUCCESS') {
-          dispatch(setEMPLOYEE_LIST({EMPLOYEE_LIST: data, STORE_SEQ}));
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        dispatch(setSplashVisible({visible: false}));
+    try {
+      if (!EMPLOYEE_LIST) {
+        dispatch(setSplashVisible({visible: true, text: '직원'}));
       }
+      const {data} = await api.getEmpLists(STORE_SEQ);
+      if (data.message == 'SUCCESS') {
+        dispatch(setEMPLOYEE_LIST({EMPLOYEE_LIST: data, STORE_SEQ}));
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      dispatch(setSplashVisible({visible: false}));
     }
   };
 
   useEffect(() => {
-    fetchData();
+    if (EMPLOYEE_LIST_SEQ != STORE_SEQ) {
+      fetchData();
+    }
   }, []);
 
   return (

@@ -25,6 +25,7 @@ export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {loading} = useSelector((state: any) => state.splashReducer);
+  const {MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
   const scrollRef = createRef(0);
   const {interpolate, Extrapolate} = Animated;
   const y = useValue(0);
@@ -165,6 +166,7 @@ export default () => {
       const {data} = await api.checkShelfLifeData({
         STORE,
         EMP_SEQ,
+        MEMBER_SEQ,
         shelfLife_SEQ,
       });
       if (data.resultmsg !== '1') {

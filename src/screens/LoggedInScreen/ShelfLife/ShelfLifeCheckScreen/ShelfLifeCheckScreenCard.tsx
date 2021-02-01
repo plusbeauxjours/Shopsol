@@ -8,6 +8,7 @@ import Ripple from 'react-native-material-ripple';
 
 import {CheckMarkIcon, BarCodeIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IsChecked {
   isChecked?: boolean;
@@ -177,8 +178,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                         item?.IMG_LIST?.includes('http://') ||
                         item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
-                      : 'http://shopsolapi.shop-sol.com/uploads/' +
-                        item.IMG_LIST,
+                      : utils.getUriImage(item.IMG_LIST),
                   cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}
@@ -221,7 +221,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                     item?.IMG_LIST?.includes('http://') ||
                     item?.IMG_LIST?.includes('content://')
                   ? item.IMG_LIST
-                  : 'http://shopsolapi.shop-sol.com/uploads/' + item.IMG_LIST,
+                  : utils.getUriImage(item.IMG_LIST),
                 onRefresh,
                 shelfLifeBarcode:
                   item?.shelfLifeBarcode == 'undefined'
@@ -280,8 +280,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
                         item?.IMG_LIST?.includes('http://') ||
                         item?.IMG_LIST?.includes('content://')
                       ? item.IMG_LIST
-                      : 'http://shopsolapi.shop-sol.com/uploads/' +
-                        item.IMG_LIST,
+                      : utils.getUriImage(item.IMG_LIST),
                   cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}

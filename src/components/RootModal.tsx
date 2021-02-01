@@ -14,6 +14,7 @@ import styleGuide from '~/constants/styleGuide';
 import FastImage from 'react-native-fast-image';
 import Loader from '~/components/Loader';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import utils from '~/constants/utils';
 
 interface IColor {
   color: string;
@@ -147,9 +148,7 @@ export default ({alert}) => {
       isVisible={alert.visible}>
       {alert.image && (
         <ImageViewer
-          imageUrls={[
-            {url: 'http://shopsolapi.shop-sol.com/uploads/' + alert.image},
-          ]}
+          imageUrls={[{url: getUriImage(alert.image)}]}
           onSwipeDown={() => dispatch(setAlertVisible(false))}
           backgroundColor={'transparent'}
           saveToLocalByLongPress={false}
@@ -162,7 +161,7 @@ export default ({alert}) => {
             <FastImage
               style={{width: '100%', height: '100%'}}
               source={{
-                uri: props.source.uri,
+                uri: utils.getUriImage(props.source.uri),
                 cache: FastImage.cacheControl.immutable,
                 priority: FastImage.priority.low,
               }}

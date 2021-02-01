@@ -9,13 +9,50 @@ import Geolocation from 'react-native-geolocation-service';
 
 export default {
   isAndroid: () => Platform.OS === 'android',
+  getOCRImage: (uri) => {
+    const getUri = (uri) => {
+      return uri !== null &&
+        uri !== undefined &&
+        uri?.includes('/') &&
+        uri?.includes('.')
+        ? uri
+        : '';
+    };
+    if (!uri?.includes('https://wesop.s3.ap-northeast-2.amazonaws.com')) {
+      return `http://shopsolapi.shop-sol.com/uploads/ocr/${uri}`;
+    } else {
+      return getUri(uri);
+    }
+  },
+  getQRImage: (uri) => {
+    const getUri = (uri) => {
+      return uri !== null &&
+        uri !== undefined &&
+        uri?.includes('/') &&
+        uri?.includes('.')
+        ? uri
+        : '';
+    };
+    if (!uri?.includes('https://wesop.s3.ap-northeast-2.amazonaws.com')) {
+      return `http://shopsolapi.shop-sol.com/${uri}`;
+    } else {
+      return getUri(uri);
+    }
+  },
   getUriImage: (uri) => {
-    return uri !== null &&
-      uri !== undefined &&
-      uri.includes('/') &&
-      uri.includes('.')
-      ? uri
-      : '';
+    const getUri = (uri) => {
+      return uri !== null &&
+        uri !== undefined &&
+        uri?.includes('/') &&
+        uri?.includes('.')
+        ? uri
+        : '';
+    };
+    if (!uri?.includes('https://wesop.s3.ap-northeast-2.amazonaws.com')) {
+      return `http://shopsolapi.shop-sol.com/uploads/${uri}`;
+    } else {
+      return getUri(uri);
+    }
   },
   handleCameraPermission: async (handle) => {
     try {

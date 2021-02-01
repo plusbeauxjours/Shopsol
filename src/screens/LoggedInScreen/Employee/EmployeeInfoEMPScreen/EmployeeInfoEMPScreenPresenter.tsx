@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import {BackIcon, ForwardIcon, EllipseIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IsSelected {
   isSelected: boolean;
@@ -423,7 +424,7 @@ export default ({
                 <FastImage
                   style={{width: 60, height: 60, borderRadius: 30}}
                   source={{
-                    uri: `http://shopsolapi.shop-sol.com/uploads/${AVATAR}`,
+                    uri: utils.getUriImage(AVATAR),
                     cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}

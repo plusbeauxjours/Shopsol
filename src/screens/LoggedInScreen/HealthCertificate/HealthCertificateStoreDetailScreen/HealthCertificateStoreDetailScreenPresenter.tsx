@@ -19,6 +19,7 @@ import {
 } from '~/constants/Icons';
 import Loader from '~/components/Loader';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -181,7 +182,7 @@ export default ({
     const navigation = useNavigation();
     const images = [
       {
-        url: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+        url: utils.getOCRImage(HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST),
       },
     ];
 
@@ -342,7 +343,9 @@ export default ({
                       HEALTH_STORE_DETAIL[SELECT_INDEX]?.businesstype,
                     EDUCATION_TYPE:
                       HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationTYPE,
-                    IMG_LIST: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+                    IMG_LIST: utils.getOCRImage(
+                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    ),
                   });
                 }}>
                 <Text
@@ -357,7 +360,9 @@ export default ({
                     EDUCATION_DATEprops:
                       HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE,
                     NAME: HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME,
-                    IMG_LIST: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+                    IMG_LIST: utils.getOCRImage(
+                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    ),
                   });
                 }}>
                 <Text

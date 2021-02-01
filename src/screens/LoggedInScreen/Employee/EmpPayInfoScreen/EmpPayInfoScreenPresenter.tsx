@@ -11,6 +11,7 @@ import EmpPayInfoCard2 from './EmpPayInfoCard2';
 import {ForwardIcon, BackIcon, ReloadCircleIcon} from '~/constants/Icons';
 import Chevron from '~/components/Chevron';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IsFirst {
   isFirst?: boolean;
@@ -342,7 +343,7 @@ export default ({
           <FastImage
             style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
             source={{
-              uri: `http://shopsolapi.shop-sol.com/uploads/${image}`,
+              uri: utils.getUriImage(image),
               cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.low,
             }}

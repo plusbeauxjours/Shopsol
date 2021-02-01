@@ -13,13 +13,14 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import moment from 'moment';
+import {Linking} from 'react-native';
+import LottieView from 'lottie-react-native';
 
 import {BackIcon, ForwardIcon, HelpCircleIcon} from '~/constants/Icons';
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import styleGuide from '~/constants/styleGuide';
-import {PhoneIcon} from '../../../../constants/Icons';
-import {Linking} from 'react-native';
-import LottieView from 'lottie-react-native';
+import {PhoneIcon} from '~/constants/Icons';
+import utils from '~/constants/utils';
 
 interface IsSelected {
   isSelected: boolean;
@@ -144,7 +145,7 @@ const FixTypeDayChangeButton = styled.TouchableOpacity`
   width: 30%;
   height: 40px;
   border-radius: 5px;
-  border-width: 1;
+  border-width: 1px;
   align-items: center;
   justify-content: center;
 `;
@@ -497,7 +498,7 @@ export default ({
                 <FastImage
                   style={{width: 60, height: 60, borderRadius: 30}}
                   source={{
-                    uri: `http://shopsolapi.shop-sol.com/uploads/${IMAGE}`,
+                    uri: utils.getUriImage(IMAGE),
                     cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}

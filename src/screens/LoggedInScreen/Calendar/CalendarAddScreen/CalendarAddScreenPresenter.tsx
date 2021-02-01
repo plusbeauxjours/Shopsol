@@ -24,7 +24,6 @@ import {
 } from '~/constants/Icons';
 import CalendarAddScreenCard from './CalendarAddScreenCard';
 import RoundBtn from '~/components/Btn/RoundBtn';
-import {} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 import Chevron from '~/components/Chevron';
@@ -140,7 +139,7 @@ const RenderWorkDayTouchable = styled.TouchableOpacity`
 `;
 
 const IncentiveText = styled.Text`
-  margin-left: 10;
+  margin-left: 10px;
   font-size: 14px;
 `;
 

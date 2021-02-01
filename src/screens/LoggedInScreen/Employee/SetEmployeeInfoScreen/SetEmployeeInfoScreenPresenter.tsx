@@ -484,7 +484,7 @@ export default ({
           <FastImage
             style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
             source={{
-              uri: `http://shopsolapi.shop-sol.com/uploads/${IMAGE}`,
+              uri: utils.getUriImage(IMAGE),
               cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.low,
             }}

@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Ripple from 'react-native-material-ripple';
 import {CloseCircleIcon, BarCodeIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const Text = styled.Text`
   color: #333;
@@ -146,7 +147,7 @@ export default ({
             <FastImage
               style={{width: 60, height: 60, borderRadius: 10}}
               source={{
-                uri: shelfLifeImgLink ?? shelfLifeIMAGE,
+                uri: shelfLifeImgLink ? shelfLifeImgLink : shelfLifeIMAGE,
                 cache: FastImage.cacheControl.immutable,
                 priority: FastImage.priority.low,
               }}

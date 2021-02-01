@@ -34,6 +34,17 @@ export default () => {
   const [markedDates, setMarkedDates] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const onRefresh = async () => {
+    try {
+      setLoading(true);
+      await fetchData(moment().format('YYYY-MM-DD'));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // INIT으로 받은 데이터를 가공
   const setMarkFn = (data) => {
     let staticMarked = {};
@@ -116,13 +127,14 @@ export default () => {
       if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
         dispatch(setSplashVisible({visible: true, text: '캘린더'}));
       }
-      dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
       const {data} = await api.getAllSchedules(
         STORE_SEQ,
         moment(date).format('YYYY'),
         moment(date).format('M'),
       );
+      console.log(data);
       if (data.message === 'SUCCESS') {
+        dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
         let buffer = {};
         const iterator = Object.keys(data.result);
         for (const key of iterator) {
@@ -177,6 +189,7 @@ export default () => {
       loading={loading}
       fetchData={fetchData}
       MANAGER_CALLED={MANAGER_CALLED}
+      onRefresh={onRefresh}
     />
   );
 };

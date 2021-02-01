@@ -19,6 +19,7 @@ import {
 } from '~/constants/Icons';
 import Loader from '~/components/Loader';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -181,7 +182,7 @@ export default ({
     const navigation = useNavigation();
     const images = [
       {
-        url: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+        url: utils.getOCRImage(HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST),
       },
     ];
 
@@ -308,7 +309,9 @@ export default ({
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
                     EDUCATION_DATE:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
-                    IMG_LIST: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+                    IMG_LIST: utils.getOCRImage(
+                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    ),
                     STORE_HEALTH_SEQ:
                       HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_HEALTH_SEQ,
                     SELECT_INDEX,
@@ -327,7 +330,9 @@ export default ({
                     RESULT_DATE: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
                     NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
                     RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
-                    IMG_LIST: `http://shopsolapi.shop-sol.com/uploads/ocr/${HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST}`,
+                    IMG_LIST: utils.getOCRImage(
+                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                    ),
                     SELECT_INDEX,
                   });
                 }}>

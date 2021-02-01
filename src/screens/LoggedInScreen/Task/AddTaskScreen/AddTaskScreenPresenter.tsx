@@ -604,9 +604,9 @@ export default ({
           />
           <DatePickerRoundBtn
             onPress={() => {
-              setInitTaskDate(moment(taskDate).format('YYYY-MM-DD'));
               setIsDateModalVisible(false);
               setTaskDateSet(true);
+              setInitTaskDate(moment(taskDate).format('YYYY-MM-DD'));
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}
@@ -618,8 +618,8 @@ export default ({
           <DatePickerRoundBtn
             isCancelBtn={true}
             onPress={() => {
-              setIsDateModalVisible(false);
               setTaskDate(moment(initTaskDate).format('YYYY-MM-DD'));
+              setIsDateModalVisible(false);
             }}
             rippleColor={styleGuide.palette.rippleGreyColor}
             rippleDuration={600}

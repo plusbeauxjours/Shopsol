@@ -19,6 +19,7 @@ import {
 import Loader from '~/components/Loader';
 import styleGuide from '~/constants/styleGuide';
 import LottieView from 'lottie-react-native';
+import utils from '~/constants/utils';
 
 interface ISelected {
   isSelected: boolean;
@@ -236,7 +237,7 @@ export default ({
       <FastImage
         style={{width: 100, height: 100, borderRadius: 10, marginHorizontal: 5}}
         source={{
-          uri: item,
+          uri: utils.getUriImage(item),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}
@@ -299,11 +300,9 @@ export default ({
           if (imageList && Array.isArray(imageList)) {
             if (imageList[0] != '') {
               for (const imageName of imageList) {
-                cameraPictureList.push(
-                  `http://shopsolapi.shop-sol.com/uploads/${imageName}`,
-                );
+                cameraPictureList.push(`${imageName}`);
                 modalImgarr.push({
-                  url: `http://shopsolapi.shop-sol.com/uploads/${imageName}`,
+                  url: `${imageName}`,
                 });
               }
             }
@@ -534,7 +533,7 @@ export default ({
               <FastImage
                 style={{width: '100%', height: '100%'}}
                 source={{
-                  uri: props.source.uri,
+                  uri: utils.getUriImage(props.source.uri),
                   cache: FastImage.cacheControl.immutable,
                   priority: FastImage.priority.low,
                 }}

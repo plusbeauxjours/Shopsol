@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {CloseCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 const Container = styled.View`
   justify-content: center;
@@ -38,7 +39,7 @@ export default ({name, image}) => {
       <FastImage
         style={{width: 60, height: 60, borderRadius: 30}}
         source={{
-          uri: `http://shopsolapi.shop-sol.com/uploads/${image}`,
+          uri: utils.getUriImage(image),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}

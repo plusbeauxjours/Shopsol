@@ -267,7 +267,7 @@ export default ({route: {params}}) => {
         dispatch(setSplashVisible({visible: true, text: '유통기한'}));
         if (codenumber) {
           const {data} = await api.getBarCode(codenumber);
-          if (data.resultdata?.length > 0) {
+          if (data.message == 'SUCCESS') {
             dispatch(setSplashVisible({visible: false}));
             setShelfLifeName(data.resultdata[0].NAME);
             setShelfLifeMemo(data.resultdata[0].BRAND);

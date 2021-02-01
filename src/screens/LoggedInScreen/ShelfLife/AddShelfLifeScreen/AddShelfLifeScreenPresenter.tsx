@@ -371,7 +371,9 @@ export default ({
                   <FastImage
                     style={{width: 60, height: 60, borderRadius: 10}}
                     source={{
-                      uri: shelfLifeImgLink ?? cameraPictureLast,
+                      uri: shelfLifeImgLink
+                        ? shelfLifeImgLink
+                        : cameraPictureLast,
                       cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}

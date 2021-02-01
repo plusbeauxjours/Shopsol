@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import styleGuide from '~/constants/styleGuide';
 import FastImage from 'react-native-fast-image';
+import utils from '~/constants/utils';
 
 const BigText = styled.Text`
   color: #000;
@@ -71,7 +72,7 @@ export default ({
           zIndex: 15,
         }}
         source={{
-          uri: `http://shopsolapi.shop-sol.com/uploads/${AVATAR}`,
+          uri: utils.getUriImage(AVATAR),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}

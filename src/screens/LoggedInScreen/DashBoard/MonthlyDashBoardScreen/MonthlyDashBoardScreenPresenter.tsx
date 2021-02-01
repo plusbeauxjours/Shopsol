@@ -360,7 +360,7 @@ export default ({
               borderRadius: 20,
             }}
             source={{
-              uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+              uri: utils.getUriImage(i.IMAGE),
               cache: FastImage.cacheControl.immutable,
               priority: FastImage.priority.low,
             }}
@@ -768,7 +768,7 @@ export default ({
                                       borderRadius: 20,
                                     }}
                                     source={{
-                                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                                      uri: utils.getUriImage(i.IMAGE),
                                       cache: FastImage.cacheControl.immutable,
                                       priority: FastImage.priority.low,
                                     }}
@@ -856,7 +856,7 @@ export default ({
                                       borderRadius: 20,
                                     }}
                                     source={{
-                                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                                      uri: utils.getUriImage(i.IMAGE),
                                       cache: FastImage.cacheControl.immutable,
                                       priority: FastImage.priority.low,
                                     }}
@@ -944,7 +944,7 @@ export default ({
                                       borderRadius: 20,
                                     }}
                                     source={{
-                                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                                      uri: utils.getUriImage(i.IMAGE),
                                       cache: FastImage.cacheControl.immutable,
                                       priority: FastImage.priority.low,
                                     }}
@@ -1018,7 +1018,7 @@ export default ({
                                   borderRadius: 20,
                                 }}
                                 source={{
-                                  uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                                  uri: utils.getUriImage(i.IMAGE),
                                   cache: FastImage.cacheControl.immutable,
                                   priority: FastImage.priority.low,
                                 }}
@@ -1103,7 +1103,7 @@ export default ({
                                   borderRadius: 20,
                                 }}
                                 source={{
-                                  uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                                  uri: utils.getUriImage(i.IMAGE),
                                   cache: FastImage.cacheControl.immutable,
                                   priority: FastImage.priority.low,
                                 }}
@@ -1158,7 +1158,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                      uri: utils.getUriImage(i.IMAGE),
                       cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
@@ -1212,7 +1212,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                      uri: utils.getUriImage(i.IMAGE),
                       cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
@@ -1266,7 +1266,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                      uri: utils.getUriImage(i.IMAGE),
                       cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
@@ -1320,7 +1320,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                      uri: utils.getUriImage(i.IMAGE),
                       cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
@@ -1374,7 +1374,7 @@ export default ({
                       borderRadius: 20,
                     }}
                     source={{
-                      uri: `http://shopsolapi.shop-sol.com/uploads/${i.IMAGE}`,
+                      uri: utils.getUriImage(i.IMAGE),
                       cache: FastImage.cacheControl.immutable,
                       priority: FastImage.priority.low,
                     }}
