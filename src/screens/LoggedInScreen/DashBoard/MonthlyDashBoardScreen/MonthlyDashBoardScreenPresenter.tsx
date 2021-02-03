@@ -20,6 +20,7 @@ import {
   CloseCircleOutlineIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import utils from '~/constants/utils';
 
 interface IColor {
   color: string;
