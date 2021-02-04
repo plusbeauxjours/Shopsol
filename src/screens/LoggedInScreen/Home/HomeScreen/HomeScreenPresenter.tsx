@@ -411,6 +411,7 @@ export default ({
   STORE_NAME,
   TOTAL_COUNT,
   WORKING_COUNT,
+  EMPCOUNT,
   qrCameraConfirmModalOpen,
   setQrCameraConfirmModalOpen,
   qrConfirmLoading,
@@ -830,7 +831,7 @@ export default ({
                   paging={'InviteEmployeeScreen'}
                   source={require(`../../../../assets/main/Invite.png`)}
                 />
-                {TOTAL_COUNT !== 0 && (
+                {EMPCOUNT !== 0 && (
                   <MenuCntContainer
                     selection={'직원목록'}
                     paging={'EmployeeListScreen'}
@@ -843,7 +844,7 @@ export default ({
                   count={invitedEmpCount}
                   source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
                 />
-                {TOTAL_COUNT !== 0 && (
+                {EMPCOUNT !== 0 && (
                   <MenuCntContainer
                     selection={'캘린더'}
                     paging={'CalendarInfoScreen'}
@@ -854,14 +855,14 @@ export default ({
                     }
                   />
                 )}
-                {TOTAL_COUNT !== 0 && (
+                {EMPCOUNT !== 0 && (
                   <MenuCntContainer
                     selection={'급여정보'}
                     paging={'PaymentInfoScreen'}
                     source={require(`../../../../assets/main/PaymentInfo.png`)}
                   />
                 )}
-                {TOTAL_COUNT !== 0 && (
+                {EMPCOUNT !== 0 && (
                   <MenuCntContainer
                     selection={'사업장현황'}
                     paging={'DashBoardScreen'}
@@ -1002,7 +1003,7 @@ export default ({
                           paging={'InviteEmployeeScreen'}
                           source={require(`../../../../assets/main/Invite.png`)}
                         />
-                        {TOTAL_COUNT !== 0 &&
+                        {EMPCOUNT !== 0 &&
                           (STORE_DATA?.OTHERPAY_SHOW == 1 ? (
                             <MenuCntContainer
                               selection={'직원목록'}
@@ -1022,7 +1023,7 @@ export default ({
                           count={invitedEmpCount}
                           source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
                         />
-                        {TOTAL_COUNT !== 0 &&
+                        {EMPCOUNT !== 0 &&
                           STORE_DATA?.CalendarEdit == '1' && (
                             <MenuCntContainer
                               selection={'캘린더'}
@@ -1034,7 +1035,7 @@ export default ({
                               }
                             />
                           )}
-                        {TOTAL_COUNT !== 0 &&
+                        {EMPCOUNT !== 0 &&
                         STORE_DATA?.STOREPAY_SHOW == '1' ? (
                           <MenuCntContainer
                             selection={'급여정보'}
@@ -1050,7 +1051,7 @@ export default ({
                             />
                           )
                         )}
-                        {TOTAL_COUNT !== 0 && (
+                        {EMPCOUNT !== 0 && (
                           <MenuCntContainer
                             selection={'사업장현황'}
                             paging={'DashBoardScreen'}

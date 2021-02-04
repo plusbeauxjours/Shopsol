@@ -43,9 +43,10 @@ export default ({route: {params}}) => {
   const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
     false,
   );
-  const [qrCameraConfirmModalOpen, setQrCameraConfirmModalOpen] = useState<
-    boolean
-  >(false);
+  const [
+    qrCameraConfirmModalOpen,
+    setQrCameraConfirmModalOpen,
+  ] = useState<boolean>(false);
   const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
   const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
@@ -495,6 +496,7 @@ export default ({route: {params}}) => {
       STORE_NAME={STORE_NAME}
       TOTAL_COUNT={TOTAL_COUNT}
       WORKING_COUNT={WORKING_COUNT}
+      EMPCOUNT={STORE_DATA?.EMPCOUNT}
       setShowPictureModalOpen={setShowPictureModalOpen}
       showPictureModalOpen={showPictureModalOpen}
       workingModalOpen={workingModalOpen}

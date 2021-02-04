@@ -132,7 +132,6 @@ export default () => {
         moment(date).format('YYYY'),
         moment(date).format('M'),
       );
-      console.log(data);
       if (data.message === 'SUCCESS') {
         dispatch(setCALENDAR_DATA_STORE_SEQ(STORE_SEQ));
         let buffer = {};

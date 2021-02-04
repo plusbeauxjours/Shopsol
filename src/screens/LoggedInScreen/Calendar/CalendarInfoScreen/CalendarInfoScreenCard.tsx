@@ -189,6 +189,33 @@ export default ({
             </SelectBoxTouchable>
           </SelectBox>
         );
+      } else if (TYPE == '4') {
+        return (
+          <SelectBox style={{marginTop: 0}}>
+            <SelectBoxTouchable
+              style={{width: (wp('100%') / 3) * 2 - 30}}
+              onPress={() => {
+                navigation.navigate('RealWorkTimeScreen', {
+                  data,
+                  date,
+                });
+              }}>
+              <BoxText>출퇴근시간 수정</BoxText>
+            </SelectBoxTouchable>
+            <SelectBoxTouchable
+              onPress={() => {
+                navigation.navigate('WorkDayScreen', {
+                  data,
+                  STORE_SEQ,
+                  date,
+                  addWork:
+                    TYPE == '3' && VACATION != '1' ? 'addWork' : 'schWork',
+                });
+              }}>
+              <BoxText>기타 설정</BoxText>
+            </SelectBoxTouchable>
+          </SelectBox>
+        );
       } else {
         return (
           <SelectBox style={{marginTop: 0}}>

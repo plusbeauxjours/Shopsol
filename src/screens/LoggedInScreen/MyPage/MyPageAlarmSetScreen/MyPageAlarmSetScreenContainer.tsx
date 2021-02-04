@@ -104,7 +104,6 @@ export default () => {
   const fetch = async () => {
     try {
       const {data} = await api.getPush({MEMBER_SEQ});
-      console.log(data);
       data.All_Push == '1' && dispatch(setAllPush(true));
       data.WORK_PUSH == '1' && dispatch(setWorkPush(true));
       data.CHECK_PUSH == '1' && dispatch(setCheckPush(true));

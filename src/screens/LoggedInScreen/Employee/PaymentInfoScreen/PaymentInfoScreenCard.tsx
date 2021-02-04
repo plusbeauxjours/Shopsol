@@ -95,9 +95,14 @@ export default ({MANAGER_CALLED, data, STORE, STORE_SEQ, STOREPAY_SHOW}) => {
           {data?.PAY_TYPE === '2' && '월급'}&nbsp;
           {data?.PAY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
         </PayText>
-        <PayText>
-          근무기간&nbsp;({moment().diff(moment(data?.START), 'month')}개월)
-        </PayText>
+        {moment(data?.START) < moment() ? (
+          <PayText>
+            근무기간&nbsp;({moment().diff(moment(data?.START), 'month')}
+            개월)
+          </PayText>
+        ) : (
+          <PayText>근무기간&nbsp;(근무시작전)</PayText>
+        )}
         <PayText>
           {moment(data?.START).format('YYYY.MM.DD')} ~&nbsp;
           {data?.END ? moment(data?.END).format('YYYY.MM.DD') : '계속'}

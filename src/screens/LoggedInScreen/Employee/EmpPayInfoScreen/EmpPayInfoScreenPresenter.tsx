@@ -362,9 +362,14 @@ export default ({
               {EMP_PAY_TYPE && EMP_PAY_TYPE === '2' && '월급'}&nbsp;
               {PAY?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
             </EmployeeText>
-            <EmployeeText>
-              근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)
-            </EmployeeText>
+            {moment(START) < moment() ? (
+              <EmployeeText>
+                근무기간&nbsp;({moment().diff(moment(START), 'month')}
+                개월)
+              </EmployeeText>
+            ) : (
+              <EmployeeText>근무기간&nbsp;(근무시작전)</EmployeeText>
+            )}
             <EmployeeText>
               {moment(START).format('YYYY.MM.DD')}&nbsp;~&nbsp;
               {END ? moment(END).format('YYYY.MM.DD') : '계속'}

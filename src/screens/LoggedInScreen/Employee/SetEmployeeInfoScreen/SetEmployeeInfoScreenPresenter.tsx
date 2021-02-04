@@ -524,10 +524,16 @@ export default ({
             )}
             {initSTART && (
               <>
-                <EmployeeCardText>
-                  근무기간&nbsp;({moment().diff(moment(initSTART), 'month')}
-                  개월)
-                </EmployeeCardText>
+                {moment(initSTART) < moment() ? (
+                  <EmployeeCardText>
+                    근무기간&nbsp;({moment().diff(moment(initSTART), 'month')}
+                    개월)
+                  </EmployeeCardText>
+                ) : (
+                  <EmployeeCardText>
+                    근무기간&nbsp;(근무시작전)
+                  </EmployeeCardText>
+                )}
                 <EmployeeCardText>
                   {moment(initSTART).format('YYYY.MM.DD')} ~&nbsp;
                   {END ? moment(END).format('YYYY.MM.DD') : '계속'}
@@ -1446,7 +1452,7 @@ export default ({
             <ListTouchable onPress={() => setClick5(!click5)}>
               <ListContainer as={Animated.View}>
                 <DateBoxText style={{fontWeight: '600'}}>
-                  (선택) 직책 / 권한 , 급여보기
+                  (선택) 직책 / 권한, 급여보기
                 </DateBoxText>
                 <Chevron {...{transition: click5Transition}} />
               </ListContainer>

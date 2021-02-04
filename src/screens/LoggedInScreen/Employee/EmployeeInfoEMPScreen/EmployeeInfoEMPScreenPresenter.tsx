@@ -439,11 +439,18 @@ export default ({
                         : '[직원]'}
                     </NameText>
                   </Row>
-                  <InfoText>
-                    근무기간&nbsp;(
-                    {moment().diff(moment(EMPLOYEE_INFO_DATA?.START), 'month')}
-                    개월)
-                  </InfoText>
+                  {moment(EMPLOYEE_INFO_DATA?.START) < moment() ? (
+                    <InfoText>
+                      근무기간&nbsp;(
+                      {moment().diff(
+                        moment(EMPLOYEE_INFO_DATA?.START),
+                        'month',
+                      )}
+                      개월)
+                    </InfoText>
+                  ) : (
+                    <InfoText>근무기간&nbsp;(근무시작전)</InfoText>
+                  )}
                   <InfoText>
                     {moment(EMPLOYEE_INFO_DATA?.START).format('YYYY.MM.DD')}
                     &nbsp; ~&nbsp;

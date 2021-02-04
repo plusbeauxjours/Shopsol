@@ -32,10 +32,9 @@ export default ({route: {params}}) => {
   const {EMPLOYEE_LIST: {workinglist = []} = {}} = useSelector(
     (state: any) => state.employeeReducer,
   );
-
   const {data: {EMP_SEQ = null, images = []} = {}} = params;
 
-  const user = workinglist.find((i) => (i.EMP_SEQ = EMP_SEQ));
+  const user = workinglist.find((i) => i.EMP_SEQ == EMP_SEQ);
   const START = user?.START;
   const END = user?.END;
   const EMP_PAY_TYPE = user?.PAY_TYPE;

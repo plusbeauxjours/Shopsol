@@ -528,10 +528,15 @@ export default ({
                       </InfoText>
                     </Row>
                   </Touchable>
-                  <InfoText>
-                    근무기간&nbsp;({moment().diff(moment(data.START), 'month')}
-                    개월)
-                  </InfoText>
+                  {moment(data.START) < moment() ? (
+                    <InfoText>
+                      근무기간&nbsp;(
+                      {moment().diff(moment(data.START), 'month')}
+                      개월)
+                    </InfoText>
+                  ) : (
+                    <InfoText>근무기간&nbsp;(근무시작전)</InfoText>
+                  )}
                   <InfoText>
                     {moment(data.START).format('YYYY.MM.DD')} ~&nbsp;
                     {data?.END

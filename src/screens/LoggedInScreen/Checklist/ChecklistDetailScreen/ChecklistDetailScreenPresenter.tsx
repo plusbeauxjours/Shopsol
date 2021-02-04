@@ -232,8 +232,6 @@ export default ({
         setIsImageViewVisible(true);
       }}
       key={index}>
-      {console.log(item)}
-
       <FastImage
         style={{width: 100, height: 100, borderRadius: 10, marginHorizontal: 5}}
         source={{

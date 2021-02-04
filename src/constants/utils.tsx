@@ -120,7 +120,6 @@ export default {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           Geolocation.getCurrentPosition(
             (position) => {
-              console.log(position);
               setLat(position.coords.latitude);
               setLong(position.coords.longitude);
             },
@@ -157,7 +156,6 @@ export default {
         if (permission === 'granted') {
           Geolocation.getCurrentPosition(
             (position) => {
-              console.log(position);
               setLat(position.coords.latitude);
               setLong(position.coords.longitude);
             },
