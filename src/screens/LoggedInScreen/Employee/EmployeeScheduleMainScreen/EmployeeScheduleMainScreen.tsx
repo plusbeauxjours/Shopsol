@@ -11,6 +11,7 @@ import {
   RadioBtnOffIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import api from '~/constants/LoggedInApi';
 
 const WhiteSpace = styled.View`
   height: 30px;
@@ -80,6 +81,16 @@ export default ({route: {params}}) => {
 
   const [isFreeWorkingType, setIsFreeWorkingType] = useState<boolean>(true); //  [ 일정이 있는 직원, 자율출퇴근 직원 ]
 
+  const alertModal = (text) => {
+    const params = {
+      alertType: 'alert',
+      title: '',
+      content: text || '',
+    };
+    dispatch(setAlertInfo(params));
+    dispatch(setAlertVisible(true));
+  };
+
   const explainModal = (text) => {
     const params = {
       alertType: 'explain',
@@ -88,6 +99,18 @@ export default ({route: {params}}) => {
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
+  };
+
+  const changeMode = async () => {
+    try {
+      await api.toggleCalendar({
+        CALENDAR: isFreeWorkingType ? '1' : '0',
+        EMP_SEQ,
+      });
+    } catch (e) {
+      console.log(e);
+      alertModal('통신이 원활하지 않습니다.');
+    }
   };
 
   const WorkType = ({selection, text}) => (
@@ -158,6 +181,7 @@ export default ({route: {params}}) => {
         <SubmitBtn
           text={'선택 완료'}
           onPress={() => {
+            changeMode();
             navigation.navigate('EmployeeScheduleInfoScreen', {
               CALCULATE_DAY,
               isFreeWorkingType,
