@@ -479,6 +479,7 @@ export default ({
                     autoCorrect={false}
                     multiline={true}
                     style={{
+                      textAlignVertical: 'top',
                       padding: 0,
                       top: 0,
                       fontSize: styleGuide.fontSize.middle,

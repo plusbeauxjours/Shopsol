@@ -395,6 +395,7 @@ export default ({
                     value={shelfLifeMemo}
                     multiline={true}
                     style={{
+                      textAlignVertical: 'top',
                       fontSize: styleGuide.fontSize.middle,
                       width: '100%',
                       paddingTop: 10,

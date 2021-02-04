@@ -424,6 +424,9 @@ export default ({
                     autoCorrect={false}
                     placeholderTextColor={styleGuide.palette.greyColor}
                     multiline={true}
+                    style={{
+                      textAlignVertical: 'top',
+                    }}
                   />
                 </Box>
               </Section>

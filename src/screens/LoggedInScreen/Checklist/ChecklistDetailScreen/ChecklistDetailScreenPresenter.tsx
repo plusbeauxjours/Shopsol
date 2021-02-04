@@ -481,6 +481,9 @@ export default ({
                   placeholderTextColor={'#CCCCCC'}
                   multiline={true}
                   editable={false}
+                  style={{
+                    textAlignVertical: 'top',
+                  }}
                 />
               </Box>
             </Section>
