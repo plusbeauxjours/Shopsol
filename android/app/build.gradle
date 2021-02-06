@@ -173,8 +173,8 @@ android {
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 85
-        versionName "1.2.20"
+        versionCode 86
+        versionName "1.2.21"
     }
     splits {
         abi {

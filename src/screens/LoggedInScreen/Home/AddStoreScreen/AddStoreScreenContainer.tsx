@@ -26,7 +26,6 @@ export default ({route: {params}}) => {
   const [LONG, setLONG] = useState<number>(params?.lng || 0);
   const [TYPE, setTYPE] = useState<number>(0);
 
-  const [commuteType, setCommuteType] = useState<number>(0); // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
   const [storeCategoryType, setStoreCategoryType] = useState<string>(
     '분류 선택',
   ); // 사업장 분류 유형, 0: 요식업, 1: 도,소매업, 2: 서비스업, 3: 일반회사, 4: 기타
@@ -37,10 +36,6 @@ export default ({route: {params}}) => {
     true,
     false,
   ]); //1: 5인 이상, 0: 5인 미만
-  const [commuteTypeCheck, setCommuteTypeCheck] = useState<[boolean, boolean]>([
-    true,
-    false,
-  ]);
   const [storeCategoryTypeEtc, setStoreCategoryTypeEtc] = useState<string>(''); // 사업장 분류 유형이 4(기타)인 경우 직접 입력 값
   const [categoryCheck, setCategoryCheck] = useState<boolean>(false);
   const [EARLYtimeCheck, setEARLYtimeCheck] = useState<boolean>(true);
@@ -179,7 +174,7 @@ export default ({route: {params}}) => {
           LATE_FLAG,
           EARLY_TIME,
           EARLY_FLAG,
-          GPS: commuteType,
+          GPS: '1', //출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
           JULI: distance,
           TYPE,
           CATEGORY: storeCategoryType,
@@ -256,9 +251,6 @@ export default ({route: {params}}) => {
       setNAME={setNAME}
       submit={submit}
       helparr={helparr}
-      setCommuteType={setCommuteType}
-      commuteTypeCheck={commuteTypeCheck}
-      setCommuteTypeCheck={setCommuteTypeCheck}
       storeCategoryType={storeCategoryType}
       categoryCheck={categoryCheck}
       setStoreCategoryTypeEtc={setStoreCategoryTypeEtc}

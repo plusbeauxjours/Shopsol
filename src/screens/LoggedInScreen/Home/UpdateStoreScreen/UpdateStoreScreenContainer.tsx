@@ -46,9 +46,6 @@ export default ({route: {params}}) => {
   const [LONG, setLONG] = useState<number>(STORE_DATA?.resultdata?.LONG || 0);
   const [TYPE, setTYPE] = useState<number>(STORE_DATA?.resultdata?.TYPE || 0);
 
-  const [commuteType, setCommuteType] = useState<number>(
-    STORE_DATA?.resultdata?.GPS == '1' ? 1 : 0,
-  ); // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
   const [storeCategoryType, setStoreCategoryType] = useState<number>(
     STORE_DATA?.resultdata?.CATEGORY || '분류 선택',
   ); // 사업장 분류 유형, 0: 요식업, 1: 도,소매업, 2: 서비스업, 3: 일반회사, 4: 기타
@@ -197,7 +194,7 @@ export default ({route: {params}}) => {
           EARLY_FLAG,
           EARLY_TIME,
           CALCULATE_DAY,
-          GPS: commuteType.toString(),
+          GPS: '1',
           JULI: distance,
           CATEGORY: storeCategoryType,
           other: storeCategoryTypeEtc,
@@ -227,7 +224,7 @@ export default ({route: {params}}) => {
         LATE_FLAG,
         EARLY_TIME,
         EARLY_FLAG,
-        GPS: commuteType.toString(),
+        GPS: '1', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
         JULI: distance,
         TYPE,
         CATEGORY: storeCategoryType,
@@ -307,10 +304,6 @@ export default ({route: {params}}) => {
       setNAME={setNAME}
       submit={submit}
       helparr={helparr}
-      commuteType={commuteType}
-      setCommuteType={setCommuteType}
-      commuteTypeCheck={commuteTypeCheck}
-      setCommuteTypeCheck={setCommuteTypeCheck}
       storeCategoryType={storeCategoryType}
       categoryCheck={categoryCheck}
       setStoreCategoryTypeEtc={setStoreCategoryTypeEtc}
