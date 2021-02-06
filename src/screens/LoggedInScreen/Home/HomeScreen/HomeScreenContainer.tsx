@@ -35,23 +35,12 @@ export default ({route: {params}}) => {
     GENDER,
     CUSTOM_MENU_EMP,
   } = useSelector((state: any) => state.userReducer);
-  const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
   const [workingLoading, setWorkingLoading] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
-  const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
-    false,
-  );
-  const [
-    qrCameraConfirmModalOpen,
-    setQrCameraConfirmModalOpen,
-  ] = useState<boolean>(false);
-  const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
-  const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
   const [isWorkingMode, setIsWorkingMode] = useState<boolean>(false);
   const [workingModalOpen, setWorkingModalOpen] = useState<boolean>(false);
-  const [qrCameraMode, setQrCameraMode] = useState<boolean>(false);
   const [sucessModalOpen, setSucessModalOpen] = useState<boolean>(false);
   const [failModalOpen, setFailModalOpen] = useState<boolean>(false);
   const [actionTYPE, setActionTYPE] = useState<string>('출근');
@@ -61,10 +50,23 @@ export default ({route: {params}}) => {
   const [initLoading, setInitLoading] = useState<boolean>(
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
-  const [hasConfirmed, setHasConfirmed] = useState<boolean>(
-    params?.hasConfirmed == '1',
-  );
   const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  //0208 REMOVEQR
+  // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
+  // const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
+  // const [qrCameraModalOpen2, setQrCameraModalOpen2] = useState<boolean>(false);
+  // const [qrCameraMode, setQrCameraMode] = useState<boolean>(false);
+  // const [hasConfirmed, setHasConfirmed] = useState<boolean>(
+  //   params?.hasConfirmed == '1',
+  // );
+  // const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
+  //   false,
+  // );
+  // const [
+  //   qrCameraConfirmModalOpen,
+  //   setQrCameraConfirmModalOpen,
+  // ] = useState<boolean>(false);
 
   const onRefresh = async () => {
     try {
@@ -213,21 +215,93 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
-  const confirmModal = () => {
-    const params = {
-      alertType: 'confirm',
-      title: '',
-      content: '텍스트텍스트텍스트?',
-      cancelButtonText: '취소',
-      okButtonText: '확인',
-      okCallback: async () => {
-        setHasConfirmed(true);
-        const {data} = await api.confirmQR({STORE_SEQ});
-        utils.handleCameraPermission(setQrCameraModalOpen2);
-      },
-    };
-    dispatch(setAlertInfo(params));
-    dispatch(setAlertVisible(true));
+  // QR 출근하기 //0208 REMOVEQR
+  const goWorkFn = async (TYPE) => {
+    setActionTYPE('출근');
+    try {
+      setWorkingLoading(true);
+      await utils.handleLocationPermission(setLat, setLong);
+      const {data} = await api.attendanceWork({
+        STORE_ID: STORE_SEQ,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        MEMBER_SEQ,
+        TYPE,
+      });
+
+      if (data.message === 'CONTRACT_END') {
+        // setErrorMessage('해당 사업장 QR코드가 아닙니다.'); //0208 REMOVEQR
+        setFailModalOpen(true);
+      } else if (data.message === 'WORK_ON_SUCCESS') {
+        setSucessModalOpen(true);
+      } else if (data.message === 'SCHEDULE_EMPTY') {
+        setErrorMessage('오늘은 근무일이 아닙니다.');
+        setFailModalOpen(true);
+      } else if (data.message === 'SCHEDULE_EXIST') {
+        setErrorMessage('이미 출근처리를 완료했습니다.');
+        setFailModalOpen(true);
+      } else if (data.message === 'ALREADY_SUCCESS') {
+        setErrorMessage('이미 출근처리를 완료했습니다.');
+        setFailModalOpen(true);
+      } else if (data.message === 'FAR_STORE') {
+        setErrorMessage('사업장 도착 후 출근을 진행해주세요.');
+        setFailModalOpen(true);
+      } else if (data.message === 'FAIL') {
+        setFailModalOpen(true);
+      } else {
+        setFailModalOpen(true);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setWorkingLoading(false);
+    }
+  };
+
+  // QR 퇴근하기 //0208 REMOVEQR
+  const leaveWorkFn = async (TYPE) => {
+    setActionTYPE('퇴근');
+    try {
+      setWorkingLoading(true);
+      await utils.handleLocationPermission(setLat, setLong);
+      const {data} = await api.attendanceOffWork({
+        STORE_ID: STORE_SEQ,
+        LAT: lat,
+        LONG: long,
+        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+        MEMBER_SEQ,
+        TYPE,
+      });
+      if (data.message == 'CONTRACT_END') {
+        // setErrorMessage('해당 사업장 QR코드가 아닙니다'); //0208 REMOVEQR
+        setFailModalOpen(true);
+      } else if (data.message == 'SCHEDULE_EMPTY') {
+        setErrorMessage('일하는 시간이 아닙니다.');
+        setFailModalOpen(true);
+      } else if (data.message == 'ALREADY_SUCCESS') {
+        setErrorMessage('이미 퇴근하였습니다.');
+        setFailModalOpen(true);
+      } else if (data.message == 'WORK_OFF_SUCCESS') {
+        setSucessModalOpen(true);
+      } else if (data.message == 'NOWORK') {
+        setErrorMessage('출근기록이 없습니다.');
+        setFailModalOpen(true);
+      } else if (data.message === 'FAR_STORE') {
+        setErrorMessage('사업장 도착 후 퇴근을 진행해주세요.');
+        setFailModalOpen(true);
+      } else if (data.message == 'FAIL') {
+        setFailModalOpen(true);
+      } else {
+        setFailModalOpen(true);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setWorkingLoading(false);
+    }
   };
 
   // VERSION
@@ -263,139 +337,6 @@ export default ({route: {params}}) => {
       Linking.openURL(
         'https://apps.apple.com/kr/app/%ED%87%B4%EA%B7%BC%ED%95%B4%EC%94%A8%EC%9C%A0-%EC%9A%B0%EB%A6%AC%EB%A7%A4%EC%9E%A5-%ED%95%84%EC%88%98%ED%92%88/id1503486454',
       );
-    }
-  };
-
-  // QR 출근하기
-  const goWorkFn = async (TYPE) => {
-    setActionTYPE('출근');
-    try {
-      setWorkingLoading(true);
-      await utils.handleLocationPermission(setLat, setLong);
-      const {data} = await api.attendanceWork({
-        STORE_ID: STORE_SEQ,
-        LAT: lat,
-        LONG: long,
-        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
-        MEMBER_SEQ,
-        TYPE,
-      });
-
-      if (data.message === 'CONTRACT_END') {
-        setErrorMessage('해당 사업장 QR코드가 아닙니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'WORK_ON_SUCCESS') {
-        setSucessModalOpen(true);
-      } else if (data.message === 'SCHEDULE_EMPTY') {
-        setErrorMessage('오늘은 근무일이 아닙니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'SCHEDULE_EXIST') {
-        setErrorMessage('이미 출근처리를 완료했습니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'ALREADY_SUCCESS') {
-        setErrorMessage('이미 출근처리를 완료했습니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'FAR_STORE') {
-        setErrorMessage('사업장 도착 후 출근을 진행해주세요.');
-        setFailModalOpen(true);
-      } else if (data.message === 'FAIL') {
-        setFailModalOpen(true);
-      } else {
-        setFailModalOpen(true);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setWorkingLoading(false);
-    }
-  };
-
-  // QR 퇴근하기
-  const leaveWorkFn = async (TYPE) => {
-    setActionTYPE('퇴근');
-    try {
-      setWorkingLoading(true);
-      await utils.handleLocationPermission(setLat, setLong);
-      const {data} = await api.attendanceOffWork({
-        STORE_ID: STORE_SEQ,
-        LAT: lat,
-        LONG: long,
-        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
-        MEMBER_SEQ,
-        TYPE,
-      });
-      if (data.message == 'CONTRACT_END') {
-        setErrorMessage('해당 사업장 QR코드가 아닙니다');
-        setFailModalOpen(true);
-      } else if (data.message == 'SCHEDULE_EMPTY') {
-        setErrorMessage('일하는 시간이 아닙니다.');
-        setFailModalOpen(true);
-      } else if (data.message == 'ALREADY_SUCCESS') {
-        setErrorMessage('이미 퇴근하였습니다.');
-        setFailModalOpen(true);
-      } else if (data.message == 'WORK_OFF_SUCCESS') {
-        setSucessModalOpen(true);
-      } else if (data.message == 'NOWORK') {
-        setErrorMessage('출근기록이 없습니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'FAR_STORE') {
-        setErrorMessage('사업장 도착 후 퇴근을 진행해주세요.');
-        setFailModalOpen(true);
-      } else if (data.message == 'FAIL') {
-        setFailModalOpen(true);
-      } else {
-        setFailModalOpen(true);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setWorkingLoading(false);
-    }
-  };
-
-  // 출퇴근QR 스캔
-  const handleBarCodeScanned1 = (codenumber) => {
-    console.log(codenumber);
-    if (!codenumber || STORE_SEQ != codenumber) {
-      setQrCameraModalOpen1(false);
-      setTimeout(() => {
-        alertModal('', '해당 사업장 QR코드가 아닙니다');
-      }, 500);
-    } else {
-      setIsWorkingMode(true);
-    }
-  };
-
-  // 사업장QR 스캔
-  const handleBarCodeScanned2 = async (codenumber) => {
-    console.log(codenumber, /^wes/.test(codenumber));
-    await setQrCameraModalOpen2(false);
-    if (/^wes/.test(codenumber)) {
-      try {
-        const {data} = await api.insertQR(STORE_SEQ, codenumber);
-        if (data.message !== 'SUCCESS') {
-          setTimeout(() => {
-            alertModal('', '연결에 실패하였습니다.');
-          }, 500);
-        } else {
-          setTimeout(() => {
-            alertModal('', 'QR코드를 등록하였습니다.');
-          }, 500);
-          dispatch(updateQR_Num(codenumber));
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        setQrCameraModalOpen2(false);
-        setShowPictureModalOpen(false);
-        setQrCameraMode(false);
-      }
-    } else {
-      setTimeout(() => {
-        alertModal('', '샵솔에서 제공한 QR코드가 아닙니다.');
-      }, 500);
     }
   };
 
@@ -487,6 +428,68 @@ export default ({route: {params}}) => {
     checkVersion();
   }, []);
 
+  // // QR 처음 등록하기  //0208 REMOVEQR
+  // const confirmModal = () => {
+  //   const params = {
+  //     alertType: 'confirm',
+  //     title: '',
+  //     content: '0208 REMOVEQR?',
+  //     cancelButtonText: '취소',
+  //     okButtonText: '확인',
+  //     okCallback: async () => {
+  //       setHasConfirmed(true);
+  //       const {data} = await api.confirmQR({STORE_SEQ});
+  //       utils.handleCameraPermission(setQrCameraModalOpen2);
+  //     },
+  //   };
+  //   dispatch(setAlertInfo(params));
+  //   dispatch(setAlertVisible(true));
+  // };
+
+  // // 출퇴근QR 스캔 //0208 REMOVEQR
+  // const handleBarCodeScanned1 = (codenumber) => {
+  //   console.log(codenumber);
+  //   if (!codenumber || STORE_SEQ != codenumber) {
+  //     setQrCameraModalOpen1(false);
+  //     setTimeout(() => {
+  //       alertModal('', '해당 사업장 QR코드가 아닙니다');
+  //     }, 500);
+  //   } else {
+  //     setIsWorkingMode(true);
+  //   }
+  // };
+
+  // // 사업장QR 스캔 //0208 REMOVEQR
+  // const handleBarCodeScanned2 = async (codenumber) => {
+  //   console.log(codenumber, /^wes/.test(codenumber));
+  //   await setQrCameraModalOpen2(false);
+  //   if (/^wes/.test(codenumber)) {
+  //     try {
+  //       const {data} = await api.insertQR(STORE_SEQ, codenumber);
+  //       if (data.message !== 'SUCCESS') {
+  //         setTimeout(() => {
+  //           alertModal('', '연결에 실패하였습니다.');
+  //         }, 500);
+  //       } else {
+  //         setTimeout(() => {
+  //           alertModal('', 'QR코드를 등록하였습니다.');
+  //         }, 500);
+  //         dispatch(updateQR_Num(codenumber));
+  //       }
+  //     } catch (e) {
+  //       console.log(e);
+  //     } finally {
+  //       setQrCameraModalOpen2(false);
+  //       setShowPictureModalOpen(false);
+  //       setQrCameraMode(false);
+  //     }
+  //   } else {
+  //     setTimeout(() => {
+  //       alertModal('', '샵솔에서 제공한 QR코드가 아닙니다.');
+  //     }, 500);
+  //   }
+  // };
+
   return (
     <HomeScreenPresenter
       STORE_DATA={STORE_DATA}
@@ -497,24 +500,11 @@ export default ({route: {params}}) => {
       TOTAL_COUNT={TOTAL_COUNT}
       WORKING_COUNT={WORKING_COUNT}
       EMPCOUNT={STORE_DATA?.EMPCOUNT}
-      setShowPictureModalOpen={setShowPictureModalOpen}
-      showPictureModalOpen={showPictureModalOpen}
       workingModalOpen={workingModalOpen}
       setWorkingModalOpen={setWorkingModalOpen}
       goWorkFn={goWorkFn}
       leaveWorkFn={leaveWorkFn}
-      handleBarCodeScanned1={handleBarCodeScanned1}
-      handleBarCodeScanned2={handleBarCodeScanned2}
       invitedEmpCount={STORE_DATA.inviteemp || 0}
-      QR={STORE_DATA?.resultdata?.QR || ''}
-      qrCameraConfirmModalOpen={qrCameraConfirmModalOpen}
-      setQrCameraConfirmModalOpen={setQrCameraConfirmModalOpen}
-      qrConfirmLoading={qrConfirmLoading}
-      setQrConfirmLoading={setQrConfirmLoading}
-      qrCameraModalOpen1={qrCameraModalOpen1}
-      setQrCameraModalOpen1={setQrCameraModalOpen1}
-      qrCameraModalOpen2={qrCameraModalOpen2}
-      setQrCameraModalOpen2={setQrCameraModalOpen2}
       isGpsVisible={isGpsVisible}
       setIsGpsVisible={setIsGpsVisible}
       lat={lat}
@@ -543,19 +533,32 @@ export default ({route: {params}}) => {
       AVATAR={AVATAR}
       initLoading={initLoading}
       gotoScreen={gotoScreen}
-      qrCameraMode={qrCameraMode}
-      setQrCameraMode={setQrCameraMode}
-      QR_Num={QR_Num}
       refreshing={refreshing}
       onRefresh={onRefresh}
       setLat={setLat}
       setLong={setLong}
-      hasConfirmed={hasConfirmed}
-      confirmModal={confirmModal}
       category={params?.category}
       mapRef={mapRef}
       moveMap={moveMap}
       gotoSelectStoreFn={gotoSelectStoreFn}
+      // QR={STORE_DATA?.resultdata?.QR || ''} //0208 REMOVEQR
+      // hasConfirmed={hasConfirmed} //0208 REMOVEQR
+      // confirmModal={confirmModal} //0208 REMOVEQR
+      // setShowPictureModalOpen={setShowPictureModalOpen} //0208 REMOVEQR
+      // showPictureModalOpen={showPictureModalOpen} //0208 REMOVEQR
+      // handleBarCodeScanned1={handleBarCodeScanned1} //0208 REMOVEQR
+      // handleBarCodeScanned2={handleBarCodeScanned2} //0208 REMOVEQR
+      // qrCameraConfirmModalOpen={qrCameraConfirmModalOpen} //0208 REMOVEQR
+      // setQrCameraConfirmModalOpen={setQrCameraConfirmModalOpen} //0208 REMOVEQR
+      // qrConfirmLoading={qrConfirmLoading} //0208 REMOVEQR
+      // setQrConfirmLoading={setQrConfirmLoading} //0208 REMOVEQR
+      // qrCameraModalOpen1={qrCameraModalOpen1} //0208 REMOVEQR
+      // setQrCameraModalOpen1={setQrCameraModalOpen1} //0208 REMOVEQR
+      // qrCameraModalOpen2={qrCameraModalOpen2} //0208 REMOVEQR
+      // setQrCameraModalOpen2={setQrCameraModalOpen2} //0208 REMOVEQR
+      // qrCameraMode={qrCameraMode} //0208 REMOVEQR
+      // setQrCameraMode={setQrCameraMode} //0208 REMOVEQR
+      // QR_Num={QR_Num} //0208 REMOVEQR
     />
   );
 };

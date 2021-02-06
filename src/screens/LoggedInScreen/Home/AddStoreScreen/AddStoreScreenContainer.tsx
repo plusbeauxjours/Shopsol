@@ -26,6 +26,13 @@ export default ({route: {params}}) => {
   const [LONG, setLONG] = useState<number>(params?.lng || 0);
   const [TYPE, setTYPE] = useState<number>(0);
 
+  //0208 REMOVEQR
+  // const [commuteType, setCommuteType] = useState<number>(0); // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
+  // const [commuteTypeCheck, setCommuteTypeCheck] = useState<[boolean, boolean]>([
+  //   true,
+  //   false,
+  // ]);
+
   const [storeCategoryType, setStoreCategoryType] = useState<string>(
     '분류 선택',
   ); // 사업장 분류 유형, 0: 요식업, 1: 도,소매업, 2: 서비스업, 3: 일반회사, 4: 기타
@@ -174,7 +181,8 @@ export default ({route: {params}}) => {
           LATE_FLAG,
           EARLY_TIME,
           EARLY_FLAG,
-          GPS: '1', //출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
+          // GPS: commuteType, //0208 REMOVEQR
+          GPS: '1', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
           JULI: distance,
           TYPE,
           CATEGORY: storeCategoryType,
@@ -256,6 +264,9 @@ export default ({route: {params}}) => {
       setStoreCategoryTypeEtc={setStoreCategoryTypeEtc}
       storeCategoryTypeEtc={storeCategoryTypeEtc}
       scrollRef={scrollRef}
+      // setCommuteType={setCommuteType} //0208 REMOVEQR
+      // commuteTypeCheck={commuteTypeCheck} //0208 REMOVEQR
+      // setCommuteTypeCheck={setCommuteTypeCheck} //0208 REMOVEQR
     />
   );
 };

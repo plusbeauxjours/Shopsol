@@ -46,6 +46,16 @@ export default ({route: {params}}) => {
   const [LONG, setLONG] = useState<number>(STORE_DATA?.resultdata?.LONG || 0);
   const [TYPE, setTYPE] = useState<number>(STORE_DATA?.resultdata?.TYPE || 0);
 
+  //0208 REMOVEQR
+  // const [commuteType, setCommuteType] = useState<number>(
+  //   STORE_DATA?.resultdata?.GPS == '1' ? 1 : 0,
+  // ); // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
+  // const [commuteTypeCheck, setCommuteTypeCheck] = useState<[boolean, boolean]>(
+  //   STORE_DATA?.resultdata?.GPS == '1'
+  //     ? [true, false]
+  //     : [false, true] || [true, false],
+  // );
+
   const [storeCategoryType, setStoreCategoryType] = useState<number>(
     STORE_DATA?.resultdata?.CATEGORY || '분류 선택',
   ); // 사업장 분류 유형, 0: 요식업, 1: 도,소매업, 2: 서비스업, 3: 일반회사, 4: 기타
@@ -58,12 +68,6 @@ export default ({route: {params}}) => {
       ? [true, false]
       : [false, true] || [true, false],
   ); //1: 5인 이상, 0: 5인 미만
-  const [commuteTypeCheck, setCommuteTypeCheck] = useState<[boolean, boolean]>(
-    STORE_DATA?.resultdata?.GPS == '1'
-      ? [true, false]
-      : [false, true] || [true, false],
-  );
-
   const [storeCategoryTypeEtc, setStoreCategoryTypeEtc] = useState<string>(
     STORE_DATA?.resultdata?.other || null,
   ); // 사업장 분류 유형이 4(기타)인 경우 직접 입력 값
@@ -194,7 +198,8 @@ export default ({route: {params}}) => {
           EARLY_FLAG,
           EARLY_TIME,
           CALCULATE_DAY,
-          GPS: '1',
+          // GPS: commuteType.toString(), //0208 REMOVEQR
+          GPS: '1', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
           JULI: distance,
           CATEGORY: storeCategoryType,
           other: storeCategoryTypeEtc,
@@ -224,6 +229,7 @@ export default ({route: {params}}) => {
         LATE_FLAG,
         EARLY_TIME,
         EARLY_FLAG,
+        // GPS: commuteType.toString(), //0208 REMOVEQR
         GPS: '1', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
         JULI: distance,
         TYPE,
@@ -310,6 +316,10 @@ export default ({route: {params}}) => {
       storeCategoryTypeEtc={storeCategoryTypeEtc}
       STORE={STORE}
       confirmModal={confirmModal}
+      // commuteType={commuteType} //0208 REMOVEQR
+      // setCommuteType={setCommuteType} //0208 REMOVEQR
+      // commuteTypeCheck={commuteTypeCheck} //0208 REMOVEQR
+      // setCommuteTypeCheck={setCommuteTypeCheck} //0208 REMOVEQR
     />
   );
 };

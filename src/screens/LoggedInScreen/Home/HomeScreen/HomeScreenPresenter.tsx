@@ -21,7 +21,7 @@ import {
   BoldAddIcon,
   BoldRemoveIcon,
   CloseIcon,
-  QrCodeIcon,
+  // QrCodeIcon,
   LocationIcon,
   NavigateIcon,
 } from '~/constants/Icons';
@@ -47,9 +47,10 @@ interface IEye {
   isEyeOn: boolean;
 }
 
-interface IHasQr {
-  hasQr: boolean;
-}
+//0208 REMOVEQR
+// interface IHasQr {
+//   hasQr: boolean;
+// }
 
 const BackGround = styled.View`
   flex: 1;
@@ -82,15 +83,6 @@ const IconContainer = styled.TouchableOpacity`
   justify-content: center;
   background-color: ${styleGuide.palette.tertiary};
   border-radius: 20px;
-`;
-
-const QrIconContainer = styled(IconContainer)<IHasQr>`
-  flex-direction: row;
-  background-color: ${(props) =>
-    props.hasQr ? styleGuide.palette.tertiary : 'white'};
-  border-width: ${(props) => (props.hasQr ? 0 : 2)}px;
-  border-color: ${(props) =>
-    props.hasQr ? 'transparent' : styleGuide.palette.tertiary};
 `;
 
 const MenuCnt = styled(Ripple)`
@@ -209,18 +201,6 @@ const Bold = styled(MenuTitle)`
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
-const ShowPictureModalTouchable = styled.TouchableOpacity`
-  flex: 1;
-  margin: 0 20px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ShowPictureModalImage = styled.View`
-  width: ${wp('90%')}px;
-  height: ${wp('90%')}px;
-`;
-
 const WhiteSpace = styled.View`
   height: 20px;
 `;
@@ -328,55 +308,6 @@ const FooterText = styled.Text`
   margin-bottom: 15px;
 `;
 
-const ConfirmBackGround = styled.View`
-  flex: 1;
-  background-color: #ffffff;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-`;
-
-const ConfirmWhiteBox = styled.View`
-  height: 280px;
-  background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  bottom: 0;
-`;
-
-const ConfirmBox = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-`;
-
-const ConfirmContent = styled.Text`
-  font-size: 14px;
-  color: ${styleGuide.palette.greyColor};
-`;
-
-const ConfirmHalfBtnLeft = styled(Ripple)`
-  height: 60px;
-  width: ${wp('50%')}px;
-  align-items: center;
-  justify-content: center;
-  border-color: #bbb;
-`;
-
-const ConfirmHalfBtnRight = styled(ConfirmHalfBtnLeft)`
-  background-color: ${styleGuide.palette.primary};
-`;
-
-const ConfirmHalfTextLeft = styled.Text`
-  font-size: 18px;
-  color: ${styleGuide.palette.primary};
-`;
-
-const ConfirmHalfTextRight = styled.Text`
-  font-size: 18px;
-  color: white;
-`;
-
 const DarkGreyColor = styled.Text`
   color: ${styleGuide.palette.darkGreyColor};
 `;
@@ -403,6 +334,87 @@ const AddButton = styled.TouchableOpacity`
   elevation: 6;
 `;
 
+//0208 REMOVEQR
+// const ConfirmHalfBtnLeft = styled(Ripple)`
+//   height: 60px;
+//   width: ${wp('50%')}px;
+//   align-items: center;
+//   justify-content: center;
+//   border-color: #bbb;
+// `;
+
+//0208 REMOVEQR
+// const QrIconContainer = styled(IconContainer)<IHasQr>`
+//   flex-direction: row;
+//   background-color: ${(props) =>
+//     props.hasQr ? styleGuide.palette.tertiary : 'white'};
+//   border-width: ${(props) => (props.hasQr ? 0 : 2)}px;
+//   border-color: ${(props) =>
+//     props.hasQr ? 'transparent' : styleGuide.palette.tertiary};
+// `;
+
+//0208 REMOVEQR
+// const ConfirmHalfBtnRight = styled(ConfirmHalfBtnLeft)`
+//   background-color: ${styleGuide.palette.primary};
+// `;
+
+//0208 REMOVEQR
+// const ConfirmHalfTextLeft = styled.Text`
+//   font-size: 18px;
+//   color: ${styleGuide.palette.primary};
+// `;
+
+//0208 REMOVEQR
+// const ConfirmHalfTextRight = styled.Text`
+//   font-size: 18px;
+//   color: white;
+// `;
+
+//0208 REMOVEQR
+// const ConfirmBackGround = styled.View`
+//   flex: 1;
+//   background-color: #ffffff;
+//   border-top-left-radius: 20px;
+//   border-top-right-radius: 20px;
+// `;
+
+//0208 REMOVEQR
+// const ConfirmWhiteBox = styled.View`
+//   height: 280px;
+//   background-color: white;
+//   border-top-left-radius: 20px;
+//   border-top-right-radius: 20px;
+//   bottom: 0;
+// `;
+
+//0208 REMOVEQR
+// const ConfirmBox = styled.View`
+//   flex: 1;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 0 20px;
+// `;
+
+//0208 REMOVEQR
+// const ConfirmContent = styled.Text`
+//   font-size: 14px;
+//   color: ${styleGuide.palette.greyColor};
+// `;
+
+//0208 REMOVEQR
+// const ShowPictureModalTouchable = styled.TouchableOpacity`
+//   flex: 1;
+//   margin: 0 20px;
+//   align-items: center;
+//   justify-content: center;
+// `;
+
+//0208 REMOVEQR
+// const ShowPictureModalImage = styled.View`
+//   width: ${wp('90%')}px;
+//   height: ${wp('90%')}px;
+// `;
+
 export default ({
   STORE_DATA,
   MEMBER_NAME,
@@ -412,24 +424,11 @@ export default ({
   TOTAL_COUNT,
   WORKING_COUNT,
   EMPCOUNT,
-  qrCameraConfirmModalOpen,
-  setQrCameraConfirmModalOpen,
-  qrConfirmLoading,
-  setQrConfirmLoading,
-  qrCameraModalOpen1,
-  setQrCameraModalOpen1,
-  qrCameraModalOpen2,
-  setQrCameraModalOpen2,
   workingModalOpen,
   setWorkingModalOpen,
-  setShowPictureModalOpen,
-  showPictureModalOpen,
   goWorkFn,
   leaveWorkFn,
-  handleBarCodeScanned1,
-  handleBarCodeScanned2,
   invitedEmpCount,
-  QR,
   isGpsVisible,
   setIsGpsVisible,
   lat,
@@ -458,19 +457,32 @@ export default ({
   AVATAR,
   initLoading,
   gotoScreen,
-  qrCameraMode,
-  setQrCameraMode,
-  QR_Num,
   refreshing,
   onRefresh,
   setLat,
   setLong,
-  hasConfirmed,
-  confirmModal,
   category,
   mapRef,
   moveMap,
   gotoSelectStoreFn,
+  // QR, //0208 REMOVEQR
+  // hasConfirmed, //0208 REMOVEQR
+  // confirmModal, //0208 REMOVEQR
+  // setShowPictureModalOpen, //0208 REMOVEQR
+  // showPictureModalOpen, //0208 REMOVEQR
+  // handleBarCodeScanned1, //0208 REMOVEQR
+  // handleBarCodeScanned2, //0208 REMOVEQR
+  // qrCameraConfirmModalOpen, //0208 REMOVEQR
+  // setQrCameraConfirmModalOpen, //0208 REMOVEQR
+  // qrConfirmLoading, //0208 REMOVEQR
+  // setQrConfirmLoading, //0208 REMOVEQR
+  // qrCameraModalOpen1, //0208 REMOVEQR
+  // setQrCameraModalOpen1, //0208 REMOVEQR
+  // qrCameraModalOpen2, //0208 REMOVEQR
+  // setQrCameraModalOpen2, //0208 REMOVEQR
+  // qrCameraMode, //0208 REMOVEQR
+  // setQrCameraMode, //0208 REMOVEQR
+  // QR_Num, //0208 REMOVEQR
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -726,23 +738,27 @@ export default ({
         <MenuBox style={{zIndex: 1}}>
           {STORE == 0 && (
             <>
-              {GPS == '0' ? (
-                <BoxContainer>
-                  <Box
-                    style={{flexDirection: 'row'}}
-                    onPress={() => {
-                      setIsWorkingMode(false);
-                      setSucessModalOpen(false);
-                      setFailModalOpen(false);
-                      utils.handleCameraPermission(setQrCameraModalOpen1);
-                      setWorkingTYPE('QR');
-                    }}
-                    hasGPS={GPS !== '0'}>
-                    <QrCodeIcon color={'white'} size={22} />
-                    <BoxText style={{marginLeft: 5}}>QR출퇴근하기</BoxText>
-                  </Box>
-                </BoxContainer>
-              ) : (
+              {/* {GPS == '0' ? (  //0208 REMOVEQR*/}
+              <BoxContainer>
+                <Box
+                  style={{flexDirection: 'row'}}
+                  onPress={async () => {
+                    setIsWorkingMode(false);
+                    setSucessModalOpen(false);
+                    setFailModalOpen(false);
+                    setWorkingTYPE('GPS');
+                    utils.handleLocationPermission(
+                      setLat,
+                      setLong,
+                      setIsGpsVisible,
+                    );
+                  }}
+                  hasGPS={GPS === '0'}>
+                  <LocationIcon color={'white'} size={22} />
+                  <BoxText style={{marginLeft: 5}}>GPS출퇴근하기</BoxText>
+                </Box>
+              </BoxContainer>
+              {/* ) : ( //0208 REMOVEQR
                 <BoxContainer>
                   <Box
                     style={{flexDirection: 'row'}}
@@ -775,7 +791,7 @@ export default ({
                     <BoxText style={{marginLeft: 5}}>GPS출퇴근하기</BoxText>
                   </Box>
                 </BoxContainer>
-              )}
+              )} */}
             </>
           )}
           {STORE == '1' ? ( // 사업주 ============================
@@ -786,7 +802,7 @@ export default ({
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
                 </MenuTitleArea>
-                {hasConfirmed ? (
+                {/* {hasConfirmed ? ( //0208 REMOVEQR
                   <QrIconContainer
                     hasQr={QR_Num}
                     onPress={() => {
@@ -823,7 +839,7 @@ export default ({
                       <WhiteText style={{marginLeft: 5}}>등록하기</WhiteText>
                     </QrIconContainer>
                   </>
-                )}
+                )} */}
               </SpaceRow>
               <Container>
                 <MenuCntContainer
@@ -936,7 +952,7 @@ export default ({
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 직원관리</Bold>
                     </MenuTitleArea>
-                    {hasConfirmed ? (
+                    {/* {hasConfirmed ? ( //0208 REMOVEQR
                       <QrIconContainer
                         hasQr={true}
                         onPress={() => {
@@ -974,7 +990,7 @@ export default ({
                           </WhiteText>
                         </QrIconContainer>
                       </>
-                    )}
+                    )} */}
                   </SpaceRow>
                   {initLoading ? (
                     <Column
@@ -1023,20 +1039,18 @@ export default ({
                           count={invitedEmpCount}
                           source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
                         />
-                        {EMPCOUNT !== 0 &&
-                          STORE_DATA?.CalendarEdit == '1' && (
-                            <MenuCntContainer
-                              selection={'캘린더'}
-                              paging={'CalendarInfoScreen'}
-                              source={
-                                STORE_DATA?.CalendarEdit == 1
-                                  ? require(`../../../../assets/main/CalendarInfo.png`)
-                                  : require(`../../../../assets/main/CalendarInfoEmp.png`)
-                              }
-                            />
-                          )}
-                        {EMPCOUNT !== 0 &&
-                        STORE_DATA?.STOREPAY_SHOW == '1' ? (
+                        {EMPCOUNT !== 0 && STORE_DATA?.CalendarEdit == '1' && (
+                          <MenuCntContainer
+                            selection={'캘린더'}
+                            paging={'CalendarInfoScreen'}
+                            source={
+                              STORE_DATA?.CalendarEdit == 1
+                                ? require(`../../../../assets/main/CalendarInfo.png`)
+                                : require(`../../../../assets/main/CalendarInfoEmp.png`)
+                            }
+                          />
+                        )}
+                        {EMPCOUNT !== 0 && STORE_DATA?.STOREPAY_SHOW == '1' ? (
                           <MenuCntContainer
                             selection={'급여정보'}
                             paging={'PaymentInfoScreen'}
@@ -1195,151 +1209,6 @@ export default ({
         </MenuBox>
       </ScrollView>
       <Modal
-        isVisible={qrCameraModalOpen1}
-        onBackdropPress={() => {
-          setQrCameraModalOpen1(false);
-          setSucessModalOpen(false);
-          setFailModalOpen(false);
-          setIsWorkingMode(false);
-        }}
-        onRequestClose={() => {
-          setQrCameraModalOpen1(false);
-          setSucessModalOpen(false);
-          setFailModalOpen(false);
-          setIsWorkingMode(false);
-        }}
-        avoidKeyboard={true}
-        style={{
-          marginLeft: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: wp('100%'),
-          height: '100%',
-        }}>
-        {workingLoading ? (
-          <LottieView
-            style={{width: 150, height: 150, marginBottom: 40}}
-            source={require('../../../../assets/animations/loading.json')}
-            loop
-            autoPlay
-          />
-        ) : sucessModalOpen ? (
-          <GoWorkingSuccessAnimation
-            AVATAR={AVATAR}
-            STORE_NAME={STORE_NAME}
-            MEMBER_NAME={MEMBER_NAME}
-            setSucessModalOpen={setSucessModalOpen}
-            setWorkingModalOpen={setWorkingModalOpen}
-            setQrCameraModalOpen1={setQrCameraModalOpen1}
-            actionTYPE={actionTYPE}
-          />
-        ) : failModalOpen ? (
-          <GoWorkingFailAnimation
-            AVATAR={AVATAR}
-            STORE_NAME={STORE_NAME}
-            MEMBER_NAME={MEMBER_NAME}
-            setFailModalOpen={setFailModalOpen}
-            actionTYPE={actionTYPE}
-            errorMessage={errorMessage}
-          />
-        ) : isWorkingMode ? (
-          <BoxContainer>
-            <Box
-              style={{
-                width: (wp('100%') - 60) / 2,
-                height: (wp('100%') - 60) / 2,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              }}
-              onPress={() => goWorkFn(workingTYPE)}>
-              <BoxText style={{fontSize: 30}}>출근</BoxText>
-            </Box>
-            <Box
-              style={{
-                width: (wp('100%') - 60) / 2,
-                height: (wp('100%') - 60) / 2,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              }}
-              onPress={() => leaveWorkFn(workingTYPE)}>
-              <BoxText style={{fontSize: 30}}>퇴근</BoxText>
-            </Box>
-          </BoxContainer>
-        ) : (
-          <RNCamera
-            style={{flex: 1, alignItems: 'center'}}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            autoFocus={RNCamera.Constants.AutoFocus.on}
-            captureAudio={false}
-            onFacesDetected={() => {}}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
-            onBarCodeRead={({data}) => handleBarCodeScanned1(data)}>
-            <BarcodeMask
-              width={300}
-              height={300}
-              outerMaskOpacity={0.8}
-              edgeColor={styleGuide.palette.tertiary}
-              edgeBorderWidth={2}
-              showAnimatedLine={false}
-            />
-            <Footer
-              onPress={() => {
-                setQrCameraModalOpen1(false);
-                setSucessModalOpen(false);
-                setFailModalOpen(false);
-                setIsWorkingMode(false);
-              }}>
-              <FooterText>닫기</FooterText>
-            </Footer>
-          </RNCamera>
-        )}
-      </Modal>
-      <Modal
-        isVisible={qrCameraModalOpen2}
-        onBackdropPress={() => {
-          setQrCameraModalOpen2(false);
-        }}
-        onRequestClose={() => {
-          setQrCameraModalOpen2(false);
-        }}
-        avoidKeyboard={true}
-        style={{
-          margin: 0,
-        }}>
-        <RNCamera
-          style={{flex: 1, alignItems: 'center'}}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.off}
-          autoFocus={RNCamera.Constants.AutoFocus.on}
-          captureAudio={false}
-          onFacesDetected={() => {}}
-          onFocusChanged={() => {}}
-          onZoomChanged={() => {}}
-          onBarCodeRead={({data}) => handleBarCodeScanned2(data)}
-          androidCameraPermissionOptions={{
-            title: '카메라 권한 설정',
-            message:
-              '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
-            buttonPositive: '확인',
-            buttonNegative: '취소',
-          }}>
-          <BarcodeMask
-            width={300}
-            height={300}
-            outerMaskOpacity={0.8}
-            edgeColor={styleGuide.palette.tertiary}
-            edgeBorderWidth={2}
-            showAnimatedLine={false}
-          />
-          <Footer
-            onPress={() => {
-              setQrCameraModalOpen2(false);
-            }}>
-            <FooterText>닫기</FooterText>
-          </Footer>
-        </RNCamera>
-      </Modal>
-      <Modal
         isVisible={isGpsVisible}
         onBackdropPress={() => setIsGpsVisible(false)}
         onRequestClose={() => setIsGpsVisible(false)}
@@ -1473,7 +1342,7 @@ export default ({
             MEMBER_NAME={MEMBER_NAME}
             setSucessModalOpen={setSucessModalOpen}
             setWorkingModalOpen={setWorkingModalOpen}
-            setQrCameraModalOpen1={setQrCameraModalOpen1}
+            // setQrCameraModalOpen1={setQrCameraModalOpen1} //0208 REMOVEQR
             actionTYPE={actionTYPE}
           />
         ) : failModalOpen ? (
@@ -1508,7 +1377,152 @@ export default ({
           </BoxContainer>
         )}
       </Modal>
-      <Modal
+      {/* <Modal //0208 REMOVEQR
+        isVisible={qrCameraModalOpen2}
+        onBackdropPress={() => {
+          setQrCameraModalOpen2(false);
+        }}
+        onRequestClose={() => {
+          setQrCameraModalOpen2(false);
+        }}
+        avoidKeyboard={true}
+        style={{
+          margin: 0,
+        }}>
+        <RNCamera
+          style={{flex: 1, alignItems: 'center'}}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.off}
+          autoFocus={RNCamera.Constants.AutoFocus.on}
+          captureAudio={false}
+          onFacesDetected={() => {}}
+          onFocusChanged={() => {}}
+          onZoomChanged={() => {}}
+          onBarCodeRead={({data}) => handleBarCodeScanned2(data)}
+          androidCameraPermissionOptions={{
+            title: '카메라 권한 설정',
+            message:
+              '앱을 사용하기 위해서는 반드시 권한을 허용해야 합니다.\n거부시 설정에서 "샵솔" 앱의 권한 허용을 해야 합니다.',
+            buttonPositive: '확인',
+            buttonNegative: '취소',
+          }}>
+          <BarcodeMask
+            width={300}
+            height={300}
+            outerMaskOpacity={0.8}
+            edgeColor={styleGuide.palette.tertiary}
+            edgeBorderWidth={2}
+            showAnimatedLine={false}
+          />
+          <Footer
+            onPress={() => {
+              setQrCameraModalOpen2(false);
+            }}>
+            <FooterText>닫기</FooterText>
+          </Footer>
+        </RNCamera>
+      </Modal> */}
+      {/* <Modal //0208 REMOVEQR
+        isVisible={qrCameraModalOpen1}
+        onBackdropPress={() => {
+          setQrCameraModalOpen1(false);
+          setSucessModalOpen(false);
+          setFailModalOpen(false);
+          setIsWorkingMode(false);
+        }}
+        onRequestClose={() => {
+          setQrCameraModalOpen1(false);
+          setSucessModalOpen(false);
+          setFailModalOpen(false);
+          setIsWorkingMode(false);
+        }}
+        avoidKeyboard={true}
+        style={{
+          marginLeft: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: wp('100%'),
+          height: '100%',
+        }}>
+        {workingLoading ? (
+          <LottieView
+            style={{width: 150, height: 150, marginBottom: 40}}
+            source={require('../../../../assets/animations/loading.json')}
+            loop
+            autoPlay
+          />
+        ) : sucessModalOpen ? (
+          <GoWorkingSuccessAnimation
+            AVATAR={AVATAR}
+            STORE_NAME={STORE_NAME}
+            MEMBER_NAME={MEMBER_NAME}
+            setSucessModalOpen={setSucessModalOpen}
+            setWorkingModalOpen={setWorkingModalOpen}
+            setQrCameraModalOpen1={setQrCameraModalOpen1}
+            actionTYPE={actionTYPE}
+          />
+        ) : failModalOpen ? (
+          <GoWorkingFailAnimation
+            AVATAR={AVATAR}
+            STORE_NAME={STORE_NAME}
+            MEMBER_NAME={MEMBER_NAME}
+            setFailModalOpen={setFailModalOpen}
+            actionTYPE={actionTYPE}
+            errorMessage={errorMessage}
+          />
+        ) : isWorkingMode ? (
+          <BoxContainer>
+            <Box
+              style={{
+                width: (wp('100%') - 60) / 2,
+                height: (wp('100%') - 60) / 2,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              }}
+              onPress={() => goWorkFn(workingTYPE)}>
+              <BoxText style={{fontSize: 30}}>출근</BoxText>
+            </Box>
+            <Box
+              style={{
+                width: (wp('100%') - 60) / 2,
+                height: (wp('100%') - 60) / 2,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              }}
+              onPress={() => leaveWorkFn(workingTYPE)}>
+              <BoxText style={{fontSize: 30}}>퇴근</BoxText>
+            </Box>
+          </BoxContainer>
+        ) : (
+          <RNCamera
+            style={{flex: 1, alignItems: 'center'}}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            autoFocus={RNCamera.Constants.AutoFocus.on}
+            captureAudio={false}
+            onFacesDetected={() => {}}
+            onFocusChanged={() => {}}
+            onZoomChanged={() => {}}
+            onBarCodeRead={({data}) => handleBarCodeScanned1(data)}>
+            <BarcodeMask
+              width={300}
+              height={300}
+              outerMaskOpacity={0.8}
+              edgeColor={styleGuide.palette.tertiary}
+              edgeBorderWidth={2}
+              showAnimatedLine={false}
+            />
+            <Footer
+              onPress={() => {
+                setQrCameraModalOpen1(false);
+                setSucessModalOpen(false);
+                setFailModalOpen(false);
+                setIsWorkingMode(false);
+              }}>
+              <FooterText>닫기</FooterText>
+            </Footer>
+          </RNCamera>
+        )}
+      </Modal> */}
+      {/* <Modal //0208 REMOVEQR
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
         isVisible={showPictureModalOpen}
@@ -1640,7 +1654,7 @@ export default ({
             </StoreUpdateBtn>
           </ShowPictureModalTouchable>
         )}
-      </Modal>
+      </Modal> */}
     </BackGround>
   );
 };

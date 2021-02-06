@@ -290,6 +290,10 @@ export default ({
   storeCategoryTypeEtc,
   STORE,
   confirmModal,
+  // commuteType, //0208 REMOVEQR
+  // setCommuteType, //0208 REMOVEQR
+  // commuteTypeCheck, //0208 REMOVEQR
+  // setCommuteTypeCheck, //0208 REMOVEQR
 }) => {
   const RenderDayRowData = ({rowData, rowNum}) => {
     let value = JSON.parse(JSON.stringify(days));
@@ -338,6 +342,27 @@ export default ({
     );
   };
 
+  //0208 REMOVEQR
+  // const CommuteType = ({selection, text}) => {
+  //   let value = JSON.parse(JSON.stringify(commuteTypeCheck));
+  //   return (
+  //     <TypeContainer
+  //       onPress={() => {
+  //         value.fill(false);
+  //         value[selection] = true;
+  //         setCommuteTypeCheck(value);
+  //         setCommuteType(selection == 0 ? '1' : '0');
+  //       }}>
+  //       {commuteTypeCheck[selection] ? (
+  //         <RadioBtnOnIcon size={22} />
+  //       ) : (
+  //         <RadioBtnOffIcon size={22} />
+  //       )}
+  //       <TypeText>{text}</TypeText>
+  //     </TypeContainer>
+  //   );
+  // };
+
   return (
     <BackGround>
       <ScrollView
@@ -365,7 +390,16 @@ export default ({
             </GreyText>
             <WhiteSpace />
             <InputCaseRow style={{alignItems: 'flex-end'}}>
+              {/* <RowTouchable //0208 REMOVEQR
+                onPress={() => {
+                  explainModal(
+                    '',
+                    '입력하신 주소로 출퇴근관리 QR키트를 발송해 드립니다. 일반우편으로 발송되며, 원활한 수령을 위하여 정확한 주소 입력 부탁드립니다.',
+                  );
+                }}> */}
               <Text>기본주소</Text>
+              {/* <HelpCircleIcon /> //0208 REMOVEQR
+              </RowTouchable> */}
               <RequestButton onPress={() => gotoSearchAddress()}>
                 <RequestText>주소 검색</RequestText>
               </RequestButton>
@@ -412,6 +446,21 @@ export default ({
           <Section>
             <TitleText>출퇴근정보 설정</TitleText>
             <GreyLine />
+            {/* <RowTouchable //0208 REMOVEQR
+              onPress={() => {
+                explainModal(
+                  '출퇴근방법 설정',
+                  '-QR코드 출퇴근 : 샵솔에서 제공한 QR로만 출퇴근이 가능합니다.\n-GPS출퇴근 : 직원앱에서 GPS를 이용하여 바로 출퇴근 할 수 있습니다. 또한 QR코드 출퇴근 기능도 함께 사용할 수 있습니다.\n* 추후에 변경 가능합니다.',
+                );
+              }}>
+              <Text>출퇴근방법 설정</Text>
+              <HelpCircleIcon />
+            </RowTouchable>
+            <TypeCheckCase>
+              <CommuteType selection={0} text={'GPS 출퇴근'} />
+              <CommuteType selection={1} text={'QR코드 출퇴근'} />
+            </TypeCheckCase>
+            <WhiteSpace /> */}
             <InputCaseRow>
               <RowTouchable
                 onPress={() =>
