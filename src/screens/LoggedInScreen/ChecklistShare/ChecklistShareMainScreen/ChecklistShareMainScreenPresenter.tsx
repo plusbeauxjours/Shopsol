@@ -583,7 +583,7 @@ export default ({
         <CalendarTitle>
           <CalendarTextBox>
             <RowSpace>
-              <CalendarTitleText>게시글 표시</CalendarTitleText>
+              <CalendarTitleText>등록 게시글</CalendarTitleText>
               <NewPoint
                 style={{
                   backgroundColor: 'transparent',
@@ -594,7 +594,7 @@ export default ({
             </RowSpace>
             <SmallWhiteSpace />
             <RowSpace>
-              <CalendarTitleText>읽지않은 게시글</CalendarTitleText>
+              <CalendarTitleText>미열람 게시글</CalendarTitleText>
               <NewPoint>
                 <CalendarTitleText style={{color: 'white'}}>
                   1

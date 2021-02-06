@@ -328,7 +328,9 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
           <TextContainer>
             <Row>
               <Text isChecked={true}>처리직원: </Text>
-              <Bold isChecked={true}>{item.checkEmpName}</Bold>
+              <Bold isChecked={true}>
+                {item.checkEmpName} [{item.MANAGER == '2' ? '사업주' : '직원'}]
+              </Bold>
             </Row>
             <Row>
               <Text isChecked={true}>처리시간: </Text>

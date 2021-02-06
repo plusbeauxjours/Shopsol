@@ -161,11 +161,11 @@ export default ({
                 <TextBox>
                   <Column>
                     <EmptyText>등록된 사업장이 없습니다!</EmptyText>
-                    <EmptyText>사업장을 등록하시면 입력하신 주소로</EmptyText>
+                    {/* <EmptyText>사업장을 등록하시면 입력하신 주소로</EmptyText> //0208 REMOVEQR
                     <EmptyText>
                       출퇴근이 가능한 QR키트를 송부해 드립니다.
                     </EmptyText>
-                    <EmptyText>(영업일 기준 2~3일 소요)</EmptyText>
+                    <EmptyText>(영업일 기준 2~3일 소요)</EmptyText> */}
                   </Column>
                 </TextBox>
               </EmptyBox>

@@ -163,7 +163,7 @@ export default () => {
             </Card>
             <Card
               onPress={() => {
-                navigation.navigate('MyPageAppointmentScreen');
+                navigation.navigate('PolicyScreen');
               }}>
               <CardText>약관보기</CardText>
               <ArrowIcon />

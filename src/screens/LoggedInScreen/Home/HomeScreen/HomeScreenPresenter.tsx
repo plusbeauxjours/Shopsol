@@ -566,6 +566,8 @@ export default ({
         <SpaceRow>
           {STORE_DATA.resultdata.JULI == -1 ? (
             <MarkerText>출퇴근 거리 제한 없음</MarkerText>
+          ) : STORE_DATA.resultdata.JULI == -2 ? (
+            <MarkerText>재택근무</MarkerText>
           ) : (
             <>
               <MarkerText>출퇴근 허용거리: </MarkerText>
@@ -755,7 +757,7 @@ export default ({
                   }}
                   hasGPS={GPS === '0'}>
                   <LocationIcon color={'white'} size={22} />
-                  <BoxText style={{marginLeft: 5}}>GPS출퇴근하기</BoxText>
+                  <BoxText style={{marginLeft: 5}}>출퇴근하기</BoxText>
                 </Box>
               </BoxContainer>
               {/* ) : ( //0208 REMOVEQR

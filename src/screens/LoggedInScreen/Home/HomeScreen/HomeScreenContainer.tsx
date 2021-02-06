@@ -215,7 +215,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
-  // QR 출근하기 //0208 REMOVEQR
+  // 출근하기
   const goWorkFn = async (TYPE) => {
     setActionTYPE('출근');
     try {
@@ -260,7 +260,7 @@ export default ({route: {params}}) => {
     }
   };
 
-  // QR 퇴근하기 //0208 REMOVEQR
+  // 퇴근하기
   const leaveWorkFn = async (TYPE) => {
     setActionTYPE('퇴근');
     try {

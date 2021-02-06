@@ -12,6 +12,7 @@ import InputLine from '~/components/InputLine';
 import {getText1, getText2, getText3} from '~/constants/getText';
 import {CheckMarkIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import Ripple from 'react-native-material-ripple';
 
 interface IsBefore {
   isBefore: boolean;
@@ -132,11 +133,6 @@ const PolicyText = styled.Text<IPolicyCheck>`
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
-const GreyText = styled.Text`
-  color: ${styleGuide.palette.greyColor};
-  font-size: 14px;
-`;
-
 const BoxText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
 `;
@@ -157,15 +153,16 @@ const IconContainer = styled.View<IPolicyCheck>`
   justify-content: center;
 `;
 
-const BoxTouchable = styled.TouchableOpacity`
+const BoxTouchable = styled(Ripple)`
+  margin-top: 10px;
   width: 100%;
-  margin-bottom: 20px;
-  padding: 20px 0;
-  border-width: 1px;
-  border-color: #333;
-  border-radius: 8px;
+  height: 60px;
   align-items: center;
   justify-content: center;
+  border-radius: 30px;
+  background-color: transparent;
+  border-width: 1px;
+  border-color: grey;
 `;
 
 const Section = styled.View`
@@ -180,6 +177,7 @@ export default ({
   verifyCode,
   mobileNo,
   gotoSignup,
+  gotoPolicy,
   onChangeMobileNum,
   onChangeVerifyNum,
   requireVerifyCode,
@@ -315,26 +313,15 @@ export default ({
               />
             </>
           ) : (
-            <>
-              <BoxTouchable onPress={() => RBSheet1.current.open()}>
-                <BoxText>
-                  이용약관&nbsp;
-                  <GreyText>(보기)</GreyText>
-                </BoxText>
-              </BoxTouchable>
-              <BoxTouchable onPress={() => RBSheet2.current.open()}>
-                <BoxText>
-                  개인정보처리방침&nbsp;
-                  <GreyText>(보기)</GreyText>
-                </BoxText>
-              </BoxTouchable>
-              <BoxTouchable onPress={() => RBSheet3.current.open()}>
-                <BoxText>
-                  위치정보 제공&nbsp;
-                  <GreyText>(보기)</GreyText>
-                </BoxText>
-              </BoxTouchable>
-            </>
+            <BoxTouchable
+              onPress={() => gotoPolicy()}
+              rippleColor={styleGuide.palette.rippleGreyColor}
+              rippleDuration={600}
+              rippleSize={1200}
+              rippleContainerBorderRadius={30}
+              rippleOpacity={0.1}>
+              <BoxText>이용약관 보기</BoxText>
+            </BoxTouchable>
           )}
         </Container>
       </KeyboardAwareScrollView>

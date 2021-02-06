@@ -15,6 +15,7 @@ import WeeklyDashBoardScreen from './WeeklyDashBoardScreen';
 import MonthlyDashBoardScreen from './MonthlyDashBoardScreen';
 import {setSplashVisible} from '~/redux/splashSlice';
 import styleGuide from '~/constants/styleGuide';
+import LottieView from 'lottie-react-native';
 
 export default () => {
   const dispatch = useDispatch();
@@ -120,42 +121,29 @@ export default () => {
   };
 
   // v2.3
-  useEffect(() => {
-    fetchSchedulesData();
-    firebase.analytics().setCurrentScreen('사업장 현황');
-  }, []);
+  // useEffect(() => {
+  //   fetchSchedulesData();
+  //   firebase.analytics().setCurrentScreen('사업장 현황');
+  // }, []);
 
-  if (loading) {
-    return null;
-  } else {
-    return (
-      <Tab.Navigator
-        tabBarOptions={{
-          labelStyle: {fontSize: 14},
-          indicatorStyle: {
-            height: 4,
-            borderRadius: 10,
-            backgroundColor: styleGuide.palette.primary,
-          },
-          style: {backgroundColor: 'white'},
-        }}>
-        <Tab.Screen name="일별현황" component={DailyDashBoardScreen} />
-        <Tab.Screen name="주별현황" component={WeeklyDashBoardScreen} />
-        <Tab.Screen name="월별현황" component={MonthlyDashBoardScreen} />
-      </Tab.Navigator>
-    );
-  }
-  // return (
-  //   <View style={{flex: 1, alignItems: 'center'}}>
-  //     <Text
-  //       style={{
-  //         fontSize: styleGuide.fontSize.large,
-  //         fontWeight: styleGuide.fontWeight.bold,
-  //         color: styleGuide.palette.primary,
-  //         top: 100,
-  //       }}>
-  //       추후 제공 예정입니다.
-  //     </Text>
-  //   </View>
-  // );
+  // if (loading) {
+  //   return null;
+  // } else {
+  return (
+    <Tab.Navigator
+      tabBarOptions={{
+        labelStyle: {fontSize: 14},
+        indicatorStyle: {
+          height: 4,
+          borderRadius: 10,
+          backgroundColor: styleGuide.palette.primary,
+        },
+        style: {backgroundColor: 'white'},
+      }}>
+      <Tab.Screen name="일별현황" component={DailyDashBoardScreen} />
+      <Tab.Screen name="주별현황" component={WeeklyDashBoardScreen} />
+      <Tab.Screen name="월별현황" component={MonthlyDashBoardScreen} />
+    </Tab.Navigator>
+  );
+  // }
 };

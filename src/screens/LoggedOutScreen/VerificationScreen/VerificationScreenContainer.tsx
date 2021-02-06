@@ -139,6 +139,10 @@ export default () => {
     }
   };
 
+  const gotoPolicy = () => {
+    navigation.navigate('PolicyScreen');
+  };
+
   const gotoSignup = () => {
     setVerifyCode('');
     setCountdown('');
@@ -183,6 +187,7 @@ export default () => {
       verifyCode={verifyCode}
       mobileNo={mobileNo}
       gotoSignup={gotoSignup}
+      gotoPolicy={gotoPolicy}
       onChangeMobileNum={onChangeMobileNum}
       onChangeVerifyNum={onChangeVerifyNum}
       requireVerifyCode={requireVerifyCode}
