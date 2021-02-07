@@ -161,9 +161,14 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
+          {console.log(item)}
           <Touchable
             onPress={() =>
-              confirmModal(name, item.shelfLife_SEQ, item.IMG_LIST)
+              confirmModal(
+                name,
+                item.shelfLife_SEQ,
+                item.IMG_LIST ?? item.shelfLifeImgLink,
+              )
             }>
             {item.IMG_LIST || item?.shelfLifeImgLink ? (
               <FastImage
@@ -265,7 +270,11 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
         <GreyBox>
           <Touchable
             onPress={() =>
-              cancelModal(name, item.shelfLife_SEQ, item.IMG_LIST)
+              cancelModal(
+                name,
+                item.shelfLife_SEQ,
+                item.IMG_LIST ?? item.shelfLifeImgLink,
+              )
             }>
             {item.IMG_LIST || item?.shelfLifeImgLink ? (
               <FastImage

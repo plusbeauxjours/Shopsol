@@ -48,7 +48,11 @@ export default {
         ? uri
         : '';
     };
-    if (!uri?.includes('https://wesop.s3.ap-northeast-2.amazonaws.com')) {
+    if (uri?.includes('http://gs1.koreannet.or.kr/')) {
+      return getUri(uri);
+    } else if (
+      !uri?.includes('https://wesop.s3.ap-northeast-2.amazonaws.com')
+    ) {
       return `http://shopsolapi.shop-sol.com/uploads/${uri}`;
     } else {
       return getUri(uri);

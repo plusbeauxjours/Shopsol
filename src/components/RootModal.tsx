@@ -134,7 +134,7 @@ export default ({alert}) => {
     dispatch(setAlertVisible(false));
     alert?.cancelCallback && alert.cancelCallback();
   };
-
+  console.log('alert.image', alert.image);
   return (
     <Modal
       onRequestClose={() => dispatch(setAlertVisible(false))}
@@ -148,7 +148,7 @@ export default ({alert}) => {
       isVisible={alert.visible}>
       {alert.image && (
         <ImageViewer
-          imageUrls={[{url: getUriImage(alert.image)}]}
+          imageUrls={[{url: utils.getUriImage(alert.image)}]}
           onSwipeDown={() => dispatch(setAlertVisible(false))}
           backgroundColor={'transparent'}
           saveToLocalByLongPress={false}
