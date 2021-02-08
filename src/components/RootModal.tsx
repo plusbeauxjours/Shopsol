@@ -134,7 +134,6 @@ export default ({alert}) => {
     dispatch(setAlertVisible(false));
     alert?.cancelCallback && alert.cancelCallback();
   };
-  console.log('alert.image', alert.image);
   return (
     <Modal
       onRequestClose={() => dispatch(setAlertVisible(false))}

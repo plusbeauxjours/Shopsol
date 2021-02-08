@@ -174,15 +174,15 @@ export default ({
   HEALTH_EMP_DETAIL,
   isImageViewVisible,
   setIsImageViewVisible,
-  SELECT_INDEX,
-  decreaseSELECT_INDEX,
-  increaseSELECT_INDEX,
+  selectIndex,
+  decreaseSelectIndex,
+  increaseSelectIndex,
 }) => {
   if (HEALTH_EMP_DETAIL) {
     const navigation = useNavigation();
     const images = [
       {
-        url: utils.getOCRImage(HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST),
+        url: utils.getOCRImage(HEALTH_EMP_DETAIL[selectIndex]?.IMG_LIST),
       },
     ];
 
@@ -237,17 +237,17 @@ export default ({
               <Date>
                 <DateArrowLeft
                   onPress={() => {
-                    if (SELECT_INDEX == HEALTH_EMP_DETAIL?.length - 1) {
+                    if (selectIndex == HEALTH_EMP_DETAIL?.length - 1) {
                       alertModal('최초데이터 입니다.');
                     } else {
-                      increaseSELECT_INDEX();
+                      increaseSelectIndex();
                     }
                   }}>
                   <BackIcon size={22} color={styleGuide.palette.arrowColor} />
                 </DateArrowLeft>
                 <DateTextArea>
                   <DateText>
-                    {HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT}회차
+                    {HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT}회차
                   </DateText>
                 </DateTextArea>
                 <DateArrowRight
@@ -260,10 +260,10 @@ export default ({
                 </DateArrowRight>
                 <DateArrowRight
                   onPress={() => {
-                    if (SELECT_INDEX == 0) {
+                    if (selectIndex == 0) {
                       alertModal('최신데이터 입니다.');
                     } else {
-                      decreaseSELECT_INDEX();
+                      decreaseSelectIndex();
                     }
                   }}>
                   <ForwardIcon
@@ -275,16 +275,16 @@ export default ({
               <ContentWrapper>
                 <GetContent
                   label={'성명'}
-                  data={HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME}
+                  data={HEALTH_EMP_DETAIL[selectIndex]?.NAME}
                 />
                 <GetContent
                   label={'회차'}
-                  data={HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT}
+                  data={HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT}
                 />
                 <GetContent
                   label={'검진일'}
                   data={moment(
-                    HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
+                    HEALTH_EMP_DETAIL[selectIndex]?.RESULT_DATE,
                   ).format('YYYY.MM.DD')}
                 />
                 <GetContentComponent label={'사진'} images={images} />
@@ -292,7 +292,7 @@ export default ({
               <RegDateContainer>
                 <RegDate>
                   입력일자 :&nbsp;
-                  {moment(HEALTH_EMP_DETAIL[SELECT_INDEX]?.CREATE_TIME).format(
+                  {moment(HEALTH_EMP_DETAIL[selectIndex]?.CREATE_TIME).format(
                     'YYYY.MM.DD',
                   )}
                 </RegDate>
@@ -303,18 +303,17 @@ export default ({
                 onPress={() => {
                   navigation.navigate('HealthCertificateEmpUpdateScreen', {
                     fetchData,
-                    NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
-                    EMP_SEQ: HEALTH_EMP_DETAIL[SELECT_INDEX]?.EMP_SEQ,
-                    STORE_SEQ: HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_SEQ,
-                    RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
-                    EDUCATION_DATE:
-                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
+                    NAME: HEALTH_EMP_DETAIL[selectIndex]?.NAME,
+                    EMP_SEQ: HEALTH_EMP_DETAIL[selectIndex]?.EMP_SEQ,
+                    STORE_SEQ: HEALTH_EMP_DETAIL[selectIndex]?.STORE_SEQ,
+                    RESULT_COUNT: HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT,
+                    EDUCATION_DATE: HEALTH_EMP_DETAIL[selectIndex]?.RESULT_DATE,
                     IMG_LIST: utils.getOCRImage(
-                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                      HEALTH_EMP_DETAIL[selectIndex]?.IMG_LIST,
                     ),
                     STORE_HEALTH_SEQ:
-                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.STORE_HEALTH_SEQ,
-                    SELECT_INDEX,
+                      HEALTH_EMP_DETAIL[selectIndex]?.STORE_HEALTH_SEQ,
+                    selectIndex,
                   });
                 }}>
                 <Text
@@ -327,13 +326,13 @@ export default ({
                   navigation.navigate('HealthCertificateEmpFormScreen', {
                     fetchData,
                     EMP_SEQ,
-                    RESULT_DATE: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_DATE,
-                    NAME: HEALTH_EMP_DETAIL[SELECT_INDEX]?.NAME,
-                    RESULT_COUNT: HEALTH_EMP_DETAIL[SELECT_INDEX]?.RESULT_COUNT,
+                    RESULT_DATE: HEALTH_EMP_DETAIL[selectIndex]?.RESULT_DATE,
+                    NAME: HEALTH_EMP_DETAIL[selectIndex]?.NAME,
+                    RESULT_COUNT: HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT,
                     IMG_LIST: utils.getOCRImage(
-                      HEALTH_EMP_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                      HEALTH_EMP_DETAIL[selectIndex]?.IMG_LIST,
                     ),
-                    SELECT_INDEX,
+                    selectIndex,
                   });
                 }}>
                 <Text

@@ -5,15 +5,16 @@ import api from '~/constants/LoggedInApi';
 import HealthCertificateEmpDetailScreenPresenter from './HealthCertificateEmpDetailScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
-import {setHEALTH_EMP_DETAIL, setSELECT_INDEX} from '~/redux/healthSlice';
+import {setHEALTH_EMP_DETAIL} from '~/redux/healthSlice';
 
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
 
-  const {HEALTH_EMP_DETAIL, SELECT_INDEX} = useSelector(
-    (state: any) => state.healthReducer,
-  );
+  const {HEALTH_EMP_DETAIL} = useSelector((state: any) => state.healthReducer);
+  console.log('params', params);
   const {data: {EMP_SEQ = null} = {}} = params;
+
+  const [selectIndex, setSelectIndex] = useState<number>(0);
   const [isImageViewVisible, setIsImageViewVisible] = useState<boolean>(false);
 
   const alertModal = (text) => {
@@ -40,7 +41,7 @@ export default ({route: {params}}) => {
     try {
       const {data} = await api.storeHealthEmpDetail(EMP_SEQ);
       if (data.message === 'SUCCESS') {
-        dispatch(setSELECT_INDEX(0));
+        setSelectIndex(0);
         dispatch(setHEALTH_EMP_DETAIL(data.result));
       }
     } catch (e) {
@@ -48,12 +49,12 @@ export default ({route: {params}}) => {
     }
   };
 
-  const decreaseSELECT_INDEX = () => {
-    dispatch(setSELECT_INDEX(SELECT_INDEX - 1));
+  const decreaseSelectIndex = () => {
+    setSelectIndex(selectIndex - 1);
   };
 
-  const increaseSELECT_INDEX = () => {
-    dispatch(setSELECT_INDEX(SELECT_INDEX + 1));
+  const increaseSelectIndex = () => {
+    setSelectIndex(selectIndex + 1);
   };
 
   useEffect(() => {
@@ -69,9 +70,9 @@ export default ({route: {params}}) => {
       HEALTH_EMP_DETAIL={HEALTH_EMP_DETAIL}
       isImageViewVisible={isImageViewVisible}
       setIsImageViewVisible={setIsImageViewVisible}
-      SELECT_INDEX={SELECT_INDEX}
-      decreaseSELECT_INDEX={decreaseSELECT_INDEX}
-      increaseSELECT_INDEX={increaseSELECT_INDEX}
+      selectIndex={selectIndex}
+      decreaseSelectIndex={decreaseSelectIndex}
+      increaseSelectIndex={increaseSelectIndex}
     />
   );
 };

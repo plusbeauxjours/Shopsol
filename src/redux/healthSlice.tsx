@@ -5,7 +5,6 @@ import api from '../constants/LoggedInApi';
 const healthSlice = createSlice({
   name: 'health',
   initialState: {
-    SELECT_INDEX: 0,
     HEALTH_CERTIFICATE_DATA: {},
     HEALTH_EMP_LIST: [],
     HEALTH_EMP_LIST_SEQ: null,
@@ -32,10 +31,7 @@ const healthSlice = createSlice({
       const {payload: HEALTH_STORE_DETAIL} = action;
       state.HEALTH_STORE_DETAIL = HEALTH_STORE_DETAIL;
     },
-    setSELECT_INDEX(state, action) {
-      const {payload: SELECT_INDEX} = action;
-      state.SELECT_INDEX = SELECT_INDEX;
-    },
+
     removeHEALTH_EMP_DETAIL(state, action) {
       const {payload: STORE_HEALTH_SEQ} = action;
       state.HEALTH_EMP_DETAIL = state.HEALTH_EMP_DETAIL.filter(
@@ -56,7 +52,6 @@ export const {
   setHEALTH_EMP_LIST,
   setHEALTH_EMP_DETAIL,
   setHEALTH_STORE_DETAIL,
-  setSELECT_INDEX,
   removeHEALTH_EMP_DETAIL,
   removeHEALTH_STORE_DETAIL,
 } = healthSlice.actions;

@@ -182,7 +182,7 @@ export default ({route: {params}}) => {
           EARLY_TIME,
           EARLY_FLAG,
           // GPS: commuteType, //0208 REMOVEQR
-          GPS: '1', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
+          GPS: '2', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
           JULI: distance,
           TYPE,
           CATEGORY: storeCategoryType,

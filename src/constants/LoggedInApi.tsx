@@ -50,7 +50,7 @@ export default {
   checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
   storeList: (STORE: string, MEMBER_SEQ: string) =>
     oldApi('get', `/Store/store_list?STORE=${STORE}&MEMBER_SEQ=${MEMBER_SEQ}`),
-  addStore: (data: any) => oldApi('post', '/Store/insert22', data),
+  addStore: (data: any) => oldApi('post', '/Store/insert222', data),
   updatePush: (data: any) => oldApi('post', '/Employee/updatePush/', data),
   getPush: (data: any) => oldApi('post', '/Employee/getPush/', data),
   endList: (MEMBER_SEQ: string) =>

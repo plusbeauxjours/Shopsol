@@ -174,15 +174,15 @@ export default ({
   HEALTH_STORE_DETAIL,
   isImageViewVisible,
   setIsImageViewVisible,
-  SELECT_INDEX,
-  decreaseSELECT_INDEX,
-  increaseSELECT_INDEX,
+  selectIndex,
+  decreaseSelectIndex,
+  increaseSelectIndex,
 }) => {
   if (HEALTH_STORE_DETAIL) {
     const navigation = useNavigation();
     const images = [
       {
-        url: utils.getOCRImage(HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST),
+        url: utils.getOCRImage(HEALTH_STORE_DETAIL[selectIndex]?.IMG_LIST),
       },
     ];
 
@@ -211,7 +211,7 @@ export default ({
         {label == '교육 구분' ? (
           <ContentDataWrapper>
             <ContentDataText>
-              {HEALTH_STORE_DETAIL[SELECT_INDEX]?.EDUCATION_TYPE === 'online'
+              {HEALTH_STORE_DETAIL[selectIndex]?.EDUCATION_TYPE === 'online'
                 ? '온라인교육'
                 : '집체교육'}
             </ContentDataText>
@@ -247,10 +247,10 @@ export default ({
               <Date>
                 <DateArrowLeft
                   onPress={() => {
-                    if (SELECT_INDEX == HEALTH_STORE_DETAIL?.length - 1) {
+                    if (selectIndex == HEALTH_STORE_DETAIL?.length - 1) {
                       alertModal('최초데이터 입니다.');
                     } else {
-                      increaseSELECT_INDEX();
+                      increaseSelectIndex();
                     }
                   }}>
                   <BackIcon size={22} color={styleGuide.palette.arrowColor} />
@@ -258,7 +258,7 @@ export default ({
                 <DateTextArea>
                   <DateText>
                     {
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE.split(
+                      HEALTH_STORE_DETAIL[selectIndex]?.probationDATE.split(
                         '-',
                       )[0]
                     }
@@ -275,10 +275,10 @@ export default ({
                 </DateArrowRight>
                 <DateArrowRight
                   onPress={() => {
-                    if (SELECT_INDEX == 0) {
+                    if (selectIndex == 0) {
                       alertModal('최신데이터 입니다.');
                     } else {
-                      decreaseSELECT_INDEX();
+                      decreaseSelectIndex();
                     }
                   }}>
                   <ForwardIcon
@@ -290,29 +290,29 @@ export default ({
               <ContentWrapper>
                 <GetContent
                   label={'교육 이수자'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME}
+                  data={HEALTH_STORE_DETAIL[selectIndex]?.NAME}
                 />
                 <GetContent
                   label={'직책'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.position}
+                  data={HEALTH_STORE_DETAIL[selectIndex]?.position}
                 />
                 <GetContent
                   label={'대표자성명'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.owner}
+                  data={HEALTH_STORE_DETAIL[selectIndex]?.owner}
                 />
                 <GetContent
                   label={'영업소명칭'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.storename}
+                  data={HEALTH_STORE_DETAIL[selectIndex]?.storename}
                 />
                 <GetContent
                   label={'교육 일시'}
                   data={moment(
-                    HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE,
+                    HEALTH_STORE_DETAIL[selectIndex]?.probationDATE,
                   ).format('YYYY.MM.DD')}
                 />
                 <GetContent
                   label={'영업의종류'}
-                  data={HEALTH_STORE_DETAIL[SELECT_INDEX]?.businesstype}
+                  data={HEALTH_STORE_DETAIL[selectIndex]?.businesstype}
                 />
                 <GetContentComponent label={'교육 구분'} />
                 <GetContentComponent label={'사진'} images={images} />
@@ -320,9 +320,9 @@ export default ({
               <RegDateContainer>
                 <RegDate>
                   입력일자 :
-                  {moment(
-                    HEALTH_STORE_DETAIL[SELECT_INDEX]?.CREATE_TIME,
-                  ).format('YYYY.MM.DD')}
+                  {moment(HEALTH_STORE_DETAIL[selectIndex]?.CREATE_TIME).format(
+                    'YYYY.MM.DD',
+                  )}
                 </RegDate>
               </RegDateContainer>
             </Section>
@@ -332,19 +332,19 @@ export default ({
                   navigation.navigate('HealthCertificateStoreUpdateScreen', {
                     fetchData,
                     CEO_HEALTH_SEQ:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.CEO_HEALTH_SEQ,
-                    NAME: HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME,
-                    position: HEALTH_STORE_DETAIL[SELECT_INDEX]?.position,
-                    owner: HEALTH_STORE_DETAIL[SELECT_INDEX]?.owner,
-                    storename: HEALTH_STORE_DETAIL[SELECT_INDEX]?.storename,
+                      HEALTH_STORE_DETAIL[selectIndex]?.CEO_HEALTH_SEQ,
+                    NAME: HEALTH_STORE_DETAIL[selectIndex]?.NAME,
+                    position: HEALTH_STORE_DETAIL[selectIndex]?.position,
+                    owner: HEALTH_STORE_DETAIL[selectIndex]?.owner,
+                    storename: HEALTH_STORE_DETAIL[selectIndex]?.storename,
                     EDUCATION_DATE:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE,
+                      HEALTH_STORE_DETAIL[selectIndex]?.probationDATE,
                     businesstype:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.businesstype,
+                      HEALTH_STORE_DETAIL[selectIndex]?.businesstype,
                     EDUCATION_TYPE:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationTYPE,
+                      HEALTH_STORE_DETAIL[selectIndex]?.probationTYPE,
                     IMG_LIST: utils.getOCRImage(
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                      HEALTH_STORE_DETAIL[selectIndex]?.IMG_LIST,
                     ),
                   });
                 }}>
@@ -358,10 +358,10 @@ export default ({
                   navigation.navigate('HealthCertificateStoreFormScreen', {
                     fetchData,
                     EDUCATION_DATEprops:
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.probationDATE,
-                    NAME: HEALTH_STORE_DETAIL[SELECT_INDEX]?.NAME,
+                      HEALTH_STORE_DETAIL[selectIndex]?.probationDATE,
+                    NAME: HEALTH_STORE_DETAIL[selectIndex]?.NAME,
                     IMG_LIST: utils.getOCRImage(
-                      HEALTH_STORE_DETAIL[SELECT_INDEX]?.IMG_LIST,
+                      HEALTH_STORE_DETAIL[selectIndex]?.IMG_LIST,
                     ),
                   });
                 }}>

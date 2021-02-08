@@ -315,11 +315,8 @@ export default ({
     if (timeTable && timeTable.length !== 0) {
       return (
         <RenderDayListContainer>
-          {originalDayList?.map((originalDay) => (
-            <RenderDayListItem
-              key={originalDay.day}
-              originalDay={originalDay}
-            />
+          {originalDayList?.map((originalDay, index) => (
+            <RenderDayListItem key={index} originalDay={originalDay} />
           ))}
         </RenderDayListContainer>
       );

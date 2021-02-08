@@ -100,7 +100,8 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SelectStoreScreen'}
+        // initialRouteName={'SelectStoreScreen'}
+        initialRouteName={'CalendarInfoScreen'}
         screenOptions={{
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
@@ -509,7 +510,7 @@ export default () => {
           name="SetEmployeeInfoScreen"
           component={SetEmployeeInfoScreen}
           options={{
-            headerLeft: () => <ConfirmBackBtn />,
+            headerBackImage: () => <ConfirmBackBtn />,
             headerTitle: '직원 정보 입력',
             title: '직원 정보등록 & 정보수정',
             headerRight: () => <HomeBtn from={'SetEmployeeInfoScreen'} />,
@@ -528,7 +529,7 @@ export default () => {
           name="EmployeeScheduleInfoScreen"
           component={EmployeeScheduleInfoScreen}
           options={{
-            headerLeft: () => <ConfirmBackBtn />,
+            headerBackImage: () => <ConfirmBackBtn />,
             headerTitle: '직원 정보 입력',
             title: '직원 근무일정 (최초 가입시)',
             headerRight: () => null,

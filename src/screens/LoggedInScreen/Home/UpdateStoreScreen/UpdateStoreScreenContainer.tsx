@@ -199,7 +199,7 @@ export default ({route: {params}}) => {
           EARLY_TIME,
           CALCULATE_DAY,
           // GPS: commuteType.toString(), //0208 REMOVEQR
-          GPS: '1', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
+          GPS: STORE_DATA?.resultdata?.GPS, // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
           JULI: distance,
           CATEGORY: storeCategoryType,
           other: storeCategoryTypeEtc,
@@ -230,7 +230,7 @@ export default ({route: {params}}) => {
         EARLY_TIME,
         EARLY_FLAG,
         // GPS: commuteType.toString(), //0208 REMOVEQR
-        GPS: '1', // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
+        GPS: STORE_DATA?.resultdata?.GPS, // 출퇴근방법 0: QR코드 출퇴근, 1: GPS 출퇴근
         JULI: distance,
         TYPE,
         CATEGORY: storeCategoryType,
