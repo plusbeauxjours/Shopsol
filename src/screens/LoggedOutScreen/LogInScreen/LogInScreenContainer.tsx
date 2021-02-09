@@ -60,6 +60,7 @@ export default () => {
           USERID: PUSH_TOKEN,
           push: PUSH_TOKEN,
         });
+        console.log(data);
         switch (data.message) {
           case 'SUCCESS':
             dispatch(setUSER({userInfo: data.result, mobileNo}));

@@ -171,6 +171,8 @@ export default ({
   EMP_SEQ,
   onRefresh,
   alertModal,
+  loading,
+  HEALTH_EMP_DETAIL_PARAMS_DATA,
   HEALTH_EMP_DETAIL,
   isImageViewVisible,
   setIsImageViewVisible,
@@ -183,6 +185,11 @@ export default ({
     const images = [
       {
         url: utils.getOCRImage(HEALTH_EMP_DETAIL[selectIndex]?.IMG_LIST),
+      },
+    ];
+    const imagesTemp = [
+      {
+        url: utils.getOCRImage(HEALTH_EMP_DETAIL_PARAMS_DATA?.IMG_LIST),
       },
     ];
 
@@ -247,7 +254,10 @@ export default ({
                 </DateArrowLeft>
                 <DateTextArea>
                   <DateText>
-                    {HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT}회차
+                    {loading
+                      ? HEALTH_EMP_DETAIL_PARAMS_DATA?.RESULT_COUNT
+                      : HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT}
+                    회차
                   </DateText>
                 </DateTextArea>
                 <DateArrowRight
@@ -275,26 +285,47 @@ export default ({
               <ContentWrapper>
                 <GetContent
                   label={'성명'}
-                  data={HEALTH_EMP_DETAIL[selectIndex]?.NAME}
+                  data={
+                    loading
+                      ? HEALTH_EMP_DETAIL_PARAMS_DATA?.REAL_NAME
+                      : HEALTH_EMP_DETAIL[selectIndex]?.NAME
+                  }
                 />
                 <GetContent
                   label={'회차'}
-                  data={HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT}
+                  data={
+                    loading
+                      ? HEALTH_EMP_DETAIL_PARAMS_DATA?.RESULT_COUNT
+                      : HEALTH_EMP_DETAIL[selectIndex]?.RESULT_COUNT
+                  }
                 />
                 <GetContent
                   label={'검진일'}
-                  data={moment(
-                    HEALTH_EMP_DETAIL[selectIndex]?.RESULT_DATE,
-                  ).format('YYYY.MM.DD')}
+                  data={
+                    loading
+                      ? moment(
+                          HEALTH_EMP_DETAIL_PARAMS_DATA?.RESULT_DATE,
+                        ).format('YYYY.MM.DD')
+                      : moment(
+                          HEALTH_EMP_DETAIL[selectIndex]?.RESULT_DATE,
+                        ).format('YYYY.MM.DD')
+                  }
                 />
-                <GetContentComponent label={'사진'} images={images} />
+                <GetContentComponent
+                  label={'사진'}
+                  images={loading ? imagesTemp : images}
+                />
               </ContentWrapper>
               <RegDateContainer>
                 <RegDate>
                   입력일자 :&nbsp;
-                  {moment(HEALTH_EMP_DETAIL[selectIndex]?.CREATE_TIME).format(
-                    'YYYY.MM.DD',
-                  )}
+                  {loading
+                    ? moment(HEALTH_EMP_DETAIL[selectIndex]?.SETTIME).format(
+                        'YYYY.MM.DD',
+                      )
+                    : moment(
+                        HEALTH_EMP_DETAIL[selectIndex]?.CREATE_TIME,
+                      ).format('YYYY.MM.DD')}
                 </RegDate>
               </RegDateContainer>
             </Section>

@@ -11,11 +11,11 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
 
   const {HEALTH_EMP_DETAIL} = useSelector((state: any) => state.healthReducer);
-  console.log('params', params);
   const {data: {EMP_SEQ = null} = {}} = params;
 
   const [selectIndex, setSelectIndex] = useState<number>(0);
   const [isImageViewVisible, setIsImageViewVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const alertModal = (text) => {
     const params = {
@@ -43,6 +43,7 @@ export default ({route: {params}}) => {
       if (data.message === 'SUCCESS') {
         setSelectIndex(0);
         dispatch(setHEALTH_EMP_DETAIL(data.result));
+        setLoading(false);
       }
     } catch (e) {
       console.log(e);
@@ -67,6 +68,8 @@ export default ({route: {params}}) => {
       EMP_SEQ={EMP_SEQ}
       onRefresh={onRefresh}
       alertModal={alertModal}
+      loading={loading}
+      HEALTH_EMP_DETAIL_PARAMS_DATA={params?.data}
       HEALTH_EMP_DETAIL={HEALTH_EMP_DETAIL}
       isImageViewVisible={isImageViewVisible}
       setIsImageViewVisible={setIsImageViewVisible}

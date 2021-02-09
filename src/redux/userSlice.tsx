@@ -58,7 +58,7 @@ const userSlice = createSlice({
       state.MEMBER_NAME = userInfo.NAME;
       state.STORE = userInfo.STORE;
       state.TYPE = userInfo.TYPE;
-      state.AVATAR = userInfo.images[0].IMAGE;
+      state.AVATAR = userInfo?.images[0]?.IMAGE;
       state.MOBILE_NO = mobileNo;
       state.isLoggedIn = true;
     },
