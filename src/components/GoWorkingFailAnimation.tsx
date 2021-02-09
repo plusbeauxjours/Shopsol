@@ -89,7 +89,7 @@ export default ({
               color: 'red',
               fontWeight: '600',
             }}>
-            {errorMessage.split('.')[0]}.
+            {errorMessage}
           </BigText>
           <WhiteSpace />
           <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>

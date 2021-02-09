@@ -58,7 +58,7 @@ export default ({
   MEMBER_NAME,
   setSucessModalOpen,
   setWorkingModalOpen,
-  // setQrCameraModalOpen1, //0208 REMOVEQR
+  setQrCameraModalOpen1,
   actionTYPE,
 }) => {
   return (
@@ -101,7 +101,7 @@ export default ({
           onPress={() => {
             setSucessModalOpen(false);
             setWorkingModalOpen(false);
-            // setQrCameraModalOpen1(false); //0208 REMOVEQR
+            setQrCameraModalOpen1(false);
           }}
           rippleColor={styleGuide.palette.rippleColor}
           rippleDuration={600}

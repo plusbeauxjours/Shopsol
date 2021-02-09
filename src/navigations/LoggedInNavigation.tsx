@@ -100,8 +100,7 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        // initialRouteName={'SelectStoreScreen'}
-        initialRouteName={'CalendarInfoScreen'}
+        initialRouteName={'SelectStoreScreen'}
         screenOptions={{
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {

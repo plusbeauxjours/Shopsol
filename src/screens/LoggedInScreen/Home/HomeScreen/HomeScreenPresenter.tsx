@@ -21,7 +21,7 @@ import {
   BoldAddIcon,
   BoldRemoveIcon,
   CloseIcon,
-  // QrCodeIcon,
+  QrCodeIcon,
   LocationIcon,
   NavigateIcon,
 } from '~/constants/Icons';
@@ -334,6 +334,12 @@ const AddButton = styled.TouchableOpacity`
   elevation: 6;
 `;
 
+const ModalContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: ${wp('100%')};
+`;
+
 //0208 REMOVEQR
 // const ConfirmHalfBtnLeft = styled(Ripple)`
 //   height: 60px;
@@ -465,24 +471,24 @@ export default ({
   mapRef,
   moveMap,
   gotoSelectStoreFn,
-  // QR, //0208 REMOVEQR
-  // hasConfirmed, //0208 REMOVEQR
-  // confirmModal, //0208 REMOVEQR
-  // setShowPictureModalOpen, //0208 REMOVEQR
-  // showPictureModalOpen, //0208 REMOVEQR
-  // handleBarCodeScanned1, //0208 REMOVEQR
-  // handleBarCodeScanned2, //0208 REMOVEQR
-  // qrCameraConfirmModalOpen, //0208 REMOVEQR
-  // setQrCameraConfirmModalOpen, //0208 REMOVEQR
-  // qrConfirmLoading, //0208 REMOVEQR
-  // setQrConfirmLoading, //0208 REMOVEQR
-  // qrCameraModalOpen1, //0208 REMOVEQR
-  // setQrCameraModalOpen1, //0208 REMOVEQR
-  // qrCameraModalOpen2, //0208 REMOVEQR
-  // setQrCameraModalOpen2, //0208 REMOVEQR
-  // qrCameraMode, //0208 REMOVEQR
-  // setQrCameraMode, //0208 REMOVEQR
-  // QR_Num, //0208 REMOVEQR
+  // QR,
+  // hasConfirmed,
+  // confirmModal,
+  // setShowPictureModalOpen,
+  // showPictureModalOpen,
+  handleBarCodeScanned1,
+  // handleBarCodeScanned2,
+  // qrCameraConfirmModalOpen,
+  // setQrCameraConfirmModalOpen,
+  // qrConfirmLoading,
+  // setQrConfirmLoading,
+  qrCameraModalOpen1,
+  setQrCameraModalOpen1,
+  // qrCameraModalOpen2,
+  // setQrCameraModalOpen2,
+  // qrCameraMode,
+  // setQrCameraMode,
+  // QR_Num,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -740,27 +746,27 @@ export default ({
         <MenuBox style={{zIndex: 1}}>
           {STORE == 0 && (
             <>
-              {/* {GPS == '0' ? (  //0208 REMOVEQR*/}
-              <BoxContainer>
-                <Box
-                  style={{flexDirection: 'row'}}
-                  onPress={async () => {
-                    setIsWorkingMode(false);
-                    setSucessModalOpen(false);
-                    setFailModalOpen(false);
-                    setWorkingTYPE('GPS');
-                    utils.handleLocationPermission(
-                      setLat,
-                      setLong,
-                      setIsGpsVisible,
-                    );
-                  }}
-                  hasGPS={GPS === '0'}>
-                  <LocationIcon color={'white'} size={22} />
-                  <BoxText style={{marginLeft: 5}}>출퇴근하기</BoxText>
-                </Box>
-              </BoxContainer>
-              {/* ) : ( //0208 REMOVEQR
+              {GPS == '0' ? (
+                <BoxContainer>
+                  <Box
+                    style={{flexDirection: 'row'}}
+                    onPress={async () => {
+                      setIsWorkingMode(false);
+                      setSucessModalOpen(false);
+                      setFailModalOpen(false);
+                      setWorkingTYPE('GPS');
+                      utils.handleLocationPermission(
+                        setLat,
+                        setLong,
+                        setIsGpsVisible,
+                      );
+                    }}
+                    hasGPS={GPS === '0'}>
+                    <LocationIcon color={'white'} size={22} />
+                    <BoxText style={{marginLeft: 5}}>출퇴근하기</BoxText>
+                  </Box>
+                </BoxContainer>
+              ) : (
                 <BoxContainer>
                   <Box
                     style={{flexDirection: 'row'}}
@@ -793,7 +799,7 @@ export default ({
                     <BoxText style={{marginLeft: 5}}>GPS출퇴근하기</BoxText>
                   </Box>
                 </BoxContainer>
-              )} */}
+              )}
             </>
           )}
           {STORE == '1' ? ( // 사업주 ============================
@@ -1344,7 +1350,7 @@ export default ({
             MEMBER_NAME={MEMBER_NAME}
             setSucessModalOpen={setSucessModalOpen}
             setWorkingModalOpen={setWorkingModalOpen}
-            // setQrCameraModalOpen1={setQrCameraModalOpen1} //0208 REMOVEQR
+            setQrCameraModalOpen1={setQrCameraModalOpen1}
             actionTYPE={actionTYPE}
           />
         ) : failModalOpen ? (
@@ -1424,7 +1430,7 @@ export default ({
           </Footer>
         </RNCamera>
       </Modal> */}
-      {/* <Modal //0208 REMOVEQR
+      <Modal
         isVisible={qrCameraModalOpen1}
         onBackdropPress={() => {
           setQrCameraModalOpen1(false);
@@ -1439,39 +1445,39 @@ export default ({
           setIsWorkingMode(false);
         }}
         avoidKeyboard={true}
-        style={{
-          marginLeft: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: wp('100%'),
-          height: '100%',
-        }}>
+        style={{margin: 0}}>
         {workingLoading ? (
-          <LottieView
-            style={{width: 150, height: 150, marginBottom: 40}}
-            source={require('../../../../assets/animations/loading.json')}
-            loop
-            autoPlay
-          />
+          <ModalContainer>
+            <LottieView
+              style={{width: 150, height: 150, marginBottom: 40}}
+              source={require('../../../../assets/animations/loading.json')}
+              loop
+              autoPlay
+            />
+          </ModalContainer>
         ) : sucessModalOpen ? (
-          <GoWorkingSuccessAnimation
-            AVATAR={AVATAR}
-            STORE_NAME={STORE_NAME}
-            MEMBER_NAME={MEMBER_NAME}
-            setSucessModalOpen={setSucessModalOpen}
-            setWorkingModalOpen={setWorkingModalOpen}
-            setQrCameraModalOpen1={setQrCameraModalOpen1}
-            actionTYPE={actionTYPE}
-          />
+          <ModalContainer>
+            <GoWorkingSuccessAnimation
+              AVATAR={AVATAR}
+              STORE_NAME={STORE_NAME}
+              MEMBER_NAME={MEMBER_NAME}
+              setSucessModalOpen={setSucessModalOpen}
+              setWorkingModalOpen={setWorkingModalOpen}
+              setQrCameraModalOpen1={setQrCameraModalOpen1}
+              actionTYPE={actionTYPE}
+            />
+          </ModalContainer>
         ) : failModalOpen ? (
-          <GoWorkingFailAnimation
-            AVATAR={AVATAR}
-            STORE_NAME={STORE_NAME}
-            MEMBER_NAME={MEMBER_NAME}
-            setFailModalOpen={setFailModalOpen}
-            actionTYPE={actionTYPE}
-            errorMessage={errorMessage}
-          />
+          <ModalContainer>
+            <GoWorkingFailAnimation
+              AVATAR={AVATAR}
+              STORE_NAME={STORE_NAME}
+              MEMBER_NAME={MEMBER_NAME}
+              setFailModalOpen={setFailModalOpen}
+              actionTYPE={actionTYPE}
+              errorMessage={errorMessage}
+            />
+          </ModalContainer>
         ) : isWorkingMode ? (
           <BoxContainer>
             <Box
@@ -1523,7 +1529,7 @@ export default ({
             </Footer>
           </RNCamera>
         )}
-      </Modal> */}
+      </Modal>
       {/* <Modal //0208 REMOVEQR
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
