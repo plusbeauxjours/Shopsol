@@ -11,6 +11,7 @@ import BackBtn from '../components/Header/BackBtn';
 import PolicyScreen from '~/components/PolicyScreen';
 import {useSelector} from 'react-redux';
 import RootModal from '../components/RootModal';
+import SplashScreen from '../components/SplashScreen';
 
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
@@ -20,6 +21,7 @@ const LoggedOutNavigation = createStackNavigator();
 export default () => {
   const alert = useSelector((state: any) => state.alertReducer);
   const SharedStorage = NativeModules.SharedStorage;
+
   useEffect(() => {
     // if (utils.isAndroid) {
     //   SharedStorage.set(

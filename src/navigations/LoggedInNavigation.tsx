@@ -77,6 +77,7 @@ import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCe
 import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
 
 // Components========================================================
+import SplashScreen from '../components/SplashScreen';
 import SettingBtn from '../components/Header/SettingBtn';
 import LogOutBtn from '../components/Header/LogOutBtn';
 import RootModal from '../components/RootModal';
@@ -100,7 +101,7 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SelectStoreScreen'}
+        initialRouteName={'SplashScreen'}
         screenOptions={{
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
@@ -115,6 +116,13 @@ export default () => {
           headerBackImage: () => <BackBtn />,
           headerLeftContainerStyle: {marginLeft: 10},
         }}>
+        <LoggedInNavigation.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
         <LoggedInNavigation.Screen
           name="SelectStoreScreen"
           component={SelectStoreScreen}
