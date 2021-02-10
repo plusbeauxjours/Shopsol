@@ -16,7 +16,7 @@ export default () => {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('SelectStoreScreen');
-    }, 3000);
+    }, 2000);
   }, []);
 
   useEffect(() => {

@@ -448,16 +448,14 @@ export default ({route: {params}}) => {
         onBackdropPress={() => setWorkOnMapModalOpen(false)}
         onRequestClose={() => setWorkOnMapModalOpen(false)}
         avoidKeyboard={true}
-        style={{
-          margin: 0,
-        }}>
+        style={{margin: 0}}>
         <MapView
           ref={mapRef}
           style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
-            latitude: params?.data.WORK_ON_LAT,
-            longitude: params?.data.WORK_ON_LON,
+            latitude: parseFloat(params?.data.WORK_ON_LAT),
+            longitude: parseFloat(params?.data.WORK_ON_LON),
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}>
@@ -483,15 +481,15 @@ export default ({route: {params}}) => {
                   : 'rgba(240, 52, 52, 1)'
               }
               center={{
-                latitude: Number(STORE_DATA.resultdata.LAT),
-                longitude: Number(STORE_DATA.resultdata.LONG),
+                latitude: parseFloat(STORE_DATA.resultdata.LAT),
+                longitude: parseFloat(STORE_DATA.resultdata.LONG),
               }}
             />
           )}
           <Marker
             coordinate={{
-              latitude: Number(params?.data.WORK_ON_LAT),
-              longitude: Number(params?.data.WORK_ON_LON),
+              latitude: parseFloat(params?.data.WORK_ON_LAT),
+              longitude: parseFloat(params?.data.WORK_ON_LON),
             }}>
             <UserMarker
               distance={
@@ -512,8 +510,8 @@ export default ({route: {params}}) => {
           </Marker>
           <Marker
             coordinate={{
-              latitude: Number(STORE_DATA.resultdata.LAT),
-              longitude: Number(STORE_DATA.resultdata.LONG),
+              latitude: parseFloat(STORE_DATA.resultdata.LAT),
+              longitude: parseFloat(STORE_DATA.resultdata.LONG),
             }}>
             <ShopMarker />
           </Marker>
@@ -543,8 +541,8 @@ export default ({route: {params}}) => {
           style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
-            latitude: params?.data.WORK_OFF_LAT,
-            longitude: params?.data.WORK_OFF_LON,
+            latitude: parseFloat(params?.data.WORK_OFF_LAT),
+            longitude: parseFloat(params?.data.WORK_OFF_LON),
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}>
@@ -570,15 +568,15 @@ export default ({route: {params}}) => {
                   : 'rgba(240, 52, 52, 1)'
               }
               center={{
-                latitude: Number(STORE_DATA.resultdata.LAT),
-                longitude: Number(STORE_DATA.resultdata.LONG),
+                latitude: parseFloat(STORE_DATA.resultdata.LAT),
+                longitude: parseFloat(STORE_DATA.resultdata.LONG),
               }}
             />
           )}
           <Marker
             coordinate={{
-              latitude: Number(params?.data.WORK_OFF_LAT),
-              longitude: Number(params?.data.WORK_OFF_LON),
+              latitude: parseFloat(params?.data.WORK_OFF_LAT),
+              longitude: parseFloat(params?.data.WORK_OFF_LON),
             }}>
             <UserMarker
               distance={
@@ -599,8 +597,8 @@ export default ({route: {params}}) => {
           </Marker>
           <Marker
             coordinate={{
-              latitude: Number(STORE_DATA.resultdata.LAT),
-              longitude: Number(STORE_DATA.resultdata.LONG),
+              latitude: parseFloat(STORE_DATA.resultdata.LAT),
+              longitude: parseFloat(STORE_DATA.resultdata.LONG),
             }}>
             <ShopMarker />
           </Marker>
