@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
-import {RefreshControl, StatusBar} from 'react-native';
+import {Linking, RefreshControl, StatusBar} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import {
   widthPercentageToDP as wp,
@@ -52,6 +52,9 @@ interface IEye {
 //   hasQr: boolean;
 // }
 
+const windowWidth = wp('100%') - 30;
+const bannerHeight = (wp('100%') - 20) * 0.286754400291120815;
+
 const BackGround = styled.View`
   flex: 1;
   background-color: white;
@@ -59,6 +62,7 @@ const BackGround = styled.View`
 
 const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
+const Touchable = styled.TouchableOpacity``;
 
 const LoadingText = styled.Text`
   position: absolute;
@@ -245,7 +249,7 @@ const MarkerWrapper = styled.View`
 `;
 
 const ShopMarkerContainer = styled.View<ITheme>`
-  background-color: rgba(0, 0, 0, 0.8)
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 10px;
   border-radius: 10px;
   position: relative;
@@ -339,6 +343,30 @@ const ModalContainer = styled.View`
   align-items: center;
   width: ${wp('100%')};
 `;
+
+// 0212 BANNER
+// const BannerImageContainer = styled.View`
+//   margin-top: 15px;
+//   box-shadow: 3px 3px 3px rgba(100, 100, 100, 0.3);
+//   elevation: 3;
+//   background-color: #fff;
+// `;
+
+// 0212 BANNER
+// const BottomBannerContainer = styled.TouchableOpacity`
+//   border-radius: 8px;
+//   box-shadow: 3px 3px 3px rgba(100, 100, 100, 0.3);
+//   elevation: 3;
+// `;
+
+// 0212 BANNER
+// const EventAreaContainer = styled.View`
+//   width: ${wp('100%')}px;
+//   padding: 10px;
+//   border-radius: 8px;
+//   width: ${wp('100%') - 30}px;
+//   height: ${(wp('100%') - 20) * 0.286754400291120815}px;
+// `;
 
 //0208 REMOVEQR
 // const ConfirmHalfBtnLeft = styled(Ripple)`
@@ -894,6 +922,30 @@ export default ({
                   />
                 )}
               </Container>
+              {/* {STORE_DATA?.arbashow == 1 && ( // 0212 BANNER
+                <>
+                  <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                    <MenuTitleArea style={{zIndex: 3}}>
+                      <MenuTitle>언제든지,</MenuTitle>
+                      <Bold> 구인관리</Bold>
+                    </MenuTitleArea>
+                  </SpaceRow>
+                  <Container>
+                    <BannerImageContainer>
+                      <Touchable
+                        onPress={() => {
+                          Linking.openURL(STORE_DATA.arba);
+                        }}>
+                        <FastImage
+                          style={{width: windowWidth, height: bannerHeight}}
+                          source={require('../../../../assets/main/gubgooBanner.png')}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                      </Touchable>
+                    </BannerImageContainer>
+                  </Container>
+                </>
+              )} */}
               <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                 <MenuTitleArea style={{zIndex: 3}}>
                   <MenuTitle>정확한,</MenuTitle>
@@ -1081,6 +1133,34 @@ export default ({
                           />
                         )}
                       </Container>
+                      {/* {STORE_DATA?.arbashow == 1 && ( // 0212 BANNER
+                        <>
+                          <SpaceRow
+                            style={{width: '100%', alignItems: 'center'}}>
+                            <MenuTitleArea style={{zIndex: 3}}>
+                              <MenuTitle>언제든지,</MenuTitle>
+                              <Bold> 구인관리</Bold>
+                            </MenuTitleArea>
+                          </SpaceRow>
+                          <Container>
+                            <BannerImageContainer>
+                              <Touchable
+                                onPress={() => {
+                                  Linking.openURL(STORE_DATA.arba);
+                                }}>
+                                <FastImage
+                                  style={{
+                                    width: windowWidth,
+                                    height: bannerHeight,
+                                  }}
+                                  source={require('../../../../assets/main/gubgooBanner.png')}
+                                  resizeMode={FastImage.resizeMode.cover}
+                                />
+                              </Touchable>
+                            </BannerImageContainer>
+                          </Container>
+                        </>
+                      )} */}
                       <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                         <MenuTitleArea style={{zIndex: 3}}>
                           <MenuTitle>정확한,</MenuTitle>
@@ -1210,6 +1290,40 @@ export default ({
               )}
             </>
           )}
+          {/* {STORE == '1' && STORE_DATA?.eventShow1 == '1' && ( // 0212 BANNER
+            <EventAreaContainer>
+              <BottomBannerContainer
+                onPress={() => {
+                  Linking.openURL(STORE_DATA?.eventUrl1);
+                }}>
+                <FastImage
+                  source={{
+                    uri: STORE_DATA?.eventImage1,
+                    cache: FastImage.cacheControl.immutable,
+                    priority: FastImage.priority.low,
+                  }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </BottomBannerContainer>
+            </EventAreaContainer>
+          )}
+          {STORE == '0' && STORE_DATA?.eventShow2 == '1' && (
+            <EventAreaContainer>
+              <BottomBannerContainer
+                onPress={() => {
+                  Linking.openURL(STORE_DATA?.eventUrl2);
+                }}>
+                <FastImage
+                  source={{
+                    uri: STORE_DATA?.eventImage2,
+                    cache: FastImage.cacheControl.immutable,
+                    priority: FastImage.priority.low,
+                  }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </BottomBannerContainer>
+            </EventAreaContainer>
+          )} */}
           <GrayLinearGradient
             colors={['#f8f1e9', 'white']}
             hasHeight={STORE == '1'}
