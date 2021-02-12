@@ -47,10 +47,9 @@ interface IEye {
   isEyeOn: boolean;
 }
 
-//0208 REMOVEQR
-// interface IHasQr {
-//   hasQr: boolean;
-// }
+interface IHasQr {
+  hasQr: boolean;
+}
 
 const windowWidth = wp('100%') - 30;
 const bannerHeight = (wp('100%') - 20) * 0.286754400291120815;
@@ -344,6 +343,15 @@ const ModalContainer = styled.View`
   width: ${wp('100%')};
 `;
 
+const QrIconContainer = styled(IconContainer)<IHasQr>`
+  flex-direction: row;
+  background-color: ${(props) =>
+    props.hasQr ? styleGuide.palette.tertiary : 'white'};
+  border-width: ${(props) => (props.hasQr ? 0 : 2)}px;
+  border-color: ${(props) =>
+    props.hasQr ? 'transparent' : styleGuide.palette.tertiary};
+`;
+
 // 0212 BANNER
 // const BannerImageContainer = styled.View`
 //   margin-top: 15px;
@@ -375,16 +383,6 @@ const ModalContainer = styled.View`
 //   align-items: center;
 //   justify-content: center;
 //   border-color: #bbb;
-// `;
-
-//0208 REMOVEQR
-// const QrIconContainer = styled(IconContainer)<IHasQr>`
-//   flex-direction: row;
-//   background-color: ${(props) =>
-//     props.hasQr ? styleGuide.palette.tertiary : 'white'};
-//   border-width: ${(props) => (props.hasQr ? 0 : 2)}px;
-//   border-color: ${(props) =>
-//     props.hasQr ? 'transparent' : styleGuide.palette.tertiary};
 // `;
 
 //0208 REMOVEQR
@@ -435,19 +433,17 @@ const ModalContainer = styled.View`
 //   color: ${styleGuide.palette.greyColor};
 // `;
 
-//0208 REMOVEQR
-// const ShowPictureModalTouchable = styled.TouchableOpacity`
-//   flex: 1;
-//   margin: 0 20px;
-//   align-items: center;
-//   justify-content: center;
-// `;
+const ShowPictureModalTouchable = styled.TouchableOpacity`
+  flex: 1;
+  margin: 0 20px;
+  align-items: center;
+  justify-content: center;
+`;
 
-//0208 REMOVEQR
-// const ShowPictureModalImage = styled.View`
-//   width: ${wp('90%')}px;
-//   height: ${wp('90%')}px;
-// `;
+const ShowPictureModalImage = styled.View`
+  width: ${wp('90%')}px;
+  height: ${wp('90%')}px;
+`;
 
 export default ({
   STORE_DATA,
@@ -499,11 +495,11 @@ export default ({
   mapRef,
   moveMap,
   gotoSelectStoreFn,
-  // QR,
+  QR,
   // hasConfirmed,
   // confirmModal,
-  // setShowPictureModalOpen,
-  // showPictureModalOpen,
+  setShowPictureModalOpen,
+  showPictureModalOpen,
   handleBarCodeScanned1,
   // handleBarCodeScanned2,
   // qrCameraConfirmModalOpen,
@@ -804,6 +800,11 @@ export default ({
                       setFailModalOpen(false);
                       setWorkingTYPE('QR');
                       utils.handleCameraPermission(setQrCameraModalOpen1);
+                      utils.handleLocationPermission(
+                        setLat,
+                        setLong,
+                        setIsGpsVisible,
+                      );
                     }}
                     hasGPS={GPS !== '0'}>
                     <QrCodeIcon color={'white'} size={22} />
@@ -838,6 +839,15 @@ export default ({
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
                 </MenuTitleArea>
+                {GPS === '0' && (
+                  <QrIconContainer
+                    hasQr={true}
+                    onPress={() => {
+                      setShowPictureModalOpen(true);
+                    }}>
+                    <QrCodeIcon color={'white'} size={18} />
+                  </QrIconContainer>
+                )}
                 {/* {hasConfirmed ? ( //0208 REMOVEQR
                   <QrIconContainer
                     hasQr={QR_Num}
@@ -1012,6 +1022,15 @@ export default ({
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 직원관리</Bold>
                     </MenuTitleArea>
+                    {GPS === '0' && (
+                      <QrIconContainer
+                        hasQr={true}
+                        onPress={() => {
+                          setShowPictureModalOpen(true);
+                        }}>
+                        <QrCodeIcon color={'white'} size={18} />
+                      </QrIconContainer>
+                    )}
                     {/* {hasConfirmed ? ( //0208 REMOVEQR
                       <QrIconContainer
                         hasQr={true}
@@ -1644,126 +1663,120 @@ export default ({
           </RNCamera>
         )}
       </Modal>
-      {/* <Modal //0208 REMOVEQR
+      <Modal
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}
         isVisible={showPictureModalOpen}
         style={{margin: 0}}
         onBackdropPress={() => {
-          if (!qrConfirmLoading) {
-            setShowPictureModalOpen(false);
-            setQrCameraConfirmModalOpen(false);
-            setQrConfirmLoading(false);
-            setQrCameraMode(false);
-          }
+          // if (!qrConfirmLoading) {
+          setShowPictureModalOpen(false);
+          // setQrCameraConfirmModalOpen(false);
+          // setQrConfirmLoading(false);
+          // setQrCameraMode(false);
+          // }
         }}
         onRequestClose={() => {
-          if (!qrConfirmLoading) {
-            setShowPictureModalOpen(false);
-            setQrCameraConfirmModalOpen(false);
-            setQrConfirmLoading(false);
-            setQrCameraMode(false);
-          }
+          // if (!qrConfirmLoading) {
+          setShowPictureModalOpen(false);
+          // setQrCameraConfirmModalOpen(false);
+          // setQrConfirmLoading(false);
+          // setQrCameraMode(false);
+          // }
         }}>
-        {qrConfirmLoading ? (
-          <ConfirmBox>
-            <LottieView
-              style={{width: 150, height: 150, marginBottom: 40}}
-              source={require('../../../../assets/animations/loading.json')}
-              loop
-              autoPlay
+        {/* {qrConfirmLoading ? (
+           <ConfirmBox>
+             <LottieView
+               style={{width: 150, height: 150, marginBottom: 40}}
+               source={require('../../../../assets/animations/loading.json')}
+               loop
+               autoPlay
+             />
+           </ConfirmBox>
+         ) : ( 
+           ) : qrCameraMode ? (
+             <RNCamera
+               style={{flex: 1, alignItems: 'center'}}
+               type={RNCamera.Constants.Type.back}
+               flashMode={RNCamera.Constants.FlashMode.off}
+               autoFocus={RNCamera.Constants.AutoFocus.on}
+               captureAudio={false}
+               onFacesDetected={() => {}}
+               onFocusChanged={() => {}}
+               onZoomChanged={() => {}}
+               onBarCodeRead={({data}) => handleBarCodeScanned2(data)}>
+               <BarcodeMask
+                 width={300}
+                 height={300}
+                 outerMaskOpacity={0.8}
+                 edgeColor={styleGuide.palette.tertiary}
+                 edgeBorderWidth={2}
+                 showAnimatedLine={false}
+               />
+               <Footer
+                 onPress={() => {
+                   setQrCameraConfirmModalOpen(false);
+                   setQrConfirmLoading(false);
+                   setQrCameraMode(false);
+                 }}>
+                 <FooterText>닫기</FooterText>
+               </Footer>
+             </RNCamera>
+           ) : qrCameraConfirmModalOpen ? (
+             <>
+               <ShowPictureModalTouchable
+                 onPress={() => {
+                   setQrCameraConfirmModalOpen(false);
+                 }}>
+
+               </ShowPictureModalTouchable>
+               <ConfirmWhiteBox>
+                 <ConfirmBackGround>
+                   <ConfirmBox>
+                     <ConfirmContent>
+                       사업장의 QR을 변경하시겠습니까?
+                     </ConfirmContent>
+                   </ConfirmBox>
+                 </ConfirmBackGround>
+                 <Row>
+                   <ConfirmHalfBtnLeft
+                     onPress={() => {
+                       setShowPictureModalOpen(false);
+                       setQrCameraConfirmModalOpen(false);
+                       setQrConfirmLoading(false);
+                        setQrCameraMode(false);
+                     }}
+                     rippleColor={styleGuide.palette.rippleColor}
+                     rippleSize={1200}
+                     rippleDuration={600}
+                     rippleOpacity={0.45}>
+                     <ConfirmHalfTextLeft>취소</ConfirmHalfTextLeft>
+                   </ConfirmHalfBtnLeft>
+                   <ConfirmHalfBtnRight
+                     onPress={() => {
+                       utils.handleCameraPermission(setQrCameraMode);
+                     }}
+                     rippleColor={styleGuide.palette.secondary}
+                     rippleSize={1200}
+                     rippleDuration={600}
+                     rippleOpacity={0.4}>
+                     <ConfirmHalfTextRight>변경</ConfirmHalfTextRight>
+                   </ConfirmHalfBtnRight>
+                 </Row>
+               </ConfirmWhiteBox>
+             </> */}
+        <ShowPictureModalTouchable
+          onPress={() => {
+            setShowPictureModalOpen(false);
+          }}>
+          <ShowPictureModalImage>
+            <FastImage
+              style={{width: '100%', height: '100%'}}
+              source={{uri: utils.getQRImage(QR)}}
+              resizeMode={FastImage.resizeMode.contain}
             />
-          </ConfirmBox>
-        ) : qrCameraMode ? (
-          <RNCamera
-            style={{flex: 1, alignItems: 'center'}}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            autoFocus={RNCamera.Constants.AutoFocus.on}
-            captureAudio={false}
-            onFacesDetected={() => {}}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
-            onBarCodeRead={({data}) => handleBarCodeScanned2(data)}>
-            <BarcodeMask
-              width={300}
-              height={300}
-              outerMaskOpacity={0.8}
-              edgeColor={styleGuide.palette.tertiary}
-              edgeBorderWidth={2}
-              showAnimatedLine={false}
-            />
-            <Footer
-              onPress={() => {
-                setQrCameraConfirmModalOpen(false);
-                setQrConfirmLoading(false);
-                setQrCameraMode(false);
-              }}>
-              <FooterText>닫기</FooterText>
-            </Footer>
-          </RNCamera>
-        ) : qrCameraConfirmModalOpen ? (
-          <>
-            <ShowPictureModalTouchable
-              onPress={() => {
-                setQrCameraConfirmModalOpen(false);
-              }}>
-              <ShowPictureModalImage>
-                <FastImage
-                  style={{width: '100%', height: '100%'}}
-                  source={{uri: utils.getQRImage(QR)}}
-                  resizeMode={FastImage.resizeMode.contain}
-                />
-              </ShowPictureModalImage>
-            </ShowPictureModalTouchable>
-            <ConfirmWhiteBox>
-              <ConfirmBackGround>
-                <ConfirmBox>
-                  <ConfirmContent>
-                    사업장의 QR을 변경하시겠습니까?
-                  </ConfirmContent>
-                </ConfirmBox>
-              </ConfirmBackGround>
-              <Row>
-                <ConfirmHalfBtnLeft
-                  onPress={() => {
-                    setShowPictureModalOpen(false);
-                    setQrCameraConfirmModalOpen(false);
-                    setQrConfirmLoading(false);
-                    setQrCameraMode(false);
-                  }}
-                  rippleColor={styleGuide.palette.rippleColor}
-                  rippleSize={1200}
-                  rippleDuration={600}
-                  rippleOpacity={0.45}>
-                  <ConfirmHalfTextLeft>취소</ConfirmHalfTextLeft>
-                </ConfirmHalfBtnLeft>
-                <ConfirmHalfBtnRight
-                  onPress={() => {
-                    utils.handleCameraPermission(setQrCameraMode);
-                  }}
-                  rippleColor={styleGuide.palette.secondary}
-                  rippleSize={1200}
-                  rippleDuration={600}
-                  rippleOpacity={0.4}>
-                  <ConfirmHalfTextRight>변경</ConfirmHalfTextRight>
-                </ConfirmHalfBtnRight>
-              </Row>
-            </ConfirmWhiteBox>
-          </>
-        ) : (
-          <ShowPictureModalTouchable
-            onPress={() => {
-              setShowPictureModalOpen(false);
-            }}>
-            <ShowPictureModalImage>
-              <FastImage
-                style={{width: '100%', height: '100%'}}
-                source={{uri: utils.getQRImage(QR)}}
-                resizeMode={FastImage.resizeMode.contain}
-              />
-            </ShowPictureModalImage>
-            <StoreUpdateBtn
+          </ShowPictureModalImage>
+          {/* <StoreUpdateBtn
               style={{width: 110, alignSelf: 'flex-end', marginTop: 20}}
               onPress={() => {
                 setQrConfirmLoading(true);
@@ -1772,11 +1785,11 @@ export default ({
                   setQrCameraConfirmModalOpen(true);
                 }, 500);
               }}>
-              <WhiteText>QR코드 재등록</WhiteText>
-            </StoreUpdateBtn>
-          </ShowPictureModalTouchable>
-        )}
-      </Modal> */}
+              <WhiteText>QR코드 재등록</WhiteText> //0208 REMOVEQR
+            </StoreUpdateBtn> */}
+        </ShowPictureModalTouchable>
+        {/* )} */}
+      </Modal>
     </BackGround>
   );
 };

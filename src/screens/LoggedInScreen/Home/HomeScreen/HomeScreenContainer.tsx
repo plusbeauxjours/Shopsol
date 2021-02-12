@@ -13,6 +13,7 @@ import {getStore} from '~/redux/storeSlice';
 import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
 
 export default ({route: {params}}) => {
+  console.log(params);
   const mapRef = useRef(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -52,6 +53,9 @@ export default ({route: {params}}) => {
   );
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
+  const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
+    false,
+  );
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -60,9 +64,7 @@ export default ({route: {params}}) => {
   // const [hasConfirmed, setHasConfirmed] = useState<boolean>(
   //   params?.hasConfirmed == '1',
   // );
-  // const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
-  //   false,
-  // );
+
   // const [
   //   qrCameraConfirmModalOpen,
   //   setQrCameraConfirmModalOpen,
@@ -510,7 +512,7 @@ export default ({route: {params}}) => {
       lat={lat}
       long={long}
       getDistance={getDistance}
-      GPS={GPS}
+      GPS={GPS || STORE_DATA?.resultdata?.GPS}
       sucessModalOpen={sucessModalOpen}
       setSucessModalOpen={setSucessModalOpen}
       failModalOpen={failModalOpen}
@@ -541,24 +543,24 @@ export default ({route: {params}}) => {
       mapRef={mapRef}
       moveMap={moveMap}
       gotoSelectStoreFn={gotoSelectStoreFn}
-      // QR={STORE_DATA?.resultdata?.QR || ''} //0208 REMOVEQR
-      // hasConfirmed={hasConfirmed} //0208 REMOVEQR
-      // confirmModal={confirmModal} //0208 REMOVEQR
-      // setShowPictureModalOpen={setShowPictureModalOpen} //0208 REMOVEQR
-      // showPictureModalOpen={showPictureModalOpen} //0208 REMOVEQR
+      QR={STORE_DATA?.resultdata?.QR || ''}
+      // hasConfirmed={hasConfirmed}
+      // confirmModal={confirmModal}
+      setShowPictureModalOpen={setShowPictureModalOpen}
+      showPictureModalOpen={showPictureModalOpen}
       handleBarCodeScanned1={handleBarCodeScanned1}
-      // handleBarCodeScanned2={handleBarCodeScanned2} //0208 REMOVEQR
-      // qrCameraConfirmModalOpen={qrCameraConfirmModalOpen} //0208 REMOVEQR
-      // setQrCameraConfirmModalOpen={setQrCameraConfirmModalOpen} //0208 REMOVEQR
-      // qrConfirmLoading={qrConfirmLoading} //0208 REMOVEQR
-      // setQrConfirmLoading={setQrConfirmLoading} //0208 REMOVEQR
+      // handleBarCodeScanned2={handleBarCodeScanned2}
+      // qrCameraConfirmModalOpen={qrCameraConfirmModalOpen}
+      // setQrCameraConfirmModalOpen={setQrCameraConfirmModalOpen}
+      // qrConfirmLoading={qrConfirmLoading}
+      // setQrConfirmLoading={setQrConfirmLoading}
       qrCameraModalOpen1={qrCameraModalOpen1}
       setQrCameraModalOpen1={setQrCameraModalOpen1}
-      // qrCameraModalOpen2={qrCameraModalOpen2} //0208 REMOVEQR
-      // setQrCameraModalOpen2={setQrCameraModalOpen2} //0208 REMOVEQR
-      // qrCameraMode={qrCameraMode} //0208 REMOVEQR
-      // setQrCameraMode={setQrCameraMode} //0208 REMOVEQR
-      // QR_Num={QR_Num} //0208 REMOVEQR
+      // qrCameraModalOpen2={qrCameraModalOpen2}
+      // setQrCameraModalOpen2={setQrCameraModalOpen2}
+      // qrCameraMode={qrCameraMode}
+      // setQrCameraMode={setQrCameraMode}
+      // QR_Num={QR_Num}
     />
   );
 };

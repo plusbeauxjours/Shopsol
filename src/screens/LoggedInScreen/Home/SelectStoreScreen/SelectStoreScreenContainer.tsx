@@ -62,9 +62,9 @@ export default ({route: {params}}) => {
               WORKING_COUNT: data.workinglist,
               TOTAL_COUNT: data.emplist,
               GPS: data.GPS,
-              QR_Num: data.QR_Num,
               hasConfirmed: data.hasConfirmedQr,
               category: data.CATEGORY,
+              QR_Num: data.QR_Num, //0208 REMOVEQR
             },
           },
         ],
