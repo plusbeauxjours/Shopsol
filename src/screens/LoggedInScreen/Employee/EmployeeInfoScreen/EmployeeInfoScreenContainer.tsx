@@ -132,8 +132,6 @@ export default ({route: {params}}) => {
         initTimeTable(data.result);
       } else if (data.message === 'LIST_EMPTY') {
         initTimeTable([]);
-      } else {
-        console.log(data);
       }
     } catch (e) {
       console.log(e);
@@ -402,7 +400,6 @@ export default ({route: {params}}) => {
   useEffect(() => {
     fetchData();
   }, []);
-
   return (
     <EmployeeInfoScreenPresenter
       STORE={STORE}

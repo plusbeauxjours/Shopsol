@@ -161,7 +161,6 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
-          {console.log(item)}
           <Touchable
             onPress={() =>
               confirmModal(

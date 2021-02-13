@@ -325,7 +325,7 @@ export default ({
     }
   };
 
-  const RenderDayListItem = ({originalDay, key}) => {
+  const RenderDayListItem = ({originalDay}) => {
     const substractHour = (startTime, endTime) => {
       const startTimeArray = startTime.split(':');
       let startTimeHour = Number(startTimeArray[0]);
@@ -372,7 +372,7 @@ export default ({
     const substract = flag ? substractHour(startTime, endTime) : '';
     const isSelected = color && flag;
     return (
-      <RenderDayRow key={key}>
+      <RenderDayRow>
         <RenderDayBox isSelected={isSelected} color={color}>
           <RenderDayBoxText isSelected={isSelected}>
             {originalDay.text}

@@ -13,7 +13,6 @@ import {getStore} from '~/redux/storeSlice';
 import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
 
 export default ({route: {params}}) => {
-  console.log(params);
   const mapRef = useRef(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -333,11 +332,11 @@ export default ({route: {params}}) => {
     if (utils.isAndroid) {
       BackHandler.exitApp();
       Linking.openURL(
-        'https://play.google.com/store/apps/details?id=com.wesop.cuhr',
+        'https://play.google.com/store/apps/details?id=com.wesop.appshopsol',
       );
     } else {
       Linking.openURL(
-        'https://apps.apple.com/kr/app/%ED%87%B4%EA%B7%BC%ED%95%B4%EC%94%A8%EC%9C%A0-%EC%9A%B0%EB%A6%AC%EB%A7%A4%EC%9E%A5-%ED%95%84%EC%88%98%ED%92%88/id1503486454',
+        'https://itunes.apple.com/kr/app/샵솔/id1408364175?l=ko&ls=1&mt=8',
       );
     }
   };
@@ -491,7 +490,7 @@ export default ({route: {params}}) => {
   //     }, 500);
   //   }
   // };
-
+  console.log(STORE_DATA?.resultdata?.QR);
   return (
     <HomeScreenPresenter
       STORE_DATA={STORE_DATA}
@@ -543,7 +542,7 @@ export default ({route: {params}}) => {
       mapRef={mapRef}
       moveMap={moveMap}
       gotoSelectStoreFn={gotoSelectStoreFn}
-      QR={STORE_DATA?.resultdata?.QR || ''}
+      QR={STORE_DATA?.resultdata?.QR}
       // hasConfirmed={hasConfirmed}
       // confirmModal={confirmModal}
       setShowPictureModalOpen={setShowPictureModalOpen}

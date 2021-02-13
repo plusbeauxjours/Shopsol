@@ -192,7 +192,12 @@ export default ({route: {params}}) => {
           alertModal(
             '사업장 추가완료\n\n사업장을 클릭하신 후 직원을 초대하세요.',
           );
-          navigation.goBack();
+          setTimeout(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'SelectStoreScreen'}],
+            });
+          }, 600);
         }
       } catch (e) {
         console.log(e);

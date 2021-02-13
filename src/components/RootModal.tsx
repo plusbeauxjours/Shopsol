@@ -147,7 +147,7 @@ export default ({alert}) => {
       isVisible={alert.visible}>
       {alert.image && (
         <ImageViewer
-          imageUrls={[{url: utils.getUriImage(alert.image)}]}
+          imageUrls={[{url: alert.image}]}
           onSwipeDown={() => dispatch(setAlertVisible(false))}
           backgroundColor={'transparent'}
           saveToLocalByLongPress={false}

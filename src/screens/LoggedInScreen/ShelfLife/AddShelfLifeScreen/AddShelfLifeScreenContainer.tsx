@@ -155,7 +155,6 @@ export default ({route: {params}}) => {
         alertModal('연결에 실패하였습니다.');
       } else {
         dispatch(setLoadingVisible(false));
-        params?.onRefresh();
       }
     } catch (e) {
       console.log(e);
@@ -188,7 +187,6 @@ export default ({route: {params}}) => {
           alertModal('연결에 실패하였습니다.');
         } else {
           alertModal('등록이 완료되었습니다.');
-          params?.onRefresh();
         }
       } else {
         return;
@@ -198,9 +196,12 @@ export default ({route: {params}}) => {
     } finally {
       navigation.goBack();
       dispatch(setSplashVisible({visible: false}));
-      list.map(
-        (i, index) => i.shelfLifeIMAGE && submitShelfLifeDataImg(i, STORE_SEQ),
-      );
+      list.map((i, index) => {
+        if (list.length - 1 == index) {
+          params?.onRefresh();
+        }
+        i.shelfLifeIMAGE && submitShelfLifeDataImg(i, STORE_SEQ);
+      });
     }
   };
 

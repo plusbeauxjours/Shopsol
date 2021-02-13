@@ -104,8 +104,7 @@ export default ({gotoLogin, gotoVerification}) => {
           from: {opacity: 0},
           to: {opacity: 1},
         }}
-        delay={3000}
-        duration={800}>
+        duration={2000}>
         <BarButton
           onPress={() => gotoVerification()}
           rippleColor={styleGuide.palette.rippleColor}

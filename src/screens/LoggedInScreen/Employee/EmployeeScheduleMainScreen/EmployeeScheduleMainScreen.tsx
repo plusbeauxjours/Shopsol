@@ -104,7 +104,7 @@ export default ({route: {params}}) => {
   const changeMode = async () => {
     try {
       await api.toggleCalendar({
-        CALENDAR: isFreeWorkingType ? '1' : '0',
+        CALENDAR: isFreeWorkingType ? '0' : '1', // previous status, return status should be reversed
         EMP_SEQ,
       });
     } catch (e) {

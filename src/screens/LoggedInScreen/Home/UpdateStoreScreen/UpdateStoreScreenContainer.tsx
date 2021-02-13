@@ -180,11 +180,13 @@ export default ({route: {params}}) => {
   const submit = async (sign) => {
     if (sign == 'close') {
       alertModal('사업장의 폐업처리가 완료되었습니다.');
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'SelectStoreScreen'}],
-      });
       dispatch(closeSTORE_ON_STORE_LIST());
+      setTimeout(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'SelectStoreScreen'}],
+        });
+      }, 600);
     } else {
       alertModal('수정하였습니다.');
       dispatch(

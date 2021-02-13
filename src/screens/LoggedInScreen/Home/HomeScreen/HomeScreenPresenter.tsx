@@ -778,19 +778,16 @@ export default ({
                       setIsWorkingMode(false);
                       setSucessModalOpen(false);
                       setFailModalOpen(false);
-                      setWorkingTYPE('GPS');
-                      utils.handleLocationPermission(
-                        setLat,
-                        setLong,
-                        setIsGpsVisible,
-                      );
+                      setWorkingTYPE('QR');
+                      utils.handleCameraPermission(setQrCameraModalOpen1);
+                      utils.handleLocationPermission(setLat, setLong);
                     }}
-                    hasGPS={GPS === '0'}>
-                    <LocationIcon color={'white'} size={22} />
+                    hasGPS={false}>
+                    <QrCodeIcon color={'white'} size={22} />
                     <BoxText style={{marginLeft: 5}}>출퇴근하기</BoxText>
                   </Box>
                 </BoxContainer>
-              ) : (
+              ) : GPS == '1' ? (
                 <BoxContainer>
                   <Box
                     style={{flexDirection: 'row'}}
@@ -800,13 +797,9 @@ export default ({
                       setFailModalOpen(false);
                       setWorkingTYPE('QR');
                       utils.handleCameraPermission(setQrCameraModalOpen1);
-                      utils.handleLocationPermission(
-                        setLat,
-                        setLong,
-                        setIsGpsVisible,
-                      );
+                      utils.handleLocationPermission(setLat, setLong);
                     }}
-                    hasGPS={GPS !== '0'}>
+                    hasGPS={true}>
                     <QrCodeIcon color={'white'} size={22} />
                     <BoxText style={{marginLeft: 5}}>QR출퇴근하기</BoxText>
                   </Box>
@@ -823,9 +816,29 @@ export default ({
                         setIsGpsVisible,
                       );
                     }}
-                    hasGPS={GPS !== '0'}>
+                    hasGPS={true}>
                     <LocationIcon color={'white'} size={22} />
                     <BoxText style={{marginLeft: 5}}>GPS출퇴근하기</BoxText>
+                  </Box>
+                </BoxContainer>
+              ) : (
+                <BoxContainer>
+                  <Box
+                    style={{flexDirection: 'row'}}
+                    onPress={async () => {
+                      setIsWorkingMode(false);
+                      setSucessModalOpen(false);
+                      setFailModalOpen(false);
+                      setWorkingTYPE('GPS');
+                      utils.handleLocationPermission(
+                        setLat,
+                        setLong,
+                        setIsGpsVisible,
+                      );
+                    }}
+                    hasGPS={false}>
+                    <LocationIcon color={'white'} size={22} />
+                    <BoxText style={{marginLeft: 5}}>출퇴근하기</BoxText>
                   </Box>
                 </BoxContainer>
               )}
@@ -839,7 +852,7 @@ export default ({
                   <MenuTitle>더욱 쉬워진,</MenuTitle>
                   <Bold> 직원관리</Bold>
                 </MenuTitleArea>
-                {GPS === '0' && (
+                {GPS !== '2' && (
                   <QrIconContainer
                     hasQr={true}
                     onPress={() => {
@@ -1022,7 +1035,7 @@ export default ({
                       <MenuTitle>더욱 쉬워진,</MenuTitle>
                       <Bold> 직원관리</Bold>
                     </MenuTitleArea>
-                    {GPS === '0' && (
+                    {GPS !== '2' && (
                       <QrIconContainer
                         hasQr={true}
                         onPress={() => {

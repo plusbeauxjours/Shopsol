@@ -141,11 +141,12 @@ const FixTypeDayChangeBox = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
+
 const FixTypeDayChangeButton = styled.TouchableOpacity`
-  width: 30%;
+  width: ${(wp('100') - 100) / 3}px;
   height: 40px;
-  border-radius: 5px;
-  border-width: 1px;
+  border-radius: 15px;
+  border-width: 0.7px;
   align-items: center;
   justify-content: center;
 `;
@@ -667,9 +668,7 @@ export default ({
                     <GreyLine />
                     <FixTypeDayChangeButton
                       style={{
-                        backgroundColor: 'white',
                         borderColor: styleGuide.palette.greyColor,
-                        alignItems: 'center',
                         width: '100%',
                       }}
                       onPress={() => registerScheduleFn()}>

@@ -114,8 +114,6 @@ export default () => {
         initTimeTable(data.result);
       } else if (data.message === 'LIST_EMPTY') {
         initTimeTable([]);
-      } else {
-        console.log(data);
       }
     } catch (e) {
       console.log(e);

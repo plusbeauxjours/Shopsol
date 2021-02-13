@@ -32,15 +32,17 @@ export default ({route: {params}}) => {
     }
   };
 
+  // EXIT
   const exitandroid = () => {
-    if (Platform.OS === 'ios') {
-      Linking.openURL(
-        'https://itunes.apple.com/kr/app/샵솔/id1408364175?l=ko&ls=1&mt=8',
-      );
-    } else {
+    dispatch(setAlertVisible(false));
+    if (utils.isAndroid) {
       BackHandler.exitApp();
       Linking.openURL(
         'https://play.google.com/store/apps/details?id=com.wesop.appshopsol',
+      );
+    } else {
+      Linking.openURL(
+        'https://itunes.apple.com/kr/app/샵솔/id1408364175?l=ko&ls=1&mt=8',
       );
     }
   };

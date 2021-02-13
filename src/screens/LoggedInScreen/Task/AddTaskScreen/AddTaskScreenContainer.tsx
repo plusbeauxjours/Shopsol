@@ -128,24 +128,28 @@ export default ({route: {params}}) => {
         alertModal('연결에 실패하였습니다.');
       } else {
         dispatch(setLoadingVisible(false));
-        params?.onRefresh();
       }
     } catch (e) {
       console.log(e);
+      alertModal('연결에 실패하였습니다.');
+    } finally {
+      dispatch(setLoadingVisible(false));
     }
   };
 
   const submitFn = async () => {
     if (list.length == 0) {
-      return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
+      return alertModal('등록하실 업무를 목록에 추가하신 후 등록을 해주세요.');
     }
-    dispatch(setLoadingVisible(true));
-    list.map((i) =>
-      i.taskIMAGE ? taskDataImg(i, STORE_SEQ) : taskDataTempList.push(i),
-    );
-    navigation.goBack();
-    if (taskDataTempList.length > 0) {
-      try {
+    try {
+      dispatch(
+        setSplashVisible({
+          visible: true,
+          fullText: '업무를 등록중입니다.',
+        }),
+      );
+      list.map((i, index) => !i.taskIMAGE && taskDataTempList.push(i));
+      if (taskDataTempList.length > 0) {
         const {data} = await api.setTaskData({
           STORE_SEQ,
           LIST: taskDataTempList,
@@ -153,13 +157,22 @@ export default ({route: {params}}) => {
         if (data.result == '0') {
           alertModal('연결에 실패하였습니다.');
         } else {
-          dispatch(setLoadingVisible(false));
           alertModal('등록이 완료되었습니다.');
+        }
+      } else {
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      navigation.goBack();
+      dispatch(setSplashVisible({visible: false}));
+      list.map((i, index) => {
+        if (list.length - 1 == index) {
           params?.onRefresh();
         }
-      } catch (e) {
-        console.log(e);
-      }
+        i.taskIMAGE && taskDataImg(i, STORE_SEQ);
+      });
     }
   };
 
