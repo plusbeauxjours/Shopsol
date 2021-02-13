@@ -166,7 +166,7 @@ android {
 
     defaultConfig {
         targetSdkVersion 29
-        applicationId "com.shopsolMasterWesop"
+        applicationId "com.wesop.appshopsol"
         minSdkVersion rootProject.ext.minSdkVersion
         missingDimensionStrategy 'react-native-camera', 'general'
         targetSdkVersion rootProject.ext.targetSdkVersion

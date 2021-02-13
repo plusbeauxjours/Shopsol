@@ -1,4 +1,4 @@
-package com.shopsolMasterWesop;
+package com.wesop.appshopsol;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;

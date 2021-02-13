@@ -1,34 +1,80 @@
 {
   "project_info": {
-    "project_number": "690515042246",
-    "project_id": "shopsol-app",
-    "storage_bucket": "shopsol-app.appspot.com"
+    "project_number": "44557955526",
+    "firebase_url": "https://shopsol-f86dd.firebaseio.com",
+    "project_id": "shopsol-f86dd",
+    "storage_bucket": "shopsol-f86dd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:690515042246:android:86ef379833a91c7e2c9cc7",
+        "mobilesdk_app_id": "1:44557955526:android:dc3492c2c482010f",
         "android_client_info": {
-          "package_name": "com.shopsolMasterWesop"
+          "package_name": "com.wesop.appshopsol"
         }
       },
       "oauth_client": [
         {
-          "client_id": "690515042246-j7dm74p685e8vfet0jq2havvq8kck58s.apps.googleusercontent.com",
+          "client_id": "44557955526-e9kbmc8v6jl0vlfjckmovmh0ggc3vl2g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDItItpYFpYc-z7ikd7DxHcj246C-iTJJk"
+          "current_key": "AIzaSyBa_FYioT7Xad5Md7A2Fd8aM4HF3xNaCmQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "690515042246-j7dm74p685e8vfet0jq2havvq8kck58s.apps.googleusercontent.com",
+              "client_id": "44557955526-e9kbmc8v6jl0vlfjckmovmh0ggc3vl2g.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "44557955526-08nhqqo0imkso8k2nirg4k63rbbkbj7e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.wesop.appshopsol",
+                "app_store_id": "1408364175"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44557955526:android:d03270a32c0b63bc",
+        "android_client_info": {
+          "package_name": "com.xujun.coma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44557955526-e9kbmc8v6jl0vlfjckmovmh0ggc3vl2g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa_FYioT7Xad5Md7A2Fd8aM4HF3xNaCmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44557955526-e9kbmc8v6jl0vlfjckmovmh0ggc3vl2g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "44557955526-08nhqqo0imkso8k2nirg4k63rbbkbj7e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.wesop.appshopsol",
+                "app_store_id": "1408364175"
+              }
             }
           ]
         }

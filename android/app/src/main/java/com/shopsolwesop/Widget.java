@@ -1,4 +1,4 @@
-package com.shopsolMasterWesop;
+package com.wesop.appshopsol;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

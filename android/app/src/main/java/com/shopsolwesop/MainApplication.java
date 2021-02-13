@@ -1,4 +1,4 @@
-package com.shopsolMasterWesop;
+package com.wesop.appshopsol;
 
 import android.app.Application;
 import android.content.Context;
@@ -86,7 +86,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.shopsolMasterWesop.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.wesop.appshopsol.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);
