@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
@@ -240,7 +240,10 @@ export default ({route: {params}}) => {
       `${params?.TITLE} 상세`,
       '===================',
     );
-    firebase.analytics().setCurrentScreen(`${params?.TITLE} 상세`);
+    analytics().logScreenView({
+      screen_name: `${params?.TITLE} 상세`,
+      screen_class: `${params?.TITLE} 상세`,
+    });
   }, []);
 
   return (

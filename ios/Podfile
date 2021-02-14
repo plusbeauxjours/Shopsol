@@ -22,9 +22,8 @@ target 'ShopsolWesop' do
   pod 'react-native-google-maps', path: '../node_modules/react-native-maps' 
   pod 'GoogleMaps' 
   pod 'Google-Maps-iOS-Utils'
-  pod 'Firebase/Core', '~> 6.13.0'
-  pod 'Firebase/Auth', '~> 6.13.0'
   pod 'Firebase/Messaging'
+  pod 'Firebase/Analytics'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
   target 'ShopsolWesopTests' do

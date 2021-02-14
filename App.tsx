@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import codePush from 'react-native-code-push';
+import messaging from '@react-native-firebase/messaging';
 
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -9,6 +10,17 @@ import store, {persistor} from './src/redux/store';
 import RootContainer from './src/components/RootContainer';
 
 function App() {
+  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+    console.log('Message handled in the background!', remoteMessage);
+  });
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      console.log('Message handled in the background!', remoteMessage);
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import analytics from '@react-native-firebase/analytics';
 import {StatusBar, LogBox} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import firebase from 'react-native-firebase';
 import styled from 'styled-components/native';
 import {
   widthPercentageToDP as wp,
@@ -110,9 +110,10 @@ export default () => {
             navigationRef.current.getCurrentOptions()?.title,
             '===================',
           );
-          firebase
-            .analytics()
-            .setCurrentScreen(navigationRef.current.getCurrentOptions()?.title);
+          analytics().logScreenView({
+            screen_name: navigationRef.current.getCurrentOptions()?.title,
+            screen_class: navigationRef.current.getCurrentOptions()?.title,
+          });
         } else {
           if (
             navigationRef.current.getCurrentRoute()?.name !==

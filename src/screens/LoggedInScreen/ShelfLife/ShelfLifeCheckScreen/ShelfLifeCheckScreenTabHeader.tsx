@@ -31,7 +31,7 @@ const LineTextContainer = styled.View`
   height: 30px;
   justify-content: center;
   align-items: center;
-  bottom: ${utils.isAndroid() ? 20 : isIphoneX() ? 70 : 40}px;
+  bottom: ${utils.isAndroid() ? 20 : isIphoneX() ? 70 : 12}px;
   margin-top: ${utils.isAndroid() ? 30 : 2}px;
 `;
 

@@ -173,8 +173,8 @@ android {
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 86
-        versionName "1.2.21"
+        versionCode 88
+        versionName "2.2.0"
     }
     splits {
         abi {
@@ -233,20 +233,14 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-firebase')
     implementation project(':react-native-image-crop-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-contacts')
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    // Add the SDK for Firebase Cloud Messaging
-    implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation "com.google.android.gms:play-services-base:17.2.1"
-    implementation "com.google.firebase:firebase-core:17.0.1"
-    implementation "com.google.firebase:firebase-messaging:20.0.0"
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

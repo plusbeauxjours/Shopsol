@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {
@@ -258,7 +258,10 @@ export default () => {
   useEffect(() => {
     init(index);
     dispatch(setSplashVisible({visible: false}));
-    firebase.analytics().setCurrentScreen('업무일지');
+    analytics().logScreenView({
+      screen_name: '업무일지',
+      screen_class: '업무일지',
+    });
   }, []);
 
   return (

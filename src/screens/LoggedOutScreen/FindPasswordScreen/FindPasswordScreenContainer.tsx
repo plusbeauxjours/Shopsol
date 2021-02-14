@@ -42,7 +42,7 @@ export default () => {
   };
 
   const onChangeMobileNum = (text) => {
-    if (text.length > 11) {
+    if (text?.length > 11) {
       alertModal('핸드폰번호는 최대 11자리 입력 가능합니다.');
     } else {
       setMobileNo(text);
@@ -98,15 +98,15 @@ export default () => {
     } else {
       setPasswordCheck('');
       if (reg1.test(text)) {
-        if (password.length < 5) {
+        if (password?.length < 5) {
           setPassword(text);
           setIsPasswordError(true);
         } else {
           if (
             (password.search(/[0-9]/g) < 0 &&
-              reg3.test(text.charAt(text.length - 1))) ||
+              reg3.test(text.charAt(text?.length - 1))) ||
             (password.search(/[a-z]/gi) < 0 &&
-              reg2.test(text.charAt(text.length - 1)))
+              reg2.test(text.charAt(text?.length - 1)))
           ) {
             setPassword(text);
             setIsPasswordError(true);
@@ -122,11 +122,11 @@ export default () => {
   };
 
   const onVerifyCode = async () => {
-    if (verifyCode.length != 6) {
+    if (verifyCode?.length != 6) {
       clearInterval(timer);
       setIsVerified(true);
       setIsCountDownStarted(false);
-    } else if (verifyCode.length != 6) {
+    } else if (verifyCode?.length != 6) {
       alertModal('인증번호를 정확히 입력해주세요.');
     } else {
       try {
@@ -152,7 +152,7 @@ export default () => {
   };
 
   const requireVerifyCode = async () => {
-    if (mobileNo.length == 0) {
+    if (mobileNo?.length == 0) {
       alertModal('찾으실 휴대폰번호를 입력해주세요.');
       return;
     }

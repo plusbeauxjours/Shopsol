@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import SelectStoreScreenPresenter from './SelectStoreScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 import {NativeModules, Alert, Linking, Platform} from 'react-native';
+import messaging from '@react-native-firebase/messaging';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setDEVICE_INFO} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
 import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
-import firebase from 'react-native-firebase';
 import utils from '~/constants/utils';
 import {openSettings} from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
@@ -83,35 +83,6 @@ export default ({route: {params}}) => {
     navigation.navigate('AddStoreScreen');
   };
 
-  const getToken = async () => {
-    const PUSH_TOKEN = await firebase.messaging().getToken();
-    console.log('PUSH_TOKEN', PUSH_TOKEN);
-    if (PUSH_TOKEN) {
-      await api.changeToken({
-        token: PUSH_TOKEN,
-        MEMBER_SEQ,
-      });
-      dispatch(
-        setDEVICE_INFO({
-          PUSH_TOKEN,
-          DEVICE_MODEL: DeviceInfo.getModel(),
-          DEVICE_PLATFORM: Platform.OS,
-          DEVICE_SYSTEM_VERSION:
-            Platform.OS + ' ' + DeviceInfo.getSystemVersion(),
-        }),
-      );
-    }
-  };
-
-  const checkPermission = async () => {
-    const enabled = await firebase.messaging().hasPermission();
-    if (enabled) {
-      getToken();
-    } else {
-      requestPermission();
-    }
-  };
-
   const fetchData = async () => {
     try {
       dispatch(setSplashVisible({visible: true, text: '사업장 목록'}));
@@ -127,35 +98,43 @@ export default ({route: {params}}) => {
     }
   };
 
-  const requestPermission = async () => {
-    try {
-      await firebase.messaging().requestPermission();
-      getToken();
-    } catch (error) {
-      Alert.alert(
-        '푸쉬 알림 거절',
-        '푸시 알림을 받으려면 확인을 누른 뒤, 환경 설정에서 푸시를 켜주세요.',
-        [
-          {
-            text: '취소',
-            style: 'cancel',
-          },
-          {
-            text: '확인',
-            onPress: () => {
-              utils.isAndroid
-                ? openSettings()
-                : Linking.openURL('app-settings:');
-            },
-          },
-        ],
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      getFcmToken();
+      console.log('Authorization status:', authStatus);
+    }
+  };
+
+  const getFcmToken = async () => {
+    const PUSH_TOKEN = await messaging().getToken();
+    if (PUSH_TOKEN) {
+      console.log('PUSH_TOKEN', PUSH_TOKEN);
+      await api.changeToken({
+        token: PUSH_TOKEN,
+        MEMBER_SEQ,
+      });
+      dispatch(
+        setDEVICE_INFO({
+          PUSH_TOKEN,
+          DEVICE_MODEL: DeviceInfo.getModel(),
+          DEVICE_PLATFORM: Platform.OS,
+          DEVICE_SYSTEM_VERSION:
+            Platform.OS + ' ' + DeviceInfo.getSystemVersion(),
+        }),
       );
+    } else {
+      console.log('Failed', 'No token received');
     }
   };
 
   useEffect(() => {
     if (params?.from == 'loginScreen') {
-      checkPermission();
+      requestUserPermission();
     }
   }, [params]);
 

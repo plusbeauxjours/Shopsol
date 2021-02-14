@@ -1,13 +1,11 @@
+#import <Firebase.h>
 #import "AppDelegate.h"
 
 #import <CodePush/CodePush.h>
 
 #import <React/RCTBridge.h>
-#import <Firebase.h>
-#import "RNFirebaseNotifications.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-@import Firebase;
 @import GoogleMaps;
 @implementation AppDelegate
 
@@ -23,7 +21,6 @@
   [FIRApp configure];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
-    [RNFirebaseNotifications configure];
   }
     
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];

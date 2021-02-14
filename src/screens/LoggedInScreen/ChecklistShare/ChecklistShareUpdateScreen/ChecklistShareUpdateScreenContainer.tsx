@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import * as ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 
 import ChecklistShareUpdateScreenPresenter from './ChecklistShareUpdateScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
@@ -248,7 +248,10 @@ export default ({route: {params}}) => {
       `${params?.TITLE} 수정`,
       '===================',
     );
-    firebase.analytics().setCurrentScreen(`${params?.TITLE} 수정`);
+    analytics().logScreenView({
+      screen_name: `${params?.TITLE} 수정`,
+      screen_class: `${params?.TITLE} 수정`,
+    });
   }, []);
 
   return (

@@ -2,7 +2,7 @@ import React, {useState, useEffect, createRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import * as ImagePicker from 'react-native-image-picker';
-import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 import ImageResizer from 'react-native-image-resizer';
 import moment from 'moment';
 
@@ -200,7 +200,10 @@ export default ({route: {params}}) => {
       `${params?.TITLE} 등록`,
       '===================',
     );
-    firebase.analytics().setCurrentScreen(`${params?.TITLE} 등록`);
+    analytics().logScreenView({
+      screen_name: `${params?.TITLE} 등록`,
+      screen_class: `${params?.TITLE} 등록`,
+    });
   }, []);
 
   return (

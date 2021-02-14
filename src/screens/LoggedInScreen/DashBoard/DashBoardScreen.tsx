@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View, Text} from 'react-native';
 import moment from 'moment';
-import firebase from 'react-native-firebase';
+import analytics from '@react-native-firebase/analytics';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import api from '~/constants/LoggedInApi';
@@ -123,7 +123,10 @@ export default () => {
   // v2.3
   // useEffect(() => {
   //   fetchSchedulesData();
-  //   firebase.analytics().setCurrentScreen('사업장 현황');
+  // analytics().logScreenView({
+  //   screen_name: '사업장현황',
+  //   screen_class: '사업장현황',
+  // });
   // }, []);
 
   // if (loading) {

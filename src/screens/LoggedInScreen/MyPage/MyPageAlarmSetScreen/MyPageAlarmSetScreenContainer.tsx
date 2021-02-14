@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import firebase from 'react-native-firebase';
+import messaging from '@react-native-firebase/messaging';
 import {Alert, Linking, Platform} from 'react-native';
 import {openSettings} from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
@@ -178,6 +178,40 @@ export default () => {
     }
   };
 
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      getFcmToken();
+      console.log('Authorization status:', authStatus);
+    }
+  };
+
+  const getFcmToken = async () => {
+    const PUSH_TOKEN = await messaging().getToken();
+    if (PUSH_TOKEN) {
+      console.log('PUSH_TOKEN', PUSH_TOKEN);
+      await api.changeToken({
+        token: PUSH_TOKEN,
+        MEMBER_SEQ,
+      });
+      dispatch(
+        setDEVICE_INFO({
+          PUSH_TOKEN,
+          DEVICE_MODEL: DeviceInfo.getModel(),
+          DEVICE_PLATFORM: Platform.OS,
+          DEVICE_SYSTEM_VERSION:
+            Platform.OS + ' ' + DeviceInfo.getSystemVersion(),
+        }),
+      );
+    } else {
+      console.log('Failed', 'No token received');
+    }
+  };
+
   useEffect(() => {
     fetch();
   }, []);
@@ -185,7 +219,7 @@ export default () => {
   useEffect(
     () => () => {
       if (All_PUSH) {
-        getToken();
+        getFcmToken();
       }
     },
     [],
@@ -193,7 +227,7 @@ export default () => {
 
   useEffect(() => {
     if (All_PUSH) {
-      checkPermission();
+      requestUserPermission();
     }
   }, [All_PUSH]);
 

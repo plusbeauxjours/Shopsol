@@ -64,7 +64,7 @@ export default () => {
   };
 
   const onVerifyCode = async () => {
-    if (verifyCode.length != 6) {
+    if (verifyCode?.length != 6) {
       clearInterval(timer);
       setIsCountDownStarted(false);
       alertModal('인증번호를 정확히 입력해주세요.');
@@ -88,7 +88,7 @@ export default () => {
   };
 
   const onChangeMobileNum = (text) => {
-    if (text.length > 11) {
+    if (text?.length > 11) {
       alertModal('핸드폰번호는 최대 11자리 입력 가능합니다.');
     } else {
       setMobileNo(text);
@@ -96,7 +96,7 @@ export default () => {
   };
 
   const onChangeVerifyNum = (text) => {
-    if (text.length > 6) {
+    if (text?.length > 6) {
       alertModal('인증번호는 최대 6자리 입력 가능합니다.');
     } else {
       setVerifyCode(text);
@@ -104,7 +104,7 @@ export default () => {
   };
 
   const requireVerifyCode = async () => {
-    if (mobileNo.length == 0) {
+    if (mobileNo?.length == 0) {
       return alertModal('휴대폰번호를 입력해주세요.');
     }
     const regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
