@@ -10,7 +10,6 @@ const checklistshareSlice = createSlice({
     NEW_CNT1: 0,
     CHECKLIST_SHARE_DATA2: null,
     NEW_CNT2: 0,
-    CHECKLIST_SHARE_MARKED: {},
     CHECKLIST_SHARE_DETAIL: null,
     CHECKLIST_SHARE_COMMENTS: [],
   },
@@ -88,10 +87,6 @@ const checklistshareSlice = createSlice({
     setCHECKLIST_SHARE_DATA2(state, action) {
       const {payload: CHECKLIST_SHARE_DATA2} = action;
       state.CHECKLIST_SHARE_DATA2 = CHECKLIST_SHARE_DATA2;
-    },
-    setCHECKLIST_SHARE_MARKED(state, action) {
-      const {payload: CHECKLIST_SHARE_MARKED} = action;
-      state.CHECKLIST_SHARE_MARKED = CHECKLIST_SHARE_MARKED;
     },
     increaseNEW_CNT1(state) {
       state.NEW_CNT1 + 1;
@@ -213,7 +208,6 @@ export const {
   setCHECKLIST_SHARE_STORE_SEQ,
   setCHECKLIST_SHARE_DATA1,
   setCHECKLIST_SHARE_DATA2,
-  setCHECKLIST_SHARE_MARKED,
   increaseNEW_CNT1,
   increaseNEW_CNT2,
   setCHECKLIST_SHARE_COMMENTS,
@@ -252,7 +246,7 @@ export const getCHECKLIST_SHARE_DATA1 = (date) => async (
         dispatch(increaseNEW_CNT1());
       }
     }
-    if (data.basic[0]?.ADDDATE == date) {
+    if (data.basic[0]?.ADDDATE == date || data.basic.length == 0) {
       dispatch(setCHECKLIST_SHARE_DATA1(data));
     }
     return data;
@@ -291,7 +285,7 @@ export const getCHECKLIST_SHARE_DATA2 = (date) => async (
         dispatch(increaseNEW_CNT2());
       }
     }
-    if (data.basic[0]?.ADDDATE == date) {
+    if (data.basic[0]?.ADDDATE == date || data.basic.length == 0) {
       dispatch(setCHECKLIST_SHARE_DATA2(data));
     }
   } catch (e) {

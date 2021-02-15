@@ -11,7 +11,6 @@ import {
   setCHECKLIST_SHARE_DATA2,
   getCHECKLIST_SHARE_DATA1,
   getCHECKLIST_SHARE_DATA2,
-  setCHECKLIST_SHARE_MARKED,
   onCHECKLIST_SHARE_FAVORITE,
   offCHECKLIST_SHARE_FAVORITE,
 } from '~/redux/checklistshareSlice';
@@ -34,12 +33,12 @@ export default () => {
     NEW_CNT1,
     CHECKLIST_SHARE_DATA2,
     NEW_CNT2,
-    CHECKLIST_SHARE_MARKED,
   } = useSelector((state: any) => state.checklistshareReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [date, setDate] = useState<string>(moment().format('YYYY-MM-DD'));
+  const [CHECKLIST_SHARE_MARKED, setCHECKLIST_SHARE_MARKED] = useState<any>({});
   const [isCalendarModalVisible, setIsCalendarModalVisible] = useState<boolean>(
     false,
   );
@@ -133,10 +132,8 @@ export default () => {
   };
 
   // 캘린더에서 날짜를 선택하는 경우 지시사항과 특이사항만 로드
-  const onDayPress = async (date) => {
-    console.log(date);
-    const data = await dispatch(getCHECKLIST_SHARE_DATA1(date.dateString));
-    console.log(data);
+  const onDayPress = (date) => {
+    dispatch(getCHECKLIST_SHARE_DATA1(date.dateString));
     dispatch(getCHECKLIST_SHARE_DATA2(date.dateString));
     setIsCalendarModalVisible(false);
     setDate(date.dateString);
@@ -164,15 +161,10 @@ export default () => {
   };
 
   // 캘린더 마킹 데이터
-  const markingFn = async (YEAR, MONTH) => {
+  const markingFn = async (YEAR, MONTH, index) => {
     const content = {key: 'content', color: '#000'};
     try {
-      const {data} = await api.getNoticeAll(
-        STORE_SEQ,
-        YEAR,
-        MONTH,
-        index == 0 ? '1' : '0',
-      );
+      const {data} = await api.getNoticeAll(STORE_SEQ, YEAR, MONTH, index);
       if (data.message === 'SUCCESS') {
         const iterator = Object.keys(data.result);
         const markedDates = {};
@@ -192,7 +184,7 @@ export default () => {
           }
         }
         for (let i = 0; i < data.result.length; i++) {}
-        dispatch(setCHECKLIST_SHARE_MARKED(markedDates));
+        setCHECKLIST_SHARE_MARKED(markedDates);
       }
     } catch (e) {
       console.log(e);
