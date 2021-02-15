@@ -255,6 +255,7 @@ export const getCHECKLIST_SHARE_DATA1 = (date) => async (
     if (data.basic[0]?.ADDDATE == date) {
       dispatch(setCHECKLIST_SHARE_DATA1(data));
     }
+    return data;
   } catch (e) {
     console.log(e);
   } finally {

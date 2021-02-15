@@ -86,15 +86,17 @@ export default ({route: {params}}) => {
               fileType = 'image/jpeg';
             }
           }
+          console.log(cameraPicture.uri);
           formData.append('image', {
             uri: utils.isAndroid
-              ? cameraPicture.uri
-              : cameraPicture.uri.replace('file://', ''),
+              ? cameraPicture?.uri
+              : cameraPicture?.uri.replace('file://', ''),
             name: fileName,
             type: fileType,
           });
         }
         const {data} = await api.setNoticeImg(formData);
+        console.log(data);
         if (data.result === 'SUCCESS') {
           alertModal(`${params.TITLE}이 등록되었습니다.`);
           if (params.TITLE === '지시사항') {

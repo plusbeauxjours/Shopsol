@@ -352,29 +352,24 @@ const QrIconContainer = styled(IconContainer)<IHasQr>`
     props.hasQr ? 'transparent' : styleGuide.palette.tertiary};
 `;
 
-// 0212 BANNER
-// const BannerImageContainer = styled.View`
-//   margin-top: 15px;
-//   box-shadow: 3px 3px 3px rgba(100, 100, 100, 0.3);
-//   elevation: 3;
-//   background-color: #fff;
-// `;
+const BannerImageContainer = styled.View`
+  margin-top: 15px;
+  box-shadow: 3px 3px 3px rgba(100, 100, 100, 0.3);
+  elevation: 3;
+  background-color: #fff;
+`;
 
-// 0212 BANNER
-// const BottomBannerContainer = styled.TouchableOpacity`
-//   border-radius: 8px;
-//   box-shadow: 3px 3px 3px rgba(100, 100, 100, 0.3);
-//   elevation: 3;
-// `;
+const ShowPictureModalTouchable = styled.TouchableOpacity`
+  flex: 1;
+  margin: 0 20px;
+  align-items: center;
+  justify-content: center;
+`;
 
-// 0212 BANNER
-// const EventAreaContainer = styled.View`
-//   width: ${wp('100%')}px;
-//   padding: 10px;
-//   border-radius: 8px;
-//   width: ${wp('100%') - 30}px;
-//   height: ${(wp('100%') - 20) * 0.286754400291120815}px;
-// `;
+const ShowPictureModalImage = styled.View`
+  width: ${wp('90%')}px;
+  height: ${wp('90%')}px;
+`;
 
 //0208 REMOVEQR
 // const ConfirmHalfBtnLeft = styled(Ripple)`
@@ -432,18 +427,6 @@ const QrIconContainer = styled(IconContainer)<IHasQr>`
 //   font-size: 14px;
 //   color: ${styleGuide.palette.greyColor};
 // `;
-
-const ShowPictureModalTouchable = styled.TouchableOpacity`
-  flex: 1;
-  margin: 0 20px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ShowPictureModalImage = styled.View`
-  width: ${wp('90%')}px;
-  height: ${wp('90%')}px;
-`;
 
 export default ({
   STORE_DATA,
@@ -945,7 +928,7 @@ export default ({
                   />
                 )}
               </Container>
-              {/* {STORE_DATA?.arbashow == 1 && ( // 0212 BANNER
+              {STORE_DATA?.arbashow == 1 && (
                 <>
                   <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                     <MenuTitleArea style={{zIndex: 3}}>
@@ -968,19 +951,12 @@ export default ({
                     </BannerImageContainer>
                   </Container>
                 </>
-              )} */}
+              )}
               <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                 <MenuTitleArea style={{zIndex: 3}}>
                   <MenuTitle>정확한,</MenuTitle>
                   <Bold> 업무관리</Bold>
                 </MenuTitleArea>
-                <IconContainer onPress={() => setEditMode(!editMode)}>
-                  {editMode ? (
-                    <CloseIcon size={24} color={'white'} />
-                  ) : (
-                    <SettingIcon size={18} color={'white'} />
-                  )}
-                </IconContainer>
               </SpaceRow>
               <Container>
                 {storeKeepersEMPMenu.map((menu, index) => {
@@ -1165,7 +1141,7 @@ export default ({
                           />
                         )}
                       </Container>
-                      {/* {STORE_DATA?.arbashow == 1 && ( // 0212 BANNER
+                      {STORE_DATA?.arbashow == 1 && (
                         <>
                           <SpaceRow
                             style={{width: '100%', alignItems: 'center'}}>
@@ -1192,21 +1168,12 @@ export default ({
                             </BannerImageContainer>
                           </Container>
                         </>
-                      )} */}
+                      )}
                       <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                         <MenuTitleArea style={{zIndex: 3}}>
                           <MenuTitle>정확한,</MenuTitle>
                           <Bold> 업무관리</Bold>
                         </MenuTitleArea>
-                        <Row>
-                          <IconContainer onPress={() => setEditMode(!editMode)}>
-                            {editMode ? (
-                              <CloseIcon size={24} color={'white'} />
-                            ) : (
-                              <SettingIcon size={20} color={'white'} />
-                            )}
-                          </IconContainer>
-                        </Row>
                       </SpaceRow>
                       <Container>
                         {managersEMPMenu.map((menu, index) => {
@@ -1322,40 +1289,42 @@ export default ({
               )}
             </>
           )}
-          {/* {STORE == '1' && STORE_DATA?.eventShow1 == '1' && ( // 0212 BANNER
-            <EventAreaContainer>
-              <BottomBannerContainer
+          {STORE == '1' && STORE_DATA?.eventShow1 == '1' && (
+            <BannerImageContainer style={{marginBottom: 60}}>
+              <Touchable
                 onPress={() => {
                   Linking.openURL(STORE_DATA?.eventUrl1);
                 }}>
                 <FastImage
+                  style={{width: windowWidth, height: bannerHeight}}
                   source={{
-                    uri: STORE_DATA?.eventImage1,
+                    uri: utils.getUriImage(STORE_DATA?.eventImage1),
                     cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}
                   resizeMode={FastImage.resizeMode.cover}
                 />
-              </BottomBannerContainer>
-            </EventAreaContainer>
+              </Touchable>
+            </BannerImageContainer>
           )}
           {STORE == '0' && STORE_DATA?.eventShow2 == '1' && (
-            <EventAreaContainer>
-              <BottomBannerContainer
+            <BannerImageContainer style={{marginBottom: 60}}>
+              <Touchable
                 onPress={() => {
                   Linking.openURL(STORE_DATA?.eventUrl2);
                 }}>
                 <FastImage
+                  style={{width: windowWidth, height: bannerHeight}}
                   source={{
-                    uri: STORE_DATA?.eventImage2,
+                    uri: utils.getUriImage(STORE_DATA?.eventImage2),
                     cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}
                   resizeMode={FastImage.resizeMode.cover}
                 />
-              </BottomBannerContainer>
-            </EventAreaContainer>
-          )} */}
+              </Touchable>
+            </BannerImageContainer>
+          )}
           <GrayLinearGradient
             colors={['#f8f1e9', 'white']}
             hasHeight={STORE == '1'}

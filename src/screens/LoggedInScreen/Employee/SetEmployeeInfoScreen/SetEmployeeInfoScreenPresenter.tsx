@@ -690,7 +690,7 @@ export default ({
               <InputCase
                 style={{paddingTop: 40}}
                 isFirst={true}
-                height={payCheck[1] ? 157 : 410}>
+                height={payCheck[1] ? 159 : 410}>
                 <SelectArea style={{paddingHorizontal: 40}}>
                   <PayCheck
                     selection={0}

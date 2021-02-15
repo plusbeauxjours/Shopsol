@@ -143,9 +143,7 @@ export default ({route: {params}}) => {
         }
       }
       formData.append('image', {
-        uri: utils.isAndroid
-          ? i.shelfLifeIMAGE
-          : i.shelfLifeIMAGE.replace('file://', ''),
+        uri: i.shelfLifeIMAGE.replace('file://', ''),
         name: fileName,
         type: fileType,
       });

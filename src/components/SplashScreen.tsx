@@ -15,7 +15,15 @@ export default () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('SelectStoreScreen');
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'LoggedInNavigation',
+            state: {routes: [{name: 'SelectStoreScreen'}]},
+          },
+        ],
+      });
     }, 2000);
   }, []);
 

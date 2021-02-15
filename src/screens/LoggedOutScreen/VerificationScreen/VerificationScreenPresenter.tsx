@@ -190,9 +190,6 @@ export default ({
   policyCheck,
   togglePolicyCheck,
 }) => {
-  const RBSheet1 = useRef(null);
-  const RBSheet2 = useRef(null);
-  const RBSheet3 = useRef(null);
   const Comma = () => <PolicyText>, </PolicyText>;
   const Modal = ({sheetRef, text}) => (
     <UnderlineText
@@ -233,9 +230,6 @@ export default ({
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}>
         <Container>
-          <Sheet sheetRef={RBSheet1} getText={getText1()} />
-          <Sheet sheetRef={RBSheet2} getText={getText2()} />
-          <Sheet sheetRef={RBSheet3} getText={getText3()} />
           <Row onPress={() => togglePolicyCheck()}>
             <IconContainer policyCheck={policyCheck}>
               <CheckMarkIcon
@@ -244,12 +238,7 @@ export default ({
               />
             </IconContainer>
             <PolicyText policyCheck={policyCheck}>
-              샵솔의&nbsp;
-              <Modal sheetRef={RBSheet1} text={'이용약관'} />
-              <Comma />
-              <Modal sheetRef={RBSheet2} text={'개인정보처리방침'} />
-              <Comma />
-              <Modal sheetRef={RBSheet3} text={'위치정보'} />에 모두 동의합니다.
+              샵솔의 이용약관, 개인정보처리방침, 위치정보에 모두 동의합니다.
             </PolicyText>
           </Row>
           {policyCheck ? (

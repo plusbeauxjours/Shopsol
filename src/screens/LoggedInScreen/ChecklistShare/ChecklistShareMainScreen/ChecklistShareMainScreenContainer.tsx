@@ -133,8 +133,10 @@ export default () => {
   };
 
   // 캘린더에서 날짜를 선택하는 경우 지시사항과 특이사항만 로드
-  const onDayPress = (date) => {
-    dispatch(getCHECKLIST_SHARE_DATA1(date.dateString));
+  const onDayPress = async (date) => {
+    console.log(date);
+    const data = await dispatch(getCHECKLIST_SHARE_DATA1(date.dateString));
+    console.log(data);
     dispatch(getCHECKLIST_SHARE_DATA2(date.dateString));
     setIsCalendarModalVisible(false);
     setDate(date.dateString);

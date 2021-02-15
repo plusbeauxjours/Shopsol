@@ -237,9 +237,7 @@ export default ({route: {params}}) => {
             }
           }
           formData.append('image', {
-            uri: utils.isAndroid
-              ? cameraPicture.uri
-              : cameraPicture.uri.replace('file://', ''),
+            uri: cameraPicture.uri.replace('file://', ''),
             name: fileName,
             type: fileType,
           });
