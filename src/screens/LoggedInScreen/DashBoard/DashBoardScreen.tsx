@@ -120,33 +120,32 @@ export default () => {
     }
   };
 
-  // v2.3
-  // useEffect(() => {
-  //   fetchSchedulesData();
-  // analytics().logScreenView({
-  //   screen_name: '사업장현황',
-  //   screen_class: '사업장현황',
-  // });
-  // }, []);
+  useEffect(() => {
+    fetchSchedulesData();
+    analytics().logScreenView({
+      screen_name: '사업장현황',
+      screen_class: '사업장현황',
+    });
+  }, []);
 
-  // if (loading) {
-  //   return null;
-  // } else {
-  return (
-    <Tab.Navigator
-      tabBarOptions={{
-        labelStyle: {fontSize: 14},
-        indicatorStyle: {
-          height: 4,
-          borderRadius: 10,
-          backgroundColor: styleGuide.palette.primary,
-        },
-        style: {backgroundColor: 'white'},
-      }}>
-      <Tab.Screen name="일별현황" component={DailyDashBoardScreen} />
-      <Tab.Screen name="주별현황" component={WeeklyDashBoardScreen} />
-      <Tab.Screen name="월별현황" component={MonthlyDashBoardScreen} />
-    </Tab.Navigator>
-  );
-  // }
+  if (loading) {
+    return null;
+  } else {
+    return (
+      <Tab.Navigator
+        tabBarOptions={{
+          labelStyle: {fontSize: 14},
+          indicatorStyle: {
+            height: 4,
+            borderRadius: 10,
+            backgroundColor: styleGuide.palette.primary,
+          },
+          style: {backgroundColor: 'white'},
+        }}>
+        <Tab.Screen name="일별현황" component={DailyDashBoardScreen} />
+        <Tab.Screen name="주별현황" component={WeeklyDashBoardScreen} />
+        <Tab.Screen name="월별현황" component={MonthlyDashBoardScreen} />
+      </Tab.Navigator>
+    );
+  }
 };

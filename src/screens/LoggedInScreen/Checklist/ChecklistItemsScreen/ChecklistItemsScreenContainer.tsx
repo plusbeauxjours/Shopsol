@@ -27,14 +27,14 @@ export default () => {
 
   const intended = {
     key: 'intended',
-    color: '#0D4F8A',
-    selectedDotColor: '#0D4F8A',
+    color: '#c8d2d1',
+    selectedDotColor: '#c8d2d1',
   }; // 체크 예정
-  const clear = {key: 'clear', color: '#AACE36', selectedDotColor: '#AACE36'}; // 체크 정상
+  const clear = {key: 'clear', color: '#67b956', selectedDotColor: '#67b956'}; // 체크 정상
   const confused = {
     key: 'confused',
-    color: '#984B19',
-    selectedDotColor: '#984B19',
+    color: '#ec7272',
+    selectedDotColor: '#ec7272',
   }; // 체크 이상
 
   const [isCalendarModalVisible, setIsCalendarModalVisible] = useState<boolean>(

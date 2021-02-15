@@ -181,6 +181,7 @@ const StoreUpdateBtn = styled.TouchableOpacity`
 `;
 
 const WhiteText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
   color: white;
 `;
 
