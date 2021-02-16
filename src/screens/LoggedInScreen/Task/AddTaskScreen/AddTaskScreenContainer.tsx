@@ -118,7 +118,7 @@ export default ({route: {params}}) => {
         }
       }
       formData.append('image', {
-        uri: i.taskIMAGE.replace('file://', ''),
+        uri: utils.isAndroid ? i.taskIMAGE : i.taskIMAGE.replace('file://', ''),
         name: fileName,
         type: fileType,
       });

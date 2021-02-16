@@ -654,7 +654,6 @@ export default ({
 
   return (
     <BackGround>
-      <StatusBar barStyle="dark-content" />
       <GrayLinearGradient
         colors={['white', '#f8f1e9']}
         hasHeight={STORE == '1'}
