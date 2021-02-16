@@ -51,10 +51,16 @@ const Row = styled.View`
   align-items: flex-start;
 `;
 
-const EndRow = styled(Row)`
-  align-items: flex-end;
+const EndRow = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
   margin-top: 10px;
   height: 140px;
+`;
+
+const ScrollViewContainer = styled.View`
+  align-items: flex-start;
 `;
 
 const TextInput = styled.TextInput`
@@ -313,75 +319,79 @@ export default ({
                   />
                 </TextContainer>
               </WhiteItem>
-              <Animated.ScrollView
-                ref={scrollRef}
-                onContentSizeChange={() => {
-                  scrollRef.current?.getNode()?.scrollToEnd({animated: true});
-                }}
-                showsHorizontalScrollIndicator={false}
-                horizontal={true}>
-                <EndRow>
-                  <Column>
-                    <Touchable
-                      onPress={() =>
-                        utils.handleCameraPermission(setIsCameraModalVisible)
-                      }>
-                      <BorderBox>
-                        <CameraIcon size={25} color={'#ccc'} />
-                        <GreyText style={{fontSize: styleGuide.fontSize.small}}>
-                          사진촬영
-                        </GreyText>
-                      </BorderBox>
-                    </Touchable>
-                    <Touchable onPress={() => launchImageLibraryFn()}>
-                      <BorderBox>
-                        <PictureIcon size={25} color={'#ccc'} />
-                        <GreyText style={{fontSize: styleGuide.fontSize.small}}>
-                          보관함
-                        </GreyText>
-                      </BorderBox>
-                    </Touchable>
-                  </Column>
-                  {cameraPictureList.length > 0 ? (
-                    cameraPictureList?.map((cameraPicture, index) => (
+              <ScrollViewContainer>
+                <Animated.ScrollView
+                  ref={scrollRef}
+                  onContentSizeChange={() => {
+                    scrollRef.current?.getNode()?.scrollToEnd({animated: true});
+                  }}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal={true}>
+                  <EndRow>
+                    <Column>
                       <Touchable
-                        key={index}
-                        onPress={() => onPressImageFn(cameraPicture)}
-                        style={{
-                          marginRight: 10,
-                          marginBottom: 5,
-                          justifyContent: 'flex-end',
-                        }}>
-                        <CloseIconContainer>
-                          <CloseCircleIcon />
-                        </CloseIconContainer>
-                        <FastImage
-                          style={{
-                            width: 125,
-                            height: 125,
-                            borderRadius: 10,
-                          }}
-                          source={{
-                            uri: cameraPicture.uri,
-                            cache: FastImage.cacheControl.immutable,
-                            priority: FastImage.priority.low,
-                          }}
-                          resizeMode={FastImage.resizeMode.cover}
-                        />
+                        onPress={() =>
+                          utils.handleCameraPermission(setIsCameraModalVisible)
+                        }>
+                        <BorderBox>
+                          <CameraIcon size={25} color={'#ccc'} />
+                          <GreyText
+                            style={{fontSize: styleGuide.fontSize.small}}>
+                            사진촬영
+                          </GreyText>
+                        </BorderBox>
                       </Touchable>
-                    ))
-                  ) : (
-                    <PictureBorderBox>
-                      <GreyText style={{textAlign: 'center', color: '#eee'}}>
-                        사진
-                      </GreyText>
-                      <GreyText style={{textAlign: 'center', color: '#eee'}}>
-                        미등록
-                      </GreyText>
-                    </PictureBorderBox>
-                  )}
-                </EndRow>
-              </Animated.ScrollView>
+                      <Touchable onPress={() => launchImageLibraryFn()}>
+                        <BorderBox>
+                          <PictureIcon size={25} color={'#ccc'} />
+                          <GreyText
+                            style={{fontSize: styleGuide.fontSize.small}}>
+                            보관함
+                          </GreyText>
+                        </BorderBox>
+                      </Touchable>
+                    </Column>
+                    {cameraPictureList.length > 0 ? (
+                      cameraPictureList?.map((cameraPicture, index) => (
+                        <Touchable
+                          key={index}
+                          onPress={() => onPressImageFn(cameraPicture)}
+                          style={{
+                            marginRight: 10,
+                            marginBottom: 5,
+                            justifyContent: 'flex-end',
+                          }}>
+                          <CloseIconContainer>
+                            <CloseCircleIcon />
+                          </CloseIconContainer>
+                          <FastImage
+                            style={{
+                              width: 125,
+                              height: 125,
+                              borderRadius: 10,
+                            }}
+                            source={{
+                              uri: cameraPicture.uri,
+                              cache: FastImage.cacheControl.immutable,
+                              priority: FastImage.priority.low,
+                            }}
+                            resizeMode={FastImage.resizeMode.cover}
+                          />
+                        </Touchable>
+                      ))
+                    ) : (
+                      <PictureBorderBox>
+                        <GreyText style={{textAlign: 'center', color: '#eee'}}>
+                          사진
+                        </GreyText>
+                        <GreyText style={{textAlign: 'center', color: '#eee'}}>
+                          미등록
+                        </GreyText>
+                      </PictureBorderBox>
+                    )}
+                  </EndRow>
+                </Animated.ScrollView>
+              </ScrollViewContainer>
             </Section>
             <SubmitBtn
               text={`${TITLE} 등록완료`}
