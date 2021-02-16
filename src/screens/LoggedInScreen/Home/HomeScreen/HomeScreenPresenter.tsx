@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
-import {Linking, RefreshControl, StatusBar} from 'react-native';
+import {Image, Linking, RefreshControl, StatusBar} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import {
   widthPercentageToDP as wp,
@@ -51,8 +51,8 @@ interface IHasQr {
   hasQr: boolean;
 }
 
-const windowWidth = wp('100%') - 30;
-const bannerHeight = (wp('100%') - 20) * 0.286754400291120815;
+const windowWidth = wp('100%') - 40;
+const bannerHeight = (wp('100%') - 40) * 0.286754400291120815;
 
 const BackGround = styled.View`
   flex: 1;
@@ -497,6 +497,8 @@ export default ({
   // qrCameraMode,
   // setQrCameraMode,
   // QR_Num,
+  banner1D,
+  banner2D,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -938,7 +940,12 @@ export default ({
                     </MenuTitleArea>
                   </SpaceRow>
                   <Container>
-                    <BannerImageContainer>
+                    <BannerImageContainer
+                      style={{
+                        marginHorizontal: 10,
+                        width: windowWidth,
+                        alignItems: 'center',
+                      }}>
                       <Touchable
                         onPress={() => {
                           Linking.openURL(STORE_DATA.arba);
@@ -1152,7 +1159,12 @@ export default ({
                             </MenuTitleArea>
                           </SpaceRow>
                           <Container>
-                            <BannerImageContainer>
+                            <BannerImageContainer
+                              style={{
+                                marginHorizontal: 10,
+                                width: windowWidth,
+                                alignItems: 'center',
+                              }}>
                               <Touchable
                                 onPress={() => {
                                   Linking.openURL(STORE_DATA.arba);
@@ -1290,38 +1302,46 @@ export default ({
               )}
             </>
           )}
-          {STORE == '1' && STORE_DATA?.eventShow1 == '1' && (
-            <BannerImageContainer style={{marginBottom: 60}}>
+          {STORE == '1' && STORE_DATA?.eventShow1 == '1' && banner1D && (
+            <BannerImageContainer style={{borderRadius: 8, marginBottom: 60}}>
               <Touchable
                 onPress={() => {
                   Linking.openURL(STORE_DATA?.eventUrl1);
                 }}>
                 <FastImage
-                  style={{width: windowWidth, height: bannerHeight}}
+                  style={{
+                    borderRadius: 8,
+                    width: windowWidth,
+                    height: windowWidth * banner1D,
+                  }}
                   source={{
                     uri: utils.getUriImage(STORE_DATA?.eventImage1),
                     cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}
-                  resizeMode={FastImage.resizeMode.cover}
+                  resizeMode={FastImage.resizeMode.contain}
                 />
               </Touchable>
             </BannerImageContainer>
           )}
-          {STORE == '0' && STORE_DATA?.eventShow2 == '1' && (
-            <BannerImageContainer style={{marginBottom: 60}}>
+          {STORE == '0' && STORE_DATA?.eventShow2 == '1' && banner2D && (
+            <BannerImageContainer style={{borderRadius: 8, marginBottom: 60}}>
               <Touchable
                 onPress={() => {
                   Linking.openURL(STORE_DATA?.eventUrl2);
                 }}>
                 <FastImage
-                  style={{width: windowWidth, height: bannerHeight}}
+                  style={{
+                    borderRadius: 8,
+                    width: windowWidth,
+                    height: windowWidth * banner2D,
+                  }}
                   source={{
                     uri: utils.getUriImage(STORE_DATA?.eventImage2),
                     cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.low,
                   }}
-                  resizeMode={FastImage.resizeMode.cover}
+                  resizeMode={FastImage.resizeMode.contain}
                 />
               </Touchable>
             </BannerImageContainer>

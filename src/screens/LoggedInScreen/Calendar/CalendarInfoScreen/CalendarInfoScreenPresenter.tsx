@@ -194,7 +194,7 @@ export default ({
         onRefresh={() => onRefresh()}
         monthFormat={'yyyy년 M월'}
         renderDay={(day, item) => {
-          if (day !== undefined) {
+          if (day) {
             let DAY = '0';
             if (new Date(day.timestamp).getDay().toString() == '0') {
               DAY = '일';
@@ -211,7 +211,7 @@ export default ({
             } else {
               DAY = '토';
             }
-            if (item !== undefined) {
+            if (item) {
               return (
                 <Row>
                   <Bold

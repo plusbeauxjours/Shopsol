@@ -16,6 +16,7 @@ import {
   HelpCircleIcon,
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import LottieView from 'lottie-react-native';
 
 const BackGround = styled.SafeAreaView`
   flex: 1;
@@ -82,9 +83,9 @@ const Touchable = styled.TouchableOpacity`
 `;
 
 const PayBox = styled.View`
-  flex: 1;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100px;
 `;
 
@@ -187,7 +188,21 @@ export default ({
             <GreyLine />
             {loading ? (
               <PayBox>
-                <ActivityIndicator size="small" />
+                <LottieView
+                  style={{
+                    width: 80,
+                    height: 80,
+                  }}
+                  source={require('../../../../assets/animations/loading.json')}
+                  loop
+                  autoPlay
+                />
+                <BoxTitleText3 style={{fontSize: styleGuide.fontSize.middle}}>
+                  급여 정보를 불러오는 중입니다..
+                </BoxTitleText3>
+                <BoxTitleText3 style={{fontSize: styleGuide.fontSize.middle}}>
+                  잠시만 기다려주세요.
+                </BoxTitleText3>
               </PayBox>
             ) : (
               <PayBox>

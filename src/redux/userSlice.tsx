@@ -1,6 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {removeSTORE_NAME} from './storeSlice';
-import {closeSTORE_DATA} from '~/redux/storeSlice';
 
 const userSlice = createSlice({
   name: 'user',
@@ -101,18 +99,5 @@ export const {
   addCUSTOM_MENU_EMP,
   removeCUSTOM_MENU_EMP,
 } = userSlice.actions;
-
-export const userLogout = () => async (dispatch) => {
-  dispatch(removeSTORE_NAME());
-  dispatch(setLOGOUT());
-};
-
-export const closeSTORE_ON_STORE_LIST = () => async (dispatch) => {
-  try {
-    dispatch(closeSTORE_DATA());
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 export default userSlice.reducer;

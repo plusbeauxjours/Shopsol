@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {userLogout} from '~/redux/userSlice';
+import {setLOGOUT} from '~/redux/userSlice';
 import {LogoutIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
@@ -38,7 +38,7 @@ export default () => {
           ],
         });
         setTimeout(() => {
-          dispatch(userLogout());
+          dispatch(setLOGOUT());
         }, 1000);
       }}>
       <IconContainer>

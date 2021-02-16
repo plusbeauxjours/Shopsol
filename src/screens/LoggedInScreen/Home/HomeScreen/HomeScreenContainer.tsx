@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {Linking, BackHandler, NativeModules} from 'react-native';
+import {Linking, BackHandler, NativeModules, Image} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
@@ -55,6 +55,8 @@ export default ({route: {params}}) => {
   const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
     false,
   );
+  const [banner1D, setBanner1D] = useState<number>(null);
+  const [banner2D, setBanner2D] = useState<number>(null);
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -351,6 +353,24 @@ export default ({route: {params}}) => {
       });
       if (data.resultmsg === '1') {
         dispatch(getStore(data));
+        Image.getSize(
+          data.eventImage1,
+          (width, height) => {
+            setBanner1D(height / width);
+          },
+          (error) => {
+            console.log('Image.getSize failed with error: ', error);
+          },
+        );
+        Image.getSize(
+          data.eventImage2,
+          (width, height) => {
+            setBanner2D(height / width);
+          },
+          (error) => {
+            console.log('Image.getSize failed with error: ', error);
+          },
+        );
       }
     } catch (e) {
       console.log(e);
@@ -490,7 +510,7 @@ export default ({route: {params}}) => {
   //     }, 500);
   //   }
   // };
-  console.log(STORE_DATA?.resultdata?.QR);
+
   return (
     <HomeScreenPresenter
       STORE_DATA={STORE_DATA}
@@ -560,6 +580,8 @@ export default ({route: {params}}) => {
       // qrCameraMode={qrCameraMode}
       // setQrCameraMode={setQrCameraMode}
       // QR_Num={QR_Num}
+      banner1D={banner1D}
+      banner2D={banner2D}
     />
   );
 };

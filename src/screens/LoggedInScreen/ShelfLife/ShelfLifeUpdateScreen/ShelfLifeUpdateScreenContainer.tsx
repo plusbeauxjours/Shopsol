@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import * as ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
 import moment from 'moment';
 
@@ -207,17 +207,17 @@ export default ({route: {params}}) => {
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.launchImageLibrary(
-      {
-        mediaType: 'photo',
-        includeBase64: false,
-        maxWidth: 800,
-        maxHeight: 1200,
-      },
-      (response) => {
-        !response.didCancel && setCameraPictureLast(response.uri);
-      },
-    );
+    ImagePicker.openPicker({
+      multiple: false,
+      forceJpg: true,
+      mediaType: 'photo',
+      compressImageMaxWidth: 800,
+      compressImageMaxHeight: 1200,
+    }).then((photo: any) => {
+      if (photo) {
+        setCameraPictureLast(photo.path);
+      }
+    });
   };
 
   const handleBarCodeScanned = async (codenumber) => {

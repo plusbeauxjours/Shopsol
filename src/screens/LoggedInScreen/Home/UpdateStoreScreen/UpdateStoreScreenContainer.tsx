@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/native';
 
 import UpdateStoreScreenPresenter from './UpdateStoreScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {closeSTORE_ON_STORE_LIST} from '~/redux/userSlice';
 import api from '~/constants/LoggedInApi';
 import {closeSTORE_DATA, updateSTORE} from '~/redux/storeSlice';
 
@@ -180,7 +179,7 @@ export default ({route: {params}}) => {
   const submit = async (sign) => {
     if (sign == 'close') {
       alertModal('사업장의 폐업처리가 완료되었습니다.');
-      dispatch(closeSTORE_ON_STORE_LIST());
+      dispatch(closeSTORE_DATA());
       setTimeout(() => {
         navigation.reset({
           index: 0,

@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ScrollView} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import {userLogout} from '~/redux/userSlice';
+import {setLOGOUT} from '~/redux/userSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {ForwardIcon, LogoutIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
@@ -96,7 +96,7 @@ export default () => {
       title: '',
       content: '로그아웃 하시겠습니까?',
       okCallback: () => {
-        dispatch(userLogout());
+        dispatch(setLOGOUT());
         navigation.reset({
           index: 0,
           routes: [

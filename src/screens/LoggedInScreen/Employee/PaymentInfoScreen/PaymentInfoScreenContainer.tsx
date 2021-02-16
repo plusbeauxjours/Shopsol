@@ -36,7 +36,7 @@ export default () => {
   let CALCULATE_DAY_temp =
     Number(CALCULATE_DAY) < 10 ? '0' + CALCULATE_DAY : CALCULATE_DAY;
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [startDate, setStartDate] = useState<string>(
     moment(
       `${

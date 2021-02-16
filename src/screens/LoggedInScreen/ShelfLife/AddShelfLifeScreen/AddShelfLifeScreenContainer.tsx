@@ -6,7 +6,7 @@ import moment from 'moment';
 import AddShelfLifeScreenPresenter from './AddShelfLifeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
-import * as ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
 import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
 import utils from '~/constants/utils';
@@ -224,17 +224,17 @@ export default ({route: {params}}) => {
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.launchImageLibrary(
-      {
-        mediaType: 'photo',
-        includeBase64: false,
-        maxWidth: 800,
-        maxHeight: 1200,
-      },
-      (response) => {
-        !response.didCancel && setCameraPictureLast(response.uri);
-      },
-    );
+    ImagePicker.openPicker({
+      multiple: false,
+      forceJpg: true,
+      mediaType: 'photo',
+      compressImageMaxWidth: 800,
+      compressImageMaxHeight: 1200,
+    }).then((photo: any) => {
+      if (photo) {
+        setCameraPictureLast(photo.path);
+      }
+    });
   };
 
   const handleBarCodeScanned = async (codenumber) => {

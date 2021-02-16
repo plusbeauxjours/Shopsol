@@ -20,9 +20,6 @@ import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/inde
 import Loader from './Loader';
 import styleGuide from '~/constants/styleGuide';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import api from '~/constants/LoggedInApi';
-import {getStore} from '../redux/storeSlice';
-import {setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 
 LogBox.ignoreAllLogs(true);
 

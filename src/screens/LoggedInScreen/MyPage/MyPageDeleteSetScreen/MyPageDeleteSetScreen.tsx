@@ -10,7 +10,7 @@ import Ripple from 'react-native-material-ripple';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedInApi';
-import {userLogout} from '~/redux/userSlice';
+import {setLOGOUT} from '~/redux/userSlice';
 import {CheckBoxOnIcon, CheckBoxOffIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
@@ -105,7 +105,7 @@ export default () => {
 
   const submit = async () => {
     try {
-      dispatch(userLogout());
+      dispatch(setLOGOUT());
       navigation.reset({
         index: 0,
         routes: [

@@ -22,6 +22,7 @@ export default () => {
   const dispatch = useDispatch();
 
   const {STORE} = useSelector((state: any) => state.userReducer);
+  const {visible} = useSelector((state: any) => state.splashReducer);
   const {CALENDAR_DATA_STORE_SEQ, CALENDAR_DATA} = useSelector(
     (state: any) => state.calendarReducer,
   );
@@ -161,12 +162,12 @@ export default () => {
   };
 
   const onDayPressFn = (date) => {
-    fetchData(date.dateString);
+    !visible && fetchData(date.dateString);
   };
 
   // 캘린더에서 달이 바뀔 때
   const onChangeMonth = (date) => {
-    if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
+    if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ && !visible) {
       setLoading(true);
       fetchData(date.dateString);
     }

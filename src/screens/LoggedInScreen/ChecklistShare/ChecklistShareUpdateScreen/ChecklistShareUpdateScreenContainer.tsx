@@ -1,7 +1,7 @@
 import React, {useState, useEffect, createRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import * as ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
 import analytics from '@react-native-firebase/analytics';
 
@@ -85,21 +85,20 @@ export default ({route: {params}}) => {
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.launchImageLibrary(
-      {
-        mediaType: 'photo',
-        includeBase64: false,
-        maxWidth: 800,
-        maxHeight: 1200,
-      },
-      (response) => {
-        !response.didCancel &&
-          setCameraPictureList((cameraPictureList) => [
-            ...cameraPictureList,
-            {uri: response.uri},
-          ]);
-      },
-    );
+    ImagePicker.openPicker({
+      multiple: false,
+      forceJpg: true,
+      mediaType: 'photo',
+      compressImageMaxWidth: 800,
+      compressImageMaxHeight: 1200,
+    }).then((photo: any) => {
+      if (photo) {
+        setCameraPictureList((cameraPictureList) => [
+          ...cameraPictureList,
+          {uri: photo.path},
+        ]);
+      }
+    });
   };
 
   const selectPicture = () => {
