@@ -26,6 +26,8 @@ target 'ShopsolWesop' do
   pod 'Firebase/Analytics'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
   target 'ShopsolWesopTests' do
     inherit! :complete
     # Pods for testing
