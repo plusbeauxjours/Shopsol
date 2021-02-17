@@ -643,9 +643,6 @@ export default ({
             flashMode={RNCamera.Constants.FlashMode.off}
             autoFocus={RNCamera.Constants.AutoFocus.on}
             captureAudio={false}
-            onFacesDetected={() => {}}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
             onBarCodeRead={({data}) => handleBarCodeScanned(data)}>
             <BarcodeMask
               width={300}
@@ -673,9 +670,6 @@ export default ({
             flashMode={RNCamera.Constants.FlashMode.off}
             autoFocus={RNCamera.Constants.AutoFocus.on}
             captureAudio={false}
-            onFacesDetected={() => {}}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
             onBarCodeRead={({data}) => handleBarCodeInputScanned(data)}>
             <BarcodeMask
               width={300}

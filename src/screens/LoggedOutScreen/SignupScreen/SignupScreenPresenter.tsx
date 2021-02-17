@@ -422,7 +422,7 @@ export default ({
                 />
               </TextinputCase>
               <InputLine isBefore={passwordCheck == '' ? true : false} />
-              {passwordCheck.length > 6 && password !== passwordCheck ? (
+              {passwordCheck.length > 5 && password !== passwordCheck ? (
                 <GreyText isError={true}>
                   * 비밀번호가 일치하지 않습니다.
                 </GreyText>

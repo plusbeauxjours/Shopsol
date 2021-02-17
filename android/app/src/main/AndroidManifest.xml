@@ -31,7 +31,7 @@
             android:value="AIzaSyAg2JiVvGTq9PI5u5KF3B5VXBVkuhDPQak"/>
         <meta-data
             android:name="com.dieam.reactnativepushnotification.notification_color"
-            android:resource="@color/notification_color"/>
+            android:resource="@color/white"/>
         <receiver android:name=".Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -55,5 +55,17 @@
             </intent-filter>
         </activity>
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <!-- <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".Firebase.MyJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service> -->
     </application>
 </manifest>

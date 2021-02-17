@@ -759,7 +759,7 @@ export default ({
                 <BoxContainer>
                   <Box
                     style={{flexDirection: 'row'}}
-                    onPress={async () => {
+                    onPress={() => {
                       setIsWorkingMode(false);
                       setSucessModalOpen(false);
                       setFailModalOpen(false);
@@ -1528,9 +1528,6 @@ export default ({
           flashMode={RNCamera.Constants.FlashMode.off}
           autoFocus={RNCamera.Constants.AutoFocus.on}
           captureAudio={false}
-          onFacesDetected={() => {}}
-          onFocusChanged={() => {}}
-          onZoomChanged={() => {}}
           onBarCodeRead={({data}) => handleBarCodeScanned2(data)}
           androidCameraPermissionOptions={{
             title: '카메라 권한 설정',
@@ -1631,9 +1628,6 @@ export default ({
             flashMode={RNCamera.Constants.FlashMode.off}
             autoFocus={RNCamera.Constants.AutoFocus.on}
             captureAudio={false}
-            onFacesDetected={() => {}}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}
             onBarCodeRead={({data}) => handleBarCodeScanned1(data)}>
             <BarcodeMask
               width={300}
@@ -1693,9 +1687,6 @@ export default ({
                flashMode={RNCamera.Constants.FlashMode.off}
                autoFocus={RNCamera.Constants.AutoFocus.on}
                captureAudio={false}
-               onFacesDetected={() => {}}
-               onFocusChanged={() => {}}
-               onZoomChanged={() => {}}
                onBarCodeRead={({data}) => handleBarCodeScanned2(data)}>
                <BarcodeMask
                  width={300}

@@ -260,7 +260,7 @@ export default ({
                     />
                   </TextinputCase>
                   <InputLine isBefore={passwordCheck == '' ? true : false} />
-                  {passwordCheck.length > 6 && password !== passwordCheck ? (
+                  {passwordCheck.length > 5 && password !== passwordCheck ? (
                     <GreyText isError={true}>
                       * 비밀번호가 일치하지 않습니다.
                     </GreyText>
@@ -278,7 +278,7 @@ export default ({
             onPress={() => submitFn()}
             isRegisted={
               password === passwordCheck &&
-              passwordCheck.length > 6 &&
+              passwordCheck.length > 5 &&
               password.search(/[0-9]/g) >= 0 &&
               password.search(/[a-z]/gi) >= 0 &&
               !/(\w)\1\1\1/.test(password)
