@@ -159,7 +159,7 @@ export default () => {
         checkSHELFLIFE({
           name,
           shelfLife_SEQ,
-          checkEmpName: STORE === '1' ? '사업주' : MEMBER_NAME,
+          checkEmpName: MEMBER_NAME,
           checkTime: moment().format('YYYY-MM-DD HH:mm'),
         }),
       );
@@ -366,6 +366,7 @@ export default () => {
       setBarCodeCameraModalOpen={setBarCodeCameraModalOpen}
       handleBarCodeScanned={handleBarCodeScanned}
       loading={loading}
+      STORE={STORE}
     />
   );
 };

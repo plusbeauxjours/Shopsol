@@ -48,12 +48,6 @@ const Row = styled.View`
   align-items: center;
 `;
 
-const SpaceRow = styled(Row)`
-  margin-right: 10px;
-  min-width: 60px;
-  justify-content: space-between;
-`;
-
 const Card = styled(Ripple)<ICard>`
   justify-content: flex-start;
   align-items: center;
@@ -289,9 +283,10 @@ export default ({
   setBarCodeCameraModalOpen,
   handleBarCodeScanned,
   loading,
+  STORE,
 }) => {
   const cameraRef = useRef(null);
-
+  console.log(SHELFLIFE_DATA[0]?.items);
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
     if (
       SHELFLIFE_DATA[0]?.items.length == 0 &&
@@ -455,6 +450,7 @@ export default ({
                                   confirmModal={confirmModal}
                                   cancelModal={cancelModal}
                                   onRefresh={onRefresh}
+                                  STORE={STORE}
                                 />
                               </View>
                             </React.Fragment>
@@ -466,6 +462,7 @@ export default ({
                                 confirmModal={confirmModal}
                                 cancelModal={cancelModal}
                                 onRefresh={onRefresh}
+                                STORE={STORE}
                               />
                             </View>
                           );
@@ -497,6 +494,7 @@ export default ({
                                   confirmModal={confirmModal}
                                   cancelModal={cancelModal}
                                   onRefresh={onRefresh}
+                                  STORE={STORE}
                                 />
                               </View>
                             </React.Fragment>
@@ -508,6 +506,7 @@ export default ({
                                 confirmModal={confirmModal}
                                 cancelModal={cancelModal}
                                 onRefresh={onRefresh}
+                                STORE={STORE}
                               />
                             </View>
                           );
@@ -525,6 +524,7 @@ export default ({
                                 confirmModal={confirmModal}
                                 cancelModal={cancelModal}
                                 onRefresh={onRefresh}
+                                STORE={STORE}
                               />
                             </View>
                           </React.Fragment>
@@ -536,6 +536,7 @@ export default ({
                               confirmModal={confirmModal}
                               cancelModal={cancelModal}
                               onRefresh={onRefresh}
+                              STORE={STORE}
                             />
                           </View>
                         );

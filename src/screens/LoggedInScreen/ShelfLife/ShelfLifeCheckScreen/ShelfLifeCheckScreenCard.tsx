@@ -155,7 +155,7 @@ const BarcodeIconContainer = styled.View`
   align-items: center;
 `;
 
-export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
+export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
   const navigation = useNavigation();
   if (item.checkType === '0') {
     return (
@@ -337,7 +337,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh}) => {
             <Row>
               <Text isChecked={true}>처리직원: </Text>
               <Bold isChecked={true}>
-                {item.checkEmpName} [{item.MANAGER == '2' ? '사업주' : '직원'}]
+                {item.checkEmpName} [{STORE === '1' ? '사업주' : '직원'}]
               </Bold>
             </Row>
             <Row>

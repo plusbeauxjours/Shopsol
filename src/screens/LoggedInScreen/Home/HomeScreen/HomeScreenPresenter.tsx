@@ -1267,19 +1267,9 @@ export default ({
                         {employeesMenu.map((menu, index) => {
                           if (
                             menu.paging == 'EmpPayInfoScreen' &&
-                            STORE_DATA?.PAY_SHOW == 1
+                            STORE_DATA?.PAY_SHOW == 0
                           ) {
-                            return (
-                              <MenuCntContainer
-                                key={index}
-                                index={index}
-                                type={'store'}
-                                selection={menu.selection}
-                                paging={menu.paging}
-                                count={menu.count}
-                                source={menu.source}
-                              />
-                            );
+                            return null;
                           } else {
                             return (
                               <MenuCntContainer

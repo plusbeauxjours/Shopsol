@@ -250,6 +250,7 @@ export default ({
   isCancelToastVisible,
   isUpdateToastVisible,
   loading,
+  STORE,
 }) => {
   if (TASK_DATA?.length > 0 && data?.length > 0) {
     if (
@@ -411,6 +412,7 @@ export default ({
                                   confirmModal={confirmModal}
                                   cancelModal={cancelModal}
                                   onRefresh={onRefresh}
+                                  STORE={STORE}
                                 />
                               </View>
                             </React.Fragment>
@@ -422,6 +424,7 @@ export default ({
                                 confirmModal={confirmModal}
                                 cancelModal={cancelModal}
                                 onRefresh={onRefresh}
+                                STORE={STORE}
                               />
                             </View>
                           );
@@ -439,6 +442,7 @@ export default ({
                                 confirmModal={confirmModal}
                                 cancelModal={cancelModal}
                                 onRefresh={onRefresh}
+                                STORE={STORE}
                               />
                             </View>
                           </React.Fragment>
@@ -450,6 +454,7 @@ export default ({
                               confirmModal={confirmModal}
                               cancelModal={cancelModal}
                               onRefresh={onRefresh}
+                              STORE={STORE}
                             />
                           </View>
                         );
