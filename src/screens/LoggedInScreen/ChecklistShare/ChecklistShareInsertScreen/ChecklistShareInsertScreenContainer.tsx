@@ -2,6 +2,7 @@ import React, {useState, useEffect, createRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
+import * as IOSImagePicker from 'react-native-image-picker';
 import analytics from '@react-native-firebase/analytics';
 import ImageResizer from 'react-native-image-resizer';
 import moment from 'moment';
@@ -86,7 +87,6 @@ export default ({route: {params}}) => {
               fileType = 'image/jpeg';
             }
           }
-          console.log(cameraPicture.uri);
           formData.append('image', {
             uri: utils.isAndroid
               ? cameraPicture?.uri
@@ -164,8 +164,8 @@ export default ({route: {params}}) => {
       null,
       true,
     )
-      .then((response) => {
-        setCameraPictureLast(response.uri);
+      .then((res) => {
+        setCameraPictureLast(res.uri);
       })
       .catch((e) => {
         console.log(e);
@@ -173,20 +173,32 @@ export default ({route: {params}}) => {
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      multiple: false,
-      forceJpg: true,
-      mediaType: 'photo',
-      compressImageMaxWidth: 800,
-      compressImageMaxHeight: 1200,
-    }).then((photo: any) => {
-      if (photo) {
-        setCameraPictureList((cameraPictureList) => [
-          ...cameraPictureList,
-          {uri: photo.path},
-        ]);
-      }
-    });
+    utils.isAndroid()
+      ? ImagePicker.openPicker({
+          multiple: false,
+          forceJpg: true,
+          mediaType: 'photo',
+          compressImageMaxWidth: 800,
+          compressImageMaxHeight: 1200,
+        }).then((res: any) => {
+          console.log(res);
+          if (res) {
+            setCameraPictureList([...cameraPictureList, {uri: res.path}]);
+          }
+        })
+      : IOSImagePicker.launchImageLibrary(
+          {
+            mediaType: 'photo',
+            includeBase64: false,
+            maxWidth: 800,
+            maxHeight: 1200,
+          },
+          (res) => {
+            console.log(res);
+            !res.didCancel &&
+              setCameraPictureList([...cameraPictureList, {uri: res.uri}]);
+          },
+        );
   };
 
   const selectPicture = () => {

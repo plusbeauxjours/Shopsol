@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
+import * as IOSImagePicker from 'react-native-image-picker';
+
 import ImageResizer from 'react-native-image-resizer';
 import moment from 'moment';
 
@@ -200,8 +202,8 @@ export default ({route: {params}}) => {
       null,
       true,
     )
-      .then((response) => {
-        setCameraPictureLast(response.uri);
+      .then((res) => {
+        setCameraPictureLast(res.uri);
       })
       .catch((e) => {
         console.log(e);
@@ -209,17 +211,31 @@ export default ({route: {params}}) => {
   };
 
   const launchImageLibraryFn = () => {
-    ImagePicker.openPicker({
-      multiple: false,
-      forceJpg: true,
-      mediaType: 'photo',
-      compressImageMaxWidth: 800,
-      compressImageMaxHeight: 1200,
-    }).then((photo: any) => {
-      if (photo) {
-        setCameraPictureLast(photo.path);
-      }
-    });
+    utils.isAndroid()
+      ? ImagePicker.openPicker({
+          multiple: false,
+          forceJpg: true,
+          mediaType: 'photo',
+          compressImageMaxWidth: 800,
+          compressImageMaxHeight: 1200,
+        }).then((res: any) => {
+          console.log(res);
+          if (res) {
+            setCameraPictureLast({uri: res.path});
+          }
+        })
+      : IOSImagePicker.launchImageLibrary(
+          {
+            mediaType: 'photo',
+            includeBase64: false,
+            maxWidth: 800,
+            maxHeight: 1200,
+          },
+          (res) => {
+            console.log(res);
+            !res.didCancel && setCameraPictureLast({uri: res.uri});
+          },
+        );
   };
 
   const handleBarCodeScanned = async (codenumber) => {
