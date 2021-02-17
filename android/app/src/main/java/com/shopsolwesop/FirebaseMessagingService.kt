@@ -48,7 +48,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Beomstargram.")
+            .setContentTitle("샵솔")
             .setContentText(messageBody)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)

@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
+import {AppState, PushNotificationIOS} from 'react-native';
+import PushNotification from 'react-native-push-notification';
 
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -10,14 +12,55 @@ import store, {persistor} from './src/redux/store';
 import RootContainer from './src/components/RootContainer';
 
 function App() {
+  // const _handleAppStateChange = (nextAppState) => {
+  //   if (nextAppState === 'active') {
+  //     _registerLocalNotification();
+  //   }
+  // };
+
+  const register = async () => {
+    PushNotification.setApplicationIconBadgeNumber(0);
+    PushNotification.cancelAllLocalNotifications();
+    PushNotification.configure({
+      popInitialNotification: true,
+      onRegister: function (token) {
+        console.log('TOKEN:', token);
+      },
+      onNotification: function (notification) {
+        console.log('NOTIFICATION');
+      },
+      onAction: function (notification) {
+        console.log('ACTION:', notification.action);
+        console.log('NOTIFICATION:', notification);
+      },
+      onRegistrationError: function (err) {
+        console.error(err.message, err);
+      },
+
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+
+      requestPermissions: true,
+    });
+  };
+
+  // const unregister = () => {
+  //   AppState.removeEventListener('change', _handleAppStateChange);
+  // };
+
   messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    console.log('Message handled in the background!', remoteMessage);
+    console.log('Message handled in the background1!', remoteMessage);
   });
 
   useEffect(() => {
+    register();
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.log('Message handled in the background!', remoteMessage);
+      console.log('Message handled in the background2!', remoteMessage);
     });
+
     return unsubscribe;
   }, []);
 
