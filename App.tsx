@@ -23,17 +23,19 @@ function App() {
   //   }
   // };
 
+  let exitApp;
   const handleBackButton = () => {
-    let exitApp = true;
-    const timeout = setTimeout(() => {
-      exitApp = false;
-    }, 2000);
-    if (exitApp == undefined || !exitApp) {
-      ToastAndroid.show('한번 더 누르면 종료됩니다.', ToastAndroid.SHORT);
+    if (!exitApp || exitApp == undefined) {
+      exitApp = true;
+      ToastAndroid.show('한번 더 누르면 종료됩니다.', 2000);
+      setTimeout(() => {
+        exitApp = false;
+        clearTimeout();
+      }, 2000);
     } else {
-      clearTimeout(timeout);
-      exitApp = false;
+      clearTimeout();
       BackHandler.exitApp();
+      exitApp = false;
     }
     return true;
   };
