@@ -275,6 +275,12 @@ const PhoneIconContainer = styled.View`
   margin-bottom: 5px;
 `;
 
+const LottieContainer = styled.View`
+  width: ${wp('100%') - 40}px;
+  align-items: center;
+  position: absolute;
+`;
+
 export default ({
   originalDayList,
   timeTableIndex,
@@ -662,23 +668,35 @@ export default ({
                   </FixTypeDayChangeBox>
                 </>
               )}
-              {!isFreeWorkingType &&
-                timeTable.length == 0 && ( // 자율출퇴근★
-                  <>
-                    <GreyLine />
-                    <FixTypeDayChangeButton
+              {!isFreeWorkingType && timeTable.length == 0 && (
+                <>
+                  <GreyLine />
+                  <LottieContainer>
+                    <LottieView
                       style={{
-                        borderColor: styleGuide.palette.greyColor,
-                        width: '100%',
+                        top: -5,
+                        width: 260,
+                        height: 260,
                       }}
-                      onPress={() => registerScheduleFn()}>
-                      <FixTypeDayChangeButtonText
-                        style={{color: styleGuide.palette.greyColor}}>
-                        일정 추가
-                      </FixTypeDayChangeButtonText>
-                    </FixTypeDayChangeButton>
-                  </>
-                )}
+                      source={require('../../../../assets/animations/qrLoading.json')}
+                      loop
+                      autoPlay
+                    />
+                  </LottieContainer>
+                  <FixTypeDayChangeButton
+                    style={{
+                      borderColor: styleGuide.palette.greyColor,
+                      backgroundColor: 'white',
+                      width: '100%',
+                    }}
+                    onPress={() => registerScheduleFn()}>
+                    <FixTypeDayChangeButtonText
+                      style={{color: styleGuide.palette.greyColor}}>
+                      일정 추가
+                    </FixTypeDayChangeButtonText>
+                  </FixTypeDayChangeButton>
+                </>
+              )}
               {!isFreeWorkingType && timeTable.length > 0 && (
                 <>
                   <GreyLine />
