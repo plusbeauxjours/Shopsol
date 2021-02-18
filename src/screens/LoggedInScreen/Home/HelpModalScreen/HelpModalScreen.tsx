@@ -1,12 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {Linking, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import Modal from 'react-native-modal';
+import {WebView} from 'react-native-webview';
+import {isIphoneX} from 'react-native-iphone-x-helper';
+import LottieView from 'lottie-react-native';
+import {useNavigation} from '@react-navigation/native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import api from '~/constants/LoggedInApi';
 import {setHelpCategory} from '~/redux/helpSlice';
 import {setSplashVisible} from '~/redux/splashSlice';
-import {ForwardIcon} from '~/constants/Icons';
+import {ForwardIcon, CloseCircleOutlineIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
 const BackGround = styled.View`
@@ -55,6 +64,7 @@ const AdviceBox = styled(KakaoBox)`
 
 export default () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const {helpCategory} = useSelector((state: any) => state.helpReducer);
 
   const fetchData = async () => {
@@ -89,16 +99,18 @@ export default () => {
           </Row>
           <ForwardIcon color={'black'} />
         </KakaoBox>
-        {helpCategory?.map((data: any, index) => (
-          <AdviceBox
-            key={index}
-            onPress={() => {
-              Linking.openURL(data?.URL);
-            }}>
-            <AdviceText>{data?.TITLE}</AdviceText>
-            <ForwardIcon color={styleGuide.palette.greyColor} />
-          </AdviceBox>
-        ))}
+        <AdviceBox
+          onPress={() => {
+            navigation.navigate('WebViewScreen', {
+              uri:
+                'https://www.notion.so/wesop/FAQ-d1ded15e0dfa4502ad0aaf40ba217601',
+              text: '자주 묻는 질문을 불러오는 중입니다.',
+              title: '자주 묻는 질문',
+            });
+          }}>
+          <AdviceText>자주 묻는 질문</AdviceText>
+          <ForwardIcon color={styleGuide.palette.greyColor} />
+        </AdviceBox>
         <WhiteSpace />
       </ScrollView>
     </BackGround>

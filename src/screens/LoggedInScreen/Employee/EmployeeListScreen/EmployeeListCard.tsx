@@ -35,7 +35,8 @@ const DateText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
 `;
 
-const InfoText = styled(DateText)`
+const InfoText = styled.Text`
+  color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.small}px;
   height: 15px;
 `;
@@ -74,14 +75,13 @@ export default ({EMP_NAME, IS_MANAGER, data, image, mobileNo, START, END}) => {
         </Row>
         {moment(START) < moment() ? (
           <InfoText>
-            근무기간&nbsp;({moment().diff(moment(START), 'month')}
-            개월)
+            근무기간&nbsp;({moment().diff(moment(START), 'month')}개월)
           </InfoText>
         ) : (
           <InfoText>근무기간&nbsp;(근무시작전)</InfoText>
         )}
         <InfoText>
-          {moment(START).format('YYYY.MM.DD')} ~&nbsp;
+          {moment(START).format('YYYY.MM.DD')}&nbsp;~&nbsp;
           {END ? moment(END).format('YYYY.MM.DD') : '계속'}
         </InfoText>
         {data?.probationDATE && data?.probationPercent && (

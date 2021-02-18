@@ -1,4 +1,4 @@
-app_identifier("ccom.wesop.appshopsol") 
+app_identifier("com.wesop.appshopsol") 
 apple_id("shopsol.master@gmail.com")
 
 itc_team_id("118823375")

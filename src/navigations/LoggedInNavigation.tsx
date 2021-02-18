@@ -84,7 +84,6 @@ import RootModal from '../components/RootModal';
 import BackBtn from '../components/Header/BackBtn';
 import HomeBtn from '../components/Header/HomeBtn';
 import ConfirmBackBtn from '../components/Header/ConfirmBackBtn';
-import PolicyScreen from '~/components/PolicyScreen';
 
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
@@ -622,15 +621,6 @@ export default () => {
             headerTitle: '보건증 수정',
             title: '조기경보시스템 직원 수정',
             headerRight: () => <HomeBtn />,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="PolicyScreen"
-          component={PolicyScreen}
-          options={{
-            headerTitle: '약관보기',
-            title: '약관보기',
-            headerTintColor: 'white',
           }}
         />
       </LoggedInNavigation.Navigator>

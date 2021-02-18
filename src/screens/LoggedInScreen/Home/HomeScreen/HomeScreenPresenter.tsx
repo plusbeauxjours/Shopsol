@@ -580,17 +580,17 @@ export default ({
       <ShopMarkerContainer>
         <MenuTitle style={{marginBottom: 5}}>{STORE_NAME}점</MenuTitle>
         <SpaceRow>
-          {STORE_DATA.resultdata.JULI == -1 ? (
+          {STORE_DATA?.resultdata?.JULI == -1 ? (
             <MarkerText>출퇴근 거리 제한 없음</MarkerText>
-          ) : STORE_DATA.resultdata.JULI == -2 ? (
+          ) : STORE_DATA?.resultdata?.JULI == -2 ? (
             <MarkerText>재택근무</MarkerText>
           ) : (
             <>
               <MarkerText>출퇴근 허용거리: </MarkerText>
               <MarkerText style={{fontWeight: '600'}}>
-                {Number(STORE_DATA.resultdata.JULI) < 1000
-                  ? Number(STORE_DATA.resultdata.JULI) + 'm'
-                  : Number(STORE_DATA.resultdata.JULI) / 1000 + 'km'}
+                {Number(STORE_DATA?.resultdata?.JULI) < 1000
+                  ? Number(STORE_DATA?.resultdata?.JULI) + 'm'
+                  : Number(STORE_DATA?.resultdata?.JULI) / 1000 + 'km'}
               </MarkerText>
             </>
           )}
@@ -743,9 +743,7 @@ export default ({
               {STORE === '1' && (
                 <StoreUpdateBtn
                   style={{width: 35}}
-                  onPress={() => {
-                    navigation.navigate('HelpModalScreen');
-                  }}>
+                  onPress={() => navigation.navigate('HelpModalScreen')}>
                   <HelpIcon size={16} color={'white'} />
                 </StoreUpdateBtn>
               )}
@@ -1380,18 +1378,18 @@ export default ({
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
               }}>
-              {STORE_DATA?.resultdata.JULI !== -1 && (
+              {STORE_DATA?.resultdata?.JULI !== -1 && (
                 <Circle
                   zIndex={0}
-                  radius={STORE_DATA.resultdata.JULI}
+                  radius={STORE_DATA?.resultdata?.JULI}
                   strokeWidth={0}
                   fillColor={
-                    getDistance() < STORE_DATA.resultdata.JULI
+                    getDistance() < STORE_DATA?.resultdata?.JULI
                       ? 'rgba(0, 230, 64, 0.2)'
                       : 'rgba(240, 52, 52, 0.2)'
                   }
                   strokeColor={
-                    getDistance() < STORE_DATA.resultdata.JULI
+                    getDistance() < STORE_DATA?.resultdata?.JULI
                       ? 'rgba(0, 230, 64, 1)'
                       : 'rgba(240, 52, 52, 1)'
                   }
@@ -1403,9 +1401,9 @@ export default ({
               )}
               <Marker
                 onPress={() => {
-                  (STORE_DATA.resultdata.JULI >
+                  (STORE_DATA?.resultdata?.JULI >
                     Math.round(getDistance() * 10) / 10 ||
-                    STORE_DATA.resultdata.JULI == -1) &&
+                    STORE_DATA?.resultdata?.JULI == -1) &&
                     setIsGpsVisible(false);
                   setTimeout(() => {
                     setWorkingModalOpen(true);
@@ -1419,9 +1417,9 @@ export default ({
                 }}>
                 <UserMarker
                   distance={
-                    STORE_DATA.resultdata.JULI == '-1'
+                    STORE_DATA?.resultdata?.JULI == '-1'
                       ? '제한 없음'
-                      : STORE_DATA.resultdata.JULI
+                      : STORE_DATA?.resultdata?.JULI
                   }
                   current={Math.round(getDistance() * 10) / 10}
                 />

@@ -10,7 +10,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import NetInfo from '@react-native-community/netinfo';
-
+import {isIphoneX} from 'react-native-iphone-x-helper';
 import * as Sentry from '@sentry/react-native';
 
 import CloseBtn from './Header/CloseBtn';
@@ -18,6 +18,10 @@ import LoggedInNavigation from '../navigations/LoggedInNavigation';
 import LoggedOutNavigation from '../navigations/LoggedOutNavigation';
 import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/index';
 import Loader from './Loader';
+import WebViewScreen from './WebViewScreen';
+import BackBtn from './Header/BackBtn';
+
+import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 
@@ -41,6 +45,11 @@ export default () => {
   const routeNameRef = useRef(null);
   const navigationRef = useRef(null);
   const dispatch = useDispatch();
+
+  const headerStyle = utils.isAndroid() &&
+    !isIphoneX() && {
+      height: 56,
+    };
 
   const {visible} = useSelector((state: any) => state.splashReducer);
   const {isLoggedIn, STORE, MEMBER_SEQ} = useSelector(
@@ -157,7 +166,26 @@ export default () => {
               backgroundColor: styleGuide.palette.primary,
               borderColor: 'white',
               borderWidth: 0,
+              ...headerStyle,
             },
+            headerTintColor: 'white',
+            headerLeft: null,
+          }}
+        />
+        <RootStack.Screen
+          name="WebViewScreen"
+          component={WebViewScreen}
+          options={{
+            gestureEnabled: false,
+            title: '자주 묻는 질문',
+            headerRight: () => <CloseBtn />,
+            headerStyle: {
+              backgroundColor: styleGuide.palette.primary,
+              borderColor: 'white',
+              borderWidth: 0,
+              ...headerStyle,
+            },
+            headerTitleAlign: 'center',
             headerTintColor: 'white',
             headerLeft: null,
           }}

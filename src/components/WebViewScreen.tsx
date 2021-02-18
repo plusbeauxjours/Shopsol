@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {WebView} from 'react-native-webview';
 import styled from 'styled-components/native';
 import LottieView from 'lottie-react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,9 +22,17 @@ const Text = styled.Text`
   bottom: 10px;
 `;
 
-export default () => {
+export default ({route: {params}}) => {
+  const navigation = useNavigation();
+  const {uri, text, title} = params;
+
+  useEffect(() => {
+    navigation.setOptions({headerTitle: title});
+  }, []);
+
   return (
     <WebView
+      source={{uri}}
       style={{flex: 1, width: wp('100%'), height: hp('100%')}}
       javaScriptEnabled={true}
       domStorageEnabled={true}
@@ -48,13 +57,10 @@ export default () => {
             loop
             autoPlay
           />
-          <Text>샵솔 약관을 불러오는 중입니다.</Text>
+          <Text>{text}</Text>
           <Text>잠시만 기다려주세요.</Text>
         </View>
       )}
-      source={{
-        uri: `https://www.notion.so/wesop/d13606c443f843d69fdb2c8e8e84ad1b`,
-      }}
     />
   );
 };

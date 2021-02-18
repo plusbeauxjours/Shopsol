@@ -268,17 +268,17 @@ export default ({route: {params}}) => {
           {STORE_DATA.resultdata.NAME}점
         </MenuTitle>
         <SpaceRow>
-          {STORE_DATA.resultdata.JULI == -1 ? (
+          {STORE_DATA?.resultdata?.JULI == -1 ? (
             <MarkerText>출퇴근 거리 제한 없음</MarkerText>
-          ) : STORE_DATA.resultdata.JULI == -2 ? (
+          ) : STORE_DATA?.resultdata?.JULI == -2 ? (
             <MarkerText>재택근무</MarkerText>
           ) : (
             <>
               <MarkerText>출퇴근 허용거리: </MarkerText>
               <MarkerText style={{fontWeight: '600'}}>
-                {Number(STORE_DATA.resultdata.JULI) < 1000
-                  ? Number(STORE_DATA.resultdata.JULI) + 'm'
-                  : Number(STORE_DATA.resultdata.JULI) / 1000 + 'km'}
+                {Number(STORE_DATA?.resultdata?.JULI) < 1000
+                  ? Number(STORE_DATA?.resultdata?.JULI) + 'm'
+                  : Number(STORE_DATA?.resultdata?.JULI) / 1000 + 'km'}
               </MarkerText>
             </>
           )}
@@ -459,16 +459,16 @@ export default ({route: {params}}) => {
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}>
-          {STORE_DATA?.resultdata.JULI !== -1 && (
+          {STORE_DATA?.resultdata?.JULI !== -1 && (
             <Circle
               zIndex={0}
-              radius={STORE_DATA.resultdata.JULI}
+              radius={STORE_DATA?.resultdata?.JULI}
               strokeWidth={0}
               fillColor={
                 getDistance(
                   params?.data.WORK_ON_LAT,
                   params?.data.WORK_ON_LON,
-                ) < STORE_DATA.resultdata.JULI
+                ) < STORE_DATA?.resultdata?.JULI
                   ? 'rgba(0, 230, 64, 0.2)'
                   : 'rgba(240, 52, 52, 0.2)'
               }
@@ -476,7 +476,7 @@ export default ({route: {params}}) => {
                 getDistance(
                   params?.data.WORK_ON_LAT,
                   params?.data.WORK_ON_LON,
-                ) < STORE_DATA.resultdata.JULI
+                ) < STORE_DATA?.resultdata?.JULI
                   ? 'rgba(0, 230, 64, 1)'
                   : 'rgba(240, 52, 52, 1)'
               }
@@ -493,9 +493,9 @@ export default ({route: {params}}) => {
             }}>
             <UserMarker
               distance={
-                STORE_DATA.resultdata.JULI == '-1'
+                STORE_DATA?.resultdata?.JULI == '-1'
                   ? '제한 없음'
-                  : STORE_DATA.resultdata.JULI
+                  : STORE_DATA?.resultdata?.JULI
               }
               current={
                 Math.round(
@@ -546,16 +546,16 @@ export default ({route: {params}}) => {
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}>
-          {STORE_DATA?.resultdata.JULI !== -1 && (
+          {STORE_DATA?.resultdata?.JULI !== -1 && (
             <Circle
               zIndex={0}
-              radius={STORE_DATA.resultdata.JULI}
+              radius={STORE_DATA?.resultdata?.JULI}
               strokeWidth={0}
               fillColor={
                 getDistance(
                   params?.data.WORK_OFF_LAT,
                   params?.data.WORK_OFF_LON,
-                ) < STORE_DATA.resultdata.JULI
+                ) < STORE_DATA?.resultdata?.JULI
                   ? 'rgba(0, 230, 64, 0.2)'
                   : 'rgba(240, 52, 52, 0.2)'
               }
@@ -563,7 +563,7 @@ export default ({route: {params}}) => {
                 getDistance(
                   params?.data.WORK_OFF_LAT,
                   params?.data.WORK_OFF_LON,
-                ) < STORE_DATA.resultdata.JULI
+                ) < STORE_DATA?.resultdata?.JULI
                   ? 'rgba(0, 230, 64, 1)'
                   : 'rgba(240, 52, 52, 1)'
               }
@@ -580,9 +580,9 @@ export default ({route: {params}}) => {
             }}>
             <UserMarker
               distance={
-                STORE_DATA.resultdata.JULI == '-1'
+                STORE_DATA?.resultdata?.JULI == '-1'
                   ? '제한 없음'
-                  : STORE_DATA.resultdata.JULI
+                  : STORE_DATA?.resultdata?.JULI
               }
               current={
                 Math.round(

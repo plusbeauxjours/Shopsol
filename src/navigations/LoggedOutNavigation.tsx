@@ -8,7 +8,6 @@ import SignupScreen from '../screens/LoggedOutScreen/SignupScreen';
 import FindPasswordScreen from '../screens/LoggedOutScreen/FindPasswordScreen';
 import VerificationScreen from '../screens/LoggedOutScreen/VerificationScreen';
 import BackBtn from '../components/Header/BackBtn';
-import PolicyScreen from '~/components/PolicyScreen';
 import {useSelector} from 'react-redux';
 import RootModal from '../components/RootModal';
 
@@ -88,15 +87,6 @@ export default () => {
         <LoggedOutNavigation.Screen
           name="FindPasswordScreen"
           component={FindPasswordScreen}
-          options={{
-            headerTitle: '비밀번호 찾기',
-            title: '비밀번호 찾기',
-            headerTintColor: 'white',
-          }}
-        />
-        <LoggedOutNavigation.Screen
-          name="PolicyScreen"
-          component={PolicyScreen}
           options={{
             headerTitle: '비밀번호 찾기',
             title: '비밀번호 찾기',

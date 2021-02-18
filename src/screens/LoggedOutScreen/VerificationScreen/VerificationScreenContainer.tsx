@@ -138,7 +138,11 @@ export default () => {
   };
 
   const gotoPolicy = () => {
-    navigation.navigate('PolicyScreen');
+    navigation.navigate('WebViewScreen', {
+      uri: 'https://www.notion.so/wesop/d13606c443f843d69fdb2c8e8e84ad1b',
+      text: '샵솔 약관을 불러오는 중입니다.',
+      title: '샵솔 약관',
+    });
   };
 
   const gotoSignup = () => {
