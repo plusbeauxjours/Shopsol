@@ -1,7 +1,12 @@
 import React, {useEffect} from 'react';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
-import {AppState, PushNotificationIOS} from 'react-native';
+import {
+  AppState,
+  PushNotificationIOS,
+  BackHandler,
+  ToastAndroid,
+} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 
 import {Provider} from 'react-redux';
@@ -18,7 +23,23 @@ function App() {
   //   }
   // };
 
+  const handleBackButton = () => {
+    let exitApp = true;
+    const timeout = setTimeout(() => {
+      exitApp = false;
+    }, 2000);
+    if (exitApp == undefined || !exitApp) {
+      ToastAndroid.show('한번 더 누르면 종료됩니다.', ToastAndroid.SHORT);
+    } else {
+      clearTimeout(timeout);
+      exitApp = false;
+      BackHandler.exitApp();
+    }
+    return true;
+  };
+
   const register = async () => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
     PushNotification.setApplicationIconBadgeNumber(0);
     PushNotification.cancelAllLocalNotifications();
     PushNotification.configure({
@@ -60,9 +81,14 @@ function App() {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log('Message handled in the background2!', remoteMessage);
     });
-
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    return () => {
+      null;
+    };
+  });
 
   return (
     <Provider store={store}>

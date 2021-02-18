@@ -17,7 +17,7 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const {TITLE, NOTICE_SEQ, isFavorite} = params;
 
-  const {STORE, MEMBER_SEQ: ME, MEMBER_NAME, GENDER} = useSelector(
+  const {STORE, MEMBER_SEQ: ME, MEMBER_NAME, AVATAR, GENDER} = useSelector(
     (state: any) => state.userReducer,
   );
   const {
@@ -141,9 +141,9 @@ export default ({route: {params}}) => {
     }
     try {
       setCommentInputBox(false);
-      setComment('');
       dispatch(
         addCHECKLIST_SHARE_COMMENTS({
+          IMAGE: AVATAR,
           COM_SEQ: Math.ceil(Math.random() * 10000000),
           CONTENTS: comment,
           CREATE_TIME: moment().format('YYYY-MM-DD'),

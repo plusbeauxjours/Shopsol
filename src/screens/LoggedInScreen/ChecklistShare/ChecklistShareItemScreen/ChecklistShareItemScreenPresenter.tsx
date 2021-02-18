@@ -168,7 +168,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   height: 30px;
   right: 20px;
   margin-top: 15px;
-  top: ${(props) => (isIphoneX() ? 35 : 25)}px;
+  top: ${() => (isIphoneX() ? 35 : 25)}px;
 `;
 
 const RowTouchable = styled.TouchableOpacity`
@@ -424,8 +424,7 @@ export default ({
                                   fontWeight: '600',
                                   color: styleGuide.palette.greyColor,
                                 }}>
-                                {item.EMP_NAME} [{item.IS_MANAGER}
-                                ]&nbsp;&nbsp;
+                                {item.EMP_NAME} [{item.IS_MANAGER}]&nbsp;&nbsp;
                               </Text>
                               {item.CONTENTS}
                             </Text>

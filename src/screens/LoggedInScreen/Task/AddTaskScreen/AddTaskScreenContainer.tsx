@@ -209,7 +209,7 @@ export default ({route: {params}}) => {
         }).then((res: any) => {
           console.log(res);
           if (res) {
-            setCameraPictureLast({uri: res.path});
+            setCameraPictureLast(res.path);
           }
         })
       : IOSImagePicker.launchImageLibrary(
@@ -221,7 +221,7 @@ export default ({route: {params}}) => {
           },
           (res) => {
             console.log(res);
-            !res.didCancel && setCameraPictureLast({uri: res.uri});
+            !res.didCancel && setCameraPictureLast(res.uri);
           },
         );
   };

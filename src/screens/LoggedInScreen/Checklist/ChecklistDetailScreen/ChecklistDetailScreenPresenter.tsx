@@ -149,7 +149,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   height: 30px;
   right: 20px;
   margin-top: 15px;
-  top: ${(props) => (isIphoneX() ? 35 : 25)}px;
+  top: ${() => (isIphoneX() ? 35 : 25)}px;
 `;
 
 const Line = styled.View`
