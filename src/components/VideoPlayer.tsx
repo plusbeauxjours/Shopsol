@@ -43,7 +43,7 @@ const FullScreenIconContainer = styled.TouchableOpacity<IsFullScreen>`
   width: 30px;
   height: 30px;
   right: 0;
-  top: ${(props) => (isIphoneX() ? 15 : -10)};
+  top: ${() => (isIphoneX() ? 15 : -10)};
 `;
 
 const CloseIconContainer = styled.TouchableOpacity<IsFullScreen>`
@@ -52,7 +52,7 @@ const CloseIconContainer = styled.TouchableOpacity<IsFullScreen>`
   width: 30px;
   height: 30px;
   right: 0;
-  top: ${(props) => (isIphoneX() ? 15 : -10)};
+  top: ${() => (isIphoneX() ? 15 : -10)};
 `;
 
 export default ({url, setModalVisible}) => {

@@ -206,6 +206,7 @@ const CloseIconContainer = styled.TouchableOpacity`
   right: 20px;
   margin-top: 15px;
   top: ${() => (isIphoneX() ? 35 : 25)}px;
+  margin-top: ${() => (isIphoneX() ? 0 : 15)}px;
 `;
 
 const IconContainer = styled.View`
