@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
     "android-test": "npx react-native run-android --variant=release",
     "android": "react-native run-android",
     "apk": "npx jetifier && cd android && ./gradlew clean && ./gradlew app:assembleRelease --stacktrace",
@@ -21,7 +22,7 @@
     "@react-native-community/progress-bar-android": "1.0.3",
     "@react-native-community/progress-view": "1.1.0",
     "@react-native-community/push-notification-ios": "1.8.0",
-    "@react-native-firebase/analytics": "8.0.1",
+    "@react-native-firebase/analytics": "10.8.0",
     "@react-native-firebase/app": "9.0.0",
     "@react-native-firebase/messaging": "8.0.1",
     "@react-navigation/material-top-tabs": "5.2.16",

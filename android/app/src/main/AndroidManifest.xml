@@ -5,8 +5,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -29,15 +31,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
-        <meta-data  
-            android:name="com.dieam.reactnativepushnotification.notification_foreground" 
-            android:value="true"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAg2JiVvGTq9PI5u5KF3B5VXBVkuhDPQak"/>
-        <!-- <meta-data
-            android:name="com.dieam.reactnativepushnotification.notification_color"
-            android:resource="@color/white"/> -->
         <receiver android:name=".Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -47,10 +43,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
-        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name"
-            android:value="com.wesop.appshopsol"/>
-        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description"
-            android:value="com.wesop.appshopsol"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
             <intent-filter>
@@ -65,7 +57,14 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
+        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
+            android:value="true"/>
+        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name"
+            android:value="com.wesop.appshopsol"/>
+        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description"
+            android:value="com.wesop.appshopsol"/>
+        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"
+            android:resource="@android:color/white"/>  
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

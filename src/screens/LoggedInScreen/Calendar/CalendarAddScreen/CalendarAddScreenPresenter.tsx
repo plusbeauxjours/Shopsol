@@ -449,8 +449,8 @@ export default ({
             return alertModal('추가하신 출퇴근 시간을 먼저 선택해주세요.');
           }
           let temp = {
-            key: timeCheck[timeSelected].color,
-            color: timeCheck[timeSelected].color,
+            key: timeCheck[timeSelected]?.color,
+            color: timeCheck[timeSelected]?.color,
           };
           let value = JSON.parse(JSON.stringify(markedDates));
           let testIndex;

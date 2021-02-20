@@ -105,7 +105,7 @@ export default ({index, removeDayFn, timeList, timeListIndex, originalDay}) => {
         endTime = timeList[i].endTime;
         flag = true;
         if (timeListIndex !== null && timeListIndex === i) {
-          color = timeList[i].color;
+          color = timeList[i]?.color;
         }
       }
     }

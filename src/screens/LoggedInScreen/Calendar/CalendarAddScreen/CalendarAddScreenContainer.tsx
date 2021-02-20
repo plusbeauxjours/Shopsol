@@ -119,8 +119,8 @@ export default ({route: {params}}) => {
       let newMarkedDates = [];
       Object.keys(markedDates).map((key) => {
         for (var j = 0; j < markedDates[key].dots.length; j++) {
-          let value = markedDates[key].dots[j].color;
-          if (value === timeCheck[i].color) {
+          let value = markedDates[key].dots[j]?.color;
+          if (value === timeCheck[i]?.color) {
             newMarkedDates.push(key);
           }
         }
@@ -139,7 +139,7 @@ export default ({route: {params}}) => {
           TYPE: '3',
           START: timeCheck[i].start,
           END: timeCheck[i].end,
-          COLOR: timeCheck[i].color,
+          COLOR: timeCheck[i]?.color,
           STORE_NAME,
           STORE_ID: STORE_SEQ,
         });
@@ -192,7 +192,7 @@ export default ({route: {params}}) => {
         };
       } else {
         for (var i = 0; i < timeCheck.length; i++) {
-          tempIndex = color.indexOf(timeCheck[i].color);
+          tempIndex = color.indexOf(timeCheck[i]?.color);
           color.splice(tempIndex, 1);
         }
         temp = {
@@ -213,7 +213,7 @@ export default ({route: {params}}) => {
     let markedDated = JSON.parse(JSON.stringify(markedDates));
     Object.keys(markedDated).map((key) => {
       var temp = markedDated[key].dots.findIndex(
-        (element) => element.key === timeChecked[index].color,
+        (element) => element.key === timeChecked[index]?.color,
       );
 
       if (temp !== -1) {
