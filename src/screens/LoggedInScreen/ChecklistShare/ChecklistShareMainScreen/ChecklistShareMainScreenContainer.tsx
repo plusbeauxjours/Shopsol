@@ -127,8 +127,8 @@ export default () => {
   };
 
   // 캘린더에서 월을 이동하는 경우 해당 월의 Marking 로드
-  const onMonthChange = (date) => {
-    markingFn(date.year, date.month);
+  const onMonthChange = (date, index) => {
+    markingFn(date.year, date.month, index);
     setDate(date.dateString);
   };
 
@@ -164,6 +164,7 @@ export default () => {
   // 캘린더 마킹 데이터
   const markingFn = async (YEAR, MONTH, index) => {
     const content = {key: 'content', color: '#000'};
+    console.log(index);
     try {
       const {data} = await api.getNoticeAll(STORE_SEQ, YEAR, MONTH, index);
       if (data.message === 'SUCCESS') {
@@ -236,12 +237,6 @@ export default () => {
     }
   };
 
-  const init = (page) => {
-    markingFn(moment().format('YYYY'), moment().format('M'));
-    fetchData('', moment().format('YYYY-M-DD'));
-    setIndex(page ? Number(page) : 0);
-  };
-
   const gotoChecklistShareItem = (TITLE, NOTICE_SEQ, isFavorite) => {
     navigation.navigate('ChecklistShareItemScreen', {
       TITLE,
@@ -251,7 +246,7 @@ export default () => {
   };
 
   useEffect(() => {
-    init(index);
+    fetchData('', moment().format('YYYY-M-DD'));
     dispatch(setSplashVisible({visible: false}));
     analytics().logScreenView({
       screen_name: '업무일지',
@@ -284,6 +279,8 @@ export default () => {
       gotoChecklistShareItem={gotoChecklistShareItem}
       loading={loading}
       MANAGER_CALLED={MANAGER_CALLED}
+      index={index}
+      setIndex={setIndex}
     />
   );
 };

@@ -499,6 +499,7 @@ export default ({
   // QR_Num,
   banner1D,
   banner2D,
+  successMsg,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -1475,6 +1476,7 @@ export default ({
             setWorkingModalOpen={setWorkingModalOpen}
             setQrCameraModalOpen1={setQrCameraModalOpen1}
             actionTYPE={actionTYPE}
+            successMsg={successMsg}
           />
         ) : failModalOpen ? (
           <GoWorkingFailAnimation

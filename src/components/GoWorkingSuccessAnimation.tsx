@@ -11,12 +11,18 @@ import utils from '~/constants/utils';
 
 const BigText = styled.Text`
   color: #000;
-  font-size: 24px;
+  font-size: 22px;
   text-align: center;
 `;
 const Text = styled.Text`
   color: #000;
   font-size: ${styleGuide.fontSize.large}px;
+`;
+
+const MsgText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 `;
 
 const View = styled.View`
@@ -60,6 +66,7 @@ export default ({
   setWorkingModalOpen,
   setQrCameraModalOpen1,
   actionTYPE,
+  successMsg,
 }) => {
   return (
     <>
@@ -93,9 +100,10 @@ export default ({
         <TextBox>
           <BigText>{MEMBER_NAME}님, </BigText>
           <BigText>{STORE_NAME}점에</BigText>
-          <BigText>무사히 {actionTYPE}하였습니다.</BigText>
+          <BigText>{actionTYPE}처리를 완료하였습니다.</BigText>
           <WhiteSpace />
           <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>
+          <MsgText>{successMsg}</MsgText>
         </TextBox>
         <Touchable
           onPress={() => {

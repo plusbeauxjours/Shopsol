@@ -238,6 +238,8 @@ export default ({
   gotoChecklistShareItem,
   loading,
   MANAGER_CALLED,
+  index,
+  setIndex,
 }) => {
   const Tab = createMaterialTopTabNavigator();
 
@@ -296,6 +298,7 @@ export default ({
                 moment(date).format('M'),
                 location == 'firstRoute' ? 1 : 0,
               );
+              setIndex(location == 'firstRoute' ? 1 : 0);
               setIsCalendarModalVisible(true);
             }}>
             <CalendarIcon size={18} color={styleGuide.palette.arrowColor} />
@@ -599,11 +602,11 @@ export default ({
         isVisible={isCalendarModalVisible}
         onRequestClose={() => {
           setIsCalendarModalVisible(false);
-          setDate(date);
+          setDate(moment().format('YYYY-MM-DD'));
         }}
         onBackdropPress={() => {
           setIsCalendarModalVisible(false);
-          setDate(date);
+          setDate(moment().format('YYYY-MM-DD'));
         }}>
         <CalendarTitle>
           <CalendarTextBox>
@@ -652,7 +655,7 @@ export default ({
           current={date}
           markedDates={CHECKLIST_SHARE_MARKED}
           onDayPress={(date) => onDayPress(date)}
-          onMonthChange={(date) => onMonthChange(date)}
+          onMonthChange={(date) => onMonthChange(date, index)}
         />
       </Modal>
     </>
