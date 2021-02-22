@@ -286,7 +286,6 @@ export default ({
   STORE,
 }) => {
   const cameraRef = useRef(null);
-  console.log(SHELFLIFE_DATA[0]?.items);
   if (SHELFLIFE_DATA?.length > 0 && data?.length > 0) {
     if (
       SHELFLIFE_DATA[0]?.items.length == 0 &&

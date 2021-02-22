@@ -18,7 +18,6 @@ const calendarSlice = createSlice({
       state.CALENDAR_DATA = {};
     },
     setCALENDAR_DATA(state, action) {
-      console.log('setCALENDAR_DATA');
       const {
         payload: {CALENDAR_DATA, date},
       } = action;

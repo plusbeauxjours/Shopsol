@@ -124,10 +124,11 @@ export default () => {
   };
 
   const fetchData = async (date) => {
+    console.log('fetching');
     try {
-      if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
-        dispatch(setSplashVisible({visible: true, text: '캘린더'}));
-      }
+      // if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
+      dispatch(setSplashVisible({visible: true, text: '캘린더'}));
+      // }
       const {data} = await api.getAllSchedules(
         STORE_SEQ,
         moment(date).format('YYYY'),

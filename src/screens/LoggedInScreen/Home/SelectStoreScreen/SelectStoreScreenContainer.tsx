@@ -133,10 +133,8 @@ export default ({route: {params}}) => {
   };
 
   useEffect(() => {
-    if (params?.from == 'loginScreen') {
-      requestUserPermission();
-    }
-  }, [params]);
+    requestUserPermission();
+  }, []);
 
   useEffect(() => {
     fetchData();

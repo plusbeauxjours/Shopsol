@@ -256,7 +256,6 @@ export default ({route: {params}}) => {
   };
 
   const handleBarCodeScanned = async (codenumber) => {
-    console.log(codenumber);
     await setBarCodeCameraModalOpen(false);
     if (!codenumber) {
       setTimeout(() => {
@@ -280,31 +279,34 @@ export default ({route: {params}}) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        dispatch(setSplashVisible({visible: true, text: '유통기한'}));
-        if (codenumber) {
-          const {data} = await api.getBarCode(codenumber);
-          if (data.message == 'SUCCESS') {
-            dispatch(setSplashVisible({visible: false}));
-            setShelfLifeName(data.resultdata[0].NAME);
-            setShelfLifeMemo(data.resultdata[0].BRAND);
-            setShelfLifeBarcode(data.resultdata[0].codenumber);
-            setShelfLifeImgLink(data.resultdata[0].IMG);
-          } else {
-            dispatch(setSplashVisible({visible: false}));
-            setTimeout(() => {
-              setShelfLifeBarcode(codenumber);
-              alertModal(
-                '등록된 데이터가 없습니다.\n직접입력하여 진행해 주세요.',
-              );
-            }, 100);
+      if (codenumber?.length > 0) {
+        try {
+          dispatch(setSplashVisible({visible: true, text: '유통기한'}));
+          if (codenumber) {
+            const {data} = await api.getBarCode(codenumber);
+            console.log('data', data);
+            if (data.message == 'SUCCESS') {
+              dispatch(setSplashVisible({visible: false}));
+              setShelfLifeName(data.resultdata[0].NAME);
+              setShelfLifeMemo(data.resultdata[0].BRAND);
+              setShelfLifeBarcode(data.resultdata[0].codenumber);
+              setShelfLifeImgLink(data.resultdata[0].IMG);
+            } else {
+              dispatch(setSplashVisible({visible: false}));
+              setTimeout(() => {
+                setShelfLifeBarcode(codenumber);
+                alertModal(
+                  '등록된 데이터가 없습니다.\n직접입력하여 진행해 주세요.',
+                );
+              }, 100);
+            }
           }
+        } catch (e) {
+          console.log(e);
+        } finally {
+          setCodenumber(null);
+          dispatch(setSplashVisible({visible: false}));
         }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        setCodenumber('');
-        dispatch(setSplashVisible({visible: false}));
       }
     })();
   }, [codenumber]);

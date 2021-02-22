@@ -96,7 +96,6 @@ export default ({route: {params}}) => {
           });
         }
         const {data} = await api.setNoticeImg(formData);
-        console.log(data);
         if (data.result === 'SUCCESS') {
           alertModal(`${params.TITLE}이 등록되었습니다.`);
           if (params.TITLE === '지시사항') {
