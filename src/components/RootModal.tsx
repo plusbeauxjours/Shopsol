@@ -49,9 +49,9 @@ const Box = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
+  font-size: 20px;
   color: ${styleGuide.palette.primary};
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 const Content = styled.Text`

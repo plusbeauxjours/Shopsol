@@ -8,9 +8,7 @@ import messaging from '@react-native-firebase/messaging';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setDEVICE_INFO} from '~/redux/userSlice';
 import {selectSTORE} from '~/redux/storeSlice';
-import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
-import utils from '~/constants/utils';
-import {openSettings} from 'react-native-permissions';
+import {setSplashVisible} from '~/redux/splashSlice';
 import DeviceInfo from 'react-native-device-info';
 import api from '~/constants/LoggedInApi';
 
@@ -35,10 +33,10 @@ export default ({route: {params}}) => {
       setRefreshing(false);
     }
   };
-  const alertModal = (text, okCallback = () => {}) => {
+  const alertModal = (content, okCallback = () => {}) => {
     const params = {
       alertType: 'alert',
-      content: text,
+      content,
       okCallback,
     };
     dispatch(setAlertInfo(params));
