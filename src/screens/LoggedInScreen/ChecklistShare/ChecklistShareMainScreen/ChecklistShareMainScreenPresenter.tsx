@@ -50,14 +50,13 @@ const SmallWhiteSpace = styled.View`
 `;
 
 const NewCntViewContainer = styled.View`
-  position: absolute;
-  top: ${utils.isAndroid ? 0 : -3};
-  right: -25px;
+  margin-left: 10px;
   width: 20px;
   height: 20px;
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
+  border-radius: 10px;
+  background-color: ${styleGuide.palette.redColor};
 `;
 
 const NewCntViewText = styled.Text`
@@ -158,7 +157,7 @@ const NewPoint = styled.View`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  background-color: red;
+  background-color: ${styleGuide.palette.redColor};
 `;
 
 const AddButtonContainer = styled.View`
@@ -243,13 +242,13 @@ export default ({
   const Tab = createMaterialTopTabNavigator();
 
   const NewCntView = ({route}) => {
-    if (route.title == '지시사항' && NEW_CNT1 !== 0) {
+    if (route == '지시사항' && NEW_CNT1 !== 0) {
       return (
         <NewCntViewContainer>
           <NewCntViewText>{NEW_CNT1 < 10 ? NEW_CNT1 : '9+'}</NewCntViewText>
         </NewCntViewContainer>
       );
-    } else if (route.title == '특이사항' && NEW_CNT2 !== 0) {
+    } else if (route == '특이사항' && NEW_CNT2 !== 0) {
       return (
         <NewCntViewContainer>
           <NewCntViewText>{NEW_CNT2 < 10 ? NEW_CNT2 : '9+'}</NewCntViewText>
@@ -571,8 +570,30 @@ export default ({
           },
           style: {backgroundColor: 'white'},
         }}>
-        <Tab.Screen name="지시사항" component={FirstRoute} />
-        <Tab.Screen name="특이사항" component={SecondRoute} />
+        <Tab.Screen
+          options={{
+            tabBarLabel: () => (
+              <Date>
+                <CalendarTitleText>지시사항</CalendarTitleText>
+                <NewCntView route={'지시사항'} />
+              </Date>
+            ),
+          }}
+          name="지시사항"
+          component={FirstRoute}
+        />
+        <Tab.Screen
+          options={{
+            tabBarLabel: () => (
+              <Date>
+                <CalendarTitleText>특이사항</CalendarTitleText>
+                <NewCntView route={'특이사항'} />
+              </Date>
+            ),
+          }}
+          name="특이사항"
+          component={SecondRoute}
+        />
       </Tab.Navigator>
       <Modal
         isVisible={isCalendarModalVisible}

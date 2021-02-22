@@ -240,8 +240,8 @@ export default ({route: {params}}) => {
 
   const getDistance = (lat, long) => {
     const R = 6371e3; // metres
-    const lat1 = Number(STORE_DATA.resultdata.LAT);
-    const lon1 = Number(STORE_DATA.resultdata.LONG);
+    const lat1 = Number(STORE_DATA?.resultdata?.LAT);
+    const lon1 = Number(STORE_DATA?.resultdata?.LONG);
     // const lat1 = Number(STORE_DATA.resultdata.LAT) + 0.002;
     // const lon1 = Number(STORE_DATA.resultdata.LONG) + 0.002;
     const lat2 = lat;
@@ -481,8 +481,8 @@ export default ({route: {params}}) => {
                   : 'rgba(240, 52, 52, 1)'
               }
               center={{
-                latitude: parseFloat(STORE_DATA.resultdata.LAT),
-                longitude: parseFloat(STORE_DATA.resultdata.LONG),
+                latitude: parseFloat(STORE_DATA?.resultdata?.LAT),
+                longitude: parseFloat(STORE_DATA?.resultdata?.LONG),
               }}
             />
           )}
@@ -510,8 +510,8 @@ export default ({route: {params}}) => {
           </Marker>
           <Marker
             coordinate={{
-              latitude: parseFloat(STORE_DATA.resultdata.LAT),
-              longitude: parseFloat(STORE_DATA.resultdata.LONG),
+              latitude: parseFloat(STORE_DATA?.resultdata?.LAT),
+              longitude: parseFloat(STORE_DATA?.resultdata?.LONG),
             }}>
             <ShopMarker />
           </Marker>
@@ -568,8 +568,8 @@ export default ({route: {params}}) => {
                   : 'rgba(240, 52, 52, 1)'
               }
               center={{
-                latitude: parseFloat(STORE_DATA.resultdata.LAT),
-                longitude: parseFloat(STORE_DATA.resultdata.LONG),
+                latitude: parseFloat(STORE_DATA?.resultdata?.LAT),
+                longitude: parseFloat(STORE_DATA?.resultdata?.LONG),
               }}
             />
           )}
@@ -597,8 +597,8 @@ export default ({route: {params}}) => {
           </Marker>
           <Marker
             coordinate={{
-              latitude: parseFloat(STORE_DATA.resultdata.LAT),
-              longitude: parseFloat(STORE_DATA.resultdata.LONG),
+              latitude: parseFloat(STORE_DATA?.resultdata?.LAT),
+              longitude: parseFloat(STORE_DATA?.resultdata?.LONG),
             }}>
             <ShopMarker />
           </Marker>

@@ -83,10 +83,18 @@ const checklistshareSlice = createSlice({
     setCHECKLIST_SHARE_DATA1(state, action) {
       const {payload: CHECKLIST_SHARE_DATA1} = action;
       state.CHECKLIST_SHARE_DATA1 = CHECKLIST_SHARE_DATA1;
+      state.NEW_CNT1 =
+        CHECKLIST_SHARE_DATA1?.favorite.filter((i) => !i.NoticeCheck_SEQ)
+          .length +
+        CHECKLIST_SHARE_DATA1?.basic.filter((i) => !i.NoticeCheck_SEQ).length;
     },
     setCHECKLIST_SHARE_DATA2(state, action) {
       const {payload: CHECKLIST_SHARE_DATA2} = action;
       state.CHECKLIST_SHARE_DATA2 = CHECKLIST_SHARE_DATA2;
+      state.NEW_CNT2 =
+        CHECKLIST_SHARE_DATA2?.favorite.filter((i) => !i.NoticeCheck_SEQ)
+          .length +
+        CHECKLIST_SHARE_DATA2?.basic.filter((i) => !i.NoticeCheck_SEQ).length;
     },
     increaseNEW_CNT1(state) {
       state.NEW_CNT1 + 1;

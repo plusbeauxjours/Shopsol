@@ -526,7 +526,7 @@ export default () => {
           name="EmployeeScheduleMainScreen"
           component={EmployeeScheduleMainScreen}
           options={{
-            headerTitle: '직원 정보',
+            headerTitle: '직원 근무 유형',
             title: '직원 근무유형 (최초 가입시)',
             headerRight: () => null,
           }}

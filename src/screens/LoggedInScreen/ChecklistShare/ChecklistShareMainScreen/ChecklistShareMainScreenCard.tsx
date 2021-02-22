@@ -181,7 +181,7 @@ export default ({
         <Section>
           {ME !== data?.MEMBER_SEQ && data?.NoticeCheck_SEQ == null && (
             <NewBadge>
-              <NewBoxIcon />
+              <NewBoxIcon color={styleGuide.palette.redColor} />
             </NewBadge>
           )}
           <ContentBox>

@@ -17,6 +17,7 @@ import {
 import ChecklistShareMainScreenPresenter from './ChecklistShareMainScreenPresenter';
 import api from '~/constants/LoggedInApi';
 import {setSplashVisible} from '~/redux/splashSlice';
+import styleGuide from '~/constants/styleGuide';
 
 export default () => {
   const dispatch = useDispatch();
@@ -179,7 +180,7 @@ export default () => {
             markedDates[key] = {
               ...markedDates[key],
               selected: true,
-              selectedColor: 'red',
+              selectedColor: styleGuide.palette.redColor,
             };
           }
         }

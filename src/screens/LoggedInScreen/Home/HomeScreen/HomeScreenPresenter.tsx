@@ -1394,8 +1394,8 @@ export default ({
                       : 'rgba(240, 52, 52, 1)'
                   }
                   center={{
-                    latitude: Number(STORE_DATA.resultdata.LAT),
-                    longitude: Number(STORE_DATA.resultdata.LONG),
+                    latitude: Number(STORE_DATA?.resultdata?.LAT),
+                    longitude: Number(STORE_DATA?.resultdata?.LONG),
                   }}
                 />
               )}
@@ -1426,8 +1426,8 @@ export default ({
               </Marker>
               <Marker
                 coordinate={{
-                  latitude: Number(STORE_DATA.resultdata.LAT),
-                  longitude: Number(STORE_DATA.resultdata.LONG),
+                  latitude: Number(STORE_DATA?.resultdata?.LAT),
+                  longitude: Number(STORE_DATA?.resultdata?.LONG),
                 }}>
                 <ShopMarker />
               </Marker>
