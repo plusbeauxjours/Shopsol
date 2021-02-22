@@ -29,53 +29,45 @@ export default () => {
     SCHEDULE_PUSH,
   } = useSelector((state: any) => state.userAlarmReducer);
 
-  const [allPushState, setAllPushState] = useState<boolean>(All_PUSH || false);
-  const [workPushState, setWorkPushState] = useState<boolean>(
-    WORK_PUSH || false,
-  );
-  const [checkPushState, setCheckPushState] = useState<boolean>(
-    CHECK_PUSH || false,
-  );
+  const [allPushState, setAllPushState] = useState<boolean>(All_PUSH);
+  const [workPushState, setWorkPushState] = useState<boolean>(WORK_PUSH);
+  const [checkPushState, setCheckPushState] = useState<boolean>(CHECK_PUSH);
   const [checksharePushState, setChecksharePushState] = useState<boolean>(
-    CHECKSHARE_PUSH || false,
+    CHECKSHARE_PUSH,
   );
   const [scedulePUshState, setScedulePUshState] = useState<boolean>(
-    SCHEDULE_PUSH || false,
+    SCHEDULE_PUSH,
   );
 
-  const toggleAlarmState = (value, hasSuccessed) => {
+  const toggleState = (value) => {
     switch (value) {
       case 'All_PUSH':
-        return setAllPushState(hasSuccessed ? !allPushState : All_PUSH);
+        return setAllPushState(!allPushState);
       case 'WORK_PUSH':
-        return setWorkPushState(hasSuccessed ? !workPushState : WORK_PUSH);
+        return setWorkPushState(!workPushState);
       case 'CHECK_PUSH':
-        return setCheckPushState(hasSuccessed ? !checkPushState : CHECK_PUSH);
+        return setCheckPushState(!checkPushState);
       case 'CHECKSHARE_PUSH':
-        return setChecksharePushState(
-          hasSuccessed ? !checksharePushState : CHECKSHARE_PUSH,
-        );
+        return setChecksharePushState(!checksharePushState);
       case 'SCHEDULE_PUSH':
-        return setScedulePUshState(
-          hasSuccessed ? !scedulePUshState : SCHEDULE_PUSH,
-        );
+        return setScedulePUshState(!scedulePUshState);
       default:
         break;
     }
   };
 
-  const toggleAlarm = (value) => {
+  const toggleRedux = (value) => {
     switch (value) {
       case 'All_PUSH':
-        return dispatch(setAllPush(!All_PUSH));
+        return dispatch(setAllPush(!allPushState));
       case 'WORK_PUSH':
-        return dispatch(setWorkPush(!WORK_PUSH));
+        return dispatch(setWorkPush(!workPushState));
       case 'CHECK_PUSH':
-        return dispatch(setCheckPush(!CHECK_PUSH));
+        return dispatch(setCheckPush(!checkPushState));
       case 'CHECKSHARE_PUSH':
-        return dispatch(setChecksharePush(!CHECKSHARE_PUSH));
+        return dispatch(setChecksharePush(!checksharePushState));
       case 'SCHEDULE_PUSH':
-        return dispatch(setScedulePUsh(!SCHEDULE_PUSH));
+        return dispatch(setScedulePUsh(!scedulePUshState));
       default:
         break;
     }
@@ -83,32 +75,40 @@ export default () => {
 
   const updateAlarm = async (value: boolean, alarm: string) => {
     const isAlarmOn = value == true ? '0' : '1';
-    toggleAlarmState(alarm, true);
+    toggleState(alarm);
     try {
       const {data} = await api.updatePush({
         MEMBER_SEQ,
         [alarm]: isAlarmOn,
       });
       if (data.message == 'SUCCESS') {
-        toggleAlarm(alarm);
+        toggleRedux(alarm);
       }
     } catch (e) {
       console.log(e);
       alertModal('통신이 원활하지 않습니다.');
-      setTimeout(() => {
-        toggleAlarmState(alarm, false);
-      }, 200);
     }
   };
 
   const fetch = async () => {
     try {
       const {data} = await api.getPush({MEMBER_SEQ});
-      data.All_Push == '1' && dispatch(setAllPush(true));
-      data.WORK_PUSH == '1' && dispatch(setWorkPush(true));
-      data.CHECK_PUSH == '1' && dispatch(setCheckPush(true));
-      data.CHECKSHARE_PUSH == '1' && dispatch(setChecksharePush(true));
-      data.SCHEDULE_PUSH == '1' && dispatch(setScedulePUsh(true));
+      console.log(data);
+      data.All_Push == '1'
+        ? (setAllPushState(true), dispatch(setAllPush(true)))
+        : (setAllPushState(false), dispatch(setAllPush(false)));
+      data.WORK_PUSH == '1'
+        ? (setWorkPushState(true), dispatch(setWorkPush(true)))
+        : (setWorkPushState(false), dispatch(setWorkPush(false)));
+      data.CHECK_PUSH == '1'
+        ? (setCheckPushState(true), dispatch(setCheckPush(true)))
+        : (setCheckPushState(false), dispatch(setCheckPush(false)));
+      data.CHECKSHARE_PUSH == '1'
+        ? (setChecksharePushState(true), dispatch(setChecksharePush(true)))
+        : (setChecksharePushState(false), dispatch(setChecksharePush(false)));
+      data.SCHEDULE_PUSH == '1'
+        ? (setScedulePUshState(true), dispatch(setScedulePUsh(true)))
+        : (setScedulePUshState(false), dispatch(setScedulePUsh(false)));
     } catch (e) {
       console.log(e);
     }
@@ -128,7 +128,6 @@ export default () => {
     const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
     if (enabled) {
       getFcmToken();
       console.log('Authorization status:', authStatus);
@@ -164,7 +163,7 @@ export default () => {
   useEffect(
     () => () => {
       if (All_PUSH) {
-        getFcmToken();
+        requestUserPermission();
       }
     },
     [],
