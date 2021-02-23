@@ -114,8 +114,7 @@ function App() {
 const codePushOptions = {
   checkFrequency: codePush.CheckFrequency.ON_APP_START,
   updateDialog: false,
-  installMode: codePush.InstallMode.ON_NEXT_RESUME,
-  minimumBackgroundDuration: 60 * 10,
+  installMode: codePush.InstallMode.IMMEDIATE,
 };
 
 export default codePush(codePushOptions)(App);

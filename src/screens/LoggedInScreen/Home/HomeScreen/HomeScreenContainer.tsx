@@ -58,6 +58,7 @@ export default ({route: {params}}) => {
   );
   const [banner1D, setBanner1D] = useState<number>(null);
   const [banner2D, setBanner2D] = useState<number>(null);
+  const [customMenuIndex, setCustomMenuIndex] = useState<[number]>([]);
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -83,7 +84,39 @@ export default ({route: {params}}) => {
     }
   };
 
-  const storeKeepersEMPMenu = [
+  const ownerMenu = [
+    {
+      selection: '체크리스트',
+      paging: 'ChecklistItemsScreen',
+      count: STORE_DATA?.checklength || 0,
+      source: require(`../../../../assets/main/ChecklistItems.png`),
+    },
+    {
+      selection: '업무일지',
+      paging: 'ChecklistShareMainScreen',
+      source: require(`../../../../assets/main/ChecklistShareMain.png`),
+    },
+    {
+      selection: '유통기한',
+      paging: 'ShelfLifeCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/ShelfLifeCheck.png`),
+    },
+    {
+      selection: '업무캘린더',
+      paging: 'TaskCheckScreen',
+      count: null,
+      source: require(`../../../../assets/main/TaskCalendar.png`),
+    },
+    {
+      selection: '조기경보',
+      paging: 'HealthCertificateTypeScreen',
+      count: null,
+      source: require(`../../../../assets/main/HealthCertificateType.png`),
+    },
+  ];
+
+  const customMenu = [
     {
       selection: '체크리스트',
       paging: 'ChecklistItemsScreen',
@@ -116,35 +149,7 @@ export default ({route: {params}}) => {
   ];
 
   const managersEMPMenu = [
-    {
-      selection: '체크리스트',
-      paging: 'ChecklistItemsScreen',
-      count: STORE_DATA?.checklength || 0,
-      source: require(`../../../../assets/main/ChecklistItems.png`),
-    },
-    {
-      selection: '업무일지',
-      paging: 'ChecklistShareMainScreen',
-      source: require(`../../../../assets/main/ChecklistShareMain.png`),
-    },
-    {
-      selection: '유통기한',
-      paging: 'ShelfLifeCheckScreen',
-      count: null,
-      source: require(`../../../../assets/main/ShelfLifeCheck.png`),
-    },
-    {
-      selection: '업무캘린더',
-      paging: 'TaskCheckScreen',
-      count: null,
-      source: require(`../../../../assets/main/TaskCalendar.png`),
-    },
-    {
-      selection: '조기경보',
-      paging: 'HealthCertificateTypeScreen',
-      count: null,
-      source: require(`../../../../assets/main/HealthCertificateType.png`),
-    },
+    ...customMenu.filter((_, index) => customMenuIndex.includes(index)),
   ];
 
   const employeesMenu = [
@@ -169,35 +174,7 @@ export default ({route: {params}}) => {
       count: null,
       source: require(`../../../../assets/main/PaymentInfo.png`),
     },
-    {
-      selection: '체크리스트',
-      paging: 'ChecklistItemsScreen',
-      count: STORE_DATA?.checklength || 0,
-      source: require(`../../../../assets/main/ChecklistItems.png`),
-    },
-    {
-      selection: '업무일지',
-      paging: 'ChecklistShareMainScreen',
-      source: require(`../../../../assets/main/ChecklistShareMain.png`),
-    },
-    {
-      selection: '유통기한',
-      paging: 'ShelfLifeCheckScreen',
-      count: null,
-      source: require(`../../../../assets/main/ShelfLifeCheck.png`),
-    },
-    {
-      selection: '업무캘린더',
-      paging: 'TaskCheckScreen',
-      count: null,
-      source: require(`../../../../assets/main/TaskCalendar.png`),
-    },
-    {
-      selection: '조기경보',
-      paging: 'HealthCertificateTypeScreen',
-      count: null,
-      source: require(`../../../../assets/main/HealthCertificateType.png`),
-    },
+    ...customMenu.filter((_, index) => customMenuIndex.includes(index)),
   ];
 
   const addCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
@@ -549,7 +526,7 @@ export default ({route: {params}}) => {
       setIsWorkingMode={setIsWorkingMode}
       editMode={editMode}
       setEditMode={setEditMode}
-      storeKeepersEMPMenu={storeKeepersEMPMenu}
+      ownerMenu={ownerMenu}
       managersEMPMenu={managersEMPMenu}
       employeesMenu={employeesMenu}
       CUSTOM_MENU_EMP={CUSTOM_MENU_EMP}

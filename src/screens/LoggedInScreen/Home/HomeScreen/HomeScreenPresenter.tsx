@@ -462,7 +462,7 @@ export default ({
   setIsWorkingMode,
   editMode,
   setEditMode,
-  storeKeepersEMPMenu,
+  ownerMenu,
   managersEMPMenu,
   employeesMenu,
   CUSTOM_MENU_EMP,
@@ -965,7 +965,7 @@ export default ({
                 </MenuTitleArea>
               </SpaceRow>
               <Container>
-                {storeKeepersEMPMenu.map((menu, index) => {
+                {ownerMenu.map((menu, index) => {
                   if (
                     CUSTOM_MENU_EMP &&
                     !CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
@@ -984,7 +984,7 @@ export default ({
                   }
                 })}
                 {editMode &&
-                  storeKeepersEMPMenu.map((menu, index) => {
+                  ownerMenu.map((menu, index) => {
                     if (
                       CUSTOM_MENU_EMP &&
                       CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
