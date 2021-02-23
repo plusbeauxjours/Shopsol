@@ -132,8 +132,10 @@ export default {
             },
             {
               enableHighAccuracy: true,
-              maximumAge: 0,
-              distanceFilter: 100,
+              timeout: 15000,
+              maximumAge: 1000 * 60 * 3,
+              forceRequestLocation: true,
+              showLocationDialog: true,
             },
           );
           handle(true);
@@ -168,8 +170,10 @@ export default {
             },
             {
               enableHighAccuracy: true,
-              maximumAge: 0,
-              distanceFilter: 100,
+              timeout: 15000,
+              maximumAge: 1000 * 60 * 3,
+              forceRequestLocation: true,
+              showLocationDialog: true,
             },
           );
           handle(true);
@@ -196,7 +200,7 @@ export default {
       console.warn(err);
     }
   },
-  appVersion: '2.2.0',
+  appVersion: '2.2.2',
   miniPay: '8,720',
   calculateDay: 23,
   renderWeekDay: (weekDay) => {

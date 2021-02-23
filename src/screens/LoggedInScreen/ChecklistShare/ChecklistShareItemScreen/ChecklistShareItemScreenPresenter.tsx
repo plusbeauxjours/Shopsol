@@ -20,7 +20,7 @@ import SubmitBtn from '~/components/Btn/SubmitBtn';
 import utils from '~/constants/utils';
 import Loader from '~/components/Loader';
 import styleGuide from '~/constants/styleGuide';
-import {MenuIcon} from '../../../../constants/Icons';
+import {MenuIcon, BoldAddIcon, BoldRemoveIcon} from '~/constants/Icons';
 
 import {
   ForwardIcon,
@@ -32,13 +32,20 @@ import {
 interface IsLast {
   isLast?: boolean;
 }
+
+interface IFontSize {
+  fontSize?: number;
+}
+
 const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
-const Text = styled.Text``;
+const Text = styled.Text<IFontSize>`
+  font-size: ${(props) => props.fontSize}px;
+`;
 const Touchable = styled.TouchableOpacity``;
 
 const Container = styled.View`
@@ -61,7 +68,8 @@ const Section = styled.View`
   background-color: white;
 `;
 
-const Bold = styled.Text`
+const Bold = styled.Text<IFontSize>`
+  font-size: ${(props) => props.fontSize}px;
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
@@ -224,8 +232,8 @@ const ModalPopup = styled.View`
   background-color: rgba(0, 0, 0, 0.7);
 `;
 
-const InfoText = styled.Text`
-  font-size: ${styleGuide.fontSize.small}px;
+const InfoText = styled.Text<IFontSize>`
+  font-size: ${(props) => props.fontSize}px;
   color: ${styleGuide.palette.greyColor};
 `;
 
@@ -266,6 +274,9 @@ export default ({
   openRow,
   confirmModal,
   ADDDATE,
+  smallFontSize,
+  midFontSize,
+  largeFontSize,
 }) => {
   const textInputRef = useRef(null);
   const navigation = useNavigation();
@@ -296,7 +307,6 @@ export default ({
       </FooterText>
     </Footer>
   );
-
   return (
     <>
       <BackGround>
@@ -308,18 +318,20 @@ export default ({
           <Container>
             <Section>
               <Row style={{justifyContent: 'space-between'}}>
-                <Bold style={{fontSize: 18}}>{NOTI_TITLE}</Bold>
+                <Bold fontSize={largeFontSize} style={{fontSize: 18}}>
+                  {NOTI_TITLE}
+                </Bold>
                 <Column style={{alignItems: 'flex-end'}}>
-                  <InfoText style={{color: 'black'}}>
+                  <InfoText fontSize={smallFontSize} style={{color: 'black'}}>
                     {decodeURI(EMP_NAME)}
                   </InfoText>
-                  <InfoText>
+                  <InfoText fontSize={smallFontSize}>
                     {moment(UPDATEDATE).format('YYYY.MM.DD kk:mm')}
                   </InfoText>
                 </Column>
               </Row>
               <Line />
-              <Text>{CONTENTS}</Text>
+              <Text fontSize={midFontSize}>{CONTENTS}</Text>
               {imgarr?.length > 0 && (
                 <FlatList
                   horizontal
@@ -412,6 +424,7 @@ export default ({
                           />
                           <Column>
                             <Text
+                              fontSize={midFontSize}
                               ellipsizeMode={'tail'}
                               numberOfLines={100}
                               style={{
@@ -420,6 +433,7 @@ export default ({
                                 marginBottom: 5,
                               }}>
                               <Text
+                                fontSize={midFontSize}
                                 style={{
                                   fontWeight: '600',
                                   color: styleGuide.palette.greyColor,
@@ -433,6 +447,7 @@ export default ({
                                 justifyContent: 'flex-start',
                               }}>
                               <Text
+                                fontSize={midFontSize}
                                 style={{color: styleGuide.palette.greyColor}}>
                                 {moment(item.CREATE_TIME).format('YYYY.MM.DD')}
                               </Text>

@@ -331,7 +331,7 @@ PODS:
     - React
   - react-native-date-picker (3.2.5):
     - React-Core
-  - react-native-geolocation-service (5.0.0):
+  - react-native-geolocation-service (5.2.0):
     - React
   - react-native-google-maps (0.27.1):
     - Google-Maps-iOS-Utils (= 2.1.0)
@@ -775,7 +775,7 @@ SPEC CHECKSUMS:
   react-native-camera: cf8a153d33138dcc457172fc3c33fdf4e5d288d2
   react-native-contacts: 23a5a68151740bae84d5d379545bf5c3579b0d94
   react-native-date-picker: 7b03feaea96db983f1de449e9d6d1dea4fa61010
-  react-native-geolocation-service: 141e33bdb179bcba10b216ee13962611e21f2be4
+  react-native-geolocation-service: 7c9436da6dfdecd9526c62eac62ea2bc3f0cc8ea
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
   react-native-image-picker: e3425bc0791aafad441547c1ee171614e9c8882a
   react-native-image-resizer: 354b09df56858289f386dfbd804e318155c14c8f

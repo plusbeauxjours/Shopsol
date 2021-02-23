@@ -45,6 +45,9 @@ export default ({route: {params}}) => {
   const [isRemovedToastVisible, setIsRemovedToastVisible] = useState<boolean>(
     false,
   );
+  const [smallFontSize, setSmallFontSize] = useState<number>(10);
+  const [midFontSize, setMidFontSize] = useState<number>(14);
+  const [largeFontSize, setLargeFontSize] = useState<number>(16);
 
   const confirmModal = (selectedCOM_SEQ) => {
     const params = {
@@ -284,6 +287,9 @@ export default ({route: {params}}) => {
       openRow={openRow}
       confirmModal={confirmModal}
       ADDDATE={item?.ADDDATE}
+      smallFontSize={smallFontSize}
+      midFontSize={midFontSize}
+      largeFontSize={largeFontSize}
     />
   );
 };
