@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, createRef} from 'react';
 import {Linking, BackHandler, NativeModules, Image} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -14,6 +14,7 @@ import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
 
 export default ({route: {params}}) => {
   const mapRef = useRef(null);
+  const animationRef = useRef(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
@@ -58,7 +59,9 @@ export default ({route: {params}}) => {
   );
   const [banner1D, setBanner1D] = useState<number>(null);
   const [banner2D, setBanner2D] = useState<number>(null);
-  const [customMenuIndex, setCustomMenuIndex] = useState<[number]>([]);
+  const [customMenuIndex, setCustomMenuIndex] = useState<
+    [number, number, number, number, number]
+  >([0, 1, 2, 3, 4]);
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -334,7 +337,7 @@ export default ({route: {params}}) => {
       if (data.resultmsg === '1') {
         dispatch(getStore(data));
         Image.getSize(
-          data.eventImage1,
+          data?.eventImage1,
           (width, height) => {
             setBanner1D(height / width);
           },
@@ -343,7 +346,7 @@ export default ({route: {params}}) => {
           },
         );
         Image.getSize(
-          data.eventImage2,
+          data?.boardImage1,
           (width, height) => {
             setBanner2D(height / width);
           },
@@ -407,29 +410,6 @@ export default ({route: {params}}) => {
     );
   };
 
-  useEffect(() => {
-    // if (utils.isAndroid) {
-    //   STORE === '1'
-    //     ? SharedStorage.set(
-    //         JSON.stringify({
-    //           WIDGET_TEXT: `${STORE_NAME}입니다. ${TOTAL_COUNT}명 중 ${WORKING_COUNT}명 근무중 입니다.`,
-    //           WIDGET_STORE: STORE,
-    //           WIDGET_STATUS: '2',
-    //         }),
-    //       )
-    //     : SharedStorage.set(
-    //         JSON.stringify({
-    //           WIDGET_TEXT: `${STORE_NAME}입니다. 탭하하여 출근하세요.`,
-    //           WIDGET_STORE: STORE,
-    //           WIDGET_STATUS: '2',
-    //         }),
-    //       );
-    // }
-    setIsGpsVisible(false);
-    fetchData();
-    checkVersion();
-  }, []);
-
   // // QR 처음 등록하기  //0208 REMOVEQR
   // const confirmModal = () => {
   //   const params = {
@@ -492,6 +472,36 @@ export default ({route: {params}}) => {
   //   }
   // };
 
+  useEffect(() => {
+    // if (utils.isAndroid) {
+    //   STORE === '1'
+    //     ? SharedStorage.set(
+    //         JSON.stringify({
+    //           WIDGET_TEXT: `${STORE_NAME}입니다. ${TOTAL_COUNT}명 중 ${WORKING_COUNT}명 근무중 입니다.`,
+    //           WIDGET_STORE: STORE,
+    //           WIDGET_STATUS: '2',
+    //         }),
+    //       )
+    //     : SharedStorage.set(
+    //         JSON.stringify({
+    //           WIDGET_TEXT: `${STORE_NAME}입니다. 탭하하여 출근하세요.`,
+    //           WIDGET_STORE: STORE,
+    //           WIDGET_STATUS: '2',
+    //         }),
+    //       );
+    // }
+    setIsGpsVisible(false);
+    fetchData();
+    checkVersion();
+  }, []);
+
+  useEffect(
+    () => () => {
+      clearTimeout();
+    },
+    [],
+  );
+
   return (
     <HomeScreenPresenter
       STORE_DATA={STORE_DATA}
@@ -541,6 +551,7 @@ export default ({route: {params}}) => {
       setLong={setLong}
       category={params?.category}
       mapRef={mapRef}
+      animationRef={animationRef}
       moveMap={moveMap}
       gotoSelectStoreFn={gotoSelectStoreFn}
       QR={STORE_DATA?.resultdata?.QR}

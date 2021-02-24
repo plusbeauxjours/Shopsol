@@ -477,6 +477,7 @@ export default ({
   setLong,
   category,
   mapRef,
+  animationRef,
   moveMap,
   gotoSelectStoreFn,
   QR,
@@ -519,9 +520,13 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
-        editMode && type == 'emp'
-          ? addCUSTOM_MENU_EMP_Fn(index)
-          : gotoScreen(`${paging}`);
+        console.log(animationRef);
+        // animationRef.play();
+        // setTimeout(() => {
+        //   editMode && type == 'emp'
+        //     ? addCUSTOM_MENU_EMP_Fn(index)
+        //     : gotoScreen(`${paging}`);
+        // }, 800);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
         !initLoading &&
@@ -669,6 +674,18 @@ export default ({
             progressViewOffset={100}
           />
         }>
+        <LottieView
+          ref={(animation) => (animationRef = animation)}
+          style={{
+            width: 300,
+            height: 300,
+          }}
+          source={require('../../../../assets/animations/employee.json')}
+          autoPlay
+          loop={false}
+          speed={0.4}
+          onAnimationFinish={() => setInterval(() => animationRef.play(), 1000)}
+        />
         <FastImage
           style={{width: wp('100%'), height: hp('38%'), opacity: 0.7}}
           source={
@@ -1291,10 +1308,14 @@ export default ({
             </>
           )}
           {STORE == '1' && STORE_DATA?.eventShow1 == '1' && banner1D && (
-            <BannerImageContainer style={{borderRadius: 8, marginBottom: 60}}>
+            <BannerImageContainer style={{borderRadius: 8}}>
               <Touchable
                 onPress={() => {
-                  Linking.openURL(STORE_DATA?.eventUrl1);
+                  navigation.navigate('WebViewScreen', {
+                    uri: STORE_DATA?.eventUrl1,
+                    text: '페이지를 불러오는 중입니다.',
+                    title: STORE_DATA?.eventTitle1,
+                  });
                 }}>
                 <FastImage
                   style={{
@@ -1312,17 +1333,21 @@ export default ({
               </Touchable>
             </BannerImageContainer>
           )}
-          {STORE == '0' && STORE_DATA?.eventShow2 == '1' && banner2D && (
-            <BannerImageContainer style={{borderRadius: 8, marginBottom: 60}}>
+          {STORE == '0' && STORE_DATA?.eventShow2 == '1' && banner1D && (
+            <BannerImageContainer style={{borderRadius: 8}}>
               <Touchable
                 onPress={() => {
-                  Linking.openURL(STORE_DATA?.eventUrl2);
+                  navigation.navigate('WebViewScreen', {
+                    uri: STORE_DATA?.eventUrl2,
+                    text: '페이지를 불러오는 중입니다.',
+                    title: STORE_DATA?.eventTitle2,
+                  });
                 }}>
                 <FastImage
                   style={{
                     borderRadius: 8,
                     width: windowWidth,
-                    height: windowWidth * banner2D,
+                    height: windowWidth * banner1D,
                   }}
                   source={{
                     uri: utils.getUriImage(STORE_DATA?.eventImage2),
@@ -1334,6 +1359,68 @@ export default ({
               </Touchable>
             </BannerImageContainer>
           )}
+
+          {/* ////// */}
+
+          {STORE == '1' && STORE_DATA?.boardShow1 == '1' && banner2D && (
+            <>
+              <WhiteSpace />
+              <BannerImageContainer style={{borderRadius: 8}}>
+                <Touchable
+                  onPress={() => {
+                    navigation.navigate('WebViewScreen', {
+                      uri: STORE_DATA?.boardUrl1,
+                      text: '페이지를 불러오는 중입니다.',
+                      title: STORE_DATA?.boardTitle1,
+                    });
+                  }}>
+                  <FastImage
+                    style={{
+                      borderRadius: 8,
+                      width: windowWidth,
+                      height: windowWidth * banner2D,
+                    }}
+                    source={{
+                      uri: utils.getUriImage(STORE_DATA?.boardImage1),
+                      cache: FastImage.cacheControl.immutable,
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+                </Touchable>
+              </BannerImageContainer>
+            </>
+          )}
+          {STORE == '0' && STORE_DATA?.boardShow2 == '1' && banner2D && (
+            <>
+              <WhiteSpace />
+              <BannerImageContainer style={{borderRadius: 8}}>
+                <Touchable
+                  onPress={() => {
+                    navigation.navigate('WebViewScreen', {
+                      uri: STORE_DATA?.boardUrl2,
+                      text: '페이지를 불러오는 중입니다.',
+                      title: STORE_DATA?.boardTitle2,
+                    });
+                  }}>
+                  <FastImage
+                    style={{
+                      borderRadius: 8,
+                      width: windowWidth,
+                      height: windowWidth * banner2D,
+                    }}
+                    source={{
+                      uri: utils.getUriImage(STORE_DATA?.boardImage2),
+                      cache: FastImage.cacheControl.immutable,
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+                </Touchable>
+              </BannerImageContainer>
+            </>
+          )}
+          <WhiteSpace style={{height: 60}} />
           <GrayLinearGradient
             colors={['#f8f1e9', 'white']}
             hasHeight={STORE == '1'}

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {getUserAgent, getUserAgentSync} from 'react-native-device-info';
 import moment from 'moment';
 import {
   widthPercentageToDP as wp,
@@ -86,12 +85,6 @@ const InfoText = styled.Text`
   color: ${styleGuide.palette.greyColor};
 `;
 
-const GreyText = styled.Text`
-  font-size: ${styleGuide.fontSize.middle}px;
-  color: ${styleGuide.palette.greyColor};
-  text-align: center;
-`;
-
 const WhiteText = styled.Text`
   font-size: ${styleGuide.fontSize.small}px;
   color: white;
@@ -128,16 +121,6 @@ const ContentBox = styled.View`
   padding: 0 5px;
 `;
 
-const BorderBox = styled.View`
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-  border-width: 0.7px;
-  border-color: #ccc;
-  justify-content: center;
-  align-items: center;
-`;
-
 const IconContainer = styled.View`
   flex-direction: row;
   justify-content: center;
@@ -168,11 +151,12 @@ export default ({
   return (
     <View>
       <Touchable
-        onPress={() =>
+        onPress={() => {
+          console.log(isOnFix);
           setTimeout(() => {
-            gotoChecklistShareItem(TITLE, data.NOTICE_SEQ, data.favorite);
-          }, 100)
-        }
+            gotoChecklistShareItem(TITLE, data.NOTICE_SEQ, !isOnFix && '1');
+          }, 100);
+        }}
         rippleColor={styleGuide.palette.rippleGreyColor}
         rippleDuration={600}
         rippleSize={1700}

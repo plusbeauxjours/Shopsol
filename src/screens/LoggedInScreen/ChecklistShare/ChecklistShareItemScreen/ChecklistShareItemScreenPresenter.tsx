@@ -182,7 +182,7 @@ const CloseIconContainer = styled.TouchableOpacity`
 const RowTouchable = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  width: 50;
+  width: 50px;
   height: 100%;
   justify-content: center;
   align-items: center;

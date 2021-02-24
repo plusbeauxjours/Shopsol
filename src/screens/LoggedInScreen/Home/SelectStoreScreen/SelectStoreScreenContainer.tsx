@@ -132,9 +132,6 @@ export default ({route: {params}}) => {
 
   useEffect(() => {
     requestUserPermission();
-  }, []);
-
-  useEffect(() => {
     fetchData();
     // if (utils.isAndroid) {
     //   if (STORE_NAME == '') {

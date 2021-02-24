@@ -21,6 +21,7 @@ export default ({route: {params}}) => {
     (state: any) => state.userReducer,
   );
   const {
+    IS_BIG_FONT,
     CHECKLIST_SHARE_COMMENTS,
     CHECKLIST_SHARE_DATA1,
     CHECKLIST_SHARE_DATA2,
@@ -45,9 +46,6 @@ export default ({route: {params}}) => {
   const [isRemovedToastVisible, setIsRemovedToastVisible] = useState<boolean>(
     false,
   );
-  const [smallFontSize, setSmallFontSize] = useState<number>(10);
-  const [midFontSize, setMidFontSize] = useState<number>(14);
-  const [largeFontSize, setLargeFontSize] = useState<number>(16);
 
   const confirmModal = (selectedCOM_SEQ) => {
     const params = {
@@ -287,9 +285,9 @@ export default ({route: {params}}) => {
       openRow={openRow}
       confirmModal={confirmModal}
       ADDDATE={item?.ADDDATE}
-      smallFontSize={smallFontSize}
-      midFontSize={midFontSize}
-      largeFontSize={largeFontSize}
+      smallFontSize={IS_BIG_FONT ? 14 : 10}
+      midFontSize={IS_BIG_FONT ? 18 : 14}
+      largeFontSize={IS_BIG_FONT ? 20 : 16}
     />
   );
 };

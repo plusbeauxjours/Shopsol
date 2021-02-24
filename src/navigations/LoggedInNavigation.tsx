@@ -1,89 +1,90 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {isIphoneX} from 'react-native-iphone-x-helper';
-import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 // 직원관리 ========================================================
-import HomeScreen from '../screens/LoggedInScreen/Home/HomeScreen';
-import SelectStoreScreen from '../screens/LoggedInScreen/Home/SelectStoreScreen';
-import AddStoreScreen from '../screens/LoggedInScreen/Home/AddStoreScreen';
-import SearchAddressScreen from '../screens/LoggedInScreen/Home/SearchAddressScreen';
-import UpdateStoreScreen from '../screens/LoggedInScreen/Home/UpdateStoreScreen';
-import DashBoardScreen from '../screens/LoggedInScreen/DashBoard';
+import HomeScreen from '~/screens/LoggedInScreen/Home/HomeScreen';
+import SelectStoreScreen from '~/screens/LoggedInScreen/Home/SelectStoreScreen';
+import AddStoreScreen from '~/screens/LoggedInScreen/Home/AddStoreScreen';
+import SearchAddressScreen from '~/screens/LoggedInScreen/Home/SearchAddressScreen';
+import UpdateStoreScreen from '~/screens/LoggedInScreen/Home/UpdateStoreScreen';
+import DashBoardScreen from '~/screens/LoggedInScreen/DashBoard';
 
 // 유통기한========================================================
-import ShelfLifeCheckScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLifeCheckScreen';
-import ShelfLifeUpdateScreen from '../screens/LoggedInScreen/ShelfLife/ShelfLifeUpdateScreen';
-import AddShelfLifeScreen from '../screens/LoggedInScreen/ShelfLife/AddShelfLifeScreen';
+import ShelfLifeCheckScreen from '~/screens/LoggedInScreen/ShelfLife/ShelfLifeCheckScreen';
+import ShelfLifeUpdateScreen from '~/screens/LoggedInScreen/ShelfLife/ShelfLifeUpdateScreen';
+import AddShelfLifeScreen from '~/screens/LoggedInScreen/ShelfLife/AddShelfLifeScreen';
 
 // 유통기한========================================================
-import TaskCheckScreen from '../screens/LoggedInScreen/Task/TaskCheckScreen';
-import TaskUpdateScreen from '../screens/LoggedInScreen/Task/TaskUpdateScreen';
-import AddTaskScreen from '../screens/LoggedInScreen/Task/AddTaskScreen';
+import TaskCheckScreen from '~/screens/LoggedInScreen/Task/TaskCheckScreen';
+import TaskUpdateScreen from '~/screens/LoggedInScreen/Task/TaskUpdateScreen';
+import AddTaskScreen from '~/screens/LoggedInScreen/Task/AddTaskScreen';
 
 // 직원관리========================================================
-import InviteEmployeeScreen from '../screens/LoggedInScreen/Employee/InviteEmployeeScreen';
-import ManageInviteEmployeeScreen from '../screens/LoggedInScreen/Employee/ManageInviteEmployeeScreen';
-import EmployeeListScreen from '../screens/LoggedInScreen/Employee/EmployeeListScreen';
-import EmployeeInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoScreen';
-import EmployeeInfoEMPScreen from '../screens/LoggedInScreen/Employee/EmployeeInfoEMPScreen';
-import PaymentInfoScreen from '../screens/LoggedInScreen/Employee/PaymentInfoScreen';
-import EmpPayInfoScreen from '../screens/LoggedInScreen/Employee/EmpPayInfoScreen';
-import SetEmployeeInfoScreen from '../screens/LoggedInScreen/Employee/SetEmployeeInfoScreen';
-import EmployeeScheduleMainScreen from '../screens/LoggedInScreen/Employee/EmployeeScheduleMainScreen';
-import EmployeeScheduleInfoScreen from '../screens/LoggedInScreen/Employee/EmployeeScheduleInfoScreen';
-import EmployeeScheduleAddScreen from '../screens/LoggedInScreen/Employee/EmployeeScheduleAddScreen';
+import InviteEmployeeScreen from '~/screens/LoggedInScreen/Employee/InviteEmployeeScreen';
+import ManageInviteEmployeeScreen from '~/screens/LoggedInScreen/Employee/ManageInviteEmployeeScreen';
+import EmployeeListScreen from '~/screens/LoggedInScreen/Employee/EmployeeListScreen';
+import EmployeeInfoScreen from '~/screens/LoggedInScreen/Employee/EmployeeInfoScreen';
+import EmployeeInfoEMPScreen from '~/screens/LoggedInScreen/Employee/EmployeeInfoEMPScreen';
+import PaymentInfoScreen from '~/screens/LoggedInScreen/Employee/PaymentInfoScreen';
+import EmpPayInfoScreen from '~/screens/LoggedInScreen/Employee/EmpPayInfoScreen';
+import SetEmployeeInfoScreen from '~/screens/LoggedInScreen/Employee/SetEmployeeInfoScreen';
+import EmployeeScheduleMainScreen from '~/screens/LoggedInScreen/Employee/EmployeeScheduleMainScreen';
+import EmployeeScheduleInfoScreen from '~/screens/LoggedInScreen/Employee/EmployeeScheduleInfoScreen';
+import EmployeeScheduleAddScreen from '~/screens/LoggedInScreen/Employee/EmployeeScheduleAddScreen';
 
 // 캘린더========================================================
-import CalendarInfoScreen from '../screens/LoggedInScreen/Calendar/CalendarInfoScreen';
-import CalendarAddScreen from '../screens/LoggedInScreen/Calendar/CalendarAddScreen';
-import WorkTimeScreen from '../screens/LoggedInScreen/Calendar/WorkTimeScreen';
-import RealWorkTimeScreen from '../screens/LoggedInScreen/Calendar/RealWorkTimeScreen';
-import WorkDayScreen from '../screens/LoggedInScreen/Calendar/WorkDayScreen';
-import WorkDayRestTypeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTypeScreen';
-import WorkDayRestTimeScreen from '../screens/LoggedInScreen/Calendar/WorkDayRestTimeScreen';
+import CalendarInfoScreen from '~/screens/LoggedInScreen/Calendar/CalendarInfoScreen';
+import CalendarAddScreen from '~/screens/LoggedInScreen/Calendar/CalendarAddScreen';
+import WorkTimeScreen from '~/screens/LoggedInScreen/Calendar/WorkTimeScreen';
+import RealWorkTimeScreen from '~/screens/LoggedInScreen/Calendar/RealWorkTimeScreen';
+import WorkDayScreen from '~/screens/LoggedInScreen/Calendar/WorkDayScreen';
+import WorkDayRestTypeScreen from '~/screens/LoggedInScreen/Calendar/WorkDayRestTypeScreen';
+import WorkDayRestTimeScreen from '~/screens/LoggedInScreen/Calendar/WorkDayRestTimeScreen';
 
 // 체크리스트========================================================
-import ChecklistAddScreen from '../screens/LoggedInScreen/Checklist/ChecklistAddScreen';
-import ChecklistItemsScreen from '../screens/LoggedInScreen/Checklist/ChecklistItemsScreen';
-import ChecklistSpecificationScreen from '../screens/LoggedInScreen/Checklist/ChecklistSpecificationScreen';
-import ChecklistDetailScreen from '../screens/LoggedInScreen/Checklist/ChecklistDetailScreen';
+import ChecklistAddScreen from '~/screens/LoggedInScreen/Checklist/ChecklistAddScreen';
+import ChecklistItemsScreen from '~/screens/LoggedInScreen/Checklist/ChecklistItemsScreen';
+import ChecklistSpecificationScreen from '~/screens/LoggedInScreen/Checklist/ChecklistSpecificationScreen';
+import ChecklistDetailScreen from '~/screens/LoggedInScreen/Checklist/ChecklistDetailScreen';
 
 // 업무일지========================================================
-import ChecklistShareMainScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareMainScreen';
-import ChecklistShareItemScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareItemScreen';
-import ChecklistShareInsertScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
-import ChecklistShareUpdateScreen from '../screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
+import ChecklistShareMainScreen from '~/screens/LoggedInScreen/ChecklistShare/ChecklistShareMainScreen';
+import ChecklistShareItemScreen from '~/screens/LoggedInScreen/ChecklistShare/ChecklistShareItemScreen';
+import ChecklistShareInsertScreen from '~/screens/LoggedInScreen/ChecklistShare/ChecklistShareInsertScreen';
+import ChecklistShareUpdateScreen from '~/screens/LoggedInScreen/ChecklistShare/ChecklistShareUpdateScreen';
 
 // 마이페이지========================================================
-import MyPageAlarmSetScreen from '../screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
-import MyPageAppointmentScreen from '../screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
-import MyPageMainScreen from '../screens/LoggedInScreen/MyPage/MyPageMainScreen';
-import MyPagePlaceSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
-import MyPageDeleteSetScreen from '../screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
-import MyPageIdSetMainScreen from '../screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
-import MyPageNameSetScreen from '../screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
-import MyPagePasswordSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
-import MyPagePositionSetScreen from '../screens/LoggedInScreen/MyPage/MyPagePositionSetScreen';
+import MyPageAlarmSetScreen from '~/screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
+import MyPageAppointmentScreen from '~/screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
+import MyPageMainScreen from '~/screens/LoggedInScreen/MyPage/MyPageMainScreen';
+import MyPagePlaceSetScreen from '~/screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
+import MyPageDeleteSetScreen from '~/screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
+import MyPageIdSetMainScreen from '~/screens/LoggedInScreen/MyPage/MyPageIdSetMainScreen';
+import MyPageNameSetScreen from '~/screens/LoggedInScreen/MyPage/MyPageNameSetScreen';
+import MyPagePasswordSetScreen from '~/screens/LoggedInScreen/MyPage/MyPagePasswordSetScreen';
+import MyPagePositionSetScreen from '~/screens/LoggedInScreen/MyPage/MyPagePositionSetScreen';
 
 // 조기경보========================================================
-import HealthCertificateTypeScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
-import HealthCertificateStoreFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
-import HealthCertificateStoreDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
-import HealthCertificateEmpUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
-import HealthCertificateStoreUpdateScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
-import HealthCertificateEmpListScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
-import HealthCertificateEmpDetailScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
-import HealthCertificateEmpFormScreen from '../screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
+import HealthCertificateTypeScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateTypeScreen';
+import HealthCertificateStoreFormScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreFormScreen';
+import HealthCertificateStoreDetailScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreDetailScreen';
+import HealthCertificateEmpUpdateScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpUpdateScreen';
+import HealthCertificateStoreUpdateScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateStoreUpdateScreen';
+import HealthCertificateEmpListScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpListScreen';
+import HealthCertificateEmpDetailScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpDetailScreen';
+import HealthCertificateEmpFormScreen from '~/screens/LoggedInScreen/HealthCertificate/HealthCertificateEmpFormScreen';
 
 // Components========================================================
-import SplashScreen from '../components/SplashScreen';
-import SettingBtn from '../components/Header/SettingBtn';
-import LogOutBtn from '../components/Header/LogOutBtn';
-import RootModal from '../components/RootModal';
-import BackBtn from '../components/Header/BackBtn';
-import HomeBtn from '../components/Header/HomeBtn';
-import ConfirmBackBtn from '../components/Header/ConfirmBackBtn';
+import SplashScreen from '~/components/SplashScreen';
+import SettingBtn from '~/components/Header/SettingBtn';
+import LogOutBtn from '~/components/Header/LogOutBtn';
+import RootModal from '~/components/RootModal';
+import BackBtn from '~/components/Header/BackBtn';
+import HomeBtn from '~/components/Header/HomeBtn';
+import ConfirmBackBtn from '~/components/Header/ConfirmBackBtn';
+import ChecklistShareBtn from '~/components/Header/ChecklistShareBtn';
 
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
@@ -100,7 +101,8 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SplashScreen'}
+        initialRouteName={'SelectStoreScreen'}
+        // initialRouteName={'ChecklistItemsScreen'}
         screenOptions={{
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
@@ -365,7 +367,7 @@ export default () => {
           component={ChecklistShareItemScreen}
           options={({route: {params}}: any) => ({
             headerTitle: `${params?.TITLE} 상세`,
-            headerRight: () => <HomeBtn />,
+            headerRight: () => <ChecklistShareBtn />,
           })}
         />
         <LoggedInNavigation.Screen

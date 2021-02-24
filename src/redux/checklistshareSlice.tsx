@@ -12,8 +12,12 @@ const checklistshareSlice = createSlice({
     NEW_CNT2: 0,
     CHECKLIST_SHARE_DETAIL: null,
     CHECKLIST_SHARE_COMMENTS: [],
+    IS_BIG_FONT: false,
   },
   reducers: {
+    toggleIS_BIG_FONT(state) {
+      state.IS_BIG_FONT = !state.IS_BIG_FONT;
+    },
     addCHECKLIST_SHARE_TO_FAVORITE(state, action) {
       const {
         payload: {TITLE, NOTICE_SEQ},
@@ -209,6 +213,7 @@ const checklistshareSlice = createSlice({
 });
 
 export const {
+  toggleIS_BIG_FONT,
   addCHECKLIST_SHARE_TO_FAVORITE,
   addCHECKLIST_SHARE_TO_BASIC,
   removeCHECKLIST_SHARE_FROM_FAVORITE,
