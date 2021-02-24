@@ -109,6 +109,7 @@ export default ({
                     mobileNo={data?.MobileNo}
                     START={data?.START}
                     END={data?.END}
+                    isFinishedEMP={false}
                   />
                 );
               })}
@@ -147,6 +148,7 @@ export default ({
                   mobileNo={data?.MobileNo}
                   START={data?.START}
                   END={data?.END}
+                  isFinishedEMP={true}
                 />
               </EmployeeListBox>
             ))}

@@ -165,7 +165,7 @@ export default () => {
       });
 
       CALENDAR_DATA[date]?.map((i) => {
-        let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
+        let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
         if (emp) {
           emp['IMAGE'] = i?.IMAGE;
           emp['EARLY'] = i?.alear ?? '0';

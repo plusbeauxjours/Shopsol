@@ -189,7 +189,7 @@ export default () => {
 
       monthSubDates.map((date) => {
         CALENDAR_DATA[date]?.map((i) => {
-          let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
+          let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
           if (emp) {
             emp['IMAGE'] = i?.IMAGE;
             ((i.CHANGE_START && i.CHANGE_END) ||
@@ -226,7 +226,7 @@ export default () => {
           CALENDAR_DATA[date]?.length !== 0 &&
           setTotalWORKING_DAY((totalWORKING_DAY) => totalWORKING_DAY + 1);
         CALENDAR_DATA[date]?.map((i) => {
-          let emp = empListTemp.find((j) => j.EMP_SEQ == i.EMP_ID);
+          let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
           setTotalREST_TIME_COUNT(
             (totalREST_TIME_COUNT) =>
               totalREST_TIME_COUNT + Number(i.REST_TIME),
@@ -512,12 +512,12 @@ export default () => {
         });
       });
 
-      setTotalEARLY_EMP(empListTemp.filter((i) => i.TOTAL_EARLY > 0).length);
-      setTotalLATE_EMP(empListTemp.filter((i) => i.TOTAL_LATE > 0).length);
+      setTotalEARLY_EMP(empListTemp?.filter((i) => i.TOTAL_EARLY > 0).length);
+      setTotalLATE_EMP(empListTemp?.filter((i) => i.TOTAL_LATE > 0).length);
       setTotalVACATION_EMP(
-        empListTemp.filter((i) => i.TOTAL_VACATION > 0).length,
+        empListTemp?.filter((i) => i.TOTAL_VACATION > 0).length,
       );
-      setTotalNOWORK_EMP(empListTemp.filter((i) => i.TOTAL_NOWORK > 0).length);
+      setTotalNOWORK_EMP(empListTemp?.filter((i) => i.TOTAL_NOWORK > 0).length);
 
       const orderByWORKING = [...empListTemp];
       setEMP_LIST(

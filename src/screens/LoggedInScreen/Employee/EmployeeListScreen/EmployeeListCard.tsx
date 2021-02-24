@@ -52,12 +52,21 @@ const IconContainer = styled.View`
   right: 5px;
 `;
 
-export default ({EMP_NAME, IS_MANAGER, data, image, mobileNo, START, END}) => {
+export default ({
+  EMP_NAME,
+  IS_MANAGER,
+  data,
+  image,
+  mobileNo,
+  START,
+  END,
+  isFinishedEMP,
+}) => {
   const navigation = useNavigation();
   return (
     <Touchable
       onPress={() => {
-        navigation.navigate('EmployeeInfoScreen', {data});
+        navigation.navigate('EmployeeInfoScreen', {data, isFinishedEMP});
       }}>
       <FastImage
         style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}

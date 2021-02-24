@@ -191,13 +191,13 @@ export default ({route: {params}}) => {
   const fetchData = async () => {
     if (TITLE === '지시사항') {
       if (isFavorite) {
-        const item = CHECKLIST_SHARE_DATA1.favorite.find(
+        const item = CHECKLIST_SHARE_DATA1.favorite?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
         fetchImage(item);
         setItem(item);
       } else {
-        const item = CHECKLIST_SHARE_DATA1.basic.find(
+        const item = CHECKLIST_SHARE_DATA1.basic?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
         fetchImage(item);
@@ -205,13 +205,13 @@ export default ({route: {params}}) => {
       }
     } else if (TITLE === '특이사항') {
       if (isFavorite) {
-        const item = CHECKLIST_SHARE_DATA2.favorite.find(
+        const item = CHECKLIST_SHARE_DATA2.favorite?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
         fetchImage(item);
         setItem(item);
       } else {
-        const item = CHECKLIST_SHARE_DATA2.basic.find(
+        const item = CHECKLIST_SHARE_DATA2.basic?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
         fetchImage(item);

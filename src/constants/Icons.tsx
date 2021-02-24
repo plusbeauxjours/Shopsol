@@ -103,22 +103,6 @@ export const CartIcon: React.FC<IProps> = ({size, color}) => (
   />
 );
 
-export const ZoomInIcon: React.FC<IProps> = ({size, color}) => (
-  <MaterialCommunityIcons
-    name={'loupe'}
-    size={size ?? 22}
-    color={color ?? 'white'}
-  />
-);
-
-export const ZoomOutIcon: React.FC<IProps> = ({size, color}) => (
-  <MaterialCommunityIcons
-    name={'magnify-minus-outline'}
-    size={size ?? 22}
-    color={color ?? 'white'}
-  />
-);
-
 export const HomeIcon: React.FC<IProps> = ({size, color}) => (
   <Ionicons
     name={utils.isAndroid() ? 'md-home-outline' : 'ios-home-outline'}

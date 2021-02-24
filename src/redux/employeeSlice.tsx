@@ -6,7 +6,7 @@ const employeeSlice = createSlice({
   name: 'employee',
   initialState: {
     EMPLOYEE_LIST_SEQ: '',
-    EMPLOYEE_LIST: [],
+    EMPLOYEE_LIST: {},
     EMPLOYEE_INFO_DATA: {},
     RESPONSE_EMPLOYEE: {},
     // NO_RESPONSE_EMPLOYEE: [],
@@ -22,7 +22,7 @@ const employeeSlice = createSlice({
       } = action;
 
       state.EMPLOYEE_LIST_SEQ = STORE_SEQ;
-      state.EMPLOYEE_LIST = EMPLOYEE_LIST;
+      state.EMPLOYEE_LIST = EMPLOYEE_LIST || {};
     },
     updateEMPLOYEE_LIST(state, action) {
       const {

@@ -16,7 +16,7 @@ const taskSlice = createSlice({
       const {
         payload: {name, task_SEQ, checkEmpName, checkTime},
       } = action;
-      const item = state.TASK_DATA.find((i) => i.name === name).items.find(
+      const item = state.TASK_DATA?.find((i) => i.name === name).items?.find(
         (i) => i.task_SEQ === task_SEQ,
       );
       if (item) {
@@ -29,7 +29,7 @@ const taskSlice = createSlice({
       const {
         payload: {name, task_SEQ},
       } = action;
-      const item = state.TASK_DATA.find((i) => i.name === name).items.find(
+      const item = state.TASK_DATA?.find((i) => i.name === name).items?.find(
         (i) => i.task_SEQ === task_SEQ,
       );
       if (item) {
@@ -40,7 +40,7 @@ const taskSlice = createSlice({
       const {
         payload: {name, task_SEQ, taskName, taskDate, taskMemo, IMG_LIST},
       } = action;
-      const item = state.TASK_DATA.find((i) => i.name === name).items.find(
+      const item = state.TASK_DATA?.find((i) => i.name === name).items?.find(
         (i) => i.task_SEQ === task_SEQ,
       );
       if (item) {
@@ -54,7 +54,7 @@ const taskSlice = createSlice({
       const {
         payload: {name, task_SEQ},
       } = action;
-      const items = state.TASK_DATA.find((i) => i.name === name).items.filter(
+      const items = state.TASK_DATA?.find((i) => i.name === name).items.filter(
         (i) => i.task_SEQ !== task_SEQ,
       );
       state.TASK_DATA = state.TASK_DATA.map((item) => {

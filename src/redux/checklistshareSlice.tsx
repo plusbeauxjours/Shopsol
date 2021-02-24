@@ -23,15 +23,15 @@ const checklistshareSlice = createSlice({
         payload: {TITLE, NOTICE_SEQ},
       } = action;
       if (TITLE === '지시사항') {
-        const item = state.CHECKLIST_SHARE_DATA1.basic.find(
+        const item = state.CHECKLIST_SHARE_DATA1?.basic?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-        state.CHECKLIST_SHARE_DATA1.favorite.unshift(item);
+        state.CHECKLIST_SHARE_DATA1?.favorite.unshift(item);
       } else {
-        const item = state.CHECKLIST_SHARE_DATA2.basic.find(
+        const item = state.CHECKLIST_SHARE_DATA2?.basic?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-        state.CHECKLIST_SHARE_DATA2.favorite.unshift(item);
+        state.CHECKLIST_SHARE_DATA2?.favorite.unshift(item);
       }
     },
     addCHECKLIST_SHARE_TO_BASIC(state, action) {
@@ -39,16 +39,16 @@ const checklistshareSlice = createSlice({
         payload: {TITLE, NOTICE_SEQ},
       } = action;
       if (TITLE === '지시사항') {
-        const item = state.CHECKLIST_SHARE_DATA1.favorite.find(
+        const item = state.CHECKLIST_SHARE_DATA1?.favorite?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
 
-        state.CHECKLIST_SHARE_DATA1.basic.unshift(item);
+        state.CHECKLIST_SHARE_DATA1?.basic.unshift(item);
       } else {
-        const item = state.CHECKLIST_SHARE_DATA2.favorite.find(
+        const item = state.CHECKLIST_SHARE_DATA2?.favorite?.find(
           (i) => i.NOTICE_SEQ === NOTICE_SEQ,
         );
-        state.CHECKLIST_SHARE_DATA2.basic.unshift(item);
+        state.CHECKLIST_SHARE_DATA2?.basic.unshift(item);
       }
     },
     removeCHECKLIST_SHARE_FROM_FAVORITE(state, action) {
@@ -56,11 +56,11 @@ const checklistshareSlice = createSlice({
         payload: {TITLE, NOTICE_SEQ},
       } = action;
       if (TITLE === '지시사항') {
-        state.CHECKLIST_SHARE_DATA1.favorite = state.CHECKLIST_SHARE_DATA1.favorite.filter(
+        state.CHECKLIST_SHARE_DATA1.favorite = state.CHECKLIST_SHARE_DATA1?.favorite?.filter(
           (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
         );
       } else {
-        state.CHECKLIST_SHARE_DATA2.favorite = state.CHECKLIST_SHARE_DATA2.favorite.filter(
+        state.CHECKLIST_SHARE_DATA2.favorite = state.CHECKLIST_SHARE_DATA2?.favorite?.filter(
           (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
         );
       }
@@ -70,11 +70,11 @@ const checklistshareSlice = createSlice({
         payload: {TITLE, NOTICE_SEQ},
       } = action;
       if (TITLE === '지시사항') {
-        state.CHECKLIST_SHARE_DATA1.basic = state.CHECKLIST_SHARE_DATA1.basic.filter(
+        state.CHECKLIST_SHARE_DATA1.basic = state.CHECKLIST_SHARE_DATA1?.basic?.filter(
           (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
         );
       } else {
-        state.CHECKLIST_SHARE_DATA2.basic = state.CHECKLIST_SHARE_DATA2.basic.filter(
+        state.CHECKLIST_SHARE_DATA2.basic = state.CHECKLIST_SHARE_DATA2?.basic?.filter(
           (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
         );
       }
@@ -88,17 +88,17 @@ const checklistshareSlice = createSlice({
       const {payload: CHECKLIST_SHARE_DATA1} = action;
       state.CHECKLIST_SHARE_DATA1 = CHECKLIST_SHARE_DATA1;
       state.NEW_CNT1 =
-        CHECKLIST_SHARE_DATA1?.favorite.filter((i) => !i.NoticeCheck_SEQ)
+        CHECKLIST_SHARE_DATA1?.favorite?.filter((i) => !i.NoticeCheck_SEQ)
           .length +
-        CHECKLIST_SHARE_DATA1?.basic.filter((i) => !i.NoticeCheck_SEQ).length;
+        CHECKLIST_SHARE_DATA1?.basic?.filter((i) => !i.NoticeCheck_SEQ).length;
     },
     setCHECKLIST_SHARE_DATA2(state, action) {
       const {payload: CHECKLIST_SHARE_DATA2} = action;
       state.CHECKLIST_SHARE_DATA2 = CHECKLIST_SHARE_DATA2;
       state.NEW_CNT2 =
-        CHECKLIST_SHARE_DATA2?.favorite.filter((i) => !i.NoticeCheck_SEQ)
+        CHECKLIST_SHARE_DATA2?.favorite?.filter((i) => !i.NoticeCheck_SEQ)
           .length +
-        CHECKLIST_SHARE_DATA2?.basic.filter((i) => !i.NoticeCheck_SEQ).length;
+        CHECKLIST_SHARE_DATA2?.basic?.filter((i) => !i.NoticeCheck_SEQ).length;
     },
     increaseNEW_CNT1(state) {
       state.NEW_CNT1 + 1;
@@ -118,14 +118,14 @@ const checklistshareSlice = createSlice({
       const {
         payload: {selectedCOM_SEQ, comment},
       } = action;
-      const item = state.CHECKLIST_SHARE_COMMENTS.find(
+      const item = state.CHECKLIST_SHARE_COMMENTS?.find(
         (i) => i.COM_SEQ === selectedCOM_SEQ,
       );
       item.CONTENTS = comment;
     },
     deleteCHECKLIST_SHARE_COMMENTS(state, action) {
       const {payload: selectedCOM_SEQ} = action;
-      state.CHECKLIST_SHARE_COMMENTS = state.CHECKLIST_SHARE_COMMENTS.filter(
+      state.CHECKLIST_SHARE_COMMENTS = state.CHECKLIST_SHARE_COMMENTS?.filter(
         (i) => i.COM_SEQ !== selectedCOM_SEQ,
       );
     },
@@ -135,21 +135,21 @@ const checklistshareSlice = createSlice({
       } = action;
       if (TITLE === '지시사항') {
         if (isFavorite) {
-          state.CHECKLIST_SHARE_DATA1.favorite = state.CHECKLIST_SHARE_DATA1.favorite.filter(
+          state.CHECKLIST_SHARE_DATA1.favorite = state.CHECKLIST_SHARE_DATA1?.favorite?.filter(
             (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
           );
         } else {
-          state.CHECKLIST_SHARE_DATA1.basic = state.CHECKLIST_SHARE_DATA1.basic.filter(
+          state.CHECKLIST_SHARE_DATA1.basic = state.CHECKLIST_SHARE_DATA1?.basic?.filter(
             (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
           );
         }
       } else {
         if (isFavorite) {
-          state.CHECKLIST_SHARE_DATA2.favorite = state.CHECKLIST_SHARE_DATA2.favorite.filter(
+          state.CHECKLIST_SHARE_DATA2.favorite = state.CHECKLIST_SHARE_DATA2?.favorite?.filter(
             (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
           );
         } else {
-          state.CHECKLIST_SHARE_DATA2.basic = state.CHECKLIST_SHARE_DATA2.basic.filter(
+          state.CHECKLIST_SHARE_DATA2.basic = state.CHECKLIST_SHARE_DATA2?.basic?.filter(
             (i) => i.NOTICE_SEQ !== NOTICE_SEQ,
           );
         }
@@ -161,7 +161,7 @@ const checklistshareSlice = createSlice({
       } = action;
       if (TITLE === '지시사항') {
         if (isFavorite) {
-          const favoriteItem = state.CHECKLIST_SHARE_DATA1.favorite.find(
+          const favoriteItem = state.CHECKLIST_SHARE_DATA1?.favorite?.find(
             (i) => i.NOTICE_SEQ === NOTICE_SEQ,
           );
           favoriteItem.TITLE = title;
@@ -172,7 +172,7 @@ const checklistshareSlice = createSlice({
             favoriteItem.IMG_LIST = null;
           }
         } else {
-          const basicItem = state.CHECKLIST_SHARE_DATA1.basic.find(
+          const basicItem = state.CHECKLIST_SHARE_DATA1?.basic?.find(
             (i) => i.NOTICE_SEQ === NOTICE_SEQ,
           );
           basicItem.TITLE = title;
@@ -185,7 +185,7 @@ const checklistshareSlice = createSlice({
         }
       } else {
         if (isFavorite) {
-          const favoriteItem = state.CHECKLIST_SHARE_DATA2.favorite.find(
+          const favoriteItem = state.CHECKLIST_SHARE_DATA2?.favorite?.find(
             (i) => i.NOTICE_SEQ === NOTICE_SEQ,
           );
           favoriteItem.TITLE = title;
@@ -196,7 +196,7 @@ const checklistshareSlice = createSlice({
             favoriteItem.IMG_LIST = null;
           }
         } else {
-          const basicItem = state.CHECKLIST_SHARE_DATA2.basic.find(
+          const basicItem = state.CHECKLIST_SHARE_DATA2?.basic?.find(
             (i) => i.NOTICE_SEQ === NOTICE_SEQ,
           );
           basicItem.TITLE = title;

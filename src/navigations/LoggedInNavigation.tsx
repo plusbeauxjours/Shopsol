@@ -101,7 +101,7 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        initialRouteName={'SelectStoreScreen'}
+        initialRouteName={'SplashScreen'}
         // initialRouteName={'ChecklistItemsScreen'}
         screenOptions={{
           animationEnabled: utils.isAndroid() ? false : true,

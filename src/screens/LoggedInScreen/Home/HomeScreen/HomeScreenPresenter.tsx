@@ -520,13 +520,13 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
-        console.log(animationRef);
+        // console.log(animationRef);
         // animationRef.play();
-        // setTimeout(() => {
-        //   editMode && type == 'emp'
-        //     ? addCUSTOM_MENU_EMP_Fn(index)
-        //     : gotoScreen(`${paging}`);
-        // }, 800);
+        setTimeout(() => {
+          editMode && type == 'emp'
+            ? addCUSTOM_MENU_EMP_Fn(index)
+            : gotoScreen(`${paging}`);
+        }, 800);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
         !initLoading &&
@@ -674,7 +674,7 @@ export default ({
             progressViewOffset={100}
           />
         }>
-        <LottieView
+        {/* <LottieView
           ref={(animation) => (animationRef = animation)}
           style={{
             width: 300,
@@ -685,7 +685,7 @@ export default ({
           loop={false}
           speed={0.4}
           onAnimationFinish={() => setInterval(() => animationRef.play(), 1000)}
-        />
+        /> */}
         <FastImage
           style={{width: wp('100%'), height: hp('38%'), opacity: 0.7}}
           source={
@@ -719,7 +719,7 @@ export default ({
               </Text>
             </Row>
             <Row>
-              {TOTAL_COUNT > 0 ? (
+              {TOTAL_COUNT && WORKING_COUNT && TOTAL_COUNT > 0 ? (
                 <DarkGreyColor
                   style={{
                     color: styleGuide.palette.darkGreyColor,

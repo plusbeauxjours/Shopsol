@@ -266,13 +266,13 @@ export default ({route: {params}}) => {
       const empSeqArr = EMP_SEQ.split('@');
       for (let i = 0; i < empSeqArr.length; i++) {
         buffer1.push({
-          NAME: EMPLOYEE_LIST?.workinglist.find(
+          NAME: EMPLOYEE_LIST?.workinglist?.find(
             (j) => j.EMP_SEQ == empSeqArr[i],
           )?.EMP_NAME,
-          EMP_SEQ: EMPLOYEE_LIST?.workinglist.find(
+          EMP_SEQ: EMPLOYEE_LIST?.workinglist?.find(
             (j) => j.EMP_SEQ == empSeqArr[i],
           )?.EMP_SEQ,
-          IMAGE: EMPLOYEE_LIST?.workinglist.find(
+          IMAGE: EMPLOYEE_LIST?.workinglist?.find(
             (j) => j.EMP_SEQ == empSeqArr[i],
           )?.images[0].IMAGE,
         });

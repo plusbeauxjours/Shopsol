@@ -29,12 +29,18 @@ export default ({route: {params}}) => {
     MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
 
-  const {EMPLOYEE_LIST: {workinglist = []} = {}} = useSelector(
+  const {EMPLOYEE_LIST: {workinglist = [], endlist = []} = {}} = useSelector(
     (state: any) => state.employeeReducer,
   );
-  const {data: {EMP_SEQ = null, images = []} = {}} = params;
+  const {
+    data: {EMP_SEQ = null, images = []},
+    isFinishedEMP,
+  } = params;
 
-  const user = workinglist.find((i) => i.EMP_SEQ == EMP_SEQ);
+  const user =
+    workinglist?.find((i) => i.EMP_SEQ == EMP_SEQ) ||
+    endlist?.find((i) => i.EMP_SEQ == EMP_SEQ);
+
   const START = user?.START;
   const END = user?.END;
   const EMP_PAY_TYPE = user?.PAY_TYPE;
@@ -436,6 +442,7 @@ export default ({route: {params}}) => {
       EMP_PAY={EMP_PAY}
       probationDATE={probationDATE}
       probationPercent={probationPercent}
+      isFinishedEMP={isFinishedEMP}
     />
   );
 };

@@ -16,9 +16,9 @@ const shelflifetSlice = createSlice({
       const {
         payload: {name, shelfLife_SEQ, checkEmpName, checkTime},
       } = action;
-      const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
-        (i) => i.shelfLife_SEQ === shelfLife_SEQ,
-      );
+      const item = state.SHELFLIFE_DATA?.find(
+        (i) => i.name === name,
+      ).items?.find((i) => i.shelfLife_SEQ === shelfLife_SEQ);
       if (item) {
         item.checkType = '1';
         item.checkTime = checkTime;
@@ -29,9 +29,9 @@ const shelflifetSlice = createSlice({
       const {
         payload: {name, shelfLife_SEQ},
       } = action;
-      const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
-        (i) => i.shelfLife_SEQ === shelfLife_SEQ,
-      );
+      const item = state.SHELFLIFE_DATA?.find(
+        (i) => i.name === name,
+      ).items?.find((i) => i.shelfLife_SEQ === shelfLife_SEQ);
       if (item) {
         item.checkType = '0';
       }
@@ -49,9 +49,9 @@ const shelflifetSlice = createSlice({
           shelfLifeImgLink,
         },
       } = action;
-      const item = state.SHELFLIFE_DATA.find((i) => i.name === name).items.find(
-        (i) => i.shelfLife_SEQ === shelfLife_SEQ,
-      );
+      const item = state.SHELFLIFE_DATA?.find(
+        (i) => i.name === name,
+      ).items?.find((i) => i.shelfLife_SEQ === shelfLife_SEQ);
       if (item) {
         item.shelfLifeName = shelfLifeName;
         item.shelfLifeDate = shelfLifeDate;
@@ -65,7 +65,7 @@ const shelflifetSlice = createSlice({
       const {
         payload: {name, shelfLife_SEQ},
       } = action;
-      const items = state.SHELFLIFE_DATA.find(
+      const items = state.SHELFLIFE_DATA?.find(
         (i) => i.name === name,
       ).items.filter((i) => i.shelfLife_SEQ !== shelfLife_SEQ);
       state.SHELFLIFE_DATA = state.SHELFLIFE_DATA.map((item) => {

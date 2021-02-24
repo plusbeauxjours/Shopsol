@@ -37,7 +37,7 @@ const calendarSlice = createSlice({
       const {
         payload: {VACATION, DATE, MEMBER_SEQ},
       } = action;
-      const item = state.CALENDAR_DATA[DATE].find(
+      const item = state.CALENDAR_DATA[DATE]?.find(
         (i) => i.MEMBER_SEQ === MEMBER_SEQ,
       );
       if (item) {
@@ -48,7 +48,7 @@ const calendarSlice = createSlice({
       const {
         payload: {REST_TIME, DATE, MEMBER_SEQ},
       } = action;
-      const item = state.CALENDAR_DATA[DATE].find(
+      const item = state.CALENDAR_DATA[DATE]?.find(
         (i) => i.MEMBER_SEQ === MEMBER_SEQ,
       );
       if (item) {
@@ -59,7 +59,7 @@ const calendarSlice = createSlice({
       const {
         payload: {DATE, MEMBER_SEQ},
       } = action;
-      const item = state.CALENDAR_DATA[DATE].filter(
+      const item = state.CALENDAR_DATA[DATE]?.filter(
         (i) => i.MEMBER_SEQ !== MEMBER_SEQ,
       );
       state.CALENDAR_DATA[DATE] = item;
@@ -68,7 +68,7 @@ const calendarSlice = createSlice({
       const {
         payload: {date, EMP_ID, START, END, CHANGE_START, CHANGE_END},
       } = action;
-      const item = state.CALENDAR_DATA[date].find((i) => i.EMP_ID === EMP_ID);
+      const item = state.CALENDAR_DATA[date]?.find((i) => i.EMP_ID === EMP_ID);
       item.START = START;
       item.END = END;
       item.CHANGE_START = CHANGE_START;
@@ -85,7 +85,7 @@ const calendarSlice = createSlice({
           END_TIME,
         },
       } = action;
-      const item = state.CALENDAR_DATA[date].find((i) => i.EMP_ID === EMP_ID);
+      const item = state.CALENDAR_DATA[date]?.find((i) => i.EMP_ID === EMP_ID);
       item.UPDATED_START = UPDATED_START;
       item.UPDATED_END = UPDATED_END;
       item.START_TIME = START_TIME;
