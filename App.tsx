@@ -17,6 +17,20 @@ function App() {
   //   }
   // };
 
+  //   appsFlyer.initSdk(
+  //   {
+  //     devKey: 'K2***********99',
+  //     isDebug: false,
+  //     appId: '41*****44',
+  //   },
+  //   (result) => {
+  //     console.log(result);
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //   }
+  // );
+
   let exitApp;
   const handleBackButton = () => {
     if (!exitApp || exitApp == undefined) {

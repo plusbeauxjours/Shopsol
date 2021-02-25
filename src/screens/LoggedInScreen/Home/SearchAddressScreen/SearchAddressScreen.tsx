@@ -24,7 +24,7 @@ export default ({route: {params}}) => {
   return (
     <BackGround>
       <WebView
-        source={{uri: 'http://shopsolapi.shop-sol.com/Shopsol/zipcodern'}}
+        source={{uri: 'http://awsss.shop-sol.com/Shopsol/zipcodern'}}
         style={{flex: 1}}
         onMessage={(event) => {
           choseAddress(event.nativeEvent);

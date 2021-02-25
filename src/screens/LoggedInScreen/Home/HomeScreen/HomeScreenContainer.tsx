@@ -398,6 +398,13 @@ export default ({route: {params}}) => {
     setEditMode(false);
   };
 
+  const gotoWork = () => {
+    setIsGpsVisible(false);
+    setTimeout(() => {
+      setWorkingModalOpen(true);
+    }, 600);
+  };
+
   const moveMap = () => {
     mapRef.current?.animateCamera(
       {
@@ -575,6 +582,7 @@ export default ({route: {params}}) => {
       banner1D={banner1D}
       banner2D={banner2D}
       successMsg={successMsg}
+      gotoWork={gotoWork}
     />
   );
 };
