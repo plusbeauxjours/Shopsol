@@ -118,14 +118,6 @@ export default ({route: {params}}) => {
     },
   ];
 
-  const ownerMenu = [
-    ...customMenu.filter((_, index) => customMenuIndex?.includes(index)),
-  ];
-
-  const managersEMPMenu = [
-    ...customMenu.filter((_, index) => customMenuIndex?.includes(index)),
-  ];
-
   const employeesMenu = [
     {
       selection: '캘린더',
@@ -323,7 +315,6 @@ export default ({route: {params}}) => {
       });
       if (data.resultmsg === '1') {
         setCustomMenuIndex(data.menu);
-        console.log(data.menu);
         dispatch(getStore(data));
         Image.getSize(
           data?.eventImage1,
@@ -497,7 +488,12 @@ export default ({route: {params}}) => {
     },
     [],
   );
-
+  console.log(
+    'STORE_DATA.emplist',
+    STORE_DATA.emplist,
+    'STORE_DATA.workinglist',
+    STORE_DATA.workinglist,
+  );
   return (
     <HomeScreenPresenter
       STORE_DATA={STORE_DATA}
@@ -505,8 +501,8 @@ export default ({route: {params}}) => {
       STORE={STORE}
       STORE_SEQ={STORE_SEQ}
       STORE_NAME={STORE_NAME}
-      TOTAL_COUNT={TOTAL_COUNT || STORE_DATA.emplist}
-      WORKING_COUNT={WORKING_COUNT || STORE_DATA.workinglist}
+      TOTAL_COUNT={TOTAL_COUNT || STORE_DATA.emplist.toString()}
+      WORKING_COUNT={WORKING_COUNT || STORE_DATA.workinglist.toString()}
       EMPCOUNT={STORE_DATA?.EMPCOUNT}
       workingModalOpen={workingModalOpen}
       setWorkingModalOpen={setWorkingModalOpen}

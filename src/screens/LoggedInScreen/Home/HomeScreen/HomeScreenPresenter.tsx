@@ -11,12 +11,10 @@ import {
 } from 'react-native-responsive-screen';
 import FastImage from 'react-native-fast-image';
 import {RNCamera} from 'react-native-camera';
-import LinearGradient from 'react-native-linear-gradient';
 import MapView, {PROVIDER_GOOGLE, Marker, Circle} from 'react-native-maps';
 import BarcodeMask from 'react-native-barcode-mask';
 
 import {
-  HelpIcon,
   SettingIcon,
   BoldAddIcon,
   BoldRemoveIcon,
@@ -30,8 +28,8 @@ import GoWorkingFailAnimation from '~/components/GoWorkingFailAnimation';
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
 
-interface IHasHeight {
-  hasHeight: boolean;
+interface IIsOwner {
+  isOwner: boolean;
 }
 
 interface ITheme {
@@ -56,12 +54,21 @@ const bannerHeight = (wp('100%') - 40) * 0.286754400291120815;
 
 const BackGround = styled.View`
   flex: 1;
-  background-color: white;
+  background-color: ${styleGuide.palette.backgroundPrimary};
 `;
 
 const ScrollView = styled.ScrollView``;
 const Text = styled.Text``;
 const Touchable = styled.TouchableOpacity``;
+
+const Section = styled.View`
+  width: ${wp('100%') - 40}px;
+  padding: 10px;
+  padding-top: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+`;
 
 const LoadingText = styled.Text`
   position: absolute;
@@ -73,15 +80,11 @@ const Container = styled.View`
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  padding-top: 10px;
-  padding-bottom: 40px;
 `;
 
 const IconContainer = styled.TouchableOpacity`
-  margin-top: 20px;
-  margin-right: 10px;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   align-items: center;
   justify-content: center;
   background-color: ${styleGuide.palette.tertiary};
@@ -90,7 +93,7 @@ const IconContainer = styled.TouchableOpacity`
 
 const MenuCnt = styled(Ripple)`
   z-index: 10;
-  width: ${(wp('100%') - 20) / 3}px;
+  width: ${(wp('100%') - 60) / 3}px;
   height: ${wp('40%')}px;
   justify-content: center;
   align-items: center;
@@ -98,9 +101,9 @@ const MenuCnt = styled(Ripple)`
 
 const NewCnt = styled.View`
   position: absolute;
-  width: 30px;
-  height: 30px;
-  top: -5px;
+  width: 20px;
+  height: 20px;
+  top: 0;
   right: 0;
   align-items: center;
   justify-content: center;
@@ -111,12 +114,10 @@ const NewCnt = styled.View`
 `;
 
 const EyeIconContainer = styled(NewCnt)<IEye>`
-  background-color: white;
   border-color: ${(props) =>
     props.isEyeOn
       ? styleGuide.palette.tertiary
       : styleGuide.palette.lightGreyColor};
-  border-width: 1px;
 `;
 
 const NewCntText = styled.Text`
@@ -127,7 +128,6 @@ const NewCntText = styled.Text`
 const MenuBox = styled.View`
   padding: 10px;
   padding-top: 0;
-  background-color: white;
   flex: 1;
   align-items: center;
 `;
@@ -145,7 +145,7 @@ const StoreName = styled.View`
   margin-top: 70px;
   padding: 0 ${wp('5%')}px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-end;
 `;
 
 const StoreText = styled.Text`
@@ -167,31 +167,28 @@ const StoreUpdate = styled.View`
   justify-content: flex-end;
 `;
 
-const StoreUpdateBtn = styled.TouchableOpacity`
-  flex-direction: row;
+const StoreUpdateBtn = styled.TouchableOpacity<IIsOwner>`
   align-items: center;
   justify-content: center;
-  width: 80px
-  height: 35px;
+  height: 40px;
   border-width: 1px;
-  border-color: white;
+  border-color: ${styleGuide.palette.borderColor};
+  width: ${(props) =>
+    props.isOwner ? (wp('100%') - 70) / 4 : (wp('100%') - 50) / 2}px;
   border-radius: 20px;
-  margin-left: 10px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: white;
+  box-shadow: 3px 3px 3px rgba(100, 100, 100, 0.2);
+  elevation: 2;
 `;
 
-const WhiteText = styled.Text`
+const StoreUpdateText = styled.Text`
+  color: ${styleGuide.palette.greyColor};
   font-size: ${styleGuide.fontSize.middle}px;
-  color: white;
 `;
 
 const MenuTitleArea = styled.View`
   flex-direction: row;
   align-self: flex-start;
-  margin-top: 20px;
-  border-radius: 30px;
-  padding: 10px 20px;
-  background-color: ${styleGuide.palette.tertiary};
 `;
 
 const MenuTitle = styled.Text`
@@ -200,34 +197,33 @@ const MenuTitle = styled.Text`
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
-const Bold = styled(MenuTitle)`
-  color: white;
+const TitleText = styled.Text`
+  letter-spacing: 3px;
+  margin-left: 5px;
+  font-size: ${styleGuide.fontSize.large}px;
+  color: ${styleGuide.palette.greyColor};
   font-weight: ${styleGuide.fontWeight.bold};
 `;
 
+const GreyLine = styled.View`
+  width: ${wp('100%') - 60}px;
+  margin: 15px 0;
+  background-color: ${styleGuide.palette.borderColor};
+  height: 1px;
+`;
 const WhiteSpace = styled.View`
   height: 20px;
 `;
 
-const GrayLinearGradient = styled(LinearGradient)<IHasHeight>`
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: ${hp('30%')}px;
-  background-color: gray;
-`;
-
 const Box = styled.TouchableOpacity<IBox>`
-  width: ${(props) => (props.hasGPS ? (wp('100%') - 60) / 2 : wp('100%') - 40)};
+  width: ${(props) => (props.hasGPS ? (wp('100%') - 50) / 2 : wp('100%') - 40)};
   height: 60px;
-  border-width: 1px;
-  border-color: white;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: ${styleGuide.palette.tertiary};
+  box-shadow: 3px 3px 3px rgba(100, 100, 100, 0.3);
+  elevation: 3;
 `;
 
 const BoxText = styled.Text`
@@ -241,7 +237,8 @@ const BoxContainer = styled.View`
   flex-direction: row;
   width: 100%;
   justify-content: space-around;
-  margin: 20px 0;
+  margin-bottom: 20px;
+  margin-top: 30px;
 `;
 
 const MarkerWrapper = styled.View`
@@ -312,7 +309,8 @@ const FooterText = styled.Text`
   margin-bottom: 15px;
 `;
 
-const DarkGreyColor = styled.Text`
+const DarkGreyColorText = styled.Text`
+  font-size: 14px;
   color: ${styleGuide.palette.darkGreyColor};
 `;
 
@@ -370,6 +368,11 @@ const ShowPictureModalTouchable = styled.TouchableOpacity`
 const ShowPictureModalImage = styled.View`
   width: ${wp('90%')}px;
   height: ${wp('90%')}px;
+`;
+
+const MainImageContainer = styled.View`
+  height: 300px;
+  justify-content: flex-end;
 `;
 
 //0208 REMOVEQR
@@ -506,8 +509,6 @@ export default ({
   customMenu,
   setCustomMenu,
 }) => {
-  console.log('customMenu', customMenu);
-  console.log('customMenuIndex', customMenuIndex);
   const navigation = useNavigation();
   const MenuCntContainer = ({
     index = 0,
@@ -526,14 +527,9 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
-        console.log('MenuCntContainer');
-        // console.log(animationRef);
-        // animationRef.play();
         editMode && type == 'emp'
           ? removeCUSTOM_MENU_EMP_Fn(index)
-          : setTimeout(() => {
-              gotoScreen(`${paging}`);
-            }, 800);
+          : gotoScreen(`${paging}`);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
         !initLoading &&
@@ -569,7 +565,6 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
-        console.log('HiddenMenuCntContainer');
         editMode && type == 'emp'
           ? addCUSTOM_MENU_EMP_Fn(index)
           : gotoScreen(`${paging}`);
@@ -666,11 +661,11 @@ export default ({
 
   return (
     <BackGround>
-      <GrayLinearGradient
+      {/* <GrayLinearGradient
         colors={['white', '#f8f1e9']}
         hasHeight={STORE == '1'}
         style={{height: hp('60%')}}
-      />
+      /> */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -692,22 +687,34 @@ export default ({
           speed={0.4}
           onAnimationFinish={() => setInterval(() => animationRef.play(), 1000)}
         /> */}
-        <FastImage
-          style={{width: wp('100%'), height: hp('38%'), opacity: 0.7}}
-          source={
-            category == '일반회사'
-              ? require('../../../../assets/main/1.png')
-              : category == '도,소매업(편의점 등)'
-              ? require('../../../../assets/main/2.png')
-              : category == '요식업(음식점,카페 등)'
-              ? require('../../../../assets/main/3.png')
-              : category == '서비스업(PC방,헬스장 등)'
-              ? require('../../../../assets/main/4.png')
-              : require('../../../../assets/main/5.png')
-          }
-          resizeMode={FastImage.resizeMode.cover}>
+        <MainImageContainer>
+          {STORE == '0' ? (
+            <LottieView
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: wp('110%'),
+              }}
+              source={require('../../../../assets/animations/employee.json')}
+              loop
+              autoPlay
+              speed={0.4}
+            />
+          ) : (
+            <LottieView
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: wp('120%'),
+              }}
+              source={require('../../../../assets/animations/employer.json')}
+              loop
+              autoPlay
+              speed={0.4}
+            />
+          )}
           <StoreName>
-            <StoreText>안녕하세요.</StoreText>
+            <StoreText>안녕하세요</StoreText>
             <Row>
               <StoreText>{MEMBER_NAME}</StoreText>
               <StoreSubText>님</StoreSubText>
@@ -724,56 +731,62 @@ export default ({
                 {STORE_NAME}
               </Text>
             </Row>
-            <Row>
-              {TOTAL_COUNT && WORKING_COUNT && TOTAL_COUNT > 0 ? (
-                <DarkGreyColor
-                  style={{
-                    color: styleGuide.palette.darkGreyColor,
-                    fontSize: 14,
-                    alignSelf: 'flex-end',
-                  }}>
-                  <DarkGreyColor>{TOTAL_COUNT}</DarkGreyColor>명 중&nbsp;
-                  <DarkGreyColor>{WORKING_COUNT}</DarkGreyColor>명 근무중
-                </DarkGreyColor>
-              ) : (
-                <Text
-                  style={{
-                    color: styleGuide.palette.darkGreyColor,
-                    fontSize: 14,
-                  }}>
-                  합류된 직원이 없습니다. 직원을 초대하세요.
-                </Text>
-              )}
-            </Row>
-            <WhiteSpace />
-            <Row>
-              <StoreUpdateBtn onPress={() => gotoSelectStoreFn()}>
-                <WhiteText>사업장 전환</WhiteText>
-              </StoreUpdateBtn>
-              {STORE === '1' && (
-                <StoreUpdateBtn
-                  onPress={() => {
-                    navigation.navigate('UpdateStoreScreen');
-                  }}>
-                  <WhiteText>사업장 정보</WhiteText>
-                </StoreUpdateBtn>
-              )}
-              <StoreUpdateBtn
-                onPress={() => {
-                  navigation.navigate('MyPageMainScreen');
+            {TOTAL_COUNT && WORKING_COUNT ? (
+              <Row style={{marginBottom: 20, marginTop: 5}}>
+                <DarkGreyColorText>{TOTAL_COUNT}명 중&nbsp;</DarkGreyColorText>
+                <DarkGreyColorText>{WORKING_COUNT}명 근무중</DarkGreyColorText>
+              </Row>
+            ) : (
+              <Column
+                style={{
+                  marginBottom: 20,
+                  marginTop: 5,
+                  alignItems: 'flex-end',
                 }}>
-                <WhiteText>마이 페이지</WhiteText>
-              </StoreUpdateBtn>
-              {STORE === '1' && (
-                <StoreUpdateBtn
-                  style={{width: 35}}
-                  onPress={() => navigation.navigate('HelpModalScreen')}>
-                  <HelpIcon size={16} color={'white'} />
-                </StoreUpdateBtn>
-              )}
-            </Row>
+                <DarkGreyColorText>합류된 직원이 없습니다.</DarkGreyColorText>
+                <DarkGreyColorText>직원을 초대하세요.</DarkGreyColorText>
+              </Column>
+            )}
+            <WhiteSpace />
           </StoreUpdate>
-        </FastImage>
+        </MainImageContainer>
+        <Row
+          style={{
+            width: '100%',
+            paddingHorizontal: 20,
+            marginTop: 10,
+            height: 50,
+            justifyContent: 'space-between',
+          }}>
+          <StoreUpdateBtn
+            isOwner={STORE === '1'}
+            onPress={() => gotoSelectStoreFn()}>
+            <StoreUpdateText>사업장 전환</StoreUpdateText>
+          </StoreUpdateBtn>
+          {STORE === '1' && (
+            <StoreUpdateBtn
+              isOwner={STORE === '1'}
+              onPress={() => {
+                navigation.navigate('UpdateStoreScreen');
+              }}>
+              <StoreUpdateText>사업장 정보</StoreUpdateText>
+            </StoreUpdateBtn>
+          )}
+          <StoreUpdateBtn
+            isOwner={STORE === '1'}
+            onPress={() => {
+              navigation.navigate('MyPageMainScreen');
+            }}>
+            <StoreUpdateText>마이 페이지</StoreUpdateText>
+          </StoreUpdateBtn>
+          {STORE === '1' && (
+            <StoreUpdateBtn
+              isOwner={STORE === '1'}
+              onPress={() => navigation.navigate('HelpModalScreen')}>
+              <StoreUpdateText>도움말</StoreUpdateText>
+            </StoreUpdateBtn>
+          )}
+        </Row>
         <MenuBox style={{zIndex: 1}}>
           {STORE == 0 && (
             <>
@@ -853,22 +866,21 @@ export default ({
           )}
           {STORE == '1' ? ( // 사업주 ============================
             <>
-              <SpaceRow
-                style={{marginTop: 30, width: '100%', alignItems: 'center'}}>
-                <MenuTitleArea style={{zIndex: 3}}>
-                  <MenuTitle>더욱 쉬워진,</MenuTitle>
-                  <Bold> 직원관리</Bold>
-                </MenuTitleArea>
-                {GPS !== '2' && (
-                  <QrIconContainer
-                    hasQr={true}
-                    onPress={() => {
-                      setShowPictureModalOpen(true);
-                    }}>
-                    <QrCodeIcon color={'white'} size={18} />
-                  </QrIconContainer>
-                )}
-                {/* {hasConfirmed ? ( //0208 REMOVEQR
+              <Section style={{marginTop: 20}}>
+                <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                  <MenuTitleArea style={{zIndex: 3}}>
+                    <TitleText>직원관리</TitleText>
+                  </MenuTitleArea>
+                  {GPS !== '2' && (
+                    <QrIconContainer
+                      hasQr={true}
+                      onPress={() => {
+                        setShowPictureModalOpen(true);
+                      }}>
+                      <QrCodeIcon color={'white'} size={18} />
+                    </QrIconContainer>
+                  )}
+                  {/* {hasConfirmed ? ( //0208 REMOVEQR
                   <QrIconContainer
                     hasQr={QR_Num}
                     onPress={() => {
@@ -906,58 +918,60 @@ export default ({
                     </QrIconContainer>
                   </>
                 )} */}
-              </SpaceRow>
-              <Container>
-                <MenuCntContainer
-                  selection={'직원초대'}
-                  paging={'InviteEmployeeScreen'}
-                  source={require(`../../../../assets/main/Invite.png`)}
-                />
-                {EMPCOUNT !== 0 && (
+                </SpaceRow>
+                <GreyLine />
+
+                <Container>
                   <MenuCntContainer
-                    selection={'직원목록'}
-                    paging={'EmployeeListScreen'}
-                    source={require(`../../../../assets/main/EmployeeList.png`)}
+                    selection={'직원초대'}
+                    paging={'InviteEmployeeScreen'}
+                    source={require(`../../../../assets/main/Invite.png`)}
                   />
-                )}
-                <MenuCntContainer
-                  selection={'직원합류승인'}
-                  paging={'ManageInviteEmployeeScreen'}
-                  count={invitedEmpCount}
-                  source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
-                />
-                {EMPCOUNT !== 0 && (
+                  {EMPCOUNT !== 0 && (
+                    <MenuCntContainer
+                      selection={'직원목록'}
+                      paging={'EmployeeListScreen'}
+                      source={require(`../../../../assets/main/EmployeeList.png`)}
+                    />
+                  )}
                   <MenuCntContainer
-                    selection={'캘린더'}
-                    paging={'CalendarInfoScreen'}
-                    source={
-                      STORE_DATA?.CalendarEdit == 1
-                        ? require('../../../../assets/main/CalendarInfo.png')
-                        : require('../../../../assets/main/CalendarInfoEmp.png')
-                    }
+                    selection={'직원합류승인'}
+                    paging={'ManageInviteEmployeeScreen'}
+                    count={invitedEmpCount}
+                    source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
                   />
-                )}
-                {EMPCOUNT !== 0 && (
-                  <MenuCntContainer
-                    selection={'급여정보'}
-                    paging={'PaymentInfoScreen'}
-                    source={require(`../../../../assets/main/PaymentInfo.png`)}
-                  />
-                )}
-                {EMPCOUNT !== 0 && (
-                  <MenuCntContainer
-                    selection={'사업장현황'}
-                    paging={'DashBoardScreen'}
-                    source={require(`../../../../assets/main/DashBoard.png`)}
-                  />
-                )}
-              </Container>
+                  {EMPCOUNT !== 0 && (
+                    <MenuCntContainer
+                      selection={'캘린더'}
+                      paging={'CalendarInfoScreen'}
+                      source={
+                        STORE_DATA?.CalendarEdit == 1
+                          ? require('../../../../assets/main/CalendarInfo.png')
+                          : require('../../../../assets/main/CalendarInfoEmp.png')
+                      }
+                    />
+                  )}
+                  {EMPCOUNT !== 0 && (
+                    <MenuCntContainer
+                      selection={'급여정보'}
+                      paging={'PaymentInfoScreen'}
+                      source={require(`../../../../assets/main/PaymentInfo.png`)}
+                    />
+                  )}
+                  {EMPCOUNT !== 0 && (
+                    <MenuCntContainer
+                      selection={'사업장현황'}
+                      paging={'DashBoardScreen'}
+                      source={require(`../../../../assets/main/DashBoard.png`)}
+                    />
+                  )}
+                </Container>
+              </Section>
               {STORE_DATA?.arbashow == 1 && (
                 <>
                   <SpaceRow style={{width: '100%', alignItems: 'center'}}>
                     <MenuTitleArea style={{zIndex: 3}}>
-                      <MenuTitle>언제든지,</MenuTitle>
-                      <Bold> 구인관리</Bold>
+                      <TitleText>구인관리</TitleText>
                     </MenuTitleArea>
                   </SpaceRow>
                   <Container>
@@ -981,82 +995,109 @@ export default ({
                   </Container>
                 </>
               )}
-              <SpaceRow style={{width: '100%', alignItems: 'center'}}>
-                <MenuTitleArea style={{zIndex: 3}}>
-                  <MenuTitle>정확한,</MenuTitle>
-                  <Bold> 업무관리</Bold>
-                </MenuTitleArea>
-                <Row>
-                  <IconContainer
-                    onPress={() => {
-                      setCustomMenu();
-                      setEditMode(!editMode);
-                    }}>
-                    {editMode ? (
-                      <CloseIcon size={24} color={'white'} />
-                    ) : (
-                      <SettingIcon size={20} color={'white'} />
-                    )}
-                  </IconContainer>
-                </Row>
-              </SpaceRow>
-              <Container>
-                {customMenu.map((menu, index) => {
-                  if (customMenuIndex?.includes(index)) {
-                    return (
-                      <MenuCntContainer
-                        key={index}
-                        index={index}
-                        type={'emp'}
-                        selection={menu.selection}
-                        paging={menu.paging}
-                        count={menu.count}
-                        source={menu.source}
-                      />
-                    );
-                  }
-                })}
-                {editMode &&
-                  customMenu.map((menu, index) => {
-                    if (!customMenuIndex?.includes(index)) {
+              <Section>
+                <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                  <MenuTitleArea style={{zIndex: 3}}>
+                    <TitleText>업무관리</TitleText>
+                  </MenuTitleArea>
+                  <Row>
+                    <IconContainer
+                      onPress={() => {
+                        setCustomMenu();
+                        setEditMode(!editMode);
+                      }}>
+                      {editMode ? (
+                        <CloseIcon size={20} color={'white'} />
+                      ) : (
+                        <SettingIcon size={16} color={'white'} />
+                      )}
+                    </IconContainer>
+                  </Row>
+                </SpaceRow>
+                <GreyLine />
+                <Container>
+                  {customMenu.map((menu, index) => {
+                    if (customMenuIndex?.includes(index)) {
                       return (
-                        <HiddenMenuCntContainer
+                        <MenuCntContainer
                           key={index}
                           index={index}
                           type={'emp'}
                           selection={menu.selection}
                           paging={menu.paging}
+                          count={menu.count}
                           source={menu.source}
                         />
                       );
                     }
                   })}
-              </Container>
+                  {editMode &&
+                    customMenu.map((menu, index) => {
+                      if (!customMenuIndex?.includes(index)) {
+                        return (
+                          <HiddenMenuCntContainer
+                            key={index}
+                            index={index}
+                            type={'emp'}
+                            selection={menu.selection}
+                            paging={menu.paging}
+                            source={menu.source}
+                          />
+                        );
+                      }
+                    })}
+                </Container>
+              </Section>
             </>
           ) : (
             <>
               {STORE_DATA?.IS_MANAGER == '1' ? (
                 <>
-                  <SpaceRow
-                    style={{
-                      marginTop: 30,
-                      width: '100%',
-                      alignItems: 'center',
-                    }}>
-                    <MenuTitleArea style={{zIndex: 3}}>
-                      <MenuTitle>더욱 쉬워진,</MenuTitle>
-                      <Bold> 직원관리</Bold>
-                    </MenuTitleArea>
-                    {GPS !== '2' && (
-                      <QrIconContainer
-                        hasQr={true}
-                        onPress={() => {
-                          setShowPictureModalOpen(true);
-                        }}>
-                        <QrCodeIcon color={'white'} size={18} />
-                      </QrIconContainer>
-                    )}
-                    {/* {hasConfirmed ? ( //0208 REMOVEQR
+                  {initLoading ? (
+                    <Column
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <LottieView
+                        style={{
+                          marginTop: 20,
+                          width: 150,
+                          height: 150,
+                          marginBottom: 40,
+                        }}
+                        source={require('../../../../assets/animations/loading.json')}
+                        loop
+                        autoPlay
+                      />
+                      <DarkGreyColorText>
+                        사업장 정보를 불러오는 중입니다.
+                      </DarkGreyColorText>
+                      <DarkGreyColorText>
+                        잠시만 기다려주세요.
+                      </DarkGreyColorText>
+                    </Column>
+                  ) : (
+                    <>
+                      <Section style={{marginTop: 20}}>
+                        <SpaceRow
+                          style={{
+                            width: '100%',
+                            alignItems: 'center',
+                          }}>
+                          <MenuTitleArea style={{zIndex: 3}}>
+                            <TitleText>직원관리</TitleText>
+                          </MenuTitleArea>
+                          {GPS !== '2' && (
+                            <QrIconContainer
+                              hasQr={true}
+                              onPress={() => {
+                                setShowPictureModalOpen(true);
+                              }}>
+                              <QrCodeIcon color={'white'} size={18} />
+                            </QrIconContainer>
+                          )}
+                          {/* {hasConfirmed ? ( //0208 REMOVEQR
                       <QrIconContainer
                         hasQr={true}
                         onPress={() => {
@@ -1095,95 +1136,77 @@ export default ({
                         </QrIconContainer>
                       </>
                     )} */}
-                  </SpaceRow>
-                  {initLoading ? (
-                    <Column
-                      style={{alignItems: 'center', justifyContent: 'center'}}>
-                      <LottieView
-                        style={{
-                          marginTop: 20,
-                          width: 150,
-                          height: 150,
-                          marginBottom: 40,
-                        }}
-                        source={require('../../../../assets/animations/loading.json')}
-                        loop
-                        autoPlay
-                      />
-                      <DarkGreyColor>
-                        사업장 정보를 불러오는 중입니다.
-                      </DarkGreyColor>
-                      <DarkGreyColor>잠시만 기다려주세요.</DarkGreyColor>
-                    </Column>
-                  ) : (
-                    <>
-                      <Container>
-                        <MenuCntContainer
-                          selection={'직원초대'}
-                          paging={'InviteEmployeeScreen'}
-                          source={require(`../../../../assets/main/Invite.png`)}
-                        />
-                        {EMPCOUNT !== 0 &&
-                          (STORE_DATA?.OTHERPAY_SHOW == 1 ? (
-                            <MenuCntContainer
-                              selection={'직원목록'}
-                              paging={'EmployeeListScreen'}
-                              source={require(`../../../../assets/main/EmployeeList.png`)}
-                            />
-                          ) : (
-                            <MenuCntContainer
-                              selection={'직원정보'}
-                              paging={'EmployeeInfoEMPScreen'}
-                              source={require(`../../../../assets/main/EmployeeInfoEmp.png`)}
-                            />
-                          ))}
-                        <MenuCntContainer
-                          selection={'직원합류승인'}
-                          paging={'ManageInviteEmployeeScreen'}
-                          count={invitedEmpCount}
-                          source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
-                        />
-                        {EMPCOUNT !== 0 && STORE_DATA?.CalendarEdit == '1' && (
+                        </SpaceRow>
+                        <GreyLine />
+                        <Container>
                           <MenuCntContainer
-                            selection={'캘린더'}
-                            paging={'CalendarInfoScreen'}
-                            source={
-                              STORE_DATA?.CalendarEdit == 1
-                                ? require(`../../../../assets/main/CalendarInfo.png`)
-                                : require(`../../../../assets/main/CalendarInfoEmp.png`)
-                            }
+                            selection={'직원초대'}
+                            paging={'InviteEmployeeScreen'}
+                            source={require(`../../../../assets/main/Invite.png`)}
                           />
-                        )}
-                        {EMPCOUNT !== 0 && STORE_DATA?.STOREPAY_SHOW == '1' ? (
+                          {EMPCOUNT !== 0 &&
+                            (STORE_DATA?.OTHERPAY_SHOW == 1 ? (
+                              <MenuCntContainer
+                                selection={'직원목록'}
+                                paging={'EmployeeListScreen'}
+                                source={require(`../../../../assets/main/EmployeeList.png`)}
+                              />
+                            ) : (
+                              <MenuCntContainer
+                                selection={'직원정보'}
+                                paging={'EmployeeInfoEMPScreen'}
+                                source={require(`../../../../assets/main/EmployeeInfoEmp.png`)}
+                              />
+                            ))}
                           <MenuCntContainer
-                            selection={'급여정보'}
-                            paging={'PaymentInfoScreen'}
-                            source={require(`../../../../assets/main/PaymentInfo.png`)}
+                            selection={'직원합류승인'}
+                            paging={'ManageInviteEmployeeScreen'}
+                            count={invitedEmpCount}
+                            source={require(`../../../../assets/main/ManageInviteEmployee.png`)}
                           />
-                        ) : (
-                          STORE_DATA?.PAY_SHOW == 1 && (
+                          {EMPCOUNT !== 0 &&
+                            STORE_DATA?.CalendarEdit == '1' && (
+                              <MenuCntContainer
+                                selection={'캘린더'}
+                                paging={'CalendarInfoScreen'}
+                                source={
+                                  STORE_DATA?.CalendarEdit == 1
+                                    ? require(`../../../../assets/main/CalendarInfo.png`)
+                                    : require(`../../../../assets/main/CalendarInfoEmp.png`)
+                                }
+                              />
+                            )}
+                          {EMPCOUNT !== 0 &&
+                          STORE_DATA?.STOREPAY_SHOW == '1' ? (
                             <MenuCntContainer
                               selection={'급여정보'}
-                              paging={'EmpPayInfoScreen'}
+                              paging={'PaymentInfoScreen'}
                               source={require(`../../../../assets/main/PaymentInfo.png`)}
                             />
-                          )
-                        )}
-                        {EMPCOUNT !== 0 && (
-                          <MenuCntContainer
-                            selection={'사업장현황'}
-                            paging={'DashBoardScreen'}
-                            source={require(`../../../../assets/main/DashBoard.png`)}
-                          />
-                        )}
-                      </Container>
+                          ) : (
+                            STORE_DATA?.PAY_SHOW == 1 && (
+                              <MenuCntContainer
+                                selection={'급여정보'}
+                                paging={'EmpPayInfoScreen'}
+                                source={require(`../../../../assets/main/PaymentInfo.png`)}
+                              />
+                            )
+                          )}
+                          {EMPCOUNT !== 0 && (
+                            <MenuCntContainer
+                              selection={'사업장현황'}
+                              paging={'DashBoardScreen'}
+                              source={require(`../../../../assets/main/DashBoard.png`)}
+                            />
+                          )}
+                        </Container>
+                      </Section>
                       {STORE_DATA?.arbashow == 1 && (
                         <>
                           <SpaceRow
                             style={{width: '100%', alignItems: 'center'}}>
                             <MenuTitleArea style={{zIndex: 3}}>
-                              <MenuTitle>언제든지,</MenuTitle>
-                              <Bold> 구인관리</Bold>
+                              <TitleText>구인관리</TitleText>
                             </MenuTitleArea>
                           </SpaceRow>
                           <Container>
@@ -1210,74 +1233,63 @@ export default ({
                           </Container>
                         </>
                       )}
-                      <SpaceRow style={{width: '100%', alignItems: 'center'}}>
-                        <MenuTitleArea style={{zIndex: 3}}>
-                          <MenuTitle>정확한,</MenuTitle>
-                          <Bold> 업무관리</Bold>
-                        </MenuTitleArea>
-                        <Row>
+                      <Section>
+                        <SpaceRow style={{width: '100%', alignItems: 'center'}}>
+                          <MenuTitleArea style={{zIndex: 3}}>
+                            <TitleText>업무관리</TitleText>
+                          </MenuTitleArea>
                           <IconContainer
                             onPress={() => {
                               setCustomMenu();
                               setEditMode(!editMode);
                             }}>
                             {editMode ? (
-                              <CloseIcon size={24} color={'white'} />
+                              <CloseIcon size={20} color={'white'} />
                             ) : (
-                              <SettingIcon size={20} color={'white'} />
+                              <SettingIcon size={16} color={'white'} />
                             )}
                           </IconContainer>
-                        </Row>
-                      </SpaceRow>
-                      <Container>
-                        {customMenu.map((menu, index) => {
-                          if (customMenuIndex?.includes(index)) {
-                            return (
-                              <MenuCntContainer
-                                key={index}
-                                index={index}
-                                type={'emp'}
-                                selection={menu.selection}
-                                paging={menu.paging}
-                                count={menu.count}
-                                source={menu.source}
-                              />
-                            );
-                          }
-                        })}
-                        {editMode &&
-                          customMenu.map((menu, index) => {
-                            if (!customMenuIndex?.includes(index)) {
+                        </SpaceRow>
+                        <GreyLine />
+                        <Container>
+                          {customMenu.map((menu, index) => {
+                            if (customMenuIndex?.includes(index)) {
                               return (
-                                <HiddenMenuCntContainer
+                                <MenuCntContainer
                                   key={index}
                                   index={index}
                                   type={'emp'}
                                   selection={menu.selection}
                                   paging={menu.paging}
+                                  count={menu.count}
                                   source={menu.source}
                                 />
                               );
                             }
                           })}
-                      </Container>
+                          {editMode &&
+                            customMenu.map((menu, index) => {
+                              if (!customMenuIndex?.includes(index)) {
+                                return (
+                                  <HiddenMenuCntContainer
+                                    key={index}
+                                    index={index}
+                                    type={'emp'}
+                                    selection={menu.selection}
+                                    paging={menu.paging}
+                                    source={menu.source}
+                                  />
+                                );
+                              }
+                            })}
+                        </Container>
+                      </Section>
                     </>
                   )}
                 </>
               ) : (
                 // 직원 ============================
                 <>
-                  <SpaceRow
-                    style={{
-                      marginTop: 30,
-                      width: '100%',
-                      alignItems: 'center',
-                    }}>
-                    <MenuTitleArea style={{zIndex: 3}}>
-                      <MenuTitle>더욱 쉬워진,</MenuTitle>
-                      <Bold> 일터관리</Bold>
-                    </MenuTitleArea>
-                  </SpaceRow>
                   {initLoading ? (
                     <Column
                       style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -1292,35 +1304,47 @@ export default ({
                         loop
                         autoPlay
                       />
-                      <DarkGreyColor>
+                      <DarkGreyColorText>
                         사업장 정보를 불러오는 중입니다.
-                      </DarkGreyColor>
-                      <DarkGreyColor>잠시만 기다려주세요.</DarkGreyColor>
+                      </DarkGreyColorText>
+                      <DarkGreyColorText>
+                        잠시만 기다려주세요.
+                      </DarkGreyColorText>
                     </Column>
                   ) : (
                     <>
-                      <Container>
-                        {employeesMenu.map((menu, index) => {
-                          if (
-                            menu.paging == 'EmpPayInfoScreen' &&
-                            STORE_DATA?.PAY_SHOW == 0
-                          ) {
-                            return null;
-                          } else {
-                            return (
-                              <MenuCntContainer
-                                key={index}
-                                index={index}
-                                type={'store'}
-                                selection={menu.selection}
-                                paging={menu.paging}
-                                count={menu.count}
-                                source={menu.source}
-                              />
-                            );
-                          }
-                        })}
-                      </Container>
+                      <Section style={{marginTop: 20}}>
+                        <SpaceRow
+                          style={{
+                            width: '100%',
+                            alignItems: 'center',
+                          }}>
+                          <TitleText>일터관리</TitleText>
+                        </SpaceRow>
+                        <GreyLine />
+                        <Container>
+                          {employeesMenu.map((menu, index) => {
+                            if (
+                              menu.paging == 'EmpPayInfoScreen' &&
+                              STORE_DATA?.PAY_SHOW == 0
+                            ) {
+                              return null;
+                            } else {
+                              return (
+                                <MenuCntContainer
+                                  key={index}
+                                  index={index}
+                                  type={'store'}
+                                  selection={menu.selection}
+                                  paging={menu.paging}
+                                  count={menu.count}
+                                  source={menu.source}
+                                />
+                              );
+                            }
+                          })}
+                        </Container>
+                      </Section>
                     </>
                   )}
                 </>
@@ -1441,10 +1465,10 @@ export default ({
             </>
           )}
           <WhiteSpace style={{height: 60}} />
-          <GrayLinearGradient
+          {/* <GrayLinearGradient
             colors={['#f8f1e9', 'white']}
             hasHeight={STORE == '1'}
-          />
+          /> */}
         </MenuBox>
       </ScrollView>
       <Modal
