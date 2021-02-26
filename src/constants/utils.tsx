@@ -200,7 +200,7 @@ export default {
       console.warn(err);
     }
   },
-  appVersion: '2.2.2',
+  appVersion: '2.2.3',
   miniPay: '8,720',
   calculateDay: 23,
   renderWeekDay: (weekDay) => {

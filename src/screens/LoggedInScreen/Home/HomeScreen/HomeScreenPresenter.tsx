@@ -731,7 +731,7 @@ export default ({
                 {STORE_NAME}
               </Text>
             </Row>
-            {TOTAL_COUNT && WORKING_COUNT ? (
+            {TOTAL_COUNT && WORKING_COUNT && Number(TOTAL_COUNT) > 0 ? (
               <Row style={{marginBottom: 20, marginTop: 5}}>
                 <DarkGreyColorText>{TOTAL_COUNT}명 중&nbsp;</DarkGreyColorText>
                 <DarkGreyColorText>{WORKING_COUNT}명 근무중</DarkGreyColorText>
@@ -1001,17 +1001,25 @@ export default ({
                     <TitleText>업무관리</TitleText>
                   </MenuTitleArea>
                   <Row>
-                    <IconContainer
-                      onPress={() => {
-                        setCustomMenu();
-                        setEditMode(!editMode);
-                      }}>
-                      {editMode ? (
-                        <CloseIcon size={20} color={'white'} />
-                      ) : (
-                        <SettingIcon size={16} color={'white'} />
-                      )}
-                    </IconContainer>
+                    {editMode ? (
+                      <IconContainer
+                        style={{paddingLeft: 1}}
+                        onPress={() => {
+                          setCustomMenu();
+                          setEditMode(!editMode);
+                        }}>
+                        <CloseIcon size={18} color={'white'} />
+                      </IconContainer>
+                    ) : (
+                      <IconContainer
+                        style={{paddingLeft: 1}}
+                        onPress={() => {
+                          setCustomMenu();
+                          setEditMode(!editMode);
+                        }}>
+                        <SettingIcon size={13} color={'white'} />
+                      </IconContainer>
+                    )}
                   </Row>
                 </SpaceRow>
                 <GreyLine />
@@ -1238,17 +1246,25 @@ export default ({
                           <MenuTitleArea style={{zIndex: 3}}>
                             <TitleText>업무관리</TitleText>
                           </MenuTitleArea>
-                          <IconContainer
-                            onPress={() => {
-                              setCustomMenu();
-                              setEditMode(!editMode);
-                            }}>
-                            {editMode ? (
+                          {editMode ? (
+                            <IconContainer
+                              style={{paddingLeft: 1}}
+                              onPress={() => {
+                                setCustomMenu();
+                                setEditMode(!editMode);
+                              }}>
                               <CloseIcon size={20} color={'white'} />
-                            ) : (
+                            </IconContainer>
+                          ) : (
+                            <IconContainer
+                              style={{paddingLeft: 1}}
+                              onPress={() => {
+                                setCustomMenu();
+                                setEditMode(!editMode);
+                              }}>
                               <SettingIcon size={16} color={'white'} />
-                            )}
-                          </IconContainer>
+                            </IconContainer>
+                          )}
                         </SpaceRow>
                         <GreyLine />
                         <Container>
