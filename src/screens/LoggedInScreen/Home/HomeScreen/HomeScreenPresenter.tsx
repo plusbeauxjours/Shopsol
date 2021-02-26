@@ -462,10 +462,7 @@ export default ({
   setIsWorkingMode,
   editMode,
   setEditMode,
-  ownerMenu,
-  managersEMPMenu,
   employeesMenu,
-  CUSTOM_MENU_EMP,
   addCUSTOM_MENU_EMP_Fn,
   removeCUSTOM_MENU_EMP_Fn,
   AVATAR,
@@ -500,13 +497,17 @@ export default ({
   // QR_Num,
   banner1D,
   banner2D,
-  successMsg,
   gotoWork,
   resultCode,
   resultMessage,
   resultCode2,
   resultMessage2,
+  customMenuIndex,
+  customMenu,
+  setCustomMenu,
 }) => {
+  console.log('customMenu', customMenu);
+  console.log('customMenuIndex', customMenuIndex);
   const navigation = useNavigation();
   const MenuCntContainer = ({
     index = 0,
@@ -525,13 +526,14 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
+        console.log('MenuCntContainer');
         // console.log(animationRef);
         // animationRef.play();
-        setTimeout(() => {
-          editMode && type == 'emp'
-            ? addCUSTOM_MENU_EMP_Fn(index)
-            : gotoScreen(`${paging}`);
-        }, 800);
+        editMode && type == 'emp'
+          ? removeCUSTOM_MENU_EMP_Fn(index)
+          : setTimeout(() => {
+              gotoScreen(`${paging}`);
+            }, 800);
       }}>
       {(selection == '직원합류승인' || selection == '업무일지') &&
         !initLoading &&
@@ -567,10 +569,9 @@ export default ({
       style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
+        console.log('HiddenMenuCntContainer');
         editMode && type == 'emp'
-          ? removeCUSTOM_MENU_EMP_Fn(
-              CUSTOM_MENU_EMP[STORE_SEQ]?.filter((i) => i !== index),
-            )
+          ? addCUSTOM_MENU_EMP_Fn(index)
           : gotoScreen(`${paging}`);
       }}>
       <EyeIconContainer
@@ -985,13 +986,23 @@ export default ({
                   <MenuTitle>정확한,</MenuTitle>
                   <Bold> 업무관리</Bold>
                 </MenuTitleArea>
+                <Row>
+                  <IconContainer
+                    onPress={() => {
+                      setCustomMenu();
+                      setEditMode(!editMode);
+                    }}>
+                    {editMode ? (
+                      <CloseIcon size={24} color={'white'} />
+                    ) : (
+                      <SettingIcon size={20} color={'white'} />
+                    )}
+                  </IconContainer>
+                </Row>
               </SpaceRow>
               <Container>
-                {ownerMenu.map((menu, index) => {
-                  if (
-                    CUSTOM_MENU_EMP &&
-                    !CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
-                  ) {
+                {customMenu.map((menu, index) => {
+                  if (customMenuIndex?.includes(index)) {
                     return (
                       <MenuCntContainer
                         key={index}
@@ -1006,11 +1017,8 @@ export default ({
                   }
                 })}
                 {editMode &&
-                  ownerMenu.map((menu, index) => {
-                    if (
-                      CUSTOM_MENU_EMP &&
-                      CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
-                    ) {
+                  customMenu.map((menu, index) => {
+                    if (!customMenuIndex?.includes(index)) {
                       return (
                         <HiddenMenuCntContainer
                           key={index}
@@ -1207,13 +1215,23 @@ export default ({
                           <MenuTitle>정확한,</MenuTitle>
                           <Bold> 업무관리</Bold>
                         </MenuTitleArea>
+                        <Row>
+                          <IconContainer
+                            onPress={() => {
+                              setCustomMenu();
+                              setEditMode(!editMode);
+                            }}>
+                            {editMode ? (
+                              <CloseIcon size={24} color={'white'} />
+                            ) : (
+                              <SettingIcon size={20} color={'white'} />
+                            )}
+                          </IconContainer>
+                        </Row>
                       </SpaceRow>
                       <Container>
-                        {managersEMPMenu.map((menu, index) => {
-                          if (
-                            CUSTOM_MENU_EMP &&
-                            !CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
-                          ) {
+                        {customMenu.map((menu, index) => {
+                          if (customMenuIndex?.includes(index)) {
                             return (
                               <MenuCntContainer
                                 key={index}
@@ -1228,11 +1246,8 @@ export default ({
                           }
                         })}
                         {editMode &&
-                          managersEMPMenu.map((menu, index) => {
-                            if (
-                              CUSTOM_MENU_EMP &&
-                              CUSTOM_MENU_EMP[STORE_SEQ]?.includes(index)
-                            ) {
+                          customMenu.map((menu, index) => {
+                            if (!customMenuIndex?.includes(index)) {
                               return (
                                 <HiddenMenuCntContainer
                                   key={index}
@@ -1572,6 +1587,8 @@ export default ({
             resultMessage={resultMessage}
             resultCode2={resultCode2}
             resultMessage2={resultMessage2}
+            gotoScreen={gotoScreen}
+            customMenuIndex={customMenuIndex}
           />
         ) : failModalOpen ? (
           <GoWorkingFailAnimation
@@ -1686,6 +1703,8 @@ export default ({
               resultMessage={resultMessage}
               resultCode2={resultCode2}
               resultMessage2={resultMessage2}
+              gotoScreen={gotoScreen}
+              customMenuIndex={customMenuIndex}
             />
           </ModalContainer>
         ) : failModalOpen ? (

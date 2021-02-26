@@ -127,8 +127,6 @@ export default ({route: {params}}) => {
             Platform.OS + ' ' + DeviceInfo.getSystemVersion(),
         }),
       );
-    } else {
-      console.log('Failed', 'No token received');
     }
   };
 

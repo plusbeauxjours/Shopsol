@@ -243,4 +243,6 @@ export default {
   insertQR: (STORE_SEQ: string, QR_NUM: any) =>
     callApi('get', `/auth/insertQR?STORE_SEQ=${STORE_SEQ}&QR_NUM=${QR_NUM}`),
   confirmQR: (data: any) => callApi('post', '/auth/sawQRMsg/', data),
+  setCustomMenu: (data: any) =>
+    callApi('post', '/auth/updateCustomMenu/', data),
 };

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, createRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Linking, BackHandler, NativeModules, Image} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -6,7 +6,6 @@ import {useNavigation} from '@react-navigation/native';
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {updateQR_Num} from '~/redux/storeSlice';
-import {addCUSTOM_MENU_EMP, removeCUSTOM_MENU_EMP} from '~/redux/userSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {getStore} from '~/redux/storeSlice';
@@ -34,7 +33,6 @@ export default ({route: {params}}) => {
     MEMBER_NAME,
     DEVICE_PLATFORM,
     GENDER,
-    CUSTOM_MENU_EMP,
   } = useSelector((state: any) => state.userReducer);
   const [workingLoading, setWorkingLoading] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
@@ -62,9 +60,7 @@ export default ({route: {params}}) => {
   );
   const [banner1D, setBanner1D] = useState<number>(null);
   const [banner2D, setBanner2D] = useState<number>(null);
-  const [customMenuIndex, setCustomMenuIndex] = useState<
-    [number, number, number, number, number]
-  >([0, 1, 2, 3, 4]);
+  const [customMenuIndex, setCustomMenuIndex] = useState<any>(null);
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -89,38 +85,6 @@ export default ({route: {params}}) => {
       setRefreshing(false);
     }
   };
-
-  const ownerMenu = [
-    {
-      selection: '체크리스트',
-      paging: 'ChecklistItemsScreen',
-      count: STORE_DATA?.checklength || 0,
-      source: require(`../../../../assets/main/ChecklistItems.png`),
-    },
-    {
-      selection: '업무일지',
-      paging: 'ChecklistShareMainScreen',
-      source: require(`../../../../assets/main/ChecklistShareMain.png`),
-    },
-    {
-      selection: '유통기한',
-      paging: 'ShelfLifeCheckScreen',
-      count: null,
-      source: require(`../../../../assets/main/ShelfLifeCheck.png`),
-    },
-    {
-      selection: '업무캘린더',
-      paging: 'TaskCheckScreen',
-      count: null,
-      source: require(`../../../../assets/main/TaskCalendar.png`),
-    },
-    {
-      selection: '조기경보',
-      paging: 'HealthCertificateTypeScreen',
-      count: null,
-      source: require(`../../../../assets/main/HealthCertificateType.png`),
-    },
-  ];
 
   const customMenu = [
     {
@@ -154,8 +118,12 @@ export default ({route: {params}}) => {
     },
   ];
 
+  const ownerMenu = [
+    ...customMenu.filter((_, index) => customMenuIndex?.includes(index)),
+  ];
+
   const managersEMPMenu = [
-    ...customMenu.filter((_, index) => customMenuIndex.includes(index)),
+    ...customMenu.filter((_, index) => customMenuIndex?.includes(index)),
   ];
 
   const employeesMenu = [
@@ -180,15 +148,15 @@ export default ({route: {params}}) => {
       count: null,
       source: require(`../../../../assets/main/PaymentInfo.png`),
     },
-    ...customMenu.filter((_, index) => customMenuIndex.includes(index)),
+    ...customMenu.filter((_, index) => customMenuIndex?.includes(index)),
   ];
 
   const addCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
-    dispatch(addCUSTOM_MENU_EMP({STORE_SEQ, CUSTOM_MENU_EMP}));
+    setCustomMenuIndex([...customMenuIndex, CUSTOM_MENU_EMP]);
   };
 
   const removeCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
-    dispatch(removeCUSTOM_MENU_EMP({STORE_SEQ, CUSTOM_MENU_EMP}));
+    setCustomMenuIndex(customMenuIndex.filter((i) => i !== CUSTOM_MENU_EMP));
   };
 
   const alertModal = (title, text, okCallback = () => {}) => {
@@ -331,6 +299,20 @@ export default ({route: {params}}) => {
     }
   };
 
+  const setCustomMenu = async () => {
+    try {
+      const {data} = await api.setCustomMenu({
+        STORE_SEQ,
+        item: customMenuIndex,
+      });
+      if (data.message !== 'SUCCESS') {
+        alertModal('', '서버 접속이 원할하지 않습니다.');
+      }
+    } catch (e) {
+      alertModal('', '서버 접속이 원할하지 않습니다.');
+    }
+  };
+
   const fetchData = async () => {
     setWorkingModalOpen(false);
     try {
@@ -340,6 +322,8 @@ export default ({route: {params}}) => {
         STORE_SEQ,
       });
       if (data.resultmsg === '1') {
+        setCustomMenuIndex(data.menu);
+        console.log(data.menu);
         dispatch(getStore(data));
         Image.getSize(
           data?.eventImage1,
@@ -548,10 +532,7 @@ export default ({route: {params}}) => {
       setIsWorkingMode={setIsWorkingMode}
       editMode={editMode}
       setEditMode={setEditMode}
-      ownerMenu={ownerMenu}
-      managersEMPMenu={managersEMPMenu}
       employeesMenu={employeesMenu}
-      CUSTOM_MENU_EMP={CUSTOM_MENU_EMP}
       addCUSTOM_MENU_EMP_Fn={addCUSTOM_MENU_EMP_Fn}
       removeCUSTOM_MENU_EMP_Fn={removeCUSTOM_MENU_EMP_Fn}
       AVATAR={AVATAR}
@@ -591,6 +572,9 @@ export default ({route: {params}}) => {
       resultMessage={resultMessage}
       resultCode2={resultCode2}
       resultMessage2={resultMessage2}
+      customMenuIndex={customMenuIndex}
+      customMenu={customMenu}
+      setCustomMenu={setCustomMenu}
     />
   );
 };

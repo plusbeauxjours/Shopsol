@@ -152,8 +152,6 @@ export default () => {
             Platform.OS + ' ' + DeviceInfo.getSystemVersion(),
         }),
       );
-    } else {
-      console.log('Failed', 'No token received');
     }
   };
 

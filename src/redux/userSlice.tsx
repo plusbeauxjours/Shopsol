@@ -23,26 +23,6 @@ const userSlice = createSlice({
     setIS_SUPER_USER(state) {
       state.IS_SUPER_USER = true;
     },
-    addCUSTOM_MENU_EMP(state, action) {
-      const {
-        payload: {STORE_SEQ, CUSTOM_MENU_EMP},
-      } = action;
-      const item = state.CUSTOM_MENU_EMP[STORE_SEQ];
-      if (item) {
-        item.push(CUSTOM_MENU_EMP);
-      } else {
-        state.CUSTOM_MENU_EMP[STORE_SEQ] = [CUSTOM_MENU_EMP];
-      }
-    },
-    removeCUSTOM_MENU_EMP(state, action) {
-      const {
-        payload: {STORE_SEQ, CUSTOM_MENU_EMP},
-      } = action;
-      const item = state.CUSTOM_MENU_EMP[STORE_SEQ];
-      if (item) {
-        state.CUSTOM_MENU_EMP[STORE_SEQ] = CUSTOM_MENU_EMP;
-      }
-    },
     setMEMBER_NAME(state, action) {
       const {payload: MEMBER_NAME} = action;
       state.MEMBER_NAME = MEMBER_NAME;
@@ -102,8 +82,6 @@ export const {
   setLOGOUT,
   setDEVICE_PLATFORM,
   setDEVICE_INFO,
-  addCUSTOM_MENU_EMP,
-  removeCUSTOM_MENU_EMP,
 } = userSlice.actions;
 
 export default userSlice.reducer;

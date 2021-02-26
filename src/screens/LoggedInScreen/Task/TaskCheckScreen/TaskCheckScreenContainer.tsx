@@ -184,24 +184,26 @@ export default () => {
       const weekDuration = moment().add(7, 'days').add(1, 'days');
       const weeksDuration = moment().add(14, 'days').add(1, 'days');
       const monthDuration = moment().add(1, 'months').add(1, 'days');
-      while (monthDuration.diff(day, 'days') > 0) {
-        if (ddayDuration.diff(day, 'days') > 0) {
-          data[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[0].items.push(...data[day.format('YYYY-MM-DD')]);
-        } else if (dayDuration.diff(day, 'days') > 0) {
-          data[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[1].items.push(...data[day.format('YYYY-MM-DD')]);
-        } else if (weekDuration.diff(day, 'days') > 0) {
-          data[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[2].items.push(...data[day.format('YYYY-MM-DD')]);
-        } else if (weeksDuration.diff(day, 'days') > 0) {
-          data[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[3].items.push(...data[day.format('YYYY-MM-DD')]);
-        } else {
-          data[day.format('YYYY-MM-DD')]?.length > 0 &&
-            defaultData[4].items.push(...data[day.format('YYYY-MM-DD')]);
+      if (data) {
+        while (monthDuration.diff(day, 'days') > 0) {
+          if (ddayDuration.diff(day, 'days') > 0) {
+            data[day.format('YYYY-MM-DD')]?.length > 0 &&
+              defaultData[0].items.push(...data[day.format('YYYY-MM-DD')]);
+          } else if (dayDuration.diff(day, 'days') > 0) {
+            data[day.format('YYYY-MM-DD')]?.length > 0 &&
+              defaultData[1].items.push(...data[day.format('YYYY-MM-DD')]);
+          } else if (weekDuration.diff(day, 'days') > 0) {
+            data[day.format('YYYY-MM-DD')]?.length > 0 &&
+              defaultData[2].items.push(...data[day.format('YYYY-MM-DD')]);
+          } else if (weeksDuration.diff(day, 'days') > 0) {
+            data[day.format('YYYY-MM-DD')]?.length > 0 &&
+              defaultData[3].items.push(...data[day.format('YYYY-MM-DD')]);
+          } else {
+            data[day.format('YYYY-MM-DD')]?.length > 0 &&
+              defaultData[4].items.push(...data[day.format('YYYY-MM-DD')]);
+          }
+          day.add(1, 'days');
         }
-        day.add(1, 'days');
       }
       dispatch(setTASK_DATA(defaultData));
 

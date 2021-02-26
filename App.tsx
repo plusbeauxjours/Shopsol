@@ -18,19 +18,19 @@ function App() {
   //   }
   // };
 
-  // appsFlyer.initSdk(
-  //   {
-  //     devKey: 'Qdo76aBgNm9S9voVNTbzQJ',
-  //     isDebug: false,
-  //     appId: '1408364175',
-  //   },
-  //   (result) => {
-  //     console.log(result);
-  //   },
-  //   (error) => {
-  //     console.error(error);
-  //   },
-  // );
+  appsFlyer.initSdk(
+    {
+      devKey: 'Qdo76aBgNm9S9voVNTbzQJ',
+      isDebug: false,
+      appId: '1408364175',
+    },
+    (result) => {
+      console.log(result);
+    },
+    (error) => {
+      console.error(error);
+    },
+  );
 
   let exitApp;
   const handleBackButton = () => {

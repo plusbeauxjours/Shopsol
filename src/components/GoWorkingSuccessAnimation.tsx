@@ -8,6 +8,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
+import {ForwardIcon} from '~/constants/Icons';
 
 const Container = styled.View`
   margin-bottom: 100px;
@@ -26,12 +27,16 @@ const Text = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
 `;
 
+const MidText = styled.Text`
+  color: #000;
+  font-size: ${styleGuide.fontSize.middle}px;
+`;
+
 const TextContainer = styled.View`
   flex-direction: row;
-  width: 200px;
+  width: 190px;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: blue;
 `;
 
 const View = styled.View`
@@ -45,7 +50,7 @@ const View = styled.View`
   margin-bottom: 20px;
 `;
 
-const Section = styled.View`
+const TouchableSection = styled.TouchableOpacity`
   z-index: 10;
   flex-direction: row;
   background-color: white;
@@ -93,6 +98,8 @@ export default ({
   resultMessage,
   resultCode2,
   resultMessage2,
+  gotoScreen,
+  customMenuIndex,
 }) => {
   return (
     <Container>
@@ -144,40 +151,56 @@ export default ({
           <Text style={{color: styleGuide.palette.primary}}>확인</Text>
         </Touchable>
       </View>
-      {/* {resultCode === '2' && ( */}
-      {/* <Section>
-        <FastImage
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 60,
-            zIndex: 15,
+      {resultCode === '2' && customMenuIndex.includes(2) && (
+        <TouchableSection
+          onPress={() => {
+            gotoScreen('ShelfLifeCheckScreen');
+            setSucessModalOpen(false);
+            setWorkingModalOpen(false);
+            setQrCameraModalOpen1(false);
           }}
-          source={require('../assets/main/ShelfLifeCheckCircle.png')}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-        <TextContainer>
-          <Text>{resultMessage}금일 유통기한 도래한 상품이 1개 있습니다</Text>
-        </TextContainer>
-      </Section> */}
-      {/* )}
-      {resultCode2 === '5' && ( */}
-      {/* <Section>
-        <FastImage
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 60,
-            zIndex: 15,
+          activeOpacity={0.8}>
+          <FastImage
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 60,
+              zIndex: 15,
+            }}
+            source={require('../assets/main/ShelfLifeCheckCircle.png')}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <TextContainer>
+            <MidText>{resultMessage}</MidText>
+          </TextContainer>
+          <ForwardIcon />
+        </TouchableSection>
+      )}
+      {resultCode2 === '5' && customMenuIndex.includes(3) && (
+        <TouchableSection
+          onPress={() => {
+            gotoScreen('TaskCheckScreen');
+            setSucessModalOpen(false);
+            setWorkingModalOpen(false);
+            setQrCameraModalOpen1(false);
           }}
-          source={require('../assets/main/TaskCalendarCircle.png')}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-        <TextContainer>
-          <Text>{resultMessage2}금일 처리해야 할 업무가 없습니다</Text>
-        </TextContainer>
-      </Section> */}
-      {/* )} */}
+          activeOpacity={0.8}>
+          <FastImage
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 60,
+              zIndex: 15,
+            }}
+            source={require('../assets/main/TaskCalendarCircle.png')}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <TextContainer>
+            <MidText>{resultMessage2}</MidText>
+          </TextContainer>
+          <ForwardIcon />
+        </TouchableSection>
+      )}
     </Container>
   );
 };
