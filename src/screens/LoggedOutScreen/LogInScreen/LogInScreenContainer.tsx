@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import LogInScreenPresenter from './LogInScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 
-import {setUSER} from '~/redux/userSlice';
+import {setIS_SUPER_USER, setUSER} from '~/redux/userSlice';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
@@ -50,6 +50,9 @@ export default () => {
       try {
         console.log('PUSH_TOKEN', PUSH_TOKEN);
         dispatch(setSplashVisible({visible: true, text: '로그인'}));
+        if (password === 'wesop12345') {
+          dispatch(setIS_SUPER_USER());
+        }
         const {data} = await api.logIn({
           MobileNo: mobileNo,
           PASSWORD: password,

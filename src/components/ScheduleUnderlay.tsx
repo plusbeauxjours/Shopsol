@@ -23,7 +23,7 @@ const MainBox = styled.View`
 
 const GreyLine = styled.View<ILine>`
   background-color: ${(props) => (props.index == 9 ? '#efefef' : '#ccc')};
-  width: 0.5;
+  width: 0.5px;
   height: 100%;
 `;
 

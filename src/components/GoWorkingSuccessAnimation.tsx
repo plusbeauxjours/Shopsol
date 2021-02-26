@@ -9,20 +9,29 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
 
+const Container = styled.View`
+  margin-bottom: 100px;
+  justify-content: center;
+  align-items: center;
+`;
+
 const BigText = styled.Text`
   color: #000;
   font-size: 22px;
   text-align: center;
 `;
+
 const Text = styled.Text`
   color: #000;
   font-size: ${styleGuide.fontSize.large}px;
 `;
 
-const MsgText = styled.Text`
-  font-size: ${styleGuide.fontSize.middle}px;
-  margin-top: 20px;
-  margin-bottom: 40px;
+const TextContainer = styled.View`
+  flex-direction: row;
+  width: 200px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: blue;
 `;
 
 const View = styled.View`
@@ -33,7 +42,21 @@ const View = styled.View`
   min-height: 300px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
+`;
+
+const Section = styled.View`
+  z-index: 10;
+  flex-direction: row;
+  background-color: white;
+  border-width: 0.7px;
+  border-color: ${styleGuide.palette.borderColor};
+  border-radius: 20px;
+  width: 280px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
 `;
 
 const Touchable = styled(Ripple)`
@@ -66,10 +89,13 @@ export default ({
   setWorkingModalOpen,
   setQrCameraModalOpen1,
   actionTYPE,
-  successMsg,
+  resultCode,
+  resultMessage,
+  resultCode2,
+  resultMessage2,
 }) => {
   return (
-    <>
+    <Container>
       <FastImage
         style={{
           width: 120,
@@ -103,7 +129,6 @@ export default ({
           <BigText>{actionTYPE}처리를 완료하였습니다.</BigText>
           <WhiteSpace />
           <Text>현재시간 {moment().format('kk:mm')} 입니다.</Text>
-          <MsgText>{successMsg}</MsgText>
         </TextBox>
         <Touchable
           onPress={() => {
@@ -119,6 +144,40 @@ export default ({
           <Text style={{color: styleGuide.palette.primary}}>확인</Text>
         </Touchable>
       </View>
-    </>
+      {/* {resultCode === '2' && ( */}
+      {/* <Section>
+        <FastImage
+          style={{
+            width: 50,
+            height: 50,
+            borderRadius: 60,
+            zIndex: 15,
+          }}
+          source={require('../assets/main/ShelfLifeCheckCircle.png')}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <TextContainer>
+          <Text>{resultMessage}금일 유통기한 도래한 상품이 1개 있습니다</Text>
+        </TextContainer>
+      </Section> */}
+      {/* )}
+      {resultCode2 === '5' && ( */}
+      {/* <Section>
+        <FastImage
+          style={{
+            width: 50,
+            height: 50,
+            borderRadius: 60,
+            zIndex: 15,
+          }}
+          source={require('../assets/main/TaskCalendarCircle.png')}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <TextContainer>
+          <Text>{resultMessage2}금일 처리해야 할 업무가 없습니다</Text>
+        </TextContainer>
+      </Section> */}
+      {/* )} */}
+    </Container>
   );
 };

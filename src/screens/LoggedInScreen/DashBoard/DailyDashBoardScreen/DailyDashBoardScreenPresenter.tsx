@@ -193,7 +193,7 @@ const EmpCardContainer = styled(Ripple)<IEmpCard>`
   border-radius: 20px;
   background-color: white;
   margin-left: 20px;
-  margin-right: ${(props) => (props.isLast ? wp('100%') - 220 : 0)};
+  margin-right: ${(props) => (props.isLast ? wp('100%') - 220 : 0)}px;
   opacity: ${(props) => (props.isSelected ? 1 : 0.4)};
 `;
 
@@ -202,6 +202,7 @@ const IconContainer = styled.View`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 5px;
+  height: 22px;
 `;
 
 const EmpCardDataRow = styled.View`
@@ -429,7 +430,6 @@ export default ({
                 <Text
                   style={{
                     marginLeft: 5,
-                    textAlign: 'right',
                     width: 60,
                   }}>
                   시작시간:&nbsp;

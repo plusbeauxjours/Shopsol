@@ -6,6 +6,7 @@ import PushNotification from 'react-native-push-notification';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {RootSiblingParent} from 'react-native-root-siblings';
+import appsFlyer from 'react-native-appsflyer';
 
 import store, {persistor} from './src/redux/store';
 import RootContainer from './src/components/RootContainer';
@@ -17,18 +18,18 @@ function App() {
   //   }
   // };
 
-  //   appsFlyer.initSdk(
+  // appsFlyer.initSdk(
   //   {
-  //     devKey: 'K2***********99',
+  //     devKey: 'Qdo76aBgNm9S9voVNTbzQJ',
   //     isDebug: false,
-  //     appId: '41*****44',
+  //     appId: '1408364175',
   //   },
   //   (result) => {
   //     console.log(result);
   //   },
   //   (error) => {
   //     console.error(error);
-  //   }
+  //   },
   // );
 
   let exitApp;

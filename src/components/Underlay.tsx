@@ -21,7 +21,7 @@ const TextBox = styled.View`
 `;
 const Box = styled.View``;
 const Text = styled.Text`
-  font-size: ${styleGuide.fontSize.small}px;
+  font-size: 9px;
   color: ${styleGuide.palette.greyColor};
 `;
 

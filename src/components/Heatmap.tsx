@@ -98,6 +98,7 @@ const IconContainer = styled.View`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  height: 22px;
   margin-bottom: 10px;
 `;
 

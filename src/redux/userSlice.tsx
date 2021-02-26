@@ -4,6 +4,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     isLoggedIn: false,
+    IS_SUPER_USER: false,
     MEMBER_SEQ: '',
     MEMBER_NAME: '',
     GENDER: '',
@@ -19,6 +20,9 @@ const userSlice = createSlice({
     CUSTOM_MENU_EMP: {},
   },
   reducers: {
+    setIS_SUPER_USER(state) {
+      state.IS_SUPER_USER = true;
+    },
     addCUSTOM_MENU_EMP(state, action) {
       const {
         payload: {STORE_SEQ, CUSTOM_MENU_EMP},
@@ -62,6 +66,7 @@ const userSlice = createSlice({
     },
     setLOGOUT(state) {
       state.isLoggedIn = false;
+      state.IS_SUPER_USER = false;
       state.MEMBER_SEQ = '';
       state.GENDER = '';
       state.STORE = '';
@@ -90,6 +95,7 @@ const userSlice = createSlice({
 });
 
 export const {
+  setIS_SUPER_USER,
   setMEMBER_NAME,
   setSTORE,
   setUSER,

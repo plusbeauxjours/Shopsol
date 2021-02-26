@@ -502,6 +502,10 @@ export default ({
   banner2D,
   successMsg,
   gotoWork,
+  resultCode,
+  resultMessage,
+  resultCode2,
+  resultMessage2,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -1564,7 +1568,10 @@ export default ({
             setWorkingModalOpen={setWorkingModalOpen}
             setQrCameraModalOpen1={setQrCameraModalOpen1}
             actionTYPE={actionTYPE}
-            successMsg={successMsg}
+            resultCode={resultCode}
+            resultMessage={resultMessage}
+            resultCode2={resultCode2}
+            resultMessage2={resultMessage2}
           />
         ) : failModalOpen ? (
           <GoWorkingFailAnimation
@@ -1675,6 +1682,10 @@ export default ({
               setWorkingModalOpen={setWorkingModalOpen}
               setQrCameraModalOpen1={setQrCameraModalOpen1}
               actionTYPE={actionTYPE}
+              resultCode={resultCode}
+              resultMessage={resultMessage}
+              resultCode2={resultCode2}
+              resultMessage2={resultMessage2}
             />
           </ModalContainer>
         ) : failModalOpen ? (

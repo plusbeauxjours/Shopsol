@@ -150,7 +150,7 @@ const Text = styled.Text<IText>`
 
 const RedLine = styled.View<IRedLine>`
   z-index: 10;
-  width: 1;
+  width: 1px;
   height: ${(props) => props.height}px;
   max-height: 430px;
   background-color: ${styleGuide.palette.redColor};

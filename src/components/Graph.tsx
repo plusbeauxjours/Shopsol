@@ -85,6 +85,7 @@ const IconContainer = styled.View`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  height: 22px;
 `;
 
 const SmallTextRound = styled.View`

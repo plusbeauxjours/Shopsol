@@ -27,6 +27,7 @@ export default () => {
     CHECK_PUSH,
     CHECKSHARE_PUSH,
     SCHEDULE_PUSH,
+    IS_SUPER_USER,
   } = useSelector((state: any) => state.userAlarmReducer);
 
   const [allPushState, setAllPushState] = useState<boolean>(All_PUSH);
@@ -136,7 +137,7 @@ export default () => {
 
   const getFcmToken = async () => {
     const PUSH_TOKEN = await messaging().getToken();
-    if (PUSH_TOKEN) {
+    if (PUSH_TOKEN && !IS_SUPER_USER) {
       console.log('PUSH_TOKEN', PUSH_TOKEN);
       await api.changeToken({
         token: PUSH_TOKEN,

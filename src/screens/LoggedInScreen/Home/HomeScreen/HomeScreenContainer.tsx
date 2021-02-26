@@ -51,7 +51,10 @@ export default ({route: {params}}) => {
   const [initLoading, setInitLoading] = useState<boolean>(
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
-  const [successMsg, setSuccessMsg] = useState<string>(null);
+  const [resultCode, setResultCode] = useState<string>('');
+  const [resultMessage, setResultMessage] = useState<string>('');
+  const [resultCode2, setResultCode2] = useState<string>('');
+  const [resultMessage2, setResultMessage2] = useState<string>('');
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [qrCameraModalOpen1, setQrCameraModalOpen1] = useState<boolean>(false);
   const [showPictureModalOpen, setShowPictureModalOpen] = useState<boolean>(
@@ -220,8 +223,10 @@ export default ({route: {params}}) => {
         setFailModalOpen(true);
       } else if (data.message === 'WORK_ON_SUCCESS') {
         setSucessModalOpen(true);
-        setSuccessMsg(data.resultMessage);
-        console.log(data.resultMessage);
+        setResultCode(data.resultCode);
+        setResultMessage(data.resultMessage);
+        setResultCode2(data.resultCode2);
+        setResultMessage2(data.resultMessage2);
       } else if (data.message === 'SCHEDULE_EMPTY') {
         setErrorMessage('오늘은 근무일이 아닙니다.');
         setFailModalOpen(true);
@@ -581,8 +586,11 @@ export default ({route: {params}}) => {
       // QR_Num={QR_Num}
       banner1D={banner1D}
       banner2D={banner2D}
-      successMsg={successMsg}
       gotoWork={gotoWork}
+      resultCode={resultCode}
+      resultMessage={resultMessage}
+      resultCode2={resultCode2}
+      resultMessage2={resultMessage2}
     />
   );
 };

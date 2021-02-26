@@ -16,7 +16,9 @@ export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const SharedStorage = NativeModules.SharedStorage;
-  const {MEMBER_SEQ, STORE} = useSelector((state: any) => state.userReducer);
+  const {MEMBER_SEQ, STORE, IS_SUPER_USER} = useSelector(
+    (state: any) => state.userReducer,
+  );
   const {visible} = useSelector((state: any) => state.splashReducer);
 
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -110,7 +112,7 @@ export default ({route: {params}}) => {
 
   const getFcmToken = async () => {
     const PUSH_TOKEN = await messaging().getToken();
-    if (PUSH_TOKEN) {
+    if (PUSH_TOKEN && !IS_SUPER_USER) {
       console.log('PUSH_TOKEN', PUSH_TOKEN);
       await api.changeToken({
         token: PUSH_TOKEN,
