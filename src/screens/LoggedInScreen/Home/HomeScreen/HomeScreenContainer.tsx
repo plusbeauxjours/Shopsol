@@ -60,7 +60,7 @@ export default ({route: {params}}) => {
   );
   const [banner1D, setBanner1D] = useState<number>(null);
   const [banner2D, setBanner2D] = useState<number>(null);
-  const [customMenuIndex, setCustomMenuIndex] = useState<any>(null);
+  const [customMenuIndex, setCustomMenuIndex] = useState<any>([]);
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -148,7 +148,7 @@ export default ({route: {params}}) => {
   };
 
   const removeCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
-    setCustomMenuIndex(customMenuIndex.filter((i) => i !== CUSTOM_MENU_EMP));
+    setCustomMenuIndex(customMenuIndex?.filter((i) => i !== CUSTOM_MENU_EMP));
   };
 
   const alertModal = (title, text, okCallback = () => {}) => {
@@ -501,8 +501,8 @@ export default ({route: {params}}) => {
       STORE={STORE}
       STORE_SEQ={STORE_SEQ}
       STORE_NAME={STORE_NAME}
-      TOTAL_COUNT={TOTAL_COUNT || STORE_DATA.emplist.toString()}
-      WORKING_COUNT={WORKING_COUNT || STORE_DATA.workinglist.toString()}
+      TOTAL_COUNT={TOTAL_COUNT || STORE_DATA?.emplist?.toString()}
+      WORKING_COUNT={WORKING_COUNT || STORE_DATA?.workinglist?.toString()}
       EMPCOUNT={STORE_DATA?.EMPCOUNT}
       workingModalOpen={workingModalOpen}
       setWorkingModalOpen={setWorkingModalOpen}

@@ -77,7 +77,7 @@ const LoadingText = styled.Text`
 `;
 
 const Container = styled.View`
-  width: 100%;
+  width: ${wp('100%') - 60}px;
   flex-direction: row;
   flex-wrap: wrap;
 `;
@@ -93,7 +93,7 @@ const IconContainer = styled.TouchableOpacity`
 
 const MenuCnt = styled(Ripple)`
   z-index: 10;
-  width: ${(wp('100%') - 60) / 3}px;
+  width: ${(wp('100%') - 63) / 3}px;
   height: ${wp('40%')}px;
   justify-content: center;
   align-items: center;

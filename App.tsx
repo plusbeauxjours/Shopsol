@@ -20,7 +20,7 @@ function App() {
 
   appsFlyer.initSdk(
     {
-      devKey: 'Qdo76aBgNm9S9voVNTbzQJ',
+      devKey: 'HWrK6iFipjPUqDhwJUABpA',
       isDebug: false,
       appId: '1408364175',
     },

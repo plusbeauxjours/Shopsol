@@ -151,7 +151,7 @@ export default ({
           <Text style={{color: styleGuide.palette.primary}}>확인</Text>
         </Touchable>
       </View>
-      {resultCode === '2' && customMenuIndex.includes(2) && (
+      {resultCode === '2' && customMenuIndex?.includes(2) && (
         <TouchableSection
           onPress={() => {
             gotoScreen('ShelfLifeCheckScreen');
@@ -176,7 +176,7 @@ export default ({
           <ForwardIcon />
         </TouchableSection>
       )}
-      {resultCode2 === '5' && customMenuIndex.includes(3) && (
+      {resultCode2 === '5' && customMenuIndex?.includes(3) && (
         <TouchableSection
           onPress={() => {
             gotoScreen('TaskCheckScreen');
