@@ -334,6 +334,7 @@ export default () => {
 
   const searchName = (text) => {
     setSearch(text);
+    screenScrollRef.current?.getNode()?.scrollTo({y: 0, animated: false});
     TIME_EMP_LIST.forEach(function (item) {
       let dis = Hangul.disassemble(item.EMP_NAME, true);
       let cho = dis.reduce(function (prev, elem: any) {

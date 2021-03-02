@@ -134,9 +134,10 @@ const Column = styled.View`
 const DonutColumn = styled(Column)`
   width: 130px;
   height: 200px;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-right: 10px;
   padding-top: 10px;
+  flex-wrap: nowrap;
 `;
 
 const DonutColumnTitle = styled.Text`
@@ -147,6 +148,7 @@ const DonutColumnTitle = styled.Text`
 `;
 
 const DonutColumnText = styled(DonutColumnTitle)`
+  margin-bottom: 1px;
   font-size: ${styleGuide.fontSize.middle}px;
   font-weight: ${styleGuide.fontWeight.normal};
 `;

@@ -23,7 +23,6 @@ export default () => {
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
     MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
-  const {visible} = useSelector((state: any) => state.splashReducer);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
@@ -594,7 +593,6 @@ export default () => {
       weekStartDate={weekStartDate}
       weekEndDate={weekEndDate}
       loading={loading}
-      visible={visible}
       STORE_NAME={STORE_NAME}
       scrollRef={scrollRef}
       onPressSection={onPressSection}
