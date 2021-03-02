@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {updateQR_Num} from '~/redux/storeSlice';
+import {updateQR_Num, setSTORE_DATA} from '~/redux/storeSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {getStore} from '~/redux/storeSlice';
@@ -367,6 +367,7 @@ export default ({route: {params}}) => {
 
   const gotoSelectStoreFn = () => {
     dispatch(resetCALENDAR_DATA());
+    dispatch(setSTORE_DATA({STORE_DATA: {}}));
     navigation.reset({
       index: 0,
       routes: [{name: 'SelectStoreScreen'}],

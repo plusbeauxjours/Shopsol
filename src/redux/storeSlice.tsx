@@ -24,7 +24,7 @@ const storeSlice = createSlice({
     setSTORE_DATA(state, action) {
       const {payload: STORE_DATA} = action;
       state.MANAGER_CALLED =
-        STORE_DATA?.resultdata.CATEGORY == '일반회사' ? '관리자' : '매니저';
+        STORE_DATA?.resultdata?.CATEGORY == '일반회사' ? '관리자' : '매니저';
       state.STORE_DATA = STORE_DATA;
       state.EMP_SEQ = STORE_DATA.EMP_SEQ;
     },
