@@ -176,7 +176,7 @@ export default ({
           <ForwardIcon />
         </TouchableSection>
       )}
-      {resultCode2 === '5' && customMenuIndex?.includes(3) && (
+      {resultCode2 === '7' && customMenuIndex?.includes(3) && (
         <TouchableSection
           onPress={() => {
             gotoScreen('TaskCheckScreen');

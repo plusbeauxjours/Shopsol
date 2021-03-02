@@ -314,7 +314,7 @@ export default ({route: {params}}) => {
         STORE_SEQ,
       });
       if (data.resultmsg === '1') {
-        setCustomMenuIndex(data.menu);
+        setCustomMenuIndex(data?.menu);
         dispatch(getStore(data));
         Image.getSize(
           data?.eventImage1,

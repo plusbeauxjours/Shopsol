@@ -25,10 +25,10 @@ function App() {
       appId: '1408364175',
     },
     (result) => {
-      console.log(result);
+      console.log('AppsFlyer SDK successfully initialized: ', result);
     },
     (error) => {
-      console.error(error);
+      console.error('AppsFlyer SDK initialization threw an error: ', error);
     },
   );
 

@@ -543,7 +543,7 @@ export default ({
       {editMode && type == 'emp' && (
         <EyeIconContainer
           isEyeOn={true}
-          style={{width: 20, height: 20, zIndex: 5, paddingLeft: 1}}>
+          style={{width: 20, height: 20, zIndex: 5}}>
           <BoldRemoveIcon size={12} color={styleGuide.palette.tertiary} />
         </EyeIconContainer>
       )}
@@ -571,7 +571,7 @@ export default ({
       }}>
       <EyeIconContainer
         isEyeOn={false}
-        style={{width: 20, height: 20, zIndex: 5, paddingLeft: 1}}>
+        style={{width: 20, height: 20, zIndex: 5}}>
         <BoldAddIcon size={12} color={styleGuide.palette.lightGreyColor} />
       </EyeIconContainer>
       <FastImage
@@ -968,32 +968,24 @@ export default ({
                 </Container>
               </Section>
               {STORE_DATA?.arbashow == 1 && (
-                <>
-                  <SpaceRow style={{width: '100%', alignItems: 'center'}}>
-                    <MenuTitleArea style={{zIndex: 3}}>
-                      <TitleText>구인관리</TitleText>
-                    </MenuTitleArea>
-                  </SpaceRow>
-                  <Container>
-                    <BannerImageContainer
-                      style={{
-                        marginHorizontal: 10,
-                        width: windowWidth,
-                        alignItems: 'center',
-                      }}>
-                      <Touchable
-                        onPress={() => {
-                          Linking.openURL(STORE_DATA.arba);
-                        }}>
-                        <FastImage
-                          style={{width: windowWidth, height: bannerHeight}}
-                          source={require('../../../../assets/main/gubgooBanner.png')}
-                          resizeMode={FastImage.resizeMode.cover}
-                        />
-                      </Touchable>
-                    </BannerImageContainer>
-                  </Container>
-                </>
+                <BannerImageContainer
+                  style={{
+                    marginHorizontal: 20,
+                    marginBottom: 40,
+                    width: windowWidth,
+                    alignItems: 'center',
+                  }}>
+                  <Touchable
+                    onPress={() => {
+                      Linking.openURL(STORE_DATA.arba);
+                    }}>
+                    <FastImage
+                      style={{width: windowWidth, height: bannerHeight}}
+                      source={require('../../../../assets/main/gubgooBanner.png')}
+                      resizeMode={FastImage.resizeMode.cover}
+                    />
+                  </Touchable>
+                </BannerImageContainer>
               )}
               <Section>
                 <SpaceRow style={{width: '100%', alignItems: 'center'}}>
@@ -1003,7 +995,6 @@ export default ({
                   <Row>
                     {editMode ? (
                       <IconContainer
-                        style={{paddingLeft: 1}}
                         onPress={() => {
                           setCustomMenu();
                           setEditMode(!editMode);
@@ -1012,7 +1003,6 @@ export default ({
                       </IconContainer>
                     ) : (
                       <IconContainer
-                        style={{paddingLeft: 1}}
                         onPress={() => {
                           setCustomMenu();
                           setEditMode(!editMode);
@@ -1210,36 +1200,24 @@ export default ({
                         </Container>
                       </Section>
                       {STORE_DATA?.arbashow == 1 && (
-                        <>
-                          <SpaceRow
-                            style={{width: '100%', alignItems: 'center'}}>
-                            <MenuTitleArea style={{zIndex: 3}}>
-                              <TitleText>구인관리</TitleText>
-                            </MenuTitleArea>
-                          </SpaceRow>
-                          <Container>
-                            <BannerImageContainer
-                              style={{
-                                marginHorizontal: 10,
-                                width: windowWidth,
-                                alignItems: 'center',
-                              }}>
-                              <Touchable
-                                onPress={() => {
-                                  Linking.openURL(STORE_DATA.arba);
-                                }}>
-                                <FastImage
-                                  style={{
-                                    width: windowWidth,
-                                    height: bannerHeight,
-                                  }}
-                                  source={require('../../../../assets/main/gubgooBanner.png')}
-                                  resizeMode={FastImage.resizeMode.cover}
-                                />
-                              </Touchable>
-                            </BannerImageContainer>
-                          </Container>
-                        </>
+                        <BannerImageContainer
+                          style={{
+                            marginHorizontal: 20,
+                            marginBottom: 40,
+                            width: windowWidth,
+                            alignItems: 'center',
+                          }}>
+                          <Touchable
+                            onPress={() => {
+                              Linking.openURL(STORE_DATA.arba);
+                            }}>
+                            <FastImage
+                              style={{width: windowWidth, height: bannerHeight}}
+                              source={require('../../../../assets/main/gubgooBanner.png')}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                          </Touchable>
+                        </BannerImageContainer>
                       )}
                       <Section>
                         <SpaceRow style={{width: '100%', alignItems: 'center'}}>
@@ -1248,7 +1226,6 @@ export default ({
                           </MenuTitleArea>
                           {editMode ? (
                             <IconContainer
-                              style={{paddingLeft: 1}}
                               onPress={() => {
                                 setCustomMenu();
                                 setEditMode(!editMode);
@@ -1257,7 +1234,6 @@ export default ({
                             </IconContainer>
                           ) : (
                             <IconContainer
-                              style={{paddingLeft: 1}}
                               onPress={() => {
                                 setCustomMenu();
                                 setEditMode(!editMode);
@@ -1496,7 +1472,7 @@ export default ({
           margin: 0,
         }}>
         {lat == 0 && long == 0 ? (
-          <Container style={{justifyContent: 'center'}}>
+          <Container style={{width: wp('100%'), justifyContent: 'center'}}>
             <LottieView
               style={{
                 width: 150,
