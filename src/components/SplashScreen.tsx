@@ -22,7 +22,7 @@ export default () => {
     dispatch(setSplashVisible({visible: false}));
     dispatch(setAlertVisible(false));
     setTimeout(() => {
-      STORE_DATA.resultdata
+      STORE_DATA?.resultdata?.STORE_SEQ
         ? navigation.reset({
             index: 0,
             routes: [
@@ -33,13 +33,13 @@ export default () => {
                     {
                       name: 'HomeScreen',
                       params: {
-                        STORE_SEQ: STORE_DATA.resultdata.STORE_SEQ,
+                        STORE_SEQ: STORE_DATA?.resultdata?.STORE_SEQ,
                         STORE,
-                        STORE_NAME: STORE_DATA.resultdata.NAME,
-                        WORKING_COUNT: STORE_DATA.resultdata.workinglist,
-                        TOTAL_COUNT: STORE_DATA.resultdata.emplist,
-                        GPS: STORE_DATA.resultdata.GPS,
-                        QR_Num: STORE_DATA.resultdata.QR_Num,
+                        STORE_NAME: STORE_DATA?.resultdata?.NAME,
+                        WORKING_COUNT: STORE_DATA?.resultdata?.workinglist,
+                        TOTAL_COUNT: STORE_DATA?.resultdata?.emplist,
+                        GPS: STORE_DATA?.resultdata?.GPS,
+                        QR_Num: STORE_DATA?.resultdata?.QR_Num,
                       },
                     },
                   ],
