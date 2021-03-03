@@ -283,19 +283,19 @@ export default ({route: {params}}) => {
             </>
           )}
         </SpaceRow>
-        {STORE_DATA.resultdata.LATE_FLAG === '1' && (
+        {STORE_DATA?.resultdata?.LATE_FLAG === '1' && (
           <SpaceRow>
             <MarkerText>지각 허용시간:</MarkerText>
             <MarkerText style={{fontWeight: '600'}}>
-              {STORE_DATA.resultdata.LATE_TIME}분
+              {STORE_DATA?.resultdata?.LATE_TIME}분
             </MarkerText>
           </SpaceRow>
         )}
-        {STORE_DATA.resultdata.EARLY_FLAG === '1' && (
+        {STORE_DATA?.resultdata?.EARLY_FLAG === '1' && (
           <SpaceRow>
             <MarkerText>조퇴 허용시간:</MarkerText>
             <MarkerText style={{fontWeight: '600'}}>
-              {STORE_DATA.resultdata.EARLY_TIME}분
+              {STORE_DATA?.resultdata?.EARLY_TIME}분
             </MarkerText>
           </SpaceRow>
         )}
