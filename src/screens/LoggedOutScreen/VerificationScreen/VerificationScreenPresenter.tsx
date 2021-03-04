@@ -9,7 +9,6 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
-import {getText1, getText2, getText3} from '~/constants/getText';
 import {CheckMarkIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import Ripple from 'react-native-material-ripple';
@@ -190,38 +189,6 @@ export default ({
   policyCheck,
   togglePolicyCheck,
 }) => {
-  const Comma = () => <PolicyText>, </PolicyText>;
-  const Modal = ({sheetRef, text}) => (
-    <UnderlineText
-      policyCheck={policyCheck}
-      onPress={() => sheetRef.current.open()}>
-      {text}
-    </UnderlineText>
-  );
-  const Sheet = ({sheetRef, getText}) => (
-    <RBSheet
-      ref={sheetRef}
-      closeOnPressMask={true}
-      height={600}
-      openDuration={250}
-      customStyles={{
-        container: {
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
-      }}>
-      <ScrollView
-        persistentScrollbar={true}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{alignItems: 'center'}}
-        style={{flex: 1, paddingVertical: 16, paddingHorizontal: 16}}>
-        <Text>{getText}</Text>
-      </ScrollView>
-      <ButtonAfter onPress={() => sheetRef.current.close()}>
-        <WhiteText>닫기</WhiteText>
-      </ButtonAfter>
-    </RBSheet>
-  );
   return (
     <BackGround>
       <KeyboardAwareScrollView

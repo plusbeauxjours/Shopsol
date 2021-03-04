@@ -7,7 +7,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import {getText1, getText2, getText3} from '~/constants/getText';
 import {ForwardIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 
@@ -64,38 +63,6 @@ const Arrow = styled.View`
 `;
 
 export default () => {
-  const RBSheet1 = useRef(null);
-  const RBSheet2 = useRef(null);
-  const RBSheet3 = useRef(null);
-
-  const Sheet = ({sheetRef, getText}) => (
-    <RBSheet
-      ref={sheetRef}
-      closeOnPressMask={true}
-      height={600}
-      openDuration={250}
-      customStyles={{
-        container: {
-          paddingTop: 10,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
-      }}>
-      <ScrollView
-        persistentScrollbar={true}
-        contentContainerStyle={{alignItems: 'center'}}
-        style={{flex: 1, paddingVertical: 16, paddingHorizontal: 16}}
-        showsVerticalScrollIndicator={false}>
-        <Text>{getText}</Text>
-      </ScrollView>
-
-      <ButtonAfter onPress={() => sheetRef.current.close()}>
-        <WhiteText>닫기</WhiteText>
-      </ButtonAfter>
-    </RBSheet>
-  );
   const ArrowIcon = () => (
     <Arrow>
       <ForwardIcon color={styleGuide.palette.primary} />
@@ -103,9 +70,6 @@ export default () => {
   );
   return (
     <BackGround>
-      <Sheet sheetRef={RBSheet1} getText={getText1()} />
-      <Sheet sheetRef={RBSheet2} getText={getText2()} />
-      <Sheet sheetRef={RBSheet3} getText={getText3()} />
       <Container>
         <Section>
           <Card
