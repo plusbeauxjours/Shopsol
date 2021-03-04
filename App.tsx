@@ -18,7 +18,6 @@ function App() {
   //   }
   // };
 
-  
   appsFlyer.initSdk(
     {
       devKey: 'HWrK6iFipjPUqDhwJUABpA',
