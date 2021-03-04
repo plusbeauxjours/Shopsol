@@ -302,7 +302,7 @@ export default ({route: {params}}) => {
     </MarkerWrapper>
   );
 
-  const UserMarker = ({distance, current, time}) => (
+  const UserMarker = ({distance, current, time, index}) => (
     <MarkerWrapper style={{zIndex: 50}}>
       <UserMarkerContainer distance={distance} current={current}>
         <Row style={{alignItems: 'flex-start'}}>
@@ -355,10 +355,21 @@ export default ({route: {params}}) => {
                     10000 +
                   'km'}
             </MarkerText>
-            <MarkerText style={{marginTop: 10, textAlign: 'right'}}>
-              출근 시간
-            </MarkerText>
-            <MarkerText style={{textAlign: 'right'}}>{time}</MarkerText>
+            {index == '출근' ? (
+              <>
+                <MarkerText style={{marginTop: 10, textAlign: 'right'}}>
+                  출근 시간
+                </MarkerText>
+                <MarkerText style={{textAlign: 'right'}}>{time}</MarkerText>
+              </>
+            ) : index == '퇴근' ? (
+              <>
+                <MarkerText style={{marginTop: 10, textAlign: 'right'}}>
+                  퇴근 시간
+                </MarkerText>
+                <MarkerText style={{textAlign: 'right'}}>{time}</MarkerText>
+              </>
+            ) : null}
           </Column>
         </Row>
       </UserMarkerContainer>
@@ -504,6 +515,7 @@ export default ({route: {params}}) => {
                 ) / 10
               }
               time={params?.data.START_TIME}
+              index={'출근'}
             />
           </Marker>
           <Marker
@@ -591,6 +603,7 @@ export default ({route: {params}}) => {
                 ) / 10
               }
               time={params?.data.START_TIME}
+              index={'퇴근'}
             />
           </Marker>
           <Marker
