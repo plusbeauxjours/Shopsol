@@ -589,8 +589,6 @@ export default ({
         <SpaceRow>
           {STORE_DATA?.resultdata?.JULI == -1 ? (
             <MarkerText>출퇴근 거리 제한 없음</MarkerText>
-          ) : STORE_DATA?.resultdata?.JULI == -2 ? (
-            <MarkerText>재택근무</MarkerText>
           ) : (
             <>
               <MarkerText>출퇴근 허용거리: </MarkerText>
@@ -1502,34 +1500,32 @@ export default ({
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
               }}>
-              {STORE_DATA?.resultdata?.JULI !== -1 &&
-                STORE_DATA?.resultdata?.JULI !== -2 && (
-                  <Circle
-                    zIndex={0}
-                    radius={STORE_DATA?.resultdata?.JULI}
-                    strokeWidth={0}
-                    fillColor={
-                      getDistance() < STORE_DATA?.resultdata?.JULI
-                        ? 'rgba(0, 230, 64, 0.2)'
-                        : 'rgba(240, 52, 52, 0.2)'
-                    }
-                    strokeColor={
-                      getDistance() < STORE_DATA?.resultdata?.JULI
-                        ? 'rgba(0, 230, 64, 1)'
-                        : 'rgba(240, 52, 52, 1)'
-                    }
-                    center={{
-                      latitude: Number(STORE_DATA?.resultdata?.LAT),
-                      longitude: Number(STORE_DATA?.resultdata?.LONG),
-                    }}
-                  />
-                )}
+              {STORE_DATA?.resultdata?.JULI !== -1 && (
+                <Circle
+                  zIndex={0}
+                  radius={STORE_DATA?.resultdata?.JULI}
+                  strokeWidth={0}
+                  fillColor={
+                    getDistance() < STORE_DATA?.resultdata?.JULI
+                      ? 'rgba(0, 230, 64, 0.2)'
+                      : 'rgba(240, 52, 52, 0.2)'
+                  }
+                  strokeColor={
+                    getDistance() < STORE_DATA?.resultdata?.JULI
+                      ? 'rgba(0, 230, 64, 1)'
+                      : 'rgba(240, 52, 52, 1)'
+                  }
+                  center={{
+                    latitude: Number(STORE_DATA?.resultdata?.LAT),
+                    longitude: Number(STORE_DATA?.resultdata?.LONG),
+                  }}
+                />
+              )}
               <Marker
                 onPress={() => {
                   (STORE_DATA?.resultdata?.JULI >
                     Math.round(getDistance() * 10) / 10 ||
-                    STORE_DATA?.resultdata?.JULI == -1 ||
-                    STORE_DATA?.resultdata?.JULI == -2) &&
+                    STORE_DATA?.resultdata?.JULI == -1) &&
                     gotoWork();
                 }}
                 coordinate={{
@@ -1540,8 +1536,7 @@ export default ({
                 }}>
                 <UserMarker
                   distance={
-                    STORE_DATA?.resultdata?.JULI == -1 ||
-                    STORE_DATA?.resultdata?.JULI == -2
+                    STORE_DATA?.resultdata?.JULI == -1
                       ? '제한 없음'
                       : STORE_DATA?.resultdata?.JULI
                   }

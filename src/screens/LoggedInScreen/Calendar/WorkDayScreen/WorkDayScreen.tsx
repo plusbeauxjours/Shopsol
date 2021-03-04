@@ -270,8 +270,6 @@ export default ({route: {params}}) => {
         <SpaceRow>
           {STORE_DATA?.resultdata?.JULI == -1 ? (
             <MarkerText>출퇴근 거리 제한 없음</MarkerText>
-          ) : STORE_DATA?.resultdata?.JULI == -2 ? (
-            <MarkerText>재택근무</MarkerText>
           ) : (
             <>
               <MarkerText>출퇴근 허용거리: </MarkerText>
