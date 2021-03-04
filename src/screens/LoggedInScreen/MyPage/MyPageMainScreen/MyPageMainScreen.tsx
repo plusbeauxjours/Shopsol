@@ -86,7 +86,7 @@ const CardText = styled.Text`
 export default () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {STORE, MEMBER_NAME, MOBILE_NO, AVATAR} = useSelector(
+  const {STORE, MEMBER_NAME, MOBILE_NO, AVATAR, IS_SUPER_USER} = useSelector(
     (state: any) => state.userReducer,
   );
 
@@ -183,7 +183,9 @@ export default () => {
             <Card disabled={true}>
               <CardText>앱버전</CardText>
               <Arrow>
-                <BoxTitle>{utils.appVersion}</BoxTitle>
+                <BoxTitle>
+                  {IS_SUPER_USER ? utils.superUserAppVersion : utils.appVersion}
+                </BoxTitle>
               </Arrow>
             </Card>
             <Card onPress={() => logOut()}>

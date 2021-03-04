@@ -58,6 +58,133 @@ export default {
       return getUri(uri);
     }
   },
+  handleQrCameraPermissino: async (setLat, setLong, handle) => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            Geolocation.getCurrentPosition(
+              (position) => {
+                setLat(position.coords.latitude);
+                setLong(position.coords.longitude);
+              },
+              (e) => {
+                console.log(e);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 1000 * 60 * 3,
+                forceRequestLocation: true,
+                showLocationDialog: true,
+              },
+            );
+            handle(true);
+          } else {
+            Alert.alert(
+              '위치정보 권한 거절',
+              '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.확인을 누르신 뒤 설정에서 위치정보 권한을 켜십시오.',
+              [
+                {
+                  text: '취소',
+                  style: 'cancel',
+                },
+                {
+                  text: '확인',
+                  onPress: () => {
+                    openSettings();
+                  },
+                },
+              ],
+            );
+          }
+        } else {
+          Alert.alert(
+            '카메라 권한 거절',
+            '앱을 사용하기 위해서는 반드시 카메라 권한을 허용해야 합니다.\n 확인을 누르신 뒤 설정에서 카메라 권한을 켜십시오.',
+            [
+              {
+                text: '취소',
+                style: 'cancel',
+              },
+              {
+                text: '확인',
+                onPress: () => {
+                  openSettings();
+                },
+              },
+            ],
+          );
+        }
+      } else {
+        const permission = await request(PERMISSIONS.IOS.CAMERA);
+        if (permission === RESULTS.GRANTED) {
+          const permission = await Geolocation.requestAuthorization('always');
+          if (permission === 'granted') {
+            Geolocation.getCurrentPosition(
+              (position) => {
+                setLat(position.coords.latitude);
+                setLong(position.coords.longitude);
+              },
+              (e) => {
+                console.log(e);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 1000 * 60 * 3,
+                forceRequestLocation: true,
+                showLocationDialog: true,
+              },
+            );
+            handle(true);
+          } else {
+            Alert.alert(
+              '위치정보 권한 거절',
+              '앱을 사용하기 위해서는 반드시 위치정보 권한을 허용해야 합니다.확인을 누르신 뒤 설정에서 위치정보 권한을 켜십시오.',
+              [
+                {
+                  text: '취소',
+                  style: 'cancel',
+                },
+                {
+                  text: '확인',
+                  onPress: () => {
+                    Linking.openURL('app-settings:');
+                  },
+                },
+              ],
+            );
+          }
+        } else {
+          Alert.alert(
+            '카메라 권한 거절',
+            '앱을 사용하기 위해서는 반드시 카메라 권한을 허용해야 합니다.\n 확인을 누르신 뒤 설정에서 카메라 권한을 켜십시오.',
+            [
+              {
+                text: '취소',
+                style: 'cancel',
+              },
+              {
+                text: '확인',
+                onPress: () => {
+                  Linking.openURL('app-settings:');
+                },
+              },
+            ],
+          );
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
   handleCameraPermission: async (handle) => {
     try {
       if (Platform.OS === 'android') {
@@ -201,6 +328,7 @@ export default {
     }
   },
   appVersion: '2.2.3',
+  superUserAppVersion: '2.2.3A',
   miniPay: '8,720',
   calculateDay: 23,
   renderWeekDay: (weekDay) => {

@@ -797,8 +797,11 @@ export default ({
                       setSucessModalOpen(false);
                       setFailModalOpen(false);
                       setWorkingTYPE('QR');
-                      utils.handleCameraPermission(setQrCameraModalOpen1);
-                      utils.handleLocationPermission(setLat, setLong);
+                      utils.handleQrCameraPermissino(
+                        setLat,
+                        setLong,
+                        setQrCameraModalOpen1,
+                      );
                     }}
                     hasGPS={false}>
                     <QrCodeIcon color={'white'} size={22} />
@@ -814,8 +817,11 @@ export default ({
                       setSucessModalOpen(false);
                       setFailModalOpen(false);
                       setWorkingTYPE('QR');
-                      utils.handleCameraPermission(setQrCameraModalOpen1);
-                      utils.handleLocationPermission(setLat, setLong);
+                      utils.handleQrCameraPermissino(
+                        setLat,
+                        setLong,
+                        setQrCameraModalOpen1,
+                      );
                     }}
                     hasGPS={true}>
                     <QrCodeIcon color={'white'} size={22} />
