@@ -80,9 +80,10 @@ export default ({route: {params}}) => {
   const [noEnd, setNoEnd] = useState<boolean>(
     !WORK_OFF_TIME && !UPDATED_END && !END_TIME ? true : false,
   );
-  const [isStartTimeModalVisible, setIsStartTimeModalVisible] = useState<
-    boolean
-  >(false);
+  const [
+    isStartTimeModalVisible,
+    setIsStartTimeModalVisible,
+  ] = useState<boolean>(false);
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );

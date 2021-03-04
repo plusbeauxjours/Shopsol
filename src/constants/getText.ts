@@ -2,9 +2,9 @@ const https = require('https');
 
 const yourWebHookURL =
   'https://hooks.slack.com/services/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'; // PUT YOUR WEBHOOK URL HERE
+// 'https://hooks.slack.com/services/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'
 const userAccountNotification = {
   username: 'CODEPUSH💪', // This will appear as user name who posts the message
-  text: '새로운 Codepush가 등록됩니다.', // text
   icon_emoji: '✅', // User icon, you can also use custom icons here
   attachments: [
     {

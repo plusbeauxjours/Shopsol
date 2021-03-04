@@ -11,12 +11,11 @@
     "postcodepush:android": "node src/constants/getText.ts $(date +'%y.%m.%d.%T') $'Android'",
     "codepush:ios": "appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-ios -d Production",
     "postcodepush:ios": "node src/constants/getText.ts $(date +'%y.%m.%d.%T') $'IOS'",
-    "codepush": "codepush:android & codepush:ios",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "te": "node src/constants/getText.ts $(date +'%y.%m.%d.%T') $'IOS'"
+    "te": "node src/constants/getText.ts $(date +'%y.%m.%d.%T') $'Android'"
   },
   "dependencies": {
     "@codler/react-native-keyboard-aware-scroll-view": "1.0.1",
