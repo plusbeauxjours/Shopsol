@@ -472,18 +472,22 @@ export default ({
                 <Text>출퇴근 허용거리</Text>
                 <HelpCircleIcon />
               </RowTouchable>
-              <RequestBorderButton onPress={() => setModalVisible4(true)}>
-                <RequestBorderText>
-                  {distance == '-1'
-                   ? '허용거리 설정'
-                   : distance == '-1'
-                   ? '거리 제한 없음'
-                   : distance == '-2'
-                   ? '재택근무'
-                   : Number(distance) < 1000
-                   ? distance + 'm'
-                   : Number(distance) / 1000 + 'km'}
-                </RequestBorderText>
+              <RequestBorderButton
+                style={{height: 34}}
+                onPress={() => setModalVisible4(true)}>
+                {distance == '0' ? (
+                  <RequestBorderText>허용거리 설정</RequestBorderText>
+                ) : distance == '-1' ? (
+                  <RequestBorderText style={{fontSize: 12}}>
+                    재택근무 (거리 제한 없음)
+                  </RequestBorderText>
+                ) : Number(distance) < 1000 ? (
+                  <RequestBorderText>{distance}m</RequestBorderText>
+                ) : (
+                  <RequestBorderText>
+                    {Number(distance) / 1000}km
+                  </RequestBorderText>
+                )}
               </RequestBorderButton>
             </InputCaseRow>
             <WhiteSpace />
@@ -699,11 +703,8 @@ export default ({
               <ModalList onPress={() => onPressDistance('4000')}>
                 <ModalText>4km</ModalText>
               </ModalList>
-              <ModalList onPress={() => onPressDistance('-2')}>
-                <ModalText>재택근무</ModalText>
-              </ModalList>
               <ModalList onPress={() => onPressDistance('-1')}>
-                <ModalText>거리 제한 없음</ModalText>
+                <ModalText>재택근무 (거리 제한 없음)</ModalText>
               </ModalList>
               <SubmitBtnContainer onPress={() => setModalVisible4(false)}>
                 <SubmitBtnText>닫기</SubmitBtnText>
