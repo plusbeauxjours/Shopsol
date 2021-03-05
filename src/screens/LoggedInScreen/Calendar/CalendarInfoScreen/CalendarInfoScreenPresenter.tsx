@@ -3,17 +3,20 @@ import {Agenda} from 'react-native-calendars';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
+import {Dimensions} from 'react-native';
+import {useHeaderHeight} from '@react-navigation/stack';
 
 import {DownIcon, AddIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import CalendarInfoScreenCard from './CalendarInfoScreenCard';
-import {useNavigation} from '@react-navigation/native';
-import moment from 'moment';
 
 interface IWeekend {
   weekend: string;
 }
 
+const View = styled.View``;
 const GreyText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   position: absolute;
@@ -92,7 +95,11 @@ export default ({
   MANAGER_CALLED,
   onRefresh,
 }) => {
+  const headerHeight = useHeaderHeight();
   const navigation = useNavigation();
+
+  const {height} = Dimensions.get('screen');
+
   const rowHasChanged = (r1, r2) => r1 !== r2;
   const renderKnob = () => (
     <KnobIconContainer>
@@ -172,7 +179,7 @@ export default ({
   );
 
   return (
-    <>
+    <View style={{height: height - headerHeight}}>
       <Agenda
         items={CALENDAR_DATA}
         renderItem={renderItem}
@@ -266,6 +273,6 @@ export default ({
           </AddButton>
         </AddButtonContainer>
       )}
-    </>
+    </View>
   );
 };
