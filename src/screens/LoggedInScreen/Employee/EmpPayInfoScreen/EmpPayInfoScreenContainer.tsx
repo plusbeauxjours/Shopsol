@@ -28,7 +28,7 @@ export default ({route: {params}}) => {
   const {EMPLOYEE_LIST: {workinglist = []} = {}} = useSelector(
     (state: any) => state.employeeReducer,
   );
-  
+
   const user = workinglist?.find((i) => i.EMP_SEQ == EMP_SEQ);
   const START_store = user?.START;
   const END_store = user?.END;
@@ -185,7 +185,7 @@ export default ({route: {params}}) => {
       EMP_NAME: params?.MEMBER_NAME || MEMBER_NAME,
       STORE_SEQ: STORE_SEQ,
       EMP_SEQ: params?.EMP_SEQ || EMP_SEQ,
-      from: 'EmployeeInfoScreen',
+      from: 'EmpPayInfoScreen',
       onRefresh: fetchData,
       IMAGE: params?.image,
       IS_MANAGER: params?.IS_MANAGER || IS_MANAGER,

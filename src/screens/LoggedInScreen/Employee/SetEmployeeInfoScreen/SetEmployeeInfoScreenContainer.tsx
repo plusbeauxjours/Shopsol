@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {setAlertVisible, setAlertInfo} from '~/redux/alertSlice';
 import SetEmployeeInfoScreenPresenter from './SetEmployeeInfoScreenPresenter';
 import {setSplashVisible} from '~/redux/splashSlice';
-import {updateEMPLOYEE_LIST} from '~/redux/employeeSlice';
+import {updateEMPLOYEE_LIST, setEMPLOYEE_LIST} from '~/redux/employeeSlice';
 import api from '~/constants/LoggedInApi';
 
 export default ({route: {params}}) => {
@@ -406,6 +406,10 @@ export default ({route: {params}}) => {
         });
 
         if (data.message === 'SUCCESS') {
+          const {data} = await api.getEmpLists(STORE_SEQ);
+          if (data.message == 'SUCCESS') {
+            dispatch(setEMPLOYEE_LIST({EMPLOYEE_LIST: data, STORE_SEQ}));
+          }
           if (from === 'ManageInviteEmployeeScreen') {
             navigation.navigate('EmployeeScheduleMainScreen', {
               CALCULATE_DAY,
@@ -417,9 +421,15 @@ export default ({route: {params}}) => {
               probationDATE: probationPeriodSet ? probationPeriod : null,
               probationPercent: probationPercent,
             });
-          } else {
+          } else if (from === 'EmployeeInfoScreen') {
+            navigation.navigate('EmployeeListScreen');
             alertModal('직원정보가 수정되었습니다.');
+          } else if (from === 'EmpPayInfoScreen') {
+            navigation.navigate('PaymentInfoScreen');
+            alertModal('직원정보가 수정되었습니다.');
+          } else {
             navigation.goBack();
+            alertModal('직원정보가 수정되었습니다.');
           }
         }
       } catch (e) {

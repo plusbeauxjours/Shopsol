@@ -607,13 +607,7 @@ export default ({
                 </InputCaseRow>
               </InputCase>
               <InputCase height={160}>
-                <Touchable
-                  onPress={() => {
-                    setEndDayCheck(!endDayCheck);
-                    startDay
-                      ? setEndDay(moment(startDay).add(1, 'days').toDate())
-                      : setEndDay(moment().add(1, 'days').toDate());
-                  }}>
+                <Touchable onPress={() => setEndDayCheck(!endDayCheck)}>
                   <SideBox>
                     {endDayCheck ? (
                       <CheckBoxOnIcon size={22} />
@@ -647,7 +641,14 @@ export default ({
                         <Text>퇴사일</Text>
                         <RequestBorderButton
                           isChecked={endDaySet}
-                          onPress={() => setIsEndDayModalVisible(true)}>
+                          onPress={() => {
+                            setIsEndDayModalVisible(true);
+                            startDay && moment() < moment(startDay)
+                              ? setEndDay(
+                                  moment(startDay).add(1, 'days').toDate(),
+                                )
+                              : setEndDay(moment().toDate());
+                          }}>
                           <RequestBorderText isChecked={endDaySet}>
                             {endDaySet
                               ? moment(endDay).format('YYYY년 M월 D일')

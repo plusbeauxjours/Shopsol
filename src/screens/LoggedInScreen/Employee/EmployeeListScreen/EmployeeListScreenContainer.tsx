@@ -57,9 +57,7 @@ export default () => {
   };
 
   useEffect(() => {
-    if (EMPLOYEE_LIST_SEQ != STORE_SEQ) {
-      fetchData();
-    }
+    fetchData();
   }, []);
 
   return (

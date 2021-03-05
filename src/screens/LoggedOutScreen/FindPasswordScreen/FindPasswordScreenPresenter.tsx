@@ -201,6 +201,7 @@ export default ({
                   <NameText>새 비밀번호</NameText>
                   <TextinputCase>
                     <TextInput
+                      clearTextOnFocus={true}
                       placeholder={'영문, 숫자 조합 6자 이상'}
                       placeholderTextColor={'#E5E5E5'}
                       selectionColor={styleGuide.palette.greyColor}
@@ -208,12 +209,21 @@ export default ({
                         setPassword('');
                         setPasswordCheck('');
                       }}
-                      onChangeText={(text) => passwordCheckerFn(text, false)}
+                      onChangeText={(text) => {
+                        if (!/^[A-Za-z0-9]*$/.test(text)) {
+                          setIsPasswordSeen(true);
+                        } else {
+                          if (isPasswordSeen && password.length == 0) {
+                            setIsPasswordSeen(false);
+                          } else {
+                            passwordCheckerFn(text, false);
+                          }
+                        }
+                      }}
                       value={password}
                       secureTextEntry={isPasswordSeen ? false : true}
                       autoCapitalize="none"
                       autoCorrect={false}
-                      keyboardType={'email-address'}
                     />
                     <CheckPasswordBtn
                       onPress={() => setIsPasswordSeen(!isPasswordSeen)}
@@ -241,15 +251,31 @@ export default ({
                   <NameText>새 비밀번호 확인</NameText>
                   <TextinputCase>
                     <TextInput
+                      clearTextOnFocus={true}
                       placeholder={'새 비밀번호 확인'}
                       placeholderTextColor={'#E5E5E5'}
                       selectionColor={styleGuide.palette.greyColor}
-                      onChangeText={(text) => passwordCheckerFn(text, true)}
+                      onFocus={() => {
+                        setPasswordCheck('');
+                      }}
+                      onChangeText={(text) => {
+                        if (!/^[A-Za-z0-9]*$/.test(text)) {
+                          setIsPasswordCheckSeen(true);
+                        } else {
+                          if (
+                            isPasswordCheckSeen &&
+                            passwordCheck.length == 0
+                          ) {
+                            setIsPasswordCheckSeen(false);
+                          } else {
+                            passwordCheckerFn(text, true);
+                          }
+                        }
+                      }}
                       value={passwordCheck}
                       secureTextEntry={isPasswordCheckSeen ? false : true}
                       autoCapitalize="none"
                       autoCorrect={false}
-                      keyboardType={'email-address'}
                     />
                     <CheckPasswordBtn
                       onPress={() =>
