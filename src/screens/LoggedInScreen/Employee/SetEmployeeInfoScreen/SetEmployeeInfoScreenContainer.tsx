@@ -27,10 +27,8 @@ export default ({route: {params}}) => {
     onRefresh,
     IMAGE = null,
     IS_MANAGER = null,
-    EMP_PAY_TYPE = null,
     START = null,
     END = null,
-    PAY = null,
     mobileNo = null,
   } = params;
 
@@ -521,7 +519,7 @@ export default ({route: {params}}) => {
         insuranceChecked[3] = false;
       }
       setMINPAY(data.resultdata.MINPAY);
-      if (from === 'EmployeeInfoScreen') {
+      if (from === 'EmployeeInfoScreen' || 'EmpPayInfoScreen') {
         setStartDay(data.result.START);
         setInitStartDay(data.result.START);
         setInitSTART(data.result.START);
@@ -717,10 +715,8 @@ export default ({route: {params}}) => {
       probationPeriodSet={probationPeriodSet}
       setProbationPeriodSet={setProbationPeriodSet}
       IS_MANAGER={IS_MANAGER}
-      EMP_PAY_TYPE={EMP_PAY_TYPE}
       START={START}
       END={END}
-      PAY={PAY}
       MINPAY={MINPAY}
       mobileNo={mobileNo}
       CALCULATE_DAY={CALCULATE_DAY}

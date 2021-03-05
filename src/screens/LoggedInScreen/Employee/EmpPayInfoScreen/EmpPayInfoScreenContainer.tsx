@@ -189,8 +189,6 @@ export default ({route: {params}}) => {
       onRefresh: fetchData,
       IMAGE: params?.image,
       IS_MANAGER: params?.IS_MANAGER || IS_MANAGER,
-      EMP_PAY_TYPE: params?.EMP_PAY_TYPE || maindata?.PAY_TYPE,
-      PAY: params?.PAY || maindata?.PAY,
       START: params?.START || START,
       END: params?.END || END,
     });

@@ -452,10 +452,8 @@ export default ({
   probationPeriodSet,
   setProbationPeriodSet,
   IS_MANAGER,
-  EMP_PAY_TYPE,
   START,
   END,
-  PAY,
   MINPAY,
   mobileNo,
   CALCULATE_DAY,
@@ -476,7 +474,6 @@ export default ({
   const click2Transition = useTransition(click2);
   const click4Transition = useTransition(click4);
   const click5Transition = useTransition(click5);
-
   const EmployeeCard = () => {
     return (
       <TopArea>
@@ -514,14 +511,6 @@ export default ({
                 </EmployeeCardText>
               </Row>
             </Touchable>
-            {EMP_PAY_TYPE && PAY && (
-              <EmployeeCardText>
-                {EMP_PAY_TYPE === '0' && '시급'}
-                {EMP_PAY_TYPE === '1' && '일급'}
-                {EMP_PAY_TYPE === '2' && '월급'}&nbsp;
-                {PAY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-              </EmployeeCardText>
-            )}
             {initSTART && (
               <>
                 {moment(initSTART) < moment() ? (
