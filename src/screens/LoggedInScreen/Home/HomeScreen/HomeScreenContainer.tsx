@@ -489,12 +489,7 @@ export default ({route: {params}}) => {
     },
     [],
   );
-  console.log(
-    'STORE_DATA.emplist',
-    STORE_DATA.emplist,
-    'STORE_DATA.workinglist',
-    STORE_DATA.workinglist,
-  );
+
   return (
     <HomeScreenPresenter
       STORE_DATA={STORE_DATA}

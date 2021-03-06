@@ -328,7 +328,7 @@ export default {
     }
   },
   appVersion: '2.2.3',
-  superUserAppVersion: '2.2.3B',
+  superUserAppVersion: '2.2.3C',
   miniPay: '8,720',
   calculateDay: 23,
   renderWeekDay: (weekDay) => {

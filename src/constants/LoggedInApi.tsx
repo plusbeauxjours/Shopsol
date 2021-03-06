@@ -245,4 +245,10 @@ export default {
   confirmQR: (data: any) => callApi('post', '/auth/sawQRMsg/', data),
   setCustomMenu: (data: any) =>
     callApi('post', '/auth/updateCustomMenu/', data),
+  getIosVersion: () => callApi('get', `/auth/superCodePushVersionios`),
+  getAndroidVersion: () => callApi('get', `/auth/superCodePushVersionios`),
+  setIosVersion: (data: any) =>
+    callApi('put', '/auth/superCodePushVersionios', data),
+  setAndroidVersion: (data: any) =>
+    callApi('put', '/auth/superCodePushVersionios', data),
 };
