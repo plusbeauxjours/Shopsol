@@ -519,7 +519,7 @@ export default ({route: {params}}) => {
         insuranceChecked[3] = false;
       }
       setMINPAY(data.resultdata.MINPAY);
-      if (from === 'EmployeeInfoScreen' || 'EmpPayInfoScreen') {
+      if (from === 'EmployeeInfoScreen' || from === 'EmpPayInfoScreen') {
         setStartDay(data.result.START);
         setInitStartDay(data.result.START);
         setInitSTART(data.result.START);

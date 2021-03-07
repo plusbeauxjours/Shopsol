@@ -3,8 +3,8 @@ const http = require('http');
 const request = require('request')
 
 const slackUrl =
-  'https://hooks.slack.com/services/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'; // PUT YOUR WEBHOOK URL HERE
-// 'https://hooks.slack.com/services/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'
+  // 'https://hooks.slack.com/services/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'; // PUT YOUR WEBHOOK URL HERE
+  'https://hooks.slack.com/services/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'
 
 const slackBody = {
   username: 'CODEPUSH💪',
