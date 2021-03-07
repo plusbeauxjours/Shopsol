@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import HomeScreenPresenter from './HomeScreenPresenter';
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
-import {updateQR_Num, setSTORE_DATA} from '~/redux/storeSlice';
+import {updateQR_Num, resetSTORE_DATA} from '~/redux/storeSlice';
 import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {getStore} from '~/redux/storeSlice';
@@ -34,7 +34,6 @@ export default ({route: {params}}) => {
     DEVICE_PLATFORM,
     GENDER,
   } = useSelector((state: any) => state.userReducer);
-  const [workingLoading, setWorkingLoading] = useState<boolean>(false);
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
@@ -46,9 +45,15 @@ export default ({route: {params}}) => {
   const [workingTYPE, setWorkingTYPE] = useState<string>('QR');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [editMode, setEditMode] = useState<boolean>(false);
+
+  const [checkWorkingLoading, setCheckWorkingLoading] = useState<boolean>(
+    false,
+  );
+  const [workingLoading, setWorkingLoading] = useState<boolean>(false);
   const [initLoading, setInitLoading] = useState<boolean>(
     STORE_SEQ != STORE_DATA?.resultdata?.STORE_SEQ ? true : false,
   );
+
   const [resultCode, setResultCode] = useState<string>('');
   const [resultMessage, setResultMessage] = useState<string>('');
   const [resultCode2, setResultCode2] = useState<string>('');
@@ -306,14 +311,17 @@ export default ({route: {params}}) => {
   };
 
   const fetchData = async () => {
-    setWorkingModalOpen(false);
     try {
+      setWorkingModalOpen(false);
+      setCheckWorkingLoading(true);
       const {data} = await api.getStoreInfo({
         STORE,
         MEMBER_SEQ,
         STORE_SEQ,
       });
-      if (data.resultmsg === '1') {
+      if (!data?.WORKFLAG && STORE === '0') {
+        gotoSelectStoreFn();
+      } else if (data.resultmsg === '1') {
         setCustomMenuIndex(data?.menu);
         dispatch(getStore(data));
         Image.getSize(
@@ -338,6 +346,7 @@ export default ({route: {params}}) => {
     } catch (e) {
       console.log(e);
     } finally {
+      setCheckWorkingLoading(false);
       setInitLoading(false);
     }
   };
@@ -367,7 +376,7 @@ export default ({route: {params}}) => {
 
   const gotoSelectStoreFn = () => {
     dispatch(resetCALENDAR_DATA());
-    dispatch(setSTORE_DATA({STORE_DATA: {}}));
+    dispatch(resetSTORE_DATA());
     navigation.reset({
       index: 0,
       routes: [{name: 'SelectStoreScreen'}],
@@ -519,7 +528,6 @@ export default ({route: {params}}) => {
       workingTYPE={workingTYPE}
       setWorkingTYPE={setWorkingTYPE}
       errorMessage={errorMessage}
-      workingLoading={workingLoading}
       isWorkingMode={isWorkingMode}
       setIsWorkingMode={setIsWorkingMode}
       editMode={editMode}
@@ -528,6 +536,8 @@ export default ({route: {params}}) => {
       addCUSTOM_MENU_EMP_Fn={addCUSTOM_MENU_EMP_Fn}
       removeCUSTOM_MENU_EMP_Fn={removeCUSTOM_MENU_EMP_Fn}
       AVATAR={AVATAR}
+      checkWorkingLoading={checkWorkingLoading}
+      workingLoading={workingLoading}
       initLoading={initLoading}
       gotoScreen={gotoScreen}
       refreshing={refreshing}

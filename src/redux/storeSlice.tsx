@@ -20,7 +20,9 @@ const storeSlice = createSlice({
         state.STORE_DATA.resultdata.QR_Num = QR_Num;
       }
     },
-
+    resetSTORE_DATA(state) {
+      state.STORE_DATA = {};
+    },
     setSTORE_DATA(state, action) {
       const {payload: STORE_DATA} = action;
       state.MANAGER_CALLED =
@@ -86,6 +88,7 @@ const storeSlice = createSlice({
 });
 
 export const {
+  resetSTORE_DATA,
   updateQR_Num,
   setSTORE_DATA,
   selectSTORE,

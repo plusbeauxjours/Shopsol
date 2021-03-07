@@ -63,7 +63,7 @@ export default ({url, setModalVisible}) => {
     return () => {
       StatusBar.setHidden(false);
     };
-  }, []);
+  });
 
   return (
     <>

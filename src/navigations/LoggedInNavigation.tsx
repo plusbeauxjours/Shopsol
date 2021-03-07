@@ -1,5 +1,7 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect} from 'react';
+import {AppState} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -88,14 +90,70 @@ import ChecklistShareBtn from '~/components/Header/ChecklistShareBtn';
 
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
+import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
+import {setSTORE_DATA} from '~/redux/storeSlice';
+import api from '~/constants/LoggedInApi';
 
 const LoggedInNavigation = createStackNavigator();
-export default () => {
+export default ({route}) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const {STORE_DATA: {resultdata: {STORE_SEQ = null} = {}} = {}} = useSelector(
+    (state: any) => state.storeReducer,
+  );
+  const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
+  const {visible} = useSelector((state: any) => state.splashReducer);
   const alert = useSelector((state: any) => state.alertReducer);
+
   const headerStyle = utils.isAndroid() &&
     !isIphoneX() && {
       height: 56,
     };
+
+  const gotoSelectStoreFn = () => {
+    dispatch(resetCALENDAR_DATA());
+    dispatch(setSTORE_DATA({STORE_DATA: {}}));
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'SelectStoreScreen'}],
+    });
+  };
+
+  const handleAppStateChange = async () => {
+    console.log('AppState.currentState', AppState.currentState);
+    if (
+      AppState.currentState.match('active') &&
+      STORE_SEQ &&
+      MEMBER_SEQ &&
+      STORE &&
+      STORE === '0'
+    ) {
+      try {
+        const {data} = await api.getStoreInfo({
+          STORE,
+          MEMBER_SEQ,
+          STORE_SEQ,
+        });
+        if (!data?.WORKFLAG) {
+          gotoSelectStoreFn();
+        }
+      } catch (e) {
+        // 에러가 발생하는 경우 (STORE가 없을 때, MEMBER_SEQ가 없을 때, STORE_SEQ가 없을때인데, )
+        console.log(e);
+      }
+    }
+  };
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, []);
 
   return (
     <React.Fragment>

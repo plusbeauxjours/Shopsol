@@ -460,7 +460,6 @@ export default ({
   workingTYPE,
   setWorkingTYPE,
   errorMessage,
-  workingLoading,
   isWorkingMode,
   setIsWorkingMode,
   editMode,
@@ -469,6 +468,8 @@ export default ({
   addCUSTOM_MENU_EMP_Fn,
   removeCUSTOM_MENU_EMP_Fn,
   AVATAR,
+  checkWorkingLoading,
+  workingLoading,
   initLoading,
   gotoScreen,
   refreshing,
@@ -803,6 +804,7 @@ export default ({
                         setQrCameraModalOpen1,
                       );
                     }}
+                    disabled={checkWorkingLoading}
                     hasGPS={false}>
                     <QrCodeIcon color={'white'} size={22} />
                     <BoxText style={{marginLeft: 5}}>출퇴근하기</BoxText>
@@ -823,6 +825,7 @@ export default ({
                         setQrCameraModalOpen1,
                       );
                     }}
+                    disabled={checkWorkingLoading}
                     hasGPS={true}>
                     <QrCodeIcon color={'white'} size={22} />
                     <BoxText style={{marginLeft: 5}}>QR출퇴근하기</BoxText>
@@ -840,6 +843,7 @@ export default ({
                         setIsGpsVisible,
                       );
                     }}
+                    disabled={checkWorkingLoading}
                     hasGPS={true}>
                     <LocationIcon color={'white'} size={22} />
                     <BoxText style={{marginLeft: 5}}>GPS출퇴근하기</BoxText>
@@ -860,6 +864,7 @@ export default ({
                         setIsGpsVisible,
                       );
                     }}
+                    disabled={checkWorkingLoading}
                     hasGPS={false}>
                     <LocationIcon color={'white'} size={22} />
                     <BoxText style={{marginLeft: 5}}>출퇴근하기</BoxText>

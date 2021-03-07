@@ -20,7 +20,7 @@ const slackBody = {
         },
         {
           title: 'SuperUser Version',
-          value: '2.2.3C',
+          value: '2.2.3D',
           short: true,
         },
       ],

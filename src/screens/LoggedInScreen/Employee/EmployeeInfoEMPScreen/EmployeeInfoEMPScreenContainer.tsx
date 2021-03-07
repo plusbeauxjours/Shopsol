@@ -273,7 +273,7 @@ export default () => {
     } catch (e) {
       console.log(e);
       dispatch(setSplashVisible({visible: false}));
-      alertModal('통신이 원활하지 않습니다.2');
+      alertModal('통신이 원활하지 않습니다.');
     } finally {
       dispatch(setSplashVisible({visible: false}));
     }
