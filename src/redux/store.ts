@@ -4,6 +4,8 @@ import {
     persistReducer,
 } from "redux-persist";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import thunk from 'redux-thunk'
+
 import rootReducer from './rootReducer';
 
 const persistConfig = {
@@ -15,10 +17,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
     reducer: persistedReducer,
-    middleware: getDefaultMiddleware({
-        immutableCheck: false,
-        serializableCheck: false
-    })
+    // middleware: getDefaultMiddleware({
+    //     immutableCheck: false,
+    //     serializableCheck: false
+    // }),
+    middleware: [thunk],
+    devTools: process.env.NODE_ENV !== 'production',
 })
 
 export const persistor = persistStore(store);
