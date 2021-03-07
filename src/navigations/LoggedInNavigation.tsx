@@ -123,7 +123,7 @@ export default ({route}) => {
   const handleAppStateChange = async () => {
     console.log('AppState.currentState', AppState.currentState);
     if (
-      AppState.currentState.match('active') &&
+      AppState.currentState === 'active' &&
       STORE_SEQ &&
       MEMBER_SEQ &&
       STORE &&
