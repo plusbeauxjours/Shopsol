@@ -68,15 +68,7 @@ const PhoneText = styled.Text`
   font-size: 14px;
 `;
 
-export default ({
-  key,
-  isLast,
-  join_emp_seq,
-  EMP_NAME,
-  PHONE,
-  STORE_SEQ,
-  IMAGE,
-}) => {
+export default ({isLast, join_emp_seq, EMP_NAME, PHONE, STORE_SEQ, IMAGE}) => {
   const dispatch = useDispatch();
 
   const [isSent, setIsSent] = useState<boolean>(false);

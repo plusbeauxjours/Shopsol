@@ -93,17 +93,13 @@ import utils from '~/constants/utils';
 import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
 import {setSTORE_DATA} from '~/redux/storeSlice';
 import api from '~/constants/LoggedInApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoggedInNavigation = createStackNavigator();
-export default ({route}) => {
+export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const {STORE_DATA: {resultdata: {STORE_SEQ = null} = {}} = {}} = useSelector(
-    (state: any) => state.storeReducer,
-  );
-  const {STORE, MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
-  const {visible} = useSelector((state: any) => state.splashReducer);
   const alert = useSelector((state: any) => state.alertReducer);
 
   const headerStyle = utils.isAndroid() &&
@@ -122,6 +118,9 @@ export default ({route}) => {
 
   const handleAppStateChange = async () => {
     console.log('AppState.currentState', AppState.currentState);
+    const STORE = await AsyncStorage.getItem('STORE');
+    const STORE_SEQ = await AsyncStorage.getItem('STORE_SEQ');
+    const MEMBER_SEQ = await AsyncStorage.getItem('MEMBER_SEQ');
     if (
       AppState.currentState === 'active' &&
       STORE_SEQ &&
@@ -129,6 +128,7 @@ export default ({route}) => {
       STORE &&
       STORE === '0'
     ) {
+      console.log(STORE, STORE_SEQ, MEMBER_SEQ);
       try {
         const {data} = await api.getIsRetiree(STORE_SEQ, MEMBER_SEQ);
         console.log(data);

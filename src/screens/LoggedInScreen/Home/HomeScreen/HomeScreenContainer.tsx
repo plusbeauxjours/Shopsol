@@ -10,6 +10,7 @@ import utils from '~/constants/utils';
 import api from '~/constants/LoggedInApi';
 import {getStore} from '~/redux/storeSlice';
 import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default ({route: {params}}) => {
   const mapRef = useRef(null);
@@ -468,6 +469,11 @@ export default ({route: {params}}) => {
   //     }, 500);
   //   }
   // };
+  const setAsyncStorage = async () => {
+    AsyncStorage.setItem('STORE', STORE);
+    AsyncStorage.setItem('STORE_SEQ', STORE_SEQ.toString());
+    AsyncStorage.setItem('MEMBER_SEQ', MEMBER_SEQ);
+  };
 
   useEffect(() => {
     // if (utils.isAndroid()) {
@@ -490,6 +496,7 @@ export default ({route: {params}}) => {
     setIsGpsVisible(false);
     fetchData();
     checkVersion();
+    setAsyncStorage();
   }, []);
 
   useEffect(

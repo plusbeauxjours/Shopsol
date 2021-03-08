@@ -68,7 +68,6 @@ const PhoneText = styled.Text`
 `;
 
 export default ({
-  key,
   data,
   isLast,
   EMP_NAME,
