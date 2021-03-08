@@ -130,16 +130,12 @@ export default ({route}) => {
       STORE === '0'
     ) {
       try {
-        const {data} = await api.getStoreInfo({
-          STORE,
-          MEMBER_SEQ,
-          STORE_SEQ,
-        });
+        const {data} = await api.getIsRetiree(STORE_SEQ, MEMBER_SEQ);
+        console.log(data);
         if (!data?.WORKFLAG) {
           gotoSelectStoreFn();
         }
       } catch (e) {
-        // 에러가 발생하는 경우 (STORE가 없을 때, MEMBER_SEQ가 없을 때, STORE_SEQ가 없을때인데, )
         console.log(e);
       }
     }

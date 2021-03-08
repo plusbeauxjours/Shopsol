@@ -247,4 +247,9 @@ export default {
     callApi('post', '/auth/updateCustomMenu/', data),
   getIosVersion: () => callApi('get', `/auth/superCodePushVersionios`),
   getAndroidVersion: () => callApi('get', `/auth/superCodePushVersionandroid`),
+  getIsRetiree: (STORE_SEQ: string, MEMBER_SEQ: string) =>
+    callApi(
+      'get',
+      `/auth/isRetiree?STORE_SEQ=${STORE_SEQ}&MEMBER_SEQ=${MEMBER_SEQ}`,
+    ),
 };
