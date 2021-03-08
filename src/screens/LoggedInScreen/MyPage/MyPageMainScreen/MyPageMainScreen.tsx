@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -10,6 +10,7 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {ForwardIcon, LogoutIcon} from '~/constants/Icons';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
+import api from '~/constants/LoggedInApi';
 
 const BackGround = styled.View`
   flex: 1;
@@ -90,6 +91,8 @@ export default () => {
     (state: any) => state.userReducer,
   );
 
+  const [superUserAppVersion, setSuperUserAppVersion] = useState<string>('');
+
   const logOut = () => {
     const params = {
       alertType: 'confirm',
@@ -119,6 +122,24 @@ export default () => {
       <ForwardIcon />
     </Arrow>
   );
+
+  const fetchVersion = async () => {
+    try {
+      if (utils.isAndroid()) {
+        const {data} = await api.getAndroidVersion();
+        setSuperUserAppVersion(data?.version);
+      } else {
+        const {data} = await api.getAndroidVersion();
+        setSuperUserAppVersion(data?.version);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchVersion();
+  }, []);
 
   return (
     <BackGround>
@@ -183,9 +204,13 @@ export default () => {
             <Card disabled={true}>
               <CardText>앱버전</CardText>
               <Arrow>
-                <BoxTitle>
-                  {IS_SUPER_USER ? utils.superUserAppVersion : utils.appVersion}
-                </BoxTitle>
+                {IS_SUPER_USER ? (
+                  <BoxTitle>
+                    {utils.appVersion} ({superUserAppVersion})
+                  </BoxTitle>
+                ) : (
+                  <BoxTitle>{utils.appVersion}</BoxTitle>
+                )}
               </Arrow>
             </Card>
             <Card onPress={() => logOut()}>

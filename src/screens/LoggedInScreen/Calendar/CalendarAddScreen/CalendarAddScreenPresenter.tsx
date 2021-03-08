@@ -188,7 +188,7 @@ const ModalPopup = styled.View`
   shadow-offset: 3px 3px;
   shadow-opacity: 0.5;
   shadow-radius: 3px;
-  background-color: ${utils.isAndroid
+  background-color: ${utils.isAndroid()
     ? styleGuide.palette.greyColor
     : 'rgba(0,0,0,0.7)'};
 `;

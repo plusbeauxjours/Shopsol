@@ -20,7 +20,7 @@ const slackBody = {
         },
         {
           title: 'SuperUser Version',
-          value: '2.2.3D',
+          value: process.argv[2],
           short: true,
         },
       ],
@@ -37,7 +37,7 @@ function requestSlackAPI(url, messageBody) {
   }
 }
 
-const androidVersionUrl = 'http://awsss.shop-sol.com:10001/api/auth/updateSuperCodePushVersionAndroid';
+const androidVersionUrl = `http://awsss.shop-sol.com:10001/api/auth/updateSuperCodePushVersionAndroid?version=${process.argv[2]}`;
 const iosVersionUrl = `http://awsss.shop-sol.com:10001/api/auth/updateSuperCodePushVersionios?version=${process.argv[2]}`;
 
 

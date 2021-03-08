@@ -35,7 +35,7 @@ export default ({route: {params}}) => {
   // EXIT
   const exitandroid = () => {
     dispatch(setAlertVisible(false));
-    if (utils.isAndroid) {
+    if (utils.isAndroid()) {
       BackHandler.exitApp();
       Linking.openURL(
         'https://play.google.com/store/apps/details?id=com.wesop.appshopsol',

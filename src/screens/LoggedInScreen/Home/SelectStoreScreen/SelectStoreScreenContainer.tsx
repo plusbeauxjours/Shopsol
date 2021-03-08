@@ -133,7 +133,7 @@ export default ({route: {params}}) => {
   useEffect(() => {
     requestUserPermission();
     fetchData();
-    // if (utils.isAndroid) {
+    // if (utils.isAndroid()) {
     //   if (STORE_NAME == '') {
     //     SharedStorage.set(
     //       JSON.stringify({
