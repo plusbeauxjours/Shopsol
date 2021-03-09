@@ -34,6 +34,7 @@ function requestSlackAPI(url, messageBody) {
     request({ method: "post", url, body: messageBody });
     return 'Ok'
   } catch (e) {
+    console.log(e)
     return 'Failed'
   }
 }
@@ -47,6 +48,7 @@ function requestServerAPI(url) {
     request({ method: "get", url });
     return 'Ok'
   } catch (e) {
+    console.log(e)
     return 'Failed'
   }
 }
@@ -61,5 +63,6 @@ function requestServerAPI(url) {
   );
   console.log('Message response', slackResponse);
   console.log('Version updated', versionResponse);
+  return;
 })();
 
