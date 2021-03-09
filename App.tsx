@@ -35,7 +35,7 @@ function App() {
   );
 
   appsFlyer.onInstallConversionData((res) => {
-    if (JSON.parse(res.data.is_first_launch) === true) {
+    if (JSON?.parse(res?.data?.is_first_launch) === true) {
       if (res.data.af_status === 'Non-organic') {
         var media_source = res.data.media_source;
         var campaign = res.data.campaign;
@@ -57,7 +57,7 @@ function App() {
     (res) => {
       const isFirstLaunch = res?.data?.is_first_launch;
 
-      if (isFirstLaunch && JSON.parse(isFirstLaunch) === true) {
+      if (isFirstLaunch && JSON?.parse(isFirstLaunch) === true) {
         if (res.data.af_status === 'Non-organic') {
           const media_source = res.data.media_source;
           const campaign = res.data.campaign;
