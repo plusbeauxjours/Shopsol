@@ -179,64 +179,47 @@ export default ({
   );
 
   return (
-    <View style={{height: height - headerHeight}}>
-      <Agenda
-        items={CALENDAR_DATA}
-        renderItem={renderItem}
-        renderEmptyDate={renderEmptyDate}
-        renderKnob={renderKnob}
-        markedDates={markedDates}
-        theme={{
-          agendaTodayColor: styleGuide.palette.primary,
-          selectedDayBackgroundColor: '#ddd',
-          todayTextColor: styleGuide.palette.primary,
-          'stylesheet.agenda.list': {
-            container: {
-              flexDirection: 'column',
+    <>
+      <View style={{height: height - headerHeight}}>
+        <Agenda
+          items={CALENDAR_DATA}
+          renderItem={renderItem}
+          renderEmptyDate={renderEmptyDate}
+          renderKnob={renderKnob}
+          markedDates={markedDates}
+          theme={{
+            agendaTodayColor: styleGuide.palette.primary,
+            selectedDayBackgroundColor: '#ddd',
+            todayTextColor: styleGuide.palette.primary,
+            'stylesheet.agenda.list': {
+              container: {
+                flexDirection: 'column',
+              },
             },
-          },
-        }}
-        refreshControl={null}
-        refreshing={loading}
-        onRefresh={() => onRefresh()}
-        monthFormat={'yyyy년 M월'}
-        renderDay={(day, item) => {
-          if (day) {
-            let DAY = '0';
-            if (new Date(day.timestamp).getDay().toString() == '0') {
-              DAY = '일';
-            } else if (new Date(day.timestamp).getDay().toString() == '1') {
-              DAY = '월';
-            } else if (new Date(day.timestamp).getDay().toString() == '2') {
-              DAY = '화';
-            } else if (new Date(day.timestamp).getDay().toString() == '3') {
-              DAY = '수';
-            } else if (new Date(day.timestamp).getDay().toString() == '4') {
-              DAY = '목';
-            } else if (new Date(day.timestamp).getDay().toString() == '5') {
-              DAY = '금';
-            } else {
-              DAY = '토';
-            }
-            if (item) {
-              return (
-                <Row>
-                  <Bold
-                    weekend={day.toString()}
-                    style={{
-                      color:
-                        DAY == '토'
-                          ? '#87ceeb'
-                          : DAY == '일'
-                          ? styleGuide.palette.redColor
-                          : 'black',
-                    }}>
-                    {day.month}월 {day.day}일 {DAY}요일
-                  </Bold>
-                </Row>
-              );
-            } else {
-              if (day !== undefined) {
+          }}
+          refreshControl={null}
+          refreshing={loading}
+          onRefresh={() => onRefresh()}
+          monthFormat={'yyyy년 M월'}
+          renderDay={(day, item) => {
+            if (day) {
+              let DAY = '0';
+              if (new Date(day.timestamp).getDay().toString() == '0') {
+                DAY = '일';
+              } else if (new Date(day.timestamp).getDay().toString() == '1') {
+                DAY = '월';
+              } else if (new Date(day.timestamp).getDay().toString() == '2') {
+                DAY = '화';
+              } else if (new Date(day.timestamp).getDay().toString() == '3') {
+                DAY = '수';
+              } else if (new Date(day.timestamp).getDay().toString() == '4') {
+                DAY = '목';
+              } else if (new Date(day.timestamp).getDay().toString() == '5') {
+                DAY = '금';
+              } else {
+                DAY = '토';
+              }
+              if (item) {
                 return (
                   <Row>
                     <Bold
@@ -253,16 +236,35 @@ export default ({
                     </Bold>
                   </Row>
                 );
+              } else {
+                if (day !== undefined) {
+                  return (
+                    <Row>
+                      <Bold
+                        weekend={day.toString()}
+                        style={{
+                          color:
+                            DAY == '토'
+                              ? '#87ceeb'
+                              : DAY == '일'
+                              ? styleGuide.palette.redColor
+                              : 'black',
+                        }}>
+                        {day.month}월 {day.day}일 {DAY}요일
+                      </Bold>
+                    </Row>
+                  );
+                }
               }
             }
-          }
-        }}
-        selected={moment().format('YYYY-MM-DD')}
-        rowHasChanged={rowHasChanged}
-        onDayPress={(date) => onDayPressFn(date)}
-        loadItemsForMonth={(date) => onChangeMonth(date)}
-        markingType={'multi-dot'}
-      />
+          }}
+          selected={moment().format('YYYY-MM-DD')}
+          rowHasChanged={rowHasChanged}
+          onDayPress={(date) => onDayPressFn(date)}
+          loadItemsForMonth={(date) => onChangeMonth(date)}
+          markingType={'multi-dot'}
+        />
+      </View>
       {(STORE == '1' || CALENDAR_EDIT == '1' || CALENDAR_EDIT == undefined) && (
         <AddButtonContainer>
           <AddButton
@@ -273,6 +275,6 @@ export default ({
           </AddButton>
         </AddButtonContainer>
       )}
-    </View>
+    </>
   );
 };

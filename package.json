@@ -10,7 +10,7 @@
     "codepush:android": "appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-android -d Production",
     "postcodepush:android": "node src/constants/getText.ts $(date +'%y.%m.%d.%T') $'Android'",
     "codepush:ios": "appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-ios -d Production",
-    "postcodepush:ios": "node src/constants/getText.ts $(date +'%y.%m.%d.%T') $'IOS'",
+    "postcodepush:ios": "node src/constants/getText.ts $(date +'%y.%m.%d.%T') $'Ios'",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
