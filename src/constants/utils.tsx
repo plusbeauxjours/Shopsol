@@ -129,6 +129,7 @@ export default {
           if (permission === 'granted') {
             Geolocation.getCurrentPosition(
               (position) => {
+                handle(true);
                 setLat(position.coords.latitude);
                 setLong(position.coords.longitude);
               },
@@ -143,7 +144,6 @@ export default {
                 showLocationDialog: true,
               },
             );
-            handle(true);
           } else {
             Alert.alert(
               '위치정보 권한 거절',
