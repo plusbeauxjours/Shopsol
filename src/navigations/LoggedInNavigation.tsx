@@ -141,15 +141,15 @@ export default () => {
     }
   };
 
-  useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange);
-  }, []);
+  // useEffect(() => {
+  //   AppState.addEventListener('change', handleAppStateChange);
+  // }, []);
 
-  useEffect(() => {
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     AppState.removeEventListener('change', handleAppStateChange);
+  //   };
+  // }, []);
 
   return (
     <React.Fragment>

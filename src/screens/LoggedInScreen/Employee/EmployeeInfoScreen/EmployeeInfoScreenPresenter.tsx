@@ -306,8 +306,6 @@ export default ({
   MANAGER_CALLED,
   START,
   END,
-  EMP_PAY_TYPE,
-  EMP_PAY,
   probationDATE,
   probationPercent,
   isFinishedEMP,

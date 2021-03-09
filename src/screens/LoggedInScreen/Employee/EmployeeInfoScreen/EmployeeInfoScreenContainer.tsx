@@ -61,8 +61,8 @@ export default ({route: {params}}) => {
       }`,
     ),
   );
-  const [PAY, setPAY] = useState<number>(0);
-  const [PAY_TYPE, setPAY_TYPE] = useState<string>('0');
+  const [PAY, setPAY] = useState<number>(user?.PAY || '0');
+  const [PAY_TYPE, setPAY_TYPE] = useState<string>(user?.PAY_TYPE || '0');
 
   const alertModal = (text) => {
     const params = {
@@ -406,6 +406,7 @@ export default ({route: {params}}) => {
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <EmployeeInfoScreenPresenter
       STORE={STORE}
@@ -438,8 +439,6 @@ export default ({route: {params}}) => {
       MANAGER_CALLED={MANAGER_CALLED}
       START={START}
       END={END}
-      EMP_PAY_TYPE={EMP_PAY_TYPE}
-      EMP_PAY={EMP_PAY}
       probationDATE={probationDATE}
       probationPercent={probationPercent}
       isFinishedEMP={isFinishedEMP}

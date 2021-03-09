@@ -23,6 +23,8 @@ function App() {
       devKey: 'HWrK6iFipjPUqDhwJUABpA',
       isDebug: false,
       appId: '1408364175',
+      onInstallConversionDataListener: true,
+      onDeepLinkListener: true,
     },
     (result) => {
       console.log('AppsFlyer SDK successfully initialized: ', result);
