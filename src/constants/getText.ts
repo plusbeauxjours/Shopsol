@@ -31,9 +31,10 @@ const slackBody = {
 function requestSlackAPI(url, messageBody) {
   try {
     messageBody = JSON.stringify(messageBody);
-    const data = request({ method: "post", url, body: messageBody });
+    request({ method: "post", url, body: messageBody });
+    return 'Ok'
   } catch (e) {
-    throw new Error('Failed to stringify messageBody', e);
+    return 'Failed'
   }
 }
 
@@ -44,24 +45,21 @@ const iosVersionUrl = `http://awsss.shop-sol.com:10001/api/auth/updateSuperCodeP
 function requestServerAPI(url) {
   try {
     request({ method: "get", url });
+    return 'Ok'
   } catch (e) {
-    throw new Error('Failed to stringify versionBody', e);
+    return 'Failed'
   }
 }
 
 (async function () {
-  try {
-    const slackResponse = await requestSlackAPI(
-      slackUrl,
-      slackBody,
-    );
-    const versionResponse = await requestServerAPI(
-      process.argv[3] == "Android" ? androidVersionUrl : iosVersionUrl,
-    );
-    console.log('Message response', slackResponse);
-    console.log('Version updated', versionResponse);
-  } catch (e) {
-    console.log('There was a error with the request', e);
-  }
+  const slackResponse = await requestSlackAPI(
+    slackUrl,
+    slackBody,
+  );
+  const versionResponse = await requestServerAPI(
+    process.argv[3] == "Android" ? androidVersionUrl : iosVersionUrl,
+  );
+  console.log('Message response', slackResponse);
+  console.log('Version updated', versionResponse);
 })();
 
