@@ -67,6 +67,9 @@ export default ({route: {params}}) => {
   const [banner1D, setBanner1D] = useState<number>(null);
   const [banner2D, setBanner2D] = useState<number>(null);
   const [customMenuIndex, setCustomMenuIndex] = useState<any>([]);
+  const [isModalToastVisible, setIsModalToastVisible] = useState<boolean>(
+    false,
+  );
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -168,96 +171,112 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  const modalToastFn = () => {
+    clearTimeout();
+    setIsModalToastVisible(true);
+    setTimeout(() => {
+      setIsModalToastVisible(false);
+    }, 1000);
+  };
+
   // 출근하기
   const goWorkFn = async (TYPE) => {
-    setActionTYPE('출근');
-    try {
-      setWorkingLoading(true);
-      await utils.handleLocationPermission(setLat, setLong);
-      const {data} = await api.attendanceWork({
-        STORE_ID: STORE_SEQ,
-        LAT: lat,
-        LONG: long,
-        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
-        MEMBER_SEQ,
-        TYPE,
-      });
+    if (lat === 0 && long === 0) {
+      modalToastFn();
+    } else {
+      setActionTYPE('출근');
+      try {
+        setWorkingLoading(true);
+        await utils.handleLocationPermission(setLat, setLong);
+        const {data} = await api.attendanceWork({
+          STORE_ID: STORE_SEQ,
+          LAT: lat,
+          LONG: long,
+          // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+          // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+          MEMBER_SEQ,
+          TYPE,
+        });
 
-      if (data.message === 'CONTRACT_END') {
-        setErrorMessage('해당 사업장 QR코드가 아닙니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'WORK_ON_SUCCESS') {
-        setSucessModalOpen(true);
-        setResultCode(data.resultCode);
-        setResultMessage(data.resultMessage);
-        setResultCode2(data.resultCode2);
-        setResultMessage2(data.resultMessage2);
-      } else if (data.message === 'SCHEDULE_EMPTY') {
-        setErrorMessage('오늘은 근무일이 아닙니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'SCHEDULE_EXIST') {
-        setErrorMessage('이미 출근처리를 완료했습니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'ALREADY_SUCCESS') {
-        setErrorMessage('이미 출근처리를 완료했습니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'FAR_STORE') {
-        setErrorMessage('사업장 도착 후 출근을 진행해주세요.');
-        setFailModalOpen(true);
-      } else if (data.message === 'FAIL') {
-        setFailModalOpen(true);
-      } else {
-        setFailModalOpen(true);
+        if (data.message === 'CONTRACT_END') {
+          setErrorMessage('해당 사업장 QR코드가 아닙니다.');
+          setFailModalOpen(true);
+        } else if (data.message === 'WORK_ON_SUCCESS') {
+          setSucessModalOpen(true);
+          setResultCode(data.resultCode);
+          setResultMessage(data.resultMessage);
+          setResultCode2(data.resultCode2);
+          setResultMessage2(data.resultMessage2);
+        } else if (data.message === 'SCHEDULE_EMPTY') {
+          setErrorMessage('오늘은 근무일이 아닙니다.');
+          setFailModalOpen(true);
+        } else if (data.message === 'SCHEDULE_EXIST') {
+          setErrorMessage('이미 출근처리를 완료했습니다.');
+          setFailModalOpen(true);
+        } else if (data.message === 'ALREADY_SUCCESS') {
+          setErrorMessage('이미 출근처리를 완료했습니다.');
+          setFailModalOpen(true);
+        } else if (data.message === 'FAR_STORE') {
+          setErrorMessage('사업장 도착 후 출근을 진행해주세요.');
+          setFailModalOpen(true);
+        } else if (data.message === 'FAIL') {
+          setFailModalOpen(true);
+        } else {
+          setFailModalOpen(true);
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setWorkingLoading(false);
       }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setWorkingLoading(false);
     }
   };
 
   // 퇴근하기
   const leaveWorkFn = async (TYPE) => {
-    setActionTYPE('퇴근');
-    try {
-      setWorkingLoading(true);
-      await utils.handleLocationPermission(setLat, setLong);
-      const {data} = await api.attendanceOffWork({
-        STORE_ID: STORE_SEQ,
-        LAT: lat,
-        LONG: long,
-        // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
-        // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
-        MEMBER_SEQ,
-        TYPE,
-      });
-      if (data.message == 'CONTRACT_END') {
-        setErrorMessage('해당 사업장 QR코드가 아닙니다');
-        setFailModalOpen(true);
-      } else if (data.message == 'SCHEDULE_EMPTY') {
-        setErrorMessage('일하는 시간이 아닙니다.');
-        setFailModalOpen(true);
-      } else if (data.message == 'ALREADY_SUCCESS') {
-        setErrorMessage('이미 퇴근하였습니다.');
-        setFailModalOpen(true);
-      } else if (data.message == 'WORK_OFF_SUCCESS') {
-        setSucessModalOpen(true);
-      } else if (data.message == 'NOWORK') {
-        setErrorMessage('출근기록이 없습니다.');
-        setFailModalOpen(true);
-      } else if (data.message === 'FAR_STORE') {
-        setErrorMessage('사업장 도착 후 퇴근을 진행해주세요.');
-        setFailModalOpen(true);
-      } else if (data.message == 'FAIL') {
-        setFailModalOpen(true);
-      } else {
-        setFailModalOpen(true);
+    if (lat === 0 && long === 0) {
+      modalToastFn();
+    } else {
+      setActionTYPE('퇴근');
+      try {
+        setWorkingLoading(true);
+        await utils.handleLocationPermission(setLat, setLong);
+        const {data} = await api.attendanceOffWork({
+          STORE_ID: STORE_SEQ,
+          LAT: lat,
+          LONG: long,
+          // LAT: Number(STORE_DATA.resultdata.LAT) + 0.002,
+          // LONG: Number(STORE_DATA.resultdata.LONG) + 0.002,
+          MEMBER_SEQ,
+          TYPE,
+        });
+        if (data.message == 'CONTRACT_END') {
+          setErrorMessage('해당 사업장 QR코드가 아닙니다');
+          setFailModalOpen(true);
+        } else if (data.message == 'SCHEDULE_EMPTY') {
+          setErrorMessage('일하는 시간이 아닙니다.');
+          setFailModalOpen(true);
+        } else if (data.message == 'ALREADY_SUCCESS') {
+          setErrorMessage('이미 퇴근하였습니다.');
+          setFailModalOpen(true);
+        } else if (data.message == 'WORK_OFF_SUCCESS') {
+          setSucessModalOpen(true);
+        } else if (data.message == 'NOWORK') {
+          setErrorMessage('출근기록이 없습니다.');
+          setFailModalOpen(true);
+        } else if (data.message === 'FAR_STORE') {
+          setErrorMessage('사업장 도착 후 퇴근을 진행해주세요.');
+          setFailModalOpen(true);
+        } else if (data.message == 'FAIL') {
+          setFailModalOpen(true);
+        } else {
+          setFailModalOpen(true);
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setWorkingLoading(false);
       }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setWorkingLoading(false);
     }
   };
 
@@ -584,6 +603,7 @@ export default ({route: {params}}) => {
       customMenuIndex={customMenuIndex}
       customMenu={customMenu}
       setCustomMenu={setCustomMenu}
+      isModalToastVisible={isModalToastVisible}
     />
   );
 };

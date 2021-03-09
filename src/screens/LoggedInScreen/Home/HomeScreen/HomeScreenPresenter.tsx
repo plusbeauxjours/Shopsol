@@ -375,6 +375,29 @@ const MainImageContainer = styled.View`
   justify-content: flex-end;
 `;
 
+const ModalPopupArea = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100px;
+  align-items: center;
+`;
+
+const ModalPopupText = styled.Text`
+  color: white;
+`;
+
+const ModalPopup = styled.View`
+  padding: 15px;
+  border-radius: 10px;
+  elevation: 6;
+  shadow-color: grey;
+  shadow-offset: 3px 3px;
+  shadow-opacity: 0.5;
+  shadow-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
 //0208 REMOVEQR
 // const ConfirmHalfBtnLeft = styled(Ripple)`
 //   height: 60px;
@@ -509,6 +532,7 @@ export default ({
   customMenuIndex,
   customMenu,
   setCustomMenu,
+  isModalToastVisible,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -1787,6 +1811,13 @@ export default ({
               <FooterText>닫기</FooterText>
             </Footer>
           </RNCamera>
+        )}
+        {isModalToastVisible && (
+          <ModalPopupArea>
+            <ModalPopup>
+              <ModalPopupText>위치정보를 불러오고 있습니다.</ModalPopupText>
+            </ModalPopup>
+          </ModalPopupArea>
         )}
       </Modal>
       <Modal
