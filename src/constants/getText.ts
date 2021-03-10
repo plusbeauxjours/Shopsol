@@ -3,8 +3,8 @@ const http = require('http');
 const request = require('request')
 
 const slackUrl =
-  // 'https://hooks.slack.com/services/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'; // TEST DM
-  'https://hooks.slack.com/services/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' // CHANNEL DM
+  'https://hooks.slack.com/services/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'; // TEST DM
+// 'https://hooks.slack.com/services/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' // CHANNEL DM
 
 const slackBody = {
   username: 'CODEPUSH💪',
@@ -63,6 +63,6 @@ function requestServerAPI(url) {
   );
   console.log('Message response', slackResponse);
   console.log('Version updated', versionResponse);
-  return;
+  return true;
 })();
 
