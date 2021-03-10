@@ -7421,6 +7421,13 @@ react-native-swipe-list-view@2.0.3:
   resolved "https://registry.npmjs.org/react-native-swipe-list-view/-/react-native-swipe-list-view-2.0.3.tgz"
   integrity sha512-EmMJii/5ioEbZ9pEDjMPxa21s09RbuKfB5BxWlY3Tt4rMH9FkAp9/vji9FmdXcAdbfYtYdEXag1feOCcWtoLOw==
 
+react-native-swiper@1.6.0-rc.3:
+  version "1.6.0-rc.3"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0-rc.3.tgz#ece82906d908c6a78a0b75fa41982ffc2cd2fb20"
+  integrity sha512-aZk6M7WsFdxlfHfS6OKb7gsaS3q7Z4Oqm8iTyJO7duE28EUK9kzfA2Cp5S6FdZkGXoWCXoUFGlzaO0lnhW/jtw==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-tab-view@2.15.1:
   version "2.15.1"
   resolved "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-2.15.1.tgz"

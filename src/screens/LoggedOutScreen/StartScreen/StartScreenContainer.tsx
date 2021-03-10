@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Platform, Linking, BackHandler} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
@@ -14,6 +15,32 @@ export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {DEVICE_PLATFORM} = useSelector((state: any) => state.userReducer);
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [SHOWN_APP_GUIDE_SCREEN, setSHOWN_APP_GUIDE_SCREEN] = useState<boolean>(
+    false,
+  );
+
+  const init = async () => {
+    const ASYNC_SHOWN_APP_GUIDE_SCREEN = await AsyncStorage.getItem(
+      'SHOWN_APP_GUIDE_SCREEN',
+    );
+    if (!ASYNC_SHOWN_APP_GUIDE_SCREEN) {
+      setSHOWN_APP_GUIDE_SCREEN(true);
+    }
+    return setLoading(false);
+  };
+
+  const setAsyncStorage = async () => {
+    setTimeout(() => {
+      setSHOWN_APP_GUIDE_SCREEN(false);
+      // await AsyncStorage.setItem('SHOWN_APP_GUIDE_SCREEN', 'true');
+    }, 200);
+  };
+  const removeAsyncStorage = async () => {
+    setSHOWN_APP_GUIDE_SCREEN(true);
+    await AsyncStorage.removeItem('SHOWN_APP_GUIDE_SCREEN');
+  };
 
   const checkVersion = async () => {
     try {
@@ -46,6 +73,10 @@ export default ({route: {params}}) => {
       );
     }
   };
+
+  useEffect(() => {
+    init();
+  }, []);
 
   const alertModal = (title, text) => {
     const params = {
@@ -80,8 +111,12 @@ export default ({route: {params}}) => {
 
   return (
     <StartScreenPresenter
+      loading={loading}
       gotoLogin={gotoLogin}
       gotoVerification={gotoVerification}
+      SHOWN_APP_GUIDE_SCREEN={SHOWN_APP_GUIDE_SCREEN}
+      setAsyncStorage={setAsyncStorage}
+      removeAsyncStorage={removeAsyncStorage}
     />
   );
 };

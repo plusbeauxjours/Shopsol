@@ -5,7 +5,9 @@ PODS:
   - AppCenter/Core (4.1.0)
   - AppCenterReactNativeShared (4.0.2):
     - AppCenter/Core (= 4.1.0)
-  - AppsFlyerFramework/Strict (6.2.1)
+  - AppsFlyerFramework (6.2.1):
+    - AppsFlyerFramework/Main (= 6.2.1)
+  - AppsFlyerFramework/Main (6.2.1)
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
@@ -321,7 +323,7 @@ PODS:
     - React-jsi (= 0.63.3)
   - React-jsinspector (0.63.3)
   - react-native-appsflyer (6.2.10):
-    - AppsFlyerFramework/Strict (= 6.2.1)
+    - AppsFlyerFramework (= 6.2.1)
     - React
   - react-native-camera (3.42.0):
     - React-Core
@@ -781,7 +783,7 @@ SPEC CHECKSUMS:
   React-jsi: df07aa95b39c5be3e41199921509bfa929ed2b9d
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
-  react-native-appsflyer: 132a8173e00c93ee2bf49a49dfffd17a994e4852
+  react-native-appsflyer: 113920ffa931c6144932168a2c2205fc2bd1c4ef
   react-native-camera: cf8a153d33138dcc457172fc3c33fdf4e5d288d2
   react-native-contacts: 23a5a68151740bae84d5d379545bf5c3579b0d94
   react-native-date-picker: 7b03feaea96db983f1de449e9d6d1dea4fa61010

@@ -460,7 +460,6 @@ export default ({route: {params}}) => {
 
   // // 사업장QR 스캔 //0208 REMOVEQR
   // const handleBarCodeScanned2 = async (codenumber) => {
-  //   console.log(codenumber, /^wes/.test(codenumber));
   //   await setQrCameraModalOpen2(false);
   //   if (/^wes/.test(codenumber)) {
   //     try {

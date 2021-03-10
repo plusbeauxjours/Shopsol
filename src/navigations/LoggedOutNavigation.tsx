@@ -19,7 +19,6 @@ const LoggedOutNavigation = createStackNavigator();
 export default () => {
   const alert = useSelector((state: any) => state.alertReducer);
   const SharedStorage = NativeModules.SharedStorage;
-
   useEffect(() => {
     // if (utils.isAndroid()) {
     //   SharedStorage.set(

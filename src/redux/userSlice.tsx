@@ -18,8 +18,18 @@ const userSlice = createSlice({
     DEVICE_PLATFORM: '',
     DEVICE_SYSTEM_VERSION: '',
     CUSTOM_MENU_EMP: {},
+    IS_APP_FIRST_TIME: true,
+    IS_USER_FIRST_TIME: true,
   },
   reducers: {
+    setIS_APP_FIRST_TIME(state, action) {
+      const {payload: IS_APP_FIRST_TIME} = action;
+      state.IS_APP_FIRST_TIME = IS_APP_FIRST_TIME;
+    },
+    setIS_USER_FIRST_TIME(state, action) {
+      const {payload: IS_USER_FIRST_TIME} = action;
+      state.IS_USER_FIRST_TIME = IS_USER_FIRST_TIME;
+    },
     setIS_SUPER_USER(state) {
       state.IS_SUPER_USER = true;
     },
@@ -75,6 +85,8 @@ const userSlice = createSlice({
 });
 
 export const {
+  setIS_APP_FIRST_TIME,
+  setIS_USER_FIRST_TIME,
   setIS_SUPER_USER,
   setMEMBER_NAME,
   setSTORE,

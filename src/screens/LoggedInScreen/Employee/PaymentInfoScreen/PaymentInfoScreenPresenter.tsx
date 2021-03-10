@@ -188,15 +188,7 @@ export default ({
             <GreyLine />
             {loading ? (
               <PayBox>
-                <LottieView
-                  style={{
-                    width: 80,
-                    height: 80,
-                  }}
-                  source={require('../../../../assets/animations/loading.json')}
-                  loop
-                  autoPlay
-                />
+                <ActivityIndicator size={'small'} style={{marginBottom: 20}} />
                 <BoxTitleText3 style={{fontSize: styleGuide.fontSize.middle}}>
                   급여 정보를 불러오는 중입니다..
                 </BoxTitleText3>

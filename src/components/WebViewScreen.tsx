@@ -49,8 +49,8 @@ export default ({route: {params}}) => {
         <View>
           <LottieView
             style={{
-              width: 150,
-              height: 150,
+              width: 120,
+              height: 120,
               marginBottom: 20,
             }}
             source={require('../assets/animations/loading.json')}

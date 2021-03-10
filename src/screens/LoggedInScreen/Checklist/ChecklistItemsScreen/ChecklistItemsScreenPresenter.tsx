@@ -255,8 +255,8 @@ export default ({
             <>
               <LottieView
                 style={{
-                  width: 150,
-                  height: 150,
+                  width: 120,
+                  height: 120,
                   marginBottom: 40,
                 }}
                 source={require('../../../../assets/animations/loading.json')}

@@ -555,8 +555,8 @@ export default ({
                   position: 'absolute',
                   right: -15,
                   bottom: -15,
-                  width: 150,
-                  height: 150,
+                  width: 120,
+                  height: 120,
                 }}
                 source={require('../../../../assets/animations/loading.json')}
                 loop
