@@ -1764,6 +1764,23 @@ export default ({
               errorMessage={errorMessage}
             />
           </ModalContainer>
+        ) : lat == 0 && long == 0 ? (
+          <Container style={{width: wp('100%'), justifyContent: 'center'}}>
+            <LottieView
+              style={{
+                width: 150,
+                height: 150,
+                marginBottom: 40,
+              }}
+              source={require('../../../../assets/animations/loading.json')}
+              loop
+              autoPlay
+            />
+            <LoadingText>
+              {MEMBER_NAME}님의 위치정보를 불러오는 중입니다.
+            </LoadingText>
+            <LoadingText style={{bottom: 10}}>잠시만 기다려주세요.</LoadingText>
+          </Container>
         ) : isWorkingMode ? (
           <BoxContainer>
             <Box
