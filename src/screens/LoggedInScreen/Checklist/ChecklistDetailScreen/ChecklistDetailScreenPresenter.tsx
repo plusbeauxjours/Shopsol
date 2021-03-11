@@ -170,6 +170,11 @@ const AddButtonContainer = styled.View<ILoading>`
   background-color: ${(props) => (props.loading ? 'transparent' : 'white')};
 `;
 
+const LottieButton = styled.View`
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
 const AddButton = styled.TouchableOpacity`
   width: 60px;
   height: 60px;
@@ -550,18 +555,18 @@ export default ({
         DATE == moment().format('YYYY-MM-DD') && (
           <AddButtonContainer loading={loading}>
             {loading ? (
-              <LottieView
-                style={{
-                  position: 'absolute',
-                  right: -15,
-                  bottom: -15,
-                  width: 120,
-                  height: 120,
-                }}
-                source={require('../../../../assets/animations/loading.json')}
-                loop
-                autoPlay
-              />
+              <LottieButton>
+                <LottieView
+                  style={{
+                    position: 'absolute',
+                    width: 65,
+                    height: 65,
+                  }}
+                  source={require('../../../../assets/animations/loading.json')}
+                  loop
+                  autoPlay
+                />
+              </LottieButton>
             ) : (
               <AddButton onPress={() => gotoChecklistSpecification()}>
                 <AddButtonText>체크</AddButtonText>

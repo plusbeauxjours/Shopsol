@@ -333,8 +333,8 @@ export default ({
             <>
               <LottieView
                 style={{
-                  width: 120,
-                  height: 120,
+                  width: 80,
+                  height: 80,
                   marginBottom: 40,
                 }}
                 source={require('../../../../assets/animations/loading.json')}
@@ -407,8 +407,8 @@ export default ({
             <>
               <LottieView
                 style={{
-                  width: 120,
-                  height: 120,
+                  width: 80,
+                  height: 80,
                   marginBottom: 40,
                 }}
                 source={require('../../../../assets/animations/loading.json')}

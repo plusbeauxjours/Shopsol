@@ -1093,8 +1093,8 @@ export default ({
                       <LottieView
                         style={{
                           marginTop: 20,
-                          width: 120,
-                          height: 120,
+                          width: 80,
+                          height: 80,
                           marginBottom: 40,
                         }}
                         source={require('../../../../assets/animations/loading.json')}
@@ -1321,8 +1321,8 @@ export default ({
                       <LottieView
                         style={{
                           marginTop: 20,
-                          width: 120,
-                          height: 120,
+                          width: 80,
+                          height: 80,
                           marginBottom: 40,
                         }}
                         source={require('../../../../assets/animations/loading.json')}
@@ -1508,8 +1508,8 @@ export default ({
           <Container style={{width: wp('100%'), justifyContent: 'center'}}>
             <LottieView
               style={{
-                width: 120,
-                height: 120,
+                width: 80,
+                height: 80,
                 marginBottom: 40,
               }}
               source={require('../../../../assets/animations/loading.json')}
@@ -1615,7 +1615,7 @@ export default ({
         }}>
         {workingLoading ? (
           <LottieView
-            style={{width: 120, height: 120, marginBottom: 40}}
+            style={{width: 80, height: 80, marginBottom: 40}}
             source={require('../../../../assets/animations/loading.json')}
             loop
             autoPlay
@@ -1729,7 +1729,7 @@ export default ({
         {workingLoading ? (
           <ModalContainer>
             <LottieView
-              style={{width: 120, height: 120, marginBottom: 40}}
+              style={{width: 80, height: 80, marginBottom: 40}}
               source={require('../../../../assets/animations/loading.json')}
               loop
               autoPlay
@@ -1768,8 +1768,8 @@ export default ({
           <Container style={{width: wp('100%'), justifyContent: 'center'}}>
             <LottieView
               style={{
-                width: 120,
-                height: 120,
+                width: 80,
+                height: 80,
                 marginBottom: 40,
               }}
               source={require('../../../../assets/animations/loading.json')}
@@ -1861,7 +1861,7 @@ export default ({
         {/* {qrConfirmLoading ? (
            <ConfirmBox>
              <LottieView
-               style={{width: 150, height: 150, marginBottom: 40}}
+               style={{width: 80, height: 80, marginBottom: 40}}
                source={require('../../../../assets/animations/loading.json')}
                loop
                autoPlay

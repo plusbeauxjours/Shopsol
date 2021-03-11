@@ -489,8 +489,8 @@ export default ({
   //       <LottieView
   //         style={{
   //           marginTop: 20,
-  //           width: 150,
-  //           height: 150,
+  //           width: 80,
+  //           height: 80,
   //           marginBottom: 40,
   //         }}
   //         source={require('../../../../assets/animations/loading.json')}

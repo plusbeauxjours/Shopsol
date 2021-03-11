@@ -11,6 +11,7 @@ import {useHeaderHeight} from '@react-navigation/stack';
 import {DownIcon, AddIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import CalendarInfoScreenCard from './CalendarInfoScreenCard';
+import LottieView from 'lottie-react-native';
 
 interface IWeekend {
   weekend: string;

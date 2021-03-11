@@ -31,10 +31,10 @@ export default ({route: {params}}) => {
     return setLoading(false);
   };
 
-  const setAsyncStorage = async () => {
-    setTimeout(() => {
+  const setAsyncStorage = () => {
+    setTimeout(async () => {
       setSHOWN_APP_GUIDE_SCREEN(false);
-      // await AsyncStorage.setItem('SHOWN_APP_GUIDE_SCREEN', 'true');
+      await AsyncStorage.setItem('SHOWN_APP_GUIDE_SCREEN', 'true');
     }, 200);
   };
   const removeAsyncStorage = async () => {

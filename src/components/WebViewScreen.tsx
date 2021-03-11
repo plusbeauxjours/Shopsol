@@ -49,11 +49,11 @@ export default ({route: {params}}) => {
         <View>
           <LottieView
             style={{
-              width: 120,
-              height: 120,
+              width: 80,
+              height: 80,
               marginBottom: 20,
             }}
-            source={require('../assets/animations/loading.json')}
+            source={require('../assets/animations/loading2.json')}
             loop
             autoPlay
           />
