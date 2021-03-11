@@ -337,7 +337,7 @@ export default ({
                   height: 80,
                   marginBottom: 40,
                 }}
-                source={require('../../../../assets/animations/loading.json')}
+                source={require('../../../../assets/animations/loading2.json')}
                 loop
                 autoPlay
               />
@@ -411,7 +411,7 @@ export default ({
                   height: 80,
                   marginBottom: 40,
                 }}
-                source={require('../../../../assets/animations/loading.json')}
+                source={require('../../../../assets/animations/loading2.json')}
                 loop
                 autoPlay
               />

@@ -244,6 +244,16 @@ const ModalPopupText = styled.Text`
   color: white;
 `;
 
+const LottieButton = styled.View`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
+  elevation: 6;
+`;
+
 const ModalPopup = styled.View`
   padding: 14px;
   border-radius: 10px;
@@ -554,18 +564,17 @@ export default ({
           )}
           <AddButtonContainer loading={loading}>
             {loading ? (
-              <LottieView
-                style={{
-                  position: 'absolute',
-                  right: -15,
-                  bottom: -15,
-                  width: 80,
-                  height: 80,
-                }}
-                source={require('../../../../assets/animations/loading.json')}
-                loop
-                autoPlay
-              />
+              <LottieButton>
+                <LottieView
+                  style={{
+                    width: 70,
+                    height: 70,
+                  }}
+                  source={require('../../../../assets/animations/loading.json')}
+                  loop
+                  autoPlay
+                />
+              </LottieButton>
             ) : (
               <AddButton onPress={() => gotoAdd()}>
                 <AddIcon />
@@ -629,7 +638,7 @@ export default ({
             height: 80,
             marginBottom: 40,
           }}
-          source={require('../../../../assets/animations/loading.json')}
+          source={require('../../../../assets/animations/loading2.json')}
           loop
           autoPlay
         />

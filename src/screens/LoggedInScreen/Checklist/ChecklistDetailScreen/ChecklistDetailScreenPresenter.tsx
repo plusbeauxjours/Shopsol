@@ -171,6 +171,11 @@ const AddButtonContainer = styled.View<ILoading>`
 `;
 
 const LottieButton = styled.View`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
   box-shadow: 7px 7px 7px rgba(100, 100, 100, 0.4);
   elevation: 6;
 `;
@@ -558,9 +563,8 @@ export default ({
               <LottieButton>
                 <LottieView
                   style={{
-                    position: 'absolute',
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 70,
                   }}
                   source={require('../../../../assets/animations/loading.json')}
                   loop
