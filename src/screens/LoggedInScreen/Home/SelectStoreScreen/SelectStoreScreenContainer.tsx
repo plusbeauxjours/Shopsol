@@ -4,6 +4,7 @@ import SelectStoreScreenPresenter from './SelectStoreScreenPresenter';
 import {useNavigation} from '@react-navigation/native';
 import {NativeModules, Alert, Linking, Platform} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import {setDEVICE_INFO} from '~/redux/userSlice';
@@ -24,6 +25,19 @@ export default ({route: {params}}) => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [STORELIST_DATA, setSTORELIST_DATA] = useState<any>([]);
   const [loading, setloading] = useState<boolean>(true);
+  const [
+    SHOWN_USER_GUIDE_SCREEN,
+    setSHOWN_USER_GUIDE_SCREEN,
+  ] = useState<boolean>(false);
+
+  const init = async () => {
+    const ASYNC_SHOWN_APP_GUIDE_SCREEN = await AsyncStorage.getItem(
+      'SHOWN_USER_GUIDE_SCREEN',
+    );
+    if (!ASYNC_SHOWN_APP_GUIDE_SCREEN) {
+      setSHOWN_USER_GUIDE_SCREEN(true);
+    }
+  };
 
   const onRefresh = async () => {
     try {
@@ -133,6 +147,7 @@ export default ({route: {params}}) => {
   useEffect(() => {
     requestUserPermission();
     fetchData();
+    init();
     // if (utils.isAndroid()) {
     //   if (STORE_NAME == '') {
     //     SharedStorage.set(
@@ -158,6 +173,7 @@ export default ({route: {params}}) => {
       gotoHomeScreen={gotoHomeScreen}
       visible={visible}
       loading={loading}
+      SHOWN_USER_GUIDE_SCREEN={SHOWN_USER_GUIDE_SCREEN}
     />
   );
 };

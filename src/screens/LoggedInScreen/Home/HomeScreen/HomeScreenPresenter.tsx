@@ -62,6 +62,7 @@ const Text = styled.Text``;
 const Touchable = styled.TouchableOpacity``;
 
 const Section = styled.View`
+  z-index: 0;
   width: ${wp('100%') - 40}px;
   padding: 10px;
   padding-top: 20px;
@@ -80,6 +81,24 @@ const Container = styled.View`
   width: ${wp('100%') - 60}px;
   flex-direction: row;
   flex-wrap: wrap;
+  z-index: 3;
+`;
+
+const TempModalContainer = styled.View`
+  flex: 2;
+  position: absolute;
+  width: ${wp('100%')}px;
+  height: ${hp('100%')}px;
+  z-index: 1;
+  background-color: rgba(100, 100, 100, 0.7);
+`;
+
+const TempContainerModalContainer = styled(TempModalContainer)`
+  width: ${wp('100%') - 40}px;
+  padding: 10px;
+  padding-top: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
 `;
 
 const IconContainer = styled.TouchableOpacity`
@@ -92,7 +111,7 @@ const IconContainer = styled.TouchableOpacity`
 `;
 
 const MenuCnt = styled(Ripple)`
-  z-index: 10;
+  z-index: 3;
   width: ${(wp('100%') - 63) / 3}px;
   height: ${wp('40%')}px;
   justify-content: center;
@@ -533,6 +552,7 @@ export default ({
   customMenu,
   setCustomMenu,
   isModalToastVisible,
+  SHOWN_USER_GUIDE_SCREEN,
 }) => {
   const navigation = useNavigation();
   const MenuCntContainer = ({
@@ -549,7 +569,6 @@ export default ({
       rippleSize={200}
       rippleContainerBorderRadius={0}
       rippleOpacity={0.9}
-      style={{zIndex: 4}}
       activeOpacity={0.3}
       onPress={() => {
         editMode && type == 'emp'
@@ -577,6 +596,20 @@ export default ({
         source={source}
         resizeMode={FastImage.resizeMode.contain}
       />
+      {/* {STORE === '1' && SHOWN_USER_GUIDE_SCREEN && selection == '직원초대' && (
+        <LottieView
+          style={{
+            position: 'absolute',
+            zIndex: 11,
+            width: 110,
+            height: 110,
+            opacity: 0.75,
+          }}
+          source={require('../../../../assets/animations/pointer.json')}
+          loop
+          autoPlay
+        />
+      )} */}
     </MenuCnt>
   );
 

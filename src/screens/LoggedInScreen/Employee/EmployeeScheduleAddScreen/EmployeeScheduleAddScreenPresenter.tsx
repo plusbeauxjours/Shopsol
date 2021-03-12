@@ -418,7 +418,14 @@ export default ({
             <RoundBtn
               isInSection={true}
               text={'추가하기'}
-              onPress={() => checkAddTimeFn()}
+              onPress={() =>
+                TYPE == '수정'
+                  ? alertModal(
+                      '하단에서 수정하고자 하는 요일의 일정을 \n삭제한 후 진행해주세요',
+                      checkAddTimeFn(),
+                    )
+                  : checkAddTimeFn()
+              }
               isRegisted={true}
             />
           </Section>

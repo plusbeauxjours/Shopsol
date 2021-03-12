@@ -327,7 +327,7 @@ export default {
       console.warn(err);
     }
   },
-  appVersion: '2.2.3',
+  appVersion: '2.2.4',
   superUserAppVersion: '2.2.3D',
   miniPay: '8,720',
   calculateDay: 23,

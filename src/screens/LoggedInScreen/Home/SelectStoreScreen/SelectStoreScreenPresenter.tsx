@@ -11,6 +11,7 @@ import FastImage from 'react-native-fast-image';
 import SelectStoreCard from './SelectStoreCard';
 import {AddCircleIcon} from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
+import LottieView from 'lottie-react-native';
 interface IIsStore {
   isStore?: boolean;
 }
@@ -84,6 +85,16 @@ const AddStoreButton = styled(Ripple)`
   shadow-color: grey;
   shadow-offset: 6px 6px;
   elevation: 8;
+  z-index: 10;
+`;
+
+const TempModalContainer = styled.View`
+  flex: 1;
+  position: absolute;
+  width: ${wp('100%')}px;
+  height: ${hp('100%')}px;
+  z-index: 5;
+  background-color: rgba(100, 100, 100, 0.7);
 `;
 
 export default ({
@@ -95,12 +106,14 @@ export default ({
   gotoHomeScreen,
   visible,
   loading,
+  SHOWN_USER_GUIDE_SCREEN,
 }) => {
   if (loading || visible) {
     return null;
   } else {
     return (
       <BackGround isStore={STORE == '1'}>
+        {/* {SHOWN_USER_GUIDE_SCREEN && <TempModalContainer />} */}
         {STORE == '1' && (
           <AddStoreButton
             onPress={() => gotoAddStore()}
@@ -111,6 +124,21 @@ export default ({
             rippleOpacity={0.45}>
             <AddStoreButtonText>사업장 등록하기</AddStoreButtonText>
             <AddCircleIcon />
+            {/* {SHOWN_USER_GUIDE_SCREEN && (
+              <LottieView
+                style={{
+                  position: 'absolute',
+                  zIndex: 11,
+                  width: 110,
+                  height: 110,
+                  opacity: 0.75,
+                  right: 5,
+                }}
+                source={require('../../../../assets/animations/pointer.json')}
+                loop
+                autoPlay
+              />
+            )} */}
           </AddStoreButton>
         )}
         <ScrollView

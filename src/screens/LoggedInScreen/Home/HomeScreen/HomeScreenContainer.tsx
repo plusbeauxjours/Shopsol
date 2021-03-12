@@ -70,6 +70,19 @@ export default ({route: {params}}) => {
   const [isModalToastVisible, setIsModalToastVisible] = useState<boolean>(
     false,
   );
+  const [
+    SHOWN_USER_GUIDE_SCREEN,
+    setSHOWN_USER_GUIDE_SCREEN,
+  ] = useState<boolean>(false);
+
+  const init = async () => {
+    const ASYNC_SHOWN_APP_GUIDE_SCREEN = await AsyncStorage.getItem(
+      'SHOWN_USER_GUIDE_SCREEN',
+    );
+    if (!ASYNC_SHOWN_APP_GUIDE_SCREEN) {
+      setSHOWN_USER_GUIDE_SCREEN(true);
+    }
+  };
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -515,6 +528,7 @@ export default ({route: {params}}) => {
     fetchData();
     checkVersion();
     setAsyncStorage();
+    init();
   }, []);
 
   useEffect(
@@ -603,6 +617,7 @@ export default ({route: {params}}) => {
       customMenu={customMenu}
       setCustomMenu={setCustomMenu}
       isModalToastVisible={isModalToastVisible}
+      SHOWN_USER_GUIDE_SCREEN={SHOWN_USER_GUIDE_SCREEN}
     />
   );
 };

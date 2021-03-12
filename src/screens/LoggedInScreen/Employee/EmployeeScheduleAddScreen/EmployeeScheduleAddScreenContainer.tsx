@@ -73,12 +73,12 @@ export default ({route: {params}}) => {
   const [isEndTimeModalVisible, setIsEndTimeModalVisible] = useState<boolean>(
     false,
   );
-
-  const alertModal = (text) => {
+  const alertModal = (text, okCallback = () => {}) => {
     const params = {
       alertType: 'alert',
       title: '',
       content: text,
+      okCallback,
     };
     dispatch(setAlertInfo(params));
     dispatch(setAlertVisible(true));
