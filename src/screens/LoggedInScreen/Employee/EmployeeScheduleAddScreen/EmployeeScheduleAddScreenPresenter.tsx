@@ -98,7 +98,6 @@ const DayPickRowBox = styled.View`
   margin-top: 10px;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
 `;
 
 const WorkTypeCheckSection = styled.View``;
@@ -229,6 +228,18 @@ const RequestBorderButton = styled.TouchableOpacity<IsChecked>`
 const RequestBorderText = styled.Text<IsChecked>`
   color: ${(props) => (props.isChecked ? styleGuide.palette.primary : 'white')};
 `;
+
+const SmallTextContainer = styled.View`
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
+const SmallText = styled.Text`
+  text-align: center;
+  font-size: ${styleGuide.fontSize.small}px;
+  color: ${styleGuide.palette.greyColor};
+`;
+
 export default ({
   timeList,
   timeListIndex,
@@ -412,20 +423,21 @@ export default ({
           <Section>
             <TitleText>출퇴근 요일 선택</TitleText>
             <GreyLine />
-            <DayPickRowBox>
+            <DayPickRowBox style={{marginBottom: TYPE == '수정' ? 10 : 20}}>
               <RenderDayPicker />
             </DayPickRowBox>
+            {TYPE == '수정' && (
+              <SmallTextContainer>
+                <SmallText>
+                  하단에서 수정하고자 하는 요일의 일정을 먼저 삭제한 후
+                  진행해주세요.
+                </SmallText>
+              </SmallTextContainer>
+            )}
             <RoundBtn
               isInSection={true}
               text={'추가하기'}
-              onPress={() =>
-                TYPE == '수정'
-                  ? alertModal(
-                      '하단에서 수정하고자 하는 요일의 일정을 \n삭제한 후 진행해주세요',
-                      checkAddTimeFn(),
-                    )
-                  : checkAddTimeFn()
-              }
+              onPress={() => checkAddTimeFn()}
               isRegisted={true}
             />
           </Section>
