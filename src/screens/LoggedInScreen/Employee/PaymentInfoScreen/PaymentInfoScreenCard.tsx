@@ -64,7 +64,7 @@ export default ({MANAGER_CALLED, data, STORE, STORE_SEQ, STOREPAY_SHOW}) => {
       IS_MANAGER: data?.IS_MANAGER,
       EMP_PAY_TYPE: data?.PAY_TYPE,
       PAY: data?.PAY,
-      image: data?.images[0].IMAGE,
+      image: data?.images[0]?.IMAGE,
       START: data?.START,
       END: data?.END,
       probationDATE: data?.probationDATE,
@@ -76,7 +76,7 @@ export default ({MANAGER_CALLED, data, STORE, STORE_SEQ, STOREPAY_SHOW}) => {
       <FastImage
         style={{width: 60, height: 60, borderRadius: 30, marginRight: 10}}
         source={{
-          uri: utils.getUriImage(data?.images[0].IMAGE),
+          uri: utils.getUriImage(data?.images[0]?.IMAGE),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.low,
         }}

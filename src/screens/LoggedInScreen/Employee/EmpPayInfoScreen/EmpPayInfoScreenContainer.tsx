@@ -155,9 +155,9 @@ export default ({route: {params}}) => {
     );
     try {
       const {data} = await api.getEmp(params?.EMP_SEQ || EMP_SEQ);
-      setImage(data?.result.images[0].IMAGE);
-      setSTART(data?.result.START);
-      setEND(data?.result.END);
+      setImage(data?.result?.images[0]?.IMAGE);
+      setSTART(data?.result?.START);
+      setEND(data?.result?.END);
     } catch (e) {
       console.log(e);
     }

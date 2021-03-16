@@ -178,7 +178,7 @@ export default () => {
           TOTAL_VACATION: 0,
           TOTAL_NOWORK: 0,
           REST_TIME: '0',
-          IMAGE: i.images[0].IMAGE || '',
+          IMAGE: i?.images[0]?.IMAGE || '',
         });
       });
 

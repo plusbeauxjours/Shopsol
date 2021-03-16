@@ -160,7 +160,7 @@ export default () => {
           legendFontColor: styleGuide.palette.greyColor,
           legendfontSize: styleGuide.fontSize.middle,
           WORKING: 0,
-          IMAGE: i.images[0].IMAGE || '',
+          IMAGE: i?.images[0]?.IMAGE || '',
         });
       });
 

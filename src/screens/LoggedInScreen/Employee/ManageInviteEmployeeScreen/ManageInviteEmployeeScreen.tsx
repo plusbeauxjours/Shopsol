@@ -112,7 +112,7 @@ export default () => {
   useEffect(() => {
     dispatch(getRESPONSE_EMPLOYEE());
   }, []);
-  
+
   return (
     <BackGround>
       <ScrollView
@@ -148,7 +148,7 @@ export default () => {
                   PHONE={data.MobileNo}
                   STORE_SEQ={STORE_SEQ}
                   onRefresh={onRefresh}
-                  IMAGE={data.images[0].IMAGE}
+                  IMAGE={data?.images[0]?.IMAGE}
                 />
               ))}
             </EmployeeListBox>
@@ -179,7 +179,7 @@ export default () => {
                   EMP_NAME={data.EMP_NAME}
                   PHONE={data.PHONE}
                   STORE_SEQ={STORE_SEQ}
-                  IMAGE={data.images[0].IMAGE}
+                  IMAGE={data?.images[0]?.IMAGE}
                 />
               ))}
             </EmployeeListBox>

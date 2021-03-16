@@ -103,7 +103,9 @@ export default ({
                     EMP_NAME={data?.EMP_NAME}
                     IS_MANAGER={data?.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
                     image={
-                      data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
+                      data?.images.length == 0
+                        ? '3.png'
+                        : data?.images[0]?.IMAGE
                     }
                     data={data}
                     mobileNo={data?.MobileNo}
@@ -142,7 +144,7 @@ export default ({
                   EMP_NAME={data?.EMP_NAME}
                   IS_MANAGER={data?.IS_MANAGER == 0 ? '직원' : MANAGER_CALLED}
                   image={
-                    data?.images.length == 0 ? '3.png' : data?.images[0].IMAGE
+                    data?.images.length == 0 ? '3.png' : data?.images[0]?.IMAGE
                   }
                   data={data}
                   mobileNo={data?.MobileNo}

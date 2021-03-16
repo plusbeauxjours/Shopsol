@@ -274,7 +274,7 @@ export default ({route: {params}}) => {
           )?.EMP_SEQ,
           IMAGE: EMPLOYEE_LIST?.workinglist?.find(
             (j) => j.EMP_SEQ == empSeqArr[i],
-          )?.images[0].IMAGE,
+          )?.images[0]?.IMAGE,
         });
       }
       if (EMPLOYEE_LIST && EMPLOYEE_LIST?.workinglist) {
@@ -282,7 +282,7 @@ export default ({route: {params}}) => {
           buffer2.push({
             NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
             EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
-            IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
+            IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0]?.IMAGE,
           });
         }
         setChoiceEmp(buffer1);
@@ -295,7 +295,7 @@ export default ({route: {params}}) => {
           buffer.push({
             NAME: EMPLOYEE_LIST?.workinglist[i].EMP_NAME,
             EMP_SEQ: EMPLOYEE_LIST?.workinglist[i].EMP_SEQ,
-            IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0].IMAGE,
+            IMAGE: EMPLOYEE_LIST?.workinglist[i].images[0]?.IMAGE,
           });
         }
       }

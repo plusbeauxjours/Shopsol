@@ -361,8 +361,8 @@ export default ({
             {choiceEmp?.map((data, index) => (
               <Touchable key={index} onPress={() => deleteEmpFn(data.MobileNo)}>
                 <CalendarAddScreenCard
-                  name={data.EMP_NAME}
-                  image={data.images[0]?.IMAGE}
+                  name={data?.EMP_NAME}
+                  image={data?.images[0]?.IMAGE}
                 />
               </Touchable>
             ))}
