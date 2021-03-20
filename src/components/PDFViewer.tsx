@@ -45,6 +45,7 @@ const CloseIconContainer = styled.TouchableOpacity<IsFullScreen>`
   top: ${() => (isIphoneX() ? 15 : -10)};
 `;
 
+// 퇴근해cu에서 사용하려고 하였던 PDF뷰어
 export default ({url, setModalVisible}) => {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 

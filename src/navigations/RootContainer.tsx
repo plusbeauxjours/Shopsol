@@ -1,8 +1,9 @@
 import React, {useRef} from 'react';
+import {StatusBar, LogBox} from 'react-native';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import analytics from '@react-native-firebase/analytics';
-import {StatusBar, LogBox} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components/native';
 import {
@@ -11,15 +12,13 @@ import {
 } from 'react-native-responsive-screen';
 import NetInfo from '@react-native-community/netinfo';
 import {isIphoneX} from 'react-native-iphone-x-helper';
-import * as Sentry from '@sentry/react-native';
 
-import CloseBtn from './Header/CloseBtn';
-import LoggedInNavigation from '../navigations/LoggedInNavigation';
-import LoggedOutNavigation from '../navigations/LoggedOutNavigation';
+import CloseBtn from '../components/Header/CloseBtn';
+import LoggedInNavigation from './LoggedInNavigation';
+import LoggedOutNavigation from './LoggedOutNavigation';
 import HelpModalScreen from '../screens/LoggedInScreen/Home/HelpModalScreen/index';
-import Loader from './Loader';
-import WebViewScreen from './WebViewScreen';
-import BackBtn from './Header/BackBtn';
+import Loader from '../components/Loader';
+import WebViewScreen from '../components/WebViewScreen';
 
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
@@ -42,22 +41,24 @@ const Container = styled.View`
 `;
 
 export default () => {
+  // Ref
   const routeNameRef = useRef(null);
   const navigationRef = useRef(null);
   const dispatch = useDispatch();
 
+  // 전역변수 호출
+  const {visible} = useSelector((state: any) => state.splashReducer); // [로딩중]인지 알려주는 전역변수🍉
+  const {isLoggedIn} = useSelector((state: any) => state.userReducer); // [로그인]되어있는지 알려주는 전역변수🥑
+
+  // 안드로이드에서 앱을 켰을 때 헤더의 높이가 순간바뀌는 이슈 대응 (feat.대표님)
   const headerStyle = utils.isAndroid() &&
     !isIphoneX() && {
       height: 56,
     };
 
-  const {visible} = useSelector((state: any) => state.splashReducer);
-  const {isLoggedIn, STORE, MEMBER_SEQ} = useSelector(
-    (state: any) => state.userReducer,
-  );
-  const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
   const RootStack = createStackNavigator();
 
+  // 네트워크가 없을 때 알림창🐙 띄우기 위하여 네트워크 상태 확인
   const isNetworkAvailable = async () => {
     const response = await NetInfo.fetch();
     return response.isConnected;
@@ -73,13 +74,6 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
-  Sentry.init({
-    dsn:
-      'https://920fb530d09442768b04ec6825a3a2b4@o450648.ingest.sentry.io/5457931',
-    enableAutoSessionTracking: true,
-    sessionTrackingIntervalMillis: 10000,
-  });
-
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -87,23 +81,13 @@ export default () => {
         (routeNameRef.current = navigationRef.current.getCurrentRoute()?.name)
       }
       onStateChange={async () => {
-        // if (
-        //   navigationRef?.current?.getCurrentOptions()?.title == '메인 페이지'
-        // ) {
-        //   const {data: storeData} = await api.getStoreInfo({
-        //     STORE,
-        //     MEMBER_SEQ,
-        //     STORE_SEQ,
-        //   });
-        //   if (storeData.resultmsg === '1') {
-        //     dispatch(getStore(storeData));
-        //   }
-        // }
         const onNetwork = await isNetworkAvailable();
         if (!onNetwork) {
-          alertModal('연결에 실패하였습니다. 네트워크 상태를 확인하세요.');
+          alertModal('연결에 실패하였습니다. 네트워크 상태를 확인하세요.'); // 알림창🐙
           navigationRef.current.goBack();
         }
+
+        // GA를 위하여 따로 설정한 스크린 네이밍
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef?.current?.getCurrentRoute()
           ?.name;
@@ -121,6 +105,7 @@ export default () => {
             screen_class: navigationRef.current.getCurrentOptions()?.title,
           });
         } else {
+          // GA를 위하여 따로 설정한 스크린 네이밍의 예외처리
           if (
             navigationRef.current.getCurrentRoute()?.name !==
               'ChecklistShareUpdateScreen' &&
@@ -145,6 +130,8 @@ export default () => {
         mode="modal"
         initialRouteName={
           isLoggedIn ? 'LoggedInNavigation' : 'LoggedOutNavigation'
+          // LoggedInNavigation: [로그인]되어있는지 알려주는 전역변수🥑 가 ture일때 나타나는 네비게이션
+          // LoggedOutNavigation: [로그인]되어있는지 알려주는 전역변수🥑 가 false일때 나타나는 네비게이션
         }>
         <RootStack.Screen
           name="LoggedInNavigation"
@@ -191,7 +178,7 @@ export default () => {
           }}
         />
       </RootStack.Navigator>
-      {visible && (
+      {visible && ( // [로딩중]인지 알려주는 전역변수🍉가 true일때 나타나는 로딩스피너
         <Container>
           <Loader />
         </Container>

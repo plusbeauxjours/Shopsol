@@ -86,6 +86,7 @@ const TextBox = styled.View`
   align-items: center;
 `;
 
+// 직원이 출퇴근을 성공하였을 때 뜨는 폭죽 모달
 export default ({
   AVATAR,
   STORE_NAME,

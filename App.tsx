@@ -1,23 +1,20 @@
 import React, {useEffect} from 'react';
+import {BackHandler, ToastAndroid, Platform} from 'react-native';
+
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
-import {BackHandler, ToastAndroid, Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {RootSiblingParent} from 'react-native-root-siblings';
 import appsFlyer from 'react-native-appsflyer';
+import * as Sentry from '@sentry/react-native';
 
 import store, {persistor} from './src/redux/store';
-import RootContainer from './src/components/RootContainer';
+import RootContainer from './src/navigations/RootContainer';
 
 function App() {
-  // const _handleAppStateChange = (nextAppState) => {
-  //   if (nextAppState === 'active') {
-  //     _registerLocalNotification();
-  //   }
-  // };
-
+  // 앱스플라이어 SDK (feat.대표님)
   appsFlyer.initSdk(
     {
       devKey: 'HWrK6iFipjPUqDhwJUABpA',
@@ -34,6 +31,15 @@ function App() {
     },
   );
 
+  // 센트리 SDK
+  Sentry.init({
+    dsn:
+      'https://920fb530d09442768b04ec6825a3a2b4@o450648.ingest.sentry.io/5457931',
+    enableAutoSessionTracking: true,
+    sessionTrackingIntervalMillis: 10000,
+  });
+
+  // 안드로이드 백버튼 두번 탭하여 앱종료
   let exitApp;
   const handleBackButton = () => {
     if (!exitApp || exitApp == undefined) {
@@ -51,6 +57,18 @@ function App() {
     return true;
   };
 
+  ////////////////// LOCAL_PUSH_NOTIFICATION ////////////////////////////////////
+  //
+  //   1) 앱이 켜져있을 때는(foreground) push notification을 못하는 이슈가 있어서 (feat.허군님)
+  //   local-push-notification을 사용
+  //   https://dev-yakuza.posstree.com/ko/react-native/react-native-push-notification/
+  //
+  //   2) 앱이 꺼지면(background) foregounrd에서 사용하는
+  //   local-push-notification을 끔
+  //
+  ///////////////////////////////////////////////////////////////////////////////
+
+  // local-push-notification등록Fn
   const register = async () => {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', handleBackButton);
@@ -81,6 +99,7 @@ function App() {
     console.log('Message handled in the background1!', remoteMessage);
   });
 
+  // local-push-notification의 스타일과, 옵션
   const localNotif = (remoteMessage) => {
     PushNotification.localNotification({
       /* Android Only Properties */
@@ -103,6 +122,7 @@ function App() {
     });
   };
 
+  // local-push-notification등록
   useEffect(() => {
     register();
     messaging().onMessage(async (remoteMessage) => {
@@ -111,6 +131,7 @@ function App() {
     });
   }, []);
 
+  // local-push-notification해제
   useEffect(() => {
     return () => {
       PushNotification.cancelAllLocalNotifications();
@@ -128,18 +149,32 @@ function App() {
   );
 }
 
+////////////////// CODE_PUSH ////////////////////////////////////
+//
+//   1) https://appcenter.ms/apps 에서 관리
+//   2) https://appcenter.ms/users/shopsol.master-gmail.com/apps/shopsolWesop-android/distribute/code-push 에서 코드푸시버전 확인
+//   3) https://appcenter.ms/users/shopsol.master-gmail.com/apps/shopsolWesop-android/settings/webhooks 에서 webhook을 slack으로 날림
+//
+//   4) js, ts가 바뀔 경우 아래의 명령어🐙를 통하여 스토어 심사없이 적용 가능
+//   5) 이미지가 추가되는 경우, 패키지가 추가되는 경우, native부분이 수정된 경우 코드푸시로 적용 불가능, 스토어 심사를 통해서 업데이트해야함
+//   6) 새로운 코드푸시가 적용 될 때 앱이 깜빡이며 처음의 navigation으로 이동하는 현상있음
+//
+//////////////////////////////////////////////////////////////////
+
+// 코드푸시 셋팅
 const codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+  checkFrequency: codePush.CheckFrequency.ON_APP_START, // 새로운 코드푸시가 있는지 확인하는 타이밍
   updateDialog: false,
-  installMode: codePush.InstallMode.IMMEDIATE,
+  installMode: codePush.InstallMode.IMMEDIATE, // 새로운 코드푸시를 적용하는 타이밍
 };
 
 export default codePush(codePushOptions)(App);
 
 // Andrioid
 // shopsol.master-gmail.com/shopsolWesop-android
-// appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-android -d Production
-// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-android -k
+// appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-android -d Production  // 안드로이드 코드푸시를 할 때의 명령어🐙이지만 codepush:android로 코드푸시해야함
+// SLACK의 #샵솔-코드푸시 채널의 코드푸시 버전과 앱의 버전을 동기화하기 위함
+// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-android -k // 처음에 코드푸시를 세팅할 때 https://appcenter.ms/apps에 디플로이를 위한 명령어
 // ┌────────────┬───────────────────────────────────────┐
 // │ Name       │ Key                                   │
 // ├────────────┼───────────────────────────────────────┤
@@ -148,8 +183,9 @@ export default codePush(codePushOptions)(App);
 
 // iOS
 // shopsol.master-gmail.com/shopsolWesop-ios
-// appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-ios -d Production
-// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-ios -k
+// appcenter codepush release-react -a shopsol.master-gmail.com/shopsolWesop-ios -d Production  // IOS 코드푸시를 할 때의 명령어🐙이지만 codepush:android로 코드푸시해야함
+// SLACK의 #샵솔-코드푸시 채널의 코드푸시 버전과 앱의 버전을 동기화하기 위함
+// appcenter codepush deployment list -a shopsol.master-gmail.com/shopsolWesop-ios -k // 처음에 코드푸시를 세팅할 때 https://appcenter.ms/apps에 디플로이를 위한 명령어
 // ┌────────────┬───────────────────────────────────────┐
 // │ Name       │ Key                                   │
 // ├────────────┼───────────────────────────────────────┤

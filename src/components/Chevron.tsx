@@ -18,6 +18,7 @@ const IconContainer = styled.View`
   margin-bottom: 1px;
 `;
 
+// 에니며이션되는 아커디언의 아이콘, 탭하면 돌면서 에니메이션 됨
 export default ({transition}) => {
   const rotateZ = mix(transition, Math.PI, 0);
   const backgroundColor = mixColor(

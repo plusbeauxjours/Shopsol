@@ -9,7 +9,9 @@ import Geolocation from 'react-native-geolocation-service';
 
 export default {
   isAndroid: () => Platform.OS === 'android',
+
   getOCRImage: (uri) => {
+    // 안드로이드에서 fastImage를 사용할 때 에러가 뜨는 이슈가 있음(feat.허군)
     const getUri = (uri) => {
       return uri !== null &&
         uri !== undefined &&
@@ -18,13 +20,17 @@ export default {
         ? uri
         : '';
     };
+    // s3로 이전하지 못하였을 때, 기존의 url을 사용하도록 하였음(feat.허군)
+    // https://wesop.slack.com/archives/C01HQV8UU5B/p1611962906019300(feat.허군)
     if (!uri?.includes('https://wesop.s3.ap-northeast-2.amazonaws.com')) {
       return `http://shopsolapi.shop-sol.com/uploads/ocr/${uri}`;
     } else {
       return getUri(uri);
     }
   },
+
   getQRImage: (uri) => {
+    // 안드로이드에서 fastImage를 사용할 때 에러가 뜨는 이슈가 있음(feat.허군)
     const getUri = (uri) => {
       return uri !== null &&
         uri !== undefined &&
@@ -33,13 +39,18 @@ export default {
         ? uri
         : '';
     };
+    // s3로 이전하지 못하였을 때, 기존의 url을 사용하도록 하였음(feat.허군)
+    // https://wesop.slack.com/archives/C01HQV8UU5B/p1611962906019300(feat.허군)
     if (!uri?.includes('https://wesop.s3.ap-northeast-2.amazonaws.com')) {
       return `http://shopsolapi.shop-sol.com/${uri}`;
     } else {
       return getUri(uri);
     }
   },
+
   getUriImage: (uri) => {
+    // 안드로이드에서 fastImage를 사용할 때 에러가 뜨는 이슈가 있음(feat.허군)
+    // https://wesop.slack.com/archives/C01HQV8UU5B/p1611962906019300(feat.허군)
     const getUri = (uri) => {
       return uri !== null &&
         uri !== undefined &&
@@ -48,6 +59,8 @@ export default {
         ? uri
         : '';
     };
+    // s3로 이전하지 못하였을 때, 기존의 url을 사용하도록 하였음(feat.허군)
+    // https://wesop.slack.com/archives/C01HQV8UU5B/p1611962906019300(feat.허군)
     if (uri?.includes('http://gs1.koreannet.or.kr/')) {
       return getUri(uri);
     } else if (
@@ -58,6 +71,10 @@ export default {
       return getUri(uri);
     }
   },
+
+  // 출근을 위한 권한 요청
+  // 카메라 권한을 요청하고, 위치 권한을 요청함 (feat.허군)
+  // https://wesop.slack.com/archives/C01HQV8UU5B/p1615346217109800
   handleQrCameraPermissino: async (setLat, setLong, handle) => {
     try {
       if (Platform.OS === 'android') {
@@ -185,6 +202,9 @@ export default {
       console.log(e);
     }
   },
+
+  // 매번 카메라 권한을 요청하기 위함
+  // 카메라 권한이 없을 경우 settings에서 권한을 직접 켜도록 알림창이 뜸
   handleCameraPermission: async (handle) => {
     try {
       if (Platform.OS === 'android') {
@@ -238,6 +258,9 @@ export default {
       console.log(e);
     }
   },
+
+  // 매번 위치 권한을 요청하기 위함
+  // 위치 권한이 없을 경우 settings에서 권한을 직접 켜도록 알림창이 뜸
   handleLocationPermission: async (
     setLat,
     setLong,
@@ -327,10 +350,8 @@ export default {
       console.warn(err);
     }
   },
+
   appVersion: '2.2.4',
-  superUserAppVersion: '2.2.3D',
-  miniPay: '8,720',
-  calculateDay: 23,
   renderWeekDay: (weekDay) => {
     switch (weekDay) {
       case '0':

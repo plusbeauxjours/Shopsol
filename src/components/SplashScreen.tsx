@@ -13,6 +13,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
+// 앱을 켤 때 가장처음 나타나는 스플레쉬 스크린
 export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();

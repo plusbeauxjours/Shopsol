@@ -13,6 +13,7 @@ interface IIsWhiteBack {
   isInSection?: boolean;
 }
 
+// Ripple처리된 라운드 버튼
 const SubmitButton = styled(Ripple)<IIsWhiteBack>`
   width: ${(props) => (props.isInSection ? wp('100%') - 80 : wp('100%') - 40)};
   height: 60px;

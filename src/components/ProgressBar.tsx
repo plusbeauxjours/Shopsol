@@ -37,6 +37,7 @@ interface Props {
   onSlideComplete: () => void;
 }
 
+// 퇴근해cu에서 사용하려고 하였던 비디오플레이어 타임라인
 export const ProgressBar: React.FC<Props> = ({
   currentTime,
   duration,

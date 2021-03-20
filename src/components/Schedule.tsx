@@ -175,6 +175,7 @@ const BackImage = styled.View`
   left: 3px;
 `;
 
+// 일별 사업장현황의 타임라인
 export default ({
   TIME_EMP_LIST,
   selectedIndex,
@@ -186,6 +187,7 @@ export default ({
 }) => {
   const ballonRef = useRef(null);
   const renderThumbImage = () => (
+    //일별 사업장현황의 타임라인 붉은 세로선
     <IconConatainer>
       <FastImage
         style={{height: 30, width: 30}}
@@ -203,6 +205,7 @@ export default ({
     </IconConatainer>
   );
   const renderBallon = () => (
+    //일별 사업장현황의 타임라인 붉은 세로선의 시간을 표기하는 풍선
     <Ballon
       ref={ballonRef}
       color={styleGuide.palette.redColor}
@@ -270,7 +273,7 @@ export default ({
                       setSelectedIndex(index);
                       gotoSelectedIndex(index);
                     }}>
-                    <FrontView
+                    <FrontView // 스케쥴이 익일로 넘어갈경우 앞뒤에서 표기를 하기 때문에 frontView와 backView로 나누어져있음
                       isSelected={selectedIndex == index}
                       backgroundColor={i?.color}
                       width={moment.duration(i.END_TIME).as('milliseconds')}>
@@ -304,7 +307,7 @@ export default ({
                         resizeMode={FastImage.resizeMode.cover}
                       />
                     </FrontView>
-                    <BackView
+                    <BackView // 스케쥴이 익일로 넘어갈경우 앞뒤에서 표기를 하기 때문에 frontView와 backView로 나누어져있음
                       isSelected={selectedIndex == index}
                       backgroundColor={i?.color}
                       startTime={moment

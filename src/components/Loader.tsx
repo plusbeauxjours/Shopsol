@@ -14,6 +14,7 @@ const Text = styled.Text`
   color: white;
 `;
 
+// 로딩스피너
 export default () => {
   const {text, fullText} = useSelector((state: any) => state.splashReducer);
   return (

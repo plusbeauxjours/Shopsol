@@ -52,6 +52,7 @@ const TextBox = styled.View`
   margin-bottom: 30px;
 `;
 
+// 직원이 출퇴근을 실패하였을 때 뜨는 모달
 export default ({
   AVATAR,
   STORE_NAME,

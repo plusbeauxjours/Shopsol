@@ -27,6 +27,7 @@ const GreyLine = styled.View<ILine>`
   height: 100%;
 `;
 
+// 일별 사업장현황의 타임라인 바탕의 세로 점선들과 그위의 시간
 export default () => (
   <BoxContainer>
     <MainBox>

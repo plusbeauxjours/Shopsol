@@ -8,6 +8,7 @@ const CheckPasswordButton = styled.TouchableOpacity`
   align-items: center;
 `;
 
+// 페스워드 입력폼의 오른쪽 눈알
 export default ({onPress, isEmpty, isPasswordSeen}) => {
   return (
     <CheckPasswordButton activeOpacity={1} onPress={() => onPress()}>

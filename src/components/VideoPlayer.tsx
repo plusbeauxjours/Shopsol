@@ -55,6 +55,7 @@ const CloseIconContainer = styled.TouchableOpacity<IsFullScreen>`
   top: ${() => (isIphoneX() ? 15 : -10)};
 `;
 
+// 퇴근해cu에서 사용하려고 하였던 비디오플레이어
 export default ({url, setModalVisible}) => {
   const videoRef = useRef(null);
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);

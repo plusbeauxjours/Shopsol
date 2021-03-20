@@ -54,6 +54,7 @@ export default ({
     };
   });
 
+  // 사업장현황, 유통기한, 업무캘린더에서 사용중인 에니메이션 도넛그래프
   return (
     <Svg
       height={radius * 2}

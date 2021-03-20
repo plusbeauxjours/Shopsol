@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {isIphoneX} from 'react-native-iphone-x-helper';
@@ -93,19 +94,20 @@ import utils from '~/constants/utils';
 import {resetCALENDAR_DATA} from '~/redux/calendarSlice';
 import {setSTORE_DATA} from '~/redux/storeSlice';
 import api from '~/constants/LoggedInApi';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoggedInNavigation = createStackNavigator();
 export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const alert = useSelector((state: any) => state.alertReducer);
 
+  // 안드로이드에서 앱을 켰을 때 헤더의 높이가 순간바뀌는 이슈 대응 (feat.대표님)
   const headerStyle = utils.isAndroid() &&
     !isIphoneX() && {
       height: 56,
     };
+
+  const LoggedInNavigation = createStackNavigator();
 
   const gotoSelectStoreFn = () => {
     dispatch(resetCALENDAR_DATA());
@@ -116,13 +118,22 @@ export default () => {
     });
   };
 
+  ////////////////// LOCAL_PUSH_NOTIFICATION ////////////////////////////////////
+  //
+  // 1) 탈퇴한 직원이 앱을 선택하는 화면에서 앱으로 돌아왔을 때
+  // 2) API를 날려서 탈퇴 여부를 확인 후
+  // 3) 탈퇴하였드면 사업장 스크린 화면으로 이동하는 FN (feat.허군님)
+  // 4) https://wesop.slack.com/archives/C01HQV8UU5B/p1615190528009600
+  // 5) 사용빈도에 비하여 안정성이 낮아 사용하지 않음
+  // 6) 앱을 선택하는 화면에서 돌아오는 것을 디텍팅🍆하는 코드는 다른 곳에서도 사용 할 수 있을 것 같아서 남겨둠
+  //
   const handleAppStateChange = async () => {
     console.log('AppState.currentState', AppState.currentState);
     const STORE = await AsyncStorage.getItem('STORE');
     const STORE_SEQ = await AsyncStorage.getItem('STORE_SEQ');
     const MEMBER_SEQ = await AsyncStorage.getItem('MEMBER_SEQ');
     if (
-      AppState.currentState === 'active' &&
+      AppState.currentState === 'active' && // 앱을 선택하는 화면에서 돌아오는 것을 디텍팅🍆
       STORE_SEQ &&
       MEMBER_SEQ &&
       STORE &&
@@ -130,7 +141,7 @@ export default () => {
     ) {
       console.log(STORE, STORE_SEQ, MEMBER_SEQ);
       try {
-        const {data} = await api.getIsRetiree(STORE_SEQ, MEMBER_SEQ);
+        const {data} = await api.getIsRetiree(STORE_SEQ, MEMBER_SEQ); // 직원의 탈퇴 여부 확인API
         console.log(data);
         if (!data?.WORKFLAG) {
           gotoSelectStoreFn();
@@ -140,23 +151,24 @@ export default () => {
       }
     }
   };
-
+  //
   // useEffect(() => {
   //   AppState.addEventListener('change', handleAppStateChange);
   // }, []);
-
+  //
   // useEffect(() => {
   //   return () => {
   //     AppState.removeEventListener('change', handleAppStateChange);
   //   };
   // }, []);
+  //
+  ///////////////////////////////////////////////////////////////////////////////
 
   return (
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
         initialRouteName={'SplashScreen'}
-        // initialRouteName={'ChecklistItemsScreen'}
         screenOptions={{
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {
@@ -222,7 +234,7 @@ export default () => {
             title: '사업장 검색',
           }}
         />
-        {/* 마이페이지======================================================== */}
+        {/* =======================================마이페이지 */}
         <LoggedInNavigation.Screen
           name="MyPageAlarmSetScreen"
           component={MyPageAlarmSetScreen}
@@ -313,7 +325,7 @@ export default () => {
             headerRight: () => <HomeBtn />,
           }}
         />
-        {/* 유통기한======================================================== */}
+        {/* =======================================유통기한 */}
         <LoggedInNavigation.Screen
           name="ShelfLifeCheckScreen"
           component={ShelfLifeCheckScreen}
@@ -341,7 +353,7 @@ export default () => {
             headerRight: () => <HomeBtn />,
           }}
         />
-        {/* 업무캘린더======================================================== */}
+        {/* =======================================업무캘린더 */}
         <LoggedInNavigation.Screen
           name="TaskCheckScreen"
           component={TaskCheckScreen}
@@ -369,7 +381,7 @@ export default () => {
             headerRight: () => <HomeBtn />,
           }}
         />
-        {/* 체크리스트======================================================== */}
+        {/* =======================================체크리스트 */}
         <LoggedInNavigation.Screen
           name="ChecklistAddScreen"
           component={ChecklistAddScreen}
@@ -406,7 +418,7 @@ export default () => {
             headerRight: () => <HomeBtn />,
           }}
         />
-        {/* 업무일지======================================================== */}
+        {/* =======================================업무일지 */}
         <LoggedInNavigation.Screen
           name="ChecklistShareMainScreen"
           component={ChecklistShareMainScreen}
@@ -440,7 +452,7 @@ export default () => {
             headerRight: () => <HomeBtn />,
           })}
         />
-        {/* 캘린더======================================================== */}
+        {/* =======================================캘린더 */}
         <LoggedInNavigation.Screen
           name="CalendarInfoScreen"
           component={CalendarInfoScreen}
@@ -504,7 +516,7 @@ export default () => {
             headerRight: () => <HomeBtn />,
           }}
         />
-        {/* 직원관리======================================================== */}
+        {/* =======================================직원관리 */}
         <LoggedInNavigation.Screen
           name="InviteEmployeeScreen"
           component={InviteEmployeeScreen}
@@ -606,7 +618,7 @@ export default () => {
             headerRight: () => null,
           }}
         />
-        {/* 조기경보======================================================== */}
+        {/* =======================================조기경보 */}
         <LoggedInNavigation.Screen
           name="HealthCertificateTypeScreen"
           component={HealthCertificateTypeScreen}

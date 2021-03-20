@@ -12,6 +12,7 @@ interface IIsBefore {
   isBefore: boolean;
 }
 
+// Ripple처리된 버튼
 const SubmitButton = styled(Ripple)<IIsBefore>`
   width: ${wp('100%') - 40}px;
   height: 60px;

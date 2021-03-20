@@ -147,6 +147,7 @@ const VacationTopText = styled(TopText)<IColumn>`
       : 'rgba(127, 127, 127, 0.6)'};
 `;
 
+// 주별 사업장현황의 막대그래프
 export default ({data, toDay}) => {
   const values = Object.values(data.WORKING)?.map((p) => p[0]);
   const minY = Math.min(...values);

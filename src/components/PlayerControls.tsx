@@ -32,6 +32,7 @@ const Touchable = styled.TouchableOpacity`
   padding: 5px;
 `;
 
+// 퇴근해cu에서 사용하려고 하였던 비디오플레이어 아이콘
 export const PlayerControls: React.FC<Props> = ({
   playing,
   showSkip,

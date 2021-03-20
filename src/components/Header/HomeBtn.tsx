@@ -27,6 +27,7 @@ export default ({from = ''}) => {
   const {STORE_SEQ} = useSelector((state: any) => state.storeReducer);
 
   const onRefresh = async () => {
+    // popToTop이 아니면 슬라이드가 역으로 (오른쪽에서 왼쪽으로) 발생하기 때문에 popToTop이 가장 적당하였음(feat.윤혜정)
     navigation.popToTop();
     await api.getStoreInfo({
       STORE,
