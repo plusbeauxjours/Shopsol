@@ -13,8 +13,8 @@ import utils from '~/constants/utils';
 export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   const {mobileNo = null, verifyCode = null} = params;
+
   const [name, setName] = useState<string>('');
   const [positionTypeCheck, setPositionTypeCheck] = useState<
     [boolean, boolean]
@@ -61,6 +61,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  // 회원가입을 위한 유효성검사 & api
   const submitFn = async () => {
     const checkNumber = password.search(/[0-9]/g);
     const checkEnglish = password.search(/[a-z]/gi);
@@ -68,7 +69,6 @@ export default ({route: {params}}) => {
     if (name.length == 0) {
       return alertModal('이름을 입력하세요.');
     }
-
     if (name.length > 6) {
       return alertModal('이름은 6자 이하로 입력해주세요.');
     }
@@ -153,6 +153,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 비밀번호 입력 & length 제한 & 유효성검사
   const passwordCheckerFn = (text, isPasswordCheck) => {
     const reg1 = /^[A-Za-z0-9]*$/;
     const reg2 = /[0-9]/g;
@@ -190,6 +191,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 가입경로 데이터
   const fetchData = async () => {
     const {data} = await api.help2();
     if (data.helparr.length > 0) {

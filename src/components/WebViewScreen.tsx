@@ -22,6 +22,8 @@ const Text = styled.Text`
   bottom: 10px;
 `;
 
+// 각종 웹뷰들을 렌더링할 스크린
+// 로딩과 기본 설정들이 되어있음
 export default ({route: {params}}) => {
   const navigation = useNavigation();
   const {uri, text, title} = params;

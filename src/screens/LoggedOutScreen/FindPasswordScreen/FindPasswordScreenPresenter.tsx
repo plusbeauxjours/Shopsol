@@ -210,6 +210,7 @@ export default ({
                         setPasswordCheck('');
                       }}
                       onChangeText={(text) => {
+                        // 키보드가 한글일 경우 염문 키보드로 바꿈
                         if (!/^[A-Za-z0-9]*$/.test(text)) {
                           setIsPasswordSeen(true);
                         } else {
@@ -259,6 +260,7 @@ export default ({
                         setPasswordCheck('');
                       }}
                       onChangeText={(text) => {
+                        // 키보드가 한글일 경우 염문 키보드로 바꿈
                         if (!/^[A-Za-z0-9]*$/.test(text)) {
                           setIsPasswordCheckSeen(true);
                         } else {

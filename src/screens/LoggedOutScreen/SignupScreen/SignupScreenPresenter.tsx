@@ -207,6 +207,8 @@ export default ({
   setName,
 }) => {
   const sheetRef = useRef(null);
+
+  // 가입유형 라디오버튼
   const positionType = (selection, text) => {
     let value = JSON.parse(JSON.stringify(positionTypeCheck));
     return (
@@ -230,6 +232,8 @@ export default ({
       </TypeContainer>
     );
   };
+
+  // 성별선택 라디오버튼
   const genderType = (selection, text) => {
     let value = JSON.parse(JSON.stringify(genderTypeCheck));
     return (
@@ -250,6 +254,7 @@ export default ({
       </TypeContainer>
     );
   };
+
   return (
     <BackGround>
       <KeyboardAwareScrollView

@@ -1,11 +1,7 @@
-import React, {useRef} from 'react';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import React from 'react';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import RBSheet from 'react-native-raw-bottom-sheet';
 
 import SubmitBtn from '~/components/Btn/SubmitBtn';
 import InputLine from '~/components/InputLine';
@@ -20,8 +16,6 @@ interface IsBefore {
 interface IPolicyCheck {
   policyCheck?: boolean;
 }
-
-const ScrollView = styled.ScrollView``;
 
 const Container = styled.View`
   padding: 20px;
@@ -99,24 +93,6 @@ const VerifyButton = styled.TouchableOpacity<IsBefore>`
   border-radius: 20px;
 `;
 
-const WhiteText = styled.Text`
-  color: white;
-  font-size: ${styleGuide.fontSize.large}px;
-`;
-
-const Text = styled.Text`
-  color: ${styleGuide.palette.greyColor};
-  font-size: 14px;
-`;
-
-const ButtonAfter = styled.TouchableOpacity`
-  height: ${hp('7%')}px;
-  width: ${wp('100%')}px;
-  align-items: center;
-  justify-content: center;
-  background-color: ${styleGuide.palette.primary};
-`;
-
 const Row = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
@@ -134,10 +110,6 @@ const PolicyText = styled.Text<IPolicyCheck>`
 
 const BoxText = styled.Text`
   font-size: ${styleGuide.fontSize.large}px;
-`;
-
-const UnderlineText = styled(PolicyText)`
-  text-decoration-line: underline;
 `;
 
 const IconContainer = styled.View<IPolicyCheck>`

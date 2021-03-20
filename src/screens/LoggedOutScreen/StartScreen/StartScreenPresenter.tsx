@@ -4,14 +4,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import FastImage from 'react-native-fast-image';
 import Ripple from 'react-native-material-ripple';
 import Swiper from 'react-native-swiper';
 
 import styleGuide from '~/constants/styleGuide';
 import * as Animatable from 'react-native-animatable';
-import RoundBtn from '~/components/Btn/RoundBtn';
-import Loader from '~/components/Loader';
 
 const Container = styled.View`
   flex: 1;
@@ -119,7 +116,6 @@ export default ({
   gotoVerification,
   SHOWN_APP_GUIDE_SCREEN,
   setAsyncStorage,
-  removeAsyncStorage,
 }) => {
   if (!loading) {
     if (SHOWN_APP_GUIDE_SCREEN) {

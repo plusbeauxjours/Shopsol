@@ -41,6 +41,62 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
+  // 인증번호를 발송하고 나면 카운트다운이 시작
+  const startCountDown = () => {
+    let duration = moment.duration(180000, 'milliseconds');
+    setCountdown(
+      '0' +
+        duration.minutes().toString() +
+        ':' +
+        (duration.seconds() < 10 ? '0' : '') +
+        duration.seconds().toString(),
+    );
+    const timer = setInterval(() => {
+      if (duration.asSeconds() <= 0) {
+        clearInterval(timer);
+        setHasCheckedVerifyCode(false);
+        setIsCountDownStarted(false);
+        setHasCheckTimeOut(true);
+      }
+      duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+      setCountdown(
+        '0' +
+          duration.minutes().toString() +
+          ':' +
+          (duration.seconds() < 10 ? '0' : '') +
+          duration.seconds().toString(),
+      );
+    }, 1000);
+  };
+
+  // 인증번호 인증을 위한 api
+  const onVerifyCode = async () => {
+    if (verifyCode?.length != 6) {
+      clearInterval(timer);
+      setIsVerified(true);
+      setIsCountDownStarted(false);
+    } else if (verifyCode?.length != 6) {
+      alertModal('인증번호를 정확히 입력해주세요.');
+    } else {
+      try {
+        const {data} = await api.checkSMS({
+          MobileNo: mobileNo,
+          SMSNUMBER: verifyCode,
+        });
+        if (data.message == 'SUCCESS') {
+          clearInterval(timer);
+          setIsVerified(true);
+          setIsCountDownStarted(false);
+        } else {
+          alertModal('인증번호가 맞지않습니다.');
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  // 휴대폰번호 입력 & length 제한
   const onChangeMobileNum = (text) => {
     if (text?.length > 11) {
       alertModal('핸드폰번호는 최대 11자리 입력 가능합니다.');
@@ -49,6 +105,34 @@ export default () => {
     }
   };
 
+  // 인증번호 발송을 위한 api
+  const requireVerifyCode = async () => {
+    if (mobileNo?.length == 0) {
+      alertModal('찾으실 휴대폰번호를 입력해주세요.');
+      return;
+    }
+    const regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+    if (!regExp_ctn.test(mobileNo)) {
+      alertModal('올바른 휴대폰번호 11자리를 입력해주세요.');
+      return;
+    }
+    setHasCheckedVerifyCode(true);
+    setIsCountDownStarted(true);
+    setHasCheckTimeOut(false);
+    startCountDown();
+    try {
+      const {data} = await api.getSMS({
+        PHONENUMBER: mobileNo,
+      });
+      if (data.message == 'SUCCESS') {
+        alertModal('인증번호를 발송하였습니다.');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // 새로운 비밀번호를 등록
   const submitFn = async () => {
     if (!/^[a-zA-Z0-9]{6,15}$/.test(password)) {
       return alertModal('숫자와 영문자 조합으로 6~15자리를 사용해야 합니다.');
@@ -84,6 +168,7 @@ export default () => {
     }
   };
 
+  // 인증번호 입력 & length 제한 & 유효성검사
   const passwordCheckerFn = (text, isPasswordCheck) => {
     const reg1 = /^[A-Za-z0-9]*$/;
     const reg2 = /[0-9]/g;
@@ -121,87 +206,9 @@ export default () => {
     }
   };
 
-  const onVerifyCode = async () => {
-    if (verifyCode?.length != 6) {
-      clearInterval(timer);
-      setIsVerified(true);
-      setIsCountDownStarted(false);
-    } else if (verifyCode?.length != 6) {
-      alertModal('인증번호를 정확히 입력해주세요.');
-    } else {
-      try {
-        const {data} = await api.checkSMS({
-          MobileNo: mobileNo,
-          SMSNUMBER: verifyCode,
-        });
-        if (data.message == 'SUCCESS') {
-          clearInterval(timer);
-          setIsVerified(true);
-          setIsCountDownStarted(false);
-        } else {
-          alertModal('인증번호가 맞지않습니다.');
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
-
+  // 인증번호 입력
   const onChangeVerifyCode = (text) => {
     setVerifyCode(text);
-  };
-
-  const requireVerifyCode = async () => {
-    if (mobileNo?.length == 0) {
-      alertModal('찾으실 휴대폰번호를 입력해주세요.');
-      return;
-    }
-    const regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-    if (!regExp_ctn.test(mobileNo)) {
-      alertModal('올바른 휴대폰번호 11자리를 입력해주세요.');
-      return;
-    }
-    setHasCheckedVerifyCode(true);
-    setIsCountDownStarted(true);
-    setHasCheckTimeOut(false);
-    startCountDown();
-    try {
-      const {data} = await api.getSMS({
-        PHONENUMBER: mobileNo,
-      });
-      if (data.message == 'SUCCESS') {
-        alertModal('인증번호를 발송하였습니다.');
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const startCountDown = () => {
-    let duration = moment.duration(180000, 'milliseconds');
-    setCountdown(
-      '0' +
-        duration.minutes().toString() +
-        ':' +
-        (duration.seconds() < 10 ? '0' : '') +
-        duration.seconds().toString(),
-    );
-    const timer = setInterval(() => {
-      if (duration.asSeconds() <= 0) {
-        clearInterval(timer);
-        setHasCheckedVerifyCode(false);
-        setIsCountDownStarted(false);
-        setHasCheckTimeOut(true);
-      }
-      duration = moment.duration(duration.asSeconds() - 1, 'seconds');
-      setCountdown(
-        '0' +
-          duration.minutes().toString() +
-          ':' +
-          (duration.seconds() < 10 ? '0' : '') +
-          duration.seconds().toString(),
-      );
-    }, 1000);
   };
 
   useEffect(() => {
