@@ -7101,10 +7101,10 @@ react-native-animatable@1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-appsflyer@6.2.10:
-  version "6.2.10"
-  resolved "https://registry.yarnpkg.com/react-native-appsflyer/-/react-native-appsflyer-6.2.10.tgz#12ecb9585ce3c5d5920904f0dce9c491220ef548"
-  integrity sha512-DiUe2dz48O4mE6Cq2pFLet3oVs4Fq1UiXWpWkMnyFVj13nxTMXjHBPkYwTegazQ5v3ls0yIJ5ekvo+xHNeurbw==
+react-native-appsflyer@6.2.40:
+  version "6.2.40"
+  resolved "https://registry.yarnpkg.com/react-native-appsflyer/-/react-native-appsflyer-6.2.40.tgz#d5adbb882dcad371d7829ef9bd37b0b78a127818"
+  integrity sha512-11UAKzLFYr3f90N9HdhDSKFRVw0K2uoXPglZ4qVZ8eJdOYiXinWgui17HzXqUp6enC9p+9FjXQiGS7XrFyHzpg==
 
 react-native-barcode-mask@1.2.4:
   version "1.2.4"

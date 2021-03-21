@@ -1,34 +1,60 @@
 import React from 'react';
-import {Keyboard} from 'react-native';
+import {Keyboard, KeyboardAvoidingView} from 'react-native';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import * as Animatable from 'react-native-animatable';
 
 import InputLine from '~/components/InputLine';
 import RoundBtn from '~/components/Btn/RoundBtn';
 import styleGuide from '~/constants/styleGuide';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const BackGround = styled.View`
+const BackGround = styled.SafeAreaView`
   flex: 1;
   background-color: white;
 `;
 
 const Container = styled.View`
   flex: 1;
-  padding: 20px 0;
   align-items: center;
   justify-content: center;
   height: 100%;
 `;
 
+const ScrollView = styled.ScrollView`
+  flex: 1;
+`;
+
 const Space = styled.View`
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 70px;
+  margin-bottom: 10px;
 `;
 
 const Touchable = styled.TouchableOpacity``;
+const View = styled.View``;
+
+const Section = styled.View`
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: ${styleGuide.palette.lightGreyColor};
+  background-color: white;
+  bottom: 0px;
+  flex: 1;
+`;
+
+const SectionNoLine = styled.View`
+  width: 100%;
+  background-color: white;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
 
 const TextInput = styled.TextInput`
   padding: 0;
@@ -61,8 +87,27 @@ const TextInputContainer = styled.View`
   margin-bottom: 5px;
 `;
 
-const TextInputBox = styled.View`
-  width: ${wp('100%') - 80}px;
+const RequestButton = styled.TouchableOpacity`
+  padding: 7px 14px;
+  width: 100px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${styleGuide.palette.primary};
+  border-radius: 20px;
+  align-self: flex-end;
+  margin-bottom: 10px;
+  margin-top: 10px;
+`;
+
+const RequestText = styled.Text`
+  font-size: ${styleGuide.fontSize.middle}px;
+  color: white;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export default ({
@@ -72,22 +117,124 @@ export default ({
   mobileNo,
   password,
   logIn,
+  brandData,
+  selectedBrandIndex,
+  selectBrandFn,
+  isBrandLogin,
+  setIsBrandLogin,
 }) => {
+  console.log(brandData);
   return (
     <BackGround>
-      <KeyboardAwareScrollView
-        extraScrollHeight={100}
-        keyboardShouldPersistTaps={'handled'}
-        keyboardDismissMode="on-drag"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{alignItems: 'center'}}>
+      <KeyboardAvoidingView style={{height: '100%', padding: 20}}>
         <Container>
-          <FastImage
-            style={{height: 200, width: 200, marginVertical: 50}}
-            source={require('../../../assets/images/shopSol.png')}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-          <TextInputBox>
+          {isBrandLogin ? (
+            selectedBrandIndex ? (
+              <SectionNoLine
+                as={Animatable.View}
+                animation={{
+                  from: {height: 20, opacity: 0},
+                  to: {height: 150, opacity: 1},
+                }}
+                duration={500}>
+                <Touchable
+                  style={{width: wp('100%'), flex: 1, alignItems: 'center'}}
+                  onPress={() => selectBrandFn()}>
+                  <FastImage
+                    style={{borderRadius: 20, height: 150, width: 150, flex: 1}}
+                    source={{
+                      uri: brandData[selectedBrandIndex].IMG_URL,
+                      cache: FastImage.cacheControl.immutable,
+                      priority: FastImage.priority.low,
+                    }}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+                </Touchable>
+              </SectionNoLine>
+            ) : brandData?.length > 12 ? (
+              <ScrollView
+                keyboardShouldPersistTaps={'handled'}
+                keyboardDismissMode="on-drag"
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: 'center',
+                }}>
+                <Row
+                  as={Animatable.View}
+                  animation={{
+                    from: {opacity: 0},
+                    to: {opacity: 1},
+                  }}
+                  duration={500}>
+                  {brandData?.map((brand, index) => (
+                    <Touchable onPress={() => selectBrandFn(index, brand.NAME)}>
+                      <FastImage
+                        key={index}
+                        style={{
+                          borderRadius: 10,
+                          height: (wp('100%') - 120) / 4,
+                          width: (wp('100%') - 120) / 4,
+                          margin: 10,
+                        }}
+                        source={{
+                          uri: brand.IMG_URL,
+                          cache: FastImage.cacheControl.immutable,
+                          priority: FastImage.priority.low,
+                        }}
+                        resizeMode={FastImage.resizeMode.contain}
+                      />
+                    </Touchable>
+                  ))}
+                </Row>
+              </ScrollView>
+            ) : (
+              <SectionNoLine>
+                <Row
+                  as={Animatable.View}
+                  animation={{
+                    from: {opacity: 0},
+                    to: {opacity: 1},
+                  }}
+                  duration={500}>
+                  {brandData?.map((brand, index) => (
+                    <Touchable onPress={() => selectBrandFn(index, brand.NAME)}>
+                      <FastImage
+                        key={index}
+                        style={{
+                          borderRadius: 10,
+                          height: (wp('100%') - 120) / 4,
+                          width: (wp('100%') - 120) / 4,
+                          margin: 10,
+                        }}
+                        source={{
+                          uri: brand.IMG_URL,
+                          cache: FastImage.cacheControl.immutable,
+                          priority: FastImage.priority.low,
+                        }}
+                        resizeMode={FastImage.resizeMode.contain}
+                      />
+                    </Touchable>
+                  ))}
+                </Row>
+              </SectionNoLine>
+            )
+          ) : (
+            <FastImage
+              style={{height: 200, width: 200, flex: 1}}
+              source={require('../../../assets/images/shopSol.png')}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
+          {!selectedBrandIndex ? (
+            <RequestButton onPress={() => setIsBrandLogin(!isBrandLogin)}>
+              <RequestText>
+                {isBrandLogin ? '샵솔 로그인' : '브랜드 로그인'}
+              </RequestText>
+            </RequestButton>
+          ) : (
+            <View style={{height: 50}} />
+          )}
+          <Section>
             <TextInputContainer>
               <GreyText>ID</GreyText>
               <TextInput
@@ -134,9 +281,9 @@ export default ({
                 <UnderLineText>비밀번호 찾기</UnderLineText>
               </Touchable>
             </Space>
-          </TextInputBox>
+          </Section>
         </Container>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     </BackGround>
   );
 };

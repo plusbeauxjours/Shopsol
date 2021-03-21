@@ -41,4 +41,5 @@ export default {
   getSMS: (data: any) => oldApi('post', '/Auth/get_appSMS', data),
   checkSMS: (data: any) => oldApi('post', '/Auth/checkSMS/', data),
   checkApp: (data: any) => oldApi('post', '/Auth/checkApp/', data),
+  getBrandData: () => callApi('get', '/auth/getbranddata'),
 };

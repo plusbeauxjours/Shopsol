@@ -6,6 +6,7 @@ const storeSlice = createSlice({
   name: 'store',
   initialState: {
     STORE_SEQ: '',
+    BRAND_SEQ: '',
     STORE_NAME: '',
     EMP_SEQ: '',
     STORE_DATA: {},
@@ -19,6 +20,12 @@ const storeSlice = createSlice({
       } else {
         state.STORE_DATA.resultdata.QR_Num = QR_Num;
       }
+    },
+    setBRAND_SEQ(state, action) {
+      const {
+        payload: {BRAND_SEQ},
+      } = action;
+      state.BRAND_SEQ = BRAND_SEQ;
     },
     resetSTORE_DATA(state) {
       state.STORE_DATA = {};
@@ -90,6 +97,7 @@ const storeSlice = createSlice({
 export const {
   resetSTORE_DATA,
   updateQR_Num,
+  setBRAND_SEQ,
   setSTORE_DATA,
   selectSTORE,
   updateSTORE,

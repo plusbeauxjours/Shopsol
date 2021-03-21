@@ -8,8 +8,9 @@ import {setAlertInfo, setAlertVisible} from '~/redux/alertSlice';
 import api from '~/constants/LoggedOutApi';
 import utils from '~/constants/utils';
 import {setSplashVisible} from '~/redux/splashSlice';
+import styleGuide from '~/constants/styleGuide';
 
-export default () => {
+export default ({route: {params}}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -19,9 +20,12 @@ export default () => {
     DEVICE_PLATFORM,
     DEVICE_SYSTEM_VERSION,
   } = useSelector((state: any) => state.userReducer);
+  const {brandData} = params;
 
   const [mobileNo, setMobileNo] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isBrandLogin, setIsBrandLogin] = useState<boolean>(false);
+  const [selectedBrandIndex, setSelectedBrandIndex] = useState<string>(null);
 
   const alertModal = (text) => {
     const params = {alertType: 'alert', content: text};
@@ -40,6 +44,22 @@ export default () => {
 
   const gotoFind = () => {
     navigation.navigate('FindPasswordScreen');
+  };
+
+  const selectBrandFn = (index: number, name: string) => {
+    if (selectedBrandIndex) {
+      navigation.setOptions({
+        headerTitle: name,
+        headerStyle: {backgroundColor: styleGuide.palette.primary},
+      });
+      setSelectedBrandIndex(null);
+    } else {
+      navigation.setOptions({
+        headerTitle: name,
+        headerStyle: {backgroundColor: 'red'},
+      });
+      setSelectedBrandIndex(index + '');
+    }
   };
 
   // 로그인 api
@@ -112,6 +132,11 @@ export default () => {
       mobileNo={mobileNo}
       password={password}
       logIn={logIn}
+      brandData={brandData}
+      selectedBrandIndex={selectedBrandIndex}
+      selectBrandFn={selectBrandFn}
+      isBrandLogin={isBrandLogin}
+      setIsBrandLogin={setIsBrandLogin}
     />
   );
 };

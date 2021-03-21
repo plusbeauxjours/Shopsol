@@ -219,7 +219,7 @@ export default ({
                   from: {opacity: 0},
                   to: {opacity: 1},
                 }}
-                duration={800}
+                duration={400}
                 style={{height: 200, width: 200}}
                 source={require('../../../assets/images/shopSol.png')}
               />
@@ -229,7 +229,7 @@ export default ({
                   from: {height: 20, opacity: 0},
                   to: {height: 150, opacity: 1},
                 }}
-                delay={1400}
+                delay={1000}
                 duration={500}>
                 <LoginButton
                   onPress={() => gotoLogin()}
@@ -249,7 +249,7 @@ export default ({
               from: {opacity: 0},
               to: {opacity: 1},
             }}
-            duration={2000}>
+            duration={1000}>
             <BarButton
               onPress={() => gotoVerification()}
               rippleColor={styleGuide.palette.rippleColor}

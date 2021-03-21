@@ -17,6 +17,7 @@ export default () => {
   const {DEVICE_PLATFORM} = useSelector((state: any) => state.userReducer);
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [brandData, setBrandData] = useState<any>([]);
   const [SHOWN_APP_GUIDE_SCREEN, setSHOWN_APP_GUIDE_SCREEN] = useState<boolean>(
     false,
   );
@@ -38,7 +39,7 @@ export default () => {
   // 로그인 스크린으로 이동
   const gotoLogin = () => {
     navigation.navigate('LogInScreen', {
-      appVersion: utils.appVersion,
+      brandData,
     });
   };
 
@@ -53,6 +54,11 @@ export default () => {
     );
     if (!ASYNC_SHOWN_APP_GUIDE_SCREEN) {
       setSHOWN_APP_GUIDE_SCREEN(true);
+    }
+    // 처음 시작할 때 로고가 뜨는 시간에(에니메이션) 데이터를 미리 받아두고 로그인스크린으로 토스함
+    const {data} = await api.getBrandData();
+    if (data.message === 'SUCCESS') {
+      setBrandData(data.resultdata);
     }
     return setLoading(false);
   };

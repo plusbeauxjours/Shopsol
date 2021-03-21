@@ -22,6 +22,7 @@ function App() {
       appId: '1408364175',
       onInstallConversionDataListener: true,
       onDeepLinkListener: true,
+      timeToWaitForATTUserAuthorization: 10,
     },
     (result) => {
       console.log('AppsFlyer SDK successfully initialized: ', result);
