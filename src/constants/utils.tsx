@@ -351,7 +351,7 @@ export default {
     }
   },
 
-  appVersion: '2.2.4',
+  appVersion: '2.2.5',
   renderWeekDay: (weekDay) => {
     switch (weekDay) {
       case '0':

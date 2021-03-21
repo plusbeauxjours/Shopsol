@@ -119,6 +119,7 @@ const WhiteSpace = styled.View<IRow>`
   width: ${(props) => props.paddingLeft * (ToucahbleSize + ToucahbleMargin)}px;
 `;
 
+// 월별 사업장현황의 달력
 export default ({data, toDay}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(
     moment(toDay).date() - 1,

@@ -168,7 +168,7 @@ export default () => {
     }
   };
 
-  // 인증번호 입력 & length 제한 & 유효성검사
+  // 비밀번호 입력 & length 제한 & 유효성검사
   const passwordCheckerFn = (text, isPasswordCheck) => {
     const reg1 = /^[A-Za-z0-9]*$/;
     const reg2 = /[0-9]/g;

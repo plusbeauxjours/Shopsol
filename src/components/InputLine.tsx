@@ -13,4 +13,5 @@ const Line = styled.View<IIsBefore>`
     props.isBefore ? '#CCCCCC' : styleGuide.palette.primary};
 `;
 
+// 입력폼에서 내용이 있으면 색이 바뀌는 선
 export default ({isBefore}) => <Line isBefore={isBefore} />;

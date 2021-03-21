@@ -25,6 +25,7 @@ const Text = styled.Text`
   color: ${styleGuide.palette.greyColor};
 `;
 
+// 주별 사업장현황의 막대그래프 아래의 시간
 export default ({minY, maxY}) => {
   const lerp = (v0: number, v1: number, t: number) => (1 - t) * v0 + t * v1;
   return (
