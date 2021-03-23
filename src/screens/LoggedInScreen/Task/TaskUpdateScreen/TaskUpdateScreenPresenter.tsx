@@ -250,6 +250,8 @@ export default ({
         <Container>
           <Section>
             <Row>
+              {/* 업무 이미지 입력(좌) */}
+              {/* 선택 혹은 촬영한 이미지가 있을 경우 */}
               {cameraPictureLast ? (
                 <Touchable
                   onPress={() => setCameraPictureLast(null)}
@@ -269,6 +271,7 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
+                  {/* 선택 혹은 촬영한 이미지가 없을 경우 (디포트) */}
                   <Touchable
                     onPress={() =>
                       utils.handleCameraPermission(setIsCameraModalVisible)
@@ -290,6 +293,7 @@ export default ({
                   </Touchable>
                 </Column>
               )}
+              {/* 업무 내용 입력(우) */}
               <WhiteItem style={{justifyContent: 'flex-start'}}>
                 <Name>
                   <TextInput
@@ -351,11 +355,13 @@ export default ({
               </WhiteItem>
             </Row>
           </Section>
+          {/* 업무 수정완료 버튼 */}
           <SubmitBtn
             text={'수정완료'}
             onPress={() => submit()}
             isRegisted={taskName.length !== 0 && taskMemo.length !== 0}
           />
+          {/* 업무 삭제 버튼 */}
           <DeleteButton
             onPress={() =>
               deleteModal('', '등록하신 업무를 삭제하시겠습니까?')
@@ -371,6 +377,7 @@ export default ({
             </Text>
           </DeleteButton>
         </Container>
+        {/* 사진촬영 모달 */}
         <Modal
           isVisible={isCameraModalVisible}
           style={{margin: 0}}
@@ -440,6 +447,7 @@ export default ({
           )}
         </Modal>
       </ScrollView>
+      {/* 날짜 선택 모달 */}
       <Modal
         onRequestClose={() => {}}
         onBackdropPress={() => {}}

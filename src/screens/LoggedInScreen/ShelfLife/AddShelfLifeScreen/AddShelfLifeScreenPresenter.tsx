@@ -358,6 +358,8 @@ export default ({
             </TextContainer>
             <GreyLine />
             <Row style={{marginTop: 10, marginBottom: 20}}>
+              {/* 유통기한 이미지 입력(좌) */}
+              {/* 선택 혹은 촬영한 이미지가 있을 경우 */}
               {shelfLifeImgLink || cameraPictureLast ? (
                 <Touchable
                   onPress={() =>
@@ -383,6 +385,7 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
+                  {/* 선택 혹은 촬영한 이미지가 없을 경우 (디포트) */}
                   <Touchable
                     onPress={() =>
                       utils.handleCameraPermission(setIsCameraModalVisible)
@@ -415,7 +418,7 @@ export default ({
                   </Touchable>
                 </Column>
               )}
-
+              {/* 유통기한 내용 입력(우) */}
               <WhiteItem style={{justifyContent: 'flex-start'}}>
                 <Name>
                   <TextInput
@@ -491,6 +494,7 @@ export default ({
                   />
                   {/* 
                   v2.3
+                  유통기한아이템을 등록 할 때 바코드를 옵션으로 등록(홀딩 feat.대표님)
                   <ListContasiner style={{width: '100%', marginTop: 32}}>
                     <Touchable
                       onPress={() =>
@@ -526,6 +530,7 @@ export default ({
               />
             </Center>
           </Section>
+          {/* 유통기한 목록 섹션 */}
           <Section>
             <ListContasiner>
               <TitleText>상품목록</TitleText>
@@ -556,12 +561,14 @@ export default ({
                 />
               ))}
           </Section>
+          {/* 유통기한 등록완료 버튼 */}
           <SubmitBtn
             text={'상품 등록완료'}
             isRegisted={list && list.length !== 0}
             onPress={() => submitFn()}
           />
         </Container>
+        {/* 사진촬영 모달 */}
         <Modal
           isVisible={isCameraModalVisible}
           style={{margin: 0}}
@@ -630,6 +637,7 @@ export default ({
             </RNCamera>
           )}
         </Modal>
+        {/* 카메라로 바코드를 스캔하여 유통기한 아이템을 등록 할 때 모달 */}
         <Modal
           isVisible={barCodeCameraModalOpen}
           onBackdropPress={() => setBarCodeCameraModalOpen(false)}
@@ -657,6 +665,7 @@ export default ({
             </Footer>
           </RNCamera>
         </Modal>
+        {/* 유통기한아이템을 등록 할 때 바코드를 옵션으로 등록하려고 할 때 모달(홀딩 feat.대표님)*/}
         <Modal
           isVisible={barCodeInputCameraModalOpen}
           onBackdropPress={() => setBarCodeInputCameraModalOpen(false)}
@@ -684,6 +693,7 @@ export default ({
             </Footer>
           </RNCamera>
         </Modal>
+        {/* 이미지 확대 모달 */}
         <Modal
           onRequestClose={() => {
             setSelectedIndex(0);
@@ -718,6 +728,7 @@ export default ({
           />
         </Modal>
       </ScrollView>
+      {/* 날짜 선택 모달 */}
       <Modal
         onRequestClose={() => {}}
         onBackdropPress={() => {}}

@@ -262,6 +262,7 @@ export default ({
   loading,
   STORE,
 }) => {
+  // 유통기한 아이템이 없을 때
   if (TASK_DATA?.length > 0 && data?.length > 0) {
     if (
       TASK_DATA[0]?.items.length == 0 &&
@@ -300,6 +301,7 @@ export default ({
         </BackGround>
       );
     } else {
+      // 유통기한 아이템이 있을 때
       return (
         <BackGround>
           <Animated.ScrollView
@@ -315,6 +317,7 @@ export default ({
                 onRefresh={() => onRefresh('firstRoute')}
               />
             }>
+            {/* 도넛그래프카드 */}
             <FlatList
               keyExtractor={(_, index) => index.toString()}
               data={data}
@@ -369,6 +372,7 @@ export default ({
               )}
             />
             <Container>
+              {/* 서치바 */}
               <Row>
                 <SearchInputContainer>
                   <SearchInput
@@ -410,6 +414,7 @@ export default ({
                               .includes(search.toLowerCase()),
                         )
                         .map((item, index) => {
+                          // 텍스트로 검색된 아이템
                           return index == 0 ? (
                             <React.Fragment key={index}>
                               <LineTextContainer color={color}>
@@ -440,8 +445,10 @@ export default ({
                           );
                         })
                     : items?.map((item, index) => {
+                        // 아이템
                         return index == 0 ? (
                           <React.Fragment key={index}>
+                            {/* 인덱스가 0일때는 디데이가 오른쪽 상단에 표기 */}
                             <LineTextContainer color={color}>
                               <LineText color={color}>{name}</LineText>
                             </LineTextContainer>
@@ -473,6 +480,7 @@ export default ({
               ))}
             </Container>
           </Animated.ScrollView>
+          {/* 앵커된 y값에 다다르면 스르르 나타나는 헤더 */}
           {tabs[4]?.anchor !== 20 && (
             <TaskCheckScreenHeader
               y={y}
@@ -481,6 +489,7 @@ export default ({
               ready={ready}
             />
           )}
+          {/* 오른쪽 하단의 등록 버튼 */}
           <AddButtonContainer loading={loading}>
             {loading ? (
               <LottieButton>
@@ -500,6 +509,7 @@ export default ({
               </AddButton>
             )}
           </AddButtonContainer>
+          {/* 처리 취소 토스트 */}
           {isCancelToastVisible && (
             <ModalPopupArea>
               <ModalPopup>
@@ -507,6 +517,7 @@ export default ({
               </ModalPopup>
             </ModalPopupArea>
           )}
+          {/* 처리 토스트 */}
           {isUpdateToastVisible && (
             <ModalPopupArea>
               <ModalPopup>
@@ -518,6 +529,7 @@ export default ({
       );
     }
   } else {
+    // 로딩
     return (
       <Container style={{justifyContent: 'center'}}>
         <LottieView

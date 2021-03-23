@@ -123,7 +123,6 @@ export default ({
   isBrandLogin,
   setIsBrandLogin,
 }) => {
-  console.log(brandData);
   return (
     <BackGround>
       <KeyboardAvoidingView style={{height: '100%', padding: 20}}>

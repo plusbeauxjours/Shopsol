@@ -32,6 +32,7 @@ export default ({y, tabs, gotoCategory, ready}) => {
   const {top: paddingTop} = insets;
   const opacity = transition;
   useCode(() => block([set(toggle, greaterThan(y, 350))]), [toggle, y]);
+  // 앵커된 y값에 다다르면 스르르 나타나는 헤더
   return (
     <HeaderContainer as={Animated.View} style={{paddingTop}}>
       <HeaderBackground as={Animated.View} style={{opacity}} />

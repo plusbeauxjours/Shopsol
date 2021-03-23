@@ -105,6 +105,7 @@ export default () => {
     dispatch(setAlertVisible(true));
   };
 
+  // 처리 취소 토스트
   const cancelToastFn = () => {
     clearTimeout();
     setIsCancelToastVisible(true);
@@ -113,6 +114,7 @@ export default () => {
     }, 1000);
   };
 
+  // 처리 토스트
   const updateToastFn = () => {
     clearTimeout();
     setIsUpdateToastVisible(true);
@@ -121,6 +123,7 @@ export default () => {
     }, 1000);
   };
 
+  // 새로고침
   const onRefresh = async () => {
     try {
       setRefreshing(true);
@@ -133,6 +136,7 @@ export default () => {
     }
   };
 
+  // 처리 취소 API
   const cancelTask = async (name, task_SEQ) => {
     try {
       cancelToastFn();
@@ -148,6 +152,7 @@ export default () => {
     }
   };
 
+  // 처리 API
   const updateTask = async (name, task_SEQ) => {
     try {
       updateToastFn();
@@ -177,8 +182,10 @@ export default () => {
 
   const fetchData = async () => {
     try {
+      // 데이터 패칭
       const data = await dispatch(getTASK_DATA(YEAR, MONTH, DAY));
       const day = moment();
+      // 오늘로부터 해당 날짜들을 변수로 저장
       const ddayDuration = moment().add(1, 'days');
       const dayDuration = moment().add(2, 'days');
       const weekDuration = moment().add(7, 'days').add(1, 'days');
@@ -187,18 +194,23 @@ export default () => {
       if (data) {
         while (monthDuration.diff(day, 'days') > 0) {
           if (ddayDuration.diff(day, 'days') > 0) {
+            //오늘
             data[day.format('YYYY-MM-DD')]?.length > 0 &&
               defaultData[0].items.push(...data[day.format('YYYY-MM-DD')]);
           } else if (dayDuration.diff(day, 'days') > 0) {
+            //내일
             data[day.format('YYYY-MM-DD')]?.length > 0 &&
               defaultData[1].items.push(...data[day.format('YYYY-MM-DD')]);
           } else if (weekDuration.diff(day, 'days') > 0) {
+            //1주일
             data[day.format('YYYY-MM-DD')]?.length > 0 &&
               defaultData[2].items.push(...data[day.format('YYYY-MM-DD')]);
           } else if (weeksDuration.diff(day, 'days') > 0) {
+            //이주일
             data[day.format('YYYY-MM-DD')]?.length > 0 &&
               defaultData[3].items.push(...data[day.format('YYYY-MM-DD')]);
           } else {
+            //1개월
             data[day.format('YYYY-MM-DD')]?.length > 0 &&
               defaultData[4].items.push(...data[day.format('YYYY-MM-DD')]);
           }
@@ -207,6 +219,7 @@ export default () => {
       }
       dispatch(setTASK_DATA(defaultData));
 
+      // 해당 날짜들의 카운트
       const ddayCount = defaultData[0].items.length;
       const dayCount =
         defaultData[0].items.length + defaultData[1].items.length;
@@ -226,6 +239,7 @@ export default () => {
         defaultData[3].items.length +
         defaultData[4].items.length;
 
+      // 해당 날짜들의 카운트에서 처리된 아이템의 갯수 추출 (나중에 처리 비율 렌터)
       const ddayDone = defaultData[0].items.filter((i) => i.checkType === '1')
         .length;
       const dayDone =
@@ -298,10 +312,12 @@ export default () => {
     }
   };
 
+  // 오른쪽 하단 등록하기 버튼
   const gotoAdd = () => {
     navigation.navigate('AddTaskScreen', {onRefresh});
   };
 
+  // 앵커된 y값으로 이동
   const gotoCategory = (index) => {
     if (scrollRef.current) {
       setTimeout(() => {
@@ -313,6 +329,7 @@ export default () => {
     }
   };
 
+  // 헤더 마운트
   const onMeasurement = (index, tab) => {
     setTimeout(() => {
       tabs[index] = tab;

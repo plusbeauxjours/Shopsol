@@ -320,6 +320,8 @@ export default ({
             </TextContainer>
             <GreyLine />
             <Row style={{marginTop: 10, marginBottom: 20}}>
+              {/* 업무 이미지 입력(좌) */}
+              {/* 선택 혹은 촬영한 이미지가 있을 경우 */}
               {cameraPictureLast ? (
                 <Touchable
                   onPress={() => setCameraPictureLast(null)}
@@ -339,12 +341,11 @@ export default ({
                 </Touchable>
               ) : (
                 <Column>
+                  {/* 선택 혹은 촬영한 이미지가 없을 경우 (디포트) */}
                   <Touchable
                     onPress={() =>
                       utils.handleCameraPermission(setIsCameraModalVisible)
                     }>
-                    {/* <Touchable
-                    onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <CameraIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -353,8 +354,6 @@ export default ({
                     </BorderBox>
                   </Touchable>
                   <Touchable onPress={() => launchImageLibraryFn()}>
-                    {/* <Touchable
-                     onPress={() => alertModal('사진등록 서비스 준비중입니다.')}> */}
                     <BorderBox>
                       <PictureIcon size={25} color={'#ccc'} />
                       <GreyText style={{fontSize: styleGuide.fontSize.small}}>
@@ -364,7 +363,7 @@ export default ({
                   </Touchable>
                 </Column>
               )}
-
+              {/* 업무 내용 입력(우) */}
               <WhiteItem style={{justifyContent: 'flex-start'}}>
                 <Name>
                   <TextInput
@@ -446,6 +445,7 @@ export default ({
               />
             </Center>
           </Section>
+          {/* 업무 목록 섹션 */}
           <Section>
             <ListContasiner>
               <TitleText>업무목록</TitleText>
@@ -474,12 +474,14 @@ export default ({
                 />
               ))}
           </Section>
+          {/* 업무 등록완료 버튼 */}
           <SubmitBtn
             text={'업무 등록완료'}
             isRegisted={list && list.length !== 0}
             onPress={() => submitFn()}
           />
         </Container>
+        {/* 사진촬영 모달 */}
         <Modal
           isVisible={isCameraModalVisible}
           style={{margin: 0}}
@@ -548,6 +550,7 @@ export default ({
             </RNCamera>
           )}
         </Modal>
+        {/* 이미지 확대 모달 */}
         <Modal
           onRequestClose={() => {
             setSelectedIndex(0);
@@ -582,6 +585,7 @@ export default ({
           />
         </Modal>
       </ScrollView>
+      {/* 날짜 선택 모달 */}
       <Modal
         onRequestClose={() => {}}
         onBackdropPress={() => {}}

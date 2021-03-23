@@ -41,6 +41,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+    // 삭제 버튼을 탭하였을 때
   const deleteModal = (title, text) => {
     const params = {
       alertType: 'confirm',
@@ -57,6 +58,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+    // 삭제 API
   const deleteTask = async () => {
     try {
       alertModal('업무를 삭제하였습니다.');
@@ -68,11 +70,13 @@ export default ({route: {params}}) => {
     }
   };
 
+    // 수정 API
   const submit = async () => {
     if (taskName == '') {
       alertModal('수정할 업무명을 입력해주세요.');
     }
     if (!cameraPictureLast) {
+      // 이미지가 없을 때
       try {
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
@@ -99,6 +103,7 @@ export default ({route: {params}}) => {
         console.log(e);
       }
     } else {
+      // 이미지가 있을 때
       try {
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
@@ -151,6 +156,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 카메라로 사진 촬영 후 압축
   const takePictureFn = async (cameraRef) => {
     const data = await cameraRef.current.takePictureAsync();
     return ImageResizer.createResizedImage(
@@ -171,6 +177,9 @@ export default ({route: {params}}) => {
       });
   };
 
+  // 디바이스의 앨범에서 사진 선택 후 압축
+  // 이미지 등록에 이슈가 있어서 플랫폼에 따라 다른 라이브러리를 사용 중
+  // 오랜 삽질을 거쳐서 최적화됨
   const launchImageLibraryFn = () => {
     utils.isAndroid()
       ? ImagePicker.openPicker({

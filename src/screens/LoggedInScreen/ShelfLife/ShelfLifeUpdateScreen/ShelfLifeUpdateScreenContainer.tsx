@@ -17,6 +17,7 @@ import ShelfLifeUpdateScreenPresenter from './ShelfLifeUpdateScreenPresenter';
 import utils from '~/constants/utils';
 import {setSplashVisible, setLoadingVisible} from '~/redux/splashSlice';
 
+// 업데이트 스크린은 parmas로 기존의 정보를 모두 받아서 기본 렌더를 함
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -65,6 +66,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  // 삭제 버튼을 탭하였을 때
   const deleteModal = (title, text) => {
     const params = {
       alertType: 'confirm',
@@ -81,6 +83,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  // 삭제 API
   const deleteShelfLife = async () => {
     try {
       dispatch(removeSHELFLIFE_DATA({name: params?.name, shelfLife_SEQ}));
@@ -96,11 +99,13 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 수정 API
   const submit = async () => {
     if (shelfLifeName == '') {
       alertModal('업무명을 적어주세요.');
     }
     if (!cameraPictureLast) {
+      // 이미지가 없을 때
       try {
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
@@ -131,6 +136,7 @@ export default ({route: {params}}) => {
         console.log(e);
       }
     } else {
+      // 이미지가 있을 때
       try {
         navigation.goBack();
         alertModal('수정이 완료되었습니다.');
@@ -190,6 +196,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 카메라로 사진 촬영 후 압축
   const takePictureFn = async (cameraRef) => {
     const data = await cameraRef.current.takePictureAsync();
     return ImageResizer.createResizedImage(
@@ -210,6 +217,9 @@ export default ({route: {params}}) => {
       });
   };
 
+  // 디바이스의 앨범에서 사진 선택 후 압축
+  // 이미지 등록에 이슈가 있어서 플랫폼에 따라 다른 라이브러리를 사용 중
+  // 오랜 삽질을 거쳐서 최적화됨
   const launchImageLibraryFn = () => {
     utils.isAndroid()
       ? ImagePicker.openPicker({
@@ -238,6 +248,7 @@ export default ({route: {params}}) => {
         );
   };
 
+  // 카메라로 바코드를 스캔하여 유통기한아이템을 등록 할 때 실행
   const handleBarCodeScanned = async (codenumber) => {
     console.log(codenumber);
     await setBarCodeCameraModalOpen(false);
@@ -250,6 +261,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 유통기한아이템을 등록 할 때 바코드를 옵션으로 등록하려고 할 때 실행(홀딩 feat.대표님)
   const handleBarCodeInputScanned = async (codenumber) => {
     console.log(codenumber);
     await setBarCodeInputCameraModalOpen(false);
@@ -262,6 +274,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 바코드로 아이템을 스캔 후 정보를 받아왔을 때, 입력
   useEffect(() => {
     (async () => {
       if (codenumber?.length > 0) {

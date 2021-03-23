@@ -158,6 +158,7 @@ const BarcodeIconContainer = styled.View`
 export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
   const navigation = useNavigation();
   if (item.checkType === '0') {
+    // 처리 전의 아이템
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
@@ -170,6 +171,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
               )
             }>
             {item.IMG_LIST || item?.shelfLifeImgLink ? (
+              // 이미지가 있는 아이템
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
@@ -189,11 +191,13 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
                 resizeMode={FastImage.resizeMode.cover}
               />
             ) : (
+              // 이미지가 없는 아이템
               <BorderBox style={{zIndex: 10}}>
                 <GreyText>사진</GreyText>
                 <GreyText>미등록</GreyText>
               </BorderBox>
             )}
+            {/* 처리유무를 알려주는 아이콘 */}
             <IconBorder>
               <IconContainer isChecked={true}>
                 <CheckMarkIcon size={12} color={'white'} />
@@ -201,6 +205,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
             </IconBorder>
           </Touchable>
         </GreyBox>
+        {/* 바코드유무를 알려주는 아이콘 */}
         {item?.shelfLifeBarcode &&
           item?.shelfLifeBarcode !== 'undefined' &&
           item?.shelfLifeBarcode !== 'null' && (
@@ -210,6 +215,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
               </BarcodeIconContainer>
             </WhiteBack>
           )}
+        {/* 아이템 수정 */}
         <WhiteItem
           onPress={() =>
             setTimeout(() => {
@@ -264,6 +270,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
       </Row>
     );
   } else {
+    // 처리된 아이템
     return (
       <Row style={{marginTop: 10, marginBottom: 10}}>
         <GreyBox>
@@ -276,6 +283,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
               )
             }>
             {item.IMG_LIST || item?.shelfLifeImgLink ? (
+              // 이미지가 있는 아이템
               <FastImage
                 style={{width: 60, height: 60, borderRadius: 10}}
                 source={{
@@ -295,11 +303,13 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
                 resizeMode={FastImage.resizeMode.cover}
               />
             ) : (
+              // 이미지가 없는 아이템
               <BorderBox style={{zIndex: 10}}>
                 <GreyText>사진</GreyText>
                 <GreyText>미등록</GreyText>
               </BorderBox>
             )}
+            {/* 처리유무를 알려주는 아이콘 */}
             <IconBorder>
               <IconContainer isChecked={false}>
                 <CheckMarkIcon size={12} color={'white'} />
@@ -307,6 +317,7 @@ export default ({name, item, confirmModal, cancelModal, onRefresh, STORE}) => {
             </IconBorder>
           </Touchable>
         </GreyBox>
+        {/* 바코드유무를 알려주는 아이콘 */}
         <WhiteBack
           style={{backgroundColor: styleGuide.palette.backgroundPrimary}}>
           <BarcodeIconContainer>

@@ -64,6 +64,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  // 목록에 추가하기 버튼
   const addFn = () => {
     if (shelfLifeName == '') {
       return alertModal('상품명을 입력해주세요.');
@@ -111,6 +112,7 @@ export default ({route: {params}}) => {
     setList(buffer);
   };
 
+  // 유통기한 목록에서 제거
   const deleteBuffer = (name, date) => {
     setTimeout(() => {
       setList((buffer) =>
@@ -121,6 +123,7 @@ export default ({route: {params}}) => {
     }, 200);
   };
 
+  // 이미지가 있는 유통기한 등록
   const submitShelfLifeDataImg = async (i, shelfLifeSTORE_SEQ) => {
     try {
       dispatch(setLoadingVisible(true));
@@ -166,20 +169,24 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 유통기한 등록 (이미지가 있는 유통기한 등록 & 이미지가 없는 유통기한 등록)
   const submitFn = async () => {
     if (list.length == 0) {
       return alertModal('등록하실 상품을 목록에 추가하신 후 등록을 해주세요.');
     }
     try {
+      // 로딩스피너
       dispatch(
         setSplashVisible({
           visible: true,
           fullText: '유통기한을 등록중입니다.',
         }),
       );
+      // 이미지가 없는 업무는 리스트를 파라미터로 받기 때문에 빈리스트에 푸시
       list.map(
         (i, index) => !i.shelfLifeIMAGE && shelfLifeDataTempList.push(i),
       );
+      // 이미지가 없는 유통기한 리퀘스트
       if (shelfLifeDataTempList.length > 0) {
         const {data} = await api.setShelfLifeData({
           STORE_SEQ,
@@ -197,7 +204,10 @@ export default ({route: {params}}) => {
       console.log(e);
     } finally {
       navigation.goBack();
+      // 이미지가 있는 업무는 업무하나에 리퀘스트 하나를 보내기때문에 시간이 오래걸림
+      // 그 동안 리프레쉬를 하여서 이미지가 없는 업무를 등록한 것을 렌더
       dispatch(setSplashVisible({visible: false}));
+      // 루프를 돌면서 이미지가 있는 업무를 등록
       list.map((i, index) => {
         if (list.length - 1 == index) {
           params?.onRefresh();
@@ -207,6 +217,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 카메라로 사진 촬영 후 압축
   const takePictureFn = async (cameraRef) => {
     const data = await cameraRef.current.takePictureAsync();
     return ImageResizer.createResizedImage(
@@ -227,6 +238,9 @@ export default ({route: {params}}) => {
       });
   };
 
+  // 디바이스의 앨범에서 사진 선택 후 압축
+  // 이미지 등록에 이슈가 있어서 플랫폼에 따라 다른 라이브러리를 사용 중
+  // 오랜 삽질을 거쳐서 최적화됨
   const launchImageLibraryFn = () => {
     utils.isAndroid()
       ? ImagePicker.openPicker({
@@ -255,6 +269,7 @@ export default ({route: {params}}) => {
         );
   };
 
+  // 카메라로 바코드를 스캔하여 유통기한아이템을 등록 할 때 실행
   const handleBarCodeScanned = async (codenumber) => {
     await setBarCodeCameraModalOpen(false);
     if (!codenumber) {
@@ -266,6 +281,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 유통기한 아이템을 등록 할 때 바코드를 옵션으로 등록하려고 할 때 실행(홀딩 feat.대표님)
   const handleBarCodeInputScanned = async (codenumber) => {
     await setBarCodeInputCameraModalOpen(false);
     if (!codenumber) {
@@ -277,6 +293,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 바코드로 아이템을 스캔 후 정보를 받아왔을 때, 입력
   useEffect(() => {
     (async () => {
       if (codenumber?.length > 0) {

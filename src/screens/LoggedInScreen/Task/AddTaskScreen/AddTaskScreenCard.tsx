@@ -97,6 +97,7 @@ const CloseIconContainer = styled.View`
   right: -10px;
 `;
 
+// 업무캘린더 등록시 하단의 업무목록 리스트
 export default ({taskIMAGE, deleteBuffer, onPress, NAME, DATE, MEMO}) => {
   return (
     <Row style={{marginTop: 10, marginBottom: 10}}>

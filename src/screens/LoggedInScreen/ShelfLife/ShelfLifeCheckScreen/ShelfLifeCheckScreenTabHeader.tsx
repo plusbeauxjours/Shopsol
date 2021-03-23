@@ -45,8 +45,10 @@ const Touchable = styled.TouchableOpacity``;
 
 export default ({transition, tabs, gotoCategory, y, ready}) => {
   const opacity = transition;
+  // 앵커된 y값에 다다르면 헤더이있는 인덱스가 이동(바탕색)
   const updateBackColor = (anchor = 20, nextAnchor = 5000, color) => {
     return interpolateColor(y, {
+      //앵커된y 전, 앵커된 y, 다음 앵커된 y, 다음 앵커된 y 후
       inputRange: [
         Number(anchor) + 250,
         Number(anchor) + 260,
@@ -56,6 +58,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
       outputRange: ['white', color, color, 'white'],
     });
   };
+  // 앵커된 y값에 다다르면 헤더이있는 인덱스가 이동(글자색)
   const updateFrontColor = (
     anchor = 20,
     nextAnchor = 5000,
@@ -63,6 +66,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
   ) => {
     return interpolateColor(y, {
       inputRange: [
+        //앵커된y 전, 앵커된 y, 다음 앵커된 y, 다음 앵커된 y 후
         Number(anchor) + 250,
         Number(anchor) + 260,
         Number(anchor > nextAnchor ? anchor : nextAnchor) + 260,
@@ -72,6 +76,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
     });
   };
 
+  // 헤더에 있는 인덱스 컴퍼넌트
   const Tab = ({name, index, color, gotoCategory}) => {
     return (
       <Touchable onPress={() => gotoCategory(index)}>
@@ -105,6 +110,7 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
     );
   };
 
+  // 앵커된 y값에 다다르면 스르르 나타나는 헤더
   const TabsContainer = ({tabs, gotoCategory}) => {
     return (
       <Row>
