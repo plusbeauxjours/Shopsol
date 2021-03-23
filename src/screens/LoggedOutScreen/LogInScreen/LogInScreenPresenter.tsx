@@ -133,10 +133,10 @@ export default ({
               <SectionNoLine
                 as={Animatable.View}
                 animation={{
-                  from: {height: 20, opacity: 0},
-                  to: {height: 150, opacity: 1},
+                  from: {opacity: 0, scale: 1.2},
+                  to: {opacity: 1, scale: 1},
                 }}
-                duration={500}>
+                duration={100}>
                 <Touchable
                   style={{width: wp('100%'), flex: 1, alignItems: 'center'}}
                   onPress={() => selectBrandFn()}>
@@ -165,9 +165,12 @@ export default ({
                     from: {opacity: 0},
                     to: {opacity: 1},
                   }}
-                  duration={500}>
+                  duration={200}>
                   {brandData?.map((brand, index) => (
-                    <Touchable onPress={() => selectBrandFn(index, brand.NAME)}>
+                    <Touchable
+                      onPress={() =>
+                        selectBrandFn(index, brand.NAME, brand.COLOR)
+                      }>
                       <FastImage
                         key={index}
                         style={{
@@ -195,9 +198,12 @@ export default ({
                     from: {opacity: 0},
                     to: {opacity: 1},
                   }}
-                  duration={500}>
+                  duration={200}>
                   {brandData?.map((brand, index) => (
-                    <Touchable onPress={() => selectBrandFn(index, brand.NAME)}>
+                    <Touchable
+                      onPress={() =>
+                        selectBrandFn(index, brand.NAME, brand.COLOR)
+                      }>
                       <FastImage
                         key={index}
                         style={{

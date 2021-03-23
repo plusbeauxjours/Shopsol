@@ -46,7 +46,11 @@ export default ({route: {params}}) => {
     navigation.navigate('FindPasswordScreen');
   };
 
-  const selectBrandFn = (index: number, name: string) => {
+  const selectBrandFn = (
+    index: number,
+    name: string,
+    backgroundColor: string,
+  ) => {
     if (selectedBrandIndex) {
       navigation.setOptions({
         headerTitle: name,
@@ -56,7 +60,7 @@ export default ({route: {params}}) => {
     } else {
       navigation.setOptions({
         headerTitle: name,
-        headerStyle: {backgroundColor: 'red'},
+        headerStyle: {backgroundColor},
       });
       setSelectedBrandIndex(index + '');
     }
