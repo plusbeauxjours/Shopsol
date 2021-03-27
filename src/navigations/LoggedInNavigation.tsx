@@ -60,7 +60,6 @@ import ChecklistShareUpdateScreen from '~/screens/LoggedInScreen/ChecklistShare/
 
 // 마이페이지========================================================
 import MyPageAlarmSetScreen from '~/screens/LoggedInScreen/MyPage/MyPageAlarmSetScreen';
-import MyPageAppointmentScreen from '~/screens/LoggedInScreen/MyPage/MyPageAppointmentScreen';
 import MyPageMainScreen from '~/screens/LoggedInScreen/MyPage/MyPageMainScreen';
 import MyPagePlaceSetScreen from '~/screens/LoggedInScreen/MyPage/MyPagePlaceSetScreen';
 import MyPageDeleteSetScreen from '~/screens/LoggedInScreen/MyPage/MyPageDeleteSetScreen';
@@ -241,15 +240,6 @@ export default () => {
           options={{
             headerTitle: '알림설정',
             title: '마이페이지 알림설정',
-            headerRight: null,
-          }}
-        />
-        <LoggedInNavigation.Screen
-          name="MyPageAppointmentScreen"
-          component={MyPageAppointmentScreen}
-          options={{
-            headerTitle: '약관보기',
-            title: '마이페이지 약관보기',
             headerRight: null,
           }}
         />

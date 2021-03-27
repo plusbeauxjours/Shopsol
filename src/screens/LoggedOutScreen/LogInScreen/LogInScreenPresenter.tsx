@@ -127,7 +127,7 @@ export default ({
     <BackGround>
       <KeyboardAvoidingView style={{height: '100%', padding: 20}}>
         <Container>
-          {isBrandLogin ? (
+          {/* {isBrandLogin ? (
             selectedBrandIndex ? (
               <SectionNoLine
                 as={Animatable.View}
@@ -223,22 +223,22 @@ export default ({
                 </Row>
               </SectionNoLine>
             )
-          ) : (
-            <FastImage
-              style={{height: 200, width: 200, flex: 1}}
-              source={require('../../../assets/images/shopSol.png')}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          )}
-          {!selectedBrandIndex ? (
-            <RequestButton onPress={() => setIsBrandLogin(!isBrandLogin)}>
-              <RequestText>
-                {isBrandLogin ? '샵솔 로그인' : '브랜드 로그인'}
-              </RequestText>
-            </RequestButton>
-          ) : (
-            <View style={{height: 50}} />
-          )}
+          ) : ( */}
+          <FastImage
+            style={{height: 200, width: 200, flex: 1}}
+            source={require('../../../assets/images/shopSol.png')}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+          {/*  )}
+           {!selectedBrandIndex ? (
+             <RequestButton onPress={() => setIsBrandLogin(!isBrandLogin)}>
+               <RequestText>
+                 {isBrandLogin ? '샵솔 로그인' : '브랜드 로그인'}
+               </RequestText>
+             </RequestButton>
+           ) : (
+             <View style={{height: 50}} />
+           )} */}
           <Section>
             <TextInputContainer>
               <GreyText>ID</GreyText>
