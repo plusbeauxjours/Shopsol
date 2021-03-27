@@ -48,16 +48,15 @@ const SmallText = styled.Text`
 
 const Container = styled.View`
   width: 100%;
-  padding: 20px 20px 0 20px;
+  padding: 20px;
   align-items: center;
 `;
 
-const Section = styled(Ripple)`
+const Section = styled.View`
   width: 100%;
   border-radius: 20px;
-  padding: 10px;
+  padding: 20px;
   background-color: white;
-  margin-bottom: 20px;
 `;
 
 const SectionCard = styled.View`
@@ -88,6 +87,13 @@ const Card = styled(Ripple)<ICard>`
   background-color: white;
   margin-left: 20px;
   margin-right: ${(props) => (props.isLast ? wp('100%') - 220 : 0)}px;
+`;
+
+const GreyLine = styled.View`
+  width: ${wp('100%') - 80}px;
+  height: 1px;
+  background-color: ${styleGuide.palette.borderColor};
+  margin: 10px 0 10px 0;
 `;
 
 const CardGreyLine = styled.View`
@@ -282,7 +288,6 @@ const DateText = styled.Text`
 const SearchInputContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
 `;
 
 const CloseIconContainer = styled.TouchableOpacity`
@@ -482,6 +487,7 @@ export default ({
         </GotoTopButtonContainer>
         <Animated.ScrollView
           ref={scrollRef}
+          style={{paddingBottom: hp('100%') - 420}}
           keyboardDismissMode="on-drag"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{alignItems: 'center'}}>
@@ -543,157 +549,50 @@ export default ({
                 />
               </EmptyView>
             ) : (
-              <>
-                <Section
-                  onPress={() => onPressSection()}
-                  rippleColor={styleGuide.palette.rippleGreyColor}
-                  rippleDuration={600}
-                  rippleSize={1700}
-                  rippleContainerBorderRadius={20}
-                  rippleOpacity={0.1}>
-                  <Row>
-                    {totalWORKING_COUNT != 0 && totalWORKING_EMP != 0 && (
-                      <DonutCard
-                        percentage={totalWORKING_COUNT / totalWORKING_EMP}
-                        color={styleGuide.palette.donutColor}
-                        max={86400000}
-                      />
-                    )}
-                    <DodnutTextContainer
-                      style={{
-                        left: 65,
-                        top: 80,
-                        height: 40,
-                      }}>
-                      {Math.trunc(
-                        moment
-                          .duration(totalWORKING_COUNT / totalWORKING_EMP)
-                          .asHours(),
-                      ) != 0 && (
-                        <PercentageSubText
-                          color={styleGuide.palette.primary}
-                          style={{fontSize: 18}}>
-                          {Math.trunc(
-                            moment
-                              .duration(totalWORKING_COUNT / totalWORKING_EMP)
-                              .asHours(),
-                          )}
-                          시간
-                        </PercentageSubText>
-                      )}
-                      {Math.trunc(
-                        moment
-                          .duration(totalWORKING_COUNT / totalWORKING_EMP)
-                          .minutes(),
-                      ) != 0 && (
-                        <PercentageSubText
-                          color={styleGuide.palette.primary}
-                          style={{fontSize: 18}}>
-                          {moment
-                            .duration(totalWORKING_COUNT / totalWORKING_EMP)
-                            .minutes()}
-                          분
-                        </PercentageSubText>
-                      )}
-                    </DodnutTextContainer>
-                    <DonutColumn>
-                      <DonutColumnTitle>{STORE_NAME}점</DonutColumnTitle>
-                      <WhiteSpace />
+              <Section>
+                <DateText>{STORE_NAME}점</DateText>
+                <GreyLine />
+                <DonutColumn>
+                  {Number(
+                    moment(toDay).startOf('isoWeek').format('YYYYMMDD'),
+                  ) <= Number(moment().format('YYYYMMDD')) && (
+                    <>
                       <DonutColumnText>
-                        {totalWORKING_DAY}일 직원 근무일
-                      </DonutColumnText>
-                      <DonutColumnText>
-                        {Math.ceil(
-                          (EMP_LIST.filter((i) => i.TOTAL_WORKING !== 0)
-                            .length /
-                            EMP_LIST.length) *
-                            100,
-                        )}
-                        % 직원 근무&nbsp; (
-                        {EMP_LIST.filter((i) => i.TOTAL_WORKING !== 0).length}
-                        명)
-                      </DonutColumnText>
-                      {Number(
-                        moment(toDay).startOf('isoWeek').format('YYYYMMDD'),
-                      ) <= Number(moment().format('YYYYMMDD')) && (
-                        <>
-                          <DonutColumnText>
-                            {totalLATE_COUNT / totalSUB_WORKING_EMP == 0
-                              ? 0
-                              : Math.ceil(
-                                  (totalLATE_COUNT / totalSUB_WORKING_EMP) *
-                                    100,
-                                )}
-                            % 평균 지각&nbsp; ({totalLATE_EMP}명)
-                          </DonutColumnText>
-                          <DonutColumnText>
-                            {totalEARLY_COUNT / totalSUB_WORKING_EMP == 0
-                              ? 0
-                              : Math.ceil(
-                                  (totalEARLY_COUNT / totalSUB_WORKING_EMP) *
-                                    100,
-                                )}
-                            % 평균 조퇴&nbsp; ({totalEARLY_EMP}명)
-                          </DonutColumnText>
-                          <DonutColumnText>
-                            {totalNOWORK_COUNT / totalSUB_WORKING_EMP == 0
-                              ? 0
-                              : Math.ceil(
-                                  (totalNOWORK_COUNT / totalSUB_WORKING_EMP) *
-                                    100,
-                                )}
-                            % 평균 결근&nbsp; ({totalNOWORK_EMP}명)
-                          </DonutColumnText>
-                        </>
-                      )}
-                      <DonutColumnText>
-                        {totalREST_TIME_COUNT / totalWORKING_EMP == 0
-                          ? 0
-                          : Math.ceil(totalREST_TIME_COUNT / totalWORKING_EMP)}
-                        분 평균 휴게시간
-                      </DonutColumnText>
-                      <DonutColumnText>
-                        {totalVACATION_COUNT / totalSUB_WORKING_EMP == 0
+                        {totalLATE_COUNT / totalSUB_WORKING_EMP == 0
                           ? 0
                           : Math.ceil(
-                              (totalVACATION_COUNT / totalSUB_WORKING_EMP) *
-                                100,
+                              (totalLATE_COUNT / totalSUB_WORKING_EMP) * 100,
                             )}
-                        % 휴가&nbsp; ({totalVACATION_EMP}명)
+                        % 평균 지각&nbsp; ({totalLATE_EMP}명)
                       </DonutColumnText>
-                    </DonutColumn>
-                  </Row>
-                </Section>
-                <SearchInputContainer>
-                  <SearchInput
-                    placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
-                    placeholderTextColor={styleGuide.palette.searchBarColor}
-                    onChangeText={(text) => searchName(text)}
-                    value={search}
-                  />
-                  <CloseIconContainer onPress={() => setSearch('')}>
-                    <CloseCircleOutlineIcon
-                      color={styleGuide.palette.searchBarColor}
-                      size={24}
-                    />
-                  </CloseIconContainer>
-                </SearchInputContainer>
-                {search?.length !== 0 ? (
-                  result.length > 0 ? (
-                    result?.map((i, index) => (
-                      <EmpCardComponent i={i} index={index} key={index} />
-                    ))
-                  ) : (
-                    <Text style={{margin: 30, marginBottom: 70}}>
-                      검색된 직원이 없습니다.
-                    </Text>
-                  )
-                ) : (
-                  EMP_LIST?.map((i, index) => (
-                    <EmpCardComponent i={i} index={index} key={index} />
-                  ))
-                )}
-              </>
+                      <DonutColumnText>
+                        {totalEARLY_COUNT / totalSUB_WORKING_EMP == 0
+                          ? 0
+                          : Math.ceil(
+                              (totalEARLY_COUNT / totalSUB_WORKING_EMP) * 100,
+                            )}
+                        % 평균 조퇴&nbsp; ({totalEARLY_EMP}명)
+                      </DonutColumnText>
+                      <DonutColumnText>
+                        {totalNOWORK_COUNT / totalSUB_WORKING_EMP == 0
+                          ? 0
+                          : Math.ceil(
+                              (totalNOWORK_COUNT / totalSUB_WORKING_EMP) * 100,
+                            )}
+                        % 평균 결근&nbsp; ({totalNOWORK_EMP}명)
+                      </DonutColumnText>
+                    </>
+                  )}
+                  <DonutColumnText>
+                    {totalVACATION_COUNT / totalSUB_WORKING_EMP == 0
+                      ? 0
+                      : Math.ceil(
+                          (totalVACATION_COUNT / totalSUB_WORKING_EMP) * 100,
+                        )}
+                    % 휴가&nbsp; ({totalVACATION_EMP}명)
+                  </DonutColumnText>
+                </DonutColumn>
+              </Section>
             )}
           </Container>
           {totalWORKING_DAY != 0 &&
@@ -1134,6 +1033,44 @@ export default ({
                   </EmpConatainer>
                 </Card>
               </ScrollView>
+            )}
+          {totalWORKING_DAY !== 0 &&
+            totalWORKING_COUNT !== 0 &&
+            totalWORKING_EMP !== 0 &&
+            EMP_LIST.length !== 0 && (
+              <>
+                <SearchInputContainer>
+                  <SearchInput
+                    placeholder="이름으로 검색 ex) 홍길동, ㅎㄱㄷ"
+                    placeholderTextColor={styleGuide.palette.searchBarColor}
+                    onChangeText={(text) => searchName(text)}
+                    value={search}
+                  />
+                  <CloseIconContainer onPress={() => setSearch('')}>
+                    <CloseCircleOutlineIcon
+                      color={styleGuide.palette.searchBarColor}
+                      size={24}
+                    />
+                  </CloseIconContainer>
+                </SearchInputContainer>
+                <Container>
+                  {search?.length !== 0 ? (
+                    result.length > 0 ? (
+                      result?.map((i, index) => (
+                        <EmpCardComponent i={i} index={index} key={index} />
+                      ))
+                    ) : (
+                      <Text style={{margin: 30, marginBottom: 70}}>
+                        검색된 직원이 없습니다.
+                      </Text>
+                    )
+                  ) : (
+                    EMP_LIST?.map((i, index) => (
+                      <EmpCardComponent i={i} index={index} key={index} />
+                    ))
+                  )}
+                </Container>
+              </>
             )}
         </Animated.ScrollView>
         <Modal
