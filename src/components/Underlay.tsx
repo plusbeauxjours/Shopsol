@@ -9,7 +9,7 @@ const BoxContainer = styled.View`
   top: 0;
   bottom: 0;
   right: 0;
-  left: -30;
+  left: -30px;
 `;
 const MainBox = styled.View`
   flex: 1;

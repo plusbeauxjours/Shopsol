@@ -23,6 +23,7 @@ import {
 import Schedule from '~/components/Schedule';
 import utils from '~/constants/utils';
 import styleGuide from '~/constants/styleGuide';
+import BarGraph from '~/components/BarGraph';
 
 interface IColor {
   color: string;
@@ -136,28 +137,6 @@ const Bold = styled.Text`
 
 const Column = styled.View`
   flex-direction: column;
-`;
-
-const DonutColumn = styled(Column)`
-  width: 130px;
-  height: 200px;
-  justify-content: space-between;
-  margin-right: 10px;
-  padding-top: 10px;
-  flex-wrap: nowrap;
-`;
-
-const DonutColumnTitle = styled.Text`
-  color: ${styleGuide.palette.greyColor};
-  font-size: 18px;
-  font-weight: ${styleGuide.fontWeight.bold};
-  margin: 3px 0;
-`;
-
-const DonutColumnText = styled(DonutColumnTitle)`
-  margin-bottom: 1px;
-  font-size: ${styleGuide.fontSize.middle}px;
-  font-weight: ${styleGuide.fontWeight.normal};
 `;
 
 const EmpConatainer = styled.View`
@@ -638,279 +617,284 @@ export default ({
               </Section>
             )}
           </Container>
-          <ScrollView
-            horizontal
-            snapToInterval={220}
-            style={{marginBottom: 20}}
-            decelerationRate="fast"
-            showsHorizontalScrollIndicator={false}>
-            <Card
-              onPress={() => setModalLATE(true)}
-              rippleColor={styleGuide.palette.rippleGreyColor}
-              rippleDuration={600}
-              rippleSize={1700}
-              rippleContainerBorderRadius={20}
-              rippleOpacity={0.1}>
-              <TitleText>지각률 </TitleText>
-              <CardGreyLine />
-              <DonutCard
-                percentage={Math.ceil((totalLATE / totalWORKING_EMP) * 100)}
-                color={styleGuide.palette.donutColor}
-                max={100}
-              />
-              {totalLATE / totalWORKING_EMP == 0 ? (
-                <DodnutTextContainer>
-                  <PercentageText
-                    color={styleGuide.palette.primary}
-                    style={{marginTop: 10}}>
-                    {Math.ceil((totalLATE / totalWORKING_EMP) * 100)}%
-                  </PercentageText>
-                </DodnutTextContainer>
-              ) : (
+          {totalWORKING_EMP != 0 && EMP_LIST.length != 0 && (
+            <ScrollView
+              horizontal
+              snapToInterval={220}
+              style={{marginBottom: 20}}
+              decelerationRate="fast"
+              showsHorizontalScrollIndicator={false}>
+              <Card
+                onPress={() => setModalLATE(true)}
+                rippleColor={styleGuide.palette.rippleGreyColor}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
+                <TitleText>지각률 </TitleText>
+                <CardGreyLine />
+
+                <DonutCard
+                  percentage={Math.ceil((totalLATE / totalWORKING_EMP) * 100)}
+                  color={styleGuide.palette.donutColor}
+                  max={100}
+                />
+                {totalLATE / totalWORKING_EMP == 0 ? (
+                  <DodnutTextContainer>
+                    <PercentageText
+                      color={styleGuide.palette.primary}
+                      style={{marginTop: 10}}>
+                      0%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                ) : (
+                  <DodnutTextContainer style={{marginTop: 5}}>
+                    <PercentageText color={styleGuide.palette.primary}>
+                      {Math.ceil((totalLATE / totalWORKING_EMP) * 100)}%
+                    </PercentageText>
+                    <PercentageSubText color={styleGuide.palette.primary}>
+                      {totalLATE}명
+                    </PercentageSubText>
+                  </DodnutTextContainer>
+                )}
+                <TitleText>지각 직원</TitleText>
+                <CardGreyLine />
+                <EmpConatainer>
+                  {LATE_EMP_LIST.filter((i) => i.LATE && i.LATE !== '0')
+                    .length === 0 ? (
+                    <Text style={{marginTop: 20}}>지각 직원이 없습니다.</Text>
+                  ) : (
+                    LATE_EMP_LIST.slice(0, 3).map(
+                      (i, index) =>
+                        i.LATE &&
+                        i.LATE !== '0' && (
+                          <EmpCard key={index}>
+                            <FastImage
+                              style={{
+                                margin: 10,
+                                marginLeft: 20,
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                              }}
+                              source={{
+                                uri: utils.getUriImage(i.IMAGE),
+                                cache: FastImage.cacheControl.immutable,
+                                priority: FastImage.priority.low,
+                              }}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                            <Column>
+                              <Bold>
+                                {i.EMP_NAME} [
+                                {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
+                              </Bold>
+                            </Column>
+                          </EmpCard>
+                        ),
+                    )
+                  )}
+                </EmpConatainer>
+              </Card>
+              <Card
+                onPress={() => setModalEARLY(true)}
+                rippleColor={styleGuide.palette.rippleGreyColor}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
+                <TitleText>조퇴률 </TitleText>
+                <CardGreyLine />
+                <DonutCard
+                  percentage={Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}
+                  color={styleGuide.palette.donutColor}
+                  max={100}
+                />
+                {totalEARLY / totalWORKING_EMP == 0 ? (
+                  <DodnutTextContainer>
+                    <PercentageText
+                      color={styleGuide.palette.primary}
+                      style={{marginTop: 10}}>
+                      0%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                ) : (
+                  <DodnutTextContainer style={{marginTop: 5}}>
+                    <PercentageText color={styleGuide.palette.primary}>
+                      {Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}%
+                    </PercentageText>
+                    <PercentageSubText color={styleGuide.palette.primary}>
+                      {totalEARLY}명
+                    </PercentageSubText>
+                  </DodnutTextContainer>
+                )}
+                <TitleText>조퇴 직원</TitleText>
+                <CardGreyLine />
+                <EmpConatainer>
+                  {EARLY_EMP_LIST.filter((i) => i.EARLY && i.EARLY !== '0')
+                    .length === 0 ? (
+                    <Text style={{marginTop: 20}}>조퇴 직원이 없습니다.</Text>
+                  ) : (
+                    EARLY_EMP_LIST.slice(0, 3).map(
+                      (i, index) =>
+                        i.EARLY &&
+                        i.EARLY !== '0' && (
+                          <EmpCard key={index}>
+                            <FastImage
+                              style={{
+                                margin: 10,
+                                marginLeft: 20,
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                              }}
+                              source={{
+                                uri: utils.getUriImage(i.IMAGE),
+                                cache: FastImage.cacheControl.immutable,
+                                priority: FastImage.priority.low,
+                              }}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                            <Column>
+                              <Bold>
+                                {i.EMP_NAME} [
+                                {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
+                              </Bold>
+                            </Column>
+                          </EmpCard>
+                        ),
+                    )
+                  )}
+                </EmpConatainer>
+              </Card>
+              <Card
+                onPress={() => setModalNOWORK(true)}
+                rippleColor={styleGuide.palette.rippleGreyColor}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
+                <TitleText>결근률 </TitleText>
+                <CardGreyLine />
+                <DonutCard
+                  percentage={Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}
+                  color={styleGuide.palette.donutColor}
+                  max={100}
+                />
+                {totalNOWORK / totalWORKING_EMP == 0 ? (
+                  <DodnutTextContainer>
+                    <PercentageText
+                      color={styleGuide.palette.primary}
+                      style={{marginTop: 10}}>
+                      0%
+                    </PercentageText>
+                  </DodnutTextContainer>
+                ) : (
+                  <DodnutTextContainer style={{marginTop: 5}}>
+                    <PercentageText color={styleGuide.palette.primary}>
+                      {Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}%
+                    </PercentageText>
+                    <PercentageSubText color={styleGuide.palette.primary}>
+                      {totalNOWORK}명
+                    </PercentageSubText>
+                  </DodnutTextContainer>
+                )}
+                <TitleText>결근 직원</TitleText>
+                <CardGreyLine />
+                <EmpConatainer>
+                  {NOWORK_EMP_LIST.filter((i) => i.NOWORK && i.NOWORK !== '0')
+                    .length === 0 ? (
+                    <Text style={{marginTop: 20}}>결근 직원이 없습니다.</Text>
+                  ) : (
+                    NOWORK_EMP_LIST.slice(0, 3).map(
+                      (i, index) =>
+                        i.NOWORK &&
+                        i.NOWORK !== '0' && (
+                          <EmpCard key={index}>
+                            <FastImage
+                              style={{
+                                margin: 10,
+                                marginLeft: 20,
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                              }}
+                              source={{
+                                uri: utils.getUriImage(i.IMAGE),
+                                cache: FastImage.cacheControl.immutable,
+                                priority: FastImage.priority.low,
+                              }}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                            <Column>
+                              <Bold>
+                                {i.EMP_NAME} [
+                                {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
+                              </Bold>
+                            </Column>
+                          </EmpCard>
+                        ),
+                    )
+                  )}
+                </EmpConatainer>
+              </Card>
+              <Card
+                isLast={true}
+                onPress={() => setModalVACATION(true)}
+                rippleColor={styleGuide.palette.rippleGreyColor}
+                rippleDuration={600}
+                rippleSize={1700}
+                rippleContainerBorderRadius={20}
+                rippleOpacity={0.1}>
+                <TitleText>일간 휴가 사용 일수</TitleText>
+                <CardGreyLine />
                 <DodnutTextContainer style={{marginTop: 5}}>
                   <PercentageText color={styleGuide.palette.primary}>
-                    {Math.ceil((totalLATE / totalWORKING_EMP) * 100)}%
-                  </PercentageText>
-                  <PercentageSubText color={styleGuide.palette.primary}>
-                    {totalLATE}명
-                  </PercentageSubText>
-                </DodnutTextContainer>
-              )}
-              <TitleText>지각 직원</TitleText>
-              <CardGreyLine />
-              <EmpConatainer>
-                {LATE_EMP_LIST.filter((i) => i.LATE && i.LATE !== '0')
-                  .length === 0 ? (
-                  <Text style={{marginTop: 20}}>지각 직원이 없습니다.</Text>
-                ) : (
-                  LATE_EMP_LIST.slice(0, 3).map(
-                    (i, index) =>
-                      i.LATE &&
-                      i.LATE !== '0' && (
-                        <EmpCard key={index}>
-                          <FastImage
-                            style={{
-                              margin: 10,
-                              marginLeft: 20,
-                              width: 40,
-                              height: 40,
-                              borderRadius: 20,
-                            }}
-                            source={{
-                              uri: utils.getUriImage(i.IMAGE),
-                              cache: FastImage.cacheControl.immutable,
-                              priority: FastImage.priority.low,
-                            }}
-                            resizeMode={FastImage.resizeMode.cover}
-                          />
-                          <Column>
-                            <Bold>
-                              {i.EMP_NAME} [
-                              {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
-                            </Bold>
-                          </Column>
-                        </EmpCard>
-                      ),
-                  )
-                )}
-              </EmpConatainer>
-            </Card>
-            <Card
-              onPress={() => setModalEARLY(true)}
-              rippleColor={styleGuide.palette.rippleGreyColor}
-              rippleDuration={600}
-              rippleSize={1700}
-              rippleContainerBorderRadius={20}
-              rippleOpacity={0.1}>
-              <TitleText>조퇴률 </TitleText>
-              <CardGreyLine />
-              <DonutCard
-                percentage={Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}
-                color={styleGuide.palette.donutColor}
-                max={100}
-              />
-              {totalEARLY / totalWORKING_EMP == 0 ? (
-                <DodnutTextContainer>
-                  <PercentageText
-                    color={styleGuide.palette.primary}
-                    style={{marginTop: 10}}>
-                    {Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}%
+                    {totalVACATION}일
                   </PercentageText>
                 </DodnutTextContainer>
-              ) : (
-                <DodnutTextContainer style={{marginTop: 5}}>
-                  <PercentageText color={styleGuide.palette.primary}>
-                    {Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}%
-                  </PercentageText>
-                  <PercentageSubText color={styleGuide.palette.primary}>
-                    {totalEARLY}명
-                  </PercentageSubText>
-                </DodnutTextContainer>
-              )}
-              <TitleText>조퇴 직원</TitleText>
-              <CardGreyLine />
-              <EmpConatainer>
-                {EARLY_EMP_LIST.filter((i) => i.EARLY && i.EARLY !== '0')
-                  .length === 0 ? (
-                  <Text style={{marginTop: 20}}>조퇴 직원이 없습니다.</Text>
-                ) : (
-                  EARLY_EMP_LIST.slice(0, 3).map(
-                    (i, index) =>
-                      i.EARLY &&
-                      i.EARLY !== '0' && (
-                        <EmpCard key={index}>
-                          <FastImage
-                            style={{
-                              margin: 10,
-                              marginLeft: 20,
-                              width: 40,
-                              height: 40,
-                              borderRadius: 20,
-                            }}
-                            source={{
-                              uri: utils.getUriImage(i.IMAGE),
-                              cache: FastImage.cacheControl.immutable,
-                              priority: FastImage.priority.low,
-                            }}
-                            resizeMode={FastImage.resizeMode.cover}
-                          />
-                          <Column>
-                            <Bold>
-                              {i.EMP_NAME} [
-                              {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
-                            </Bold>
-                          </Column>
-                        </EmpCard>
-                      ),
-                  )
-                )}
-              </EmpConatainer>
-            </Card>
-            <Card
-              onPress={() => setModalNOWORK(true)}
-              rippleColor={styleGuide.palette.rippleGreyColor}
-              rippleDuration={600}
-              rippleSize={1700}
-              rippleContainerBorderRadius={20}
-              rippleOpacity={0.1}>
-              <TitleText>결근률 </TitleText>
-              <CardGreyLine />
-              <DonutCard
-                percentage={Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}
-                color={styleGuide.palette.donutColor}
-                max={100}
-              />
-              {totalNOWORK / totalWORKING_EMP == 0 ? (
-                <DodnutTextContainer>
-                  <PercentageText
-                    color={styleGuide.palette.primary}
-                    style={{marginTop: 10}}>
-                    {Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}%
-                  </PercentageText>
-                </DodnutTextContainer>
-              ) : (
-                <DodnutTextContainer style={{marginTop: 5}}>
-                  <PercentageText color={styleGuide.palette.primary}>
-                    {Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}%
-                  </PercentageText>
-                  <PercentageSubText color={styleGuide.palette.primary}>
-                    {totalNOWORK}명
-                  </PercentageSubText>
-                </DodnutTextContainer>
-              )}
-              <TitleText>결근 직원</TitleText>
-              <CardGreyLine />
-              <EmpConatainer>
-                {NOWORK_EMP_LIST.filter((i) => i.NOWORK && i.NOWORK !== '0')
-                  .length === 0 ? (
-                  <Text style={{marginTop: 20}}>결근 직원이 없습니다.</Text>
-                ) : (
-                  NOWORK_EMP_LIST.slice(0, 3).map(
-                    (i, index) =>
-                      i.NOWORK &&
-                      i.NOWORK !== '0' && (
-                        <EmpCard key={index}>
-                          <FastImage
-                            style={{
-                              margin: 10,
-                              marginLeft: 20,
-                              width: 40,
-                              height: 40,
-                              borderRadius: 20,
-                            }}
-                            source={{
-                              uri: utils.getUriImage(i.IMAGE),
-                              cache: FastImage.cacheControl.immutable,
-                              priority: FastImage.priority.low,
-                            }}
-                            resizeMode={FastImage.resizeMode.cover}
-                          />
-                          <Column>
-                            <Bold>
-                              {i.EMP_NAME} [
-                              {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
-                            </Bold>
-                          </Column>
-                        </EmpCard>
-                      ),
-                  )
-                )}
-              </EmpConatainer>
-            </Card>
-            <Card
-              isLast={true}
-              onPress={() => setModalVACATION(true)}
-              rippleColor={styleGuide.palette.rippleGreyColor}
-              rippleDuration={600}
-              rippleSize={1700}
-              rippleContainerBorderRadius={20}
-              rippleOpacity={0.1}>
-              <TitleText>일간 휴가 사용 일수</TitleText>
-              <CardGreyLine />
-              <DodnutTextContainer style={{marginTop: 5}}>
-                <PercentageText color={styleGuide.palette.primary}>
-                  {totalVACATION}일
-                </PercentageText>
-              </DodnutTextContainer>
-              <View style={{height: 200}} />
-              <TitleText>휴가 직원</TitleText>
-              <CardGreyLine />
-              <EmpConatainer>
-                {VACATION_EMP_LIST.filter((i) => i.VACATION).length === 0 ? (
-                  <Text style={{marginTop: 20}}>휴가중인 직원이 없습니다.</Text>
-                ) : (
-                  VACATION_EMP_LIST.slice(0, 3).map(
-                    (i, index) =>
-                      i.VACATION && (
-                        <EmpCard key={index}>
-                          <FastImage
-                            style={{
-                              margin: 10,
-                              marginLeft: 20,
-                              width: 40,
-                              height: 40,
-                              borderRadius: 20,
-                            }}
-                            source={{
-                              uri: utils.getUriImage(i.IMAGE),
-                              cache: FastImage.cacheControl.immutable,
-                              priority: FastImage.priority.low,
-                            }}
-                            resizeMode={FastImage.resizeMode.cover}
-                          />
-                          <Column>
-                            <Bold>
-                              {i.EMP_NAME} [
-                              {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
-                            </Bold>
-                          </Column>
-                        </EmpCard>
-                      ),
-                  )
-                )}
-              </EmpConatainer>
-            </Card>
-          </ScrollView>
+                <View style={{height: 200}} />
+                <TitleText>휴가 직원</TitleText>
+                <CardGreyLine />
+                <EmpConatainer>
+                  {VACATION_EMP_LIST.filter((i) => i.VACATION).length === 0 ? (
+                    <Text style={{marginTop: 20}}>
+                      휴가중인 직원이 없습니다.
+                    </Text>
+                  ) : (
+                    VACATION_EMP_LIST.slice(0, 3).map(
+                      (i, index) =>
+                        i.VACATION && (
+                          <EmpCard key={index}>
+                            <FastImage
+                              style={{
+                                margin: 10,
+                                marginLeft: 20,
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                              }}
+                              source={{
+                                uri: utils.getUriImage(i.IMAGE),
+                                cache: FastImage.cacheControl.immutable,
+                                priority: FastImage.priority.low,
+                              }}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
+                            <Column>
+                              <Bold>
+                                {i.EMP_NAME} [
+                                {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
+                              </Bold>
+                            </Column>
+                          </EmpCard>
+                        ),
+                    )
+                  )}
+                </EmpConatainer>
+              </Card>
+            </ScrollView>
+          )}
           {totalWORKING_EMP != 0 && totalWORKING != 0 && EMP_LIST.length != 0 && (
             <>
               <SearchInputContainer>

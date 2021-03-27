@@ -21,6 +21,7 @@ import {
 } from '~/constants/Icons';
 import styleGuide from '~/constants/styleGuide';
 import utils from '~/constants/utils';
+import BarGraph from '~/components/BarGraph';
 
 interface IColor {
   color: string;
@@ -408,9 +409,13 @@ export default ({
                 )}
               </Row>
             </Row>
+            <BarGraph
+              TOTAL_WORKING={i.TOTAL_WORKING}
+              max={252000000}
+              middle={187200000}
+            />
             <Row
               style={{
-                marginTop: 5,
                 justifyContent: 'flex-start',
               }}>
               {i.TOTAL_LATE !== 0 && (
