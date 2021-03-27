@@ -38,7 +38,7 @@ export default () => {
   const [totalNOWORK, setTotalNOWORK] = useState<number>(0);
   const [NOWORK_EMP_LIST, setNOWORK_EMP_LIST] = useState<any>([]);
   const [totalWORKING, setTotalWORKING] = useState<number>(0);
-  const [totlaWORKING_EMP, setTotalWORKING_EMP] = useState<number>(0);
+  const [totalWORKING_EMP, setTotalWORKING_EMP] = useState<number>(0);
   const [modalEARLY, setModalEARLY] = useState<boolean>(false);
   const [modalLATE, setModalLATE] = useState<boolean>(false);
   const [modalREST_TIME, setModalREST_TIME] = useState<boolean>(false);
@@ -204,7 +204,7 @@ export default () => {
                         .diff(moment(i.CHANGE_START, 'kk:mm')),
                     ),
                 ),
-                setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1))
+                setTotalWORKING_EMP((totalWORKING_EMP) => totalWORKING_EMP + 1))
               : ((emp['START_TIME'] = i.CHANGE_START),
                 (emp['END_TIME'] = i.CHANGE_END),
                 (emp['WORKING'] = moment(i.CHANGE_END, 'kk:mm').diff(
@@ -219,7 +219,7 @@ export default () => {
                       ),
                     ),
                 ),
-                setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1))
+                setTotalWORKING_EMP((totalWORKING_EMP) => totalWORKING_EMP + 1))
             : i.ATTENDANCE_TIME && i.WORK_OFF_TIME
             ? moment.duration(i.ATTENDANCE_TIME).as('milliseconds') >
               moment.duration(i.WORK_OFF_TIME).as('milliseconds')
@@ -237,7 +237,7 @@ export default () => {
                         .diff(moment(i.ATTENDANCE_TIME, 'kk:mm')),
                     ),
                 ),
-                setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1))
+                setTotalWORKING_EMP((totalWORKING_EMP) => totalWORKING_EMP + 1))
               : ((emp['START_TIME'] = i.ATTENDANCE_TIME),
                 (emp['END_TIME'] = i.WORK_OFF_TIME),
                 (emp['WORKING'] = moment(i.WORK_OFF_TIME, 'kk:mm').diff(
@@ -252,7 +252,7 @@ export default () => {
                       ),
                     ),
                 ),
-                setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1))
+                setTotalWORKING_EMP((totalWORKING_EMP) => totalWORKING_EMP + 1))
             : moment.duration(i.START).as('milliseconds') >
               moment.duration(i.END).as('milliseconds')
             ? ((emp['START_TIME'] = i.START),
@@ -269,7 +269,7 @@ export default () => {
                       .diff(moment(i.START, 'kk:mm')),
                   ),
               ),
-              setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1))
+              setTotalWORKING_EMP((totalWORKING_EMP) => totalWORKING_EMP + 1))
             : ((emp['START_TIME'] = i.START),
               (emp['END_TIME'] = i.END),
               (emp['WORKING'] = moment(i.END, 'kk:mm').diff(
@@ -280,7 +280,7 @@ export default () => {
                   totalWORKING +
                   Number(moment(i.END, 'kk:mm').diff(moment(i.START, 'kk:mm'))),
               ),
-              setTotalWORKING_EMP((totlaWORKING_EMP) => totlaWORKING_EMP + 1));
+              setTotalWORKING_EMP((totalWORKING_EMP) => totalWORKING_EMP + 1));
         }
       });
 
@@ -371,7 +371,7 @@ export default () => {
       totalNOWORK={totalNOWORK}
       NOWORK_EMP_LIST={NOWORK_EMP_LIST}
       totalWORKING={totalWORKING}
-      totlaWORKING_EMP={totlaWORKING_EMP}
+      totalWORKING_EMP={totalWORKING_EMP}
       toDay={toDay}
       loading={loading}
       STORE_NAME={STORE_NAME}

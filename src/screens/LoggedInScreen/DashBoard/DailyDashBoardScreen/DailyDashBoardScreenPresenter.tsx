@@ -167,10 +167,6 @@ const EmpConatainer = styled.View`
   align-items: center;
 `;
 
-const WhiteSpace = styled.View`
-  height: 10px;
-`;
-
 const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -190,6 +186,11 @@ const SmallTextRound = styled.View`
   padding: 5px;
   margin-right: 5px;
   margin-top: 5px;
+`;
+
+const TextRound = styled(SmallTextRound)`
+  border-radius: 20px;
+  padding: 5px 10px 5px 10px;
 `;
 
 const EmpCardContainer = styled(Ripple)<IEmpCard>`
@@ -331,6 +332,11 @@ const EmptyView = styled.View`
   padding-top: 10px;
 `;
 
+const TopText = styled.Text`
+  font-weight: 500;
+  color: ${styleGuide.palette.greyColor};
+`;
+
 export default ({
   EMP_LIST,
   TIME_EMP_LIST,
@@ -345,7 +351,7 @@ export default ({
   totalNOWORK,
   NOWORK_EMP_LIST,
   totalWORKING,
-  totlaWORKING_EMP,
+  totalWORKING_EMP,
   toDay,
   loading,
   STORE_NAME,
@@ -583,7 +589,7 @@ export default ({
                 </DateArrowRight>
               </Date>
             </DateSection>
-            {totlaWORKING_EMP == 0 ||
+            {totalWORKING_EMP == 0 ||
             totalWORKING == 0 ||
             EMP_LIST.length == 0 ? (
               <EmptyView>
@@ -615,24 +621,20 @@ export default ({
               <Section>
                 <DateText>{STORE_NAME}점</DateText>
                 <GreyLine />
-                <DonutColumn>
-                  <DonutColumnText>
-                    {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
-                    지각&nbsp; ({totalLATE}명)
-                  </DonutColumnText>
-                  <DonutColumnText>
-                    {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
-                    조퇴&nbsp; ({totalEARLY}명)
-                  </DonutColumnText>
-                  <DonutColumnText>
-                    {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
-                    결근&nbsp; ({totalNOWORK}명)
-                  </DonutColumnText>
-                  <DonutColumnText>
-                    {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
-                    휴가&nbsp; ({totalVACATION}명)
-                  </DonutColumnText>
-                </DonutColumn>
+                <Row>
+                  <TextRound>
+                    <TopText>지각: {totalLATE}회</TopText>
+                  </TextRound>
+                  <TextRound>
+                    <TopText>조퇴: {totalEARLY}회</TopText>
+                  </TextRound>
+                  <TextRound>
+                    <TopText>결근: {totalNOWORK}회</TopText>
+                  </TextRound>
+                  <TextRound>
+                    <TopText>휴가: {totalVACATION}회</TopText>
+                  </TextRound>
+                </Row>
               </Section>
             )}
           </Container>
@@ -652,22 +654,22 @@ export default ({
               <TitleText>지각률 </TitleText>
               <CardGreyLine />
               <DonutCard
-                percentage={Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}
+                percentage={Math.ceil((totalLATE / totalWORKING_EMP) * 100)}
                 color={styleGuide.palette.donutColor}
                 max={100}
               />
-              {totalLATE / totlaWORKING_EMP == 0 ? (
+              {totalLATE / totalWORKING_EMP == 0 ? (
                 <DodnutTextContainer>
                   <PercentageText
                     color={styleGuide.palette.primary}
                     style={{marginTop: 10}}>
-                    {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
+                    {Math.ceil((totalLATE / totalWORKING_EMP) * 100)}%
                   </PercentageText>
                 </DodnutTextContainer>
               ) : (
                 <DodnutTextContainer style={{marginTop: 5}}>
                   <PercentageText color={styleGuide.palette.primary}>
-                    {Math.ceil((totalLATE / totlaWORKING_EMP) * 100)}%
+                    {Math.ceil((totalLATE / totalWORKING_EMP) * 100)}%
                   </PercentageText>
                   <PercentageSubText color={styleGuide.palette.primary}>
                     {totalLATE}명
@@ -723,22 +725,22 @@ export default ({
               <TitleText>조퇴률 </TitleText>
               <CardGreyLine />
               <DonutCard
-                percentage={Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}
+                percentage={Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}
                 color={styleGuide.palette.donutColor}
                 max={100}
               />
-              {totalEARLY / totlaWORKING_EMP == 0 ? (
+              {totalEARLY / totalWORKING_EMP == 0 ? (
                 <DodnutTextContainer>
                   <PercentageText
                     color={styleGuide.palette.primary}
                     style={{marginTop: 10}}>
-                    {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
+                    {Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}%
                   </PercentageText>
                 </DodnutTextContainer>
               ) : (
                 <DodnutTextContainer style={{marginTop: 5}}>
                   <PercentageText color={styleGuide.palette.primary}>
-                    {Math.ceil((totalEARLY / totlaWORKING_EMP) * 100)}%
+                    {Math.ceil((totalEARLY / totalWORKING_EMP) * 100)}%
                   </PercentageText>
                   <PercentageSubText color={styleGuide.palette.primary}>
                     {totalEARLY}명
@@ -794,22 +796,22 @@ export default ({
               <TitleText>결근률 </TitleText>
               <CardGreyLine />
               <DonutCard
-                percentage={Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}
+                percentage={Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}
                 color={styleGuide.palette.donutColor}
                 max={100}
               />
-              {totalNOWORK / totlaWORKING_EMP == 0 ? (
+              {totalNOWORK / totalWORKING_EMP == 0 ? (
                 <DodnutTextContainer>
                   <PercentageText
                     color={styleGuide.palette.primary}
                     style={{marginTop: 10}}>
-                    {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
+                    {Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}%
                   </PercentageText>
                 </DodnutTextContainer>
               ) : (
                 <DodnutTextContainer style={{marginTop: 5}}>
                   <PercentageText color={styleGuide.palette.primary}>
-                    {Math.ceil((totalNOWORK / totlaWORKING_EMP) * 100)}%
+                    {Math.ceil((totalNOWORK / totalWORKING_EMP) * 100)}%
                   </PercentageText>
                   <PercentageSubText color={styleGuide.palette.primary}>
                     {totalNOWORK}명
@@ -856,70 +858,6 @@ export default ({
               </EmpConatainer>
             </Card>
             <Card
-              onPress={() => setModalREST_TIME(true)}
-              rippleColor={styleGuide.palette.rippleGreyColor}
-              rippleDuration={600}
-              rippleSize={1700}
-              rippleContainerBorderRadius={20}
-              rippleOpacity={0.1}>
-              <TitleText>평균&nbsp;휴게시간</TitleText>
-              <CardGreyLine />
-              <DonutCard
-                percentage={Math.ceil(totalREST_TIME / totlaWORKING_EMP)}
-                color={styleGuide.palette.donutColor}
-                max={60}
-              />
-              <DodnutTextContainer>
-                <PercentageText
-                  color={styleGuide.palette.primary}
-                  style={{marginTop: 10}}>
-                  {Math.ceil(totalREST_TIME / totlaWORKING_EMP)}분
-                </PercentageText>
-              </DodnutTextContainer>
-              <TitleText>휴게시간 상위직원</TitleText>
-              <CardGreyLine />
-              <EmpConatainer>
-                {REST_TIME_EMP_LIST.filter(
-                  (i) => i.REST_TIME && i.REST_TIME !== '0',
-                ).length === 0 ? (
-                  <Text style={{marginTop: 20}}>
-                    휴게시간이 있는 직원이 없습니다.
-                  </Text>
-                ) : (
-                  REST_TIME_EMP_LIST.slice(0, 3).map(
-                    (i, index) =>
-                      i.REST_TIME &&
-                      i.REST_TIME !== '0' && (
-                        <EmpCard key={index}>
-                          <FastImage
-                            style={{
-                              margin: 10,
-                              marginLeft: 20,
-                              width: 40,
-                              height: 40,
-                              borderRadius: 20,
-                            }}
-                            source={{
-                              uri: utils.getUriImage(i.IMAGE),
-                              cache: FastImage.cacheControl.immutable,
-                              priority: FastImage.priority.low,
-                            }}
-                            resizeMode={FastImage.resizeMode.cover}
-                          />
-                          <Column>
-                            <Bold>
-                              {i.EMP_NAME} [
-                              {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
-                            </Bold>
-                            <Text style={{marginTop: 5}}>{i.REST_TIME}분</Text>
-                          </Column>
-                        </EmpCard>
-                      ),
-                  )
-                )}
-              </EmpConatainer>
-            </Card>
-            <Card
               isLast={true}
               onPress={() => setModalVACATION(true)}
               rippleColor={styleGuide.palette.rippleGreyColor}
@@ -927,32 +865,14 @@ export default ({
               rippleSize={1700}
               rippleContainerBorderRadius={20}
               rippleOpacity={0.1}>
-              <TitleText>휴가중인 직원</TitleText>
+              <TitleText>일간 휴가 사용 일수</TitleText>
               <CardGreyLine />
-              <DonutCard
-                percentage={totalVACATION}
-                color={styleGuide.palette.donutColor}
-                max={totlaWORKING_EMP}
-              />
-              {totalVACATION / totlaWORKING_EMP == 0 ? (
-                <DodnutTextContainer>
-                  <PercentageText
-                    color={styleGuide.palette.primary}
-                    style={{marginTop: 10}}>
-                    {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
-                  </PercentageText>
-                </DodnutTextContainer>
-              ) : (
-                <DodnutTextContainer style={{marginTop: 5}}>
-                  <PercentageText color={styleGuide.palette.primary}>
-                    {Math.ceil((totalVACATION / totlaWORKING_EMP) * 100)}%
-                  </PercentageText>
-                  <PercentageSubText color={styleGuide.palette.primary}>
-                    {totalVACATION}명
-                  </PercentageSubText>
-                </DodnutTextContainer>
-              )}
-
+              <DodnutTextContainer style={{marginTop: 5}}>
+                <PercentageText color={styleGuide.palette.primary}>
+                  {totalVACATION}일
+                </PercentageText>
+              </DodnutTextContainer>
+              <View style={{height: 200}} />
               <TitleText>휴가 직원</TitleText>
               <CardGreyLine />
               <EmpConatainer>
@@ -991,7 +911,7 @@ export default ({
               </EmpConatainer>
             </Card>
           </ScrollView>
-          {totlaWORKING_EMP != 0 && totalWORKING != 0 && EMP_LIST.length != 0 && (
+          {totalWORKING_EMP != 0 && totalWORKING != 0 && EMP_LIST.length != 0 && (
             <>
               <SearchInputContainer>
                 <SearchInput
@@ -1044,7 +964,7 @@ export default ({
                   </Text>
                 )
               ) : (
-                totlaWORKING_EMP > 0 && (
+                totalWORKING_EMP > 0 && (
                   <Container>
                     <Schedule
                       TIME_EMP_LIST={
