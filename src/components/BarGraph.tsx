@@ -64,8 +64,8 @@ export default ({
             y={0}
             x2={(middle / max) * width}
             y2={height}
-            stroke={styleGuide.palette.redColor}
-            strokeWidth="4"
+            stroke={styleGuide.palette.secondary}
+            strokeWidth="1"
           />
           <Line
             x1={width}

@@ -17,7 +17,7 @@ import {
 export default ({route: {params}}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
+  console.log(params);
   const {EMP_SEQ = null, STORE_SEQ = null, STORE_HEALTH_SEQ = null} = params;
   const {MEMBER_SEQ} = useSelector((state: any) => state.userReducer);
 
@@ -129,8 +129,8 @@ export default ({route: {params}}) => {
       }
       formData.append('image', {
         uri: utils.isAndroid
-          ? cameraPictureLast?.uri
-          : cameraPictureLast?.uri.replace('file://', ''),
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
         name: fileName,
         type: fileType,
       });
@@ -173,8 +173,8 @@ export default ({route: {params}}) => {
       }
       formData.append('image', {
         uri: utils.isAndroid
-          ? cameraPictureLast?.uri
-          : cameraPictureLast?.uri.replace('file://', ''),
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
         name: fileName,
         type: fileType,
       });

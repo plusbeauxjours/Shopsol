@@ -41,8 +41,9 @@ export default () => {
   const fetchData = async () => {
     try {
       const {data} = await api.getAllCeoHealth({STORE_SEQ});
+      console.log(data);
       if (data.resultmsg === '1') {
-        dispatch(setSelectIndex(0));
+        setSelectIndex(0);
         dispatch(setHEALTH_STORE_DETAIL(data.resultdata));
       }
     } catch (e) {

@@ -105,8 +105,8 @@ export default ({route: {params}}) => {
       }
       formData.append('image', {
         uri: utils.isAndroid
-          ? cameraPictureLast?.uri
-          : cameraPictureLast?.uri.replace('file://', ''),
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
         name: fileName,
         type: fileType,
       });
@@ -151,8 +151,8 @@ export default ({route: {params}}) => {
       }
       formData.append('image', {
         uri: utils.isAndroid
-          ? cameraPictureLast?.uri
-          : cameraPictureLast?.uri.replace('file://', ''),
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
         name: fileName,
         type: fileType,
       });

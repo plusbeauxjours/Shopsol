@@ -121,7 +121,7 @@ export default ({route: {params}}) => {
       formData.append('EMP_NAME', NAME);
       formData.append('STORE_SEQ', STORE_SEQ);
       formData.append('MEMBER_SEQ', MEMBER_SEQ);
-
+      console.log(cameraPictureLast);
       const fileInfoArr = cameraPictureLast.split('/');
       const fileInfo = fileInfoArr[fileInfoArr.length - 1];
       const extensionIndex = fileInfo.indexOf('.');
@@ -136,8 +136,8 @@ export default ({route: {params}}) => {
       }
       formData.append('image', {
         uri: utils.isAndroid
-          ? cameraPictureLast?.uri
-          : cameraPictureLast?.uri.replace('file://', ''),
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
         name: fileName,
         type: fileType,
       });
@@ -182,8 +182,8 @@ export default ({route: {params}}) => {
 
       formData.append('image', {
         uri: utils.isAndroid
-          ? cameraPictureLast?.uri
-          : cameraPictureLast?.uri.replace('file://', ''),
+          ? cameraPictureLast
+          : cameraPictureLast.replace('file://', ''),
         name: fileName,
         type: fileType,
       });
