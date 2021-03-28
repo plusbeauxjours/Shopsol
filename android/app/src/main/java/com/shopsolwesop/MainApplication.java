@@ -3,6 +3,7 @@ package com.wesop.appshopsol;
 import android.app.Application;
 import android.content.Context;
 
+// import com.appsflyer.reactnative.RNAppsFlyerPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -41,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           packages.add(new SharedStoragePackager());
+          // packages.add(new RNAppsFlyerPackage(MainApplication.this));
           return packages;
         }
 

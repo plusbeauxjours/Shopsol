@@ -173,8 +173,8 @@ android {
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 94
-        versionName "2.2.6"
+        versionCode 95
+        versionName "2.2.7"
     }
     splits {
         abi {
@@ -235,9 +235,9 @@ android {
 dependencies {
     implementation project(':react-native-push-notification')
     
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
-    implementation 'com.firebase:firebase-jobdispatcher:0.6.0'
+    // implementation 'com.google.firebase:firebase-core:16.0.1'
+    // implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    // implementation 'com.firebase:firebase-jobdispatcher:0.6.0'
     
     implementation (project(':react-native-camera')) {
         exclude group: "com.google.android.gms"
@@ -245,14 +245,14 @@ dependencies {
         exclude group: "com.google.firebase", module: "firebase-ml-vision-face-model"
     }
 
-    implementation platform('com.google.firebase:firebase-bom:26.1.0')
-    implementation 'com.google.firebase:firebase-analytics'
+    // implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    // implementation 'com.google.firebase:firebase-analytics'
 
     implementation project(':react-native-image-crop-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-contacts')
     //noinspection GradleDynamicVersion
-    
+    compile 'com.android.support:multidex:1.0.3' 
     implementation "com.facebook.react:react-native: 0.63.3"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'androidx.multidex:multidex:2.0.1'
