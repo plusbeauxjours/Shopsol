@@ -555,6 +555,8 @@ export default ({
   SHOWN_USER_GUIDE_SCREEN,
 }) => {
   const navigation = useNavigation();
+
+  // 보이고 싶은 메뉴 컴퍼넌트
   const MenuCntContainer = ({
     index = 0,
     type = 'store',
@@ -596,6 +598,7 @@ export default ({
         source={source}
         resizeMode={FastImage.resizeMode.contain}
       />
+      {/* 가이드스크린 작업중 */}
       {/* {STORE === '1' && SHOWN_USER_GUIDE_SCREEN && selection == '직원초대' && (
         <LottieView
           style={{
@@ -613,6 +616,8 @@ export default ({
     </MenuCnt>
   );
 
+  // 숨기고 싶은 메뉴의 경우 뱃지가 없음
+  // 따로 컴퍼넌트를 만듬
   const HiddenMenuCntContainer = ({type, index, selection, paging, source}) => (
     <MenuCnt
       rippleColor={styleGuide.palette.borderColor}
@@ -640,6 +645,7 @@ export default ({
     </MenuCnt>
   );
 
+  // gps출퇴근 지도스크린의 사업장 위치를 알려주는 박스
   const ShopMarker = () => (
     <MarkerWrapper style={{zIndex: 10}}>
       <ShopMarkerContainer>
@@ -679,6 +685,7 @@ export default ({
     </MarkerWrapper>
   );
 
+  // gps출퇴근 지도스크린의 유저 위치를 알려주는 박스
   const UserMarker = ({distance, current}) => (
     <MarkerWrapper style={{zIndex: 50}}>
       <UserMarkerContainer distance={distance} current={current}>
@@ -717,11 +724,6 @@ export default ({
 
   return (
     <BackGround>
-      {/* <GrayLinearGradient
-        colors={['white', '#f8f1e9']}
-        hasHeight={STORE == '1'}
-        style={{height: hp('60%')}}
-      /> */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -743,6 +745,7 @@ export default ({
           speed={0.4}
           onAnimationFinish={() => setInterval(() => animationRef.play(), 1000)}
         /> */}
+        {/* 메인 이미지 */}
         <MainImageContainer>
           {STORE == '0' ? (
             <LottieView
@@ -806,6 +809,7 @@ export default ({
             <WhiteSpace />
           </StoreUpdate>
         </MainImageContainer>
+        {/* 메인이미지 아래의 메뉴 버튼 */}
         <Row
           style={{
             width: '100%',
@@ -844,6 +848,7 @@ export default ({
           )}
         </Row>
         <MenuBox style={{zIndex: 1}}>
+          {/* 직원의 출근 버튼 */}
           {STORE == 0 && (
             <>
               {GPS == '0' ? (
@@ -930,7 +935,7 @@ export default ({
               )}
             </>
           )}
-          {STORE == '1' ? ( // 사업주 ============================
+          {STORE == '1' ? ( // ==================================================================================== 사업주
             <>
               <Section style={{marginTop: 20}}>
                 <SpaceRow style={{width: '100%', alignItems: 'center'}}>
@@ -986,8 +991,8 @@ export default ({
                 )} */}
                 </SpaceRow>
                 <GreyLine />
-
                 <Container>
+                  {/* 직원관리 */}
                   <MenuCntContainer
                     selection={'직원초대'}
                     paging={'InviteEmployeeScreen'}
@@ -1033,6 +1038,7 @@ export default ({
                   )}
                 </Container>
               </Section>
+              {/* 알바배너 */}
               {STORE_DATA?.arbashow == 1 && (
                 <BannerImageContainer
                   style={{
@@ -1059,6 +1065,7 @@ export default ({
                     <TitleText>업무관리</TitleText>
                   </MenuTitleArea>
                   <Row>
+                    {/* 커스텀 메뉴 세팅 온오프 */}
                     {editMode ? (
                       <IconContainer
                         onPress={() => {
@@ -1080,6 +1087,7 @@ export default ({
                 </SpaceRow>
                 <GreyLine />
                 <Container>
+                  {/* 커스텀 메뉴에서 보여주고 싶은 메뉴들 */}
                   {customMenu.map((menu, index) => {
                     if (customMenuIndex?.includes(index)) {
                       return (
@@ -1095,6 +1103,7 @@ export default ({
                       );
                     }
                   })}
+                  {/* 커스텀 메뉴에서 가리고 싶은 메뉴들 */}
                   {editMode &&
                     customMenu.map((menu, index) => {
                       if (!customMenuIndex?.includes(index)) {
@@ -1114,6 +1123,7 @@ export default ({
               </Section>
             </>
           ) : (
+            // ==================================================================================== 메니저
             <>
               {STORE_DATA?.IS_MANAGER == '1' ? (
                 <>
@@ -1203,6 +1213,7 @@ export default ({
                         </SpaceRow>
                         <GreyLine />
                         <Container>
+                          {/* 직원관리 */}
                           <MenuCntContainer
                             selection={'직원초대'}
                             paging={'InviteEmployeeScreen'}
@@ -1265,6 +1276,7 @@ export default ({
                           )}
                         </Container>
                       </Section>
+                      {/* 알바배너 */}
                       {STORE_DATA?.arbashow == 1 && (
                         <BannerImageContainer
                           style={{
@@ -1290,6 +1302,7 @@ export default ({
                           <MenuTitleArea style={{zIndex: 3}}>
                             <TitleText>업무관리</TitleText>
                           </MenuTitleArea>
+                          {/* 커스텀 메뉴 세팅 온오프 */}
                           {editMode ? (
                             <IconContainer
                               onPress={() => {
@@ -1310,6 +1323,7 @@ export default ({
                         </SpaceRow>
                         <GreyLine />
                         <Container>
+                          {/* 커스텀 메뉴에서 보여주고 싶은 메뉴들 */}
                           {customMenu.map((menu, index) => {
                             if (customMenuIndex?.includes(index)) {
                               return (
@@ -1325,6 +1339,7 @@ export default ({
                               );
                             }
                           })}
+                          {/* 커스텀 메뉴에서 가리고 싶은 메뉴들 */}
                           {editMode &&
                             customMenu.map((menu, index) => {
                               if (!customMenuIndex?.includes(index)) {
@@ -1346,7 +1361,7 @@ export default ({
                   )}
                 </>
               ) : (
-                // 직원 ============================
+                // ==================================================================================== 직원
                 <>
                   {initLoading ? (
                     <Column
@@ -1409,6 +1424,7 @@ export default ({
               )}
             </>
           )}
+          {/* 사업주 이벤트 */}
           {STORE == '1' && STORE_DATA?.eventShow1 == '1' && banner1D && (
             <BannerImageContainer style={{borderRadius: 8}}>
               <Touchable
@@ -1435,6 +1451,7 @@ export default ({
               </Touchable>
             </BannerImageContainer>
           )}
+          {/* 직원 이벤트 */}
           {STORE == '0' && STORE_DATA?.eventShow2 == '1' && banner1D && (
             <BannerImageContainer style={{borderRadius: 8}}>
               <Touchable
@@ -1461,9 +1478,7 @@ export default ({
               </Touchable>
             </BannerImageContainer>
           )}
-
-          {/* ////// */}
-
+          {/* 사업주 배너 */}
           {STORE == '1' && STORE_DATA?.boardShow1 == '1' && banner2D && (
             <>
               <WhiteSpace />
@@ -1493,6 +1508,7 @@ export default ({
               </BannerImageContainer>
             </>
           )}
+          {/* 직원 배너 */}
           {STORE == '0' && STORE_DATA?.boardShow2 == '1' && banner2D && (
             <>
               <WhiteSpace />
@@ -1523,12 +1539,10 @@ export default ({
             </>
           )}
           <WhiteSpace style={{height: 60}} />
-          {/* <GrayLinearGradient
-            colors={['#f8f1e9', 'white']}
-            hasHeight={STORE == '1'}
-          /> */}
         </MenuBox>
       </ScrollView>
+
+      {/* gps 모달 */}
       <Modal
         isVisible={isGpsVisible}
         onBackdropPress={() => setIsGpsVisible(false)}
@@ -1634,6 +1648,8 @@ export default ({
           </>
         )}
       </Modal>
+
+      {/* gps 출퇴근 */}
       <Modal
         isVisible={workingModalOpen}
         animationOutTiming={1}
@@ -1743,6 +1759,8 @@ export default ({
           </Footer>
         </RNCamera>
       </Modal> */}
+
+      {/* qr카메라 출퇴근 */}
       <Modal
         isVisible={qrCameraModalOpen1}
         onBackdropPress={() => {
@@ -1870,6 +1888,8 @@ export default ({
           </ModalPopupArea>
         )}
       </Modal>
+
+      {/* qr코드 확인*/}
       <Modal
         animationIn={'fadeIn'}
         animationOut={'fadeOut'}

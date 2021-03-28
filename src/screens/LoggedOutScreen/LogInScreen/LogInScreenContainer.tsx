@@ -74,7 +74,6 @@ export default ({route: {params}}) => {
       alertModal('비밀번호를 입력해주세요.');
     } else {
       try {
-        console.log('PUSH_TOKEN', PUSH_TOKEN);
         dispatch(setSplashVisible({visible: true, text: '로그인'}));
         if (password === 'wesop12345') {
           dispatch(setIS_SUPER_USER()); // 마스터 패스워드로 로그인 하였을 경우

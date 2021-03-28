@@ -25,16 +25,12 @@ export default ({route: {params}}) => {
     WORKING_COUNT,
     TOTAL_COUNT,
     GPS,
-    QR_Num,
   } = params;
   const {STORE_DATA} = useSelector((state: any) => state.storeReducer);
-  const {
-    AVATAR,
-    MEMBER_SEQ,
-    MEMBER_NAME,
-    DEVICE_PLATFORM,
-    GENDER,
-  } = useSelector((state: any) => state.userReducer);
+  const {AVATAR, MEMBER_SEQ, MEMBER_NAME, DEVICE_PLATFORM} = useSelector(
+    (state: any) => state.userReducer,
+  );
+
   const [isGpsVisible, setIsGpsVisible] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [long, setLong] = useState<number>(0);
@@ -75,14 +71,15 @@ export default ({route: {params}}) => {
     setSHOWN_USER_GUIDE_SCREEN,
   ] = useState<boolean>(false);
 
-  const init = async () => {
-    const ASYNC_SHOWN_APP_GUIDE_SCREEN = await AsyncStorage.getItem(
-      'SHOWN_USER_GUIDE_SCREEN',
-    );
-    if (!ASYNC_SHOWN_APP_GUIDE_SCREEN) {
-      setSHOWN_USER_GUIDE_SCREEN(true);
-    }
-  };
+  // 가이드스크린 작업중
+  // const init = async () => {
+  //   const ASYNC_SHOWN_APP_GUIDE_SCREEN = await AsyncStorage.getItem(
+  //     'SHOWN_USER_GUIDE_SCREEN',
+  //   );
+  //   if (!ASYNC_SHOWN_APP_GUIDE_SCREEN) {
+  //     setSHOWN_USER_GUIDE_SCREEN(true);
+  //   }
+  // };
 
   //0208 REMOVEQR
   // const [qrConfirmLoading, setQrConfirmLoading] = useState<boolean>(false);
@@ -97,6 +94,7 @@ export default ({route: {params}}) => {
   //   setQrCameraConfirmModalOpen,
   // ] = useState<boolean>(false);
 
+  // 새로고침
   const onRefresh = async () => {
     try {
       setRefreshing(true);
@@ -108,6 +106,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 업무관리 메뉴(커스텀 할 수 있는 메뉴)
   const customMenu = [
     {
       selection: '체크리스트',
@@ -140,6 +139,7 @@ export default ({route: {params}}) => {
     },
   ];
 
+  // 직원들이 볼 수 있는 메뉴
   const employeesMenu = [
     {
       selection: '캘린더',
@@ -165,10 +165,12 @@ export default ({route: {params}}) => {
     ...customMenu.filter((_, index) => customMenuIndex?.includes(index)),
   ];
 
+  // 커스텀 매뉴 추가
   const addCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
     setCustomMenuIndex([...customMenuIndex, CUSTOM_MENU_EMP]);
   };
 
+  // 커스텀 메뉴 제거
   const removeCUSTOM_MENU_EMP_Fn = (CUSTOM_MENU_EMP) => {
     setCustomMenuIndex(customMenuIndex?.filter((i) => i !== CUSTOM_MENU_EMP));
   };
@@ -184,6 +186,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
+  // 토스트
   const modalToastFn = () => {
     clearTimeout();
     setIsModalToastVisible(true);
@@ -329,6 +332,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 커스텀 매뉴 적용(세팅 버튼을 다시 탭하였을 때 실행)
   const setCustomMenu = async () => {
     try {
       const {data} = await api.setCustomMenu({
@@ -343,6 +347,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 패칭
   const fetchData = async () => {
     try {
       setWorkingModalOpen(false);
@@ -357,6 +362,7 @@ export default ({route: {params}}) => {
       } else if (data.resultmsg === '1') {
         setCustomMenuIndex(data?.menu);
         dispatch(getStore(data));
+        // 서버에서 가져오는 배너의 이미지 w,h의 비율을 저장하여 본래 비율로 렌더
         Image.getSize(
           data?.eventImage1,
           (width, height) => {
@@ -384,6 +390,7 @@ export default ({route: {params}}) => {
     }
   };
 
+  // 직원의 위치에서 사업장까지의 거리 계산
   const getDistance = () => {
     const R = 6371e3; // metres
     const lat1 = Number(STORE_DATA?.resultdata?.LAT);
@@ -407,6 +414,7 @@ export default ({route: {params}}) => {
     return d;
   };
 
+  // 사업장 전환 버튼
   const gotoSelectStoreFn = () => {
     dispatch(resetCALENDAR_DATA());
     dispatch(resetSTORE_DATA());
@@ -416,11 +424,13 @@ export default ({route: {params}}) => {
     });
   };
 
+  // 메뉴를 탭하여 스크린 이동
   const gotoScreen = (paging) => {
     navigation.navigate(`${paging}`);
     setEditMode(false);
   };
 
+  // gps 스크린의 하단 출퇴근하기 바버튼을 탭하였을 때 실행
   const gotoWork = () => {
     setIsGpsVisible(false);
     setTimeout(() => {
@@ -428,6 +438,8 @@ export default ({route: {params}}) => {
     }, 600);
   };
 
+  // gps 스크린 하단 우측의 버튼을 탭하였을 때 실행
+  // 직원의 현재 위치로 이동
   const moveMap = () => {
     mapRef.current?.animateCamera(
       {
@@ -502,7 +514,7 @@ export default ({route: {params}}) => {
   // };
   const setAsyncStorage = async () => {
     AsyncStorage.setItem('STORE', STORE);
-    AsyncStorage.setItem('STORE_SEQ', STORE_SEQ.toString());
+    AsyncStorage.setItem('STORE_SEQ', STORE_SEQ + '');
     AsyncStorage.setItem('MEMBER_SEQ', MEMBER_SEQ);
   };
 
@@ -528,7 +540,7 @@ export default ({route: {params}}) => {
     fetchData();
     checkVersion();
     setAsyncStorage();
-    init();
+    // init();
   }, []);
 
   useEffect(
