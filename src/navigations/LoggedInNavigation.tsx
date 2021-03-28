@@ -138,10 +138,8 @@ export default () => {
       STORE &&
       STORE === '0'
     ) {
-      console.log(STORE, STORE_SEQ, MEMBER_SEQ);
       try {
         const {data} = await api.getIsRetiree(STORE_SEQ, MEMBER_SEQ); // 직원의 탈퇴 여부 확인API
-        console.log(data);
         if (!data?.WORKFLAG) {
           gotoSelectStoreFn();
         }

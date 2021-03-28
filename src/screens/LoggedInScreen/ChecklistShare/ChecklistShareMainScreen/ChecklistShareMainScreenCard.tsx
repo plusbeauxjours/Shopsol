@@ -152,7 +152,6 @@ export default ({
     <View>
       <Touchable
         onPress={() => {
-          console.log(isOnFix);
           setTimeout(() => {
             gotoChecklistShareItem(TITLE, data.NOTICE_SEQ, !isOnFix && '1');
           }, 100);

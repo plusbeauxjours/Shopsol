@@ -250,7 +250,6 @@ export default ({route: {params}}) => {
           compressImageMaxWidth: 800,
           compressImageMaxHeight: 1200,
         }).then((res: any) => {
-          console.log(res);
           if (res) {
             setCameraPictureLast(res.path);
           }
@@ -263,7 +262,6 @@ export default ({route: {params}}) => {
             maxHeight: 1200,
           },
           (res) => {
-            console.log(res);
             !res.didCancel && setCameraPictureLast(res.uri);
           },
         );
@@ -301,7 +299,6 @@ export default ({route: {params}}) => {
           dispatch(setSplashVisible({visible: true, text: '유통기한'}));
           if (codenumber) {
             const {data} = await api.getBarCode(codenumber);
-            console.log('data', data);
             if (data.message == 'SUCCESS') {
               dispatch(setSplashVisible({visible: false}));
               setShelfLifeName(data.resultdata[0].NAME);

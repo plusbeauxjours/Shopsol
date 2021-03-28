@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, memo} from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import styled from 'styled-components/native';
@@ -214,20 +214,38 @@ export default ({data, toDay}) => {
             <IconContainer>
               <PlayCircleOutlineIcon />
               <Text style={{marginLeft: 5, width: 60}}>시작시간:&nbsp;</Text>
-              <Text style={{marginLeft: 5, width: 60}}>
-                {data.WORKING[selectedIndex][1].slice(0, 5)}
-              </Text>
+              {moment() >
+              moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                <Text style={{marginLeft: 5, width: 60}}>
+                  {data.WORKING[selectedIndex][10].slice(0, 5)}
+                </Text>
+              ) : (
+                <Text style={{marginLeft: 5, width: 60}}>
+                  {data.WORKING[selectedIndex][1].slice(0, 5)}
+                </Text>
+              )}
             </IconContainer>
             <IconContainer>
               <StopCircleOutlineIcon />
               <Text style={{marginLeft: 5, width: 60}}>종료시간:&nbsp;</Text>
-              <Text style={{marginLeft: 5, width: 60}}>
-                {moment.duration(data.WORKING[selectedIndex][1]) >
-                  moment.duration(data.WORKING[selectedIndex][2]) && (
-                  <SmallText>익일&nbsp;</SmallText>
-                )}
-                {data.WORKING[selectedIndex][2].slice(0, 5)}
-              </Text>
+              {moment() >
+              moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                <Text style={{marginLeft: 5, width: 60}}>
+                  {moment.duration(data.WORKING[selectedIndex][10]) >
+                    moment.duration(data.WORKING[selectedIndex][11]) && (
+                    <SmallText>익일&nbsp;</SmallText>
+                  )}
+                  {data.WORKING[selectedIndex][11].slice(0, 5)}
+                </Text>
+              ) : (
+                <Text style={{marginLeft: 5, width: 60}}>
+                  {moment.duration(data.WORKING[selectedIndex][1]) >
+                    moment.duration(data.WORKING[selectedIndex][2]) && (
+                    <SmallText>익일&nbsp;</SmallText>
+                  )}
+                  {data.WORKING[selectedIndex][2].slice(0, 5)}
+                </Text>
+              )}
             </IconContainer>
           </Row>
         ) : data.WORKING[selectedIndex][0] === -1 &&
@@ -248,21 +266,49 @@ export default ({data, toDay}) => {
         <Row style={{justifyContent: 'flex-start'}}>
           {data.WORKING[selectedIndex][0] > 0 && (
             <SmallTextRound>
-              <SmallText>
-                근무시간:&nbsp;
-                {Math.trunc(
-                  moment.duration(data.WORKING[selectedIndex][0]).asHours(),
-                ) > 0 &&
-                  `${Math.trunc(
+              {moment() >
+              moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                typeof data.WORKING[selectedIndex][9] === 'string' &&
+                data.WORKING[selectedIndex][9]?.includes('미') ? (
+                  <SmallText>
+                    근무시간:&nbsp;{data.WORKING[selectedIndex][9]}
+                  </SmallText>
+                ) : (
+                  <SmallText>
+                    근무시간:&nbsp;
+                    {Math.trunc(
+                      moment.duration(data.WORKING[selectedIndex][9]).asHours(),
+                    ) > 0 &&
+                      `${Math.trunc(
+                        moment
+                          .duration(data.WORKING[selectedIndex][9])
+                          .asHours(),
+                      )}시간`}
+                    &nbsp;
+                    {moment.duration(data.WORKING[selectedIndex][9]).minutes() >
+                      0 &&
+                      `${moment
+                        .duration(data.WORKING[selectedIndex][9])
+                        .minutes()}분`}
+                  </SmallText>
+                )
+              ) : (
+                <SmallText>
+                  근무시간:&nbsp;
+                  {Math.trunc(
                     moment.duration(data.WORKING[selectedIndex][0]).asHours(),
-                  )}시간`}
-                &nbsp;
-                {moment.duration(data.WORKING[selectedIndex][0]).minutes() >
-                  0 &&
-                  `${moment
-                    .duration(data.WORKING[selectedIndex][0])
-                    .minutes()}분`}
-              </SmallText>
+                  ) > 0 &&
+                    `${Math.trunc(
+                      moment.duration(data.WORKING[selectedIndex][0]).asHours(),
+                    )}시간`}
+                  &nbsp;
+                  {moment.duration(data.WORKING[selectedIndex][0]).minutes() >
+                    0 &&
+                    `${moment
+                      .duration(data.WORKING[selectedIndex][0])
+                      .minutes()}분`}
+                </SmallText>
+              )}
             </SmallTextRound>
           )}
           {data.WORKING[selectedIndex][0] > 0 && data.REST_TIME !== '0' && (

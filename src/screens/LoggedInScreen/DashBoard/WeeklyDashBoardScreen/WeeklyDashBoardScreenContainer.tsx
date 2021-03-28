@@ -162,11 +162,20 @@ export default () => {
     try {
       let empListTemp = new Array();
       EMPLOYEE_LIST?.workinglist?.map((i, index) => {
-        const WORKING = Array.from(
-          Array(7),
-          () => [0, '00:00', '00:00', false, false, false, false, false, 0],
-          //[0:근무시간, 1: 시작시간, 2: 종료시간, 3: 휴가, 4: 지각, 5: 조퇴, 6: 결근, 7: 유급휴가, 8: 유급휴가 근무시간]
-        );
+        const WORKING = Array.from(Array(7), () => [
+          0, // 0: 근무시간
+          '00:00', // 1: 시작시간
+          '00:00', // 2: 종료시간
+          false, // 3: 휴가
+          false, // 4: 지각
+          false, // 5: 조퇴
+          false, // 6: 결근
+          false, // 7: 유급휴가
+          0, // 8: 유급휴가 근무시간
+          0, // 9: 출퇴근시간
+          '00:00', // 10: 출근시간
+          '00:00', // 11: 퇴근시간
+        ]);
         empListTemp?.push({
           EMP_SEQ: i.EMP_SEQ,
           EMP_NAME: i.EMP_NAME,
@@ -233,6 +242,59 @@ export default () => {
               totalREST_TIME_COUNT + Number(i.REST_TIME),
           );
           if (emp) {
+            (i.START_TIME?.substring(0, 5) ==
+              i.UPDATED_START?.substring(0, 5) &&
+              i.END_TIME?.substring(0, 5) == i.UPDATED_END?.substring(0, 5)) ||
+            (!i.UPDATED_START && !i.UPDATED_END)
+              ? ((emp['WORKING'][index][10] = i.START_TIME || '미출근'),
+                (emp['WORKING'][index][11] =
+                  i.START_TIME && i.AUTOWORKOFF == '1' && !i.END_TIME
+                    ? '퇴근미체크'
+                    : i.END_TIME
+                    ? i.END_TIME
+                    : '미퇴근'),
+                (emp['WORKING'][index][9] = !i.START_TIME
+                  ? '출근미체크'
+                  : i.AUTOWORKOFF == '1' && !i.END_TIME
+                  ? '퇴근미체크'
+                  : moment.duration(i.START_TIME).as('milliseconds') >
+                    moment.duration(i.END_TIME).as('milliseconds')
+                  ? Number(
+                      moment(i.END_TIME, 'kk:mm')
+                        .add(1, 'days')
+                        .diff(moment(i.START_TIME, 'kk:mm')),
+                    )
+                  : Number(
+                      moment(i.END_TIME, 'kk:mm').diff(
+                        moment(i.START_TIME, 'kk:mm'),
+                      ),
+                    )))
+              : ((emp['WORKING'][index][10] = !i.UPDATED_START
+                  ? '미출근'
+                  : i.UPDATED_START),
+                (emp['WORKING'][index][11] =
+                  i.UPDATED_START && i.AUTOWORKOFF == '1' && !i.UPDATED_END
+                    ? '퇴근미체크'
+                    : i.UPDATED_END
+                    ? i.UPDATED_END
+                    : '미퇴근'),
+                (emp['WORKING'][index][9] = !i.UPDATED_START
+                  ? '출근미체크'
+                  : i.AUTOWORKOFF == '1' && !i.UPDATED_END
+                  ? '퇴근미체크'
+                  : moment.duration(i.UPDATED_START).as('milliseconds') >
+                    moment.duration(i.UPDATED_END).as('milliseconds')
+                  ? Number(
+                      moment(i.UPDATED_END, 'kk:mm')
+                        .add(1, 'days')
+                        .diff(moment(i.UPDATED_START, 'kk:mm')),
+                    )
+                  : Number(
+                      moment(i.UPDATED_END, 'kk:mm').diff(
+                        moment(i.UPDATED_START, 'kk:mm'),
+                      ),
+                    )));
+
             i.CHANGE_START && i.CHANGE_END
               ? moment.duration(i.CHANGE_START).as('milliseconds') >
                 moment.duration(i.CHANGE_END).as('milliseconds')

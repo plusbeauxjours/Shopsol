@@ -135,7 +135,6 @@ export default ({route: {params}}) => {
           compressImageMaxWidth: 800,
           compressImageMaxHeight: 1200,
         }).then((res: any) => {
-          console.log(res);
           if (res) {
             setCameraPictureList([...cameraPictureList, {uri: res.path}]);
           }
@@ -148,7 +147,6 @@ export default ({route: {params}}) => {
             maxHeight: 1200,
           },
           (res) => {
-            console.log(res);
             !res.didCancel &&
               setCameraPictureList([...cameraPictureList, {uri: res.uri}]);
           },

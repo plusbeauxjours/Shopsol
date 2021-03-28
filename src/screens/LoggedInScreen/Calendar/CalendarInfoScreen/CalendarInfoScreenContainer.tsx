@@ -124,7 +124,6 @@ export default () => {
   };
 
   const fetchData = async (date) => {
-    console.log('fetching');
     try {
       // if (CALENDAR_DATA_STORE_SEQ !== STORE_SEQ) {
       dispatch(setSplashVisible({visible: true, text: '캘린더'}));

@@ -428,14 +428,16 @@ export default ({
                   }}>
                   시작시간:&nbsp;
                 </Text>
-                <Text
-                  style={{
-                    marginLeft: 5,
-                    textAlign: 'right',
-                    width: 60,
-                  }}>
-                  {i.START_TIME.slice(0, 5)}
-                </Text>
+                {moment() >
+                moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                  <Text style={{marginLeft: 5, textAlign: 'right', width: 60}}>
+                    {i.START_TIME_DONE.slice(0, 5)}
+                  </Text>
+                ) : (
+                  <Text style={{marginLeft: 5, textAlign: 'right', width: 60}}>
+                    {i.START_TIME.slice(0, 5)}
+                  </Text>
+                )}
               </IconContainer>
               <IconContainer>
                 <StopCircleOutlineIcon />
@@ -447,31 +449,59 @@ export default ({
                   }}>
                   종료시간:&nbsp;
                 </Text>
-                <Text
-                  style={{
-                    marginLeft: 5,
-                    textAlign: 'right',
-                    width: 60,
-                  }}>
-                  {moment.duration(i.START_TIME) >
-                    moment.duration(i.END_TIME) && (
-                    <SmallText>익일&nbsp;</SmallText>
-                  )}
-                  {i.END_TIME.slice(0, 5)}
-                </Text>
+                {moment() >
+                moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                  <Text style={{marginLeft: 5, textAlign: 'right', width: 60}}>
+                    {moment.duration(i.START_TIME_DONE) >
+                      moment.duration(i.END_TIME_DONE) && (
+                      <SmallText>익일&nbsp;</SmallText>
+                    )}
+                    {i.END_TIME_DONE.slice(0, 5)}
+                  </Text>
+                ) : (
+                  <Text style={{marginLeft: 5, textAlign: 'right', width: 60}}>
+                    {moment.duration(i.START_TIME) >
+                      moment.duration(i.END_TIME) && (
+                      <SmallText>익일&nbsp;</SmallText>
+                    )}
+                    {i.END_TIME.slice(0, 5)}
+                  </Text>
+                )}
               </IconContainer>
             </Column>
           </EmpCardDataRow>
+
           <EmpCardDataRow style={{paddingLeft: 5}}>
             {i.WORKING > 0 ? (
               <SmallTextRound>
-                <SmallText>
-                  근무시간:
-                  {Math.trunc(moment.duration(i.WORKING).asHours()) > 0 &&
-                    ` ${Math.trunc(moment.duration(i.WORKING).asHours())}시간`}
-                  {moment.duration(i.WORKING).minutes() > 0 &&
-                    ` ${moment.duration(i.WORKING).minutes()}분`}
-                </SmallText>
+                {moment() >
+                moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                  typeof i?.WORKING_DONE === 'string' &&
+                  i?.WORKING_DONE?.includes('미') ? (
+                    <SmallText>근무시간:&nbsp;{i?.WORKING_DONE}</SmallText>
+                  ) : (
+                    <SmallText>
+                      근무시간:&nbsp;
+                      {Math.trunc(moment.duration(i.WORKING_DONE).asHours()) >
+                        0 &&
+                        `${Math.trunc(
+                          moment.duration(i.WORKING_DONE).asHours(),
+                        )}시간`}
+                      &nbsp;
+                      {moment.duration(i.WORKING_DONE).minutes() > 0 &&
+                        `${moment.duration(i.WORKING_DONE).minutes()}분`}
+                    </SmallText>
+                  )
+                ) : (
+                  <SmallText>
+                    근무시간:&nbsp;
+                    {Math.trunc(moment.duration(i.WORKING).asHours()) > 0 &&
+                      `${Math.trunc(moment.duration(i.WORKING).asHours())}시간`}
+                    &nbsp;
+                    {moment.duration(i.WORKING).minutes() > 0 &&
+                      `${moment.duration(i.WORKING).minutes()}분`}
+                  </SmallText>
+                )}
               </SmallTextRound>
             ) : (
               <Row style={{justifyContent: 'center'}}>

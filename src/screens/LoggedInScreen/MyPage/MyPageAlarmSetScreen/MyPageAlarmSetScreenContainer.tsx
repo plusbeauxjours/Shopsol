@@ -94,7 +94,6 @@ export default () => {
   const fetch = async () => {
     try {
       const {data} = await api.getPush({MEMBER_SEQ});
-      console.log(data);
       data.All_Push == '1'
         ? (setAllPushState(true), dispatch(setAllPush(true)))
         : (setAllPushState(false), dispatch(setAllPush(false)));
@@ -131,14 +130,12 @@ export default () => {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
     if (enabled) {
       getFcmToken();
-      console.log('Authorization status:', authStatus);
     }
   };
 
   const getFcmToken = async () => {
     const PUSH_TOKEN = await messaging().getToken();
     if (PUSH_TOKEN && !IS_SUPER_USER) {
-      console.log('PUSH_TOKEN', PUSH_TOKEN);
       await api.changeToken({
         token: PUSH_TOKEN,
         MEMBER_SEQ,

@@ -164,7 +164,6 @@ export default () => {
   // 캘린더 마킹 데이터
   const markingFn = async (YEAR, MONTH, index) => {
     const content = {key: 'content', color: '#000'};
-    console.log(index);
     try {
       const {data} = await api.getNoticeAll(STORE_SEQ, YEAR, MONTH, index);
       if (data.message === 'SUCCESS') {

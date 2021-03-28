@@ -120,14 +120,12 @@ export default ({route: {params}}) => {
 
     if (enabled) {
       getFcmToken();
-      console.log('Authorization status:', authStatus);
     }
   };
 
   const getFcmToken = async () => {
     const PUSH_TOKEN = await messaging().getToken();
     if (PUSH_TOKEN && !IS_SUPER_USER) {
-      console.log('PUSH_TOKEN', PUSH_TOKEN);
       await api.changeToken({
         token: PUSH_TOKEN,
         MEMBER_SEQ,

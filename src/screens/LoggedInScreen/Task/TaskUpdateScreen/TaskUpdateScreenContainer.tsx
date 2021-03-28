@@ -41,7 +41,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
-    // 삭제 버튼을 탭하였을 때
+  // 삭제 버튼을 탭하였을 때
   const deleteModal = (title, text) => {
     const params = {
       alertType: 'confirm',
@@ -58,7 +58,7 @@ export default ({route: {params}}) => {
     dispatch(setAlertVisible(true));
   };
 
-    // 삭제 API
+  // 삭제 API
   const deleteTask = async () => {
     try {
       alertModal('업무를 삭제하였습니다.');
@@ -70,7 +70,7 @@ export default ({route: {params}}) => {
     }
   };
 
-    // 수정 API
+  // 수정 API
   const submit = async () => {
     if (taskName == '') {
       alertModal('수정할 업무명을 입력해주세요.');
@@ -189,7 +189,6 @@ export default ({route: {params}}) => {
           compressImageMaxWidth: 800,
           compressImageMaxHeight: 1200,
         }).then((res: any) => {
-          console.log(res);
           if (res) {
             setCameraPictureLast(res.path);
           }
@@ -202,7 +201,6 @@ export default ({route: {params}}) => {
             maxHeight: 1200,
           },
           (res) => {
-            console.log(res);
             !res.didCancel && setCameraPictureLast(res.uri);
           },
         );
