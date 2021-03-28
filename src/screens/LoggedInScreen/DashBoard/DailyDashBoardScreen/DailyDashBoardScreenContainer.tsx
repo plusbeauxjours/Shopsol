@@ -24,6 +24,7 @@ export default () => {
     STORE_DATA: {resultdata: {CALENDAR_EDIT = null} = {}} = {},
     MANAGER_CALLED,
   } = useSelector((state: any) => state.storeReducer);
+
   const [loading, setLoading] = useState<boolean>(true);
   const [EMP_LIST, setEMP_LIST] = useState<any>([]);
   const [TIME_EMP_LIST, setTIME_EMP_LIST] = useState<any>([]);
@@ -50,10 +51,12 @@ export default () => {
   const [result, setResult] = useState<any>([]);
   const [toDay, setToDay] = useState<any>(moment().format('YYYY-MM-DD'));
 
+  // 스크린의 가장 아래로 이동 (사용안함)
   const onPressSection = () => {
     return screenScrollRef.current?.getNode()?.scrollToEnd({animated: true});
   };
 
+  // 타임라인에서 직원을 탭하였을 때 해당직원카드가 앞으로 나오도록 이동
   const gotoSelectedIndex = (index) => {
     return cardScrollRef.current
       ?.getNode()
@@ -64,10 +67,12 @@ export default () => {
     return scrollRef.current?.getNode()?.scrollTo({y: index * 60 + 190});
   };
 
+  // 오른쪽 하단의 버튼을 탭하면 가장 위로 이동
   const gotoTop = () => {
     return screenScrollRef.current?.getNode()?.scrollTo({y: 0, animated: true});
   };
 
+  // 직원카드 스크롤 할 때 직원카드의 크기에 맞춰서 이동
   const onScroll = (e) => {
     const {
       nativeEvent: {
@@ -91,6 +96,8 @@ export default () => {
     fetchSchedulesData(moment(toDay).add(1, 'days').format('YYYY-MM-DD'));
   };
 
+  // 날짜를 옮겼을 때 리덕스에 옮긴 날이 없을 때 데이터 패칭
+  // 예를 들면 2021.03.31의 다음날 혹은 2021.04.01의 전날
   const fetchSchedulesData = async (date) => {
     try {
       setLoading(true);
@@ -150,6 +157,7 @@ export default () => {
   const init = (CALENDAR_DATA, date) => {
     try {
       let empListTemp = [];
+      // 리덕스에서 직원 리스트를 가져와서 가공하여 temp에 저장
       EMPLOYEE_LIST?.workinglist?.map((i, index) => {
         empListTemp.push({
           key: `item-${index}`,
@@ -164,6 +172,8 @@ export default () => {
         });
       });
 
+      // 캘린더스크린에서 사용하는 일정정보에서 해당일에 대한 데이터를 가져와서
+      // 필요한 정보들을 temp에 저장
       CALENDAR_DATA[date]?.map((i) => {
         let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
         if (emp) {
@@ -175,6 +185,7 @@ export default () => {
           emp['VACATION_PAID'] = i?.VACATION_PAID === '1' ? true : false;
           emp['NOWORK'] = i.nowork ?? '0';
 
+          //루프를 돌면서 해당일의 총지각, 총조퇴, 총휴게시간, 총휴가, 총결근을 카운트
           setTotalEARLY((totalEARLY) => totalEARLY + (i.alear === '1' ? 1 : 0));
           setTotalLATE((totalLATE) => totalLATE + (i.jigark === '1' ? 1 : 0));
           setTotalREST_TIME(
@@ -187,6 +198,7 @@ export default () => {
             (totalNOWORK) => totalNOWORK + (i.nowork == '1' ? 1 : 0),
           );
 
+          // 최신 근무시간을 저장
           i.CHANGE_START && i.CHANGE_END
             ? moment.duration(i.CHANGE_START).as('milliseconds') >
               moment.duration(i.CHANGE_END).as('milliseconds')
@@ -284,6 +296,7 @@ export default () => {
         }
       });
 
+      //근무중인 직원을 앞으로, 근무중이지 않은 직원을 뒤로 소팅
       const orderByWORKING = [...empListTemp];
       setEMP_LIST(
         orderByWORKING.sort(
@@ -291,6 +304,7 @@ export default () => {
         ),
       );
 
+      //근무중인 직원중에서도 근무시간이 먼저인 직원을 앞으로 소팅
       const orderBySTART_TIME = [...empListTemp];
       setTIME_EMP_LIST(
         orderBySTART_TIME.sort(
@@ -307,6 +321,7 @@ export default () => {
         ),
       );
 
+      // 상위직원3명 & 모달의 직원 순서를 위한 소팅
       const orderByEARLY = [...empListTemp];
       setEARLY_EMP_LIST(orderByEARLY.sort((a, b) => b.EARLY - a.EARLY));
 
@@ -332,6 +347,7 @@ export default () => {
     }
   };
 
+  // 이름으로 직원 검색
   const searchName = (text) => {
     setSearch(text);
     screenScrollRef.current?.getNode()?.scrollTo({y: 0, animated: false});

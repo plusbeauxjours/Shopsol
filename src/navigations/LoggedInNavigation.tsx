@@ -167,8 +167,7 @@ export default () => {
     <React.Fragment>
       <LoggedInNavigation.Navigator
         headerMode={'screen'}
-        // initialRouteName={'SplashScreen'}
-        initialRouteName={'DashBoardScreen'}
+        initialRouteName={'SplashScreen'}
         screenOptions={{
           animationEnabled: utils.isAndroid() ? false : true,
           headerStyle: {

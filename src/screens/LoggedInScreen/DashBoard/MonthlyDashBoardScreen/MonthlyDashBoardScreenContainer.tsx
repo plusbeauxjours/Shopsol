@@ -54,13 +54,16 @@ export default () => {
   const [result, setResult] = useState<any>([]);
   const [toDay, setToDay] = useState<any>(moment());
 
+  // 범위를 위해서 해당월의 시작일과 마지막일
   const monthStartDate = moment(toDay).startOf('month');
   const monthEndDate = moment(toDay).endOf('month');
 
+  // 스크린의 가장 아래로 이동 (사용안함
   const onPressSection = () => {
     return scrollRef.current?.getNode()?.scrollToEnd({animated: true});
   };
 
+  // 오른쪽 하단의 버튼을 탭하면 가장 위로 이동
   const gotoTop = () => {
     return scrollRef.current?.getNode()?.scrollTo({y: 0, animated: true});
   };
@@ -77,6 +80,8 @@ export default () => {
     fetchSchedulesData(moment(toDay).add(1, 'months').format('YYYY-MM-DD'));
   };
 
+  // 날짜를 옮겼을 때 리덕스에 옮긴 주가 없을 때 데이터 패칭
+  // 예를 들면 리덕스에 3월과 4월의 데이터가 있을 때 5월로 이동
   const fetchSchedulesData = async (date) => {
     try {
       setLoading(true);
@@ -187,6 +192,7 @@ export default () => {
         });
       });
 
+      //루프를 돌면서 해당일의 총지각, 총조퇴, 총휴게시간, 총휴가, 총결근을 카운트
       monthSubDates.map((date) => {
         CALENDAR_DATA[date]?.map((i) => {
           let emp = empListTemp?.find((j) => j.EMP_SEQ == i.EMP_ID);
@@ -221,6 +227,7 @@ export default () => {
         });
       });
 
+      // 최신 근무시간을 저장, 직원의 주간 지각일, 조퇴일, 유급휴가일,무급휴가일, 결근일 카운트
       monthDates.map((date, index) => {
         CALENDAR_DATA[date] &&
           CALENDAR_DATA[date]?.length !== 0 &&
@@ -512,6 +519,7 @@ export default () => {
         });
       });
 
+      // 조퇴, 지각, 휴가, 결근을 한번이라도 한 직원의 카운트(사용안함)
       setTotalEARLY_EMP(empListTemp?.filter((i) => i.TOTAL_EARLY > 0).length);
       setTotalLATE_EMP(empListTemp?.filter((i) => i.TOTAL_LATE > 0).length);
       setTotalVACATION_EMP(
@@ -519,6 +527,7 @@ export default () => {
       );
       setTotalNOWORK_EMP(empListTemp?.filter((i) => i.TOTAL_NOWORK > 0).length);
 
+      // 상위직원3명 & 모달의 직원 순서를 위한 소팅
       const orderByWORKING = [...empListTemp];
       setEMP_LIST(
         orderByWORKING.sort((a, b) => b.TOTAL_WORKING - a.TOTAL_WORKING),
@@ -554,6 +563,7 @@ export default () => {
     }
   };
 
+  // 이름으로 직원 검색
   const searchName = (text) => {
     setSearch(text);
     EMP_LIST.forEach(function (item) {

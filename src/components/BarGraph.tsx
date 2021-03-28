@@ -9,7 +9,7 @@ import moment from 'moment';
 const MiddleText = styled.Text`
   position: absolute;
   font-size: ${styleGuide.fontSize.small}px;
-  color: ${styleGuide.palette.redColor};
+  color: ${styleGuide.palette.greyColor};
 `;
 
 const MaxText = styled.Text`
@@ -40,6 +40,7 @@ export default ({
         strokeWidth="2">
         <G rotation="0">
           <Rect
+            rx={5}
             x={0}
             y={0}
             width={(TOTAL_WORKING / max) * width}
@@ -51,6 +52,7 @@ export default ({
             }
           />
           <Rect
+            rx={5}
             x={(TOTAL_WORKING / max) * width}
             y={0}
             width={width - (TOTAL_WORKING / max) * width}
@@ -63,7 +65,7 @@ export default ({
             x2={(middle / max) * width}
             y2={height}
             stroke={styleGuide.palette.redColor}
-            strokeWidth="2"
+            strokeWidth="4"
           />
           <Line
             x1={width}

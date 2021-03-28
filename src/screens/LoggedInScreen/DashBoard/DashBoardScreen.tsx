@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, Text} from 'react-native';
 import moment from 'moment';
 import analytics from '@react-native-firebase/analytics';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -15,7 +14,6 @@ import WeeklyDashBoardScreen from './WeeklyDashBoardScreen';
 import MonthlyDashBoardScreen from './MonthlyDashBoardScreen';
 import {setSplashVisible} from '~/redux/splashSlice';
 import styleGuide from '~/constants/styleGuide';
-import LottieView from 'lottie-react-native';
 
 export default () => {
   const dispatch = useDispatch();
@@ -33,6 +31,7 @@ export default () => {
 
   const [loading, setLoading] = useState<boolean>(true);
 
+  // 캘린더스크린에서 렌더되는 일정정보를 패칭
   const fetchSchedulesData = async () => {
     try {
       dispatch(setSplashVisible({visible: true, text: '사업장현황'}));
@@ -47,6 +46,7 @@ export default () => {
           moment().format('YYYY'),
           moment().format('M'),
         );
+        // 데이터 가공
         if (scheduleData.message === 'SUCCESS') {
           let buffer = {};
           const iterator = Object.keys(scheduleData.result);
@@ -73,6 +73,8 @@ export default () => {
           );
         }
       }
+      // 오늘이 월의 마지막주라면 다음달의 일정도 패칭(주간 사업장현황)
+      // 예를 들면 2021.03.29~2021.04.04
       if (
         !CALENDAR_DATA_STORE_SEQ ||
         CALENDAR_DATA_STORE_SEQ != STORE_SEQ ||
@@ -85,6 +87,7 @@ export default () => {
           moment().add(1, 'month').format('YYYY'),
           moment().add(1, 'month').format('M'),
         );
+        // 마찬가지로 데이터 가공
         if (scheduleData.message === 'SUCCESS') {
           let buffer = {};
           const iterator = Object.keys(scheduleData.result);

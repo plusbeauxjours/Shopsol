@@ -1095,60 +1095,6 @@ export default ({
         <Modal
           animationIn={'fadeIn'}
           animationOut={'fadeOut'}
-          onRequestClose={() => setModalREST_TIME(false)}
-          onBackdropPress={() => setModalREST_TIME(false)}
-          isVisible={modalREST_TIME}
-          style={{
-            marginLeft: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: wp('100%'),
-            height: '100%',
-          }}>
-          <ModalSection style={{width: 250, maxHeight: 600}}>
-            <ScrollView
-              keyboardDismissMode="on-drag"
-              contentContainerStyle={{alignItems: 'center'}}
-              showsVerticalScrollIndicator={false}>
-              {REST_TIME_EMP_LIST.map((i, index) => (
-                <EmpCard key={index}>
-                  <FastImage
-                    style={{
-                      margin: 10,
-                      width: 40,
-                      height: 40,
-                      borderRadius: 20,
-                    }}
-                    source={{
-                      uri: utils.getUriImage(i.IMAGE),
-                      cache: FastImage.cacheControl.immutable,
-                      priority: FastImage.priority.low,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
-                  />
-                  <Column>
-                    <Bold>
-                      {i.EMP_NAME} [
-                      {i.IS_MANAGER == '1' ? MANAGER_CALLED : '직원'}]
-                    </Bold>
-                    {i.REST_TIME != '0' ? (
-                      <Row>
-                        <SmallTextRound style={{marginTop: 5}}>
-                          <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
-                        </SmallTextRound>
-                      </Row>
-                    ) : (
-                      <SmallText style={{fontSize: 18}}>&nbsp;</SmallText>
-                    )}
-                  </Column>
-                </EmpCard>
-              ))}
-            </ScrollView>
-          </ModalSection>
-        </Modal>
-        <Modal
-          animationIn={'fadeIn'}
-          animationOut={'fadeOut'}
           onRequestClose={() => setModalVACATION(false)}
           onBackdropPress={() => setModalVACATION(false)}
           isVisible={modalVACATION}
