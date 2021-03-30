@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2.8</string>
+	<string>2.2.10</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>231</string>
+	<string>233</string>
 	<key>CodePushDeploymentKey</key>
 	<string>KJJ3ieWUWc4o6dSzHZxZXdSayNHMvsvlC9U6y</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

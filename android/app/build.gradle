@@ -173,8 +173,8 @@ android {
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        versionCode 98
-        versionName "2.2.8"
+        versionCode 99
+        versionName "2.2.9"
     }
     splits {
         abi {
@@ -235,24 +235,24 @@ android {
 dependencies {
     implementation project(':react-native-push-notification')
     
-    // implementation 'com.google.firebase:firebase-core:16.0.1'
-    // implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     // implementation 'com.firebase:firebase-jobdispatcher:0.6.0'
-    
+    // implementation 'com.google.firebase:firebase-installations:16.3.5'
     implementation (project(':react-native-camera')) {
         exclude group: "com.google.android.gms"
         exclude group: "com.google.android.gms", module: "play-services-vision"
         exclude group: "com.google.firebase", module: "firebase-ml-vision-face-model"
     }
 
-    // implementation platform('com.google.firebase:firebase-bom:26.1.0')
-    // implementation 'com.google.firebase:firebase-analytics'
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
 
     implementation project(':react-native-image-crop-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-contacts')
     //noinspection GradleDynamicVersion
-    compile 'com.android.support:multidex:1.0.3' 
+    implementation 'com.android.support:multidex:1.0.3' 
     implementation "com.facebook.react:react-native: 0.63.3"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -282,10 +282,10 @@ dependencies {
 
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
-task copyDownloadableDepsToLibs(type: Copy) {
-    from configurations.compile
-    into 'libs'
-}
+// task copyDownloadableDepsToLibs(type: Copy) {
+//     from configurations.compile
+//     into 'libs'
+// }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
