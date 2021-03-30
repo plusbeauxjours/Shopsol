@@ -41,8 +41,8 @@ const Section = styled.View`
   border-width: 1px;
   border-color: ${styleGuide.palette.lightGreyColor};
   background-color: white;
-  bottom: 0px;
-  flex: 1;
+  margin-bottom: 20px;
+  height: ${hp('50%')}px;
   justify-content: center;
 `;
 
@@ -98,6 +98,11 @@ const RequestButton = styled.TouchableOpacity`
   margin-top: 10px;
 `;
 
+const ImageContainer = styled.View`
+  height: ${hp('45%')}px;
+  align-items: center;
+  justify-content: center;
+`;
 const RequestText = styled.Text`
   font-size: ${styleGuide.fontSize.middle}px;
   color: white;
@@ -126,110 +131,15 @@ export default ({
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flex: 1, padding: 20}}>
+        contentContainerStyle={{flex: 1, paddingHorizontal: 20}}>
         <Container>
-          {/* {isBrandLogin ? (
-            selectedBrandIndex ? (
-              <SectionNoLine
-                as={Animatable.View}
-                animation={{
-                  from: {opacity: 0, scale: 1.2},
-                  to: {opacity: 1, scale: 1},
-                }}
-                duration={100}>
-                <Touchable
-                  style={{width: wp('100%'), flex: 1, alignItems: 'center'}}
-                  onPress={() => selectBrandFn()}>
-                  <FastImage
-                    style={{borderRadius: 20, height: 150, width: 150, flex: 1}}
-                    source={{
-                      uri: brandData[selectedBrandIndex].IMG_URL,
-                      cache: FastImage.cacheControl.immutable,
-                      priority: FastImage.priority.low,
-                    }}
-                    resizeMode={FastImage.resizeMode.contain}
-                  />
-                </Touchable>
-              </SectionNoLine>
-            ) : brandData?.length > 12 ? (
-              <ScrollView
-                keyboardShouldPersistTaps={'handled'}
-                keyboardDismissMode="on-drag"
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                  alignItems: 'center',
-                }}>
-                <Row
-                  as={Animatable.View}
-                  animation={{
-                    from: {opacity: 0},
-                    to: {opacity: 1},
-                  }}
-                  duration={200}>
-                  {brandData?.map((brand, index) => (
-                    <Touchable
-                      onPress={() =>
-                        selectBrandFn(index, brand.NAME, brand.COLOR)
-                      }>
-                      <FastImage
-                        key={index}
-                        style={{
-                          borderRadius: 10,
-                          height: (wp('100%') - 120) / 4,
-                          width: (wp('100%') - 120) / 4,
-                          margin: 10,
-                        }}
-                        source={{
-                          uri: brand.IMG_URL,
-                          cache: FastImage.cacheControl.immutable,
-                          priority: FastImage.priority.low,
-                        }}
-                        resizeMode={FastImage.resizeMode.contain}
-                      />
-                    </Touchable>
-                  ))}
-                </Row>
-              </ScrollView>
-            ) : (
-              <SectionNoLine>
-                <Row
-                  as={Animatable.View}
-                  animation={{
-                    from: {opacity: 0},
-                    to: {opacity: 1},
-                  }}
-                  duration={200}>
-                  {brandData?.map((brand, index) => (
-                    <Touchable
-                      onPress={() =>
-                        selectBrandFn(index, brand.NAME, brand.COLOR)
-                      }>
-                      <FastImage
-                        key={index}
-                        style={{
-                          borderRadius: 10,
-                          height: (wp('100%') - 120) / 4,
-                          width: (wp('100%') - 120) / 4,
-                          margin: 10,
-                        }}
-                        source={{
-                          uri: brand.IMG_URL,
-                          cache: FastImage.cacheControl.immutable,
-                          priority: FastImage.priority.low,
-                        }}
-                        resizeMode={FastImage.resizeMode.contain}
-                      />
-                    </Touchable>
-                  ))}
-                </Row>
-              </SectionNoLine>
-            )
-          ) : ( */}
-          <FastImage
-            style={{height: 200, width: 200, flex: 1}}
-            source={require('../../../assets/images/shopSol.png')}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          <ImageContainer>
+            <FastImage
+              style={{height: 200, width: 200}}
+              source={require('../../../assets/images/shopSol.png')}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </ImageContainer>
           {/*  )}
            {!selectedBrandIndex ? (
              <RequestButton onPress={() => setIsBrandLogin(!isBrandLogin)}>
