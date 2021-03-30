@@ -242,7 +242,7 @@ export default ({route: {params}}) => {
                   height: 60,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  marginRight: 90,
+                  marginRight: 80,
                 }}
                 source={require('../../../../assets/images/emptyBalloons.png')}
                 resizeMode={FastImage.resizeMode.cover}>

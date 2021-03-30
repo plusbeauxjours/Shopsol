@@ -151,10 +151,10 @@ const EmpCardRow = styled.View`
   justify-content: space-between;
   align-items: center;
   width: ${wp('100%') - 80}px;
-  border-bottom-width: 1px;
+  /* border-bottom-width: 1px;
   border-bottom-color: ${styleGuide.palette.borderColor};
   padding-bottom: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 `;
 
 const Bold = styled.Text`
@@ -420,17 +420,17 @@ export default ({
               }}>
               {i.TOTAL_LATE !== 0 && (
                 <SmallTextRound>
-                  <SmallText>지각: {i.TOTAL_LATE}일</SmallText>
+                  <SmallText>지각: {i.TOTAL_LATE}회</SmallText>
                 </SmallTextRound>
               )}
               {i.TOTAL_EARLY !== 0 && (
                 <SmallTextRound>
-                  <SmallText>조퇴: {i.TOTAL_EARLY}일</SmallText>
+                  <SmallText>조퇴: {i.TOTAL_EARLY}회</SmallText>
                 </SmallTextRound>
               )}
               {i.TOTAL_NOWORK !== 0 && (
                 <SmallTextRound>
-                  <SmallText>결근: {i.TOTAL_NOWORK}일</SmallText>
+                  <SmallText>결근: {i.TOTAL_NOWORK}회</SmallText>
                 </SmallTextRound>
               )}
               {i.REST_TIME != 0 && (
@@ -525,7 +525,7 @@ export default ({
                     height: 55,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginRight: 90,
+                    marginRight: 80,
                   }}
                   source={require('../../../../assets/images/emptyBalloons.png')}
                   resizeMode={FastImage.resizeMode.cover}>
@@ -610,7 +610,7 @@ export default ({
                             %
                           </PercentageText>
                           <PercentageSubText color={styleGuide.palette.primary}>
-                            {totalLATE_COUNT}일 / {totalWORKING_EMP}일
+                            {totalLATE_COUNT}회 / {totalWORKING_EMP}회
                           </PercentageSubText>
                         </DodnutTextContainer>
                       )}
@@ -651,7 +651,7 @@ export default ({
                                       ]
                                     </Bold>
                                     <Text style={{marginTop: 5}}>
-                                      {i.TOTAL_LATE}일
+                                      {i.TOTAL_LATE}회
                                     </Text>
                                   </Column>
                                 </EmpCard>
@@ -693,7 +693,7 @@ export default ({
                             %
                           </PercentageText>
                           <PercentageSubText color={styleGuide.palette.primary}>
-                            {totalEARLY_COUNT}일 / {totalWORKING_EMP}일
+                            {totalEARLY_COUNT}회 / {totalWORKING_EMP}회
                           </PercentageSubText>
                         </DodnutTextContainer>
                       )}
@@ -734,7 +734,7 @@ export default ({
                                       ]
                                     </Bold>
                                     <Text style={{marginTop: 5}}>
-                                      {i.TOTAL_EARLY}일
+                                      {i.TOTAL_EARLY}회
                                     </Text>
                                   </Column>
                                 </EmpCard>
@@ -776,7 +776,7 @@ export default ({
                             %
                           </PercentageText>
                           <PercentageSubText color={styleGuide.palette.primary}>
-                            {totalNOWORK_COUNT}일 / {totalWORKING_EMP}일
+                            {totalNOWORK_COUNT}회 / {totalWORKING_EMP}회
                           </PercentageSubText>
                         </DodnutTextContainer>
                       )}
@@ -817,7 +817,7 @@ export default ({
                                       ]
                                     </Bold>
                                     <Text style={{marginTop: 5}}>
-                                      {i.TOTAL_NOWORK}일
+                                      {i.TOTAL_NOWORK}회
                                     </Text>
                                   </Column>
                                 </EmpCard>
@@ -972,7 +972,7 @@ export default ({
                     {i.TOTAL_EARLY > 0 ? (
                       <Row>
                         <SmallTextRound style={{marginTop: 5}}>
-                          <SmallText>조퇴: {i.TOTAL_EARLY}일</SmallText>
+                          <SmallText>조퇴: {i.TOTAL_EARLY}회</SmallText>
                         </SmallTextRound>
                       </Row>
                     ) : (
@@ -1026,7 +1026,7 @@ export default ({
                     {i.TOTAL_LATE > 0 ? (
                       <Row>
                         <SmallTextRound style={{marginTop: 5}}>
-                          <SmallText>지각: {i.TOTAL_LATE}일</SmallText>
+                          <SmallText>지각: {i.TOTAL_LATE}회</SmallText>
                         </SmallTextRound>
                       </Row>
                     ) : (
@@ -1080,7 +1080,7 @@ export default ({
                     {i.TOTAL_NOWORK > 0 ? (
                       <Row>
                         <SmallTextRound style={{marginTop: 5}}>
-                          <SmallText>결근: {i.TOTAL_NOWORK}일</SmallText>
+                          <SmallText>결근: {i.TOTAL_NOWORK}회</SmallText>
                         </SmallTextRound>
                       </Row>
                     ) : (

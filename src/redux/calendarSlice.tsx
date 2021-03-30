@@ -27,7 +27,7 @@ const calendarSlice = createSlice({
         ) {
           state.CALENDAR_DATA = CALENDAR_DATA;
         } else {
-          state.CALENDAR_DATA = {...CALENDAR_DATA};
+          state.CALENDAR_DATA = {...state.CALENDAR_DATA, ...CALENDAR_DATA};
         }
       } else {
         state.CALENDAR_DATA = CALENDAR_DATA;

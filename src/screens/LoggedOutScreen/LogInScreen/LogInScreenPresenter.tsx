@@ -1,5 +1,5 @@
 import React from 'react';
-import {Keyboard, KeyboardAvoidingView} from 'react-native';
+import {Keyboard} from 'react-native';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {
@@ -7,6 +7,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import * as Animatable from 'react-native-animatable';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import InputLine from '~/components/InputLine';
 import RoundBtn from '~/components/Btn/RoundBtn';
@@ -22,10 +23,6 @@ const Container = styled.View`
   align-items: center;
   justify-content: center;
   height: 100%;
-`;
-
-const ScrollView = styled.ScrollView`
-  flex: 1;
 `;
 
 const Space = styled.View`
@@ -46,6 +43,7 @@ const Section = styled.View`
   background-color: white;
   bottom: 0px;
   flex: 1;
+  justify-content: center;
 `;
 
 const SectionNoLine = styled.View`
@@ -125,7 +123,10 @@ export default ({
 }) => {
   return (
     <BackGround>
-      <KeyboardAvoidingView style={{height: '100%', padding: 20}}>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{flex: 1, padding: 20}}>
         <Container>
           {/* {isBrandLogin ? (
             selectedBrandIndex ? (
@@ -268,7 +269,7 @@ export default ({
               />
             </TextInputContainer>
             <InputLine isBefore={password == '' ? true : false} />
-            <WhiteSpace />
+            <WhiteSpace style={{height: 50}} />
             <RoundBtn
               isInSection={true}
               isWhiteBack={false}
@@ -288,7 +289,7 @@ export default ({
             </Space>
           </Section>
         </Container>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </BackGround>
   );
 };

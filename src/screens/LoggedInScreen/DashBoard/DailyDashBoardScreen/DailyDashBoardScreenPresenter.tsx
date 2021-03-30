@@ -199,6 +199,7 @@ const EmpCardDataRow = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 `;
 
 const GotoTopButtonContainer = styled.View`
@@ -428,8 +429,7 @@ export default ({
                   }}>
                   시작시간:&nbsp;
                 </Text>
-                {moment() >
-                moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                {moment() > moment(toDay) ? (
                   <Text style={{marginLeft: 5, textAlign: 'right', width: 60}}>
                     {i.START_TIME_DONE.slice(0, 5)}
                   </Text>
@@ -449,8 +449,7 @@ export default ({
                   }}>
                   종료시간:&nbsp;
                 </Text>
-                {moment() >
-                moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
+                {moment() > moment(toDay) ? (
                   <Text style={{marginLeft: 5, textAlign: 'right', width: 60}}>
                     {moment.duration(i.START_TIME_DONE) >
                       moment.duration(i.END_TIME_DONE) && (
@@ -470,68 +469,58 @@ export default ({
               </IconContainer>
             </Column>
           </EmpCardDataRow>
-
           <EmpCardDataRow style={{paddingLeft: 5}}>
-            {i.WORKING > 0 ? (
-              <SmallTextRound>
-                {moment() >
-                moment(toDay).startOf('isoWeek').add(selectedIndex, 'days') ? (
-                  typeof i?.WORKING_DONE === 'string' &&
-                  i?.WORKING_DONE?.includes('미') ? (
-                    <SmallText>근무시간:&nbsp;{i?.WORKING_DONE}</SmallText>
-                  ) : (
-                    <SmallText>
-                      근무시간:&nbsp;
-                      {Math.trunc(moment.duration(i.WORKING_DONE).asHours()) >
-                        0 &&
-                        `${Math.trunc(
-                          moment.duration(i.WORKING_DONE).asHours(),
-                        )}시간`}
-                      &nbsp;
-                      {moment.duration(i.WORKING_DONE).minutes() > 0 &&
-                        `${moment.duration(i.WORKING_DONE).minutes()}분`}
-                    </SmallText>
-                  )
-                ) : (
+            {i.NOWORK === '0' &&
+              (i.WORKING > 0 ? (
+                <SmallTextRound style={{paddingHorizontal: 30}}>
                   <SmallText>
                     근무시간:&nbsp;
-                    {Math.trunc(moment.duration(i.WORKING).asHours()) > 0 &&
-                      `${Math.trunc(moment.duration(i.WORKING).asHours())}시간`}
+                    {Math.trunc(
+                      moment
+                        .duration(i.WORKING - i.REST_TIME * 60000)
+                        .asHours(),
+                    ) > 0 &&
+                      `${Math.trunc(
+                        moment
+                          .duration(i.WORKING - i.REST_TIME * 60000)
+                          .asHours(),
+                      )}시간`}
                     &nbsp;
-                    {moment.duration(i.WORKING).minutes() > 0 &&
-                      `${moment.duration(i.WORKING).minutes()}분`}
+                    {moment
+                      .duration(i.WORKING - i.REST_TIME * 60000)
+                      .minutes() > 0 &&
+                      `${moment
+                        .duration(i.WORKING - i.REST_TIME * 60000)
+                        .minutes()}분`}
                   </SmallText>
-                )}
-              </SmallTextRound>
-            ) : (
-              <Row style={{justifyContent: 'center'}}>
-                <Text style={{textAlign: 'center'}}>
-                  해당일에 근무가 없습니다.
-                </Text>
-              </Row>
-            )}
-            {i.REST_TIME > 0 && (
-              <SmallTextRound>
-                <SmallText>휴게시간: {i.REST_TIME}분</SmallText>
-              </SmallTextRound>
-            )}
+                  {i.REST_TIME > 0 && (
+                    <SmallText> / 휴게시간: {i.REST_TIME}분 적용</SmallText>
+                  )}
+                </SmallTextRound>
+              ) : (
+                <Row style={{justifyContent: 'center'}}>
+                  <Text style={{textAlign: 'center'}}>
+                    해당일에 근무가 없습니다.
+                  </Text>
+                </Row>
+              ))}
             {i.LATE !== '0' && (
-              <SmallTextRound>
+              <SmallTextRound style={{height: 24}}>
                 <SmallText>지각: {i.LATE}일</SmallText>
               </SmallTextRound>
             )}
             {i.EARLY !== '0' && (
-              <SmallTextRound>
+              <SmallTextRound style={{height: 24}}>
                 <SmallText>조퇴: {i.EARLY}일</SmallText>
               </SmallTextRound>
             )}
             {i.NOWORK !== '0' && (
-              <SmallTextRound>
+              <SmallTextRound style={{height: 24}}>
                 <SmallText>결근: {i.NOWORK}일</SmallText>
               </SmallTextRound>
             )}
             {i.VACATION && (
-              <SmallTextRound>
+              <SmallTextRound style={{height: 24}}>
                 <SmallText>휴가: {i.VACATION}일</SmallText>
               </SmallTextRound>
             )}
@@ -608,7 +597,7 @@ export default ({
                     height: 55,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginRight: 90,
+                    marginRight: 80,
                   }}
                   source={require('../../../../assets/images/emptyBalloons.png')}
                   resizeMode={FastImage.resizeMode.cover}>
@@ -1038,7 +1027,7 @@ export default ({
                     </Bold>
                     {i.EARLY == 1 ? (
                       <Row>
-                        <SmallTextRound>
+                        <SmallTextRound style={{height: 24}}>
                           <SmallText>조퇴</SmallText>
                         </SmallTextRound>
                       </Row>
@@ -1092,7 +1081,7 @@ export default ({
                     </Bold>
                     {i.LATE == 1 ? (
                       <Row>
-                        <SmallTextRound>
+                        <SmallTextRound style={{height: 24}}>
                           <SmallText>지각</SmallText>
                         </SmallTextRound>
                       </Row>
@@ -1146,7 +1135,7 @@ export default ({
                     </Bold>
                     {i.NOWORK == 1 ? (
                       <Row>
-                        <SmallTextRound>
+                        <SmallTextRound style={{height: 24}}>
                           <SmallText>결근</SmallText>
                         </SmallTextRound>
                       </Row>
@@ -1200,7 +1189,7 @@ export default ({
                     </Bold>
                     {i.VACATION ? (
                       <Row>
-                        <SmallTextRound>
+                        <SmallTextRound style={{height: 24}}>
                           <SmallText>휴가</SmallText>
                         </SmallTextRound>
                       </Row>

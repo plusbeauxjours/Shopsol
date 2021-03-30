@@ -206,23 +206,7 @@ export default () => {
                   ? '퇴근미체크'
                   : i.END_TIME
                   ? i.END_TIME
-                  : '미퇴근'),
-              (emp['WORKING_DONE'] = !i.START_TIME
-                ? '출근미체크'
-                : i.AUTOWORKOFF == '1' && !i.END_TIME
-                ? '퇴근미체크'
-                : moment.duration(i.START_TIME).as('milliseconds') >
-                  moment.duration(i.END_TIME).as('milliseconds')
-                ? Number(
-                    moment(i.END_TIME, 'kk:mm')
-                      .add(1, 'days')
-                      .diff(moment(i.START_TIME, 'kk:mm')),
-                  )
-                : Number(
-                    moment(i.END_TIME, 'kk:mm').diff(
-                      moment(i.START_TIME, 'kk:mm'),
-                    ),
-                  )))
+                  : '미퇴근'))
             : ((emp['START_TIME_DONE'] = !i.UPDATED_START
                 ? '미출근'
                 : i.UPDATED_START),
@@ -231,23 +215,7 @@ export default () => {
                   ? '퇴근미체크'
                   : i.UPDATED_END
                   ? i.UPDATED_END
-                  : '미퇴근'),
-              (emp['WORKING_DONE'] = !i.UPDATED_START
-                ? '출근미체크'
-                : i.AUTOWORKOFF == '1' && !i.UPDATED_END
-                ? '퇴근미체크'
-                : moment.duration(i.UPDATED_START).as('milliseconds') >
-                  moment.duration(i.UPDATED_END).as('milliseconds')
-                ? Number(
-                    moment(i.UPDATED_END, 'kk:mm')
-                      .add(1, 'days')
-                      .diff(moment(i.UPDATED_START, 'kk:mm')),
-                  )
-                : Number(
-                    moment(i.UPDATED_END, 'kk:mm').diff(
-                      moment(i.UPDATED_START, 'kk:mm'),
-                    ),
-                  )));
+                  : '미퇴근'));
 
           // 최신 근무시간을 저장
           i.CHANGE_START && i.CHANGE_END

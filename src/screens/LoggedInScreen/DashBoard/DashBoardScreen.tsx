@@ -76,7 +76,6 @@ export default () => {
       // 오늘이 월의 마지막주라면 다음달의 일정도 패칭(주간 사업장현황)
       // 예를 들면 2021.03.29~2021.04.04
       if (
-        !CALENDAR_DATA_STORE_SEQ ||
         CALENDAR_DATA_STORE_SEQ != STORE_SEQ ||
         (moment().startOf('isoWeek').format('MM') !==
           moment().endOf('isoWeek').format('MM') &&
