@@ -446,13 +446,13 @@ export default ({
             </Row>
           </Column>
         </EmpCardRow>
-        {i.TOTAL_WORKING != 0 ? (
+        {/* {i.TOTAL_WORKING != 0 ? (
           <GraphContainer>
             <Graph data={i} toDay={toDay} />
           </GraphContainer>
         ) : (
           <Text style={{textAlign: 'center'}}>금주 근무가 없습니다.</Text>
-        )}
+        )} */}
       </Column>
     </SectionCard>
   );

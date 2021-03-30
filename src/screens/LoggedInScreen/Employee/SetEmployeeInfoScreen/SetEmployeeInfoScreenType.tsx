@@ -60,7 +60,7 @@ export const DeductionType = ({
 }) => {
   let value = JSON.parse(JSON.stringify(deductionTypeCheck));
   return (
-    <Row style={{marginRight: 15}}>
+    <Row>
       <TypeContainer
         onPress={() => {
           value.fill(false);

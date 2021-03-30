@@ -6,7 +6,6 @@ import {useSafeArea} from 'react-native-safe-area-context';
 import TaskCheckScreenTabHeader from './TaskCheckScreenTabHeader';
 import styled from 'styled-components/native';
 
-export const MIN_HEADER_HEIGHT = 45;
 const {useCode, greaterThan, set, block} = Animated;
 
 const HeaderBackground = styled.View`
@@ -35,14 +34,15 @@ export default ({y, tabs, gotoCategory, ready}) => {
   // 앵커된 y값에 다다르면 스르르 나타나는 헤더
   return (
     <HeaderContainer as={Animated.View} style={{paddingTop}}>
-      <HeaderBackground as={Animated.View} style={{opacity}} />
-      <TaskCheckScreenTabHeader
-        transition={transition}
-        y={y}
-        tabs={tabs}
-        gotoCategory={gotoCategory}
-        ready={ready}
-      />
+      <HeaderBackground as={Animated.View} style={{opacity}}>
+        <TaskCheckScreenTabHeader
+          transition={transition}
+          y={y}
+          tabs={tabs}
+          gotoCategory={gotoCategory}
+          ready={ready}
+        />
+      </HeaderBackground>
     </HeaderContainer>
   );
 };

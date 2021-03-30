@@ -3,7 +3,6 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import styled from 'styled-components/native';
 import {StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
-import {isIphoneX} from 'react-native-iphone-x-helper';
 import {interpolateColor} from 'react-native-redash';
 
 import utils from '~/constants/utils';
@@ -13,7 +12,6 @@ const ListContainer = styled.View`
   height: 50px;
   flex-direction: row;
   width: 100%;
-  left: 20px;
 `;
 
 const Row = styled.View`
@@ -23,7 +21,6 @@ const Row = styled.View`
 `;
 
 const LineTextContainer = styled.View`
-  align-self: flex-end;
   background-color: white;
   border-width: 1px;
   border-radius: 15px;
@@ -31,7 +28,6 @@ const LineTextContainer = styled.View`
   height: 30px;
   justify-content: center;
   align-items: center;
-  bottom: ${utils.isAndroid() ? 20 : isIphoneX() ? 70 : 12}px;
   margin-top: ${utils.isAndroid() ? 30 : 2}px;
 `;
 
@@ -137,6 +133,9 @@ export default ({transition, tabs, gotoCategory, y, ready}) => {
       <Animated.View
         style={{
           ...StyleSheet.absoluteFillObject,
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingLeft: 10,
         }}>
         <TabsContainer {...{tabs}} gotoCategory={gotoCategory} />
       </Animated.View>

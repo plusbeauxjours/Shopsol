@@ -125,7 +125,7 @@ export const Authority = ({
           <CheckBoxOffIcon size={18} />
         )}
         <Text>{text}</Text>
-        {STORE == '1' && selection !== 4 && (
+        {selection !== 4 && (
           <TypeContainer
             onPress={() => {
               if (selection == 0) {
