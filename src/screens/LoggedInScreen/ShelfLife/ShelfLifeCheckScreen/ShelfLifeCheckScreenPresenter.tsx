@@ -36,6 +36,7 @@ const BackGround = styled.SafeAreaView`
 `;
 
 const View = styled.View``;
+const ScrollView = styled.ScrollView``;
 const Container = styled.View`
   width: 100%;
   padding: 20px;
@@ -307,7 +308,16 @@ export default ({
     ) {
       return (
         <BackGround>
-          <Container style={{flex: 1, marginTop: 40}}>
+          <ScrollView
+            contentContainerStyle={{flex: 1, marginTop: 40}}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={16}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={() => onRefresh('firstRoute')}
+              />
+            }>
             <EmptyBox>
               <FastImage
                 style={{
@@ -331,7 +341,7 @@ export default ({
                 <AddIcon />
               </AddButton>
             </AddButtonContainer>
-          </Container>
+          </ScrollView>
         </BackGround>
       );
     } else {
