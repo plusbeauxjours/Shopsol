@@ -233,7 +233,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = S89HZPJ64Y;
+						DevelopmentTeam = PJS65M6U34;
 						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 					};
@@ -565,8 +565,8 @@
 				CODE_SIGN_ENTITLEMENTS = ShopsolWesop/ShopsolWesop.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
-				DEVELOPMENT_TEAM = S89HZPJ64Y;
+				CURRENT_PROJECT_VERSION = 234;
+				DEVELOPMENT_TEAM = PJS65M6U34;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ShopsolWesop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -595,8 +595,8 @@
 				CODE_SIGN_ENTITLEMENTS = ShopsolWesop/ShopsolWesop.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
-				DEVELOPMENT_TEAM = S89HZPJ64Y;
+				CURRENT_PROJECT_VERSION = 234;
+				DEVELOPMENT_TEAM = PJS65M6U34;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ShopsolWesop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

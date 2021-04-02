@@ -282,10 +282,10 @@ export default {
             },
             {
               enableHighAccuracy: true,
-              timeout: 15000,
-              maximumAge: 1000 * 60 * 3,
-              forceRequestLocation: true,
-              showLocationDialog: true,
+              // timeout: 15000,
+              // maximumAge: 1000 * 60 * 3,
+              // forceRequestLocation: true,
+              // showLocationDialog: true,
             },
           );
           handle(true);
@@ -312,8 +312,15 @@ export default {
         if (permission === 'granted') {
           Geolocation.getCurrentPosition(
             (position) => {
-              setLat(position.coords.latitude);
-              setLong(position.coords.longitude);
+              console.log(position.coords.latitude, position.coords.longitude);
+              try {
+                setLat(position.coords.latitude);
+                setLong(position.coords.longitude);
+              } catch (e) {
+                console.log(e);
+              } finally {
+                handle(true);
+              }
             },
             (e) => {
               console.log(e);
@@ -321,12 +328,11 @@ export default {
             {
               enableHighAccuracy: true,
               timeout: 15000,
-              maximumAge: 1000 * 60 * 3,
+              // maximumAge: 1000 * 60 * 3,
               forceRequestLocation: true,
               showLocationDialog: true,
             },
           );
-          handle(true);
         } else {
           Alert.alert(
             '위치정보 권한 거절',
