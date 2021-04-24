@@ -306,7 +306,7 @@ export default ({
   REST_TIME_EMP_LIST,
   totalVACATION_COUNT,
   VACATION_EMP_LIST,
-  totalWORKING_COUNT,
+  // totalWORKING_COUNT,
   totalWORKING_EMP,
   totalNOWORK_COUNT,
   totalNOWORK_EMP,
@@ -537,7 +537,7 @@ export default ({
               </Date>
             </DateSection>
             {totalWORKING_DAY == 0 ||
-            totalWORKING_COUNT == 0 ||
+            // totalWORKING_COUNT == 0 ||
             totalWORKING_EMP == 0 ||
             EMP_LIST.length == 0 ? (
               <EmptyView>
@@ -587,7 +587,7 @@ export default ({
             )}
           </Container>
           {totalWORKING_DAY != 0 &&
-            totalWORKING_COUNT != 0 &&
+            // totalWORKING_COUNT != 0 &&
             totalWORKING_EMP != 0 &&
             EMP_LIST.length != 0 && (
               <ScrollView
@@ -914,7 +914,7 @@ export default ({
               </ScrollView>
             )}
           {totalWORKING_DAY !== 0 &&
-            totalWORKING_COUNT !== 0 &&
+            // totalWORKING_COUNT !== 0 &&
             totalWORKING_EMP !== 0 &&
             EMP_LIST.length !== 0 && (
               <>

@@ -243,7 +243,7 @@ export default () => {
         defaultData[3].items.length +
         defaultData[4].items.length;
 
-        // 해당 날짜들의 카운트에서 처리된 아이템의 갯수 추출 (나중에 처리 비율 렌터)
+      // 해당 날짜들의 카운트에서 처리된 아이템의 갯수 추출 (나중에 처리 비율 렌터)
       const ddayDone = defaultData[0].items.filter((i) => i.checkType === '1')
         .length;
       const dayDone =
@@ -335,10 +335,9 @@ export default () => {
 
   // 헤더 마운트
   const onMeasurement = (index, tab) => {
-    setTimeout(() => {
-      tabs[index] = tab;
-      setTabs([...tabs]);
-    }, 5000);
+    console.log(tab);
+    tabs[index] = tab;
+    setTabs([...tabs]);
     if (index === 3) {
       setReady(true);
     }
